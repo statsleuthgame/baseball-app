@@ -900,6 +900,264 @@ body {
   margin-bottom: 8px;
 }
 
+.matchup-notice {
+  text-align: center;
+  padding: 16px;
+  background: var(--bg-card);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 13px;
+  font-style: italic;
+}
+
+/* Batter vs Pitcher */
+.bvp-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bvp-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 10px;
+  gap: 8px;
+}
+
+.bvp-player {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex-shrink: 1;
+}
+
+.bvp-player-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.bvp-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-bright);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bvp-pos {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.bvp-stats {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.bvp-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 28px;
+}
+
+.bvp-stat-val {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.bvp-stat-lbl {
+  font-size: 8px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.bvp-highlight .bvp-stat-val {
+  color: var(--team-secondary);
+}
+
+.bvp-no-data {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.bvp-loading {
+  color: var(--text-muted);
+}
+
+/* Pitch Type Matchup Table */
+.pitch-matchup-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.pitch-matchup-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.pitch-matchup-table th {
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 6px 8px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+
+.pitch-matchup-table th:first-child {
+  text-align: left;
+}
+
+.pitch-matchup-table td {
+  padding: 8px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  color: var(--text);
+}
+
+.pitch-matchup-table td:first-child {
+  text-align: left;
+}
+
+.pitch-name-cell {
+  font-weight: 600;
+  color: var(--text-bright);
+}
+
+/* Park History */
+.park-record {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.park-record-main {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.park-record-wins {
+  color: var(--win);
+}
+
+.park-record-losses {
+  color: var(--loss);
+}
+
+.park-record-sep {
+  color: var(--text-muted);
+}
+
+.park-record-pct {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.park-recent-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.park-game-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  font-size: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.park-game-date {
+  width: 80px;
+  flex-shrink: 0;
+  color: var(--text-muted);
+}
+
+.park-game-opp {
+  flex: 1;
+  color: var(--text);
+}
+
+.park-game-result {
+  font-weight: 700;
+  min-width: 50px;
+  text-align: right;
+}
+
+/* Prior Matchups */
+.prior-record {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.prior-wins {
+  color: var(--win);
+}
+
+.prior-losses {
+  color: var(--loss);
+}
+
+.prior-sep {
+  color: var(--text-muted);
+}
+
+.prior-games {
+  display: flex;
+  flex-direction: column;
+}
+
+.prior-game-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  font-size: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.prior-date {
+  width: 80px;
+  flex-shrink: 0;
+  color: var(--text-muted);
+}
+
+.prior-teams {
+  flex: 1;
+  color: var(--text);
+}
+
+.prior-score {
+  font-weight: 700;
+}
+
 /* Playoff Odds */
 .playoff-odds {
   margin-top: 14px;
@@ -1030,15 +1288,180 @@ body {
   text-transform: uppercase;
 }
 
-/* Spray Chart Placeholder */
-.spray-placeholder {
-  text-align: center;
-  padding: 40px 20px;
+/* Spray Chart */
+.spray-chart-page {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.spray-placeholder h2 {
+.spray-page-title {
+  font-size: 20px;
+  font-weight: 800;
   color: var(--text-bright);
-  margin-bottom: 8px;
+  letter-spacing: -0.3px;
+}
+
+.spray-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.spray-select {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-bright);
+  font-size: 14px;
+  font-weight: 500;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%238891a5' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+
+.spray-control-row {
+  display: flex;
+  gap: 8px;
+}
+
+.spray-select-sm {
+  flex: 1;
+  padding: 8px 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 13px;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%238891a5' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+.spray-prompt {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 40px 20px;
+  font-style: italic;
+}
+
+.spray-legend {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.spray-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.spray-legend-item.inactive {
+  opacity: 0.35;
+}
+
+.spray-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.spray-chart-container {
+  background: var(--bg-card);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  padding: 8px;
+  touch-action: manipulation;
+}
+
+.ballpark-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Spray Sidebar */
+.spray-sidebar {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 16px;
+  border: 1px solid var(--border);
+}
+
+.spray-sidebar-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-bright);
+  margin-bottom: 12px;
+}
+
+.spray-stat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.spray-stat-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.spray-stat-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.spray-stat-label {
+  flex: 1;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.spray-stat-value {
+  font-weight: 800;
+  color: var(--text-bright);
+  font-size: 16px;
+  min-width: 28px;
+  text-align: right;
+}
+
+.spray-totals {
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.spray-total-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.spray-total-val {
+  font-weight: 700;
+  color: var(--text-bright);
 }
 
 /* Common */

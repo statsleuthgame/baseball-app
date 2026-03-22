@@ -30,4 +30,13 @@ export const fetchHotPlayers = (teamId) =>
 export const fetchSprayChart = (playerId, venue, season) =>
   api.get(`/api/spraychart/${playerId}`, { params: { venue, season } }).then((r) => r.data);
 
+export const fetchBvP = (batterId, pitcherId) =>
+  api.get("/api/matchup/bvp", { params: { batterId, pitcherId } }).then((r) => r.data);
+export const fetchPitchTypeMatchup = (batterId, pitcherId) =>
+  api.get("/api/matchup/pitch-type", { params: { batterId, pitcherId } }).then((r) => r.data);
+export const fetchParkHistory = (teamId, venueId) =>
+  api.get("/api/matchup/park-history", { params: { teamId, venueId } }).then((r) => r.data);
+export const fetchPriorMatchups = (team1, team2, season) =>
+  api.get("/api/matchup/prior", { params: { team1, team2, season } }).then((r) => r.data);
+
 export default api;

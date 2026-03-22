@@ -7,7 +7,7 @@ import TeamDashboard from "./components/team/TeamDashboard";
 import PlayerDetail from "./components/player/PlayerDetail";
 import ScheduleView from "./components/schedule/ScheduleView";
 import MatchupView from "./components/matchup/MatchupView";
-import SprayChartPlaceholder from "./components/spraychart/SprayChartPlaceholder";
+import SprayChart from "./components/spraychart/SprayChart";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -36,7 +36,7 @@ export default function App() {
               <Route path="player/:playerId" element={<PlayerDetail />} />
               <Route path="schedule" element={<ScheduleView />} />
               <Route path="matchup" element={<MatchupView />} />
-              <Route path="spray" element={<SprayChartPlaceholder />} />
+              <Route path="spray" element={<SprayChart />} />
             </Route>
           </Routes>
         </BrowserRouter>
