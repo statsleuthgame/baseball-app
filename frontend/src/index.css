@@ -27,7 +27,7 @@
   box-sizing: border-box;
 }
 
-body {
+html, body {
   min-height: 100dvh;
   overflow-x: hidden;
 }
@@ -36,16 +36,19 @@ body {
 .app-shell {
   display: flex;
   flex-direction: column;
-  min-height: 100dvh;
+  height: 100dvh;
+  overflow: hidden;
 }
 
 .app-content {
   flex: 1;
   padding: 16px;
-  padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: 16px;
   max-width: 600px;
   width: 100%;
   margin: 0 auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Top Bar */
@@ -57,8 +60,7 @@ body {
   padding-top: calc(10px + env(safe-area-inset-top, 0px));
   background: var(--team-primary);
   color: white;
-  position: sticky;
-  top: 0;
+  flex-shrink: 0;
   z-index: 100;
 }
 
@@ -90,14 +92,11 @@ body {
 
 /* Bottom Nav */
 .bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
   display: flex;
   background: var(--bg-card);
   border-top: 1px solid var(--border);
   padding-bottom: env(safe-area-inset-bottom, 0px);
+  flex-shrink: 0;
   z-index: 100;
 }
 
@@ -1582,9 +1581,6 @@ body {
   }
 
   .bottom-nav {
-    max-width: 600px;
-    left: 50%;
-    transform: translateX(-50%);
-    border-radius: 16px 16px 0 0;
+    border-radius: 0;
   }
 }
