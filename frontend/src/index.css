@@ -42,7 +42,7 @@ body {
 .app-content {
   flex: 1;
   padding: 16px;
-  padding-bottom: 72px;
+  padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
   max-width: 600px;
   width: 100%;
   margin: 0 auto;
@@ -54,6 +54,7 @@ body {
   align-items: center;
   gap: 12px;
   padding: 10px 16px;
+  padding-top: calc(10px + env(safe-area-inset-top, 0px));
   background: var(--team-primary);
   color: white;
   position: sticky;
@@ -96,7 +97,7 @@ body {
   display: flex;
   background: var(--bg-card);
   border-top: 1px solid var(--border);
-  padding-bottom: env(safe-area-inset-bottom, 0);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
   z-index: 100;
 }
 
@@ -126,6 +127,8 @@ body {
   justify-content: center;
   min-height: 100dvh;
   padding: 24px;
+  padding-top: calc(24px + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
   background: var(--bg);
 }
 
