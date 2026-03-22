@@ -6,15 +6,14 @@ import BottomNav from "./BottomNav";
 
 export default function AppShell() {
   const { teamId: urlTeamId } = useParams();
-  const { teamId, setTeamId } = useTeam();
+  const { syncTeamFromUrl } = useTeam();
 
-  // Sync URL teamId to context (handles PWA cold start, direct navigation, etc.)
+  // Sync URL teamId to context on cold start (won't override intentional team switch)
   useEffect(() => {
-    const parsed = Number(urlTeamId);
-    if (parsed && parsed !== teamId) {
-      setTeamId(parsed);
+    if (urlTeamId) {
+      syncTeamFromUrl(urlTeamId);
     }
-  }, [urlTeamId, teamId, setTeamId]);
+  }, [urlTeamId, syncTeamFromUrl]);
 
   return (
     <div className="app-shell">

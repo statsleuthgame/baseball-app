@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useRef } from "react";
 
 const TeamContext = createContext(null);
 
@@ -26,13 +26,34 @@ const TEAM_DATA = {
 };
 
 export function TeamProvider({ children }) {
-  const [teamId, setTeamId] = useState(() => {
+  const [teamId, setTeamIdRaw] = useState(() => {
     const saved = localStorage.getItem("selectedTeam");
     return saved ? Number(saved) : null;
   });
 
+  // Track whether user intentionally cleared the team
+  const switchingRef = useRef(false);
+
+  const setTeamId = (id) => {
+    if (id === null) {
+      switchingRef.current = true;
+    }
+    setTeamIdRaw(id);
+  };
+
+  // Allow AppShell to sync URL teamId, but not if user is switching teams
+  const syncTeamFromUrl = (urlTeamId) => {
+    if (switchingRef.current) return; // don't override intentional clear
+    const parsed = Number(urlTeamId);
+    if (parsed && parsed !== teamId) {
+      setTeamIdRaw(parsed);
+    }
+  };
+
+  // Reset the switching flag when teamId becomes non-null (new team selected)
   useEffect(() => {
     if (teamId) {
+      switchingRef.current = false;
       localStorage.setItem("selectedTeam", String(teamId));
       const team = TEAM_DATA[teamId];
       if (team) {
@@ -48,7 +69,7 @@ export function TeamProvider({ children }) {
   const team = teamId ? TEAM_DATA[teamId] : null;
 
   return (
-    <TeamContext.Provider value={{ team, teamId, setTeamId, TEAM_DATA }}>
+    <TeamContext.Provider value={{ team, teamId, setTeamId, syncTeamFromUrl, TEAM_DATA }}>
       {children}
     </TeamContext.Provider>
   );
