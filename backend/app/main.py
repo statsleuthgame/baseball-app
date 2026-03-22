@@ -1,7 +1,9 @@
+import traceback
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 from app.config import FRONTEND_ORIGIN
 from app.services import mlb_api
@@ -36,6 +38,16 @@ app.include_router(player.router)
 app.include_router(hotplayers.router)
 app.include_router(spraychart.router)
 app.include_router(matchup.router)
+
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    tb = traceback.format_exc()
+    print(f"Unhandled error on {request.url}: {exc}\n{tb}")
+    return JSONResponse(
+        status_code=500,
+        content={"error": str(exc), "path": str(request.url)},
+    )
 
 
 @app.get("/api/health")
