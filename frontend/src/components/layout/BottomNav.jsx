@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
 
 const tabs = [
@@ -52,8 +52,9 @@ const tabs = [
 ];
 
 export default function BottomNav() {
-  const { teamId } = useTeam();
-  if (!teamId) return null;
+  const { teamId: contextTeamId } = useTeam();
+  const { teamId: urlTeamId } = useParams();
+  const teamId = contextTeamId || urlTeamId;
 
   return (
     <nav className="bottom-nav">
