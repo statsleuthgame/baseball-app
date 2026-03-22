@@ -151,23 +151,80 @@ async def get_schedule(team_id: int, season: int) -> list[dict]:
     return games
 
 
-async def get_today_game(team_id: int) -> dict | None:
-    from datetime import date
-    today = date.today().isoformat()
+async def get_next_game(team_id: int) -> dict | None:
+    """Find the next game: today's game (live/scheduled) or the nearest future game."""
+    from datetime import date, timedelta
+
+    today = date.today()
+    # Search from today through the next 14 days to find the next game
+    end_date = today + timedelta(days=14)
+
     data = await fetch("/schedule", params={
         "sportId": 1,
         "teamId": team_id,
-        "date": today,
+        "startDate": today.isoformat(),
+        "endDate": end_date.isoformat(),
         "hydrate": "team,linescore,probablePitcher",
         "gameType": "R",
     })
-    dates = data.get("dates", [])
-    if not dates:
+
+    # Also check if there's a game in progress or final today
+    # by looking at today specifically
+    today_data = await fetch("/schedule", params={
+        "sportId": 1,
+        "teamId": team_id,
+        "date": today.isoformat(),
+        "hydrate": "team,linescore,probablePitcher",
+        "gameType": "R",
+    })
+
+    # First priority: a game today that's live or scheduled
+    for date_entry in today_data.get("dates", []):
+        for g in date_entry.get("games", []):
+            status = g.get("status", {}).get("detailedState", "")
+            if status in ("In Progress", "Scheduled", "Pre-Game", "Warmup"):
+                return _format_game(g, is_next=True)
+
+    # Second priority: a game today that's Final (show the result)
+    for date_entry in today_data.get("dates", []):
+        for g in date_entry.get("games", []):
+            status = g.get("status", {}).get("detailedState", "")
+            if status == "Final":
+                # Find the next future game to show alongside
+                next_future = _find_next_future_game(data, today)
+                result = _format_game(g, is_next=False)
+                result["nextGame"] = _format_game(next_future, is_next=True) if next_future else None
+                return result
+
+    # Third priority: no game today, find the next scheduled game
+    next_game = _find_next_future_game(data, today)
+    if next_game:
+        return _format_game(next_game, is_next=True)
+
+    return None
+
+
+def _find_next_future_game(schedule_data: dict, after_date) -> dict | None:
+    """Find the first game after the given date."""
+    from datetime import date, datetime
+
+    for date_entry in schedule_data.get("dates", []):
+        game_date_str = date_entry.get("date", "")
+        try:
+            game_date = date.fromisoformat(game_date_str)
+        except ValueError:
+            continue
+        if game_date <= after_date:
+            continue
+        games = date_entry.get("games", [])
+        if games:
+            return games[0]
+    return None
+
+
+def _format_game(g: dict | None, is_next: bool = False) -> dict | None:
+    if not g:
         return None
-    games = dates[0].get("games", [])
-    if not games:
-        return None
-    g = games[0]
     away = g.get("teams", {}).get("away", {})
     home = g.get("teams", {}).get("home", {})
     away_team = away.get("team", {})
@@ -176,6 +233,7 @@ async def get_today_game(team_id: int) -> dict | None:
         "gamePk": g.get("gamePk"),
         "gameDate": g.get("gameDate", ""),
         "status": g.get("status", {}).get("detailedState", ""),
+        "isNextGame": is_next,
         "venue": {
             "id": g.get("venue", {}).get("id"),
             "name": g.get("venue", {}).get("name", ""),

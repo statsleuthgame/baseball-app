@@ -36,7 +36,7 @@ async def today_game(team_id: int):
     if cached is not None:
         return cached
 
-    game = await mlb_api.get_today_game(team_id)
-    result = game if game else {"noGame": True, "message": "No game scheduled today."}
+    game = await mlb_api.get_next_game(team_id)
+    result = game if game else {"noGame": True, "message": "No games scheduled in the next 14 days."}
     cache.set(key, result, CACHE_TTL_TODAY)
     return result

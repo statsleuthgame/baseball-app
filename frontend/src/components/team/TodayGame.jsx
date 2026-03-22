@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useTeam } from "../../context/TeamContext";
 import { fetchTodayGame } from "../../api/client";
-import { formatGameTime } from "../../utils/formatters";
+import { formatGameDate, formatGameTime } from "../../utils/formatters";
 import PlayerPhoto from "../common/PlayerPhoto";
 
 export default function TodayGame() {
@@ -21,11 +21,55 @@ export default function TodayGame() {
   if (!game || game.noGame) {
     return (
       <div className="today-game-card no-game">
-        <p>No game scheduled today</p>
+        <p>No games scheduled</p>
       </div>
     );
   }
 
+  const isLive = game.status === "In Progress";
+  const isFinal = game.status === "Final";
+  const isNext = game.isNextGame;
+
+  // Determine if this game is today or a future date
+  const gameDate = new Date(game.gameDate);
+  const today = new Date();
+  const isToday =
+    gameDate.getFullYear() === today.getFullYear() &&
+    gameDate.getMonth() === today.getMonth() &&
+    gameDate.getDate() === today.getDate();
+
+  return (
+    <div className="today-game-wrapper">
+      <GameCard
+        game={game}
+        teamId={teamId}
+        label={
+          isLive
+            ? "LIVE"
+            : isFinal
+            ? "FINAL"
+            : isToday
+            ? "TODAY"
+            : "NEXT GAME"
+        }
+        showDate={!isToday}
+      />
+
+      {/* If today's game is final, also show the next upcoming game */}
+      {isFinal && game.nextGame && (
+        <GameCard
+          game={game.nextGame}
+          teamId={teamId}
+          label="NEXT GAME"
+          showDate={true}
+          compact
+        />
+      )}
+    </div>
+  );
+}
+
+function GameCard({ game, teamId, label, showDate, compact }) {
   const isHome = game.home.id === teamId;
   const opponent = isHome ? game.away : game.home;
   const us = isHome ? game.home : game.away;
@@ -33,14 +77,16 @@ export default function TodayGame() {
   const isFinal = game.status === "Final";
 
   return (
-    <div className={`today-game-card ${isLive ? "live" : ""}`}>
+    <div className={`today-game-card ${isLive ? "live" : ""} ${compact ? "compact" : ""}`}>
       <div className="today-game-header">
-        <span className="today-game-label">
-          {isLive ? "LIVE" : isFinal ? "FINAL" : "TODAY"}
+        <span className={`today-game-label ${label === "LIVE" ? "label-live" : label === "NEXT GAME" ? "label-next" : ""}`}>
+          {label}
         </span>
-        {!isFinal && !isLive && (
-          <span className="today-game-time">{formatGameTime(game.gameDate)}</span>
-        )}
+        <span className="today-game-time">
+          {showDate && formatGameDate(game.gameDate)}
+          {!isFinal && !isLive && (showDate ? " · " : "")}
+          {!isFinal && !isLive && formatGameTime(game.gameDate)}
+        </span>
       </div>
 
       <div className="today-game-matchup">
@@ -71,7 +117,7 @@ export default function TodayGame() {
         </div>
       </div>
 
-      {(us.probablePitcher || opponent.probablePitcher) && (
+      {!compact && (us.probablePitcher || opponent.probablePitcher) && (
         <div className="today-game-pitchers">
           <div className="today-game-pitcher">
             {us.probablePitcher && (

@@ -185,7 +185,35 @@ body {
   gap: 16px;
 }
 
+/* Today Game Wrapper */
+.today-game-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 /* Today Game Card */
+.today-game-card.compact {
+  padding: 12px;
+}
+
+.today-game-card.compact .today-game-logo {
+  width: 36px;
+  height: 36px;
+}
+
+.today-game-card.compact .today-game-score {
+  font-size: 22px;
+}
+
+.label-live {
+  color: var(--live) !important;
+}
+
+.label-next {
+  color: var(--team-accent) !important;
+}
+
 .today-game-card {
   background: var(--bg-card);
   border-radius: 16px;
