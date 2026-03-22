@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useTeam } from "../../context/TeamContext";
-import { fetchRoster, fetchSprayChart } from "../../api/client";
+import { fetchRoster, fetchSprayChart, fetchVenues } from "../../api/client";
 import BallparkSVG from "./BallparkSVG";
 import HitDots from "./HitDots";
 import SprayLegend from "./SprayLegend";
@@ -12,15 +12,25 @@ import ErrorMessage from "../common/ErrorMessage";
 
 const ALL_RESULTS = ["single", "double", "triple", "home_run", "out"];
 
+// Default park for each team
+const TEAM_HOME_PARK = { 136: "SEA", 144: "ATL" };
+
 export default function SprayChart() {
   const { teamId, team } = useTeam();
   const [searchParams] = useSearchParams();
   const initialPlayer = searchParams.get("player");
 
   const [selectedPlayer, setSelectedPlayer] = useState(initialPlayer || "");
-  const [venueId, setVenueId] = useState(team?.venueId || 680);
+  const [selectedPark, setSelectedPark] = useState(TEAM_HOME_PARK[teamId] || "SEA");
   const [season, setSeason] = useState("");
-  const [filters, setFilters] = useState(null); // null = show all
+  const [filters, setFilters] = useState(null);
+
+  // Fetch venue list
+  const { data: venues } = useQuery({
+    queryKey: ["venues"],
+    queryFn: fetchVenues,
+    staleTime: Infinity,
+  });
 
   // Fetch roster for player selector
   const { data: roster } = useQuery({
@@ -30,36 +40,38 @@ export default function SprayChart() {
     staleTime: 1000 * 60 * 60,
   });
 
-  // Filter to position players only
   const positionPlayers = useMemo(
     () => (roster || []).filter((p) => p.position.type !== "Pitcher"),
     [roster]
   );
 
-  // Fetch spray chart data
+  // Get current park info
+  const currentVenue = useMemo(
+    () => (venues || []).find((v) => v.abbr === selectedPark),
+    [venues, selectedPark]
+  );
+
+  // Fetch spray chart data filtered by park
   const {
     data: sprayData,
     isLoading,
     error,
     refetch,
   } = useQuery({
-    queryKey: ["sprayChart", selectedPlayer, venueId, season],
-    queryFn: () => fetchSprayChart(selectedPlayer, venueId || undefined, season || undefined),
+    queryKey: ["sprayChart", selectedPlayer, selectedPark, season],
+    queryFn: () => fetchSprayChart(selectedPlayer, selectedPark, season || undefined),
     enabled: !!selectedPlayer,
     staleTime: 1000 * 60 * 60,
   });
 
   const handleToggleFilter = (type) => {
     if (!filters) {
-      // Currently showing all — switch to showing only this type
       setFilters([type]);
     } else if (filters.includes(type)) {
       const next = filters.filter((f) => f !== type);
-      // If all deselected, show all
       setFilters(next.length === 0 ? null : next);
     } else {
       const next = [...filters, type];
-      // If all selected, show all (null)
       setFilters(next.length === ALL_RESULTS.length ? null : next);
     }
   };
@@ -89,11 +101,14 @@ export default function SprayChart() {
         <div className="spray-control-row">
           <select
             className="spray-select-sm"
-            value={venueId}
-            onChange={(e) => setVenueId(Number(e.target.value))}
+            value={selectedPark}
+            onChange={(e) => setSelectedPark(e.target.value)}
           >
-            <option value={680}>T-Mobile Park</option>
-            <option value={4705}>Truist Park</option>
+            {(venues || []).map((v) => (
+              <option key={v.abbr} value={v.abbr}>
+                {v.name}
+              </option>
+            ))}
           </select>
 
           <select
@@ -118,17 +133,17 @@ export default function SprayChart() {
 
       {selectedPlayer && sprayData && (
         <>
-          {/* Legend / filter toggles */}
           <SprayLegend filters={filters} onToggle={handleToggleFilter} />
 
-          {/* Spray chart SVG */}
           <div className="spray-chart-container">
-            <BallparkSVG venueId={venueId}>
+            <BallparkSVG
+              dimensions={currentVenue?.dimensions}
+              parkName={currentVenue?.name}
+            >
               <HitDots hits={sprayData.hits} filters={filters} />
             </BallparkSVG>
           </div>
 
-          {/* Hit breakdown sidebar */}
           <SpraySidebar summary={sprayData.summary} />
         </>
       )}

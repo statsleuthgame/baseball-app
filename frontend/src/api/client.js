@@ -27,8 +27,9 @@ export const fetchPlayerDominance = (playerId, season) =>
 
 export const fetchHotPlayers = (teamId) =>
   api.get(`/api/hotplayers/${teamId}`).then((r) => r.data);
-export const fetchSprayChart = (playerId, venue, season) =>
-  api.get(`/api/spraychart/${playerId}`, { params: { venue, season } }).then((r) => r.data);
+export const fetchSprayChart = (playerId, homeTeam, season) =>
+  api.get(`/api/spraychart/${playerId}`, { params: { homeTeam, season } }).then((r) => r.data);
+export const fetchVenues = () => api.get("/api/spraychart/venues").then((r) => r.data);
 
 export const fetchBvP = (batterId, pitcherId) =>
   api.get("/api/matchup/bvp", { params: { batterId, pitcherId } }).then((r) => r.data);

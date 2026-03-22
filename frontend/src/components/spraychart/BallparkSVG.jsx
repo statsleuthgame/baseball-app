@@ -1,20 +1,14 @@
 /**
- * SVG Ballpark outlines for T-Mobile Park (SEA) and Truist Park (ATL).
+ * SVG Ballpark outline that renders any park from its outfield dimensions.
  *
  * Coordinate system:
  *  - Home plate is at (125, 200) in the viewBox
  *  - The SVG viewBox is "0 0 250 250"
  *  - Statcast coords are transformed server-side: x = hc_x - 125.42, y = 198.27 - hc_y
  *  - To plot in SVG: svgX = x + 125,  svgY = 200 - y
- *
- * Outfield wall dimensions (in feet from home plate):
- *  T-Mobile Park:  LF 331, LCF 378, CF 405, RCF 381, RF 326
- *  Truist Park:    LF 335, LCF 385, CF 400, RCF 375, RF 325
- *
- * We scale ~1.8 ft per SVG unit to fit the viewBox.
  */
 
-const SCALE = 0.44; // SVG units per foot (tuned to fill viewBox nicely)
+const SCALE = 0.44; // SVG units per foot
 const HP_X = 125;   // Home plate X in viewBox
 const HP_Y = 200;   // Home plate Y in viewBox
 
@@ -27,58 +21,36 @@ function ftToSvg(distFt, angleDeg) {
   };
 }
 
-function buildWallPath(distances) {
-  // distances is an array of [angleDeg, distanceFt] pairs from LF foul line to RF foul line
-  const points = distances.map(([angle, dist]) => ftToSvg(dist, angle));
-  const path = points.map((p, i) => (i === 0 ? `M ${p.x} ${p.y}` : `L ${p.x} ${p.y}`)).join(" ");
-  return path;
+function buildWallFromDimensions(dims) {
+  // dims = { LF, LCF, CF, RCF, RF }
+  // Interpolate wall points from LF foul line (-45°) to RF foul line (+45°)
+  const points = [
+    [-45, dims.LF],
+    [-35, dims.LF + (dims.LCF - dims.LF) * 0.45],
+    [-22, dims.LCF],
+    [-12, dims.LCF + (dims.CF - dims.LCF) * 0.55],
+    [0, dims.CF],
+    [12, dims.CF - (dims.CF - dims.RCF) * 0.55],
+    [22, dims.RCF],
+    [35, dims.RCF - (dims.RCF - dims.RF) * 0.45],
+    [45, dims.RF],
+  ];
+
+  return points.map(([angle, dist]) => ftToSvg(dist, angle));
 }
 
-// T-Mobile Park wall points: angle from center (neg=left, pos=right), distance in feet
-const TMOBILE_WALL = [
-  [-45, 331],  // LF foul pole
-  [-38, 345],
-  [-30, 362],
-  [-22, 378],  // LCF
-  [-15, 390],
-  [-8, 400],
-  [0, 405],    // CF
-  [8, 398],
-  [15, 390],
-  [22, 381],   // RCF
-  [30, 358],
-  [38, 340],
-  [45, 326],   // RF foul pole
-];
+export default function BallparkSVG({ dimensions, parkName, children }) {
+  const defaultDims = { LF: 330, LCF: 375, CF: 400, RCF: 375, RF: 330 };
+  const dims = dimensions || defaultDims;
+  const wallPoints = buildWallFromDimensions(dims);
 
-const TRUIST_WALL = [
-  [-45, 335],  // LF foul pole
-  [-38, 350],
-  [-30, 370],
-  [-22, 385],  // LCF
-  [-15, 393],
-  [-8, 398],
-  [0, 400],    // CF
-  [8, 395],
-  [15, 388],
-  [22, 375],   // RCF
-  [30, 352],
-  [38, 338],
-  [45, 325],   // RF foul pole
-];
+  const wallPath = wallPoints
+    .map((p, i) => (i === 0 ? `M ${p.x} ${p.y}` : `L ${p.x} ${p.y}`))
+    .join(" ");
 
-const PARKS = {
-  680: { name: "T-Mobile Park", wall: TMOBILE_WALL },
-  4705: { name: "Truist Park", wall: TRUIST_WALL },
-};
-
-export default function BallparkSVG({ venueId = 680, children }) {
-  const park = PARKS[venueId] || PARKS[680];
-  const wallPath = buildWallPath(park.wall);
-
-  // Foul lines from home plate to foul poles
-  const lfPole = ftToSvg(park.wall[0][1], park.wall[0][0]);
-  const rfPole = ftToSvg(park.wall[park.wall.length - 1][1], park.wall[park.wall.length - 1][0]);
+  // Foul lines
+  const lfPole = wallPoints[0];
+  const rfPole = wallPoints[wallPoints.length - 1];
 
   // Base positions
   const first = ftToSvg(90, 45);
@@ -112,6 +84,28 @@ export default function BallparkSVG({ venueId = 680, children }) {
         strokeWidth="2"
         strokeLinejoin="round"
       />
+
+      {/* Dimension labels on wall */}
+      {[
+        { angle: -45, dist: dims.LF, label: dims.LF },
+        { angle: 0, dist: dims.CF, label: dims.CF },
+        { angle: 45, dist: dims.RF, label: dims.RF },
+      ].map(({ angle, dist, label }) => {
+        const pos = ftToSvg(dist + 12, angle);
+        return (
+          <text
+            key={angle}
+            x={pos.x}
+            y={pos.y}
+            textAnchor="middle"
+            fill="#4a6741"
+            fontSize="5.5"
+            fontWeight="600"
+          >
+            {label}'
+          </text>
+        );
+      })}
 
       {/* Foul lines */}
       <line
@@ -161,7 +155,7 @@ export default function BallparkSVG({ venueId = 680, children }) {
 
       {/* Park name label */}
       <text x="125" y="16" textAnchor="middle" fill="#4a6741" fontSize="7" fontWeight="600">
-        {park.name}
+        {parkName || "Ballpark"}
       </text>
 
       {/* Hit dots rendered as children */}

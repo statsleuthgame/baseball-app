@@ -105,22 +105,22 @@ def _compute_batter_stats(df: pd.DataFrame, player_id: int) -> dict:
     }
 
 
-async def get_spray_chart_data(player_id: int, venue_id: int | None = None, season: int | None = None) -> dict:
-    """Get batted ball data for spray chart visualization."""
+async def get_spray_chart_data(player_id: int, home_team: str | None = None, season: int | None = None) -> dict:
+    """Get batted ball data for spray chart visualization, optionally filtered by park."""
     try:
-        result = await asyncio.to_thread(_fetch_spray_data, player_id, venue_id, season)
+        result = await asyncio.to_thread(_fetch_spray_data, player_id, home_team, season)
         return result
     except Exception as e:
         print(f"Spray chart fetch failed: {e}")
         return {"hits": [], "summary": {}}
 
 
-def _fetch_spray_data(player_id: int, venue_id: int | None, season: int | None) -> dict:
+def _fetch_spray_data(player_id: int, home_team: str | None, season: int | None) -> dict:
     from pybaseball import statcast_batter
 
     if season:
-        start_dt = f"{season}-01-01"
-        end_dt = f"{season}-12-31"
+        start_dt = f"{season}-03-01"
+        end_dt = f"{season}-11-30"
     else:
         # Default to all available data for career view
         start_dt = "2015-01-01"
@@ -133,10 +133,12 @@ def _fetch_spray_data(player_id: int, venue_id: int | None, season: int | None) 
     # Filter to batted balls with coordinates
     batted = df[df["hc_x"].notna() & df["hc_y"].notna() & df["events"].notna()].copy()
 
-    if venue_id:
-        # Filter by venue if we have that info (game_pk -> venue mapping would be needed)
-        # For now, we'll include all data as venue filtering requires additional lookups
-        pass
+    # Filter by park (home_team column tells us which park the game was at)
+    if home_team and "home_team" in batted.columns:
+        batted = batted[batted["home_team"] == home_team.upper()]
+
+    if batted.empty:
+        return {"hits": [], "summary": {"single": 0, "double": 0, "triple": 0, "home_run": 0, "out": 0, "total": 0}}
 
     hits = []
     summary = {"single": 0, "double": 0, "triple": 0, "home_run": 0, "out": 0, "total": 0}
