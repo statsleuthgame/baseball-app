@@ -2,12 +2,14 @@ import { useTeam } from "../../context/TeamContext";
 import { useNavigate } from "react-router-dom";
 
 export default function TopBar() {
-  const { team, setTeamId } = useTeam();
+  const { team, teamId, setTeamId } = useTeam();
   const navigate = useNavigate();
 
   const handleSwitch = () => {
-    setTeamId(null);
-    navigate("/");
+    // Toggle between the two teams
+    const newTeamId = teamId === 136 ? 144 : 136;
+    setTeamId(newTeamId);
+    navigate(`/team/${newTeamId}`);
   };
 
   return (
