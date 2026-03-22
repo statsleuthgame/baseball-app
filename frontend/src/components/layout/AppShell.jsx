@@ -23,6 +23,7 @@ export default function AppShell() {
         <Outlet />
       </main>
       <BottomNav />
+      <div className="bottom-safe-area" />
     </div>
   );
 }

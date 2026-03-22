@@ -103,9 +103,15 @@ body {
   display: flex;
   background: var(--bg-card);
   border-top: 1px solid var(--border);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
   flex-shrink: 0;
   z-index: 100;
+}
+
+/* Safe area spacer below bottom nav */
+.bottom-safe-area {
+  flex-shrink: 0;
+  height: env(safe-area-inset-bottom, 0px);
+  background: var(--bg-card);
 }
 
 .bottom-nav-item {

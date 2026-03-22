@@ -40,6 +40,8 @@ export function TeamProvider({ children }) {
         document.documentElement.style.setProperty("--team-secondary", team.secondary);
         document.documentElement.style.setProperty("--team-accent", team.accent);
       }
+    } else {
+      localStorage.removeItem("selectedTeam");
     }
   }, [teamId]);
 
