@@ -18,6 +18,13 @@ export const fetchPlayerDetail = (playerId) =>
 export const fetchPlayerStats = (playerId, season, group) =>
   api.get(`/api/player/${playerId}/stats`, { params: { season, group } }).then((r) => r.data);
 
+export const fetchPlayerAdvanced = (playerId, season) =>
+  api.get(`/api/player/${playerId}/advanced`, { params: { season } }).then((r) => r.data);
+export const fetchPlayerArsenal = (playerId, season) =>
+  api.get(`/api/player/${playerId}/arsenal`, { params: { season } }).then((r) => r.data);
+export const fetchPlayerDominance = (playerId, season) =>
+  api.get(`/api/player/${playerId}/dominance`, { params: { season } }).then((r) => r.data);
+
 export const fetchHotPlayers = (teamId) =>
   api.get(`/api/hotplayers/${teamId}`).then((r) => r.data);
 export const fetchSprayChart = (playerId, venue, season) =>

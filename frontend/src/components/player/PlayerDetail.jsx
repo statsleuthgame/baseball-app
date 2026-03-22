@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useTeam } from "../../context/TeamContext";
 import { fetchPlayerDetail, fetchPlayerStats } from "../../api/client";
@@ -7,10 +7,14 @@ import LoadingSpinner from "../common/LoadingSpinner";
 import ErrorMessage from "../common/ErrorMessage";
 import BatterStats from "./BatterStats";
 import PitcherStats from "./PitcherStats";
+import AdvancedBatterStats from "./AdvancedBatterStats";
+import PitchArsenal from "./PitchArsenal";
+import DominanceProfile from "./DominanceProfile";
 
 export default function PlayerDetail() {
   const { playerId } = useParams();
   const { teamId } = useTeam();
+  const navigate = useNavigate();
 
   const { data: player, isLoading: loadingDetail, error } = useQuery({
     queryKey: ["playerDetail", playerId],
@@ -48,12 +52,41 @@ export default function PlayerDetail() {
         </div>
       </div>
 
+      {/* Quick action buttons */}
+      {!isPitcher && (
+        <div className="player-actions">
+          <button
+            className="player-action-btn"
+            onClick={() => navigate(`/team/${teamId}/spray?player=${playerId}`)}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <circle cx="12" cy="12" r="10" />
+              <circle cx="8" cy="9" r="1.5" fill="currentColor" />
+              <circle cx="15" cy="7" r="1.5" fill="currentColor" />
+              <circle cx="14" cy="14" r="1.5" fill="currentColor" />
+            </svg>
+            View Spray Chart
+          </button>
+        </div>
+      )}
+
+      {/* Standard stats */}
       {loadingStats ? (
         <LoadingSpinner text="Loading stats..." />
       ) : isPitcher ? (
         <PitcherStats stats={stats} />
       ) : (
         <BatterStats stats={stats} />
+      )}
+
+      {/* Advanced stats (Statcast) */}
+      {isPitcher ? (
+        <>
+          <PitchArsenal playerId={playerId} />
+          <DominanceProfile playerId={playerId} />
+        </>
+      ) : (
+        <AdvancedBatterStats playerId={playerId} />
       )}
     </div>
   );

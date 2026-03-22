@@ -153,3 +153,402 @@ def _fetch_spray_data(player_id: int, venue_id: int | None, season: int | None) 
         })
 
     return {"hits": hits, "summary": summary}
+
+
+async def get_pitch_arsenal(player_id: int, season: int | None = None) -> dict:
+    """Get pitch type breakdown for a pitcher."""
+    try:
+        result = await asyncio.to_thread(_fetch_pitch_arsenal, player_id, season)
+        return result
+    except Exception as e:
+        print(f"Pitch arsenal fetch failed: {e}")
+        return {"pitches": [], "totalPitches": 0}
+
+
+def _fetch_pitch_arsenal(player_id: int, season: int | None) -> dict:
+    from pybaseball import statcast_pitcher
+
+    if season:
+        start_dt = f"{season}-03-01"
+        end_dt = f"{season}-11-30"
+    else:
+        start_dt = f"{date.today().year}-03-01"
+        end_dt = date.today().isoformat()
+
+    df = statcast_pitcher(start_dt, end_dt, player_id)
+    if df is None or df.empty:
+        return {"pitches": [], "totalPitches": 0}
+
+    # Filter to actual pitches (not intentional balls, etc.)
+    pitches = df[df["pitch_type"].notna() & (df["pitch_type"] != "")].copy()
+    if pitches.empty:
+        return {"pitches": [], "totalPitches": 0}
+
+    total = len(pitches)
+    arsenal = []
+
+    PITCH_NAMES = {
+        "FF": "4-Seam Fastball", "SI": "Sinker", "FC": "Cutter",
+        "SL": "Slider", "CU": "Curveball", "KC": "Knuckle Curve",
+        "CH": "Changeup", "FS": "Splitter", "SV": "Sweeper",
+        "ST": "Sweeping Curve", "KN": "Knuckleball",
+        "CS": "Slow Curve", "EP": "Eephus", "SC": "Screwball",
+        "FA": "Fastball", "IN": "Int. Ball", "PO": "Pitchout",
+    }
+
+    for pitch_type, group in pitches.groupby("pitch_type"):
+        count = len(group)
+        usage_pct = round(count / total * 100, 1)
+
+        # Average velocity
+        avg_velo = round(group["release_speed"].mean(), 1) if group["release_speed"].notna().any() else None
+
+        # Average spin rate
+        avg_spin = round(group["release_spin_rate"].mean(), 0) if "release_spin_rate" in group.columns and group["release_spin_rate"].notna().any() else None
+
+        # Whiff rate: swinging strikes / swings
+        swings = group[group["description"].isin([
+            "swinging_strike", "swinging_strike_blocked", "foul", "foul_tip",
+            "hit_into_play", "hit_into_play_no_out", "hit_into_play_score",
+        ])]
+        whiffs = group[group["description"].isin(["swinging_strike", "swinging_strike_blocked"])]
+        whiff_rate = round(len(whiffs) / len(swings) * 100, 1) if len(swings) > 0 else None
+
+        # Called strike + swinging strike rate (CSW%)
+        strikes = group[group["description"].isin([
+            "called_strike", "swinging_strike", "swinging_strike_blocked",
+        ])]
+        csw_pct = round(len(strikes) / count * 100, 1) if count > 0 else None
+
+        # Put-away rate: strikeouts on this pitch / 2-strike counts with this pitch
+        two_strike = group[(group["strikes"] == 2)]
+        strikeout_events = two_strike[two_strike["events"].isin(["strikeout", "strikeout_double_play"])] if "events" in two_strike.columns else pd.DataFrame()
+        putaway_rate = round(len(strikeout_events) / len(two_strike) * 100, 1) if len(two_strike) > 0 else None
+
+        # Batting average against
+        balls_in_play = group[group["events"].notna()]
+        hits_against = balls_in_play[balls_in_play["events"].isin(["single", "double", "triple", "home_run"])]
+        non_walk = balls_in_play[~balls_in_play["events"].isin(["walk", "hit_by_pitch", "sac_fly", "sac_bunt"])]
+        ba_against = round(len(hits_against) / len(non_walk), 3) if len(non_walk) > 0 else None
+
+        # Average horizontal and vertical movement
+        avg_pfx_x = round(group["pfx_x"].mean() * 12, 1) if group["pfx_x"].notna().any() else None  # convert to inches
+        avg_pfx_z = round(group["pfx_z"].mean() * 12, 1) if group["pfx_z"].notna().any() else None
+
+        arsenal.append({
+            "pitchType": pitch_type,
+            "pitchName": PITCH_NAMES.get(pitch_type, pitch_type),
+            "count": count,
+            "usagePct": usage_pct,
+            "avgVelo": avg_velo,
+            "avgSpin": int(avg_spin) if avg_spin else None,
+            "whiffRate": whiff_rate,
+            "cswPct": csw_pct,
+            "putawayRate": putaway_rate,
+            "baAgainst": ba_against,
+            "horzBreak": avg_pfx_x,
+            "vertBreak": avg_pfx_z,
+        })
+
+    arsenal.sort(key=lambda x: x["usagePct"], reverse=True)
+    return {"pitches": arsenal, "totalPitches": total}
+
+
+async def get_dominance_profile(player_id: int, season: int | None = None) -> dict:
+    """Get pitcher dominance splits by batter handedness and batted ball type."""
+    try:
+        result = await asyncio.to_thread(_fetch_dominance_profile, player_id, season)
+        return result
+    except Exception as e:
+        print(f"Dominance profile fetch failed: {e}")
+        return {}
+
+
+def _fetch_dominance_profile(player_id: int, season: int | None) -> dict:
+    from pybaseball import statcast_pitcher
+
+    if season:
+        start_dt = f"{season}-03-01"
+        end_dt = f"{season}-11-30"
+    else:
+        start_dt = f"{date.today().year}-03-01"
+        end_dt = date.today().isoformat()
+
+    df = statcast_pitcher(start_dt, end_dt, player_id)
+    if df is None or df.empty:
+        return {}
+
+    result = {
+        "byHandedness": _splits_by_handedness(df),
+        "byBattedBallType": _splits_by_bb_type(df),
+        "situational": _situational_stats(df),
+    }
+    return result
+
+
+def _splits_by_handedness(df: pd.DataFrame) -> list[dict]:
+    """Performance splits vs LHB and RHB."""
+    splits = []
+    for side, label in [("L", "vs LHB"), ("R", "vs RHB")]:
+        sub = df[df["stand"] == side]
+        if sub.empty:
+            continue
+        stats = _compute_pitcher_split_stats(sub)
+        stats["label"] = label
+        stats["side"] = side
+        splits.append(stats)
+    return splits
+
+
+def _splits_by_bb_type(df: pd.DataFrame) -> list[dict]:
+    """Batted ball type breakdown."""
+    batted = df[df["bb_type"].notna()]
+    if batted.empty:
+        return []
+
+    total_batted = len(batted)
+    results = []
+    BB_LABELS = {
+        "ground_ball": "Ground Ball",
+        "fly_ball": "Fly Ball",
+        "line_drive": "Line Drive",
+        "popup": "Popup",
+    }
+
+    for bb_type, label in BB_LABELS.items():
+        sub = batted[batted["bb_type"] == bb_type]
+        count = len(sub)
+        if count == 0:
+            continue
+        pct = round(count / total_batted * 100, 1)
+
+        # BA on this type
+        hits = sub[sub["events"].isin(["single", "double", "triple", "home_run"])]
+        non_walk = sub[~sub["events"].isin(["walk", "hit_by_pitch", "sac_fly", "sac_bunt"])]
+        ba = round(len(hits) / len(non_walk), 3) if len(non_walk) > 0 else None
+
+        # Average exit velocity
+        avg_ev = round(sub["launch_speed"].mean(), 1) if sub["launch_speed"].notna().any() else None
+
+        results.append({
+            "type": bb_type,
+            "label": label,
+            "count": count,
+            "pct": pct,
+            "baAgainst": ba,
+            "avgExitVelo": avg_ev,
+        })
+
+    return results
+
+
+def _situational_stats(df: pd.DataFrame) -> dict:
+    """Key situational metrics for the pitcher."""
+    events = df[df["events"].notna()]
+    if events.empty:
+        return {}
+
+    total_pa = len(events)
+    strikeouts = len(events[events["events"].isin(["strikeout", "strikeout_double_play"])])
+    walks = len(events[events["events"] == "walk"])
+    home_runs = len(events[events["events"] == "home_run"])
+    hits = len(events[events["events"].isin(["single", "double", "triple", "home_run"])])
+
+    # K% and BB%
+    k_pct = round(strikeouts / total_pa * 100, 1) if total_pa > 0 else 0
+    bb_pct = round(walks / total_pa * 100, 1) if total_pa > 0 else 0
+    hr_pct = round(home_runs / total_pa * 100, 1) if total_pa > 0 else 0
+
+    # BABIP (hits - HR) / (AB - K - HR + SF)
+    non_hr_hits = hits - home_runs
+    sac_flies = len(events[events["events"] == "sac_fly"])
+    ab = total_pa - walks - len(events[events["events"] == "hit_by_pitch"]) - sac_flies
+    babip_denom = ab - strikeouts - home_runs + sac_flies
+    babip = round(non_hr_hits / babip_denom, 3) if babip_denom > 0 else None
+
+    # Average exit velocity against
+    batted = df[df["launch_speed"].notna()]
+    avg_ev = round(batted["launch_speed"].mean(), 1) if not batted.empty else None
+
+    # Hard hit rate (>= 95 mph)
+    hard_hit = batted[batted["launch_speed"] >= 95]
+    hard_hit_pct = round(len(hard_hit) / len(batted) * 100, 1) if len(batted) > 0 else None
+
+    # Barrel rate
+    barrel = df[df.get("launch_speed_angle", pd.Series(dtype=float)) == 6] if "launch_speed_angle" in df.columns else pd.DataFrame()
+    barrel_pct = round(len(barrel) / len(batted) * 100, 1) if len(batted) > 0 else None
+
+    # First pitch strike %
+    first_pitches = df[(df["balls"] == 0) & (df["strikes"] == 0)]
+    first_strikes = first_pitches[first_pitches["description"].isin([
+        "called_strike", "swinging_strike", "swinging_strike_blocked",
+        "foul", "foul_tip", "hit_into_play", "hit_into_play_no_out", "hit_into_play_score",
+    ])]
+    fstrike_pct = round(len(first_strikes) / len(first_pitches) * 100, 1) if len(first_pitches) > 0 else None
+
+    return {
+        "kPct": k_pct,
+        "bbPct": bb_pct,
+        "hrPct": hr_pct,
+        "babip": babip,
+        "avgExitVelo": avg_ev,
+        "hardHitPct": hard_hit_pct,
+        "barrelPct": barrel_pct,
+        "fStrikePct": fstrike_pct,
+        "dominantAgainst": "LHB" if _is_more_dominant_vs(df, "L") else "RHB",
+    }
+
+
+def _is_more_dominant_vs(df: pd.DataFrame, side: str) -> bool:
+    """Check if pitcher is more dominant vs given side (lower OPS)."""
+    l_stats = _compute_pitcher_split_stats(df[df["stand"] == "L"])
+    r_stats = _compute_pitcher_split_stats(df[df["stand"] == "R"])
+    l_ops = l_stats.get("opsAgainst", 999)
+    r_ops = r_stats.get("opsAgainst", 999)
+    if side == "L":
+        return l_ops < r_ops
+    return r_ops < l_ops
+
+
+def _compute_pitcher_split_stats(df: pd.DataFrame) -> dict:
+    """Compute common pitcher stats from a filtered DataFrame."""
+    events = df[df["events"].notna()]
+    if events.empty:
+        return {"pa": 0}
+
+    total_pa = len(events)
+    hits = events[events["events"].isin(["single", "double", "triple", "home_run"])]
+    singles = len(events[events["events"] == "single"])
+    doubles = len(events[events["events"] == "double"])
+    triples = len(events[events["events"] == "triple"])
+    home_runs = len(events[events["events"] == "home_run"])
+    total_hits = len(hits)
+    walks = len(events[events["events"] == "walk"])
+    hbp = len(events[events["events"] == "hit_by_pitch"])
+    sac_flies = len(events[events["events"] == "sac_fly"])
+    strikeouts = len(events[events["events"].isin(["strikeout", "strikeout_double_play"])])
+
+    ab = total_pa - walks - hbp - sac_flies
+    if ab == 0:
+        return {"pa": total_pa}
+
+    ba = round(total_hits / ab, 3)
+    obp = round((total_hits + walks + hbp) / total_pa, 3) if total_pa > 0 else 0
+    slg = round((singles + 2 * doubles + 3 * triples + 4 * home_runs) / ab, 3)
+    ops = round(obp + slg, 3)
+    k_pct = round(strikeouts / total_pa * 100, 1)
+    bb_pct = round(walks / total_pa * 100, 1)
+
+    # Whiff rate across all pitches in this split
+    all_pitches = df[df["description"].notna()]
+    swings = all_pitches[all_pitches["description"].isin([
+        "swinging_strike", "swinging_strike_blocked", "foul", "foul_tip",
+        "hit_into_play", "hit_into_play_no_out", "hit_into_play_score",
+    ])]
+    whiffs = all_pitches[all_pitches["description"].isin(["swinging_strike", "swinging_strike_blocked"])]
+    whiff_rate = round(len(whiffs) / len(swings) * 100, 1) if len(swings) > 0 else None
+
+    return {
+        "pa": total_pa,
+        "ab": ab,
+        "hits": total_hits,
+        "hr": home_runs,
+        "kPct": k_pct,
+        "bbPct": bb_pct,
+        "baAgainst": ba,
+        "obpAgainst": obp,
+        "slgAgainst": slg,
+        "opsAgainst": ops,
+        "whiffRate": whiff_rate,
+    }
+
+
+async def get_batter_advanced_stats(player_id: int, season: int | None = None) -> dict:
+    """Get advanced batting metrics from Statcast data."""
+    try:
+        result = await asyncio.to_thread(_fetch_batter_advanced, player_id, season)
+        return result
+    except Exception as e:
+        print(f"Batter advanced stats failed: {e}")
+        return {}
+
+
+def _fetch_batter_advanced(player_id: int, season: int | None) -> dict:
+    from pybaseball import statcast_batter
+
+    if season:
+        start_dt = f"{season}-03-01"
+        end_dt = f"{season}-11-30"
+    else:
+        start_dt = f"{date.today().year}-03-01"
+        end_dt = date.today().isoformat()
+
+    df = statcast_batter(start_dt, end_dt, player_id)
+    if df is None or df.empty:
+        return {}
+
+    events = df[df["events"].notna()]
+    batted = df[df["launch_speed"].notna()]
+
+    if events.empty:
+        return {}
+
+    # Exit velocity stats
+    avg_ev = round(batted["launch_speed"].mean(), 1) if not batted.empty else None
+    max_ev = round(batted["launch_speed"].max(), 1) if not batted.empty else None
+
+    # Hard hit rate
+    hard_hit = batted[batted["launch_speed"] >= 95]
+    hard_hit_pct = round(len(hard_hit) / len(batted) * 100, 1) if len(batted) > 0 else None
+
+    # Barrel rate
+    barrel = df[df.get("launch_speed_angle", pd.Series(dtype=float)) == 6] if "launch_speed_angle" in df.columns else pd.DataFrame()
+    barrel_pct = round(len(barrel) / len(batted) * 100, 1) if len(batted) > 0 else None
+
+    # Average launch angle
+    avg_la = round(batted["launch_angle"].mean(), 1) if batted["launch_angle"].notna().any() else None
+
+    # Batted ball types
+    bb_typed = df[df["bb_type"].notna()]
+    total_bb = len(bb_typed)
+    gb_pct = round(len(bb_typed[bb_typed["bb_type"] == "ground_ball"]) / total_bb * 100, 1) if total_bb > 0 else None
+    fb_pct = round(len(bb_typed[bb_typed["bb_type"] == "fly_ball"]) / total_bb * 100, 1) if total_bb > 0 else None
+    ld_pct = round(len(bb_typed[bb_typed["bb_type"] == "line_drive"]) / total_bb * 100, 1) if total_bb > 0 else None
+
+    # Whiff rate
+    all_pitches = df[df["description"].notna()]
+    swings = all_pitches[all_pitches["description"].isin([
+        "swinging_strike", "swinging_strike_blocked", "foul", "foul_tip",
+        "hit_into_play", "hit_into_play_no_out", "hit_into_play_score",
+    ])]
+    whiffs = all_pitches[all_pitches["description"].isin(["swinging_strike", "swinging_strike_blocked"])]
+    whiff_rate = round(len(whiffs) / len(swings) * 100, 1) if len(swings) > 0 else None
+
+    # Chase rate (swings at pitches outside zone)
+    outside_zone = all_pitches[all_pitches["zone"].isin([11, 12, 13, 14])] if "zone" in all_pitches.columns else pd.DataFrame()
+    chases = outside_zone[outside_zone["description"].isin([
+        "swinging_strike", "swinging_strike_blocked", "foul", "foul_tip",
+        "hit_into_play", "hit_into_play_no_out", "hit_into_play_score",
+    ])] if not outside_zone.empty else pd.DataFrame()
+    chase_rate = round(len(chases) / len(outside_zone) * 100, 1) if len(outside_zone) > 0 else None
+
+    # xBA, xSLG, xwOBA (if available in data)
+    xba = round(events["estimated_ba_using_speedangle"].mean(), 3) if "estimated_ba_using_speedangle" in events.columns and events["estimated_ba_using_speedangle"].notna().any() else None
+    xslg = round(events["estimated_slg_using_speedangle"].mean(), 3) if "estimated_slg_using_speedangle" in events.columns and events["estimated_slg_using_speedangle"].notna().any() else None
+    xwoba = round(df["estimated_woba_using_speedangle"].mean(), 3) if "estimated_woba_using_speedangle" in df.columns and df["estimated_woba_using_speedangle"].notna().any() else None
+
+    return {
+        "avgExitVelo": avg_ev,
+        "maxExitVelo": max_ev,
+        "hardHitPct": hard_hit_pct,
+        "barrelPct": barrel_pct,
+        "avgLaunchAngle": avg_la,
+        "gbPct": gb_pct,
+        "fbPct": fb_pct,
+        "ldPct": ld_pct,
+        "whiffRate": whiff_rate,
+        "chaseRate": chase_rate,
+        "xBA": xba,
+        "xSLG": xslg,
+        "xwOBA": xwoba,
+    }

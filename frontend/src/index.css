@@ -450,6 +450,32 @@ body {
   margin-top: 2px;
 }
 
+/* Player Actions */
+.player-actions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.player-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--team-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.player-action-btn:hover {
+  background: var(--bg-card-hover);
+}
+
 /* Stat Section */
 .stat-section {
   background: var(--bg-card);
@@ -494,6 +520,232 @@ body {
   font-size: 16px;
   font-weight: 700;
   color: var(--text-bright);
+}
+
+/* Stat highlight */
+.stat-highlight {
+  background: rgba(var(--team-secondary), 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Pitch Arsenal */
+.arsenal-bar {
+  display: flex;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+
+.arsenal-bar-segment {
+  min-width: 4px;
+  transition: width 0.3s;
+}
+
+.arsenal-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 16px;
+}
+
+.arsenal-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.arsenal-table th {
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 6px 8px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+
+.arsenal-table th:first-child {
+  text-align: left;
+}
+
+.arsenal-table td {
+  padding: 8px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  color: var(--text);
+}
+
+.arsenal-table td:first-child {
+  text-align: left;
+}
+
+.arsenal-pitch-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  color: var(--text-bright);
+}
+
+.pitch-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.elite-stat {
+  color: var(--team-secondary);
+  font-weight: 700;
+}
+
+.arsenal-movement {
+  margin-top: 8px;
+}
+
+.arsenal-sub-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.movement-chart {
+  width: 100%;
+  max-width: 280px;
+  margin: 0 auto;
+  display: block;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  padding: 8px;
+}
+
+/* Dominance Profile */
+.dominance-overview {
+  margin-bottom: 16px;
+}
+
+.dominance-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.dominance-badge strong {
+  color: var(--team-secondary);
+}
+
+.dominance-situational {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.dominance-sub-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin: 16px 0 10px;
+}
+
+.splits-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.split-card {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.split-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-bright);
+  margin-bottom: 8px;
+}
+
+.split-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.split-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.split-stat-val {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-bright);
+}
+
+.split-stat-lbl {
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+/* Batted ball bars */
+.bb-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bb-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.bb-label {
+  width: 70px;
+  flex-shrink: 0;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.bb-bar-track {
+  flex: 1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.bb-bar-fill {
+  height: 100%;
+  background: var(--team-secondary);
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+.bb-pct {
+  width: 36px;
+  text-align: right;
+  color: var(--text-bright);
+  font-weight: 600;
+}
+
+.bb-ba {
+  width: 52px;
+  text-align: right;
+  color: var(--text-muted);
 }
 
 /* Schedule */
