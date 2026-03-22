@@ -1,0 +1,35 @@
+from contextlib import asynccontextmanager
+
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+from app.config import FRONTEND_ORIGIN
+from app.services import mlb_api
+from app.routers import team, schedule, standings, player
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    yield
+    await mlb_api.close_client()
+
+
+app = FastAPI(title="Baseball Stats API", version="1.0.0", lifespan=lifespan)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[FRONTEND_ORIGIN, "http://localhost:5173", "http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.include_router(team.router)
+app.include_router(schedule.router)
+app.include_router(standings.router)
+app.include_router(player.router)
+
+
+@app.get("/api/health")
+async def health():
+    return {"status": "ok"}
