@@ -25,8 +25,8 @@ export default function PlayerDetail() {
   const isPitcher = player?.primaryPosition === "P";
 
   const { data: statsData, isLoading: loadingStats } = useQuery({
-    queryKey: ["playerStats", playerId, isPitcher ? "pitching" : "hitting"],
-    queryFn: () => fetchPlayerStats(playerId, undefined, isPitcher ? "pitching" : "hitting"),
+    queryKey: ["playerStats", playerId],
+    queryFn: () => fetchPlayerStats(playerId),
     enabled: !!player,
   });
 
