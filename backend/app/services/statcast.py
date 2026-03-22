@@ -1,7 +1,18 @@
 import asyncio
+import math
 from datetime import date, timedelta
 
 import pandas as pd
+
+
+def _safe_float(val, decimals=1):
+    """Convert a value to a JSON-safe float, returning None for NaN/Inf."""
+    if val is None or (isinstance(val, float) and (math.isnan(val) or math.isinf(val))):
+        return None
+    try:
+        return round(float(val), decimals)
+    except (TypeError, ValueError):
+        return None
 
 
 async def get_hot_batters(team_roster_ids: list[int], days: int = 14) -> list[dict]:
@@ -141,15 +152,15 @@ def _fetch_spray_data(player_id: int, venue_id: int | None, season: int | None) 
         summary["total"] += 1
 
         hits.append({
-            "x": round(x, 1),
-            "y": round(y, 1),
+            "x": _safe_float(x),
+            "y": _safe_float(y),
             "result": result_type,
             "event": event,
             "date": str(row.get("game_date", "")),
-            "exitVelo": round(row["launch_speed"], 1) if pd.notna(row.get("launch_speed")) else None,
-            "launchAngle": round(row["launch_angle"], 1) if pd.notna(row.get("launch_angle")) else None,
-            "pitchType": row.get("pitch_type", ""),
-            "hitDistance": round(row["hit_distance_sc"], 0) if pd.notna(row.get("hit_distance_sc")) else None,
+            "exitVelo": _safe_float(row.get("launch_speed")),
+            "launchAngle": _safe_float(row.get("launch_angle")),
+            "pitchType": row.get("pitch_type", "") if pd.notna(row.get("pitch_type")) else "",
+            "hitDistance": _safe_float(row.get("hit_distance_sc"), 0),
         })
 
     return {"hits": hits, "summary": summary}
