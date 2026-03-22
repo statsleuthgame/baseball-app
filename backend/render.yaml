@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: baseball-api
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    envVars:
+      - key: FRONTEND_ORIGIN
+        value: https://statsleuthgame.github.io

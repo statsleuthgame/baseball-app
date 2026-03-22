@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { TeamProvider, useTeam } from "./context/TeamContext";
 import AppShell from "./components/layout/AppShell";
@@ -28,7 +28,7 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TeamProvider>
-        <BrowserRouter>
+        <HashRouter>
           <Routes>
             <Route path="/" element={<TeamRedirect />} />
             <Route path="/team/:teamId" element={<AppShell />}>
@@ -39,7 +39,7 @@ export default function App() {
               <Route path="spray" element={<SprayChart />} />
             </Route>
           </Routes>
-        </BrowserRouter>
+        </HashRouter>
       </TeamProvider>
     </QueryClientProvider>
   );
