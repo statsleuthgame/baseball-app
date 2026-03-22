@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import FRONTEND_ORIGIN
 from app.services import mlb_api
-from app.routers import team, schedule, standings, player
+from app.routers import team, schedule, standings, player, hotplayers, spraychart
 
 
 @asynccontextmanager
@@ -28,6 +28,8 @@ app.include_router(team.router)
 app.include_router(schedule.router)
 app.include_router(standings.router)
 app.include_router(player.router)
+app.include_router(hotplayers.router)
+app.include_router(spraychart.router)
 
 
 @app.get("/api/health")

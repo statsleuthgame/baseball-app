@@ -1,5 +1,6 @@
 import TodayGame from "./TodayGame";
 import StandingsCard from "./StandingsCard";
+import HotPlayers from "./HotPlayers";
 import RosterGrid from "./RosterGrid";
 
 export default function TeamDashboard() {
@@ -7,6 +8,7 @@ export default function TeamDashboard() {
     <div className="dashboard">
       <TodayGame />
       <StandingsCard />
+      <HotPlayers />
       <RosterGrid />
     </div>
   );

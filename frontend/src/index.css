@@ -648,6 +648,136 @@ body {
   margin-bottom: 8px;
 }
 
+/* Playoff Odds */
+.playoff-odds {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.playoff-odds-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.odds-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.odds-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 10px 4px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+}
+
+.odds-value {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--team-secondary);
+}
+
+.odds-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+/* Hot Players */
+.hot-players-card {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 16px;
+  border: 1px solid var(--border);
+}
+
+.hot-players-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-bright);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hot-icon {
+  font-size: 16px;
+}
+
+.hot-subtitle {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
+.hot-players-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hot-player-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 10px;
+}
+
+.hot-player-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.hot-player-name {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-bright);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hot-player-line {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.hot-player-ops {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 48px;
+}
+
+.hot-ops-value {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--team-secondary);
+}
+
+.hot-ops-label {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
 /* Spray Chart Placeholder */
 .spray-placeholder {
   text-align: center;

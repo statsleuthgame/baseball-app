@@ -29,11 +29,8 @@ async def playoff_odds():
     if cached:
         return cached
 
-    # FanGraphs scraping will be added in Phase 2
-    # For now return placeholder structure
-    result = {
-        "message": "Playoff odds coming soon.",
-        "teams": [],
-    }
+    from app.services import fangraphs
+    odds = await fangraphs.scrape_playoff_odds()
+    result = {"teams": odds}
     cache.set(key, result, CACHE_TTL_PLAYOFFS)
     return result

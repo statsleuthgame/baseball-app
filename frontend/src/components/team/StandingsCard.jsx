@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useTeam } from "../../context/TeamContext";
-import { fetchStandings } from "../../api/client";
+import { fetchStandings, fetchPlayoffOdds } from "../../api/client";
 
 export default function StandingsCard() {
   const { team } = useTeam();
@@ -11,11 +11,19 @@ export default function StandingsCard() {
     staleTime: 1000 * 60 * 30,
   });
 
+  const { data: playoffData } = useQuery({
+    queryKey: ["playoffOdds"],
+    queryFn: () => fetchPlayoffOdds(),
+    staleTime: 1000 * 60 * 60,
+  });
+
   if (isLoading) return <div className="standings-card skeleton" />;
   if (!divisions) return null;
 
   const myDivision = divisions.find((d) => d.divisionId === team?.divisionId);
   if (!myDivision) return null;
+
+  const myOdds = playoffData?.teams?.find((t) => t.teamId === team?.id);
 
   return (
     <div className="standings-card">
@@ -51,6 +59,26 @@ export default function StandingsCard() {
           ))}
         </tbody>
       </table>
+
+      {myOdds && (
+        <div className="playoff-odds">
+          <h4 className="playoff-odds-title">Playoff Projections</h4>
+          <div className="odds-grid">
+            <div className="odds-item">
+              <span className="odds-value">{myOdds.winDivision}</span>
+              <span className="odds-label">Win Division</span>
+            </div>
+            <div className="odds-item">
+              <span className="odds-value">{myOdds.makePlayoffs}</span>
+              <span className="odds-label">Make Playoffs</span>
+            </div>
+            <div className="odds-item">
+              <span className="odds-value">{myOdds.winWorldSeries}</span>
+              <span className="odds-label">Win WS</span>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
