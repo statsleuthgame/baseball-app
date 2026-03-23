@@ -385,12 +385,19 @@ html, body, #root {
   border: 1px solid var(--border);
 }
 
-.standings-title {
-  font-size: 14px;
-  font-weight: 700;
+.standings-header {
+  font-size: 18px;
+  font-weight: 800;
   color: var(--text-bright);
+  margin-bottom: 4px;
+  letter-spacing: -0.3px;
+}
+
+.standings-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
   margin-bottom: 12px;
-  letter-spacing: -0.2px;
 }
 
 .standings-table {

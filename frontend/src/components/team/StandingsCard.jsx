@@ -27,6 +27,7 @@ export default function StandingsCard() {
 
   return (
     <div className="standings-card">
+      <h2 className="standings-header">Standings</h2>
       <h3 className="standings-title">{myDivision.divisionName}</h3>
       <table className="standings-table">
         <thead>
