@@ -23,7 +23,33 @@ export const fetchSchedule = (teamId) => {
   return staticFetch(`teams/${abbr}/schedule.json`);
 };
 
-export const fetchStandings = () => staticFetch("standings.json");
+export const fetchStandings = async () => {
+  // Fetch live from MLB API for freshest standings
+  try {
+    const season = new Date().getFullYear();
+    const resp = await mlbApi.get("/standings", { params: { season, sportId: 1, leagueId: "103,104" } });
+    const divisions = [];
+    for (const record of resp.data?.records || []) {
+      const div = record.division || {};
+      const teams = (record.teamRecords || []).map((tr) => {
+        const t = tr.team || {};
+        return {
+          id: t.id, name: t.name || "", abbreviation: t.abbreviation || "",
+          wins: tr.wins || 0, losses: tr.losses || 0,
+          winPct: tr.winningPercentage || ".000",
+          gamesBack: tr.gamesBack || "-",
+          streakCode: tr.streak?.streakCode || "",
+          logoUrl: `https://www.mlbstatic.com/team-logos/${t.id}.svg`,
+        };
+      });
+      divisions.push({ divisionId: div.id, divisionName: div.name || "", teams });
+    }
+    return divisions;
+  } catch {
+    // Fallback to static data if API fails
+    return staticFetch("standings.json");
+  }
+};
 
 export const fetchPlayerDetail = (playerId) =>
   staticFetch(`players/${playerId}/info.json`).then((d) => d.detail);

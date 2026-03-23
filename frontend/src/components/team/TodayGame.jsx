@@ -80,12 +80,14 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
   const us = isHome ? game.home : game.away;
   const isLive = game.status === "In Progress";
   const isFinal = game.status === "Final";
+  const isWin = isFinal && (isHome ? game.home.score > game.away.score : game.away.score > game.home.score);
+  const isLoss = isFinal && !isWin;
 
   return (
-    <div className={`today-game-card ${isLive ? "live" : ""} ${compact ? "compact" : ""}`} onClick={onTap}>
+    <div className={`today-game-card ${isLive ? "live" : ""} ${isWin ? "win-card" : ""} ${isLoss ? "loss-card" : ""} ${compact ? "compact" : ""}`} onClick={onTap}>
       <div className="today-game-header">
-        <span className={`today-game-label ${label === "LIVE" ? "label-live" : label === "NEXT GAME" ? "label-next" : ""}`}>
-          {label}
+        <span className={`today-game-label ${label === "LIVE" ? "label-live" : label === "NEXT GAME" ? "label-next" : isWin ? "label-win" : isLoss ? "label-loss" : ""}`}>
+          {isWin ? "WIN" : isLoss ? "LOSS" : label}
         </span>
         <span className="today-game-time">
           {showDate && formatGameDate(game.gameDate)}

@@ -1,0 +1,17 @@
+{
+  "name": "Baseball Stats",
+  "short_name": "Baseball",
+  "start_url": "/baseball-app/",
+  "display": "standalone",
+  "background_color": "#141a28",
+  "theme_color": "#0C2C56",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/baseball-app/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

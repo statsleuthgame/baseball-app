@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
 import { fetchTodayGame, fetchRoster } from "../../api/client";
+import { formatGameDate, formatGameTime } from "../../utils/formatters";
 import LoadingSpinner from "../common/LoadingSpinner";
 import BatterVsPitcher from "./BatterVsPitcher";
 import PitchArsenal from "../player/PitchArsenal";
@@ -9,8 +11,9 @@ import PriorMatchups from "./PriorMatchups";
 
 export default function MatchupView() {
   const { teamId } = useTeam();
+  const navigate = useNavigate();
 
-  const { data: game, isLoading } = useQuery({
+  const { data: gameData, isLoading } = useQuery({
     queryKey: ["todayGame", teamId],
     queryFn: () => fetchTodayGame(teamId),
     enabled: !!teamId,
@@ -26,14 +29,22 @@ export default function MatchupView() {
 
   if (isLoading) return <LoadingSpinner text="Loading matchup..." />;
 
-  if (!game || game.noGame) {
+  if (!gameData || gameData.noGame) {
     return (
       <div className="matchup-empty">
-        <h2>No Game Today</h2>
-        <p>Check the schedule for upcoming games.</p>
+        <h2>No Upcoming Games</h2>
+        <p>No games scheduled in the next 14 days.</p>
+        <button className="btn-retry" onClick={() => navigate(`/team/${teamId}/schedule`)}>
+          View Schedule
+        </button>
       </div>
     );
   }
+
+  // Use the next game for matchup analysis when today's game is final
+  const isTodayFinal = gameData.status === "Final";
+  const game = (isTodayFinal && gameData.nextGame) ? gameData.nextGame : gameData;
+  const isPreview = game.isNextGame;
 
   const isHome = game.home.id === teamId;
   const opponent = isHome ? game.away : game.home;
@@ -50,12 +61,23 @@ export default function MatchupView() {
           <img src={us.logoUrl} alt={us.abbreviation} className="matchup-logo" />
           <span>{us.abbreviation}</span>
         </div>
-        <span className="matchup-vs">{isHome ? "vs" : "@"}</span>
+        <div className="matchup-header-center">
+          <span className="matchup-vs">{isHome ? "vs" : "@"}</span>
+          {isPreview && (
+            <span className="matchup-date">{formatGameDate(game.gameDate)} · {formatGameTime(game.gameDate)}</span>
+          )}
+        </div>
         <div className="matchup-team">
           <img src={opponent.logoUrl} alt={opponent.abbreviation} className="matchup-logo" />
           <span>{opponent.abbreviation}</span>
         </div>
       </div>
+
+      {isPreview && (
+        <div className="matchup-notice" style={{ color: "var(--team-accent)", fontStyle: "normal", fontWeight: 600 }}>
+          Next Game Preview
+        </div>
+      )}
 
       {!opponentPitcher && (
         <div className="matchup-notice">

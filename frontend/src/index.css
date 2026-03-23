@@ -25,44 +25,52 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
-html, body {
-  height: 100%;
-  margin: 0;
-  background: #141a28;
+html {
+  touch-action: manipulation;
   overscroll-behavior: none;
 }
 
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #141a28;
+}
+
 #root {
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  height: -webkit-fill-available;
+  overflow: hidden;
 }
 
 /* App Shell */
 .app-shell {
+  display: flex;
+  flex-direction: column;
   height: 100%;
+  overflow: hidden;
   background: var(--bg);
 }
 
 .app-content {
-  height: 100%;
+  flex: 1;
+  min-height: 0;
   padding: 16px;
-  padding-top: calc(56px + env(safe-area-inset-top, 0px));
-  padding-bottom: 70px;
   max-width: 600px;
   width: 100%;
   margin: 0 auto;
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
 }
 
-/* Top Bar */
+/* Top Bar — in flex flow, not fixed */
 .top-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -71,7 +79,10 @@ html, body {
   background: var(--team-primary);
   border-bottom: 2px solid var(--team-secondary);
   color: white;
+  flex-shrink: 0;
   z-index: 100;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .top-bar-logo {
@@ -108,9 +119,11 @@ html, body {
   display: flex;
 }
 
-.top-bar-switch:hover,
-.top-bar-back:hover {
-  background: rgba(255, 255, 255, 0.15);
+@media (hover: hover) {
+  .top-bar-switch:hover,
+  .top-bar-back:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
 }
 
 .top-bar-switch:active,
@@ -118,20 +131,16 @@ html, body {
   opacity: 0.7;
 }
 
-/* Bottom Nav — part of flex layout, pushed to bottom by flex:1 content area.
-   Container (#root) is sized via JS to window.innerHeight which IS the
-   true screen height in iOS PWA mode. So this sits at the real bottom. */
-/* Nav positioned from top using JS-measured height.
-   This bypasses the iOS viewport clipping on bottom. */
+/* Bottom Nav — in flex flow, NOT fixed. Sits at bottom of 100dvh container. */
 .bottom-nav {
-  position: fixed;
-  top: calc(var(--real-height, 100vh) - 50px);
-  left: 0;
-  right: 0;
   display: flex;
+  flex-shrink: 0;
   background: #141a28;
   border-top: 1px solid var(--border);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
   z-index: 100;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .bottom-nav-item {
@@ -140,7 +149,7 @@ html, body {
   flex-direction: column;
   align-items: center;
   gap: 2px;
-  padding: 8px 4px 2px;
+  padding: 8px 4px 6px;
   text-decoration: none;
   color: var(--text-muted);
   font-size: 11px;
@@ -273,12 +282,19 @@ html, body {
   font-size: 22px;
 }
 
-.label-live {
-  color: var(--live) !important;
+.label-live { color: var(--live) !important; }
+.label-next { color: var(--team-accent) !important; }
+.label-win { color: var(--win) !important; }
+.label-loss { color: var(--loss) !important; }
+
+.today-game-card.win-card {
+  border-color: var(--win);
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.1);
 }
 
-.label-next {
-  color: var(--team-accent) !important;
+.today-game-card.loss-card {
+  border-color: var(--loss);
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.1);
 }
 
 .today-game-card.live {
@@ -1064,10 +1080,23 @@ html, body {
   height: 56px;
 }
 
+.matchup-header-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
 .matchup-vs {
   font-size: 16px;
   color: var(--text-muted);
   font-weight: 600;
+}
+
+.matchup-date {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 500;
 }
 
 .matchup-section {
@@ -1547,7 +1576,7 @@ html, body {
 @media (min-width: 640px) {
   .app-content {
     max-width: 720px;
-    padding: 24px;
+    padding: 20px;
   }
   .roster-grid { grid-template-columns: repeat(3, 1fr); }
   .stat-grid { grid-template-columns: repeat(5, 1fr); }
@@ -1555,7 +1584,6 @@ html, body {
 
 @media (min-width: 1024px) {
   .app-content { max-width: 800px; }
-  .bottom-nav { border-radius: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
