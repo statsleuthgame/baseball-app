@@ -225,8 +225,8 @@ def _lookup_pitcher_names(pitcher_ids: list[int]) -> dict[int, str]:
             people = data.get("people", [])
             if people:
                 names[pid] = people[0].get("fullName", "")
-        except Exception:
-            pass
+        except Exception as e:
+            print(f"        failed to lookup pitcher {pid}: {e}")
     return names
 
 
@@ -245,11 +245,11 @@ def fetch_all_spray_charts(player_id: int) -> dict[str, dict]:
         if batted.empty or "home_team" not in batted.columns:
             return {}
 
-        # Batch lookup pitcher names from their IDs
-        unique_pitcher_ids = [
-            int(pid) for pid in batted["pitcher"].dropna().unique()
-        ]
-        pitcher_names = _lookup_pitcher_names(unique_pitcher_ids)
+        # Lookup pitcher names ONLY for home runs to limit API calls
+        hr_rows = batted[batted["events"] == "home_run"]
+        hr_pitcher_ids = list(set(int(pid) for pid in hr_rows["pitcher"].dropna().unique()))
+        print(f"      looking up {len(hr_pitcher_ids)} pitcher names for HRs...")
+        pitcher_names = _lookup_pitcher_names(hr_pitcher_ids)
 
         results = {}
         for home_team, group in batted.groupby("home_team"):
