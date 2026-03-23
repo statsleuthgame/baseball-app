@@ -123,13 +123,13 @@ html, body {
    true screen height in iOS PWA mode. So this sits at the real bottom. */
 .bottom-nav {
   position: fixed;
-  bottom: -10px;
+  bottom: -34px;
   left: 0;
   right: 0;
   display: flex;
   background: #141a28;
   border-top: 1px solid var(--border);
-  padding-bottom: 10px;
+  padding-bottom: 34px;
   z-index: 100;
 }
 
