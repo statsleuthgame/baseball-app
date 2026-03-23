@@ -243,6 +243,11 @@ def fetch_all_spray_charts(player_id: int) -> dict[str, dict]:
                 result_type = event if event in ("single", "double", "triple", "home_run") else "out"
                 summary[result_type] = summary.get(result_type, 0) + 1
                 summary["total"] += 1
+                # Determine opponent team
+                ht = row.get("home_team", "")
+                at = row.get("away_team", "")
+                opponent = at if ht == home_team else ht
+
                 hits.append({
                     "x": safe_float(x), "y": safe_float(y), "result": result_type, "event": event,
                     "date": str(row.get("game_date", "")),
@@ -250,6 +255,9 @@ def fetch_all_spray_charts(player_id: int) -> dict[str, dict]:
                     "launchAngle": safe_float(row.get("launch_angle")),
                     "pitchType": row.get("pitch_type", "") if pd.notna(row.get("pitch_type")) else "",
                     "hitDistance": safe_float(row.get("hit_distance_sc"), 0),
+                    "pitcher": int(row["pitcher"]) if pd.notna(row.get("pitcher")) else None,
+                    "pitcherName": str(row.get("player_name", "")) if pd.notna(row.get("player_name")) else "",
+                    "opponent": opponent if pd.notna(opponent) else "",
                 })
 
             results[home_team] = {"hits": hits, "summary": summary}

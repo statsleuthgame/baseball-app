@@ -164,20 +164,35 @@ export default function SprayChart() {
             </BallparkSVG>
           </div>
 
-          {filteredData.longestHR && (
-            <div className="longest-hr-card">
-              <span className="longest-hr-star">&#9733;</span>
-              <div className="longest-hr-info">
-                <span className="longest-hr-title">Longest Home Run</span>
-                <span className="longest-hr-detail">
-                  {filteredData.longestHR.hitDistance} ft
-                  {filteredData.longestHR.exitVelo ? ` · ${filteredData.longestHR.exitVelo} mph` : ""}
-                  {filteredData.longestHR.launchAngle ? ` · ${filteredData.longestHR.launchAngle}°` : ""}
-                </span>
-                <span className="longest-hr-date">{filteredData.longestHR.date?.split(" ")[0] || ""}</span>
+          {filteredData.longestHR && (() => {
+            const hr = filteredData.longestHR;
+            const dateParts = (hr.date || "").split(" ")[0].split("-");
+            const formattedDate = dateParts.length === 3
+              ? `${dateParts[1]}/${dateParts[2]}/${dateParts[0]}`
+              : hr.date || "";
+            // pitcherName from statcast is "Last, First" format
+            const pitcher = hr.pitcherName
+              ? hr.pitcherName.split(", ").reverse().join(" ")
+              : "";
+            return (
+              <div className="longest-hr-card">
+                <span className="longest-hr-star">&#9733;</span>
+                <div className="longest-hr-info">
+                  <span className="longest-hr-title">Longest Home Run</span>
+                  <span className="longest-hr-detail">
+                    {hr.hitDistance} ft
+                    {hr.exitVelo ? ` · ${hr.exitVelo} mph` : ""}
+                    {hr.launchAngle ? ` · ${hr.launchAngle}°` : ""}
+                  </span>
+                  <span className="longest-hr-date">
+                    {formattedDate}
+                    {hr.opponent ? ` vs ${hr.opponent}` : ""}
+                    {pitcher ? ` · off ${pitcher}` : ""}
+                  </span>
+                </div>
               </div>
-            </div>
-          )}
+            );
+          })()}
 
           {filteredData.hits.length === 0 && (
             <p className="spray-empty">No batted ball data found for these filters.</p>
