@@ -16,7 +16,6 @@ export default function PlayerDetail() {
   const { teamId } = useTeam();
   const navigate = useNavigate();
 
-  // Single fetch for both detail and stats (same JSON file)
   const { data: playerData, isLoading, error } = useQuery({
     queryKey: ["playerInfo", playerId],
     queryFn: () => fetchPlayerStats(playerId),
@@ -24,8 +23,13 @@ export default function PlayerDetail() {
   });
 
   const player = playerData?.detail;
-  const stats = playerData?.stats?.stats || {};
   const isPitcher = player?.primaryPosition === "P";
+
+  // Use current season stats if available, otherwise fall back to previous season
+  const statsObj = playerData?.stats || {};
+  const hasCurrentStats = statsObj.stats && Object.keys(statsObj.stats).length > 0;
+  const stats = hasCurrentStats ? statsObj.stats : (statsObj.prevStats || {});
+  const displaySeason = hasCurrentStats ? statsObj.season : statsObj.prevSeason;
 
   if (isLoading) return <LoadingSpinner text="Loading player..." />;
   if (error || !player?.id) return <ErrorMessage message="Player not found." />;
@@ -65,9 +69,9 @@ export default function PlayerDetail() {
       )}
 
       {isPitcher ? (
-        <PitcherStats stats={stats} />
+        <PitcherStats stats={stats} season={displaySeason} />
       ) : (
-        <BatterStats stats={stats} />
+        <BatterStats stats={stats} season={displaySeason} />
       )}
 
       {isPitcher ? (

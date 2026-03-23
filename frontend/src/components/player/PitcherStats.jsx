@@ -18,14 +18,14 @@ const STAT_ROWS = [
   { label: "SV", key: "saves" },
 ];
 
-export default function PitcherStats({ stats }) {
+export default function PitcherStats({ stats, season }) {
   if (!stats || Object.keys(stats).length === 0) {
     return <p className="no-data">No pitching stats available.</p>;
   }
 
   return (
     <div className="stat-section">
-      <h3 className="stat-section-title">Pitching Stats</h3>
+      <h3 className="stat-section-title">{season ? `${season} Pitching` : "Pitching Stats"}</h3>
       <div className="stat-grid">
         {STAT_ROWS.map(({ label, key, fmt }) => {
           let val = stats[key];

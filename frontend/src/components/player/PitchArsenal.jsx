@@ -19,30 +19,51 @@ export default function PitchArsenal({ playerId, embedded }) {
   });
 
   if (isLoading) return <LoadingSpinner text="Loading arsenal..." />;
-  if (!data?.pitches?.length) return null;
+  if (!data?.pitches?.length) return <p className="no-data">No arsenal data available.</p>;
 
-  const Wrapper = embedded ? "div" : "div";
+  // Embedded mode: compact table with fewer columns, no movement chart
+  if (embedded) {
+    return (
+      <div>
+        <div className="arsenal-bar" style={{ marginBottom: 10 }}>
+          {data.pitches.map((p) => (
+            <div
+              key={p.pitchType}
+              className="arsenal-bar-segment"
+              style={{ width: `${p.usagePct}%`, backgroundColor: PITCH_COLORS[p.pitchType] || "#666" }}
+            />
+          ))}
+        </div>
+        <div className="arsenal-compact">
+          {data.pitches.map((p) => (
+            <div key={p.pitchType} className="arsenal-compact-row">
+              <span className="pitch-dot" style={{ backgroundColor: PITCH_COLORS[p.pitchType] || "#666" }} />
+              <span className="arsenal-compact-name">{p.pitchName}</span>
+              <span className="arsenal-compact-stat">{p.usagePct}%</span>
+              <span className="arsenal-compact-stat">{p.avgVelo ?? "—"} mph</span>
+              <span className="arsenal-compact-stat">{p.whiffRate != null ? `${p.whiffRate}% whiff` : ""}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
+  // Full mode: detailed table + movement chart
   return (
-    <div className={embedded ? "" : "stat-section"}>
-      {!embedded && <h3 className="stat-section-title">Pitch Arsenal</h3>}
+    <div className="stat-section">
+      <h3 className="stat-section-title">Pitch Arsenal</h3>
 
-      {/* Usage bar visualization */}
       <div className="arsenal-bar">
         {data.pitches.map((p) => (
           <div
             key={p.pitchType}
             className="arsenal-bar-segment"
-            style={{
-              width: `${p.usagePct}%`,
-              backgroundColor: PITCH_COLORS[p.pitchType] || "#666",
-            }}
-            title={`${p.pitchName}: ${p.usagePct}%`}
+            style={{ width: `${p.usagePct}%`, backgroundColor: PITCH_COLORS[p.pitchType] || "#666" }}
           />
         ))}
       </div>
 
-      {/* Pitch details table */}
       <div className="arsenal-table-wrap">
         <table className="arsenal-table">
           <thead>
@@ -60,18 +81,13 @@ export default function PitchArsenal({ playerId, embedded }) {
             {data.pitches.map((p) => (
               <tr key={p.pitchType}>
                 <td className="arsenal-pitch-name">
-                  <span
-                    className="pitch-dot"
-                    style={{ backgroundColor: PITCH_COLORS[p.pitchType] || "#666" }}
-                  />
+                  <span className="pitch-dot" style={{ backgroundColor: PITCH_COLORS[p.pitchType] || "#666" }} />
                   {p.pitchName}
                 </td>
                 <td>{p.usagePct}%</td>
                 <td>{p.avgVelo ?? "—"}</td>
                 <td>{p.avgSpin ?? "—"}</td>
-                <td className={p.whiffRate >= 30 ? "elite-stat" : ""}>
-                  {p.whiffRate != null ? `${p.whiffRate}%` : "—"}
-                </td>
+                <td className={p.whiffRate >= 30 ? "elite-stat" : ""}>{p.whiffRate != null ? `${p.whiffRate}%` : "—"}</td>
                 <td>{p.putawayRate != null ? `${p.putawayRate}%` : "—"}</td>
                 <td>{p.baAgainst != null ? formatAvg(p.baAgainst) : "—"}</td>
               </tr>
@@ -80,11 +96,9 @@ export default function PitchArsenal({ playerId, embedded }) {
         </table>
       </div>
 
-      {/* Movement chart */}
       <div className="arsenal-movement">
         <h4 className="arsenal-sub-title">Pitch Movement (inches)</h4>
         <svg viewBox="-25 -25 50 50" className="movement-chart">
-          {/* Grid lines */}
           <line x1="-20" y1="0" x2="20" y2="0" stroke="#1e2a3e" strokeWidth="0.3" />
           <line x1="0" y1="-20" x2="0" y2="20" stroke="#1e2a3e" strokeWidth="0.3" />
           {[-10, 10].map((v) => (
@@ -95,27 +109,12 @@ export default function PitchArsenal({ playerId, embedded }) {
           ))}
           <text x="22" y="1" fill="#8891a5" fontSize="2.5">HB</text>
           <text x="-1" y="-22" fill="#8891a5" fontSize="2.5">VB</text>
-
           {data.pitches
             .filter((p) => p.horzBreak != null && p.vertBreak != null)
             .map((p) => (
               <g key={p.pitchType}>
-                <circle
-                  cx={p.horzBreak}
-                  cy={-p.vertBreak}
-                  r="2"
-                  fill={PITCH_COLORS[p.pitchType] || "#666"}
-                  opacity="0.85"
-                />
-                <text
-                  x={p.horzBreak}
-                  y={-p.vertBreak + 4}
-                  fill="#e0e4ec"
-                  fontSize="2"
-                  textAnchor="middle"
-                >
-                  {p.pitchType}
-                </text>
+                <circle cx={p.horzBreak} cy={-p.vertBreak} r="2" fill={PITCH_COLORS[p.pitchType] || "#666"} opacity="0.85" />
+                <text x={p.horzBreak} y={-p.vertBreak + 4} fill="#e0e4ec" fontSize="2" textAnchor="middle">{p.pitchType}</text>
               </g>
             ))}
         </svg>

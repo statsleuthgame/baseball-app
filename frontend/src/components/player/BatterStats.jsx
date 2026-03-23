@@ -20,14 +20,16 @@ const STAT_ROWS = [
 
 const AVG_KEYS = new Set(["avg", "obp", "slg", "ops"]);
 
-export default function BatterStats({ stats }) {
+export default function BatterStats({ stats, season }) {
   if (!stats || Object.keys(stats).length === 0) {
     return <p className="no-data">No batting stats available.</p>;
   }
 
   return (
     <div className="stat-section">
-      <h3 className="stat-section-title">Batting Stats</h3>
+      <h3 className="stat-section-title">
+        {season ? `${season} Batting` : "Batting Stats"}
+      </h3>
       <div className="stat-grid">
         {STAT_ROWS.map(({ label, key }) => (
           <div key={key} className="stat-cell">

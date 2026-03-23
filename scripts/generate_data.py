@@ -139,14 +139,26 @@ def fetch_player_detail(player_id: int) -> dict:
 
 
 def fetch_player_stats(player_id: int, group: str = "hitting") -> dict:
+    """Fetch current season stats, falling back to previous season if empty."""
+    # Try current season first
     data = mlb_get(f"/people/{player_id}/stats", {"stats": "season", "season": SEASON, "group": group})
     stats_list = data.get("stats", [])
-    if not stats_list:
-        return {}
-    splits = stats_list[0].get("splits", [])
-    if not splits:
-        return {}
-    return splits[0].get("stat", {})
+    current = {}
+    if stats_list:
+        splits = stats_list[0].get("splits", [])
+        if splits:
+            current = splits[0].get("stat", {})
+
+    # Also fetch previous season
+    prev_data = mlb_get(f"/people/{player_id}/stats", {"stats": "season", "season": SEASON - 1, "group": group})
+    prev_list = prev_data.get("stats", [])
+    previous = {}
+    if prev_list:
+        prev_splits = prev_list[0].get("splits", [])
+        if prev_splits:
+            previous = prev_splits[0].get("stat", {})
+
+    return {"current": current, "previous": previous}
 
 
 def fetch_schedule(team_id: int) -> list:
@@ -434,11 +446,18 @@ def main():
                 detail = fetch_player_detail(pid)
                 is_pitcher = detail.get("primaryPosition") == "P"
 
-                stats = fetch_player_stats(pid, "pitching" if is_pitcher else "hitting")
+                group = "pitching" if is_pitcher else "hitting"
+                stats = fetch_player_stats(pid, group)
 
                 player_data = {
                     "detail": detail,
-                    "stats": {"season": SEASON, "group": "pitching" if is_pitcher else "hitting", "stats": stats},
+                    "stats": {
+                        "season": SEASON,
+                        "group": group,
+                        "stats": stats.get("current", {}),
+                        "prevSeason": SEASON - 1,
+                        "prevStats": stats.get("previous", {}),
+                    },
                 }
                 write_json(f"players/{pid}/info.json", player_data)
             except Exception as e:
