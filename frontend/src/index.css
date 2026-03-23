@@ -74,7 +74,7 @@ html, body {
 .app-content {
   height: 100%;
   padding: 16px;
-  padding-top: calc(56px + env(safe-area-inset-top, 0px));
+  padding-top: calc(62px + env(safe-area-inset-top, 0px));
   padding-bottom: 64px;
   max-width: 600px;
   width: 100%;
