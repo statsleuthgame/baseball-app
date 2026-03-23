@@ -170,10 +170,7 @@ export default function SprayChart() {
             const formattedDate = dateParts.length === 3
               ? `${dateParts[1]}/${dateParts[2]}/${dateParts[0]}`
               : hr.date || "";
-            // pitcherName from statcast is "Last, First" format
-            const pitcher = hr.pitcherName
-              ? hr.pitcherName.split(", ").reverse().join(" ")
-              : "";
+            const pitcher = hr.pitcherName || "";
             return (
               <div className="longest-hr-card">
                 <span className="longest-hr-star">&#9733;</span>

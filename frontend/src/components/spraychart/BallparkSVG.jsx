@@ -2,15 +2,15 @@
  * SVG Ballpark outline that renders any park from its outfield dimensions.
  *
  * Coordinate system:
- *  - Home plate is at (125, 200) in the viewBox
- *  - The SVG viewBox is "0 0 250 250"
+ *  - Home plate is at (125, 225) in the viewBox
+ *  - The SVG viewBox is "0 0 250 260"
  *  - Statcast coords are transformed server-side: x = hc_x - 125.42, y = 198.27 - hc_y
- *  - To plot in SVG: svgX = x + 125,  svgY = 200 - y
+ *  - To plot in SVG: svgX = x + 125,  svgY = 225 - y
  */
 
 const SCALE = 0.40; // SVG units per foot (calibrated to Statcast hc_x/hc_y coordinate system)
 const HP_X = 125;   // Home plate X in viewBox
-const HP_Y = 200;   // Home plate Y in viewBox
+const HP_Y = 225;   // Home plate Y in viewBox (pushed down for more outfield room)
 
 function ftToSvg(distFt, angleDeg) {
   const r = distFt * SCALE;
@@ -62,14 +62,14 @@ export default function BallparkSVG({ dimensions, parkName, children }) {
 
   return (
     <svg
-      viewBox="0 0 250 250"
+      viewBox="0 0 250 260"
       className="ballpark-svg"
       xmlns="http://www.w3.org/2000/svg"
       role="img"
       aria-label={`Spray chart at ${parkName || 'ballpark'}`}
     >
       {/* Background */}
-      <rect width="250" height="250" fill="#0d1117" rx="8" />
+      <rect width="250" height="260" fill="#0d1117" rx="8" />
 
       {/* Outfield grass */}
       <path

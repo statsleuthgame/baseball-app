@@ -256,9 +256,24 @@ def fetch_all_spray_charts(player_id: int) -> dict[str, dict]:
                     "pitchType": row.get("pitch_type", "") if pd.notna(row.get("pitch_type")) else "",
                     "hitDistance": safe_float(row.get("hit_distance_sc"), 0),
                     "pitcher": int(row["pitcher"]) if pd.notna(row.get("pitcher")) else None,
-                    "pitcherName": str(row.get("player_name", "")) if pd.notna(row.get("player_name")) else "",
                     "opponent": opponent if pd.notna(opponent) else "",
                 })
+
+            # Resolve pitcher names for home runs
+            hr_pitcher_ids = set(h["pitcher"] for h in hits if h["result"] == "home_run" and h["pitcher"])
+            pitcher_names = {}
+            for pid in hr_pitcher_ids:
+                try:
+                    pdata = mlb_get(f"/people/{pid}")
+                    people = pdata.get("people", [])
+                    if people:
+                        pitcher_names[pid] = people[0].get("fullName", "")
+                except Exception:
+                    pass
+
+            for h in hits:
+                if h["result"] == "home_run" and h["pitcher"] in pitcher_names:
+                    h["pitcherName"] = pitcher_names[h["pitcher"]]
 
             results[home_team] = {"hits": hits, "summary": summary}
 
