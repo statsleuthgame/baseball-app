@@ -121,15 +121,16 @@ html, body {
 /* Bottom Nav — part of flex layout, pushed to bottom by flex:1 content area.
    Container (#root) is sized via JS to window.innerHeight which IS the
    true screen height in iOS PWA mode. So this sits at the real bottom. */
+/* Nav positioned from top using JS-measured height.
+   This bypasses the iOS viewport clipping on bottom. */
 .bottom-nav {
   position: fixed;
-  bottom: -34px;
+  top: calc(var(--real-height, 100vh) - 50px);
   left: 0;
   right: 0;
   display: flex;
   background: #141a28;
   border-top: 1px solid var(--border);
-  padding-bottom: 34px;
   z-index: 100;
 }
 
