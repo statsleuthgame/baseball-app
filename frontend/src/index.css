@@ -1542,6 +1542,29 @@ button.stat-cell {
 
 .ballpark-svg { width: 100%; height: auto; display: block; }
 
+/* Longest HR card */
+.longest-hr-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: rgba(244, 67, 54, 0.08);
+  border: 1px solid rgba(244, 67, 54, 0.2);
+  border-radius: 12px;
+  margin-top: 8px;
+}
+
+.longest-hr-star {
+  font-size: 22px;
+  color: #FFD700;
+  flex-shrink: 0;
+}
+
+.longest-hr-info { flex: 1; }
+.longest-hr-title { display: block; font-size: 12px; font-weight: 700; color: #F44336; text-transform: uppercase; letter-spacing: 0.5px; }
+.longest-hr-detail { display: block; font-size: 15px; font-weight: 700; color: var(--text-bright); margin-top: 2px; }
+.longest-hr-date { display: block; font-size: 11px; color: var(--text-muted); }
+
 /* Spray Sidebar */
 .spray-sidebar {
   background: var(--bg-card);

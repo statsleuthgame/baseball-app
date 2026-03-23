@@ -70,7 +70,13 @@ export default function SprayChart() {
       summary.total += 1;
     }
 
-    return { hits, summary };
+    // Find longest home run
+    const homeRuns = hits.filter((h) => h.result === "home_run" && h.hitDistance);
+    const longestHR = homeRuns.length
+      ? homeRuns.reduce((best, h) => (h.hitDistance > best.hitDistance ? h : best), homeRuns[0])
+      : null;
+
+    return { hits, summary, longestHR };
   }, [sprayData, season]);
 
   const handleToggleFilter = (type) => {
@@ -154,9 +160,24 @@ export default function SprayChart() {
               dimensions={currentVenue?.dimensions}
               parkName={currentVenue?.name}
             >
-              <HitDots hits={filteredData.hits} filters={filters} />
+              <HitDots hits={filteredData.hits} filters={filters} longestHR={filteredData.longestHR} />
             </BallparkSVG>
           </div>
+
+          {filteredData.longestHR && (
+            <div className="longest-hr-card">
+              <span className="longest-hr-star">&#9733;</span>
+              <div className="longest-hr-info">
+                <span className="longest-hr-title">Longest Home Run</span>
+                <span className="longest-hr-detail">
+                  {filteredData.longestHR.hitDistance} ft
+                  {filteredData.longestHR.exitVelo ? ` · ${filteredData.longestHR.exitVelo} mph` : ""}
+                  {filteredData.longestHR.launchAngle ? ` · ${filteredData.longestHR.launchAngle}°` : ""}
+                </span>
+                <span className="longest-hr-date">{filteredData.longestHR.date?.split(" ")[0] || ""}</span>
+              </div>
+            </div>
+          )}
 
           {filteredData.hits.length === 0 && (
             <p className="spray-empty">No batted ball data found for these filters.</p>
