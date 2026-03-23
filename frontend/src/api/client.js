@@ -114,10 +114,61 @@ export const fetchTodayGame = async (teamId) => {
 export const fetchHotPlayers = () =>
   Promise.resolve([]); // Requires pybaseball, not available client-side
 
-export const fetchBvP = () => Promise.resolve({ pa: 0 });
+export const fetchBvP = async (batterId, pitcherId) => {
+  try {
+    const bvp = await staticFetch(`players/${batterId}/bvp.json`);
+    return bvp[String(pitcherId)] || { pa: 0 };
+  } catch {
+    return { pa: 0 };
+  }
+};
+
 export const fetchPitchTypeMatchup = () => Promise.resolve([]);
-export const fetchParkHistory = () => Promise.resolve({ wins: 0, losses: 0, recentGames: [] });
-export const fetchPriorMatchups = () => Promise.resolve({ games: [], record: { wins: 0, losses: 0 } });
+
+export const fetchParkHistory = async (teamId) => {
+  // Compute from static schedule data
+  try {
+    const abbr = teamId == 136 ? "SEA" : "ATL";
+    const schedule = await staticFetch(`teams/${abbr}/schedule.json`);
+    const finals = schedule.filter((g) => g.status === "Final");
+    const wins = finals.filter((g) => {
+      const isHome = g.home.id == teamId;
+      return isHome ? g.home.isWinner : g.away.isWinner;
+    }).length;
+    const losses = finals.length - wins;
+    return { wins, losses, winPct: finals.length > 0 ? round3(wins / finals.length) : null, recentGames: [] };
+  } catch {
+    return { wins: 0, losses: 0, recentGames: [] };
+  }
+};
+
+export const fetchPriorMatchups = async (team1, team2) => {
+  // Compute from static schedule data
+  try {
+    const abbr = team1 == 136 ? "SEA" : "ATL";
+    const schedule = await staticFetch(`teams/${abbr}/schedule.json`);
+    const matchups = schedule.filter((g) => {
+      return g.status === "Final" && (g.away.id == team2 || g.home.id == team2);
+    });
+    const wins = matchups.filter((g) => {
+      const isHome = g.home.id == team1;
+      return isHome ? g.home.isWinner : g.away.isWinner;
+    }).length;
+    return {
+      games: matchups.map((g) => ({
+        gamePk: g.gamePk, date: g.gameDate,
+        homeAbbr: g.home.abbreviation, awayAbbr: g.away.abbreviation,
+        homeScore: g.home.score, awayScore: g.away.score,
+        won: g.home.id == team1 ? g.home.isWinner : g.away.isWinner,
+      })),
+      record: { wins, losses: matchups.length - wins },
+    };
+  } catch {
+    return { games: [], record: { wins: 0, losses: 0 } };
+  }
+};
+
+function round3(n) { return Math.round(n * 1000) / 1000; }
 
 // ---- Helpers ----
 function formatGame(g, isNext) {

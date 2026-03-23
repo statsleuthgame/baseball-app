@@ -345,6 +345,57 @@ def fetch_batter_advanced(player_id: int) -> dict:
         return {}
 
 
+def fetch_batter_career_statcast(player_id: int) -> dict:
+    """Fetch career statcast data for a batter, compute BvP for all pitchers faced."""
+    from pybaseball import statcast_batter
+
+    try:
+        # Try current season first, fall back to last 3 seasons for career data
+        df = statcast_batter("2022-03-01", date.today().isoformat(), player_id)
+        if df is None or df.empty:
+            return {}
+
+        events = df[df["events"].notna()]
+        if events.empty:
+            return {}
+
+        # Group by pitcher to create BvP lookup
+        bvp = {}
+        for pitcher_id, group in events.groupby("pitcher"):
+            pa = len(group)
+            if pa < 1:
+                continue
+
+            hits_df = group[group["events"].isin(["single", "double", "triple", "home_run"])]
+            singles = len(group[group["events"] == "single"])
+            doubles = len(group[group["events"] == "double"])
+            triples = len(group[group["events"] == "triple"])
+            home_runs = len(group[group["events"] == "home_run"])
+            total_hits = len(hits_df)
+            walks = len(group[group["events"] == "walk"])
+            hbp = len(group[group["events"] == "hit_by_pitch"])
+            strikeouts = len(group[group["events"].isin(["strikeout", "strikeout_double_play"])])
+            sac_flies = len(group[group["events"] == "sac_fly"])
+
+            ab = pa - walks - hbp - sac_flies
+            avg = round(total_hits / ab, 3) if ab > 0 else None
+            obp = round((total_hits + walks + hbp) / pa, 3) if pa > 0 else None
+            slg = round((singles + 2 * doubles + 3 * triples + 4 * home_runs) / ab, 3) if ab > 0 else None
+            ops = round(obp + slg, 3) if obp is not None and slg is not None else None
+
+            bvp[str(int(pitcher_id))] = {
+                "pa": pa, "ab": ab, "hits": total_hits,
+                "singles": singles, "doubles": doubles, "triples": triples,
+                "homeRuns": home_runs, "walks": walks, "strikeouts": strikeouts,
+                "avg": avg, "obp": obp, "slg": slg, "ops": ops,
+            }
+
+        return bvp
+    except Exception as e:
+        print(f"    career statcast error for {player_id}: {e}")
+        return {}
+
+
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
@@ -390,28 +441,39 @@ def main():
             except Exception as e:
                 print(f"    error for player {pid}: {e}")
 
-        # Statcast data (pitchers: arsenal, batters: advanced + spray at home park)
+        # Statcast data
         print(f"  fetching Statcast data (this takes a while)...")
-        for player in roster:
-            pid = player["id"]
-            is_pitcher = player["position"]["type"] == "Pitcher"
-            try:
-                if is_pitcher:
-                    arsenal = fetch_pitch_arsenal(pid)
-                    write_json(f"players/{pid}/arsenal.json", arsenal)
-                    print(f"    {player['fullName']} (P) - arsenal done")
-                else:
-                    advanced = fetch_batter_advanced(pid)
-                    write_json(f"players/{pid}/advanced.json", advanced)
+        position_players = [p for p in roster if p["position"]["type"] != "Pitcher"]
+        pitchers = [p for p in roster if p["position"]["type"] == "Pitcher"]
 
-                    # Spray chart at home park
-                    spray = fetch_spray_chart(pid, abbr)
-                    write_json(f"players/{pid}/spray/{abbr}.json", spray)
-                    print(f"    {player['fullName']} - advanced + spray done")
+        for player in pitchers:
+            pid = player["id"]
+            try:
+                arsenal = fetch_pitch_arsenal(pid)
+                write_json(f"players/{pid}/arsenal.json", arsenal)
+                print(f"    {player['fullName']} (P) - arsenal done")
             except Exception as e:
                 print(f"    statcast error for {player['fullName']}: {e}")
+            time.sleep(1)
 
-            # Be nice to Baseball Savant
+        for player in position_players:
+            pid = player["id"]
+            try:
+                # Advanced stats
+                advanced = fetch_batter_advanced(pid)
+                write_json(f"players/{pid}/advanced.json", advanced)
+
+                # Career BvP data (lookup by pitcher ID)
+                bvp = fetch_batter_career_statcast(pid)
+                write_json(f"players/{pid}/bvp.json", bvp)
+
+                # Spray chart at home park
+                spray = fetch_spray_chart(pid, abbr)
+                write_json(f"players/{pid}/spray/{abbr}.json", spray)
+
+                print(f"    {player['fullName']} - advanced + bvp + spray done")
+            except Exception as e:
+                print(f"    statcast error for {player['fullName']}: {e}")
             time.sleep(1)
 
     # ---- Venues list ----

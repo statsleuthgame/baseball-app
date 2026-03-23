@@ -42,8 +42,7 @@ body {
 .app-shell {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  height: -webkit-fill-available;
+  height: var(--app-height, 100vh);
   overflow: hidden;
   background: var(--bg);
 }
