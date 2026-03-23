@@ -107,11 +107,9 @@ body {
   z-index: 100;
 }
 
-/* Safe area spacer below bottom nav */
+/* Safe area spacer — hidden, kept for compatibility */
 .bottom-safe-area {
-  flex-shrink: 0;
-  height: env(safe-area-inset-bottom, 0px);
-  background: var(--bg-card);
+  display: none;
 }
 
 .bottom-nav-item {
