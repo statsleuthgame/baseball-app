@@ -27,30 +27,26 @@
   box-sizing: border-box;
 }
 
-html {
-  overflow: hidden;
+html, body, #root {
   height: 100%;
-}
-
-body {
-  height: 100%;
+  margin: 0;
   overflow: hidden;
-  background: var(--bg-card);
+  background: var(--bg);
 }
 
 /* App Shell */
 .app-shell {
+  height: 100%;
   display: flex;
   flex-direction: column;
-  height: var(--app-height, 100vh);
-  overflow: hidden;
   background: var(--bg);
 }
 
 .app-content {
   flex: 1;
+  min-height: 0;
   padding: 16px;
-  padding-bottom: 16px;
+  padding-bottom: 70px;
   max-width: 600px;
   width: 100%;
   margin: 0 auto;
@@ -100,14 +96,16 @@ body {
 
 /* Bottom Nav */
 .bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   display: flex;
   background: var(--bg-card);
   border-top: 1px solid var(--border);
-  flex-shrink: 0;
   z-index: 100;
 }
 
-/* Safe area spacer — hidden, kept for compatibility */
 .bottom-safe-area {
   display: none;
 }
