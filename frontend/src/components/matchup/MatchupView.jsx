@@ -1,16 +1,14 @@
-import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTeam } from "../../context/TeamContext";
 import { fetchTodayGame, fetchRoster } from "../../api/client";
 import LoadingSpinner from "../common/LoadingSpinner";
 import BatterVsPitcher from "./BatterVsPitcher";
-import PitchTypeMatchup from "./PitchTypeMatchup";
+import PitchArsenal from "../player/PitchArsenal";
 import ParkHistory from "./ParkHistory";
 import PriorMatchups from "./PriorMatchups";
 
 export default function MatchupView() {
-  const { teamId, team } = useTeam();
-  const [selectedBatter, setSelectedBatter] = useState(null);
+  const { teamId } = useTeam();
 
   const { data: game, isLoading } = useQuery({
     queryKey: ["todayGame", teamId],
@@ -19,7 +17,6 @@ export default function MatchupView() {
     staleTime: 1000 * 60 * 5,
   });
 
-  // Fetch our roster for lineup (using full roster as fallback since lineups aren't always posted)
   const { data: roster } = useQuery({
     queryKey: ["roster", teamId],
     queryFn: () => fetchRoster(teamId),
@@ -43,7 +40,6 @@ export default function MatchupView() {
   const us = isHome ? game.home : game.away;
   const opponentPitcher = opponent.probablePitcher;
 
-  // Position players from our roster
   const batters = (roster || []).filter((p) => p.position.type !== "Pitcher");
 
   return (
@@ -61,10 +57,17 @@ export default function MatchupView() {
         </div>
       </div>
 
-      {/* Probable pitcher info */}
       {!opponentPitcher && (
         <div className="matchup-notice">
           Opposing starter not yet announced. Check back closer to game time.
+        </div>
+      )}
+
+      {/* Opposing pitcher's arsenal */}
+      {opponentPitcher && (
+        <div className="matchup-section">
+          <h3>{opponentPitcher.fullName}'s Arsenal</h3>
+          <PitchArsenal playerId={opponentPitcher.id} embedded />
         </div>
       )}
 
@@ -74,33 +77,6 @@ export default function MatchupView() {
           batters={batters}
           pitcherId={opponentPitcher.id}
           pitcherName={opponentPitcher.fullName}
-        />
-      )}
-
-      {/* Individual pitch-type matchup (select a batter) */}
-      {opponentPitcher && batters.length > 0 && (
-        <div className="matchup-section">
-          <h3>Pitch Arsenal Matchup</h3>
-          <select
-            className="spray-select"
-            value={selectedBatter || ""}
-            onChange={(e) => setSelectedBatter(e.target.value || null)}
-          >
-            <option value="">Select a batter to see pitch breakdown...</option>
-            {batters.map((b) => (
-              <option key={b.id} value={b.id}>
-                {b.fullName} ({b.position.abbreviation})
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
-
-      {selectedBatter && opponentPitcher && (
-        <PitchTypeMatchup
-          batterId={Number(selectedBatter)}
-          pitcherId={opponentPitcher.id}
-          batterName={batters.find((b) => b.id === Number(selectedBatter))?.fullName}
         />
       )}
 

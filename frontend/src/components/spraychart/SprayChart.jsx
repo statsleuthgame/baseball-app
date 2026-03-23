@@ -114,7 +114,7 @@ export default function SprayChart() {
           >
             {(venues || []).map((v) => (
               <option key={v.abbr} value={v.abbr}>
-                {v.name}
+                {v.team ? `${v.team} - ${v.name}` : v.name}
               </option>
             ))}
           </select>

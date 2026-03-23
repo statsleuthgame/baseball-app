@@ -8,7 +8,7 @@
  *  - To plot in SVG: svgX = x + 125,  svgY = 200 - y
  */
 
-const SCALE = 0.44; // SVG units per foot
+const SCALE = 0.40; // SVG units per foot (calibrated to Statcast hc_x/hc_y coordinate system)
 const HP_X = 125;   // Home plate X in viewBox
 const HP_Y = 200;   // Home plate Y in viewBox
 

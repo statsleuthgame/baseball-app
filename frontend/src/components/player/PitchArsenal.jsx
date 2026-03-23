@@ -10,7 +10,7 @@ const PITCH_COLORS = {
   ST: "#5e35b1", KN: "#795548", CS: "#8e24aa",
 };
 
-export default function PitchArsenal({ playerId }) {
+export default function PitchArsenal({ playerId, embedded }) {
   const { data, isLoading } = useQuery({
     queryKey: ["arsenal", playerId],
     queryFn: () => fetchPlayerArsenal(playerId),
@@ -21,9 +21,11 @@ export default function PitchArsenal({ playerId }) {
   if (isLoading) return <LoadingSpinner text="Loading arsenal..." />;
   if (!data?.pitches?.length) return null;
 
+  const Wrapper = embedded ? "div" : "div";
+
   return (
-    <div className="stat-section">
-      <h3 className="stat-section-title">Pitch Arsenal</h3>
+    <div className={embedded ? "" : "stat-section"}>
+      {!embedded && <h3 className="stat-section-title">Pitch Arsenal</h3>}
 
       {/* Usage bar visualization */}
       <div className="arsenal-bar">
