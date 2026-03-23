@@ -27,13 +27,16 @@
   box-sizing: border-box;
 }
 
-html, body, #root {
+html, body {
   height: 100%;
   margin: 0;
-  overflow: hidden;
-  overscroll-behavior: none;
-  /* IMPORTANT: body background matches nav bar color so any gap below nav is invisible */
   background: #141a28;
+  overscroll-behavior: none;
+}
+
+#root {
+  height: 100%;
+  overflow: hidden;
 }
 
 /* App Shell */

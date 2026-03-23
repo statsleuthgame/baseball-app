@@ -1,15 +1,32 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" style="background:#141a28;">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Baseball Stats</title>
-    <meta name="theme-color" content="#0C2C56" />
+    <meta name="theme-color" content="#141a28" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <style>
+      /* Paints the ENTIRE physical screen the nav bar color.
+         Sits behind everything. Any gap iOS creates shows this
+         color instead of black. This cannot be overridden by
+         viewport quirks because it's inline on the html element
+         and the fixed div covers the full screen. */
+      #screen-fill {
+        position: fixed;
+        top: -200px;
+        left: 0;
+        right: 0;
+        bottom: -200px;
+        background: #141a28;
+        z-index: -1;
+      }
+    </style>
   </head>
-  <body>
+  <body style="margin:0; background:#141a28;">
+    <div id="screen-fill"></div>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
