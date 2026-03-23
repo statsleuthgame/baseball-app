@@ -10,7 +10,7 @@ export default function TopBar() {
   const isNestedPage = !!playerId;
 
   const handleBack = () => {
-    navigate(`/team/${teamId}`);
+    navigate(`/team/${teamId}/roster`);
   };
 
   const handleSwitch = () => {

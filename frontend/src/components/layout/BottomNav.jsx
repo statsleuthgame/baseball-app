@@ -36,6 +36,18 @@ const tabs = [
     ),
   },
   {
+    path: "roster",
+    label: "Roster",
+    icon: (
+      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+        <circle cx="9" cy="7" r="4" />
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+      </svg>
+    ),
+  },
+  {
     path: "spray",
     label: "Spray",
     icon: (
@@ -62,9 +74,14 @@ export default function BottomNav() {
   return (
     <nav className="bottom-nav" aria-label="Main navigation">
       {tabs.map((tab) => {
-        const isActive = tab.path === ""
-          ? (location.pathname === `/team/${teamId}` || location.pathname === `/team/${teamId}/` || isPlayerPage)
-          : location.pathname.includes(`/team/${teamId}/${tab.path}`);
+        let isActive;
+        if (tab.path === "") {
+          isActive = location.pathname === `/team/${teamId}` || location.pathname === `/team/${teamId}/`;
+        } else if (tab.path === "roster") {
+          isActive = location.pathname.includes(`/team/${teamId}/roster`) || isPlayerPage;
+        } else {
+          isActive = location.pathname.includes(`/team/${teamId}/${tab.path}`);
+        }
 
         return (
           <NavLink

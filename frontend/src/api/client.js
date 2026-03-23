@@ -261,7 +261,7 @@ export const fetchTransactions = async (teamId) => {
       typeDesc: t.typeDesc,
       description: t.description,
       player: t.person ? { id: t.person.id, name: t.person.fullName } : null,
-    })).slice(0, 20);
+    })).slice(0, 10);
   } catch {
     return [];
   }
@@ -279,7 +279,7 @@ export const fetchPlayerGameLog = async (playerId, group = "hitting") => {
       if (splits.length) {
         return splits.slice(-10).reverse().map((s) => ({
           date: s.date,
-          opponent: s.opponent?.abbreviation || "",
+          opponent: s.opponent?.abbreviation || s.opponent?.name?.split(" ").pop() || "",
           isHome: s.isHome,
           isWin: s.isWin,
           stat: s.stat,

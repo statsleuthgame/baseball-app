@@ -4,7 +4,6 @@ import StandingsCard from "./StandingsCard";
 import TeamHotCold from "./TeamHotCold";
 import LeagueLeaders from "./LeagueLeaders";
 import TransactionFeed from "./TransactionFeed";
-import RosterGrid from "./RosterGrid";
 
 export default function TeamDashboard() {
   return (
@@ -15,7 +14,6 @@ export default function TeamDashboard() {
       <TeamHotCold />
       <LeagueLeaders />
       <TransactionFeed />
-      <RosterGrid />
     </div>
   );
 }

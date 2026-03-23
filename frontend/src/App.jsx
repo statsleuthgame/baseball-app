@@ -9,6 +9,7 @@ import TeamDashboard from "./components/team/TeamDashboard";
 const PlayerDetail = lazy(() => import("./components/player/PlayerDetail"));
 const ScheduleView = lazy(() => import("./components/schedule/ScheduleView"));
 const MatchupView = lazy(() => import("./components/matchup/MatchupView"));
+const RosterGrid = lazy(() => import("./components/team/RosterGrid"));
 const SprayChart = lazy(() => import("./components/spraychart/SprayChart"));
 
 const queryClient = new QueryClient({
@@ -38,6 +39,7 @@ export default function App() {
               <Route path="player/:playerId" element={<PlayerDetail />} />
               <Route path="schedule" element={<ScheduleView />} />
               <Route path="matchup" element={<MatchupView />} />
+              <Route path="roster" element={<RosterGrid />} />
               <Route path="spray" element={<SprayChart />} />
             </Route>
           </Routes>

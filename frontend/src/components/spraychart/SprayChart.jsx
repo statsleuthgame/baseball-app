@@ -114,7 +114,10 @@ export default function SprayChart() {
             onChange={(e) => setSelectedPark(e.target.value)}
             aria-label="Select ballpark"
           >
-            {(venues || []).map((v) => (
+            {(venues || [])
+              .slice()
+              .sort((a, b) => (a.team || "").localeCompare(b.team || ""))
+              .map((v) => (
               <option key={v.abbr} value={v.abbr}>
                 {v.team ? `${v.team} - ${v.name}` : v.name}
               </option>
