@@ -216,6 +216,20 @@ def fetch_standings() -> list:
     return divisions
 
 
+def _lookup_pitcher_names(pitcher_ids: list[int]) -> dict[int, str]:
+    """Batch lookup pitcher names from MLB API. Returns {pitcher_id: 'First Last'}."""
+    names = {}
+    for pid in pitcher_ids:
+        try:
+            data = mlb_get(f"/people/{pid}")
+            people = data.get("people", [])
+            if people:
+                names[pid] = people[0].get("fullName", "")
+        except Exception:
+            pass
+    return names
+
+
 def fetch_all_spray_charts(player_id: int) -> dict[str, dict]:
     """Fetch career spray chart data for a player at ALL parks (2020+). Returns dict keyed by team abbr."""
     from pybaseball import statcast_batter
@@ -230,6 +244,12 @@ def fetch_all_spray_charts(player_id: int) -> dict[str, dict]:
         batted = df[df["hc_x"].notna() & df["hc_y"].notna() & df["events"].notna()].copy()
         if batted.empty or "home_team" not in batted.columns:
             return {}
+
+        # Batch lookup pitcher names from their IDs
+        unique_pitcher_ids = [
+            int(pid) for pid in batted["pitcher"].dropna().unique()
+        ]
+        pitcher_names = _lookup_pitcher_names(unique_pitcher_ids)
 
         results = {}
         for home_team, group in batted.groupby("home_team"):
@@ -248,6 +268,10 @@ def fetch_all_spray_charts(player_id: int) -> dict[str, dict]:
                 at = row.get("away_team", "")
                 opponent = at if ht == home_team else ht
 
+                # Look up pitcher name from ID (player_name is the batter, not the pitcher)
+                pid = int(row["pitcher"]) if pd.notna(row.get("pitcher")) else None
+                pitcher_name = pitcher_names.get(pid, "") if pid else ""
+
                 hits.append({
                     "x": safe_float(x), "y": safe_float(y), "result": result_type, "event": event,
                     "date": str(row.get("game_date", "")),
@@ -255,25 +279,10 @@ def fetch_all_spray_charts(player_id: int) -> dict[str, dict]:
                     "launchAngle": safe_float(row.get("launch_angle")),
                     "pitchType": row.get("pitch_type", "") if pd.notna(row.get("pitch_type")) else "",
                     "hitDistance": safe_float(row.get("hit_distance_sc"), 0),
-                    "pitcher": int(row["pitcher"]) if pd.notna(row.get("pitcher")) else None,
+                    "pitcher": pid,
+                    "pitcherName": pitcher_name,
                     "opponent": opponent if pd.notna(opponent) else "",
                 })
-
-            # Resolve pitcher names for home runs
-            hr_pitcher_ids = set(h["pitcher"] for h in hits if h["result"] == "home_run" and h["pitcher"])
-            pitcher_names = {}
-            for pid in hr_pitcher_ids:
-                try:
-                    pdata = mlb_get(f"/people/{pid}")
-                    people = pdata.get("people", [])
-                    if people:
-                        pitcher_names[pid] = people[0].get("fullName", "")
-                except Exception:
-                    pass
-
-            for h in hits:
-                if h["result"] == "home_run" and h["pitcher"] in pitcher_names:
-                    h["pitcherName"] = pitcher_names[h["pitcher"]]
 
             results[home_team] = {"hits": hits, "summary": summary}
 
