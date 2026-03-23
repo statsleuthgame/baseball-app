@@ -634,6 +634,29 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
+/* Percentile-colored stat cells */
+.stat-percentile {
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-pct-bar {
+  display: block;
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 2px;
+  margin-top: 2px;
+}
+
+.stat-pct-fill {
+  display: block;
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
 /* Pitch Arsenal */
 .arsenal-bar {
   display: flex;
