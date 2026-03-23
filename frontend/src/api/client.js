@@ -35,30 +35,24 @@ export const fetchPlayerAdvanced = (playerId) =>
   staticFetch(`players/${playerId}/advanced.json`).catch(() => ({}));
 
 export const fetchPlayerArsenal = async (playerId) => {
-  // Try static pre-generated data first (our team's pitchers)
+  // Try static pre-generated data first
   try {
     const data = await staticFetch(`players/${playerId}/arsenal.json`);
     if (data?.pitches?.length) return data;
   } catch {}
 
-  // Fallback: fetch pitch mix from MLB Stats API (works for any pitcher)
-  try {
-    const resp = await mlbApi.get(`/people/${playerId}/stats`, {
-      params: { stats: "pitchArsenal", season: new Date().getFullYear(), group: "pitching" },
-    });
-    const splits = resp.data?.stats?.[0]?.splits || [];
-    if (!splits.length) {
-      // Try previous season
-      const resp2 = await mlbApi.get(`/people/${playerId}/stats`, {
-        params: { stats: "pitchArsenal", season: new Date().getFullYear() - 1, group: "pitching" },
+  // Fallback: MLB Stats API (works for any pitcher, our team or opponent)
+  const year = new Date().getFullYear();
+  for (const season of [year, year - 1]) {
+    try {
+      const resp = await mlbApi.get(`/people/${playerId}/stats`, {
+        params: { stats: "pitchArsenal", season, group: "pitching" },
       });
-      const splits2 = resp2.data?.stats?.[0]?.splits || [];
-      return formatMlbArsenal(splits2);
-    }
-    return formatMlbArsenal(splits);
-  } catch {
-    return { pitches: [], totalPitches: 0 };
+      const splits = resp.data?.stats?.[0]?.splits || [];
+      if (splits.length) return formatMlbArsenal(splits);
+    } catch {}
   }
+  return { pitches: [], totalPitches: 0 };
 };
 
 function formatMlbArsenal(splits) {
