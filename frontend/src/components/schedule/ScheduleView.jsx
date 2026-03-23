@@ -10,7 +10,7 @@ const MONTHS = ["Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"];
 
 export default function ScheduleView() {
   const { teamId } = useTeam();
-  const [selectedMonth, setSelectedMonth] = useState(null);
+  const [selectedMonth, setSelectedMonth] = useState(() => new Date().getMonth());
 
   const { data: games, isLoading, error, refetch } = useQuery({
     queryKey: ["schedule", teamId],

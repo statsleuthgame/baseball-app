@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
 import { fetchTodayGame } from "../../api/client";
 import { formatGameDate, formatGameTime } from "../../utils/formatters";
@@ -6,6 +7,7 @@ import PlayerPhoto from "../common/PlayerPhoto";
 
 export default function TodayGame() {
   const { teamId } = useTeam();
+  const navigate = useNavigate();
 
   const { data: game, isLoading } = useQuery({
     queryKey: ["todayGame", teamId],
@@ -38,6 +40,8 @@ export default function TodayGame() {
     gameDate.getMonth() === today.getMonth() &&
     gameDate.getDate() === today.getDate();
 
+  const goToMatchup = () => navigate(`/team/${teamId}/matchup`);
+
   return (
     <div className="today-game-wrapper">
       <GameCard
@@ -53,6 +57,7 @@ export default function TodayGame() {
             : "NEXT GAME"
         }
         showDate={!isToday}
+        onTap={goToMatchup}
       />
 
       {/* If today's game is final, also show the next upcoming game */}
@@ -69,7 +74,7 @@ export default function TodayGame() {
   );
 }
 
-function GameCard({ game, teamId, label, showDate, compact }) {
+function GameCard({ game, teamId, label, showDate, compact, onTap }) {
   const isHome = game.home.id === teamId;
   const opponent = isHome ? game.away : game.home;
   const us = isHome ? game.home : game.away;
@@ -77,7 +82,7 @@ function GameCard({ game, teamId, label, showDate, compact }) {
   const isFinal = game.status === "Final";
 
   return (
-    <div className={`today-game-card ${isLive ? "live" : ""} ${compact ? "compact" : ""}`}>
+    <div className={`today-game-card ${isLive ? "live" : ""} ${compact ? "compact" : ""}`} onClick={onTap}>
       <div className="today-game-header">
         <span className={`today-game-label ${label === "LIVE" ? "label-live" : label === "NEXT GAME" ? "label-next" : ""}`}>
           {label}

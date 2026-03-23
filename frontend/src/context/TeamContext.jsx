@@ -1,27 +1,17 @@
-import { createContext, useContext, useState, useEffect, useRef } from "react";
+import { createContext, useContext, useState, useEffect, useRef, useCallback, useMemo } from "react";
 
 const TeamContext = createContext(null);
 
 const TEAM_DATA = {
   136: {
-    id: 136,
-    name: "Seattle Mariners",
-    abbreviation: "SEA",
-    primary: "#0C2C56",
-    secondary: "#005C5C",
-    accent: "#C4CED4",
-    venueId: 680,
-    divisionId: 200,
+    id: 136, name: "Seattle Mariners", abbreviation: "SEA",
+    primary: "#0C2C56", secondary: "#00A3A3", accent: "#C4CED4",
+    venueId: 680, divisionId: 200,
   },
   144: {
-    id: 144,
-    name: "Atlanta Braves",
-    abbreviation: "ATL",
-    primary: "#13274F",
-    secondary: "#CE1141",
-    accent: "#EAAA00",
-    venueId: 4705,
-    divisionId: 204,
+    id: 144, name: "Atlanta Braves", abbreviation: "ATL",
+    primary: "#13274F", secondary: "#E8365C", accent: "#EAAA00",
+    venueId: 4705, divisionId: 204,
   },
 };
 
@@ -31,26 +21,21 @@ export function TeamProvider({ children }) {
     return saved ? Number(saved) : null;
   });
 
-  // Track whether user intentionally cleared the team
   const switchingRef = useRef(false);
 
-  const setTeamId = (id) => {
-    if (id === null) {
-      switchingRef.current = true;
-    }
+  const setTeamId = useCallback((id) => {
+    if (id === null) switchingRef.current = true;
     setTeamIdRaw(id);
-  };
+  }, []);
 
-  // Allow AppShell to sync URL teamId, but not if user is switching teams
-  const syncTeamFromUrl = (urlTeamId) => {
-    if (switchingRef.current) return; // don't override intentional clear
+  const syncTeamFromUrl = useCallback((urlTeamId) => {
+    if (switchingRef.current) return;
     const parsed = Number(urlTeamId);
     if (parsed && parsed !== teamId) {
       setTeamIdRaw(parsed);
     }
-  };
+  }, [teamId]);
 
-  // Reset the switching flag when teamId becomes non-null (new team selected)
   useEffect(() => {
     if (teamId) {
       switchingRef.current = false;
@@ -68,8 +53,13 @@ export function TeamProvider({ children }) {
 
   const team = teamId ? TEAM_DATA[teamId] : null;
 
+  const value = useMemo(
+    () => ({ team, teamId, setTeamId, syncTeamFromUrl, TEAM_DATA }),
+    [team, teamId, setTeamId, syncTeamFromUrl]
+  );
+
   return (
-    <TeamContext.Provider value={{ team, teamId, setTeamId, syncTeamFromUrl, TEAM_DATA }}>
+    <TeamContext.Provider value={value}>
       {children}
     </TeamContext.Provider>
   );

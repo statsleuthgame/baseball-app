@@ -152,6 +152,10 @@ export default function SprayChart() {
             </BallparkSVG>
           </div>
 
+          {filteredData.hits.length === 0 && (
+            <p className="spray-empty">No batted ball data found for these filters.</p>
+          )}
+
           <SpraySidebar summary={filteredData.summary} />
         </>
       )}

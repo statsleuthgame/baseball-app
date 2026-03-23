@@ -1,4 +1,4 @@
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useParams, useLocation } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
 
 const tabs = [
@@ -54,7 +54,11 @@ const tabs = [
 export default function BottomNav() {
   const { teamId: contextTeamId } = useTeam();
   const { teamId: urlTeamId } = useParams();
+  const location = useLocation();
   const teamId = contextTeamId || urlTeamId;
+
+  // Check if we're on a player detail page (should highlight Dashboard)
+  const isPlayerPage = location.pathname.includes("/player/");
 
   return (
     <nav className="bottom-nav">
@@ -63,7 +67,10 @@ export default function BottomNav() {
           key={tab.path}
           to={`/team/${teamId}/${tab.path}`}
           end={tab.path === ""}
-          className={({ isActive }) => `bottom-nav-item ${isActive ? "active" : ""}`}
+          className={({ isActive }) => {
+            const active = tab.path === "" ? (isActive || isPlayerPage) : isActive;
+            return `bottom-nav-item ${active ? "active" : ""}`;
+          }}
         >
           {tab.icon}
           <span>{tab.label}</span>

@@ -1,13 +1,16 @@
+import { lazy, Suspense } from "react";
 import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { TeamProvider, useTeam } from "./context/TeamContext";
 import AppShell from "./components/layout/AppShell";
 import TeamSelector from "./components/team/TeamSelector";
 import TeamDashboard from "./components/team/TeamDashboard";
-import PlayerDetail from "./components/player/PlayerDetail";
-import ScheduleView from "./components/schedule/ScheduleView";
-import MatchupView from "./components/matchup/MatchupView";
-import SprayChart from "./components/spraychart/SprayChart";
+import LoadingSpinner from "./components/common/LoadingSpinner";
+
+const PlayerDetail = lazy(() => import("./components/player/PlayerDetail"));
+const ScheduleView = lazy(() => import("./components/schedule/ScheduleView"));
+const MatchupView = lazy(() => import("./components/matchup/MatchupView"));
+const SprayChart = lazy(() => import("./components/spraychart/SprayChart"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,6 +27,10 @@ function TeamRedirect() {
   return <TeamSelector />;
 }
 
+function LazyOutlet({ children }) {
+  return <Suspense fallback={<LoadingSpinner />}>{children}</Suspense>;
+}
+
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
@@ -33,10 +40,10 @@ export default function App() {
             <Route path="/" element={<TeamRedirect />} />
             <Route path="/team/:teamId" element={<AppShell />}>
               <Route index element={<TeamDashboard />} />
-              <Route path="player/:playerId" element={<PlayerDetail />} />
-              <Route path="schedule" element={<ScheduleView />} />
-              <Route path="matchup" element={<MatchupView />} />
-              <Route path="spray" element={<SprayChart />} />
+              <Route path="player/:playerId" element={<LazyOutlet><PlayerDetail /></LazyOutlet>} />
+              <Route path="schedule" element={<LazyOutlet><ScheduleView /></LazyOutlet>} />
+              <Route path="matchup" element={<LazyOutlet><MatchupView /></LazyOutlet>} />
+              <Route path="spray" element={<LazyOutlet><SprayChart /></LazyOutlet>} />
             </Route>
           </Routes>
         </HashRouter>

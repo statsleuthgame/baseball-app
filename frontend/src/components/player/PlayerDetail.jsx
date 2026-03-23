@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useTeam } from "../../context/TeamContext";
-import { fetchPlayerDetail, fetchPlayerStats } from "../../api/client";
+import { fetchPlayerStats } from "../../api/client";
 import PlayerPhoto from "../common/PlayerPhoto";
 import LoadingSpinner from "../common/LoadingSpinner";
 import ErrorMessage from "../common/ErrorMessage";
@@ -16,24 +16,19 @@ export default function PlayerDetail() {
   const { teamId } = useTeam();
   const navigate = useNavigate();
 
-  const { data: player, isLoading: loadingDetail, error } = useQuery({
-    queryKey: ["playerDetail", playerId],
-    queryFn: () => fetchPlayerDetail(playerId),
+  // Single fetch for both detail and stats (same JSON file)
+  const { data: playerData, isLoading, error } = useQuery({
+    queryKey: ["playerInfo", playerId],
+    queryFn: () => fetchPlayerStats(playerId),
     enabled: !!playerId,
   });
 
+  const player = playerData?.detail;
+  const stats = playerData?.stats?.stats || {};
   const isPitcher = player?.primaryPosition === "P";
 
-  const { data: statsData, isLoading: loadingStats } = useQuery({
-    queryKey: ["playerStats", playerId],
-    queryFn: () => fetchPlayerStats(playerId),
-    enabled: !!player,
-  });
-
-  if (loadingDetail) return <LoadingSpinner text="Loading player..." />;
+  if (isLoading) return <LoadingSpinner text="Loading player..." />;
   if (error || !player?.id) return <ErrorMessage message="Player not found." />;
-
-  const stats = statsData?.stats || {};
 
   return (
     <div className="player-detail">
@@ -52,7 +47,6 @@ export default function PlayerDetail() {
         </div>
       </div>
 
-      {/* Quick action buttons */}
       {!isPitcher && (
         <div className="player-actions">
           <button
@@ -70,16 +64,12 @@ export default function PlayerDetail() {
         </div>
       )}
 
-      {/* Standard stats */}
-      {loadingStats ? (
-        <LoadingSpinner text="Loading stats..." />
-      ) : isPitcher ? (
+      {isPitcher ? (
         <PitcherStats stats={stats} />
       ) : (
         <BatterStats stats={stats} />
       )}
 
-      {/* Advanced stats (Statcast) */}
       {isPitcher ? (
         <>
           <PitchArsenal playerId={playerId} />

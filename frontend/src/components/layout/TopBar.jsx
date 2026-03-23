@@ -1,31 +1,56 @@
 import { useTeam } from "../../context/TeamContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 
 export default function TopBar() {
-  const { team, teamId, setTeamId } = useTeam();
+  const { team, teamId, setTeamId, TEAM_DATA } = useTeam();
   const navigate = useNavigate();
+  const location = useLocation();
+  const { playerId } = useParams();
+
+  const isNestedPage = !!playerId;
+
+  const handleBack = () => {
+    navigate(`/team/${teamId}`);
+  };
 
   const handleSwitch = () => {
-    // Toggle between the two teams
     const newTeamId = teamId === 136 ? 144 : 136;
     setTeamId(newTeamId);
-    navigate(`/team/${newTeamId}`);
+    // Preserve current tab when switching
+    const path = location.pathname;
+    const currentTab = path.split("/").slice(3).join("/"); // e.g. "schedule", "matchup", "spray"
+    navigate(`/team/${newTeamId}/${currentTab}`);
   };
+
+  const otherTeam = teamId === 136 ? TEAM_DATA[144] : TEAM_DATA[136];
 
   return (
     <header className="top-bar">
+      {isNestedPage && (
+        <button className="top-bar-back" onClick={handleBack} title="Back">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
+      )}
       {team ? (
         <>
-          <img
-            src={`https://www.mlbstatic.com/team-logos/${team.id}.svg`}
-            alt={team.name}
-            className="top-bar-logo"
-          />
-          <h1 className="top-bar-title">{team.name}</h1>
-          <button className="top-bar-switch" onClick={handleSwitch} title="Switch team">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M7 16l-4-4 4-4M17 8l4 4-4 4M3 12h18" />
-            </svg>
+          {!isNestedPage && (
+            <img
+              src={`https://www.mlbstatic.com/team-logos/${team.id}.svg`}
+              alt={team.name}
+              className="top-bar-logo"
+            />
+          )}
+          <h1 className="top-bar-title">{isNestedPage ? "" : team.name}</h1>
+          <button className="top-bar-switch" onClick={handleSwitch} title={`Switch to ${otherTeam?.name}`}>
+            {otherTeam && (
+              <img
+                src={`https://www.mlbstatic.com/team-logos/${otherTeam.id}.svg`}
+                alt={otherTeam.name}
+                style={{ width: 24, height: 24 }}
+              />
+            )}
           </button>
         </>
       ) : (
