@@ -12,7 +12,7 @@ export default function ParkHistory({ teamId, venueId, venueName }) {
   });
 
   if (!teamId || !venueId) return null;
-  if (isLoading) return <LoadingSpinner text="Loading park history..." />;
+  if (isLoading) return null;
   if (!data) return null;
 
   return (

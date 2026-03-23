@@ -350,10 +350,24 @@ def fetch_batter_advanced(player_id: int) -> dict:
         xslg = safe_float(events["estimated_slg_using_speedangle"].mean(), 3) if "estimated_slg_using_speedangle" in events.columns and events["estimated_slg_using_speedangle"].notna().any() else None
         xwoba = safe_float(df["estimated_woba_using_speedangle"].mean(), 3) if "estimated_woba_using_speedangle" in df.columns and df["estimated_woba_using_speedangle"].notna().any() else None
 
+        # Barrel rate
+        barrel = batted[batted["launch_speed_angle"] == 6] if "launch_speed_angle" in batted.columns else pd.DataFrame()
+        barrel_pct = round(len(barrel) / len(batted) * 100, 1) if len(batted) > 0 else None
+
+        # Chase rate (swings at pitches outside zone)
+        outside_zone = all_pitches[all_pitches["zone"].isin([11, 12, 13, 14])] if "zone" in all_pitches.columns else pd.DataFrame()
+        chases = outside_zone[outside_zone["description"].isin([
+            "swinging_strike", "swinging_strike_blocked", "foul", "foul_tip",
+            "hit_into_play", "hit_into_play_no_out", "hit_into_play_score",
+        ])] if not outside_zone.empty else pd.DataFrame()
+        chase_rate = round(len(chases) / len(outside_zone) * 100, 1) if len(outside_zone) > 0 else None
+
         return {
             "avgExitVelo": avg_ev, "maxExitVelo": max_ev, "hardHitPct": hard_hit_pct,
-            "avgLaunchAngle": avg_la, "gbPct": gb_pct, "fbPct": fb_pct, "ldPct": ld_pct,
-            "whiffRate": whiff_rate, "xBA": xba, "xSLG": xslg, "xwOBA": xwoba,
+            "barrelPct": barrel_pct, "avgLaunchAngle": avg_la,
+            "whiffRate": whiff_rate, "chaseRate": chase_rate,
+            "gbPct": gb_pct, "fbPct": fb_pct, "ldPct": ld_pct,
+            "xBA": xba, "xSLG": xslg, "xwOBA": xwoba,
         }
     except Exception as e:
         print(f"    advanced error for {player_id}: {e}")

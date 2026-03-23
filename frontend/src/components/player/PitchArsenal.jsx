@@ -97,24 +97,30 @@ export default function PitchArsenal({ playerId, embedded }) {
       </div>
 
       <div className="arsenal-movement">
-        <h4 className="arsenal-sub-title">Pitch Movement (inches)</h4>
-        <svg viewBox="-25 -25 50 50" className="movement-chart">
-          <line x1="-20" y1="0" x2="20" y2="0" stroke="#1e2a3e" strokeWidth="0.3" />
-          <line x1="0" y1="-20" x2="0" y2="20" stroke="#1e2a3e" strokeWidth="0.3" />
+        <h4 className="arsenal-sub-title">Pitch Movement</h4>
+        <p className="arsenal-movement-desc">How each pitch moves from the batter's perspective. Right = arm-side run, Up = rise vs gravity.</p>
+        <svg viewBox="-28 -28 56 56" className="movement-chart">
+          {/* Grid */}
+          <line x1="-22" y1="0" x2="22" y2="0" stroke="#1e2a3e" strokeWidth="0.3" />
+          <line x1="0" y1="-22" x2="0" y2="22" stroke="#1e2a3e" strokeWidth="0.3" />
           {[-10, 10].map((v) => (
             <g key={v}>
-              <line x1={v} y1="-20" x2={v} y2="20" stroke="#1e2a3e" strokeWidth="0.15" />
-              <line x1="-20" y1={v} x2="20" y2={v} stroke="#1e2a3e" strokeWidth="0.15" />
+              <line x1={v} y1="-22" x2={v} y2="22" stroke="#1e2a3e" strokeWidth="0.15" />
+              <line x1="-22" y1={v} x2="22" y2={v} stroke="#1e2a3e" strokeWidth="0.15" />
             </g>
           ))}
-          <text x="22" y="1" fill="#8891a5" fontSize="2.5">HB</text>
-          <text x="-1" y="-22" fill="#8891a5" fontSize="2.5">VB</text>
+          {/* Axis labels */}
+          <text x="0" y="-24" fill="#9299ad" fontSize="2.2" textAnchor="middle">More Rise</text>
+          <text x="0" y="26" fill="#9299ad" fontSize="2.2" textAnchor="middle">More Drop</text>
+          <text x="24" y="1" fill="#9299ad" fontSize="2.2" textAnchor="start">Arm Side</text>
+          <text x="-24" y="1" fill="#9299ad" fontSize="2.2" textAnchor="end">Glove Side</text>
+          {/* Pitch dots */}
           {data.pitches
             .filter((p) => p.horzBreak != null && p.vertBreak != null)
             .map((p) => (
               <g key={p.pitchType}>
-                <circle cx={p.horzBreak} cy={-p.vertBreak} r="2" fill={PITCH_COLORS[p.pitchType] || "#666"} opacity="0.85" />
-                <text x={p.horzBreak} y={-p.vertBreak + 4} fill="#e0e4ec" fontSize="2" textAnchor="middle">{p.pitchType}</text>
+                <circle cx={p.horzBreak} cy={-p.vertBreak} r="2.5" fill={PITCH_COLORS[p.pitchType] || "#666"} opacity="0.85" />
+                <text x={p.horzBreak} y={-p.vertBreak + 5} fill="#e0e4ec" fontSize="2.2" textAnchor="middle" fontWeight="600">{p.pitchType}</text>
               </g>
             ))}
         </svg>

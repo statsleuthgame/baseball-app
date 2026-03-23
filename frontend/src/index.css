@@ -47,8 +47,8 @@ html, body {
 .app-content {
   height: 100%;
   padding: 16px;
-  padding-top: calc(52px + env(safe-area-inset-top, 0px));
-  padding-bottom: 60px;
+  padding-top: calc(56px + env(safe-area-inset-top, 0px));
+  padding-bottom: 70px;
   max-width: 600px;
   width: 100%;
   margin: 0 auto;
@@ -776,6 +776,13 @@ html, body {
   font-size: 12px;
   color: var(--text-muted);
   white-space: nowrap;
+}
+
+.arsenal-movement-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin-bottom: 8px;
 }
 
 .arsenal-movement {

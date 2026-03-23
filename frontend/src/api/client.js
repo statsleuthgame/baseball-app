@@ -172,11 +172,11 @@ export const fetchBvP = async (batterId, pitcherId) => {
 export const fetchPitchTypeMatchup = () => Promise.resolve([]);
 
 export const fetchParkHistory = async (teamId) => {
-  // Compute from static schedule data
   try {
     const abbr = teamId == 136 ? "SEA" : "ATL";
     const schedule = await staticFetch(`teams/${abbr}/schedule.json`);
     const finals = schedule.filter((g) => g.status === "Final");
+    if (!finals.length) return null; // Season hasn't started
     const wins = finals.filter((g) => {
       const isHome = g.home.id == teamId;
       return isHome ? g.home.isWinner : g.away.isWinner;
@@ -184,18 +184,18 @@ export const fetchParkHistory = async (teamId) => {
     const losses = finals.length - wins;
     return { wins, losses, winPct: finals.length > 0 ? round3(wins / finals.length) : null, recentGames: [] };
   } catch {
-    return { wins: 0, losses: 0, recentGames: [] };
+    return null;
   }
 };
 
 export const fetchPriorMatchups = async (team1, team2) => {
-  // Compute from static schedule data
   try {
     const abbr = team1 == 136 ? "SEA" : "ATL";
     const schedule = await staticFetch(`teams/${abbr}/schedule.json`);
     const matchups = schedule.filter((g) => {
       return g.status === "Final" && (g.away.id == team2 || g.home.id == team2);
     });
+    if (!matchups.length) return null; // Season hasn't started
     const wins = matchups.filter((g) => {
       const isHome = g.home.id == team1;
       return isHome ? g.home.isWinner : g.away.isWinner;

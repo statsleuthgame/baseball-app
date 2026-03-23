@@ -16,9 +16,8 @@ export default function TopBar() {
   const handleSwitch = () => {
     const newTeamId = teamId === 136 ? 144 : 136;
     setTeamId(newTeamId);
-    // Preserve current tab when switching
     const path = location.pathname;
-    const currentTab = path.split("/").slice(3).join("/"); // e.g. "schedule", "matchup", "spray"
+    const currentTab = path.split("/").slice(3).join("/");
     navigate(`/team/${newTeamId}/${currentTab}`);
   };
 
@@ -35,14 +34,12 @@ export default function TopBar() {
       )}
       {team ? (
         <>
-          {!isNestedPage && (
-            <img
-              src={`https://www.mlbstatic.com/team-logos/${team.id}.svg`}
-              alt={team.name}
-              className="top-bar-logo"
-            />
-          )}
-          <h1 className="top-bar-title">{isNestedPage ? "" : team.name}</h1>
+          <img
+            src={`https://www.mlbstatic.com/team-logos/${team.id}.svg`}
+            alt={team.name}
+            className="top-bar-logo"
+          />
+          <h1 className="top-bar-title">{team.name}</h1>
           <button className="top-bar-switch" onClick={handleSwitch} title={`Switch to ${otherTeam?.name}`}>
             {otherTeam && (
               <img
