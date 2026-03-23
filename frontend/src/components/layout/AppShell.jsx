@@ -16,7 +16,7 @@ export default function AppShell() {
   }, [urlTeamId, syncTeamFromUrl]);
 
   return (
-    <div className="app-shell">
+    <>
       <TopBar />
       <main className="app-content">
         <Suspense fallback={<LoadingSpinner />}>
@@ -24,6 +24,6 @@ export default function AppShell() {
         </Suspense>
       </main>
       <BottomNav />
-    </div>
+    </>
   );
 }

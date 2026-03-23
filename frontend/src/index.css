@@ -35,22 +35,20 @@ html, body {
 }
 
 #root {
-  height: var(--real-height, 100vh);
-  overflow: hidden;
+  height: 100%;
 }
 
 /* App Shell */
 .app-shell {
-  display: flex;
-  flex-direction: column;
   height: 100%;
   background: var(--bg);
 }
 
 .app-content {
-  flex: 1 1 0;
-  min-height: 0;
+  height: 100%;
   padding: 16px;
+  padding-top: calc(52px + env(safe-area-inset-top, 0px));
+  padding-bottom: 60px;
   max-width: 600px;
   width: 100%;
   margin: 0 auto;
@@ -61,6 +59,10 @@ html, body {
 
 /* Top Bar */
 .top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -69,7 +71,6 @@ html, body {
   background: var(--team-primary);
   border-bottom: 2px solid var(--team-secondary);
   color: white;
-  flex-shrink: 0;
   z-index: 100;
 }
 
@@ -121,8 +122,11 @@ html, body {
    Container (#root) is sized via JS to window.innerHeight which IS the
    true screen height in iOS PWA mode. So this sits at the real bottom. */
 .bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   display: flex;
-  flex-shrink: 0;
   background: #141a28;
   border-top: 1px solid var(--border);
   z-index: 100;
