@@ -21,19 +21,19 @@ const STAT_CONFIG = {
 };
 
 const STAT_EXPLANATIONS = {
-  avgExitVelo: "How hard they hit the ball on average (mph)",
-  maxExitVelo: "Hardest ball hit this season (mph)",
-  hardHitPct: "% of balls hit 95+ mph. Elite power indicator",
-  barrelPct: "% of batted balls with ideal exit velo + launch angle",
-  avgLaunchAngle: "Average angle the ball leaves the bat",
-  whiffRate: "% of swings that miss. Lower = better contact",
-  chaseRate: "% of pitches outside zone they swing at. Lower = better eye",
-  gbPct: "% of batted balls on the ground",
-  fbPct: "% of batted balls in the air",
-  ldPct: "% of line drives. Highest BA of any batted ball type",
-  xBA: "Expected batting avg based on exit velo + launch angle",
-  xSLG: "Expected slugging based on quality of contact",
-  xwOBA: "Expected weighted on-base avg. Best overall contact metric",
+  avgExitVelo: "Avg Exit Velo — How hard they hit the ball on average (mph)",
+  maxExitVelo: "Max Exit Velo — Hardest ball hit this season (mph)",
+  hardHitPct: "Hard Hit% — % of balls hit 95+ mph. Elite power indicator",
+  barrelPct: "Barrel% — % of batted balls with ideal exit velo + launch angle",
+  avgLaunchAngle: "Avg Launch Angle — Average angle the ball leaves the bat",
+  whiffRate: "Whiff% — % of swings that miss. Lower = better contact",
+  chaseRate: "Chase% — % of pitches outside zone they swing at. Lower = better eye",
+  gbPct: "GB% — % of batted balls on the ground",
+  fbPct: "FB% — % of batted balls in the air",
+  ldPct: "LD% — % of line drives. Highest BA of any batted ball type",
+  xBA: "xBA — Expected batting avg based on exit velo + launch angle",
+  xSLG: "xSLG — Expected slugging based on quality of contact",
+  xwOBA: "xwOBA — Expected weighted on-base avg. Best overall contact metric",
 };
 
 function getPercentile(key, rawValue) {
@@ -58,7 +58,7 @@ function percentileColor(pct) {
 }
 
 export default function AdvancedBatterStats({ playerId }) {
-  const [expanded, setExpanded] = useState(null);
+  const [selected, setSelected] = useState(null);
 
   const { data, isLoading } = useQuery({
     queryKey: ["advanced", playerId],
@@ -86,6 +86,8 @@ export default function AdvancedBatterStats({ playerId }) {
     { key: "xwOBA", label: "xwOBA", value: data.xwOBA, fmt: (v) => formatAvg(v) },
   ];
 
+  const selectedColor = selected ? percentileColor(getPercentile(selected, data[selected])) : null;
+
   return (
     <div className="stat-section">
       <h3 className="stat-section-title">Statcast Metrics</h3>
@@ -93,13 +95,13 @@ export default function AdvancedBatterStats({ playerId }) {
         {stats.map(({ key, label, value, fmt }) => {
           const pct = getPercentile(key, value);
           const color = percentileColor(pct);
-          const isExpanded = expanded === key;
+          const isSelected = selected === key;
           return (
             <div
               key={key}
-              className={`stat-cell stat-percentile ${isExpanded ? "stat-expanded" : ""}`}
+              className={`stat-cell stat-percentile ${isSelected ? "stat-selected" : ""}`}
               style={color ? { borderColor: color } : undefined}
-              onClick={() => setExpanded(isExpanded ? null : key)}
+              onClick={() => setSelected(isSelected ? null : key)}
             >
               <span className="stat-label">{label}</span>
               <span className="stat-value" style={color ? { color } : undefined}>
@@ -110,12 +112,14 @@ export default function AdvancedBatterStats({ playerId }) {
                   <span className="stat-pct-fill" style={{ width: `${pct * 100}%`, backgroundColor: color }} />
                 </span>
               )}
-              {isExpanded && (
-                <span className="stat-explain">{STAT_EXPLANATIONS[key]}</span>
-              )}
             </div>
           );
         })}
+      </div>
+
+      {/* Fixed explanation footer below the grid */}
+      <div className={`stat-explain-footer ${selected ? "visible" : ""}`} style={selectedColor ? { borderLeftColor: selectedColor } : undefined}>
+        {selected ? STAT_EXPLANATIONS[selected] : ""}
       </div>
     </div>
   );
