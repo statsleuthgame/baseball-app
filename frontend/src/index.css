@@ -1584,6 +1584,198 @@ button.stat-cell {
 .spray-total-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-muted); }
 .spray-total-val { font-weight: 700; color: var(--text-bright); }
 
+/* Watch Game */
+.watch-page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.watch-game-card {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  text-align: center;
+}
+
+.watch-game-card.live {
+  border-color: var(--live);
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.15);
+}
+
+.watch-live-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background: var(--live);
+  color: #000;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+  animation: pulse 2s infinite;
+}
+
+.watch-scheduled-badge,
+.watch-final-badge {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.watch-matchup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 16px;
+}
+
+.watch-team {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.watch-team-logo { width: 64px; height: 64px; }
+.watch-team-name { font-size: 16px; font-weight: 800; color: var(--text-bright); }
+.watch-score { font-size: 32px; font-weight: 800; color: var(--text-bright); }
+.watch-vs { font-size: 14px; color: var(--text-muted); font-weight: 600; }
+
+.watch-pitchers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-top: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+
+.watch-pitcher {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.watch-pitcher-vs { font-size: 11px; color: var(--text-muted); }
+
+.watch-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.watch-btn-primary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  background: var(--team-secondary);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.watch-btn-primary:active { opacity: 0.8; }
+
+.watch-btn-secondary {
+  padding: 14px 20px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.watch-btn-secondary:active { opacity: 0.7; }
+
+.watch-note {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.watch-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+}
+
+.watch-empty h2 {
+  color: var(--text-bright);
+  margin: 16px 0 6px;
+  font-size: 20px;
+}
+
+.watch-empty p { font-size: 14px; }
+
+/* Upcoming broadcasts */
+.watch-upcoming {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 16px;
+  border: 1px solid var(--border);
+}
+
+.watch-upcoming-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.watch-upcoming-row:active { opacity: 0.7; }
+
+.watch-upcoming-date {
+  width: 70px;
+  flex-shrink: 0;
+}
+
+.watch-upcoming-date span { display: block; font-size: 12px; color: var(--text); font-weight: 500; }
+.watch-upcoming-time { font-size: 10px; color: var(--text-muted); }
+
+.watch-upcoming-opp {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-bright);
+}
+
+.watch-upcoming-logo { width: 22px; height: 22px; }
+
+.watch-upcoming-action {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--team-secondary);
+  padding: 4px 10px;
+  border: 1px solid var(--team-secondary);
+  border-radius: 6px;
+}
+
 /* Section title (shared) */
 .section-title {
   font-size: 16px;

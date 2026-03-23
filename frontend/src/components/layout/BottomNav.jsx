@@ -36,6 +36,15 @@ const tabs = [
     ),
   },
   {
+    path: "watch",
+    label: "Watch",
+    icon: (
+      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <polygon points="5 3 19 12 5 21 5 3" fill="currentColor" />
+      </svg>
+    ),
+  },
+  {
     path: "roster",
     label: "Roster",
     icon: (
