@@ -11,12 +11,10 @@ import LoadingSpinner from "../common/LoadingSpinner";
 import ErrorMessage from "../common/ErrorMessage";
 
 const ALL_RESULTS = ["single", "double", "triple", "home_run", "out"];
-
-// Default park for each team
 const TEAM_HOME_PARK = { 136: "SEA", 144: "ATL" };
 
 export default function SprayChart() {
-  const { teamId, team } = useTeam();
+  const { teamId } = useTeam();
   const [searchParams] = useSearchParams();
   const initialPlayer = searchParams.get("player");
 
@@ -25,14 +23,12 @@ export default function SprayChart() {
   const [season, setSeason] = useState("");
   const [filters, setFilters] = useState(null);
 
-  // Fetch venue list
   const { data: venues } = useQuery({
     queryKey: ["venues"],
     queryFn: fetchVenues,
     staleTime: Infinity,
   });
 
-  // Fetch roster for player selector
   const { data: roster } = useQuery({
     queryKey: ["roster", teamId],
     queryFn: () => fetchRoster(teamId),
@@ -45,24 +41,37 @@ export default function SprayChart() {
     [roster]
   );
 
-  // Get current park info
   const currentVenue = useMemo(
     () => (venues || []).find((v) => v.abbr === selectedPark),
     [venues, selectedPark]
   );
 
-  // Fetch spray chart data filtered by park
-  const {
-    data: sprayData,
-    isLoading,
-    error,
-    refetch,
-  } = useQuery({
-    queryKey: ["sprayChart", selectedPlayer, selectedPark, season],
-    queryFn: () => fetchSprayChart(selectedPlayer, selectedPark, season || undefined),
+  // Fetch ALL career spray data for this player at this park
+  const { data: sprayData, isLoading, error, refetch } = useQuery({
+    queryKey: ["sprayChart", selectedPlayer, selectedPark],
+    queryFn: () => fetchSprayChart(selectedPlayer, selectedPark),
     enabled: !!selectedPlayer,
     staleTime: 1000 * 60 * 60,
   });
+
+  // Filter hits by selected year client-side
+  const filteredData = useMemo(() => {
+    if (!sprayData?.hits) return null;
+
+    let hits = sprayData.hits;
+    if (season) {
+      hits = hits.filter((h) => h.date && h.date.startsWith(season));
+    }
+
+    // Recompute summary for filtered hits
+    const summary = { single: 0, double: 0, triple: 0, home_run: 0, out: 0, total: 0 };
+    for (const h of hits) {
+      summary[h.result] = (summary[h.result] || 0) + 1;
+      summary.total += 1;
+    }
+
+    return { hits, summary };
+  }, [sprayData, season]);
 
   const handleToggleFilter = (type) => {
     if (!filters) {
@@ -77,13 +86,12 @@ export default function SprayChart() {
   };
 
   const currentYear = new Date().getFullYear();
-  const seasons = Array.from({ length: 10 }, (_, i) => currentYear - i);
+  const seasons = Array.from({ length: 6 }, (_, i) => currentYear - i);
 
   return (
     <div className="spray-chart-page">
       <h2 className="spray-page-title">Spray Chart</h2>
 
-      {/* Controls */}
       <div className="spray-controls">
         <select
           className="spray-select"
@@ -116,7 +124,7 @@ export default function SprayChart() {
             value={season}
             onChange={(e) => setSeason(e.target.value)}
           >
-            <option value="">Career</option>
+            <option value="">All Years</option>
             {seasons.map((y) => (
               <option key={y} value={y}>{y}</option>
             ))}
@@ -131,7 +139,7 @@ export default function SprayChart() {
       {selectedPlayer && isLoading && <LoadingSpinner text="Loading Statcast data..." />}
       {selectedPlayer && error && <ErrorMessage message="Failed to load spray data." onRetry={refetch} />}
 
-      {selectedPlayer && sprayData && (
+      {selectedPlayer && filteredData && (
         <>
           <SprayLegend filters={filters} onToggle={handleToggleFilter} />
 
@@ -140,11 +148,11 @@ export default function SprayChart() {
               dimensions={currentVenue?.dimensions}
               parkName={currentVenue?.name}
             >
-              <HitDots hits={sprayData.hits} filters={filters} />
+              <HitDots hits={filteredData.hits} filters={filters} />
             </BallparkSVG>
           </div>
 
-          <SpraySidebar summary={sprayData.summary} />
+          <SpraySidebar summary={filteredData.summary} />
         </>
       )}
     </div>
