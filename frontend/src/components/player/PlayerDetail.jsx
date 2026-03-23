@@ -8,6 +8,7 @@ import ErrorMessage from "../common/ErrorMessage";
 import BatterStats from "./BatterStats";
 import PitcherStats from "./PitcherStats";
 import AdvancedBatterStats from "./AdvancedBatterStats";
+import AdvancedPitcherStats from "./AdvancedPitcherStats";
 import PitchArsenal from "./PitchArsenal";
 import DominanceProfile from "./DominanceProfile";
 
@@ -76,6 +77,7 @@ export default function PlayerDetail() {
 
       {isPitcher ? (
         <>
+          <AdvancedPitcherStats playerId={playerId} />
           <PitchArsenal playerId={playerId} />
           <DominanceProfile playerId={playerId} />
         </>
