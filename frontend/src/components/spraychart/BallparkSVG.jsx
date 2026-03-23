@@ -65,6 +65,8 @@ export default function BallparkSVG({ dimensions, parkName, children }) {
       viewBox="0 0 250 250"
       className="ballpark-svg"
       xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label={`Spray chart at ${parkName || 'ballpark'}`}
     >
       {/* Background */}
       <rect width="250" height="250" fill="#0d1117" rx="8" />

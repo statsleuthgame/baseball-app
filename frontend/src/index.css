@@ -28,6 +28,27 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+:focus-visible {
+  outline: 2px solid var(--team-secondary);
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 html {
   touch-action: manipulation;
   overscroll-behavior: none;
@@ -665,6 +686,20 @@ html, body {
   height: 100%;
   border-radius: 2px;
   transition: width 0.4s ease;
+}
+
+.stat-pct-text {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+/* Reset button styles for stat cells */
+button.stat-cell {
+  cursor: pointer;
+  border: none;
+  font: inherit;
+  color: inherit;
 }
 
 .stat-selected {

@@ -8,6 +8,8 @@ export default function PlayerPhoto({ playerId, name, size = 64, className = "" 
     return (
       <div
         className={`player-photo-fallback ${className}`}
+        role="img"
+        aria-label={name || "Player photo"}
         style={{
           width: size,
           height: size,
@@ -21,7 +23,7 @@ export default function PlayerPhoto({ playerId, name, size = 64, className = "" 
           fontWeight: 700,
         }}
       >
-        {name ? name.split(" ").map((n) => n[0]).join("") : "?"}
+        <span aria-hidden="true">{name ? name.split(" ").map((n) => n[0]).join("") : "?"}</span>
       </div>
     );
   }

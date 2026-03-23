@@ -97,28 +97,36 @@ export default function AdvancedBatterStats({ playerId }) {
           const color = percentileColor(pct);
           const isSelected = selected === key;
           return (
-            <div
+            <button
+              type="button"
               key={key}
               className={`stat-cell stat-percentile ${isSelected ? "stat-selected" : ""}`}
               style={color ? { borderColor: color } : undefined}
               onClick={() => setSelected(isSelected ? null : key)}
+              aria-pressed={isSelected}
+              aria-label={`${label}: ${value != null ? fmt(value) : 'no data'}${pct != null ? `, ${Math.round(pct * 100)}th percentile` : ''}`}
             >
               <span className="stat-label">{label}</span>
               <span className="stat-value" style={color ? { color } : undefined}>
                 {value != null ? fmt(value) : "—"}
               </span>
               {pct != null && (
-                <span className="stat-pct-bar">
-                  <span className="stat-pct-fill" style={{ width: `${pct * 100}%`, backgroundColor: color }} />
-                </span>
+                <>
+                  <span className="stat-pct-bar" aria-hidden="true">
+                    <span className="stat-pct-fill" style={{ width: `${pct * 100}%`, backgroundColor: color }} />
+                  </span>
+                  <span className="stat-pct-text" style={color ? { color } : undefined}>
+                    {Math.round(pct * 100)}%ile
+                  </span>
+                </>
               )}
-            </div>
+            </button>
           );
         })}
       </div>
 
       {/* Fixed explanation footer below the grid */}
-      <div className={`stat-explain-footer ${selected ? "visible" : ""}`} style={selectedColor ? { borderLeftColor: selectedColor } : undefined}>
+      <div className={`stat-explain-footer ${selected ? "visible" : ""}`} role="status" aria-live="polite" style={selectedColor ? { borderLeftColor: selectedColor } : undefined}>
         {selected ? STAT_EXPLANATIONS[selected] : ""}
       </div>
     </div>

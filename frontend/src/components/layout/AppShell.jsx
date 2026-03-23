@@ -7,9 +7,16 @@ import LoadingSpinner from "../common/LoadingSpinner";
 
 const scrollPositions = {};
 
+const PAGE_TITLES = {
+  "": "Dashboard",
+  "matchup": "Matchup",
+  "schedule": "Schedule",
+  "spray": "Spray Chart",
+};
+
 export default function AppShell() {
   const { teamId: urlTeamId } = useParams();
-  const { syncTeamFromUrl } = useTeam();
+  const { team, syncTeamFromUrl } = useTeam();
   const location = useLocation();
   const contentRef = useRef(null);
   const prevPath = useRef(location.pathname);
@@ -20,12 +27,22 @@ export default function AppShell() {
     }
   }, [urlTeamId, syncTeamFromUrl]);
 
+  // Update document title on route change
+  useEffect(() => {
+    const segment = location.pathname.split("/").slice(3).join("/") || "";
+    const firstSegment = segment.split("/")[0];
+    const pageTitle = PAGE_TITLES[firstSegment] || "Player";
+    document.title = `${pageTitle} - ${team?.name || "Baseball Stats"}`;
+  }, [location.pathname, team?.name]);
+
+  // Save/restore scroll position + manage focus
   useEffect(() => {
     const el = contentRef.current;
     if (!el) return;
 
     if (prevPath.current !== location.pathname) {
       scrollPositions[prevPath.current] = el.scrollTop;
+      el.focus({ preventScroll: true });
     }
     prevPath.current = location.pathname;
 
@@ -38,7 +55,7 @@ export default function AppShell() {
   return (
     <div className="app-shell">
       <TopBar />
-      <main className="app-content" ref={contentRef}>
+      <main className="app-content" ref={contentRef} tabIndex={-1}>
         <Suspense fallback={<LoadingSpinner />}>
           <Outlet />
         </Suspense>

@@ -97,6 +97,7 @@ export default function SprayChart() {
           className="spray-select"
           value={selectedPlayer}
           onChange={(e) => setSelectedPlayer(e.target.value)}
+          aria-label="Select player"
         >
           <option value="">Select a player...</option>
           {positionPlayers.map((p) => (
@@ -111,6 +112,7 @@ export default function SprayChart() {
             className="spray-select-sm"
             value={selectedPark}
             onChange={(e) => setSelectedPark(e.target.value)}
+            aria-label="Select ballpark"
           >
             {(venues || []).map((v) => (
               <option key={v.abbr} value={v.abbr}>
@@ -123,6 +125,7 @@ export default function SprayChart() {
             className="spray-select-sm"
             value={season}
             onChange={(e) => setSeason(e.target.value)}
+            aria-label="Select season"
           >
             <option value="">All Years</option>
             {seasons.map((y) => (
