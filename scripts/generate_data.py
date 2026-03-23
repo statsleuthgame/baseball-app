@@ -204,45 +204,48 @@ def fetch_standings() -> list:
     return divisions
 
 
-def fetch_spray_chart(player_id: int, home_team: str) -> dict:
-    """Fetch spray chart data for a player at a specific park."""
+def fetch_all_spray_charts(player_id: int) -> dict[str, dict]:
+    """Fetch career spray chart data for a player at ALL parks (2020+). Returns dict keyed by team abbr."""
     from pybaseball import statcast_batter
 
+    empty_summary = {"single": 0, "double": 0, "triple": 0, "home_run": 0, "out": 0, "total": 0}
+
     try:
-        df = statcast_batter(f"{SEASON}-03-01", date.today().isoformat(), player_id)
+        df = statcast_batter("2020-01-01", date.today().isoformat(), player_id)
         if df is None or df.empty:
-            return {"hits": [], "summary": {"single": 0, "double": 0, "triple": 0, "home_run": 0, "out": 0, "total": 0}}
+            return {}
 
         batted = df[df["hc_x"].notna() & df["hc_y"].notna() & df["events"].notna()].copy()
-        if "home_team" in batted.columns:
-            batted = batted[batted["home_team"] == home_team.upper()]
+        if batted.empty or "home_team" not in batted.columns:
+            return {}
 
-        if batted.empty:
-            return {"hits": [], "summary": {"single": 0, "double": 0, "triple": 0, "home_run": 0, "out": 0, "total": 0}}
+        results = {}
+        for home_team, group in batted.groupby("home_team"):
+            hits = []
+            summary = dict(empty_summary)
 
-        hits = []
-        summary = {"single": 0, "double": 0, "triple": 0, "home_run": 0, "out": 0, "total": 0}
+            for _, row in group.iterrows():
+                event = row["events"]
+                x = row["hc_x"] - 125.42
+                y = 198.27 - row["hc_y"]
+                result_type = event if event in ("single", "double", "triple", "home_run") else "out"
+                summary[result_type] = summary.get(result_type, 0) + 1
+                summary["total"] += 1
+                hits.append({
+                    "x": safe_float(x), "y": safe_float(y), "result": result_type, "event": event,
+                    "date": str(row.get("game_date", "")),
+                    "exitVelo": safe_float(row.get("launch_speed")),
+                    "launchAngle": safe_float(row.get("launch_angle")),
+                    "pitchType": row.get("pitch_type", "") if pd.notna(row.get("pitch_type")) else "",
+                    "hitDistance": safe_float(row.get("hit_distance_sc"), 0),
+                })
 
-        for _, row in batted.iterrows():
-            event = row["events"]
-            x = row["hc_x"] - 125.42
-            y = 198.27 - row["hc_y"]
-            result_type = event if event in ("single", "double", "triple", "home_run") else "out"
-            summary[result_type] = summary.get(result_type, 0) + 1
-            summary["total"] += 1
-            hits.append({
-                "x": safe_float(x), "y": safe_float(y), "result": result_type, "event": event,
-                "date": str(row.get("game_date", "")),
-                "exitVelo": safe_float(row.get("launch_speed")),
-                "launchAngle": safe_float(row.get("launch_angle")),
-                "pitchType": row.get("pitch_type", "") if pd.notna(row.get("pitch_type")) else "",
-                "hitDistance": safe_float(row.get("hit_distance_sc"), 0),
-            })
+            results[home_team] = {"hits": hits, "summary": summary}
 
-        return {"hits": hits, "summary": summary}
+        return results
     except Exception as e:
-        print(f"    spray chart error for {player_id} at {home_team}: {e}")
-        return {"hits": [], "summary": {"single": 0, "double": 0, "triple": 0, "home_run": 0, "out": 0, "total": 0}}
+        print(f"    spray chart error for {player_id}: {e}")
+        return {}
 
 
 def fetch_pitch_arsenal(player_id: int) -> dict:
@@ -257,7 +260,7 @@ def fetch_pitch_arsenal(player_id: int) -> dict:
     }
 
     try:
-        df = statcast_pitcher(f"{SEASON}-03-01", date.today().isoformat(), player_id)
+        df = statcast_pitcher(f"{SEASON - 1}-03-01", date.today().isoformat(), player_id)
         if df is None or df.empty:
             return {"pitches": [], "totalPitches": 0}
 
@@ -305,7 +308,7 @@ def fetch_batter_advanced(player_id: int) -> dict:
     from pybaseball import statcast_batter
 
     try:
-        df = statcast_batter(f"{SEASON}-03-01", date.today().isoformat(), player_id)
+        df = statcast_batter(f"{SEASON - 1}-03-01", date.today().isoformat(), player_id)
         if df is None or df.empty:
             return {}
 
@@ -467,11 +470,12 @@ def main():
                 bvp = fetch_batter_career_statcast(pid)
                 write_json(f"players/{pid}/bvp.json", bvp)
 
-                # Spray chart at home park
-                spray = fetch_spray_chart(pid, abbr)
-                write_json(f"players/{pid}/spray/{abbr}.json", spray)
+                # Spray charts at ALL parks (one statcast call, split by venue)
+                all_sprays = fetch_all_spray_charts(pid)
+                for park_abbr, spray_data in all_sprays.items():
+                    write_json(f"players/{pid}/spray/{park_abbr}.json", spray_data)
 
-                print(f"    {player['fullName']} - advanced + bvp + spray done")
+                print(f"    {player['fullName']} - advanced + bvp + spray ({len(all_sprays)} parks) done")
             except Exception as e:
                 print(f"    statcast error for {player['fullName']}: {e}")
             time.sleep(1)
