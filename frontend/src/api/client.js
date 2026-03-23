@@ -34,8 +34,60 @@ export const fetchPlayerStats = (playerId) =>
 export const fetchPlayerAdvanced = (playerId) =>
   staticFetch(`players/${playerId}/advanced.json`).catch(() => ({}));
 
-export const fetchPlayerArsenal = (playerId) =>
-  staticFetch(`players/${playerId}/arsenal.json`).catch(() => ({ pitches: [], totalPitches: 0 }));
+export const fetchPlayerArsenal = async (playerId) => {
+  // Try static pre-generated data first (our team's pitchers)
+  try {
+    const data = await staticFetch(`players/${playerId}/arsenal.json`);
+    if (data?.pitches?.length) return data;
+  } catch {}
+
+  // Fallback: fetch pitch mix from MLB Stats API (works for any pitcher)
+  try {
+    const resp = await mlbApi.get(`/people/${playerId}/stats`, {
+      params: { stats: "pitchArsenal", season: new Date().getFullYear(), group: "pitching" },
+    });
+    const splits = resp.data?.stats?.[0]?.splits || [];
+    if (!splits.length) {
+      // Try previous season
+      const resp2 = await mlbApi.get(`/people/${playerId}/stats`, {
+        params: { stats: "pitchArsenal", season: new Date().getFullYear() - 1, group: "pitching" },
+      });
+      const splits2 = resp2.data?.stats?.[0]?.splits || [];
+      return formatMlbArsenal(splits2);
+    }
+    return formatMlbArsenal(splits);
+  } catch {
+    return { pitches: [], totalPitches: 0 };
+  }
+};
+
+function formatMlbArsenal(splits) {
+  const PITCH_NAMES = {
+    FF: "4-Seam Fastball", SI: "Sinker", FC: "Cutter", SL: "Slider",
+    CU: "Curveball", KC: "Knuckle Curve", CH: "Changeup", FS: "Splitter",
+    SV: "Sweeper", ST: "Sweeping Curve", KN: "Knuckleball",
+  };
+  const pitches = splits.map((s) => {
+    const stat = s.stat || {};
+    const code = stat.type?.code || s.stat?.pitchType?.code || "";
+    return {
+      pitchType: code,
+      pitchName: PITCH_NAMES[code] || stat.type?.description || code,
+      usagePct: stat.percentage != null ? round1(stat.percentage * 100) : null,
+      avgVelo: stat.averageSpeed != null ? round1(stat.averageSpeed) : null,
+      avgSpin: stat.averageSpin != null ? Math.round(stat.averageSpin) : null,
+      whiffRate: stat.swingAndMiss != null ? round1(stat.swingAndMiss * 100) : null,
+      baAgainst: stat.battingAverage != null ? stat.battingAverage : null,
+      count: stat.totalPitches || 0,
+      horzBreak: stat.horizontalBreak != null ? round1(stat.horizontalBreak) : null,
+      vertBreak: stat.verticalBreak != null ? round1(stat.verticalBreak) : null,
+    };
+  }).filter((p) => p.pitchType);
+  pitches.sort((a, b) => (b.usagePct || 0) - (a.usagePct || 0));
+  return { pitches, totalPitches: pitches.reduce((sum, p) => sum + (p.count || 0), 0) };
+}
+
+function round1(n) { return Math.round(n * 10) / 10; }
 
 export const fetchPlayerDominance = (playerId) =>
   Promise.resolve({}); // Not pre-generated yet, can add later
