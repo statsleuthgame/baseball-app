@@ -242,6 +242,197 @@ export const fetchPriorMatchups = async (team1, team2) => {
 
 function round3(n) { return Math.round(n * 1000) / 1000; }
 
+// ---- New Features: Live MLB API calls ----
+
+// 3. Transaction feed (roster moves, IL, trades)
+export const fetchTransactions = async (teamId) => {
+  try {
+    const end = new Date();
+    const start = new Date();
+    start.setDate(start.getDate() - 30);
+    const fmt = (d) => d.toISOString().split("T")[0];
+    const resp = await mlbApi.get("/transactions", {
+      params: { teamId, startDate: fmt(start), endDate: fmt(end) },
+    });
+    return (resp.data?.transactions || []).map((t) => ({
+      id: t.id,
+      date: t.date,
+      type: t.typeCode,
+      typeDesc: t.typeDesc,
+      description: t.description,
+      player: t.person ? { id: t.person.id, name: t.person.fullName } : null,
+    })).slice(0, 20);
+  } catch {
+    return [];
+  }
+};
+
+// 4. Player game log (last 10 games)
+export const fetchPlayerGameLog = async (playerId, group = "hitting") => {
+  const year = new Date().getFullYear();
+  for (const season of [year, year - 1]) {
+    try {
+      const resp = await mlbApi.get(`/people/${playerId}/stats`, {
+        params: { stats: "gameLog", season, group },
+      });
+      const splits = resp.data?.stats?.[0]?.splits || [];
+      if (splits.length) {
+        return splits.slice(-10).reverse().map((s) => ({
+          date: s.date,
+          opponent: s.opponent?.abbreviation || "",
+          isHome: s.isHome,
+          isWin: s.isWin,
+          stat: s.stat,
+        }));
+      }
+    } catch {}
+  }
+  return [];
+};
+
+// 5. Win probability for a game
+export const fetchWinProbability = async (gamePk) => {
+  try {
+    const resp = await mlbApi.get(`/game/${gamePk}/winProbability`);
+    return (resp.data || []).map((wp) => ({
+      atBatIndex: wp.atBatIndex,
+      homeProb: wp.homeTeamWinProbability,
+      awayProb: wp.awayTeamWinProbability,
+      probAdded: wp.homeTeamWinProbabilityAdded,
+      leverage: wp.leverageIndex,
+    }));
+  } catch {
+    return [];
+  }
+};
+
+// 8. Team hot/cold players (our team, last 7 days game logs)
+export const fetchTeamHotCold = async (teamId) => {
+  try {
+    const abbr = teamId == 136 ? "SEA" : "ATL";
+    const roster = await staticFetch(`teams/${abbr}/roster.json`);
+    const batters = roster.filter((p) => p.position.type !== "Pitcher");
+    const year = new Date().getFullYear();
+    const results = [];
+
+    for (const batter of batters.slice(0, 15)) {
+      try {
+        const resp = await mlbApi.get(`/people/${batter.id}/stats`, {
+          params: { stats: "gameLog", season: year, group: "hitting" },
+        });
+        const splits = resp.data?.stats?.[0]?.splits || [];
+        const last7 = splits.slice(-7);
+        if (last7.length < 3) continue;
+
+        let ab = 0, hits = 0, hr = 0, rbi = 0;
+        for (const g of last7) {
+          ab += g.stat.atBats || 0;
+          hits += g.stat.hits || 0;
+          hr += g.stat.homeRuns || 0;
+          rbi += g.stat.rbi || 0;
+        }
+        if (ab < 10) continue;
+        const avg = hits / ab;
+        const ops = parseFloat(last7[0]?.stat?.ops || "0");
+
+        results.push({
+          id: batter.id,
+          name: batter.fullName,
+          position: batter.position.abbreviation,
+          games: last7.length, ab, hits, hr, rbi,
+          avg: Math.round(avg * 1000) / 1000,
+          photoUrl: batter.photoUrl,
+          isHot: avg >= .300,
+          isCold: avg < .150,
+        });
+      } catch {}
+    }
+
+    results.sort((a, b) => b.avg - a.avg);
+    return {
+      hot: results.filter((r) => r.isHot).slice(0, 5),
+      cold: results.filter((r) => r.isCold).slice(0, 3),
+    };
+  } catch {
+    return { hot: [], cold: [] };
+  }
+};
+
+// 9. League leaders
+export const fetchLeagueLeaders = async () => {
+  try {
+    const year = new Date().getFullYear();
+    const categories = ["homeRuns", "battingAverage", "earnedRunAverage", "strikeouts", "stolenBases"];
+    const results = {};
+
+    for (const cat of categories) {
+      try {
+        const resp = await mlbApi.get("/stats/leaders", {
+          params: { leaderCategories: cat, season: year, sportId: 1, limit: 5 },
+        });
+        const leaders = resp.data?.leagueLeaders?.[0]?.leaders || [];
+        results[cat] = leaders.map((l) => ({
+          rank: l.rank,
+          value: l.value,
+          player: { id: l.person?.id, name: l.person?.fullName },
+          team: l.team?.abbreviation || "",
+          teamId: l.team?.id,
+        }));
+      } catch {}
+    }
+    return results;
+  } catch {
+    return {};
+  }
+};
+
+// 10. Upcoming series (next 4 games with probable pitchers)
+export const fetchUpcomingSeries = async (teamId) => {
+  try {
+    const today = new Date();
+    const end = new Date();
+    end.setDate(end.getDate() + 10);
+    const fmt = (d) => d.toISOString().split("T")[0];
+
+    const resp = await mlbApi.get("/schedule", {
+      params: {
+        sportId: 1, teamId,
+        startDate: fmt(today), endDate: fmt(end),
+        hydrate: "team,probablePitcher", gameType: "R",
+      },
+    });
+
+    const games = [];
+    for (const dateEntry of resp.data?.dates || []) {
+      for (const g of dateEntry.games || []) {
+        if (g.status?.detailedState === "Final") continue;
+        const away = g.teams?.away || {};
+        const home = g.teams?.home || {};
+        games.push({
+          gamePk: g.gamePk,
+          gameDate: g.gameDate,
+          venue: g.venue?.name || "",
+          away: {
+            id: away.team?.id, abbreviation: away.team?.abbreviation || "",
+            probablePitcher: extractPitcher(away.probablePitcher),
+            logoUrl: `https://www.mlbstatic.com/team-logos/${away.team?.id}.svg`,
+          },
+          home: {
+            id: home.team?.id, abbreviation: home.team?.abbreviation || "",
+            probablePitcher: extractPitcher(home.probablePitcher),
+            logoUrl: `https://www.mlbstatic.com/team-logos/${home.team?.id}.svg`,
+          },
+        });
+        if (games.length >= 4) break;
+      }
+      if (games.length >= 4) break;
+    }
+    return games;
+  } catch {
+    return [];
+  }
+};
+
 // ---- Helpers ----
 function formatGame(g, isNext) {
   const away = g.teams?.away || {};

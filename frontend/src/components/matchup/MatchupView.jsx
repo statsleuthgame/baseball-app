@@ -6,6 +6,7 @@ import { formatGameDate, formatGameTime } from "../../utils/formatters";
 import LoadingSpinner from "../common/LoadingSpinner";
 import BatterVsPitcher from "./BatterVsPitcher";
 import PitchArsenal from "../player/PitchArsenal";
+import WinProbability from "./WinProbability";
 import ParkHistory from "./ParkHistory";
 import PriorMatchups from "./PriorMatchups";
 
@@ -72,6 +73,11 @@ export default function MatchupView() {
           <span>{opponent.abbreviation}</span>
         </div>
       </div>
+
+      {/* Win probability chart (shows during/after live games) */}
+      {game.gamePk && (game.status === "In Progress" || game.status === "Final") && (
+        <WinProbability gamePk={game.gamePk} teamId={teamId} isHome={isHome} />
+      )}
 
       {isPreview && (
         <div className="matchup-notice" style={{ color: "var(--team-accent)", fontStyle: "normal", fontWeight: 600 }}>

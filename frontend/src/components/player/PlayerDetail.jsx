@@ -11,6 +11,7 @@ import AdvancedBatterStats from "./AdvancedBatterStats";
 import AdvancedPitcherStats from "./AdvancedPitcherStats";
 import PitchArsenal from "./PitchArsenal";
 import DominanceProfile from "./DominanceProfile";
+import PlayerGameLog from "./PlayerGameLog";
 
 export default function PlayerDetail() {
   const { playerId } = useParams();
@@ -74,6 +75,8 @@ export default function PlayerDetail() {
       ) : (
         <BatterStats stats={stats} season={displaySeason} />
       )}
+
+      <PlayerGameLog playerId={playerId} isPitcher={isPitcher} />
 
       {isPitcher ? (
         <>
