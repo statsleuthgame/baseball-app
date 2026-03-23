@@ -61,26 +61,21 @@ html, body {
 }
 
 #root {
-  display: flex;
-  flex-direction: column;
-  height: 100dvh;
-  height: -webkit-fill-available;
+  height: 100%;
   overflow: hidden;
 }
 
 /* App Shell */
 .app-shell {
-  display: flex;
-  flex-direction: column;
   height: 100%;
-  overflow: hidden;
   background: var(--bg);
 }
 
 .app-content {
-  flex: 1;
-  min-height: 0;
+  height: 100%;
   padding: 16px;
+  padding-top: calc(56px + env(safe-area-inset-top, 0px));
+  padding-bottom: 64px;
   max-width: 600px;
   width: 100%;
   margin: 0 auto;
@@ -90,8 +85,12 @@ html, body {
   overscroll-behavior-y: contain;
 }
 
-/* Top Bar — in flex flow, not fixed */
+/* Top Bar — fixed */
 .top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -100,7 +99,6 @@ html, body {
   background: var(--team-primary);
   border-bottom: 2px solid var(--team-secondary);
   color: white;
-  flex-shrink: 0;
   z-index: 100;
   -webkit-user-select: none;
   user-select: none;
@@ -152,13 +150,15 @@ html, body {
   opacity: 0.7;
 }
 
-/* Bottom Nav — in flex flow, NOT fixed. Sits at bottom of 100dvh container. */
+/* Bottom Nav — fixed at bottom. Body background matches so any gap is invisible. */
 .bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   display: flex;
-  flex-shrink: 0;
   background: #141a28;
   border-top: 1px solid var(--border);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
   z-index: 100;
   -webkit-user-select: none;
   user-select: none;

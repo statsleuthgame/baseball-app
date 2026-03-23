@@ -27,7 +27,6 @@ export default function AppShell() {
     }
   }, [urlTeamId, syncTeamFromUrl]);
 
-  // Update document title on route change
   useEffect(() => {
     const segment = location.pathname.split("/").slice(3).join("/") || "";
     const firstSegment = segment.split("/")[0];
@@ -35,7 +34,6 @@ export default function AppShell() {
     document.title = `${pageTitle} - ${team?.name || "Baseball Stats"}`;
   }, [location.pathname, team?.name]);
 
-  // Save/restore scroll position + manage focus
   useEffect(() => {
     const el = contentRef.current;
     if (!el) return;
@@ -53,7 +51,7 @@ export default function AppShell() {
   }, [location.pathname]);
 
   return (
-    <div className="app-shell">
+    <>
       <TopBar />
       <main className="app-content" ref={contentRef} tabIndex={-1}>
         <Suspense fallback={<LoadingSpinner />}>
@@ -61,6 +59,6 @@ export default function AppShell() {
         </Suspense>
       </main>
       <BottomNav />
-    </div>
+    </>
   );
 }
