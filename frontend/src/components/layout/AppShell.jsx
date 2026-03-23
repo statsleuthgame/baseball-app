@@ -24,7 +24,6 @@ export default function AppShell() {
         </Suspense>
       </main>
       <BottomNav />
-      <div className="bottom-safe-area" />
     </div>
   );
 }

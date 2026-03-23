@@ -27,21 +27,13 @@
   box-sizing: border-box;
 }
 
-html {
-  height: 100%;
-}
-
-body {
+html, body, #root {
   height: 100%;
   margin: 0;
   overflow: hidden;
   overscroll-behavior: none;
-  background: var(--bg);
-}
-
-#root {
-  height: 100%;
-  overflow: hidden;
+  /* IMPORTANT: body background matches nav bar color so any gap below nav is invisible */
+  background: #141a28;
 }
 
 /* App Shell */
@@ -50,12 +42,15 @@ body {
   flex-direction: column;
   height: 100%;
   background: var(--bg);
+  position: relative;
 }
 
 .app-content {
   flex: 1 1 0;
   min-height: 0;
   padding: 16px;
+  /* Must clear the fixed bottom nav + safe area */
+  padding-bottom: calc(64px + env(safe-area-inset-bottom, 34px));
   max-width: 600px;
   width: 100%;
   margin: 0 auto;
@@ -122,22 +117,34 @@ body {
   opacity: 0.7;
 }
 
-/* Bottom Nav */
+/* Bottom Nav — position: fixed pins to CSS bottom.
+   ::after extends 200px below to fill any iOS standalone gap
+   between CSS bottom and the physical screen edge. */
 .bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   display: flex;
-  flex-shrink: 0;
-  background: var(--bg-card);
+  background: #141a28;
   border-top: 1px solid var(--border);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
   z-index: 100;
 }
 
-/* Fills the home indicator area with nav background color */
+/* This pseudo-element fills any gap below the nav on iOS standalone */
+.bottom-nav::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: #141a28;
+}
+
 .bottom-safe-area {
-  flex-shrink: 0;
-  background: var(--bg-card);
-  /* On iOS standalone, this ensures color fills to absolute bottom */
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-  padding-bottom: constant(safe-area-inset-bottom, 0px);
+  display: none;
 }
 
 .bottom-nav-item {
@@ -1493,6 +1500,7 @@ body {
   .app-content {
     max-width: 720px;
     padding: 24px;
+    padding-bottom: calc(64px + env(safe-area-inset-bottom, 34px));
   }
   .roster-grid { grid-template-columns: repeat(3, 1fr); }
   .stat-grid { grid-template-columns: repeat(5, 1fr); }
