@@ -48,12 +48,19 @@ function getPercentile(key, rawValue) {
 
 function percentileColor(pct) {
   if (pct == null) return undefined;
+  // Blue (0%) → White (50%) → Red (100%)
   if (pct <= 0.5) {
-    const t = pct / 0.5;
-    return `rgb(${Math.round(30 + t * 140)}, ${Math.round(100 + t * 100)}, ${Math.round(220 - t * 50)})`;
+    const t = pct / 0.5; // 0 to 1
+    const r = Math.round(60 + t * 195);   // 60 → 255
+    const g = Math.round(120 + t * 135);   // 120 → 255
+    const b = Math.round(240 + t * 15);    // 240 → 255
+    return `rgb(${r}, ${g}, ${b})`;
   } else {
-    const t = (pct - 0.5) / 0.5;
-    return `rgb(${Math.round(170 + t * 75)}, ${Math.round(200 - t * 150)}, ${Math.round(170 - t * 130)})`;
+    const t = (pct - 0.5) / 0.5; // 0 to 1
+    const r = Math.round(255);              // 255 → 255
+    const g = Math.round(255 - t * 195);    // 255 → 60
+    const b = Math.round(255 - t * 205);    // 255 → 50
+    return `rgb(${r}, ${g}, ${b})`;
   }
 }
 

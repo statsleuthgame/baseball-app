@@ -103,8 +103,8 @@ export default function PitchArsenal({ playerId, embedded }) {
   );
 }
 
-const MV_SIZE = 280;
-const MV_MARGIN = { top: 28, right: 16, bottom: 32, left: 40 };
+const MV_SIZE = 300;
+const MV_MARGIN = { top: 28, right: 20, bottom: 44, left: 44 };
 const MV_W = MV_SIZE - MV_MARGIN.left - MV_MARGIN.right;
 const MV_H = MV_SIZE - MV_MARGIN.top - MV_MARGIN.bottom;
 

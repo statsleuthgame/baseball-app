@@ -873,7 +873,7 @@ button.stat-cell {
 
 .movement-chart {
   width: 100%;
-  max-width: 280px;
+  max-width: 300px;
   margin: 0 auto;
   display: block;
   background: rgba(0, 0, 0, 0.2);

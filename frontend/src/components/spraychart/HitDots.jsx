@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import { SPRAY_HP_X, SPRAY_HP_Y } from "./BallparkSVG";
 import { scaleLinear } from "d3-scale";
 
@@ -49,7 +49,20 @@ export default function HitDots({ hits, filters, longestHR }) {
     hit.x === longestHR.x && hit.y === longestHR.y &&
     hit.date === longestHR.date;
 
-  const handleSelect = (i) => setSelected(selected === i ? null : i);
+  // Track touch to prevent onClick from firing after touchStart (causes double-toggle)
+  const lastTouchRef = useRef(0);
+
+  const handleSelect = (i, fromTouch = false) => {
+    if (fromTouch) lastTouchRef.current = Date.now();
+    setSelected(selected === i ? null : i);
+  };
+
+  const handleClick = (i) => {
+    // Ignore click if it came right after a touch (prevents double-toggle)
+    if (Date.now() - lastTouchRef.current < 500) return;
+    handleSelect(i);
+  };
+
   const selectedHit = selected !== null ? filtered[selected] : null;
 
   return (
@@ -72,8 +85,8 @@ export default function HitDots({ hits, filters, longestHR }) {
                 stroke="#FFD700" strokeWidth={isSelected ? 1.5 : 0.5}
                 opacity="1"
                 style={{ cursor: "pointer", transition: "opacity 0.15s" }}
-                onClick={() => handleSelect(i)}
-                onTouchStart={(e) => { e.preventDefault(); handleSelect(i); }}
+                onClick={() => handleClick(i)}
+                onTouchStart={(e) => { e.preventDefault(); handleSelect(i, true); }}
               />
             );
           }
@@ -85,8 +98,8 @@ export default function HitDots({ hits, filters, longestHR }) {
                 cx={svgX} cy={svgY} r="6"
                 fill="transparent"
                 style={{ cursor: "pointer" }}
-                onClick={() => handleSelect(i)}
-                onTouchStart={(e) => { e.preventDefault(); handleSelect(i); }}
+                onClick={() => handleClick(i)}
+                onTouchStart={(e) => { e.preventDefault(); handleSelect(i, true); }}
               />
               {/* Visible dot */}
               <circle
