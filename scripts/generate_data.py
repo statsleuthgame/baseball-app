@@ -62,13 +62,15 @@ def mlb_get(path: str, params: dict = None) -> dict:
         return r.json()
 
 
-def safe_float(val, decimals=1):
+def safe_float(val, decimals=1, pct=False):
     if val is None:
         return None
     try:
         f = float(val)
         if math.isnan(f) or math.isinf(f):
             return None
+        if pct and f < 1:
+            f *= 100
         return round(f, decimals)
     except (TypeError, ValueError):
         return None
@@ -501,13 +503,17 @@ def fetch_fangraphs_for_player(full_name: str, is_pitcher: bool) -> dict:
 
         r = row.iloc[0]
 
-        def col(name, dec=1):
+        def col(name, dec=1, pct=False):
             v = r.get(name)
             if v is None or (isinstance(v, float) and (math.isnan(v) or math.isinf(v))):
                 return None
             try:
                 f = float(v)
-                return None if (math.isnan(f) or math.isinf(f)) else round(f, dec)
+                if math.isnan(f) or math.isinf(f):
+                    return None
+                if pct and f < 1:
+                    f *= 100
+                return round(f, dec)
             except (TypeError, ValueError):
                 return None
 
@@ -529,15 +535,15 @@ def fetch_fangraphs_for_player(full_name: str, is_pitcher: bool) -> dict:
                 "siera": col("SIERA", 2),
                 "eraMinus": col("ERA-", 0),
                 "fipMinus": col("FIP-", 0),
-                "kPct": col("K%", 1),
-                "bbPct": col("BB%", 1),
-                "kBbPct": col("K-BB%", 1),
+                "kPct": col("K%", 1, pct=True),
+                "bbPct": col("BB%", 1, pct=True),
+                "kBbPct": col("K-BB%", 1, pct=True),
                 "hrPer9": col("HR/9", 2),
-                "gbPct": col("GB%", 1),
-                "lobPct": col("LOB%", 1),
+                "gbPct": col("GB%", 1, pct=True),
+                "lobPct": col("LOB%", 1, pct=True),
                 "whip": col("WHIP", 2),
                 "babip": col("BABIP", 3),
-                "swstrPct": col("SwStr%", 1),
+                "swstrPct": col("SwStr%", 1, pct=True),
                 "ip": col("IP", 1),
                 "eraFipDiff": era_fip_diff,
                 "regressionAlert": regression_alert,
@@ -551,12 +557,12 @@ def fetch_fangraphs_for_player(full_name: str, is_pitcher: bool) -> dict:
                 "slg": col("SLG", 3),
                 "iso": col("ISO", 3),
                 "babip": col("BABIP", 3),
-                "kPct": col("K%", 1),
-                "bbPct": col("BB%", 1),
-                "kBbPct": col("K-BB%", 1),
-                "oSwingPct": col("O-Swing%", 1),
-                "zContactPct": col("Z-Contact%", 1),
-                "swstrPct": col("SwStr%", 1),
+                "kPct": col("K%", 1, pct=True),
+                "bbPct": col("BB%", 1, pct=True),
+                "kBbPct": col("K-BB%", 1, pct=True),
+                "oSwingPct": col("O-Swing%", 1, pct=True),
+                "zContactPct": col("Z-Contact%", 1, pct=True),
+                "swstrPct": col("SwStr%", 1, pct=True),
             }
     except Exception as e:
         print(f"    FanGraphs stats error for {full_name}: {e}")
@@ -585,8 +591,8 @@ def fetch_league_fangraphs(season: int) -> dict:
                     "woba": safe_float(r.get("wOBA"), 3),
                     "iso": safe_float(r.get("ISO"), 3),
                     "war": safe_float(r.get("WAR"), 1),
-                    "kPct": safe_float(r.get("K%"), 1),
-                    "bbPct": safe_float(r.get("BB%"), 1),
+                    "kPct": safe_float(r.get("K%"), 1, pct=True),
+                    "bbPct": safe_float(r.get("BB%"), 1, pct=True),
                     "babip": safe_float(r.get("BABIP"), 3),
                 })
             rows.sort(key=lambda x: (x.get("wrcPlus") or 0), reverse=True)
@@ -611,13 +617,13 @@ def fetch_league_fangraphs(season: int) -> dict:
                     "fip": safe_float(r.get("FIP"), 2),
                     "xfip": safe_float(r.get("xFIP"), 2),
                     "war": safe_float(r.get("WAR"), 1),
-                    "kPct": safe_float(r.get("K%"), 1),
-                    "bbPct": safe_float(r.get("BB%"), 1),
-                    "kBbPct": safe_float(r.get("K-BB%"), 1),
-                    "gbPct": safe_float(r.get("GB%"), 1),
+                    "kPct": safe_float(r.get("K%"), 1, pct=True),
+                    "bbPct": safe_float(r.get("BB%"), 1, pct=True),
+                    "kBbPct": safe_float(r.get("K-BB%"), 1, pct=True),
+                    "gbPct": safe_float(r.get("GB%"), 1, pct=True),
                     "whip": safe_float(r.get("WHIP"), 2),
                     "hrPer9": safe_float(r.get("HR/9"), 2),
-                    "lobPct": safe_float(r.get("LOB%"), 1),
+                    "lobPct": safe_float(r.get("LOB%"), 1, pct=True),
                 })
             rows.sort(key=lambda x: (x.get("fip") or 99))
             for i, row in enumerate(rows):
@@ -634,7 +640,7 @@ def fetch_league_fangraphs(season: int) -> dict:
         if df is not None and not df.empty:
             kbb_rows = []
             for _, r in df.iterrows():
-                kbb = safe_float(r.get("K-BB%"), 1)
+                kbb = safe_float(r.get("K-BB%"), 1, pct=True)
                 if kbb is None:
                     continue
                 kbb_rows.append({
@@ -642,8 +648,8 @@ def fetch_league_fangraphs(season: int) -> dict:
                     "team": r.get("Team", ""),
                     "ip": safe_float(r.get("IP"), 1),
                     "kBbPct": kbb,
-                    "kPct": safe_float(r.get("K%"), 1),
-                    "bbPct": safe_float(r.get("BB%"), 1),
+                    "kPct": safe_float(r.get("K%"), 1, pct=True),
+                    "bbPct": safe_float(r.get("BB%"), 1, pct=True),
                     "era": safe_float(r.get("ERA"), 2),
                     "fip": safe_float(r.get("FIP"), 2),
                     "war": safe_float(r.get("WAR"), 1),

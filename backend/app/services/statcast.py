@@ -65,17 +65,21 @@ def _fetch_hot_batters(player_ids: list[int], days: int) -> list[dict]:
                             fg_row = val
                             break
                 if fg_row is not None:
-                    def _sf(v, d=1):
+                    def _sf(v, d=1, pct=False):
                         try:
                             import math as _m
                             f = float(v)
-                            return None if (_m.isnan(f) or _m.isinf(f)) else round(f, d)
+                            if _m.isnan(f) or _m.isinf(f):
+                                return None
+                            if pct and f < 1:
+                                f *= 100
+                            return round(f, d)
                         except Exception:
                             return None
                     player["wrcPlus"] = _sf(fg_row.get("wRC+"), 0)
                     player["woba"] = _sf(fg_row.get("wOBA"), 3)
-                    player["kPct"] = _sf(fg_row.get("K%"), 1)
-                    player["bbPct"] = _sf(fg_row.get("BB%"), 1)
+                    player["kPct"] = _sf(fg_row.get("K%"), 1, pct=True)
+                    player["bbPct"] = _sf(fg_row.get("BB%"), 1, pct=True)
                     player["iso"] = _sf(fg_row.get("ISO"), 3)
     except Exception:
         pass  # FanGraphs enrichment is best-effort
