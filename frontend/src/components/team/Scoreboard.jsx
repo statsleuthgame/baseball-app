@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTeam } from "../../context/TeamContext";
-import { fetchAllGamesToday, fetchPitcherSeasonStats, fetchBvP, fetchRoster } from "../../api/client";
+import { fetchAllGamesToday, fetchPitcherSeasonStats, fetchBvP, fetchRoster, fetchScoringPlays } from "../../api/client";
 import { formatGameTime, getTeamAbbr } from "../../utils/formatters";
 import LoadingSpinner from "../common/LoadingSpinner";
 import PlayerPhoto from "../common/PlayerPhoto";
@@ -103,9 +103,80 @@ function BvPPreview({ teamId, pitcherId }) {
   );
 }
 
+function Linescore({ linescore, away, home }) {
+  if (!linescore?.innings?.length) return null;
+
+  return (
+    <div className="sb-linescore">
+      <table className="sb-linescore-table">
+        <thead>
+          <tr>
+            <th></th>
+            {linescore.innings.map((inn) => (
+              <th key={inn.num}>{inn.num}</th>
+            ))}
+            <th className="sb-ls-total">R</th>
+            <th className="sb-ls-total">H</th>
+            <th className="sb-ls-total">E</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td className="sb-ls-team">{away.abbreviation}</td>
+            {linescore.innings.map((inn) => (
+              <td key={inn.num}>{inn.away !== "" ? inn.away : "-"}</td>
+            ))}
+            <td className="sb-ls-total">{linescore.away.runs}</td>
+            <td className="sb-ls-total">{linescore.away.hits}</td>
+            <td className="sb-ls-total">{linescore.away.errors}</td>
+          </tr>
+          <tr>
+            <td className="sb-ls-team">{home.abbreviation}</td>
+            {linescore.innings.map((inn) => (
+              <td key={inn.num}>{inn.home !== "" ? inn.home : "-"}</td>
+            ))}
+            <td className="sb-ls-total">{linescore.home.runs}</td>
+            <td className="sb-ls-total">{linescore.home.hits}</td>
+            <td className="sb-ls-total">{linescore.home.errors}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function ScoringPlays({ gamePk }) {
+  const { data: plays, isLoading } = useQuery({
+    queryKey: ["scoringPlays", gamePk],
+    queryFn: () => fetchScoringPlays(gamePk),
+    enabled: !!gamePk,
+    staleTime: 1000 * 60 * 5,
+  });
+
+  if (isLoading) return <div className="sb-plays-loading">Loading plays...</div>;
+  if (!plays?.length) return <div className="sb-plays-empty">No scoring plays</div>;
+
+  return (
+    <div className="sb-scoring-plays">
+      {plays.map((play, i) => (
+        <div key={i} className="sb-play">
+          <div className="sb-play-header">
+            <span className="sb-play-inning">
+              {play.halfInning === "top" ? "Top" : "Bot"} {play.inning}
+            </span>
+            <span className="sb-play-score">{play.awayScore}-{play.homeScore}</span>
+          </div>
+          <p className="sb-play-desc">{play.description}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function Scoreboard() {
   const { teamId } = useTeam();
   const [selectedDate, setSelectedDate] = useState(fmt(new Date()));
+  const [expandedGame, setExpandedGame] = useState(null);
 
   const isToday = selectedDate === fmt(new Date());
 
@@ -180,8 +251,15 @@ export default function Scoreboard() {
               ? (weAreHome ? game.away.probablePitcher : game.home.probablePitcher)
               : null;
 
+            const isExpanded = expandedGame === game.gamePk;
+            const canExpand = isLive || isFinal;
+
             return (
-              <div key={game.gamePk} className={`scoreboard-card ${isOurGame ? "our-game" : ""} ${isLive ? "live" : ""}`}>
+              <div
+                key={game.gamePk}
+                className={`scoreboard-card ${isOurGame ? "our-game" : ""} ${isLive ? "live" : ""} ${canExpand ? "sb-tappable" : ""}`}
+                onClick={canExpand ? () => setExpandedGame(isExpanded ? null : game.gamePk) : undefined}
+              >
                 {isLive && (
                   <div className="scoreboard-live-badge">
                     {game.inningHalf === "Top" ? "Top" : "Bot"} {game.inning}
@@ -260,7 +338,8 @@ export default function Scoreboard() {
                 {isOurGame && (isLive || isScheduled) && (
                   <button
                     className="scoreboard-watch-btn"
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation();
                       window.location.href = `mlbatbat://game?game_pk=${game.gamePk}`;
                       setTimeout(() => window.open(`https://www.mlb.tv/game/${game.gamePk}`, "_blank"), 1500);
                     }}
@@ -271,6 +350,23 @@ export default function Scoreboard() {
                     </svg>
                     Watch
                   </button>
+                )}
+
+                {/* Expand indicator for live/final games */}
+                {canExpand && (
+                  <div className="sb-expand-hint">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: isExpanded ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
+                      <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                  </div>
+                )}
+
+                {/* Expanded game detail */}
+                {isExpanded && (
+                  <div className="sb-game-detail" onClick={(e) => e.stopPropagation()}>
+                    <Linescore linescore={game.linescore} away={game.away} home={game.home} />
+                    <ScoringPlays gamePk={game.gamePk} />
+                  </div>
                 )}
               </div>
             );

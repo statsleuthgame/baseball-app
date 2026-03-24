@@ -296,6 +296,19 @@ export const fetchAllGamesToday = async (dateStr) => {
         const ht = home.team || {};
         const ls = g.linescore || {};
         const w = g.weather || {};
+        // Extract inning-by-inning linescore
+        const innings = (ls.innings || []).map((inn) => ({
+          num: inn.num,
+          away: inn.away?.runs ?? "",
+          home: inn.home?.runs ?? "",
+        }));
+        const lsTeams = ls.teams || {};
+        const linescore = innings.length ? {
+          innings,
+          away: { runs: lsTeams.away?.runs ?? 0, hits: lsTeams.away?.hits ?? 0, errors: lsTeams.away?.errors ?? 0 },
+          home: { runs: lsTeams.home?.runs ?? 0, hits: lsTeams.home?.hits ?? 0, errors: lsTeams.home?.errors ?? 0 },
+        } : null;
+
         games.push({
           gamePk: g.gamePk,
           gameDate: g.gameDate || "",
@@ -304,6 +317,7 @@ export const fetchAllGamesToday = async (dateStr) => {
           inningHalf: ls.inningHalf || "",
           venue: g.venue?.name || "",
           weather: w.temp ? { temp: w.temp, condition: w.condition || "", wind: w.wind || "" } : null,
+          linescore,
           away: {
             id: at.id, name: at.name || "", abbreviation: at.abbreviation || "",
             score: away.score, wins: away.leagueRecord?.wins, losses: away.leagueRecord?.losses,
@@ -320,6 +334,27 @@ export const fetchAllGamesToday = async (dateStr) => {
       }
     }
     return games;
+  } catch {
+    return [];
+  }
+};
+
+// Scoring plays for a game (on-demand when user taps a game card)
+export const fetchScoringPlays = async (gamePk) => {
+  try {
+    const resp = await mlbApi.get(`/game/${gamePk}/playByPlay`);
+    const allPlays = resp.data?.allPlays || [];
+    return allPlays
+      .filter((p) => p.about?.isScoringPlay)
+      .map((p) => ({
+        inning: p.about?.inning || 0,
+        halfInning: p.about?.halfInning || "",
+        description: p.result?.description || "",
+        awayScore: p.result?.awayScore ?? 0,
+        homeScore: p.result?.homeScore ?? 0,
+        rbi: p.result?.rbi ?? 0,
+        event: p.result?.event || "",
+      }));
   } catch {
     return [];
   }

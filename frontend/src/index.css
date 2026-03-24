@@ -1844,6 +1844,114 @@ button.stat-cell {
 
 .scoreboard-watch-btn:active { opacity: 0.8; }
 
+.sb-tappable { cursor: pointer; }
+.sb-tappable:active { background: var(--bg-card-hover); }
+
+.sb-expand-hint {
+  display: flex;
+  justify-content: center;
+  padding-top: 4px;
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+
+.sb-game-detail {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+/* Linescore table */
+.sb-linescore {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 10px;
+}
+
+.sb-linescore-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.sb-linescore-table th {
+  color: var(--text-muted);
+  font-weight: 600;
+  padding: 3px 5px;
+  font-size: 10px;
+}
+
+.sb-linescore-table td {
+  padding: 3px 5px;
+  color: var(--text);
+}
+
+.sb-ls-team {
+  font-weight: 700;
+  text-align: left;
+  color: var(--text-bright);
+  padding-right: 8px;
+}
+
+.sb-ls-total {
+  font-weight: 700;
+  color: var(--text-bright);
+  border-left: 1px solid var(--border);
+}
+
+th.sb-ls-total {
+  color: var(--text-muted);
+}
+
+/* Scoring plays */
+.sb-scoring-plays {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sb-play {
+  padding: 6px 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 6px;
+  border-left: 2px solid var(--team-secondary);
+}
+
+.sb-play-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.sb-play-inning {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.sb-play-score {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-bright);
+}
+
+.sb-play-desc {
+  font-size: 11px;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+.sb-plays-loading, .sb-plays-empty {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 8px 0;
+}
+
 /* Section title (shared) */
 .section-title {
   font-size: 16px;
