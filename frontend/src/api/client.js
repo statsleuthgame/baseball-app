@@ -346,15 +346,25 @@ export const fetchScoringPlays = async (gamePk) => {
     const allPlays = resp.data?.allPlays || [];
     return allPlays
       .filter((p) => p.about?.isScoringPlay)
-      .map((p) => ({
-        inning: p.about?.inning || 0,
-        halfInning: p.about?.halfInning || "",
-        description: p.result?.description || "",
-        awayScore: p.result?.awayScore ?? 0,
-        homeScore: p.result?.homeScore ?? 0,
-        rbi: p.result?.rbi ?? 0,
-        event: p.result?.event || "",
-      }));
+      .map((p) => {
+        // Extract HR distance from hit data in playEvents
+        let hrDistance = null;
+        const event = p.result?.event || "";
+        if (event === "Home Run") {
+          const hitEvent = (p.playEvents || []).find((e) => e.hitData?.totalDistance);
+          if (hitEvent) hrDistance = Math.round(hitEvent.hitData.totalDistance);
+        }
+        return {
+          inning: p.about?.inning || 0,
+          halfInning: p.about?.halfInning || "",
+          description: p.result?.description || "",
+          awayScore: p.result?.awayScore ?? 0,
+          homeScore: p.result?.homeScore ?? 0,
+          rbi: p.result?.rbi ?? 0,
+          event,
+          hrDistance,
+        };
+      });
   } catch {
     return [];
   }

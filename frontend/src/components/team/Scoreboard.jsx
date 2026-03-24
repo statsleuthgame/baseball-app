@@ -174,6 +174,8 @@ function ScoringPlays({ gamePk, awayAbbr, homeAbbr }) {
         const battingAbbr = isTop ? awayAbbr : homeAbbr;
         const color = TEAM_COLORS[battingAbbr] || "var(--team-secondary)";
 
+        const isHR = play.event === "Home Run";
+
         return (
           <div key={i} className="sb-play" style={{ borderLeftColor: color }}>
             <div className="sb-play-header">
@@ -183,6 +185,9 @@ function ScoringPlays({ gamePk, awayAbbr, homeAbbr }) {
               <span className="sb-play-score">{play.awayScore}-{play.homeScore}</span>
             </div>
             <p className="sb-play-desc">{play.description}</p>
+            {isHR && play.hrDistance && (
+              <span className="sb-hr-distance">{play.hrDistance} ft</span>
+            )}
           </div>
         );
       })}

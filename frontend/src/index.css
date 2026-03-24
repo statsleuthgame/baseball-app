@@ -1966,6 +1966,17 @@ th.sb-ls-total {
   line-height: 1.4;
 }
 
+.sb-hr-distance {
+  display: inline-block;
+  margin-top: 3px;
+  padding: 1px 6px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.1);
+  border-radius: 4px;
+}
+
 .sb-plays-loading, .sb-plays-empty {
   font-size: 11px;
   color: var(--text-muted);
