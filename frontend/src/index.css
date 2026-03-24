@@ -58,24 +58,29 @@ html, body {
   margin: 0;
   padding: 0;
   background: var(--bg);
-  height: 100%;
+}
+
+html {
+  height: -webkit-fill-available;
 }
 
 body {
-  overflow: hidden;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
 }
 
 #root {
-  height: 100%;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
 }
 
 /* App Shell */
 .app-shell {
-  height: 100%;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
   background: var(--bg);
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
 .app-content {
