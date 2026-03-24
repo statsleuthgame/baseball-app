@@ -1624,6 +1624,50 @@ button.stat-cell {
 /* Scoreboard */
 .scoreboard-page { display: flex; flex-direction: column; gap: 12px; }
 
+.scoreboard-date-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.scoreboard-date-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.scoreboard-date-btn:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-bright);
+}
+
+.scoreboard-date-label {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-bright);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 12px;
+  border-radius: 8px;
+  min-width: 140px;
+  text-align: center;
+  transition: background 0.15s;
+}
+
+.scoreboard-date-label:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
 .scoreboard-title {
   font-size: 20px;
   font-weight: 800;

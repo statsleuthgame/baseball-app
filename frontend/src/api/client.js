@@ -278,13 +278,12 @@ export const fetchPriorMatchups = async (team1, team2) => {
 // ---- New Features: Live MLB API calls ----
 
 // All MLB games today (scoreboard)
-export const fetchAllGamesToday = async () => {
+export const fetchAllGamesToday = async (dateStr) => {
   try {
-    const today = new Date();
-    const fmt = (d) => d.toISOString().split("T")[0];
+    const dateParam = dateStr || new Date().toISOString().split("T")[0];
     const resp = await mlbApi.get("/schedule", {
       params: {
-        sportId: 1, date: fmt(today),
+        sportId: 1, date: dateParam,
         hydrate: "team,linescore,probablePitcher", gameType: "R",
       },
     });
