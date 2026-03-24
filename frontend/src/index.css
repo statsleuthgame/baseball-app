@@ -68,16 +68,23 @@ html, body {
 
 /* App Shell */
 .app-shell {
-  height: 100%;
+  height: 100dvh;
+  height: 100vh; /* fallback for older browsers */
   background: var(--bg);
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
 }
 
+@supports (height: 100dvh) {
+  .app-shell { height: 100dvh; }
+}
+
 .app-content {
-  height: 100%;
+  flex: 1;
+  min-height: 0;
   padding: 16px;
-  padding-top: calc(70px + env(safe-area-inset-top, 0px));
-  padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+  padding-top: 16px;
   max-width: 600px;
   width: 100%;
   margin: 0 auto;
@@ -89,10 +96,8 @@ html, body {
 
 /* Top Bar — fixed */
 .top-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  position: relative;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -173,10 +178,7 @@ html, body {
 
 /* Bottom Nav — fixed at bottom. Body background matches so any gap is invisible. */
 .bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  flex-shrink: 0;
   display: flex;
   background: #141a28;
   border-top: 1px solid var(--border);
