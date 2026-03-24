@@ -9,7 +9,7 @@ import ErrorBoundary from "../common/ErrorBoundary";
 const scrollPositions = {};
 
 const PAGE_TITLES = {
-  "": "Dashboard",
+  "": "Home",
   "matchup": "Matchup",
   "schedule": "Schedule",
   "scores": "Scores",
