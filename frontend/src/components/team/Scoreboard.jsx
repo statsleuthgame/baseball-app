@@ -145,7 +145,18 @@ function Linescore({ linescore, away, home }) {
   );
 }
 
-function ScoringPlays({ gamePk }) {
+const TEAM_COLORS = {
+  ARI: "#A71930", ATL: "#CE1141", BAL: "#DF4601", BOS: "#BD3039",
+  CHC: "#0E3386", CWS: "#27251F", CIN: "#C6011F", CLE: "#00385D",
+  COL: "#333366", DET: "#0C2340", HOU: "#002D62", KC: "#004687",
+  LAA: "#BA0021", LAD: "#005A9C", MIA: "#00A3E0", MIL: "#FFC52F",
+  MIN: "#002B5C", NYM: "#002D72", NYY: "#003087", OAK: "#003831",
+  ATH: "#003831", PHI: "#E81828", PIT: "#27251F", SD: "#2F241D",
+  SF: "#FD5A1E", SEA: "#005C5C", STL: "#C41E3A", TB: "#092C5C",
+  TEX: "#003278", TOR: "#134A8E", WSH: "#AB0003",
+};
+
+function ScoringPlays({ gamePk, awayAbbr, homeAbbr }) {
   const { data: plays, isLoading } = useQuery({
     queryKey: ["scoringPlays", gamePk],
     queryFn: () => fetchScoringPlays(gamePk),
@@ -158,17 +169,23 @@ function ScoringPlays({ gamePk }) {
 
   return (
     <div className="sb-scoring-plays">
-      {plays.map((play, i) => (
-        <div key={i} className="sb-play">
-          <div className="sb-play-header">
-            <span className="sb-play-inning">
-              {play.halfInning === "top" ? "Top" : "Bot"} {play.inning}
-            </span>
-            <span className="sb-play-score">{play.awayScore}-{play.homeScore}</span>
+      {plays.map((play, i) => {
+        const isTop = play.halfInning === "top";
+        const battingAbbr = isTop ? awayAbbr : homeAbbr;
+        const color = TEAM_COLORS[battingAbbr] || "var(--team-secondary)";
+
+        return (
+          <div key={i} className="sb-play" style={{ borderLeftColor: color }}>
+            <div className="sb-play-header">
+              <span className="sb-play-inning">
+                {isTop ? "Top" : "Bot"} {play.inning}
+              </span>
+              <span className="sb-play-score">{play.awayScore}-{play.homeScore}</span>
+            </div>
+            <p className="sb-play-desc">{play.description}</p>
           </div>
-          <p className="sb-play-desc">{play.description}</p>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
@@ -386,7 +403,7 @@ export default function Scoreboard() {
                 {isExpanded && (
                   <div className="sb-game-detail" onClick={(e) => e.stopPropagation()}>
                     <Linescore linescore={game.linescore} away={game.away} home={game.home} />
-                    <ScoringPlays gamePk={game.gamePk} />
+                    <ScoringPlays gamePk={game.gamePk} awayAbbr={game.away.abbreviation} homeAbbr={game.home.abbreviation} />
                   </div>
                 )}
               </div>
