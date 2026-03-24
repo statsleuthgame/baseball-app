@@ -105,10 +105,7 @@ export default function AdvancedBatterStats({ playerId }) {
     staleTime: 1000 * 60 * 60,
   });
 
-  if (isLoading) return <LoadingSpinner text="Loading advanced stats..." />;
-  if (!data || Object.keys(data).length === 0) return null;
-
-  const stats = useMemo(() => [
+  const stats = useMemo(() => data ? [
     { key: "avgExitVelo", label: "Avg EV", value: data.avgExitVelo, fmt: (v) => `${v}` },
     { key: "maxExitVelo", label: "Max EV", value: data.maxExitVelo, fmt: (v) => `${v}` },
     { key: "hardHitPct", label: "Hard Hit%", value: data.hardHitPct, fmt: (v) => `${v}%` },
@@ -122,9 +119,9 @@ export default function AdvancedBatterStats({ playerId }) {
     { key: "xBA", label: "xBA", value: data.xBA, fmt: (v) => formatAvg(v) },
     { key: "xSLG", label: "xSLG", value: data.xSLG, fmt: (v) => formatAvg(v) },
     { key: "xwOBA", label: "xwOBA", value: data.xwOBA, fmt: (v) => formatAvg(v) },
-  ], [data]);
+  ] : [], [data]);
 
-  const fgStats = useMemo(() => [
+  const fgStats = useMemo(() => data ? [
     { key: "war",       label: "WAR",     value: data.war,       fmt: (v) => `${v}` },
     { key: "wrcPlus",   label: "wRC+",    value: data.wrcPlus,   fmt: (v) => `${Math.round(v)}` },
     { key: "woba",      label: "wOBA",    value: data.woba,      fmt: (v) => formatAvg(v) },
@@ -134,7 +131,10 @@ export default function AdvancedBatterStats({ playerId }) {
     { key: "bbPct",     label: "BB%",     value: data.bbPct,     fmt: (v) => `${v}%` },
     { key: "kBbPct",    label: "K-BB%",   value: data.kBbPct,    fmt: (v) => `${v}%` },
     { key: "oSwingPct", label: "O-Swing%",value: data.oSwingPct, fmt: (v) => `${v}%` },
-  ].filter(s => s.value != null), [data]);
+  ].filter(s => s.value != null) : [], [data]);
+
+  if (isLoading) return <LoadingSpinner text="Loading advanced stats..." />;
+  if (!data || Object.keys(data).length === 0) return null;
 
   const hasFgStats = fgStats.length > 0;
 
