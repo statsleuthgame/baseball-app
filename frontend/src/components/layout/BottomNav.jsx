@@ -59,20 +59,6 @@ const tabs = [
       </svg>
     ),
   },
-  {
-    path: "spray",
-    label: "Spray",
-    icon: (
-      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <circle cx="12" cy="12" r="10" />
-        <circle cx="8" cy="9" r="1.5" fill="currentColor" />
-        <circle cx="15" cy="7" r="1.5" fill="currentColor" />
-        <circle cx="14" cy="14" r="1.5" fill="currentColor" />
-        <circle cx="7" cy="13" r="1.5" fill="currentColor" />
-        <circle cx="11" cy="5" r="1.5" fill="currentColor" />
-      </svg>
-    ),
-  },
 ];
 
 export default function BottomNav() {
@@ -90,7 +76,7 @@ export default function BottomNav() {
         if (tab.path === "") {
           isActive = location.pathname === `/team/${teamId}` || location.pathname === `/team/${teamId}/`;
         } else if (tab.path === "roster") {
-          isActive = location.pathname.includes(`/team/${teamId}/roster`) || isPlayerPage;
+          isActive = location.pathname.includes(`/team/${teamId}/roster`) || location.pathname.includes(`/team/${teamId}/spray`) || isPlayerPage;
         } else {
           isActive = location.pathname.includes(`/team/${teamId}/${tab.path}`);
         }

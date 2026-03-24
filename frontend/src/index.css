@@ -1,12 +1,12 @@
 :root {
   --team-primary: #0C2C56;
-  --team-secondary: #005C5C;
+  --team-secondary: #00a3a3;
   --team-accent: #C4CED4;
   --bg: #0a0e17;
   --bg-card: #141a28;
   --bg-card-hover: #1a2236;
   --text: #e0e4ec;
-  --text-muted: #9299ad;
+  --text-muted: #a3aabe;
   --text-bright: #ffffff;
   --border: #1e2a3e;
   --win: #22c55e;
@@ -14,7 +14,7 @@
   --live: #f59e0b;
 
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.5;
   color: var(--text);
   background: var(--bg);
@@ -75,7 +75,7 @@ html, body {
   height: 100%;
   padding: 16px;
   padding-top: calc(62px + env(safe-area-inset-top, 0px));
-  padding-bottom: 64px;
+  padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
   max-width: 600px;
   width: 100%;
   margin: 0 auto;
@@ -159,6 +159,7 @@ html, body {
   display: flex;
   background: #141a28;
   border-top: 1px solid var(--border);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
   z-index: 100;
   -webkit-user-select: none;
   user-select: none;
@@ -173,7 +174,7 @@ html, body {
   padding: 8px 4px 6px;
   text-decoration: none;
   color: var(--text-muted);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
   transition: color 0.2s;
   position: relative;
@@ -426,7 +427,8 @@ html, body {
   display: flex;
   align-items: center;
   gap: 4px;
-  padding: 6px 12px;
+  padding: 10px 14px;
+  min-height: 44px;
   background: var(--team-secondary);
   color: white;
   border: none;
@@ -471,7 +473,7 @@ html, body {
 .standings-table th {
   color: var(--text-muted);
   font-weight: 600;
-  font-size: 11px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   padding: 4px 6px;
@@ -570,7 +572,7 @@ html, body {
 }
 
 .roster-player-pos {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text-muted);
 }
 
@@ -668,7 +670,7 @@ html, body {
 }
 
 .stat-label {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--text-muted);
   text-transform: uppercase;
@@ -711,7 +713,7 @@ html, body {
 }
 
 .stat-pct-text {
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.3px;
 }
@@ -776,7 +778,7 @@ button.stat-cell {
 .arsenal-table th {
   color: var(--text-muted);
   font-weight: 600;
-  font-size: 10px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.4px;
   padding: 6px 8px;
@@ -852,7 +854,7 @@ button.stat-cell {
 }
 
 .arsenal-movement-desc {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text-muted);
   line-height: 1.4;
   margin-bottom: 8px;
@@ -950,7 +952,7 @@ button.stat-cell {
 }
 
 .split-stat-lbl {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--text-muted);
   text-transform: uppercase;
@@ -1151,7 +1153,7 @@ button.stat-cell {
 }
 
 .matchup-date {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text-muted);
   font-weight: 500;
 }
@@ -1222,7 +1224,7 @@ button.stat-cell {
 }
 
 .bvp-pos {
-  font-size: 10px;
+  font-size: 12px;
   color: var(--text-muted);
 }
 
@@ -1246,7 +1248,7 @@ button.stat-cell {
 }
 
 .bvp-stat-lbl {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--text-muted);
   text-transform: uppercase;
@@ -1257,7 +1259,7 @@ button.stat-cell {
 }
 
 .bvp-no-data {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text-muted);
   font-style: italic;
 }
@@ -1282,7 +1284,7 @@ button.stat-cell {
 .pitch-matchup-table th {
   color: var(--text-muted);
   font-weight: 600;
-  font-size: 10px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.4px;
   padding: 6px 8px;
@@ -1424,7 +1426,7 @@ button.stat-cell {
 }
 
 .odds-label {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--text-muted);
   text-transform: uppercase;
@@ -1452,7 +1454,7 @@ button.stat-cell {
 .hot-icon { font-size: 16px; }
 
 .hot-subtitle {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
   color: var(--text-muted);
   margin-left: auto;
@@ -1481,7 +1483,7 @@ button.stat-cell {
   text-overflow: ellipsis;
 }
 
-.hot-player-line { font-size: 11px; color: var(--text-muted); }
+.hot-player-line { font-size: 12px; color: var(--text-muted); }
 
 .hot-player-ops {
   display: flex;
@@ -1491,7 +1493,7 @@ button.stat-cell {
 }
 
 .hot-ops-value { font-size: 16px; font-weight: 800; color: var(--team-secondary); }
-.hot-ops-label { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
+.hot-ops-label { font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
 
 /* Spray Chart */
 .spray-chart-page { display: flex; flex-direction: column; gap: 12px; }
@@ -1540,7 +1542,7 @@ button.stat-cell {
   align-items: center;
   gap: 5px;
   padding: 8px 12px;
-  min-height: 36px;
+  min-height: 44px;
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -1585,7 +1587,7 @@ button.stat-cell {
 .longest-hr-info { flex: 1; }
 .longest-hr-title { display: block; font-size: 12px; font-weight: 700; color: #F44336; text-transform: uppercase; letter-spacing: 0.5px; }
 .longest-hr-detail { display: block; font-size: 15px; font-weight: 700; color: var(--text-bright); margin-top: 2px; }
-.longest-hr-date { display: block; font-size: 11px; color: var(--text-muted); }
+.longest-hr-date { display: block; font-size: 12px; color: var(--text-muted); }
 
 /* Spray Sidebar */
 .spray-sidebar {
@@ -1649,14 +1651,14 @@ button.stat-cell {
   background: var(--live);
   color: #000;
   border-radius: 4px;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.5px;
   margin-bottom: 8px;
 }
 
 .scoreboard-status-badge {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text-muted);
   font-weight: 600;
   margin-bottom: 6px;
@@ -1672,7 +1674,7 @@ button.stat-cell {
 
 .scoreboard-logo { width: 22px; height: 22px; flex-shrink: 0; }
 .scoreboard-abbr { font-size: 14px; font-weight: 700; color: var(--text-bright); width: 36px; }
-.scoreboard-record { font-size: 11px; color: var(--text-muted); flex: 1; }
+.scoreboard-record { font-size: 12px; color: var(--text-muted); flex: 1; }
 .scoreboard-score { font-size: 18px; font-weight: 800; color: var(--text-bright); min-width: 28px; text-align: right; }
 
 .scoreboard-pitchers {
@@ -1687,21 +1689,22 @@ button.stat-cell {
   justify-content: center;
 }
 
-.scoreboard-pitcher-vs { color: var(--text-muted); font-size: 10px; }
+.scoreboard-pitcher-vs { color: var(--text-muted); font-size: 12px; }
 
 .scoreboard-watch-btn {
   display: flex;
   align-items: center;
   gap: 4px;
+  min-height: 44px;
   position: absolute;
-  top: 12px;
+  top: 8px;
   right: 14px;
   padding: 5px 10px;
   background: var(--team-secondary);
   color: white;
   border: none;
   border-radius: 6px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   cursor: pointer;
 }
@@ -1740,7 +1743,7 @@ button.stat-cell {
   padding: 2px 6px;
   background: rgba(255, 255, 255, 0.06);
   border-radius: 4px;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--team-secondary);
   text-transform: uppercase;
@@ -1748,7 +1751,7 @@ button.stat-cell {
 
 .transaction-info { flex: 1; min-width: 0; }
 .transaction-desc { display: block; font-size: 12px; color: var(--text); line-height: 1.4; }
-.transaction-date { font-size: 11px; color: var(--text-muted); }
+.transaction-date { font-size: 12px; color: var(--text-muted); }
 
 /* Hot/Cold */
 .hotcold-card {
@@ -1780,13 +1783,13 @@ button.stat-cell {
 
 .hotcold-info { flex: 1; min-width: 0; }
 .hotcold-name { display: block; font-size: 13px; font-weight: 600; color: var(--text-bright); }
-.hotcold-pos { font-size: 11px; color: var(--text-muted); }
+.hotcold-pos { font-size: 12px; color: var(--text-muted); }
 
 .hotcold-stats { text-align: right; }
 .hotcold-avg { display: block; font-size: 16px; font-weight: 800; }
 .hotcold-avg.hot { color: var(--win); }
 .hotcold-avg.cold { color: var(--loss); }
-.hotcold-line { font-size: 11px; color: var(--text-muted); }
+.hotcold-line { font-size: 12px; color: var(--text-muted); }
 
 /* League Leaders */
 .leaders-card {
@@ -1811,7 +1814,7 @@ button.stat-cell {
 .leaders-row.our-team { color: var(--team-secondary); font-weight: 700; }
 .leaders-rank { width: 20px; color: var(--text-muted); font-weight: 700; text-align: center; }
 .leaders-name { flex: 1; color: var(--text); font-weight: 500; }
-.leaders-team { width: 32px; color: var(--text-muted); font-size: 11px; text-align: center; }
+.leaders-team { width: 32px; color: var(--text-muted); font-size: 12px; text-align: center; }
 .leaders-value { font-weight: 700; color: var(--text-bright); min-width: 36px; text-align: right; }
 
 /* Upcoming Series */
@@ -1834,7 +1837,7 @@ button.stat-cell {
 
 .series-date { width: 65px; flex-shrink: 0; }
 .series-date span { display: block; font-size: 12px; color: var(--text); font-weight: 500; }
-.series-time { font-size: 10px; color: var(--text-muted); }
+.series-time { font-size: 12px; color: var(--text-muted); }
 
 .series-opp {
   display: flex;
@@ -1861,12 +1864,12 @@ button.stat-cell {
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text-muted);
 }
 
-.series-pitcher-vs { font-size: 10px; color: var(--text-muted); }
-.series-tbd { font-size: 11px; color: var(--text-muted); font-style: italic; }
+.series-pitcher-vs { font-size: 12px; color: var(--text-muted); }
+.series-tbd { font-size: 12px; color: var(--text-muted); font-style: italic; }
 
 /* Player Game Log */
 .gamelog-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
@@ -1881,7 +1884,7 @@ button.stat-cell {
 .gamelog-table th {
   color: var(--text-muted);
   font-weight: 600;
-  font-size: 10px;
+  font-size: 12px;
   text-transform: uppercase;
   padding: 6px 6px;
   text-align: center;
@@ -1938,7 +1941,8 @@ button.stat-cell {
 
 .btn-retry {
   margin-top: 12px;
-  padding: 8px 20px;
+  padding: 12px 20px;
+  min-height: 44px;
   background: var(--team-primary);
   color: white;
   border: none;
