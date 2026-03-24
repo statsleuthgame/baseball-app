@@ -94,14 +94,7 @@ export default function MatchupView() {
       {/* Opposing pitcher's arsenal */}
       {opponentPitcher && (
         <div className="matchup-section">
-          <h3>
-            <span
-              style={{ cursor: "pointer", textDecoration: "underline", textDecorationColor: "var(--border)", textUnderlineOffset: "3px" }}
-              onClick={() => navigate(`/team/${teamId}/player/${opponentPitcher.id}`)}
-            >
-              {opponentPitcher.fullName}
-            </span>'s Arsenal
-          </h3>
+          <h3>{opponentPitcher.fullName}'s Arsenal</h3>
           <PitchArsenal playerId={opponentPitcher.id} embedded />
         </div>
       )}
