@@ -52,6 +52,43 @@ def lookup_player_ids(last: str, first: str) -> dict:
         return {}
 
 
+_chadwick_map: dict | None = None  # mlbam_id -> fangraphs_id
+
+
+def _get_chadwick_map() -> dict:
+    """
+    Load the Chadwick Bureau player ID cross-reference table (cached).
+    Maps MLBAM ID -> FanGraphs ID for all players in history.
+    """
+    global _chadwick_map
+    if _chadwick_map is not None:
+        return _chadwick_map
+    try:
+        from pybaseball.datasources.chadwick_register import get_chadwick_register
+        df = get_chadwick_register()
+        if df is not None and not df.empty:
+            _chadwick_map = {}
+            for _, row in df.iterrows():
+                mlbam = row.get("key_mlbam")
+                fg = row.get("key_fangraphs")
+                if pd.notna(mlbam) and pd.notna(fg):
+                    try:
+                        _chadwick_map[int(mlbam)] = str(int(fg))
+                    except (ValueError, TypeError):
+                        pass
+    except Exception:
+        pass
+    if _chadwick_map is None:
+        _chadwick_map = {}
+    return _chadwick_map
+
+
+def mlbam_to_fangraphs_id(mlbam_id: int) -> str | None:
+    """Convert an MLBAM player ID to a FanGraphs player ID via Chadwick Register."""
+    m = _get_chadwick_map()
+    return m.get(mlbam_id)
+
+
 # ---------------------------------------------------------------------------
 # Season-level FanGraphs batting stats
 # ---------------------------------------------------------------------------

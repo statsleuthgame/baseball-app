@@ -737,11 +737,21 @@ def fetch_league_fangraphs(season: int) -> dict:
 # Season game log (pybaseball schedule_and_record)
 # ---------------------------------------------------------------------------
 
+
+# Baseball Reference uses slightly different abbreviations than MLB API for some teams.
+BREF_ABBR = {
+    "CWS": "CHW", "KC": "KCR", "TB": "TBR", "SD": "SDP",
+    "SF": "SFG", "MIA": "FLA",  # FLA pre-2012, MIA 2012+
+}
+
+
 def fetch_season_gamelog(team_abbr: str, season: int) -> list:
     """Fetch game-by-game results for a team using pybaseball schedule_and_record."""
     try:
         from pybaseball import schedule_and_record
-        df = schedule_and_record(season, team_abbr)
+        # Convert MLB API abbr to Baseball Reference abbr if needed
+        bref_abbr = BREF_ABBR.get(team_abbr, team_abbr)
+        df = schedule_and_record(season, bref_abbr)
         if df is None or df.empty:
             return []
 
