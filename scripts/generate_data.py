@@ -10,6 +10,7 @@ import os
 import sys
 import time
 import traceback
+import unicodedata
 from datetime import date, timedelta
 from pathlib import Path
 
@@ -34,6 +35,14 @@ SEASON = date.today().year
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
+def strip_accents(s: str) -> str:
+    """Remove diacritics/accents from a string for fuzzy name matching."""
+    return "".join(
+        c for c in unicodedata.normalize("NFD", s)
+        if unicodedata.category(c) != "Mn"
+    )
+
 
 def safe_json(obj):
     """Recursively replace NaN/Inf with None for JSON serialization."""
@@ -673,11 +682,15 @@ def fetch_fangraphs_for_player(full_name: str, is_pitcher: bool) -> dict:
         if not name_col:
             return {}
 
-        row = df[df[name_col].str.lower() == full_name.lower()]
+        # Normalize accents for matching (e.g. Rodríguez -> Rodriguez)
+        norm_name = strip_accents(full_name).lower()
+        df["_norm_name"] = df[name_col].apply(lambda x: strip_accents(str(x)).lower())
+
+        row = df[df["_norm_name"] == norm_name]
         if row.empty:
             # Try matching on last name
-            last = full_name.split()[-1]
-            row = df[df[name_col].str.lower().str.endswith(last.lower())]
+            last = strip_accents(full_name.split()[-1]).lower()
+            row = df[df["_norm_name"].str.endswith(last)]
         if row.empty:
             return {}
 
