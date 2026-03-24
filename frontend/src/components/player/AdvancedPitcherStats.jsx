@@ -30,6 +30,12 @@ const STAT_EXPLANATIONS = {
   topWhiff: "Best Whiff — Highest whiff rate among all pitch types",
 };
 
+const ordinal = (n) => {
+  const s = ["th", "st", "nd", "rd"];
+  const v = n % 100;
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
+};
+
 function getPercentile(key, rawValue) {
   const config = STAT_CONFIG[key];
   if (!config || rawValue == null) return null;
@@ -124,9 +130,14 @@ export default function AdvancedPitcherStats({ playerId }) {
                 {value != null ? fmt(value) : "—"}
               </span>
               {pct != null && (
-                <span className="stat-pct-bar">
-                  <span className="stat-pct-fill" style={{ width: `${pct * 100}%`, backgroundColor: color }} />
-                </span>
+                <>
+                  <span className="stat-pct-bar" aria-hidden="true">
+                    <span className="stat-pct-fill" style={{ width: `${pct * 100}%`, backgroundColor: color }} />
+                  </span>
+                  <span className="stat-pct-text" style={color ? { color } : undefined}>
+                    {ordinal(Math.round(pct * 100))} percentile
+                  </span>
+                </>
               )}
             </div>
           );

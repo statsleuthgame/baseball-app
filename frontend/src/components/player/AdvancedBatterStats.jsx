@@ -36,6 +36,12 @@ const STAT_EXPLANATIONS = {
   xwOBA: "xwOBA — Expected weighted on-base avg. Best overall contact metric",
 };
 
+const ordinal = (n) => {
+  const s = ["th", "st", "nd", "rd"];
+  const v = n % 100;
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
+};
+
 function getPercentile(key, rawValue) {
   const config = STAT_CONFIG[key];
   if (!config || rawValue == null) return null;
@@ -111,7 +117,7 @@ export default function AdvancedBatterStats({ playerId }) {
               style={color ? { borderColor: color } : undefined}
               onClick={() => setSelected(isSelected ? null : key)}
               aria-pressed={isSelected}
-              aria-label={`${label}: ${value != null ? fmt(value) : 'no data'}${pct != null ? `, ${Math.round(pct * 100)}th percentile` : ''}`}
+              aria-label={`${label}: ${value != null ? fmt(value) : 'no data'}${pct != null ? `, ${ordinal(Math.round(pct * 100))} percentile` : ''}`}
             >
               <span className="stat-label">{label}</span>
               <span className="stat-value" style={color ? { color } : undefined}>
@@ -123,7 +129,7 @@ export default function AdvancedBatterStats({ playerId }) {
                     <span className="stat-pct-fill" style={{ width: `${pct * 100}%`, backgroundColor: color }} />
                   </span>
                   <span className="stat-pct-text" style={color ? { color } : undefined}>
-                    {Math.round(pct * 100)}%ile
+                    {ordinal(Math.round(pct * 100))} percentile
                   </span>
                 </>
               )}
