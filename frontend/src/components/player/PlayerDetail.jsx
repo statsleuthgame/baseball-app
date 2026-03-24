@@ -41,14 +41,14 @@ export default function PlayerDetail() {
       <div className="player-header">
         <PlayerPhoto playerId={player.id} name={player.fullName} size={96} />
         <div className="player-header-info">
-          <h2 className="player-name">{player.fullName}</h2>
+          <h2 className="player-name">{player.fullName || "Unknown"}</h2>
           <p className="player-meta">
-            #{player.primaryNumber} · {player.primaryPosition} ·{" "}
+            #{player.primaryNumber || "—"} · {player.primaryPosition || "—"} ·{" "}
             {player.batSide === "R" ? "R" : player.batSide === "L" ? "L" : "S"}/
             {player.pitchHand === "R" ? "R" : "L"}
           </p>
           <p className="player-bio">
-            {player.height} · {player.weight} lbs · Age {player.age}
+            {player.height || "—"} · {player.weight ? `${player.weight} lbs` : "—"} · {player.age ? `Age ${player.age}` : ""}
           </p>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchPlayerAdvanced } from "../../api/client";
 import { formatAvg } from "../../utils/formatters";
@@ -70,7 +70,7 @@ export default function AdvancedBatterStats({ playerId }) {
   if (isLoading) return <LoadingSpinner text="Loading advanced stats..." />;
   if (!data || Object.keys(data).length === 0) return null;
 
-  const stats = [
+  const stats = useMemo(() => [
     { key: "avgExitVelo", label: "Avg EV", value: data.avgExitVelo, fmt: (v) => `${v}` },
     { key: "maxExitVelo", label: "Max EV", value: data.maxExitVelo, fmt: (v) => `${v}` },
     { key: "hardHitPct", label: "Hard Hit%", value: data.hardHitPct, fmt: (v) => `${v}%` },
@@ -84,7 +84,7 @@ export default function AdvancedBatterStats({ playerId }) {
     { key: "xBA", label: "xBA", value: data.xBA, fmt: (v) => formatAvg(v) },
     { key: "xSLG", label: "xSLG", value: data.xSLG, fmt: (v) => formatAvg(v) },
     { key: "xwOBA", label: "xwOBA", value: data.xwOBA, fmt: (v) => formatAvg(v) },
-  ];
+  ], [data]);
 
   const selectedColor = selected ? percentileColor(getPercentile(selected, data[selected])) : null;
 

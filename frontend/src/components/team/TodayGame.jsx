@@ -40,7 +40,7 @@ export default function TodayGame() {
     gameDate.getMonth() === today.getMonth() &&
     gameDate.getDate() === today.getDate();
 
-  const goToMatchup = () => navigate(`/team/${teamId}/matchup`);
+  const handleViewMatchup = () => navigate(`/team/${teamId}/matchup`);
 
   return (
     <div className="today-game-wrapper">
@@ -57,7 +57,7 @@ export default function TodayGame() {
             : "NEXT GAME"
         }
         showDate={!isToday}
-        onTap={goToMatchup}
+        onTap={handleViewMatchup}
       />
 
       {/* If today's game is final, also show the next upcoming game */}

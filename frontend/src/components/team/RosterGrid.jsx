@@ -33,6 +33,7 @@ export default function RosterGrid() {
             key={player.id}
             className="roster-player"
             onClick={() => navigate(`/team/${teamId}/player/${player.id}`)}
+            aria-label={`View ${player.fullName}, ${player.position.abbreviation}`}
           >
             <PlayerPhoto playerId={player.id} name={player.fullName} size={56} />
             <div className="roster-player-info">
@@ -52,6 +53,7 @@ export default function RosterGrid() {
             key={player.id}
             className="roster-player"
             onClick={() => navigate(`/team/${teamId}/player/${player.id}`)}
+            aria-label={`View ${player.fullName}, ${player.position.abbreviation}`}
           >
             <PlayerPhoto playerId={player.id} name={player.fullName} size={56} />
             <div className="roster-player-info">

@@ -30,19 +30,20 @@ export default function StandingsCard() {
       <h2 className="standings-header">Standings</h2>
       <h3 className="standings-title">{myDivision.divisionName}</h3>
       <table className="standings-table">
+        <caption className="sr-only">{myDivision.divisionName} standings</caption>
         <thead>
           <tr>
-            <th>Team</th>
-            <th>W</th>
-            <th>L</th>
-            <th>PCT</th>
-            <th>GB</th>
-            <th>STR</th>
+            <th scope="col">Team</th>
+            <th scope="col"><abbr title="Wins">W</abbr></th>
+            <th scope="col"><abbr title="Losses">L</abbr></th>
+            <th scope="col"><abbr title="Win Percentage">PCT</abbr></th>
+            <th scope="col"><abbr title="Games Back">GB</abbr></th>
+            <th scope="col"><abbr title="Streak">STR</abbr></th>
           </tr>
         </thead>
         <tbody>
           {myDivision.teams.map((t) => (
-            <tr key={t.id} className={t.id === team?.id ? "my-team" : ""}>
+            <tr key={t.id} className={t.id === team?.id ? "my-team" : ""} aria-current={t.id === team?.id ? "true" : undefined}>
               <td className="standings-team-cell">
                 <img
                   src={t.logoUrl}

@@ -19,6 +19,7 @@ export default function TeamSelector() {
             key={team.id}
             className="team-card"
             onClick={() => handleSelect(team.id)}
+            aria-label={`Select ${team.name}`}
             style={{
               "--card-primary": team.primary,
               "--card-secondary": team.secondary,
