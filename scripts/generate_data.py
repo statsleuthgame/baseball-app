@@ -466,18 +466,23 @@ def fetch_fangraphs_for_player(full_name: str, is_pitcher: bool) -> dict:
     try:
         df = None
         for season in [SEASON, SEASON - 1]:
-            if is_pitcher:
-                from pybaseball import pitching_stats
-                df = pitching_stats(season, qual=1)
-                if df is None or df.empty:
-                    df = pitching_stats(season, qual=0)
-            else:
-                from pybaseball import batting_stats
-                df = batting_stats(season, qual=1)
-                if df is None or df.empty:
-                    df = batting_stats(season, qual=0)
-            if df is not None and not df.empty:
-                break
+            try:
+                if is_pitcher:
+                    from pybaseball import pitching_stats
+                    df = pitching_stats(season, qual=1)
+                    if df is None or df.empty:
+                        df = pitching_stats(season, qual=0)
+                else:
+                    from pybaseball import batting_stats
+                    df = batting_stats(season, qual=1)
+                    if df is None or df.empty:
+                        df = batting_stats(season, qual=0)
+                if df is not None and not df.empty:
+                    break
+            except Exception as e:
+                print(f"    FanGraphs {season} failed for {full_name}: {e}")
+                df = None
+                continue
 
         if df is None or df.empty:
             return {}
@@ -909,6 +914,9 @@ def main():
     print("\n[3/6] League FanGraphs (team rankings + K-BB% + percentiles)")
     try:
         league_data = fetch_league_fangraphs(SEASON)
+        if not league_data:
+            print(f"    {SEASON} empty, trying {SEASON - 1}")
+            league_data = fetch_league_fangraphs(SEASON - 1)
         if league_data.get("teamBatting"):
             write_json("league/team_batting.json", league_data["teamBatting"])
         if league_data.get("teamPitching"):
