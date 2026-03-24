@@ -1,4 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import { useTeam } from "../../context/TeamContext";
 import { fetchBvP } from "../../api/client";
 import { formatAvg } from "../../utils/formatters";
 import PlayerPhoto from "../common/PlayerPhoto";
@@ -20,6 +22,9 @@ export default function BatterVsPitcher({ batters, pitcherId, pitcherName }) {
 }
 
 function BvPRow({ batter, pitcherId }) {
+  const { teamId } = useTeam();
+  const navigate = useNavigate();
+
   const { data, isLoading } = useQuery({
     queryKey: ["bvp", batter.id, pitcherId],
     queryFn: () => fetchBvP(batter.id, pitcherId),
@@ -27,7 +32,7 @@ function BvPRow({ batter, pitcherId }) {
   });
 
   return (
-    <div className="bvp-row">
+    <div className="bvp-row" onClick={() => navigate(`/team/${teamId}/player/${batter.id}`)} style={{ cursor: "pointer" }}>
       <div className="bvp-player">
         <PlayerPhoto playerId={batter.id} name={batter.fullName} size={36} />
         <div className="bvp-player-info">
