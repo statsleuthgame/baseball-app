@@ -269,7 +269,7 @@ export default function Scoreboard() {
                     <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                       <polygon points="5 3 19 12 5 21 5 3" />
                     </svg>
-                    {isLive ? "Watch" : "MLB.tv"}
+                    Watch
                   </button>
                 )}
               </div>
