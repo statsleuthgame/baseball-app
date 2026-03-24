@@ -463,6 +463,108 @@ def fetch_batter_career_statcast(player_id: int) -> dict:
 # FanGraphs season stats (pybaseball)
 # ---------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------
+# Missed umpire calls (balls/strikes)
+# ---------------------------------------------------------------------------
+
+PLATE_HALF_WIDTH = 0.83  # 17" plate + ball radius, in feet
+
+def fetch_missed_calls(player_id: int) -> dict:
+    """Fetch 5 years of called pitches and identify incorrect ball/strike calls."""
+    from pybaseball import statcast_batter
+
+    start = f"{SEASON - 5}-01-01"
+    end = date.today().isoformat()
+
+    try:
+        df = statcast_batter(start, end, player_id)
+        if df is None or df.empty:
+            return {}
+
+        # Keep only called balls and called strikes
+        called = df[df["description"].isin(["called_strike", "ball"])].copy()
+        required = ["plate_x", "plate_z", "sz_top", "sz_bot"]
+        called = called.dropna(subset=required)
+        if called.empty:
+            return {}
+
+        total_called = len(called)
+
+        # Determine if each pitch is in the zone
+        in_zone = (
+            (called["plate_x"].abs() <= PLATE_HALF_WIDTH) &
+            (called["plate_z"] >= called["sz_bot"]) &
+            (called["plate_z"] <= called["sz_top"])
+        )
+
+        # Squeezed: pitch in zone but called ball (hurts batter)
+        squeezed_mask = (called["description"] == "ball") & in_zone
+        # Gifted: pitch outside zone but called strike (hurts batter)
+        gifted_mask = (called["description"] == "called_strike") & ~in_zone
+
+        def build_pitches(mask):
+            rows = called[mask]
+            pitches = []
+            for _, r in rows.iterrows():
+                game_date = ""
+                if pd.notna(r.get("game_date")):
+                    game_date = str(r["game_date"])[:10]
+                pitches.append({
+                    "px": round(float(r["plate_x"]), 3),
+                    "pz": round(float(r["plate_z"]), 3),
+                    "szTop": round(float(r["sz_top"]), 2),
+                    "szBot": round(float(r["sz_bot"]), 2),
+                    "date": game_date,
+                    "pitchType": r.get("pitch_type", ""),
+                    "velo": safe_float(r.get("release_speed"), 1),
+                    "balls": int(r["balls"]) if pd.notna(r.get("balls")) else None,
+                    "strikes": int(r["strikes"]) if pd.notna(r.get("strikes")) else None,
+                    "inning": int(r["inning"]) if pd.notna(r.get("inning")) else None,
+                })
+            return pitches
+
+        squeezed_pitches = build_pitches(squeezed_mask)
+        gifted_pitches = build_pitches(gifted_mask)
+        total_missed = len(squeezed_pitches) + len(gifted_pitches)
+
+        # By-year breakdown
+        by_year = {}
+        if "game_date" in called.columns:
+            called["year"] = pd.to_datetime(called["game_date"], errors="coerce").dt.year
+            for yr, grp in called.groupby("year"):
+                if pd.isna(yr):
+                    continue
+                yr_str = str(int(yr))
+                yr_in_zone = (
+                    (grp["plate_x"].abs() <= PLATE_HALF_WIDTH) &
+                    (grp["plate_z"] >= grp["sz_bot"]) &
+                    (grp["plate_z"] <= grp["sz_top"])
+                )
+                by_year[yr_str] = {
+                    "called": len(grp),
+                    "squeezed": int(((grp["description"] == "ball") & yr_in_zone).sum()),
+                    "gifted": int(((grp["description"] == "called_strike") & ~yr_in_zone).sum()),
+                }
+
+        # Average zone dimensions for the SVG reference box
+        avg_sz_top = round(float(called["sz_top"].mean()), 2)
+        avg_sz_bot = round(float(called["sz_bot"].mean()), 2)
+
+        return {
+            "totalCalled": total_called,
+            "missedCalls": total_missed,
+            "missedPct": round(total_missed / total_called * 100, 1) if total_called > 0 else 0,
+            "avgSzTop": avg_sz_top,
+            "avgSzBot": avg_sz_bot,
+            "squeezed": {"count": len(squeezed_pitches), "pitches": squeezed_pitches},
+            "gifted": {"count": len(gifted_pitches), "pitches": gifted_pitches},
+            "byYear": by_year,
+        }
+    except Exception as e:
+        print(f"    missed calls error: {e}")
+        return {}
+
+
 def fetch_fangraphs_for_player(full_name: str, is_pitcher: bool) -> dict:
     """Fetch FanGraphs season stats for a player by name."""
     try:
@@ -876,7 +978,12 @@ def main():
                 fg_stats = fetch_fangraphs_for_player(full_name, is_pitcher=True)
                 write_json(f"players/{pid}/advanced.json", fg_stats)
 
-                print(f"    {full_name} (P) - arsenal + FanGraphs done")
+                # Missed umpire calls (from batter perspective when batting)
+                missed = fetch_missed_calls(pid)
+                if missed:
+                    write_json(f"players/{pid}/missed_calls.json", missed)
+
+                print(f"    {full_name} (P) - arsenal + FanGraphs + missed calls done")
             except Exception as e:
                 print(f"    statcast error for {full_name}: {e}")
             time.sleep(1)
@@ -902,7 +1009,12 @@ def main():
                 for park_abbr, spray_data in all_sprays.items():
                     write_json(f"players/{pid}/spray/{park_abbr}.json", spray_data)
 
-                print(f"    {full_name} - advanced + FanGraphs + bvp + spray ({len(all_sprays)} parks) done")
+                # Missed umpire calls
+                missed = fetch_missed_calls(pid)
+                if missed:
+                    write_json(f"players/{pid}/missed_calls.json", missed)
+
+                print(f"    {full_name} - advanced + FanGraphs + bvp + spray ({len(all_sprays)} parks) + missed calls done")
             except Exception as e:
                 print(f"    statcast error for {full_name}: {e}")
             time.sleep(1)

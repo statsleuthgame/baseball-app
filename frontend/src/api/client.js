@@ -55,6 +55,9 @@ export const fetchPlayerStats = (playerId) =>
 export const fetchPlayerAdvanced = (playerId) =>
   staticFetch(`players/${playerId}/advanced.json`).catch(() => ({}));
 
+export const fetchMissedCalls = (playerId) =>
+  staticFetch(`players/${playerId}/missed_calls.json`).catch(() => null);
+
 export const fetchPlayerArsenal = async (playerId) => {
   // Try static pre-generated data first
   try {

@@ -12,6 +12,7 @@ import AdvancedPitcherStats from "./AdvancedPitcherStats";
 import PitchArsenal from "./PitchArsenal";
 import DominanceProfile from "./DominanceProfile";
 import PlayerGameLog from "./PlayerGameLog";
+import MissedCallsPanel from "../strikezone/MissedCallsPanel";
 
 export default function PlayerDetail() {
   const { playerId } = useParams();
@@ -87,6 +88,8 @@ export default function PlayerDetail() {
       ) : (
         <AdvancedBatterStats playerId={playerId} />
       )}
+
+      <MissedCallsPanel playerId={playerId} />
     </div>
   );
 }

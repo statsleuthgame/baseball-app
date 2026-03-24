@@ -2122,3 +2122,134 @@ button.stat-cell {
   color: #ffb74d;
   line-height: 1.4;
 }
+
+/* =========================================================
+   Missed Calls / Strike Zone
+   ========================================================= */
+.missed-calls-section {
+  margin-top: 16px;
+  padding: 12px;
+  background: var(--bg-card);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.missed-calls-subtitle {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.missed-calls-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.mc-toggle-group {
+  display: flex;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.mc-toggle {
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  background: transparent;
+  color: var(--text-muted);
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.mc-toggle:not(:last-child) {
+  border-right: 1px solid var(--border);
+}
+
+.mc-toggle-active {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-bright);
+}
+
+.mc-year-select {
+  padding: 4px 8px;
+  font-size: 11px;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.missed-calls-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.mc-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 4px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.mc-stat-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-bright);
+}
+
+.mc-stat-missed {
+  color: #f59e0b;
+}
+
+.mc-stat-label {
+  font-size: 9px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-top: 2px;
+}
+
+.missed-calls-chart {
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+.strike-zone-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.missed-calls-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 8px;
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.mc-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.mc-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
