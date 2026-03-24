@@ -27,7 +27,8 @@ export default function UpcomingSeries() {
           return (
             <div key={g.gamePk} className="series-row">
               <div className="series-date">
-                <span>{formatGameDate(g.gameDate)}</span>
+                <span className="series-dow">{new Date(g.gameDate).toLocaleDateString("en-US", { weekday: "short" })}</span>
+                <span className="series-md">{new Date(g.gameDate).toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span>
                 <span className="series-time">{formatGameTime(g.gameDate)}</span>
               </div>
               <div className="series-opp">
