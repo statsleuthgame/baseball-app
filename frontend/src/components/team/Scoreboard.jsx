@@ -307,6 +307,9 @@ export default function Scoreboard() {
             const isExpanded = expandedGame === game.gamePk;
             const canExpand = isLive || isFinal;
 
+            const awayWon = isFinal && game.away.score > game.home.score;
+            const homeWon = isFinal && game.home.score > game.away.score;
+
             return (
               <div
                 key={game.gamePk}
@@ -322,7 +325,7 @@ export default function Scoreboard() {
                 {isScheduled && <div className="scoreboard-status-badge">{formatGameTime(game.gameDate)}</div>}
 
                 <div className="scoreboard-teams">
-                  <div className="scoreboard-team-row">
+                  <div className={`scoreboard-team-row ${isFinal ? (awayWon ? "sb-winner" : "sb-loser") : ""}`}>
                     <img src={game.away.logoUrl} alt={game.away.abbreviation} className="scoreboard-logo" />
                     <span className="scoreboard-abbr">{game.away.abbreviation}</span>
                     {game.away.wins != null && (
@@ -332,7 +335,7 @@ export default function Scoreboard() {
                       {(isLive || isFinal) ? game.away.score : ""}
                     </span>
                   </div>
-                  <div className="scoreboard-team-row">
+                  <div className={`scoreboard-team-row ${isFinal ? (homeWon ? "sb-winner" : "sb-loser") : ""}`}>
                     <img src={game.home.logoUrl} alt={game.home.abbreviation} className="scoreboard-logo" />
                     <span className="scoreboard-abbr">{game.home.abbreviation}</span>
                     {game.home.wins != null && (

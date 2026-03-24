@@ -1755,6 +1755,9 @@ button.stat-cell {
 .scoreboard-record { font-size: 12px; color: var(--text-muted); flex: 1; }
 .scoreboard-score { font-size: 18px; font-weight: 800; color: var(--text-bright); min-width: 28px; text-align: right; }
 
+.sb-loser { opacity: 0.45; }
+.sb-winner .scoreboard-score { font-size: 20px; }
+
 .scoreboard-pitchers {
   display: flex;
   align-items: flex-start;
