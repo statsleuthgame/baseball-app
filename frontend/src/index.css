@@ -410,12 +410,34 @@ html, body {
   color: var(--text-muted);
 }
 
-.today-game-venue {
-  text-align: center;
-  font-size: 12px;
-  color: var(--text-muted);
+.today-game-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-top: 8px;
 }
+
+.today-game-venue {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.today-game-watch {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  background: var(--team-secondary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.today-game-watch:active { opacity: 0.8; }
 
 /* Standings Card */
 .standings-card {
@@ -1584,197 +1606,107 @@ button.stat-cell {
 .spray-total-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-muted); }
 .spray-total-val { font-weight: 700; color: var(--text-bright); }
 
-/* Watch Game */
-.watch-page {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
+/* Scoreboard */
+.scoreboard-page { display: flex; flex-direction: column; gap: 12px; }
 
-.watch-game-card {
-  background: var(--bg-card);
-  border-radius: 16px;
-  padding: 20px;
-  border: 1px solid var(--border);
-  text-align: center;
-}
-
-.watch-game-card.live {
-  border-color: var(--live);
-  box-shadow: 0 0 20px rgba(245, 158, 11, 0.15);
-}
-
-.watch-live-badge {
-  display: inline-block;
-  padding: 4px 12px;
-  background: var(--live);
-  color: #000;
-  border-radius: 20px;
-  font-size: 12px;
+.scoreboard-title {
+  font-size: 20px;
   font-weight: 800;
-  letter-spacing: 1px;
-  margin-bottom: 16px;
-  animation: pulse 2s infinite;
+  color: var(--text-bright);
+  letter-spacing: -0.3px;
 }
 
-.watch-scheduled-badge,
-.watch-final-badge {
-  font-size: 13px;
-  color: var(--text-muted);
-  margin-bottom: 12px;
-  font-weight: 500;
-}
-
-.watch-matchup {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 24px;
-  margin-bottom: 16px;
-}
-
-.watch-team {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-}
-
-.watch-team-logo { width: 64px; height: 64px; }
-.watch-team-name { font-size: 16px; font-weight: 800; color: var(--text-bright); }
-.watch-score { font-size: 32px; font-weight: 800; color: var(--text-bright); }
-.watch-vs { font-size: 14px; color: var(--text-muted); font-weight: 600; }
-
-.watch-pitchers {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 12px 0;
-  border-top: 1px solid var(--border);
-  margin-bottom: 16px;
-}
-
-.watch-pitcher {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  color: var(--text);
-}
-
-.watch-pitcher-vs { font-size: 11px; color: var(--text-muted); }
-
-.watch-buttons {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  margin-bottom: 8px;
-}
-
-.watch-btn-primary {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 14px 28px;
-  background: var(--team-secondary);
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: opacity 0.15s;
-}
-
-.watch-btn-primary:active { opacity: 0.8; }
-
-.watch-btn-secondary {
-  padding: 14px 20px;
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.watch-btn-secondary:active { opacity: 0.7; }
-
-.watch-note {
-  font-size: 11px;
-  color: var(--text-muted);
-  margin-top: 4px;
-}
-
-.watch-empty {
+.scoreboard-empty {
   text-align: center;
   padding: 60px 20px;
   color: var(--text-muted);
 }
 
-.watch-empty h2 {
-  color: var(--text-bright);
-  margin: 16px 0 6px;
-  font-size: 20px;
-}
+.scoreboard-empty h2 { color: var(--text-bright); margin-bottom: 8px; }
 
-.watch-empty p { font-size: 14px; }
+.scoreboard-list { display: flex; flex-direction: column; gap: 8px; }
 
-/* Upcoming broadcasts */
-.watch-upcoming {
+.scoreboard-card {
   background: var(--bg-card);
-  border-radius: 16px;
-  padding: 16px;
+  border-radius: 12px;
+  padding: 12px 14px;
   border: 1px solid var(--border);
+  position: relative;
 }
 
-.watch-upcoming-row {
+.scoreboard-card.our-game {
+  border-color: var(--team-secondary);
+  box-shadow: 0 0 8px rgba(0, 163, 163, 0.1);
+}
+
+.scoreboard-card.live {
+  border-color: var(--live);
+}
+
+.scoreboard-live-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  background: var(--live);
+  color: #000;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.scoreboard-status-badge {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.scoreboard-teams { display: flex; flex-direction: column; gap: 6px; }
+
+.scoreboard-team-row {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-  border: none;
-  background: none;
-  color: inherit;
-  font: inherit;
-  width: 100%;
-  text-align: left;
-  cursor: pointer;
+  gap: 8px;
 }
 
-.watch-upcoming-row:active { opacity: 0.7; }
+.scoreboard-logo { width: 22px; height: 22px; flex-shrink: 0; }
+.scoreboard-abbr { font-size: 14px; font-weight: 700; color: var(--text-bright); width: 36px; }
+.scoreboard-record { font-size: 11px; color: var(--text-muted); flex: 1; }
+.scoreboard-score { font-size: 18px; font-weight: 800; color: var(--text-bright); min-width: 28px; text-align: right; }
 
-.watch-upcoming-date {
-  width: 70px;
-  flex-shrink: 0;
-}
-
-.watch-upcoming-date span { display: block; font-size: 12px; color: var(--text); font-weight: 500; }
-.watch-upcoming-time { font-size: 10px; color: var(--text-muted); }
-
-.watch-upcoming-opp {
+.scoreboard-pitchers {
   display: flex;
   align-items: center;
   gap: 6px;
-  flex: 1;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-bright);
-}
-
-.watch-upcoming-logo { width: 22px; height: 22px; }
-
-.watch-upcoming-action {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
   font-size: 12px;
-  font-weight: 600;
-  color: var(--team-secondary);
-  padding: 4px 10px;
-  border: 1px solid var(--team-secondary);
-  border-radius: 6px;
+  color: var(--text-muted);
+  justify-content: center;
 }
+
+.scoreboard-pitcher-vs { color: var(--text-muted); font-size: 10px; }
+
+.scoreboard-watch-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  padding: 5px 10px;
+  background: var(--team-secondary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.scoreboard-watch-btn:active { opacity: 0.8; }
 
 /* Section title (shared) */
 .section-title {

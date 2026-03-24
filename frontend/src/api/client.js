@@ -235,6 +235,53 @@ export const fetchPriorMatchups = async (team1, team2) => {
 
 // ---- New Features: Live MLB API calls ----
 
+// All MLB games today (scoreboard)
+export const fetchAllGamesToday = async () => {
+  try {
+    const today = new Date();
+    const fmt = (d) => d.toISOString().split("T")[0];
+    const resp = await mlbApi.get("/schedule", {
+      params: {
+        sportId: 1, date: fmt(today),
+        hydrate: "team,linescore,probablePitcher", gameType: "R",
+      },
+    });
+    const games = [];
+    for (const dateEntry of resp.data?.dates || []) {
+      for (const g of dateEntry.games || []) {
+        const away = g.teams?.away || {};
+        const home = g.teams?.home || {};
+        const at = away.team || {};
+        const ht = home.team || {};
+        const ls = g.linescore || {};
+        games.push({
+          gamePk: g.gamePk,
+          gameDate: g.gameDate || "",
+          status: g.status?.detailedState || "",
+          inning: ls.currentInning || null,
+          inningHalf: ls.inningHalf || "",
+          venue: g.venue?.name || "",
+          away: {
+            id: at.id, name: at.name || "", abbreviation: at.abbreviation || "",
+            score: away.score, wins: away.leagueRecord?.wins, losses: away.leagueRecord?.losses,
+            probablePitcher: extractPitcher(away.probablePitcher),
+            logoUrl: `https://www.mlbstatic.com/team-logos/${at.id}.svg`,
+          },
+          home: {
+            id: ht.id, name: ht.name || "", abbreviation: ht.abbreviation || "",
+            score: home.score, wins: home.leagueRecord?.wins, losses: home.leagueRecord?.losses,
+            probablePitcher: extractPitcher(home.probablePitcher),
+            logoUrl: `https://www.mlbstatic.com/team-logos/${ht.id}.svg`,
+          },
+        });
+      }
+    }
+    return games;
+  } catch {
+    return [];
+  }
+};
+
 // 3. Transaction feed (roster moves, IL, trades)
 export const fetchTransactions = async (teamId) => {
   try {

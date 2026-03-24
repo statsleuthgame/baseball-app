@@ -36,11 +36,14 @@ const tabs = [
     ),
   },
   {
-    path: "watch",
-    label: "Watch",
+    path: "scores",
+    label: "Scores",
     icon: (
       <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <polygon points="5 3 19 12 5 21 5 3" fill="currentColor" />
+        <rect x="2" y="3" width="20" height="18" rx="2" />
+        <line x1="2" y1="9" x2="22" y2="9" />
+        <line x1="2" y1="15" x2="22" y2="15" />
+        <line x1="12" y1="3" x2="12" y2="21" />
       </svg>
     ),
   },

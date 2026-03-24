@@ -154,7 +154,25 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
         </div>
       )}
 
-      <div className="today-game-venue">{game.venue.name}</div>
+      <div className="today-game-footer">
+        <span className="today-game-venue">{game.venue.name}</span>
+        {!compact && game.gamePk && (isLive || !isFinal) && (
+          <button
+            className="today-game-watch"
+            onClick={(e) => {
+              e.stopPropagation();
+              window.location.href = `mlbatbat://game?game_pk=${game.gamePk}`;
+              setTimeout(() => window.open(`https://www.mlb.tv/game/${game.gamePk}`, "_blank"), 1500);
+            }}
+            aria-label={isLive ? "Watch live game" : "Open in MLB app"}
+          >
+            <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3" />
+            </svg>
+            {isLive ? "Watch" : "MLB.tv"}
+          </button>
+        )}
+      </div>
     </div>
   );
 }
