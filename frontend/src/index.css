@@ -1736,7 +1736,7 @@ button.stat-cell {
 
 .scoreboard-pitchers {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 6px;
   margin-top: 8px;
   padding-top: 8px;
@@ -1746,7 +1746,71 @@ button.stat-cell {
   justify-content: center;
 }
 
-.scoreboard-pitcher-vs { color: var(--text-muted); font-size: 12px; }
+.sb-pitcher-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+
+.sb-pitcher-stats {
+  font-size: 10px;
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+.scoreboard-pitcher-vs { color: var(--text-muted); font-size: 12px; margin-top: 2px; }
+
+.sb-weather {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.sb-wind {
+  opacity: 0.7;
+}
+
+.sb-venue {
+  opacity: 0.6;
+}
+
+.sb-bvp-preview {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.sb-bvp-title {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.sb-bvp-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2px 0;
+  font-size: 11px;
+}
+
+.sb-bvp-name {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.sb-bvp-stat {
+  color: var(--text-muted);
+}
 
 .scoreboard-watch-btn {
   display: flex;

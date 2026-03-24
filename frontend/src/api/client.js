@@ -284,7 +284,7 @@ export const fetchAllGamesToday = async (dateStr) => {
     const resp = await mlbApi.get("/schedule", {
       params: {
         sportId: 1, date: dateParam,
-        hydrate: "team,linescore,probablePitcher", gameType: "R",
+        hydrate: "team,linescore,probablePitcher,weather", gameType: "R",
       },
     });
     const games = [];
@@ -295,6 +295,7 @@ export const fetchAllGamesToday = async (dateStr) => {
         const at = away.team || {};
         const ht = home.team || {};
         const ls = g.linescore || {};
+        const w = g.weather || {};
         games.push({
           gamePk: g.gamePk,
           gameDate: g.gameDate || "",
@@ -302,6 +303,7 @@ export const fetchAllGamesToday = async (dateStr) => {
           inning: ls.currentInning || null,
           inningHalf: ls.inningHalf || "",
           venue: g.venue?.name || "",
+          weather: w.temp ? { temp: w.temp, condition: w.condition || "", wind: w.wind || "" } : null,
           away: {
             id: at.id, name: at.name || "", abbreviation: at.abbreviation || "",
             score: away.score, wins: away.leagueRecord?.wins, losses: away.leagueRecord?.losses,
@@ -321,6 +323,30 @@ export const fetchAllGamesToday = async (dateStr) => {
   } catch {
     return [];
   }
+};
+
+// Pitcher season stats (ERA, W-L) for scoreboard cards
+export const fetchPitcherSeasonStats = async (pitcherId) => {
+  const year = new Date().getFullYear();
+  for (const season of [year, year - 1]) {
+    try {
+      const resp = await mlbApi.get(`/people/${pitcherId}/stats`, {
+        params: { stats: "season", season, group: "pitching" },
+      });
+      const stat = resp.data?.stats?.[0]?.splits?.[0]?.stat;
+      if (stat && (stat.gamesStarted > 0 || stat.gamesPitched > 0)) {
+        return {
+          era: stat.era || "-.--",
+          wins: stat.wins || 0,
+          losses: stat.losses || 0,
+          ip: stat.inningsPitched || "0",
+          so: stat.strikeOuts || 0,
+          season,
+        };
+      }
+    } catch {}
+  }
+  return null;
 };
 
 // 3. Transaction feed (roster moves, IL, trades)

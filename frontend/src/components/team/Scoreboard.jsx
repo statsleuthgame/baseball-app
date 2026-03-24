@@ -1,14 +1,29 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTeam } from "../../context/TeamContext";
-import { fetchAllGamesToday } from "../../api/client";
-import { formatGameTime } from "../../utils/formatters";
+import { fetchAllGamesToday, fetchPitcherSeasonStats, fetchBvP, fetchRoster } from "../../api/client";
+import { formatGameTime, getTeamAbbr } from "../../utils/formatters";
 import LoadingSpinner from "../common/LoadingSpinner";
 
 const fmt = (d) => d.toISOString().split("T")[0];
 
 const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+const WEATHER_ICONS = {
+  sunny: "☀️", clear: "☀️", "partly cloudy": "⛅", cloudy: "☁️",
+  overcast: "☁️", rain: "🌧️", drizzle: "🌧️", snow: "🌨️",
+  dome: "🏟️", roof: "🏟️", retractable: "🏟️",
+};
+
+function weatherIcon(condition) {
+  if (!condition) return "🌤️";
+  const lower = condition.toLowerCase();
+  for (const [key, icon] of Object.entries(WEATHER_ICONS)) {
+    if (lower.includes(key)) return icon;
+  }
+  return "🌤️";
+}
 
 function formatDateLabel(dateStr) {
   const today = fmt(new Date());
@@ -24,6 +39,67 @@ function formatDateLabel(dateStr) {
 
   const d = new Date(dateStr + "T12:00:00");
   return `${DAYS[d.getDay()]}, ${MONTHS[d.getMonth()]} ${d.getDate()}`;
+}
+
+function PitcherStats({ pitcherId }) {
+  const { data } = useQuery({
+    queryKey: ["pitcherSeasonStats", pitcherId],
+    queryFn: () => fetchPitcherSeasonStats(pitcherId),
+    enabled: !!pitcherId,
+    staleTime: 1000 * 60 * 60,
+  });
+
+  if (!data) return null;
+
+  return (
+    <span className="sb-pitcher-stats">
+      {data.wins}-{data.losses}, {data.era} ERA
+    </span>
+  );
+}
+
+async function fetchBvPBatch(teamId, pitcherId) {
+  const roster = await fetchRoster(teamId);
+  const batters = (roster || []).filter((p) => p.position.type !== "Pitcher").slice(0, 9);
+  const results = await Promise.all(
+    batters.map(async (b) => {
+      const bvp = await fetchBvP(b.id, pitcherId);
+      return { ...b, bvp };
+    })
+  );
+  return results
+    .filter((m) => m.bvp && m.bvp.pa >= 3)
+    .sort((a, b) => (b.bvp.pa || 0) - (a.bvp.pa || 0))
+    .slice(0, 3);
+}
+
+function BvPPreview({ teamId, pitcherId }) {
+  const { data: matchups } = useQuery({
+    queryKey: ["bvpBatch", teamId, pitcherId],
+    queryFn: () => fetchBvPBatch(teamId, pitcherId),
+    enabled: !!teamId && !!pitcherId,
+    staleTime: 1000 * 60 * 60,
+  });
+
+  if (!matchups?.length) return null;
+
+  return (
+    <div className="sb-bvp-preview">
+      <span className="sb-bvp-title">Key Matchups vs Starter</span>
+      {matchups.map((m) => {
+        const avg = m.bvp.ab > 0 ? (m.bvp.hits / m.bvp.ab).toFixed(3).replace(/^0/, "") : ".000";
+        return (
+          <div key={m.id} className="sb-bvp-row">
+            <span className="sb-bvp-name">{m.fullName.split(" ").pop()}</span>
+            <span className="sb-bvp-stat">
+              {m.bvp.hits}-{m.bvp.ab} ({avg})
+              {m.bvp.homeRuns > 0 ? `, ${m.bvp.homeRuns} HR` : ""}
+            </span>
+          </div>
+        );
+      })}
+    </div>
+  );
 }
 
 export default function Scoreboard() {
@@ -97,6 +173,12 @@ export default function Scoreboard() {
             const isFinal = game.status === "Final";
             const isScheduled = !isLive && !isFinal;
 
+            // For our scheduled games, figure out opposing pitcher
+            const weAreHome = game.home.id === teamId;
+            const opposingPitcher = isOurGame && isScheduled
+              ? (weAreHome ? game.away.probablePitcher : game.home.probablePitcher)
+              : null;
+
             return (
               <div key={game.gamePk} className={`scoreboard-card ${isOurGame ? "our-game" : ""} ${isLive ? "live" : ""}`}>
                 {isLive && (
@@ -130,13 +212,41 @@ export default function Scoreboard() {
                   </div>
                 </div>
 
-                {/* Probable pitchers for scheduled games */}
+                {/* Probable pitchers with stats for scheduled games */}
                 {isScheduled && (game.away.probablePitcher || game.home.probablePitcher) && (
                   <div className="scoreboard-pitchers">
-                    <span>{game.away.probablePitcher?.fullName?.split(" ").pop() || "TBD"}</span>
+                    <div className="sb-pitcher-col">
+                      <span>{game.away.probablePitcher?.fullName?.split(" ").pop() || "TBD"}</span>
+                      {game.away.probablePitcher?.id && (
+                        <PitcherStats pitcherId={game.away.probablePitcher.id} />
+                      )}
+                    </div>
                     <span className="scoreboard-pitcher-vs">vs</span>
-                    <span>{game.home.probablePitcher?.fullName?.split(" ").pop() || "TBD"}</span>
+                    <div className="sb-pitcher-col">
+                      <span>{game.home.probablePitcher?.fullName?.split(" ").pop() || "TBD"}</span>
+                      {game.home.probablePitcher?.id && (
+                        <PitcherStats pitcherId={game.home.probablePitcher.id} />
+                      )}
+                    </div>
                   </div>
+                )}
+
+                {/* Weather + venue for scheduled games */}
+                {isScheduled && (game.weather || game.venue) && (
+                  <div className="sb-weather">
+                    {game.weather && (
+                      <>
+                        <span>{weatherIcon(game.weather.condition)} {game.weather.temp}°F</span>
+                        {game.weather.wind && <span className="sb-wind">{game.weather.wind}</span>}
+                      </>
+                    )}
+                    {game.venue && <span className="sb-venue">{game.venue}</span>}
+                  </div>
+                )}
+
+                {/* BvP preview for our scheduled games */}
+                {isOurGame && isScheduled && opposingPitcher?.id && (
+                  <BvPPreview teamId={teamId} pitcherId={opposingPitcher.id} />
                 )}
 
                 {/* Watch button for our game */}
