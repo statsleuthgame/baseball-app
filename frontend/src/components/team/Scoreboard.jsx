@@ -4,6 +4,7 @@ import { useTeam } from "../../context/TeamContext";
 import { fetchAllGamesToday, fetchPitcherSeasonStats, fetchBvP, fetchRoster } from "../../api/client";
 import { formatGameTime, getTeamAbbr } from "../../utils/formatters";
 import LoadingSpinner from "../common/LoadingSpinner";
+import PlayerPhoto from "../common/PlayerPhoto";
 
 const fmt = (d) => d.toISOString().split("T")[0];
 
@@ -215,6 +216,9 @@ export default function Scoreboard() {
                 {/* Probable pitchers with stats for scheduled games */}
                 {isScheduled && (game.away.probablePitcher || game.home.probablePitcher) && (
                   <div className="scoreboard-pitchers">
+                    {game.away.probablePitcher?.id ? (
+                      <PlayerPhoto playerId={game.away.probablePitcher.id} name={game.away.probablePitcher.fullName} size={32} className="sb-pitcher-photo" />
+                    ) : <div className="sb-pitcher-photo-placeholder" />}
                     <div className="sb-pitcher-col">
                       <span>{game.away.probablePitcher?.fullName?.split(" ").pop() || "TBD"}</span>
                       {game.away.probablePitcher?.id && (
@@ -228,6 +232,9 @@ export default function Scoreboard() {
                         <PitcherStats pitcherId={game.home.probablePitcher.id} />
                       )}
                     </div>
+                    {game.home.probablePitcher?.id ? (
+                      <PlayerPhoto playerId={game.home.probablePitcher.id} name={game.home.probablePitcher.fullName} size={32} className="sb-pitcher-photo" />
+                    ) : <div className="sb-pitcher-photo-placeholder" />}
                   </div>
                 )}
 
