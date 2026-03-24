@@ -8,13 +8,15 @@ const TEAM_DATA = {
   136: {
     id: 136, name: "Seattle Mariners", abbreviation: "SEA",
     primary: "#0C2C56", secondary: "#00A3A3", accent: "#C4CED4",
-    headerBg: `linear-gradient(rgba(12,44,86,0.55), rgba(12,44,86,0.7)), url(${BASE}images/sea-header.jpg)`,
+    headerBg: `url(${BASE}images/sea-header.jpg)`,
+    headerOverlay: "rgba(12,44,86,0.55)",
     venueId: 680, divisionId: 200,
   },
   144: {
     id: 144, name: "Atlanta Braves", abbreviation: "ATL",
     primary: "#13274F", secondary: "#E8365C", accent: "#EAAA00",
-    headerBg: `linear-gradient(rgba(19,39,79,0.55), rgba(19,39,79,0.7)), url(${BASE}images/atl-header.jpg)`,
+    headerBg: `url(${BASE}images/atl-header.jpg)`,
+    headerOverlay: "rgba(19,39,79,0.55)",
     venueId: 4705, divisionId: 204,
   },
 };
@@ -51,8 +53,10 @@ export function TeamProvider({ children }) {
         document.documentElement.style.setProperty("--team-accent", team.accent);
         if (team.headerBg) {
           document.documentElement.style.setProperty("--team-header-bg", team.headerBg);
+          document.documentElement.style.setProperty("--team-header-overlay", team.headerOverlay);
         } else {
           document.documentElement.style.removeProperty("--team-header-bg");
+          document.documentElement.style.removeProperty("--team-header-overlay");
         }
       }
     } else {

@@ -98,14 +98,31 @@ html, body {
   gap: 12px;
   padding: 10px 16px;
   padding-top: calc(10px + env(safe-area-inset-top, 0px));
-  background: var(--team-header-bg, var(--team-primary));
-  background-size: cover;
-  background-position: center;
+  background: var(--team-primary);
   border-bottom: 2px solid var(--team-secondary);
   color: white;
   z-index: 100;
   -webkit-user-select: none;
   user-select: none;
+  overflow: hidden;
+}
+
+.top-bar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--team-header-bg, none);
+  background-size: cover;
+  background-position: center 30%;
+  z-index: -1;
+}
+
+.top-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--team-header-overlay, transparent);
+  z-index: -1;
 }
 
 .top-bar-logo {
