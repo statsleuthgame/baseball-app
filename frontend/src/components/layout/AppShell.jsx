@@ -11,6 +11,8 @@ const PAGE_TITLES = {
   "": "Dashboard",
   "matchup": "Matchup",
   "schedule": "Schedule",
+  "scores": "Scores",
+  "roster": "Roster",
   "spray": "Spray Chart",
 };
 
@@ -46,12 +48,12 @@ export default function AppShell() {
 
     const saved = scrollPositions[location.pathname];
     requestAnimationFrame(() => {
-      el.scrollTop = saved || 0;
+      if (el) el.scrollTop = saved || 0;
     });
   }, [location.pathname]);
 
   return (
-    <>
+    <div className="app-shell">
       <TopBar />
       <main className="app-content" ref={contentRef} tabIndex={-1}>
         <Suspense fallback={<LoadingSpinner />}>
@@ -59,6 +61,6 @@ export default function AppShell() {
         </Suspense>
       </main>
       <BottomNav />
-    </>
+    </div>
   );
 }

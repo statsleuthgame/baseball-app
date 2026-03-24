@@ -62,17 +62,22 @@ html, body {
 
 #root {
   height: 100%;
-  overflow: hidden;
 }
 
 /* App Shell */
 .app-shell {
+  position: relative;
   height: 100%;
   background: var(--bg);
+  overflow: hidden;
 }
 
 .app-content {
-  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   padding: 16px;
   padding-top: calc(62px + env(safe-area-inset-top, 0px));
   padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
