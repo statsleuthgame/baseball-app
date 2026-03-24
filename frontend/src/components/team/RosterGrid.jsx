@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
 import { fetchRoster } from "../../api/client";
-import PlayerPhoto from "../common/PlayerPhoto";
 import LoadingSpinner from "../common/LoadingSpinner";
 import ErrorMessage from "../common/ErrorMessage";
 
@@ -27,41 +26,31 @@ export default function RosterGrid() {
   return (
     <div className="roster-section">
       <h3 className="roster-group-title">Position Players</h3>
-      <div className="roster-grid">
+      <div className="roster-list">
         {positionPlayers.map((player) => (
           <button
             key={player.id}
-            className="roster-player"
+            className="roster-row"
             onClick={() => navigate(`/team/${teamId}/player/${player.id}`)}
             aria-label={`View ${player.fullName}, ${player.position.abbreviation}`}
           >
-            <PlayerPhoto playerId={player.id} name={player.fullName} size={56} />
-            <div className="roster-player-info">
-              <span className="roster-player-name">{player.fullName}</span>
-              <span className="roster-player-pos">
-                {player.position.abbreviation} · #{player.jerseyNumber}
-              </span>
-            </div>
+            <span className="roster-row-name">{player.fullName}</span>
+            <span className="roster-row-meta">{player.position.abbreviation} · #{player.jerseyNumber}</span>
           </button>
         ))}
       </div>
 
       <h3 className="roster-group-title">Pitchers</h3>
-      <div className="roster-grid">
+      <div className="roster-list">
         {pitchers.map((player) => (
           <button
             key={player.id}
-            className="roster-player"
+            className="roster-row"
             onClick={() => navigate(`/team/${teamId}/player/${player.id}`)}
             aria-label={`View ${player.fullName}, ${player.position.abbreviation}`}
           >
-            <PlayerPhoto playerId={player.id} name={player.fullName} size={56} />
-            <div className="roster-player-info">
-              <span className="roster-player-name">{player.fullName}</span>
-              <span className="roster-player-pos">
-                {player.position.abbreviation} · #{player.jerseyNumber}
-              </span>
-            </div>
+            <span className="roster-row-name">{player.fullName}</span>
+            <span className="roster-row-meta">{player.position.abbreviation} · #{player.jerseyNumber}</span>
           </button>
         ))}
       </div>
