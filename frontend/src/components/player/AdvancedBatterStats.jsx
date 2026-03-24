@@ -70,8 +70,33 @@ function percentileColor(pct) {
   }
 }
 
+const FG_STAT_CONFIG = {
+  war:      { min: -1, max: 7, higher: true },
+  wrcPlus:  { min: 60, max: 160, higher: true },
+  woba:     { min: .270, max: .400, higher: true },
+  iso:      { min: .080, max: .250, higher: true },
+  kPct:     { min: 10, max: 32, higher: false },
+  bbPct:    { min: 4, max: 14, higher: true },
+  kBbPct:   { min: -5, max: 20, higher: false },
+  babip:    { min: .250, max: .360, higher: true },
+  oSwingPct:{ min: 20, max: 40, higher: false },
+};
+
+const FG_STAT_EXPLANATIONS = {
+  war:      "WAR — Wins Above Replacement. Total value above a replacement-level player",
+  wrcPlus:  "wRC+ — Weighted Runs Created Plus. 100 = league avg, 120 = 20% above average",
+  woba:     "wOBA — Weighted On-Base Average. Best single offensive rate stat",
+  iso:      "ISO — Isolated Power (SLG - AVG). Pure extra-base hit power metric",
+  kPct:     "K% — Strikeout rate. Lower is better for contact quality",
+  bbPct:    "BB% — Walk rate. Higher = better plate discipline",
+  kBbPct:   "K-BB% — Strikeout minus walk rate. Lower = better overall plate discipline",
+  babip:    "BABIP — Batting avg on balls in play. Indicates luck or batted ball quality",
+  oSwingPct:"O-Swing% — % of pitches outside zone that the batter swings at",
+};
+
 export default function AdvancedBatterStats({ playerId }) {
   const [selected, setSelected] = useState(null);
+  const [fgSelected, setFgSelected] = useState(null);
 
   const { data, isLoading } = useQuery({
     queryKey: ["advanced", playerId],
@@ -99,49 +124,116 @@ export default function AdvancedBatterStats({ playerId }) {
     { key: "xwOBA", label: "xwOBA", value: data.xwOBA, fmt: (v) => formatAvg(v) },
   ], [data]);
 
+  const fgStats = useMemo(() => [
+    { key: "war",       label: "WAR",     value: data.war,       fmt: (v) => `${v}` },
+    { key: "wrcPlus",   label: "wRC+",    value: data.wrcPlus,   fmt: (v) => `${Math.round(v)}` },
+    { key: "woba",      label: "wOBA",    value: data.woba,      fmt: (v) => formatAvg(v) },
+    { key: "iso",       label: "ISO",     value: data.iso,       fmt: (v) => formatAvg(v) },
+    { key: "babip",     label: "BABIP",   value: data.babip,     fmt: (v) => formatAvg(v) },
+    { key: "kPct",      label: "K%",      value: data.kPct,      fmt: (v) => `${v}%` },
+    { key: "bbPct",     label: "BB%",     value: data.bbPct,     fmt: (v) => `${v}%` },
+    { key: "kBbPct",    label: "K-BB%",   value: data.kBbPct,    fmt: (v) => `${v}%` },
+    { key: "oSwingPct", label: "O-Swing%",value: data.oSwingPct, fmt: (v) => `${v}%` },
+  ].filter(s => s.value != null), [data]);
+
+  const hasFgStats = fgStats.length > 0;
+
   const selectedColor = selected ? percentileColor(getPercentile(selected, data[selected])) : null;
 
+  const getFgPct = (key, val) => {
+    const cfg = FG_STAT_CONFIG[key];
+    if (!cfg || val == null) return null;
+    const { min, max, higher } = cfg;
+    let p = (val - min) / (max - min);
+    p = Math.max(0, Math.min(1, p));
+    return higher ? p : 1 - p;
+  };
+
+  const fgSelectedColor = fgSelected ? percentileColor(getFgPct(fgSelected, data[fgSelected])) : null;
+
   return (
-    <div className="stat-section">
-      <h3 className="stat-section-title">Statcast Metrics</h3>
-      <div className="stat-grid">
-        {stats.map(({ key, label, value, fmt }) => {
-          const pct = getPercentile(key, value);
-          const color = percentileColor(pct);
-          const isSelected = selected === key;
-          return (
-            <button
-              type="button"
-              key={key}
-              className={`stat-cell stat-percentile ${isSelected ? "stat-selected" : ""}`}
-              style={color ? { borderColor: color } : undefined}
-              onClick={() => setSelected(isSelected ? null : key)}
-              aria-pressed={isSelected}
-              aria-label={`${label}: ${value != null ? fmt(value) : 'no data'}${pct != null ? `, ${ordinal(Math.round(pct * 100))} percentile` : ''}`}
-            >
-              <span className="stat-label">{label}</span>
-              <span className="stat-value" style={color ? { color } : undefined}>
-                {value != null ? fmt(value) : "—"}
-              </span>
-              {pct != null && (
-                <>
-                  <span className="stat-pct-bar" aria-hidden="true">
-                    <span className="stat-pct-fill" style={{ width: `${pct * 100}%`, backgroundColor: color }} />
-                  </span>
-                  <span className="stat-pct-text" style={color ? { color } : undefined}>
-                    {ordinal(Math.round(pct * 100))} percentile
-                  </span>
-                </>
-              )}
-            </button>
-          );
-        })}
+    <>
+      <div className="stat-section">
+        <h3 className="stat-section-title">Statcast Metrics</h3>
+        <div className="stat-grid">
+          {stats.map(({ key, label, value, fmt }) => {
+            const pct = getPercentile(key, value);
+            const color = percentileColor(pct);
+            const isSelected = selected === key;
+            return (
+              <button
+                type="button"
+                key={key}
+                className={`stat-cell stat-percentile ${isSelected ? "stat-selected" : ""}`}
+                style={color ? { borderColor: color } : undefined}
+                onClick={() => setSelected(isSelected ? null : key)}
+                aria-pressed={isSelected}
+                aria-label={`${label}: ${value != null ? fmt(value) : 'no data'}${pct != null ? `, ${ordinal(Math.round(pct * 100))} percentile` : ''}`}
+              >
+                <span className="stat-label">{label}</span>
+                <span className="stat-value" style={color ? { color } : undefined}>
+                  {value != null ? fmt(value) : "—"}
+                </span>
+                {pct != null && (
+                  <>
+                    <span className="stat-pct-bar" aria-hidden="true">
+                      <span className="stat-pct-fill" style={{ width: `${pct * 100}%`, backgroundColor: color }} />
+                    </span>
+                    <span className="stat-pct-text" style={color ? { color } : undefined}>
+                      {ordinal(Math.round(pct * 100))} percentile
+                    </span>
+                  </>
+                )}
+              </button>
+            );
+          })}
+        </div>
+        <div className={`stat-explain-footer ${selected ? "visible" : ""}`} role="status" aria-live="polite" style={selectedColor ? { borderLeftColor: selectedColor } : undefined}>
+          {selected ? STAT_EXPLANATIONS[selected] : ""}
+        </div>
       </div>
 
-      {/* Fixed explanation footer below the grid */}
-      <div className={`stat-explain-footer ${selected ? "visible" : ""}`} role="status" aria-live="polite" style={selectedColor ? { borderLeftColor: selectedColor } : undefined}>
-        {selected ? STAT_EXPLANATIONS[selected] : ""}
-      </div>
-    </div>
+      {hasFgStats && (
+        <div className="stat-section">
+          <h3 className="stat-section-title">FanGraphs Season Stats</h3>
+          <div className="stat-grid">
+            {fgStats.map(({ key, label, value, fmt }) => {
+              const pct = getFgPct(key, value);
+              const color = percentileColor(pct);
+              const isSelected = fgSelected === key;
+              return (
+                <button
+                  type="button"
+                  key={key}
+                  className={`stat-cell stat-percentile ${isSelected ? "stat-selected" : ""}`}
+                  style={color ? { borderColor: color } : undefined}
+                  onClick={() => setFgSelected(isSelected ? null : key)}
+                  aria-pressed={isSelected}
+                  aria-label={`${label}: ${value != null ? fmt(value) : 'no data'}`}
+                >
+                  <span className="stat-label">{label}</span>
+                  <span className="stat-value" style={color ? { color } : undefined}>
+                    {value != null ? fmt(value) : "—"}
+                  </span>
+                  {pct != null && (
+                    <>
+                      <span className="stat-pct-bar" aria-hidden="true">
+                        <span className="stat-pct-fill" style={{ width: `${pct * 100}%`, backgroundColor: color }} />
+                      </span>
+                      <span className="stat-pct-text" style={color ? { color } : undefined}>
+                        {ordinal(Math.round(pct * 100))} percentile
+                      </span>
+                    </>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+          <div className={`stat-explain-footer ${fgSelected ? "visible" : ""}`} role="status" aria-live="polite" style={fgSelectedColor ? { borderLeftColor: fgSelectedColor } : undefined}>
+            {fgSelected ? FG_STAT_EXPLANATIONS[fgSelected] : ""}
+          </div>
+        </div>
+      )}
+    </>
   );
 }

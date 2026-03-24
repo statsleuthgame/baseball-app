@@ -115,6 +115,45 @@ export const fetchPlayoffOdds = () =>
 
 export const fetchMeta = () => staticFetch("meta.json").catch(() => null);
 
+// ---- New data sources ----
+
+/** Season game log (W/L per game, running win%, from pybaseball schedule_and_record) */
+export const fetchGameLogs = (teamId) => {
+  const abbr = getTeamAbbr(teamId);
+  return staticFetch(`teams/${abbr}/gamelogs.json`).catch(() => []);
+};
+
+/** Umpire profile from pybaseballstats (accuracy%, zone size, pitcher/batter-friendly) */
+export const fetchUmpireProfile = (umpireName) => {
+  if (!umpireName) return Promise.resolve(null);
+  // Try static pre-generated data first, fall back to live backend
+  const slug = umpireName.toLowerCase().replace(/\s+/g, "_");
+  return staticFetch(`umpires/${slug}.json`).catch(() =>
+    // Live backend call
+    axios.get(`/api/umpire/${encodeURIComponent(umpireName)}`).then((r) => r.data).catch(() => null)
+  );
+};
+
+/** K-BB% pitching leaderboard (best predictor of pitcher performance) */
+export const fetchKBBLeaderboard = () =>
+  staticFetch("leaderboards/k_bb_pct.json").catch(() => ({ top: [], bottom: [] }));
+
+/** League-wide team batting rankings (wRC+, OPS, etc.) */
+export const fetchTeamBattingRankings = () =>
+  staticFetch("league/team_batting.json").catch(() => []);
+
+/** League-wide team pitching rankings (FIP, ERA, K%, etc.) */
+export const fetchTeamPitchingRankings = () =>
+  staticFetch("league/team_pitching.json").catch(() => []);
+
+/** Per-player FanGraphs stats for live lookup (fallback to backend API) */
+export const fetchPlayerFanGraphs = (playerId, name, isPitcher = false) => {
+  const season = new Date().getFullYear();
+  return axios.get(`/api/player/${playerId}/fangraphs`, {
+    params: { name, pitcher: isPitcher, season },
+  }).then((r) => r.data).catch(() => ({}));
+};
+
 // ---- Live data (MLB Stats API, called directly from browser) ----
 export const fetchTodayGame = async (teamId) => {
   const today = new Date();
@@ -128,7 +167,7 @@ export const fetchTodayGame = async (teamId) => {
     const todayResp = await mlbApi.get("/schedule", {
       params: {
         sportId: 1, teamId, date: fmt(today),
-        hydrate: "team,linescore,probablePitcher", gameType: "R",
+        hydrate: "team,linescore,probablePitcher,officials", gameType: "R",
       },
     });
 
@@ -147,7 +186,7 @@ export const fetchTodayGame = async (teamId) => {
     const futureResp = await mlbApi.get("/schedule", {
       params: {
         sportId: 1, teamId, startDate: fmt(today), endDate: fmt(endDate),
-        hydrate: "team,linescore,probablePitcher", gameType: "R",
+        hydrate: "team,linescore,probablePitcher,officials", gameType: "R",
       },
     });
 
@@ -478,12 +517,20 @@ function formatGame(g, isNext) {
   const at = away.team || {};
   const ht = home.team || {};
 
+  // Extract home plate umpire from officials list
+  const officials = g.officials || [];
+  const hpUmpire = officials.find((o) =>
+    o.officialType === "Home Plate" || o.officialType === "HP"
+  );
+  const umpireName = hpUmpire?.official?.fullName || null;
+
   return {
     gamePk: g.gamePk,
     gameDate: g.gameDate || "",
     status: g.status?.detailedState || "",
     isNextGame: isNext,
     venue: { id: g.venue?.id, name: g.venue?.name || "" },
+    umpireName,
     away: {
       id: at.id, name: at.name || "", abbreviation: at.abbreviation || "",
       score: away.score,
