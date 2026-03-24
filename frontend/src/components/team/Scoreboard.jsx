@@ -60,18 +60,23 @@ function PitcherStats({ pitcherId }) {
 }
 
 async function fetchBvPBatch(teamId, pitcherId) {
-  const roster = await fetchRoster(teamId);
-  const batters = (roster || []).filter((p) => p.position.type !== "Pitcher").slice(0, 9);
-  const results = await Promise.all(
-    batters.map(async (b) => {
-      const bvp = await fetchBvP(b.id, pitcherId);
-      return { ...b, bvp };
-    })
-  );
-  return results
-    .filter((m) => m.bvp && m.bvp.pa >= 3)
-    .sort((a, b) => (b.bvp.pa || 0) - (a.bvp.pa || 0))
-    .slice(0, 3);
+  try {
+    const roster = await fetchRoster(teamId);
+    const batters = (roster || []).filter((p) => p.position.type !== "Pitcher").slice(0, 9);
+    if (!batters.length) return [];
+    const results = await Promise.all(
+      batters.map(async (b) => {
+        try {
+          const bvp = await fetchBvP(b.id, pitcherId);
+          return { ...b, bvp };
+        } catch { return { ...b, bvp: null }; }
+      })
+    );
+    return results
+      .filter((m) => m.bvp && m.bvp.pa >= 3)
+      .sort((a, b) => (b.bvp.pa || 0) - (a.bvp.pa || 0))
+      .slice(0, 3);
+  } catch { return []; }
 }
 
 function BvPPreview({ teamId, pitcherId }) {

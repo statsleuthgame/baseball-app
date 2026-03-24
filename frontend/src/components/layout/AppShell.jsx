@@ -58,7 +58,7 @@ export default function AppShell() {
       <TopBar />
       <TopTabs />
       <main className="app-content" ref={contentRef} tabIndex={-1}>
-        <ErrorBoundary>
+        <ErrorBoundary key={location.pathname}>
           <Suspense fallback={<LoadingSpinner />}>
             <Outlet />
           </Suspense>
