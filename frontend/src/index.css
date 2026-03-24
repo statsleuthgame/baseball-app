@@ -1991,3 +1991,132 @@ button.stat-cell {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* =========================================================
+   Umpire Card
+   ========================================================= */
+.umpire-card {
+  background: var(--bg-card);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin: 8px 0 4px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.umpire-card--loading { opacity: 0.6; }
+.umpire-card__header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 4px;
+}
+.umpire-icon { opacity: 0.5; }
+.umpire-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+.umpire-card__body { display: flex; flex-direction: column; gap: 5px; }
+.umpire-name { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+.umpire-no-data { font-size: 11px; color: var(--text-secondary); }
+.umpire-stats { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.umpire-stat { display: flex; align-items: baseline; gap: 3px; }
+.umpire-stat__label {
+  font-size: 10px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.umpire-stat__value { font-size: 13px; font-weight: 700; }
+.umpire-trend { font-size: 10px; color: var(--text-secondary); margin-left: 2px; }
+.umpire-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 10px;
+  color: #111;
+  opacity: 0.9;
+}
+.umpire-summary {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin: 0;
+  width: 100%;
+  line-height: 1.4;
+}
+
+/* =========================================================
+   Season Timeline
+   ========================================================= */
+.season-timeline {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+.season-timeline__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.season-record { font-size: 16px; font-weight: 700; }
+.season-pct { font-size: 12px; color: var(--text-secondary); font-weight: 400; }
+.season-timeline__meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.streak-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 8px;
+}
+.streak-w { background: rgba(76, 175, 80, 0.2); color: #4caf50; }
+.streak-l { background: rgba(244, 67, 54, 0.2); color: #f44336; }
+.recent-form { font-size: 11px; color: var(--text-secondary); }
+.season-sparkline {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  overflow: visible;
+}
+.season-last10 {
+  display: flex;
+  gap: 3px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.game-dot {
+  font-size: 9px;
+  font-weight: 700;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.game-dot--w { background: rgba(76, 175, 80, 0.2); color: #4caf50; }
+.game-dot--l { background: rgba(244, 67, 54, 0.2); color: #f44336; }
+.timeline-skeleton { min-height: 120px; }
+
+/* =========================================================
+   Regression Alert (FIP vs ERA)
+   ========================================================= */
+.regression-alert {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(255, 152, 0, 0.12);
+  border: 1px solid rgba(255, 152, 0, 0.3);
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin-bottom: 10px;
+  font-size: 12px;
+  color: #ffb74d;
+  line-height: 1.4;
+}

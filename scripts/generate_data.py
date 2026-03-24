@@ -458,6 +458,333 @@ def fetch_batter_career_statcast(player_id: int) -> dict:
 
 
 # ---------------------------------------------------------------------------
+# FanGraphs season stats (pybaseball)
+# ---------------------------------------------------------------------------
+
+def fetch_fangraphs_for_player(full_name: str, is_pitcher: bool) -> dict:
+    """Fetch FanGraphs season stats for a player by name."""
+    try:
+        if is_pitcher:
+            from pybaseball import pitching_stats
+            df = pitching_stats(SEASON, qual=1)
+            if df is None or df.empty:
+                # Try lower qual threshold for fewer-inning pitchers
+                df = pitching_stats(SEASON, qual=0)
+        else:
+            from pybaseball import batting_stats
+            df = batting_stats(SEASON, qual=1)
+            if df is None or df.empty:
+                df = batting_stats(SEASON, qual=0)
+
+        if df is None or df.empty:
+            return {}
+
+        name_col = "Name" if "Name" in df.columns else None
+        if not name_col:
+            return {}
+
+        row = df[df[name_col].str.lower() == full_name.lower()]
+        if row.empty:
+            # Try matching on last name
+            last = full_name.split()[-1]
+            row = df[df[name_col].str.lower().str.endswith(last.lower())]
+        if row.empty:
+            return {}
+
+        r = row.iloc[0]
+
+        def col(name, dec=1):
+            v = r.get(name)
+            if v is None or (isinstance(v, float) and (math.isnan(v) or math.isinf(v))):
+                return None
+            try:
+                f = float(v)
+                return None if (math.isnan(f) or math.isinf(f)) else round(f, dec)
+            except (TypeError, ValueError):
+                return None
+
+        if is_pitcher:
+            era = col("ERA", 2)
+            fip = col("FIP", 2)
+            era_fip_diff = round((era or 0) - (fip or 0), 2) if era is not None and fip is not None else None
+            regression_alert = None
+            if era_fip_diff is not None:
+                if era_fip_diff > 1.0:
+                    regression_alert = "ERA significantly higher than FIP — ERA likely to improve"
+                elif era_fip_diff < -1.0:
+                    regression_alert = "ERA significantly lower than FIP — ERA likely to worsen"
+            return {
+                "war": col("WAR", 1),
+                "era": era,
+                "fip": fip,
+                "xfip": col("xFIP", 2),
+                "siera": col("SIERA", 2),
+                "eraMinus": col("ERA-", 0),
+                "fipMinus": col("FIP-", 0),
+                "kPct": col("K%", 1),
+                "bbPct": col("BB%", 1),
+                "kBbPct": col("K-BB%", 1),
+                "hrPer9": col("HR/9", 2),
+                "gbPct": col("GB%", 1),
+                "lobPct": col("LOB%", 1),
+                "whip": col("WHIP", 2),
+                "babip": col("BABIP", 3),
+                "swstrPct": col("SwStr%", 1),
+                "ip": col("IP", 1),
+                "eraFipDiff": era_fip_diff,
+                "regressionAlert": regression_alert,
+            }
+        else:
+            return {
+                "war": col("WAR", 1),
+                "wrcPlus": col("wRC+", 0),
+                "woba": col("wOBA", 3),
+                "obp": col("OBP", 3),
+                "slg": col("SLG", 3),
+                "iso": col("ISO", 3),
+                "babip": col("BABIP", 3),
+                "kPct": col("K%", 1),
+                "bbPct": col("BB%", 1),
+                "kBbPct": col("K-BB%", 1),
+                "oSwingPct": col("O-Swing%", 1),
+                "zContactPct": col("Z-Contact%", 1),
+                "swstrPct": col("SwStr%", 1),
+            }
+    except Exception as e:
+        print(f"    FanGraphs stats error for {full_name}: {e}")
+        return {}
+
+
+def fetch_league_fangraphs(season: int) -> dict:
+    """Fetch league-wide FanGraphs data: team batting/pitching, K-BB% leaderboard, percentiles."""
+    result = {}
+
+    # Team batting
+    try:
+        from pybaseball import team_batting
+        df = team_batting(season)
+        if df is not None and not df.empty:
+            rows = []
+            for _, r in df.iterrows():
+                rows.append({
+                    "team": r.get("Team", ""),
+                    "pa": int(r.get("PA", 0)) if pd.notna(r.get("PA", None)) else None,
+                    "avg": safe_float(r.get("AVG"), 3),
+                    "obp": safe_float(r.get("OBP"), 3),
+                    "slg": safe_float(r.get("SLG"), 3),
+                    "ops": safe_float(r.get("OPS"), 3),
+                    "wrcPlus": safe_float(r.get("wRC+"), 0),
+                    "woba": safe_float(r.get("wOBA"), 3),
+                    "iso": safe_float(r.get("ISO"), 3),
+                    "war": safe_float(r.get("WAR"), 1),
+                    "kPct": safe_float(r.get("K%"), 1),
+                    "bbPct": safe_float(r.get("BB%"), 1),
+                    "babip": safe_float(r.get("BABIP"), 3),
+                })
+            rows.sort(key=lambda x: (x.get("wrcPlus") or 0), reverse=True)
+            for i, row in enumerate(rows):
+                row["rank"] = i + 1
+            result["teamBatting"] = rows
+            print(f"    team batting: {len(rows)} teams")
+    except Exception as e:
+        print(f"    team_batting error: {e}")
+
+    # Team pitching
+    try:
+        from pybaseball import team_pitching
+        df = team_pitching(season)
+        if df is not None and not df.empty:
+            rows = []
+            for _, r in df.iterrows():
+                rows.append({
+                    "team": r.get("Team", ""),
+                    "ip": safe_float(r.get("IP"), 1),
+                    "era": safe_float(r.get("ERA"), 2),
+                    "fip": safe_float(r.get("FIP"), 2),
+                    "xfip": safe_float(r.get("xFIP"), 2),
+                    "war": safe_float(r.get("WAR"), 1),
+                    "kPct": safe_float(r.get("K%"), 1),
+                    "bbPct": safe_float(r.get("BB%"), 1),
+                    "kBbPct": safe_float(r.get("K-BB%"), 1),
+                    "gbPct": safe_float(r.get("GB%"), 1),
+                    "whip": safe_float(r.get("WHIP"), 2),
+                    "hrPer9": safe_float(r.get("HR/9"), 2),
+                    "lobPct": safe_float(r.get("LOB%"), 1),
+                })
+            rows.sort(key=lambda x: (x.get("fip") or 99))
+            for i, row in enumerate(rows):
+                row["rank"] = i + 1
+            result["teamPitching"] = rows
+            print(f"    team pitching: {len(rows)} teams")
+    except Exception as e:
+        print(f"    team_pitching error: {e}")
+
+    # K-BB% leaderboard (pitchers)
+    try:
+        from pybaseball import pitching_stats
+        df = pitching_stats(season, qual=1)
+        if df is not None and not df.empty:
+            kbb_rows = []
+            for _, r in df.iterrows():
+                kbb = safe_float(r.get("K-BB%"), 1)
+                if kbb is None:
+                    continue
+                kbb_rows.append({
+                    "name": r.get("Name", ""),
+                    "team": r.get("Team", ""),
+                    "ip": safe_float(r.get("IP"), 1),
+                    "kBbPct": kbb,
+                    "kPct": safe_float(r.get("K%"), 1),
+                    "bbPct": safe_float(r.get("BB%"), 1),
+                    "era": safe_float(r.get("ERA"), 2),
+                    "fip": safe_float(r.get("FIP"), 2),
+                    "war": safe_float(r.get("WAR"), 1),
+                })
+            kbb_rows.sort(key=lambda x: (x.get("kBbPct") or -99), reverse=True)
+            result["kBbLeaderboard"] = {"top": kbb_rows[:25], "bottom": kbb_rows[-25:][::-1]}
+            print(f"    K-BB% leaderboard: {len(kbb_rows)} pitchers")
+    except Exception as e:
+        print(f"    K-BB% leaderboard error: {e}")
+
+    # Batter percentiles
+    try:
+        from pybaseball import batting_stats
+        df = batting_stats(season, qual=1)
+        if df is not None and not df.empty:
+            metrics = {
+                "wrcPlus": ("wRC+", True),
+                "woba": ("wOBA", True),
+                "iso": ("ISO", True),
+                "kPct": ("K%", False),
+                "bbPct": ("BB%", True),
+                "babip": ("BABIP", True),
+                "war": ("WAR", True),
+                "obp": ("OBP", True),
+                "slg": ("SLG", True),
+            }
+            batter_pcts = {}
+            for _, r in df.iterrows():
+                name = r.get("Name", "")
+                if not name:
+                    continue
+                player_pcts = {}
+                for key, (col_name, higher_is_better) in metrics.items():
+                    if col_name not in df.columns:
+                        continue
+                    val = r.get(col_name)
+                    if pd.isna(val):
+                        continue
+                    col_series = df[col_name].dropna()
+                    if col_series.empty:
+                        continue
+                    rank = float((col_series < val).sum()) / len(col_series) * 100
+                    if not higher_is_better:
+                        rank = 100 - rank
+                    player_pcts[key] = round(rank, 0)
+                batter_pcts[name] = player_pcts
+            result["batterPercentiles"] = batter_pcts
+            print(f"    batter percentiles: {len(batter_pcts)} players")
+    except Exception as e:
+        print(f"    batter percentiles error: {e}")
+
+    # Pitcher percentiles
+    try:
+        from pybaseball import pitching_stats
+        df = pitching_stats(season, qual=1)
+        if df is not None and not df.empty:
+            metrics = {
+                "war": ("WAR", True),
+                "era": ("ERA", False),
+                "fip": ("FIP", False),
+                "xfip": ("xFIP", False),
+                "siera": ("SIERA", False),
+                "kPct": ("K%", True),
+                "bbPct": ("BB%", False),
+                "kBbPct": ("K-BB%", True),
+                "gbPct": ("GB%", True),
+                "whip": ("WHIP", False),
+                "swstrPct": ("SwStr%", True),
+            }
+            pitcher_pcts = {}
+            for _, r in df.iterrows():
+                name = r.get("Name", "")
+                if not name:
+                    continue
+                player_pcts = {}
+                for key, (col_name, higher_is_better) in metrics.items():
+                    if col_name not in df.columns:
+                        continue
+                    val = r.get(col_name)
+                    if pd.isna(val):
+                        continue
+                    col_series = df[col_name].dropna()
+                    if col_series.empty:
+                        continue
+                    rank = float((col_series < val).sum()) / len(col_series) * 100
+                    if not higher_is_better:
+                        rank = 100 - rank
+                    player_pcts[key] = round(rank, 0)
+                pitcher_pcts[name] = player_pcts
+            result["pitcherPercentiles"] = pitcher_pcts
+            print(f"    pitcher percentiles: {len(pitcher_pcts)} players")
+    except Exception as e:
+        print(f"    pitcher percentiles error: {e}")
+
+    return result
+
+
+# ---------------------------------------------------------------------------
+# Season game log (pybaseball schedule_and_record)
+# ---------------------------------------------------------------------------
+
+def fetch_season_gamelog(team_abbr: str, season: int) -> list:
+    """Fetch game-by-game results for a team using pybaseball schedule_and_record."""
+    try:
+        from pybaseball import schedule_and_record
+        df = schedule_and_record(season, team_abbr)
+        if df is None or df.empty:
+            return []
+
+        games = []
+        wins = 0
+        losses = 0
+
+        for _, row in df.iterrows():
+            # Only include completed games
+            win_loss = str(row.get("W/L", "")).strip()
+            if not win_loss or win_loss not in ("W", "L", "W-wo", "L-wo"):
+                continue
+
+            won = win_loss.startswith("W")
+            if won:
+                wins += 1
+            else:
+                losses += 1
+
+            total = wins + losses
+            run_diff_raw = row.get("R", 0) or 0
+            run_against_raw = row.get("RA", 0) or 0
+
+            games.append({
+                "date": str(row.get("Date", "")),
+                "opponent": str(row.get("Opp", "")),
+                "homeAway": "home" if not str(row.get("Unnamed: 4", "")).startswith("@") else "away",
+                "runsScored": int(run_diff_raw) if pd.notna(run_diff_raw) else None,
+                "runsAllowed": int(run_against_raw) if pd.notna(run_against_raw) else None,
+                "result": "W" if won else "L",
+                "wins": wins,
+                "losses": losses,
+                "winPct": round(wins / total, 3) if total > 0 else None,
+                "streak": str(row.get("Streak", "")),
+            })
+
+        return games
+    except Exception as e:
+        print(f"    season gamelog error for {team_abbr}: {e}")
+        return []
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
@@ -516,19 +843,30 @@ def main():
 
         for player in pitchers:
             pid = player["id"]
+            full_name = player.get("fullName", "")
             try:
                 arsenal = fetch_pitch_arsenal(pid)
                 write_json(f"players/{pid}/arsenal.json", arsenal)
-                print(f"    {player['fullName']} (P) - arsenal done")
+
+                # FanGraphs advanced pitching stats
+                fg_stats = fetch_fangraphs_for_player(full_name, is_pitcher=True)
+                write_json(f"players/{pid}/advanced.json", fg_stats)
+
+                print(f"    {full_name} (P) - arsenal + FanGraphs done")
             except Exception as e:
-                print(f"    statcast error for {player['fullName']}: {e}")
+                print(f"    statcast error for {full_name}: {e}")
             time.sleep(1)
 
         for player in position_players:
             pid = player["id"]
+            full_name = player.get("fullName", "")
             try:
-                # Advanced stats
+                # Statcast advanced stats
                 advanced = fetch_batter_advanced(pid)
+
+                # Enrich with FanGraphs stats
+                fg_stats = fetch_fangraphs_for_player(full_name, is_pitcher=False)
+                advanced.update(fg_stats)
                 write_json(f"players/{pid}/advanced.json", advanced)
 
                 # Career BvP data (lookup by pitcher ID)
@@ -540,13 +878,40 @@ def main():
                 for park_abbr, spray_data in all_sprays.items():
                     write_json(f"players/{pid}/spray/{park_abbr}.json", spray_data)
 
-                print(f"    {player['fullName']} - advanced + bvp + spray ({len(all_sprays)} parks) done")
+                print(f"    {full_name} - advanced + FanGraphs + bvp + spray ({len(all_sprays)} parks) done")
             except Exception as e:
-                print(f"    statcast error for {player['fullName']}: {e}")
+                print(f"    statcast error for {full_name}: {e}")
             time.sleep(1)
 
+        # Season game log
+        print(f"  fetching season game log for {abbr}...")
+        try:
+            gamelog = fetch_season_gamelog(abbr, SEASON)
+            write_json(f"teams/{abbr}/gamelogs.json", gamelog)
+            print(f"    {len(gamelog)} games logged")
+        except Exception as e:
+            print(f"    gamelog error for {abbr}: {e}")
+
+    # ---- League FanGraphs data ----
+    print("\n[3/6] League FanGraphs (team rankings + K-BB% + percentiles)")
+    try:
+        league_data = fetch_league_fangraphs(SEASON)
+        if league_data.get("teamBatting"):
+            write_json("league/team_batting.json", league_data["teamBatting"])
+        if league_data.get("teamPitching"):
+            write_json("league/team_pitching.json", league_data["teamPitching"])
+        if league_data.get("kBbLeaderboard"):
+            write_json("leaderboards/k_bb_pct.json", league_data["kBbLeaderboard"])
+        if league_data.get("batterPercentiles") or league_data.get("pitcherPercentiles"):
+            write_json(f"fangraphs/percentiles_{SEASON}.json", {
+                "batters": league_data.get("batterPercentiles", {}),
+                "pitchers": league_data.get("pitcherPercentiles", {}),
+            })
+    except Exception as e:
+        print(f"  league FanGraphs error: {e}")
+
     # ---- Venues list ----
-    print("\n[3/5] Venues")
+    print("\n[4/6] Venues")
     venues = [
         {"abbr": "ARI", "team": "Diamondbacks", "name": "Chase Field", "dimensions": {"LF": 330, "LCF": 374, "CF": 407, "RCF": 374, "RF": 334}},
         {"abbr": "ATL", "team": "Braves", "name": "Truist Park", "dimensions": {"LF": 335, "LCF": 385, "CF": 400, "RCF": 375, "RF": 325}},
@@ -582,13 +947,13 @@ def main():
     write_json("venues.json", venues)
 
     # ---- Metadata (timestamp) ----
-    print("\n[4/5] Metadata")
+    print("\n[5/6] Metadata")
     write_json("meta.json", {
         "lastUpdated": date.today().isoformat(),
         "season": SEASON,
     })
 
-    print("\n[5/5] Done!")
+    print("\n[6/6] Done!")
 
 
 if __name__ == "__main__":

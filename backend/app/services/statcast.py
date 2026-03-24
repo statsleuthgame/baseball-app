@@ -42,6 +42,44 @@ def _fetch_hot_batters(player_ids: list[int], days: int) -> list[dict]:
         except Exception:
             continue
 
+    # Enrich with FanGraphs rolling stats (wRC+, wOBA, K%, BB%)
+    try:
+        from pybaseball import batting_stats_range
+        fg_df = batting_stats_range(start_dt, end_dt)
+        if fg_df is not None and not fg_df.empty and "Name" in fg_df.columns:
+            fg_lookup: dict = {}
+            for _, row in fg_df.iterrows():
+                name = str(row.get("Name", "")).lower()
+                fg_lookup[name] = row
+
+            for player in all_data:
+                p_name = player.get("playerName", "").lower()
+                if not p_name:
+                    continue
+                fg_row = fg_lookup.get(p_name)
+                if fg_row is None:
+                    # Try last-name match
+                    last = p_name.split()[-1] if p_name else ""
+                    for key, val in fg_lookup.items():
+                        if key.endswith(last):
+                            fg_row = val
+                            break
+                if fg_row is not None:
+                    def _sf(v, d=1):
+                        try:
+                            import math as _m
+                            f = float(v)
+                            return None if (_m.isnan(f) or _m.isinf(f)) else round(f, d)
+                        except Exception:
+                            return None
+                    player["wrcPlus"] = _sf(fg_row.get("wRC+"), 0)
+                    player["woba"] = _sf(fg_row.get("wOBA"), 3)
+                    player["kPct"] = _sf(fg_row.get("K%"), 1)
+                    player["bbPct"] = _sf(fg_row.get("BB%"), 1)
+                    player["iso"] = _sf(fg_row.get("ISO"), 3)
+    except Exception:
+        pass  # FanGraphs enrichment is best-effort
+
     # Sort by OPS descending
     all_data.sort(key=lambda x: x.get("ops", 0), reverse=True)
     return all_data[:10]

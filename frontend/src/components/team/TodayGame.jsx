@@ -4,6 +4,7 @@ import { useTeam } from "../../context/TeamContext";
 import { fetchTodayGame } from "../../api/client";
 import { formatGameDate, formatGameTime } from "../../utils/formatters";
 import PlayerPhoto from "../common/PlayerPhoto";
+import UmpireCard from "../common/UmpireCard";
 
 export default function TodayGame() {
   const { teamId } = useTeam();
@@ -152,6 +153,10 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
             )}
           </div>
         </div>
+      )}
+
+      {!compact && game.umpireName && (
+        <UmpireCard umpireName={game.umpireName} />
       )}
 
       <div className="today-game-footer">

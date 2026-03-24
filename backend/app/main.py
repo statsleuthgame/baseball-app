@@ -9,7 +9,7 @@ from fastapi.responses import JSONResponse
 
 from app.config import FRONTEND_ORIGIN
 from app.services import mlb_api
-from app.routers import team, schedule, standings, player, hotplayers, spraychart, matchup
+from app.routers import team, schedule, standings, player, hotplayers, spraychart, matchup, umpire, leaderboards
 
 
 class SafeJSONEncoder(json.JSONEncoder):
@@ -79,6 +79,8 @@ app.include_router(player.router)
 app.include_router(hotplayers.router)
 app.include_router(spraychart.router)
 app.include_router(matchup.router)
+app.include_router(umpire.router)
+app.include_router(leaderboards.router)
 
 
 @app.exception_handler(Exception)
