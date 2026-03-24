@@ -100,12 +100,12 @@ export default function AdvancedPitcherStats({ playerId }) {
   const bbRate = null; // Can't derive accurately from arsenal alone
 
   const stats = [
-    { key: "avgVelo", label: "Avg FB Velo", value: avgFBVelo, fmt: (v) => `${v}` },
-    { key: "maxVelo", label: "Max FB Velo", value: maxFBVelo, fmt: (v) => `${v}` },
+    { key: "avgVelo", label: "FB Velo", value: avgFBVelo, fmt: (v) => `${v}` },
+    { key: "maxVelo", label: "Max Velo", value: maxFBVelo, fmt: (v) => `${v}` },
     { key: "whiffRate", label: "Whiff%", value: overallWhiff ? Math.round(overallWhiff * 10) / 10 : null, fmt: (v) => `${v}%` },
-    { key: "topWhiff", label: "Best Whiff", value: topWhiffPitch.whiffRate, fmt: (v) => `${v}%` },
-    { key: "baAgainst", label: "BA Against", value: overallBA ? Math.round(overallBA * 1000) / 1000 : null, fmt: (v) => v.toFixed(3).replace(/^0/, "") },
-    { key: "pitchCount", label: "Arsenal", value: pitches.length, fmt: (v) => `${v} pitches` },
+    { key: "topWhiff", label: "Top Whiff", value: topWhiffPitch.whiffRate, fmt: (v) => `${v}%` },
+    { key: "baAgainst", label: "BAA", value: overallBA ? Math.round(overallBA * 1000) / 1000 : null, fmt: (v) => v.toFixed(3).replace(/^0/, "") },
+    { key: "pitchCount", label: "Pitches", value: pitches.length, fmt: (v) => `${v}` },
   ];
 
   const selectedColor = selected ? percentileColor(getPercentile(selected, stats.find(s => s.key === selected)?.value)) : null;
@@ -113,7 +113,7 @@ export default function AdvancedPitcherStats({ playerId }) {
   return (
     <div className="stat-section">
       <h3 className="stat-section-title">Statcast Metrics</h3>
-      <div className="stat-grid">
+      <div className="stat-grid stat-grid-3">
         {stats.map(({ key, label, value, fmt }) => {
           const pct = getPercentile(key, value);
           const color = percentileColor(pct);

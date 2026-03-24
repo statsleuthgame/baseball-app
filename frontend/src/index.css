@@ -58,25 +58,30 @@ html, body {
   margin: 0;
   padding: 0;
   background: #141a28;
+  height: 100%;
+  overflow: hidden;
 }
 
 #root {
-  min-height: 100%;
+  height: 100%;
 }
 
 /* App Shell */
 .app-shell {
-  min-height: 100%;
+  height: 100%;
   background: var(--bg);
+  overflow: hidden;
 }
 
 .app-content {
+  height: 100%;
   padding: 16px;
   padding-top: calc(70px + env(safe-area-inset-top, 0px));
   padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
   max-width: 600px;
   width: 100%;
   margin: 0 auto;
+  overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: contain;
@@ -660,8 +665,8 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
-  padding: 8px 4px;
+  gap: 1px;
+  padding: 6px 3px;
   background: rgba(255, 255, 255, 0.03);
   border-radius: 8px;
 }
@@ -710,9 +715,18 @@ html, body {
 }
 
 .stat-pct-text {
-  font-size: 12px;
+  font-size: 9px;
   font-weight: 600;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+.stat-grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.stat-grid-3 .stat-value {
+  font-size: 15px;
 }
 
 /* Reset button styles for stat cells */
