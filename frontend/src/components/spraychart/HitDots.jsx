@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { SPRAY_HP_X, SPRAY_HP_Y } from "./BallparkSVG";
+import { scaleLinear } from "d3-scale";
 
 const RESULT_COLORS = {
   single: "#4CAF50",
@@ -17,128 +18,124 @@ const RESULT_LABELS = {
   out: "Out",
 };
 
-// SVG star path centered at 0,0
-function StarShape({ cx, cy, size = 4, fill, stroke, strokeWidth, opacity, style, ...props }) {
-  const points = [];
+/** 5-pointed star SVG polygon */
+const StarShape = ({ cx, cy, size = 4, fill, stroke, strokeWidth, opacity, style, ...props }) => {
+  const pts = [];
   for (let i = 0; i < 5; i++) {
-    const outerAngle = (i * 72 - 90) * (Math.PI / 180);
-    const innerAngle = ((i * 72 + 36) - 90) * (Math.PI / 180);
-    points.push(`${cx + Math.cos(outerAngle) * size},${cy + Math.sin(outerAngle) * size}`);
-    points.push(`${cx + Math.cos(innerAngle) * size * 0.4},${cy + Math.sin(innerAngle) * size * 0.4}`);
+    const outerA = (i * 72 - 90) * (Math.PI / 180);
+    const innerA = ((i * 72 + 36) - 90) * (Math.PI / 180);
+    pts.push(`${cx + Math.cos(outerA) * size},${cy + Math.sin(outerA) * size}`);
+    pts.push(`${cx + Math.cos(innerA) * size * 0.4},${cy + Math.sin(innerA) * size * 0.4}`);
   }
-  return (
-    <polygon
-      points={points.join(" ")}
-      fill={fill}
-      stroke={stroke}
-      strokeWidth={strokeWidth}
-      opacity={opacity}
-      style={style}
-      {...props}
-    />
-  );
-}
+  return <polygon points={pts.join(" ")} fill={fill} stroke={stroke} strokeWidth={strokeWidth} opacity={opacity} style={style} {...props} />;
+};
 
 export default function HitDots({ hits, filters, longestHR }) {
-  const [tooltip, setTooltip] = useState(null);
+  const [selected, setSelected] = useState(null);
 
-  if (!hits?.length) return null;
+  const filtered = useMemo(() => {
+    if (!hits?.length) return [];
+    return filters ? hits.filter((h) => filters.includes(h.result)) : hits;
+  }, [hits, filters]);
 
-  const filtered = filters
-    ? hits.filter((h) => filters.includes(h.result))
-    : hits;
+  // D3 scales mapping statcast coords to SVG viewBox
+  const xScale = useMemo(() => scaleLinear().domain([-130, 130]).range([SPRAY_HP_X - 130, SPRAY_HP_X + 130]), []);
+  const yScale = useMemo(() => scaleLinear().domain([-10, 200]).range([SPRAY_HP_Y + 10, SPRAY_HP_Y - 200]), []);
 
-  // Check if a hit is the longest HR
+  if (!filtered.length) return null;
+
   const isLongestHR = (hit) =>
     longestHR && hit.result === "home_run" &&
     hit.x === longestHR.x && hit.y === longestHR.y &&
     hit.date === longestHR.date;
 
+  const handleSelect = (i) => setSelected(selected === i ? null : i);
+  const selectedHit = selected !== null ? filtered[selected] : null;
+
   return (
-    <g className="hit-dots">
-      {filtered.map((hit, i) => {
-        const svgX = hit.x + SPRAY_HP_X;
-        const svgY = SPRAY_HP_Y - hit.y;
-        const isLongest = isLongestHR(hit);
+    <>
+      <g className="hit-dots">
+        {/* Render outs first (behind), then hits on top */}
+        {filtered.map((hit, i) => {
+          const svgX = xScale(hit.x);
+          const svgY = yScale(hit.y);
+          const isLongest = isLongestHR(hit);
+          const isSelected = selected === i;
+          const isOut = hit.result === "out";
 
-        if (isLongest) {
+          if (isLongest) {
+            return (
+              <StarShape
+                key={`hit-${i}`}
+                cx={svgX} cy={svgY} size={6}
+                fill="#F44336"
+                stroke="#FFD700" strokeWidth={isSelected ? 1.5 : 0.5}
+                opacity="1"
+                style={{ cursor: "pointer", transition: "opacity 0.15s" }}
+                onClick={() => handleSelect(i)}
+                onTouchStart={(e) => { e.preventDefault(); handleSelect(i); }}
+              />
+            );
+          }
+
           return (
-            <StarShape
-              key={i}
-              cx={svgX}
-              cy={svgY}
-              size={5}
-              fill="#F44336"
-              stroke={tooltip === i ? "#FFD700" : "#FFD700"}
-              strokeWidth={tooltip === i ? "1" : "0.5"}
-              opacity="1"
-              style={{ cursor: "pointer" }}
-              onMouseEnter={() => setTooltip(i)}
-              onMouseLeave={() => setTooltip(null)}
-              onTouchStart={() => setTooltip(tooltip === i ? null : i)}
-            />
+            <g key={`hit-${i}`}>
+              {/* Invisible larger tap target */}
+              <circle
+                cx={svgX} cy={svgY} r="6"
+                fill="transparent"
+                style={{ cursor: "pointer" }}
+                onClick={() => handleSelect(i)}
+                onTouchStart={(e) => { e.preventDefault(); handleSelect(i); }}
+              />
+              {/* Visible dot */}
+              <circle
+                cx={svgX} cy={svgY}
+                r={isSelected ? 4 : isOut ? 1.8 : 2.8}
+                fill={RESULT_COLORS[hit.result] || "#616161"}
+                opacity={isSelected ? 1 : isOut ? 0.4 : 0.75}
+                stroke={isSelected ? "#fff" : "none"}
+                strokeWidth={isSelected ? 1 : 0}
+                style={{ transition: "r 0.15s, opacity 0.15s" }}
+              />
+            </g>
           );
-        }
+        })}
 
-        return (
+        {/* Selection ring */}
+        {selectedHit && !isLongestHR(selectedHit) && (
           <circle
-            key={i}
-            cx={svgX}
-            cy={svgY}
-            r="2.5"
-            fill={RESULT_COLORS[hit.result] || "#616161"}
-            opacity="0.75"
-            stroke={tooltip === i ? "#fff" : "none"}
-            strokeWidth={tooltip === i ? "1" : "0"}
-            style={{ cursor: "pointer" }}
-            onMouseEnter={() => setTooltip(i)}
-            onMouseLeave={() => setTooltip(null)}
-            onTouchStart={() => setTooltip(tooltip === i ? null : i)}
+            cx={xScale(selectedHit.x)}
+            cy={yScale(selectedHit.y)}
+            r="8"
+            fill="none"
+            stroke="#fff"
+            strokeWidth="0.5"
+            opacity="0.5"
           />
-        );
-      })}
+        )}
+      </g>
 
-      {/* Tooltip */}
-      {tooltip !== null && filtered[tooltip] && (() => {
-        const hit = filtered[tooltip];
-        const svgX = hit.x + SPRAY_HP_X;
-        const svgY = SPRAY_HP_Y - hit.y;
-        const flipX = svgX > 170;
-        const flipY = svgY < 50;
-        const tx = flipX ? svgX - 55 : svgX + 6;
-        const ty = flipY ? svgY + 6 : svgY - 34;
-        const isLongest = isLongestHR(hit);
+      {/* Fixed tooltip panel at bottom of SVG */}
+      {selectedHit && (() => {
+        const isLongest = isLongestHR(selectedHit);
+        const label = isLongest ? "LONGEST HR" : RESULT_LABELS[selectedHit.result] || selectedHit.event;
+        const color = isLongest ? "#FFD700" : RESULT_COLORS[selectedHit.result] || "#fff";
 
         return (
           <g>
-            <rect
-              x={tx}
-              y={ty}
-              width="53"
-              height={isLongest ? 34 : 28}
-              rx="3"
-              fill="#1a2236"
-              stroke={isLongest ? "#FFD700" : "#2e3a4e"}
-              strokeWidth="0.5"
-            />
-            <text x={tx + 4} y={ty + 10} fill={isLongest ? "#FFD700" : "#fff"} fontSize="5" fontWeight="600">
-              {isLongest ? "LONGEST HR" : (RESULT_LABELS[hit.result] || hit.event)}
+            <rect x="10" y="238" width="230" height="26" rx="5" fill="#1a2236" stroke={color} strokeWidth="0.5" opacity="0.95" />
+            <text x="18" y="250" fill={color} fontSize="6" fontWeight="700">{label}</text>
+            <text x="18" y="258" fill="#9299ad" fontSize="5">
+              {selectedHit.exitVelo ? `${selectedHit.exitVelo} mph` : ""}
+              {selectedHit.launchAngle ? ` · ${selectedHit.launchAngle}°` : ""}
+              {selectedHit.hitDistance ? ` · ${selectedHit.hitDistance} ft` : ""}
+              {selectedHit.date ? ` · ${selectedHit.date.split(" ")[0]}` : ""}
             </text>
-            <text x={tx + 4} y={ty + 17} fill="#8891a5" fontSize="4">
-              {hit.exitVelo ? `${hit.exitVelo} mph` : ""}{hit.launchAngle ? ` · ${hit.launchAngle}°` : ""}
-            </text>
-            <text x={tx + 4} y={ty + 23} fill="#8891a5" fontSize="3.5">
-              {hit.hitDistance ? `${hit.hitDistance} ft · ` : ""}{hit.date ? hit.date.split(" ")[0] : ""}
-            </text>
-            {isLongest && (
-              <text x={tx + 4} y={ty + 30} fill="#FFD700" fontSize="3.5" fontWeight="600">
-                {hit.hitDistance} ft bomb
-              </text>
-            )}
           </g>
         );
       })()}
-    </g>
+    </>
   );
 }
 
