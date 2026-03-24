@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchPlayerArsenal } from "../../api/client";
 import { formatAvg } from "../../utils/formatters";
+import { scaleLinear } from "d3-scale";
 import LoadingSpinner from "../common/LoadingSpinner";
 
 const PITCH_COLORS = {
@@ -96,35 +98,92 @@ export default function PitchArsenal({ playerId, embedded }) {
         </table>
       </div>
 
-      <div className="arsenal-movement">
-        <h4 className="arsenal-sub-title">Pitch Movement</h4>
-        <p className="arsenal-movement-desc">How each pitch moves from the batter's perspective. Right = arm-side run, Up = rise vs gravity.</p>
-        <svg viewBox="-28 -28 56 56" className="movement-chart">
+      <PitchMovementChart pitches={data.pitches} />
+    </div>
+  );
+}
+
+const MV_SIZE = 280;
+const MV_MARGIN = { top: 28, right: 16, bottom: 32, left: 40 };
+const MV_W = MV_SIZE - MV_MARGIN.left - MV_MARGIN.right;
+const MV_H = MV_SIZE - MV_MARGIN.top - MV_MARGIN.bottom;
+
+function PitchMovementChart({ pitches }) {
+  const [hovered, setHovered] = useState(null);
+  const movementPitches = pitches.filter((p) => p.horzBreak != null && p.vertBreak != null);
+  if (!movementPitches.length) return null;
+
+  const allH = movementPitches.map((p) => p.horzBreak);
+  const allV = movementPitches.map((p) => p.vertBreak);
+  const extent = Math.max(Math.max(...allH.map(Math.abs)), Math.max(...allV.map(Math.abs)), 15);
+  const domainMax = Math.ceil(extent / 5) * 5;
+
+  const xScale = scaleLinear().domain([-domainMax, domainMax]).range([0, MV_W]);
+  const yScale = scaleLinear().domain([-domainMax, domainMax]).range([MV_H, 0]);
+
+  const gridTicks = [];
+  for (let i = -domainMax; i <= domainMax; i += 5) gridTicks.push(i);
+
+  return (
+    <div className="arsenal-movement">
+      <h4 className="arsenal-sub-title">Pitch Movement</h4>
+      <p className="arsenal-movement-desc">How each pitch moves from the batter's view. Right = arm-side run, Up = rise vs gravity.</p>
+      <svg viewBox={`0 0 ${MV_SIZE} ${MV_SIZE}`} className="movement-chart" role="img" aria-label="Pitch movement scatter chart">
+        <rect width={MV_SIZE} height={MV_SIZE} fill="rgba(0,0,0,0.2)" rx="8" />
+        <g transform={`translate(${MV_MARGIN.left},${MV_MARGIN.top})`}>
           {/* Grid */}
-          <line x1="-22" y1="0" x2="22" y2="0" stroke="#1e2a3e" strokeWidth="0.3" />
-          <line x1="0" y1="-22" x2="0" y2="22" stroke="#1e2a3e" strokeWidth="0.3" />
-          {[-10, 10].map((v) => (
-            <g key={v}>
-              <line x1={v} y1="-22" x2={v} y2="22" stroke="#1e2a3e" strokeWidth="0.15" />
-              <line x1="-22" y1={v} x2="22" y2={v} stroke="#1e2a3e" strokeWidth="0.15" />
+          {gridTicks.map((t) => (
+            <g key={t}>
+              <line x1={xScale(t)} y1={0} x2={xScale(t)} y2={MV_H} stroke={t === 0 ? "#ffffff18" : "#ffffff08"} strokeWidth={t === 0 ? 0.8 : 0.4} />
+              <line x1={0} y1={yScale(t)} x2={MV_W} y2={yScale(t)} stroke={t === 0 ? "#ffffff18" : "#ffffff08"} strokeWidth={t === 0 ? 0.8 : 0.4} />
             </g>
           ))}
+
           {/* Axis labels */}
-          <text x="0" y="-24" fill="#9299ad" fontSize="2.2" textAnchor="middle">More Rise</text>
-          <text x="0" y="26" fill="#9299ad" fontSize="2.2" textAnchor="middle">More Drop</text>
-          <text x="24" y="1" fill="#9299ad" fontSize="2.2" textAnchor="start">Arm Side</text>
-          <text x="-24" y="1" fill="#9299ad" fontSize="2.2" textAnchor="end">Glove Side</text>
-          {/* Pitch dots */}
-          {data.pitches
-            .filter((p) => p.horzBreak != null && p.vertBreak != null)
-            .map((p) => (
-              <g key={p.pitchType}>
-                <circle cx={p.horzBreak} cy={-p.vertBreak} r="2.5" fill={PITCH_COLORS[p.pitchType] || "#666"} opacity="0.85" />
-                <text x={p.horzBreak} y={-p.vertBreak + 5} fill="#e0e4ec" fontSize="2.2" textAnchor="middle" fontWeight="600">{p.pitchType}</text>
+          {gridTicks.filter((t) => t % 10 === 0 && t !== 0).map((t) => (
+            <g key={`label-${t}`}>
+              <text x={xScale(t)} y={MV_H + 14} fill="#9299ad" fontSize="8" textAnchor="middle">{t}"</text>
+              <text x={-8} y={yScale(t) + 3} fill="#9299ad" fontSize="8" textAnchor="end">{t}"</text>
+            </g>
+          ))}
+
+          {/* Axis titles */}
+          <text x={MV_W / 2} y={-12} fill="#9299ad" fontSize="9" textAnchor="middle" fontWeight="500">More Rise</text>
+          <text x={MV_W / 2} y={MV_H + 26} fill="#9299ad" fontSize="9" textAnchor="middle" fontWeight="500">More Drop</text>
+          <text x={MV_W + 10} y={MV_H / 2 + 3} fill="#9299ad" fontSize="8" textAnchor="start">Arm</text>
+          <text x={-12} y={MV_H / 2 + 3} fill="#9299ad" fontSize="8" textAnchor="end">Glove</text>
+
+          {/* Pitch dots with size proportional to usage */}
+          {movementPitches.map((p) => {
+            const cx = xScale(p.horzBreak);
+            const cy = yScale(p.vertBreak);
+            const r = Math.max(6, Math.sqrt(p.usagePct || 10) * 3);
+            const isHovered = hovered === p.pitchType;
+            return (
+              <g key={p.pitchType}
+                onMouseEnter={() => setHovered(p.pitchType)}
+                onMouseLeave={() => setHovered(null)}
+                onTouchStart={() => setHovered(hovered === p.pitchType ? null : p.pitchType)}
+                style={{ cursor: "pointer" }}
+              >
+                <circle cx={cx} cy={cy} r={r + (isHovered ? 3 : 0)} fill={PITCH_COLORS[p.pitchType] || "#666"} opacity={isHovered ? 1 : 0.8} stroke={isHovered ? "#fff" : "none"} strokeWidth="1.5" />
+                <text x={cx} y={cy + r + 10} fill="#e0e4ec" fontSize="8" textAnchor="middle" fontWeight="600">{p.pitchType}</text>
+
+                {/* Tooltip */}
+                {isHovered && (
+                  <g>
+                    <rect x={cx - 45} y={cy - r - 38} width="90" height="30" rx="4" fill="#1a2236" stroke="#2e3a4e" strokeWidth="0.5" />
+                    <text x={cx} y={cy - r - 24} fill="#fff" fontSize="8" textAnchor="middle" fontWeight="600">{p.pitchName}</text>
+                    <text x={cx} y={cy - r - 14} fill="#9299ad" fontSize="7" textAnchor="middle">
+                      {p.avgVelo}mph · {p.horzBreak}"{p.vertBreak >= 0 ? " rise" : " drop"}
+                    </text>
+                  </g>
+                )}
               </g>
-            ))}
-        </svg>
-      </div>
+            );
+          })}
+        </g>
+      </svg>
     </div>
   );
 }

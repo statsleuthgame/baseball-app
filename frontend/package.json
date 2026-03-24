@@ -12,6 +12,10 @@
   "dependencies": {
     "@tanstack/react-query": "^5.95.0",
     "axios": "^1.13.6",
+    "d3-array": "^3.2.4",
+    "d3-interpolate": "^3.0.1",
+    "d3-scale": "^4.0.2",
+    "d3-shape": "^3.2.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-router-dom": "^7.13.1"
