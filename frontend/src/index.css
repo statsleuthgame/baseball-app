@@ -177,9 +177,62 @@ html, body {
 }
 
 /* Bottom Nav — fixed at bottom. Body background matches so any gap is invisible. */
+/* Top Tabs */
+.top-tabs {
+  flex-shrink: 0;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  z-index: 99;
+}
+
+.top-tabs-scroll {
+  display: flex;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.top-tabs-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.top-tab {
+  flex-shrink: 0;
+  flex: 1;
+  padding: 10px 0;
+  text-align: center;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  position: relative;
+  transition: color 0.15s;
+}
+
+.top-tab:active {
+  opacity: 0.7;
+}
+
+.top-tab-active {
+  color: var(--text-bright);
+}
+
+.top-tab-active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32px;
+  height: 2px;
+  background: var(--team-secondary);
+  border-radius: 1px;
+}
+
+/* Bottom Nav (legacy, kept for reference) */
 .bottom-nav {
   flex-shrink: 0;
-  display: flex;
+  display: none;
   background: #141a28;
   border-top: 1px solid var(--border);
   padding-bottom: env(safe-area-inset-bottom, 0px);

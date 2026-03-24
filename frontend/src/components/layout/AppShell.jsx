@@ -2,7 +2,7 @@ import { useEffect, useRef, Suspense } from "react";
 import { Outlet, useParams, useLocation } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
 import TopBar from "./TopBar";
-import BottomNav from "./BottomNav";
+import TopTabs from "./TopTabs";
 import LoadingSpinner from "../common/LoadingSpinner";
 import ErrorBoundary from "../common/ErrorBoundary";
 
@@ -56,6 +56,7 @@ export default function AppShell() {
   return (
     <div className="app-shell">
       <TopBar />
+      <TopTabs />
       <main className="app-content" ref={contentRef} tabIndex={-1}>
         <ErrorBoundary>
           <Suspense fallback={<LoadingSpinner />}>
@@ -63,7 +64,6 @@ export default function AppShell() {
           </Suspense>
         </ErrorBoundary>
       </main>
-      <BottomNav />
     </div>
   );
 }
