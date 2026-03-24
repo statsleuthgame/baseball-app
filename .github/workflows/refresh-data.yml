@@ -35,6 +35,15 @@ jobs:
       - name: Install Python dependencies
         run: pip install -r scripts/requirements.txt
 
+      - name: Restore Statcast cache
+        uses: actions/cache@v4
+        with:
+          path: .statcast_cache
+          key: statcast-cache-${{ hashFiles('scripts/generate_data.py') }}-${{ github.run_number }}
+          restore-keys: |
+            statcast-cache-${{ hashFiles('scripts/generate_data.py') }}-
+            statcast-cache-
+
       - name: Generate static data
         run: python scripts/generate_data.py
 

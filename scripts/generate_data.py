@@ -18,6 +18,8 @@ import pandas as pd
 
 # Where to write JSON files
 OUTPUT_DIR = Path(__file__).parent.parent / "frontend" / "public" / "data"
+# Parquet cache for incremental Statcast fetches
+CACHE_DIR = Path(__file__).parent.parent / ".statcast_cache"
 
 MLB_API = "https://statsapi.mlb.com/api/v1"
 
@@ -232,15 +234,87 @@ def _lookup_pitcher_names(pitcher_ids: list[int]) -> dict[int, str]:
     return names
 
 
-def fetch_all_spray_charts(player_id: int) -> dict[str, dict]:
-    """Fetch career spray chart data for a player at ALL parks (2020+). Returns dict keyed by team abbr."""
-    from pybaseball import statcast_batter
+# ---------------------------------------------------------------------------
+# Statcast caching — single fetch per player, incremental updates
+# ---------------------------------------------------------------------------
 
+def _cache_path(player_id: int, kind: str = "batter") -> Path:
+    return CACHE_DIR / f"{kind}_{player_id}.parquet"
+
+
+def fetch_statcast_cached(player_id: int, kind: str = "batter", years_back: int = 5) -> pd.DataFrame:
+    """
+    Fetch Statcast data with parquet cache.
+    First run: full fetch. Subsequent runs: load cache + fetch only new data.
+    """
+    from pybaseball import statcast_batter, statcast_pitcher
+    fetcher = statcast_batter if kind == "batter" else statcast_pitcher
+
+    CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    cache_file = _cache_path(player_id, kind)
+    today_str = date.today().isoformat()
+    earliest = f"{SEASON - years_back}-01-01"
+
+    cached_df = None
+    last_date = None
+
+    if cache_file.exists():
+        try:
+            cached_df = pd.read_parquet(cache_file)
+            if cached_df is not None and not cached_df.empty and "game_date" in cached_df.columns:
+                last_date = pd.to_datetime(cached_df["game_date"], errors="coerce").max()
+                if pd.notna(last_date):
+                    last_date = last_date.strftime("%Y-%m-%d")
+        except Exception:
+            cached_df = None
+
+    if cached_df is not None and last_date:
+        # Incremental: fetch only from day after last cached date
+        fetch_start = (pd.Timestamp(last_date) + timedelta(days=1)).strftime("%Y-%m-%d")
+        if fetch_start > today_str:
+            print(f"      cache hit (up to date) for {kind}_{player_id}")
+            return cached_df
+
+        print(f"      cache hit, fetching delta {fetch_start} to {today_str}")
+        try:
+            delta = fetcher(fetch_start, today_str, player_id)
+            if delta is not None and not delta.empty:
+                combined = pd.concat([cached_df, delta], ignore_index=True)
+                combined = combined.drop_duplicates(subset=["game_pk", "at_bat_number", "pitch_number"], keep="last")
+                combined.to_parquet(cache_file, index=False)
+                return combined
+            else:
+                # No new data, cache is current
+                return cached_df
+        except Exception as e:
+            print(f"      delta fetch failed ({e}), using cache")
+            return cached_df
+    else:
+        # Full fetch
+        print(f"      full fetch {earliest} to {today_str}")
+        try:
+            df = fetcher(earliest, today_str, player_id)
+            if df is not None and not df.empty:
+                df.to_parquet(cache_file, index=False)
+                return df
+            return pd.DataFrame()
+        except Exception as e:
+            print(f"      statcast fetch failed: {e}")
+            return pd.DataFrame()
+
+
+def fetch_all_spray_charts(player_id: int, df: pd.DataFrame = None) -> dict[str, dict]:
+    """Build spray chart data from a pre-fetched DataFrame (2020+). Returns dict keyed by team abbr."""
     empty_summary = {"single": 0, "double": 0, "triple": 0, "home_run": 0, "out": 0, "total": 0}
 
     try:
-        df = statcast_batter("2020-01-01", date.today().isoformat(), player_id)
         if df is None or df.empty:
+            return {}
+
+        # Filter to 2020+ for spray charts
+        if "game_date" in df.columns:
+            df = df[pd.to_datetime(df["game_date"], errors="coerce") >= "2020-01-01"]
+        if df.empty:
             return {}
 
         batted = df[df["hc_x"].notna() & df["hc_y"].notna() & df["events"].notna()].copy()
@@ -294,10 +368,8 @@ def fetch_all_spray_charts(player_id: int) -> dict[str, dict]:
         return {}
 
 
-def fetch_pitch_arsenal(player_id: int) -> dict:
-    """Fetch pitch arsenal for a pitcher."""
-    from pybaseball import statcast_pitcher
-
+def fetch_pitch_arsenal(player_id: int, df: pd.DataFrame = None) -> dict:
+    """Build pitch arsenal from a pre-fetched pitcher DataFrame."""
     PITCH_NAMES = {
         "FF": "4-Seam Fastball", "SI": "Sinker", "FC": "Cutter",
         "SL": "Slider", "CU": "Curveball", "KC": "Knuckle Curve",
@@ -306,8 +378,14 @@ def fetch_pitch_arsenal(player_id: int) -> dict:
     }
 
     try:
-        df = statcast_pitcher(f"{SEASON - 1}-03-01", date.today().isoformat(), player_id)
         if df is None or df.empty:
+            return {"pitches": [], "totalPitches": 0}
+
+        # Filter to last 2 seasons for arsenal
+        cutoff = f"{SEASON - 1}-03-01"
+        if "game_date" in df.columns:
+            df = df[pd.to_datetime(df["game_date"], errors="coerce") >= cutoff]
+        if df.empty:
             return {"pitches": [], "totalPitches": 0}
 
         pitches = df[df["pitch_type"].notna() & (df["pitch_type"] != "")]
@@ -349,13 +427,17 @@ def fetch_pitch_arsenal(player_id: int) -> dict:
         return {"pitches": [], "totalPitches": 0}
 
 
-def fetch_batter_advanced(player_id: int) -> dict:
-    """Fetch Statcast advanced metrics for a batter."""
-    from pybaseball import statcast_batter
-
+def fetch_batter_advanced(player_id: int, df: pd.DataFrame = None) -> dict:
+    """Build Statcast advanced metrics from a pre-fetched batter DataFrame."""
     try:
-        df = statcast_batter(f"{SEASON - 1}-03-01", date.today().isoformat(), player_id)
         if df is None or df.empty:
+            return {}
+
+        # Filter to last 2 seasons for advanced stats
+        cutoff = f"{SEASON - 1}-03-01"
+        if "game_date" in df.columns:
+            df = df[pd.to_datetime(df["game_date"], errors="coerce") >= cutoff]
+        if df.empty:
             return {}
 
         batted = df[df["launch_speed"].notna()]
@@ -408,14 +490,16 @@ def fetch_batter_advanced(player_id: int) -> dict:
         return {}
 
 
-def fetch_batter_career_statcast(player_id: int) -> dict:
-    """Fetch career statcast data for a batter, compute BvP for all pitchers faced."""
-    from pybaseball import statcast_batter
-
+def fetch_batter_career_statcast(player_id: int, df: pd.DataFrame = None) -> dict:
+    """Build BvP data from a pre-fetched batter DataFrame (last 3 seasons)."""
     try:
-        # Try current season first, fall back to last 3 seasons for career data
-        df = statcast_batter("2022-03-01", date.today().isoformat(), player_id)
         if df is None or df.empty:
+            return {}
+
+        # Filter to last ~3 seasons for BvP
+        if "game_date" in df.columns:
+            df = df[pd.to_datetime(df["game_date"], errors="coerce") >= "2022-03-01"]
+        if df.empty:
             return {}
 
         events = df[df["events"].notna()]
@@ -469,15 +553,9 @@ def fetch_batter_career_statcast(player_id: int) -> dict:
 
 PLATE_HALF_WIDTH = 0.83  # 17" plate + ball radius, in feet
 
-def fetch_missed_calls(player_id: int) -> dict:
-    """Fetch 5 years of called pitches and identify incorrect ball/strike calls."""
-    from pybaseball import statcast_batter
-
-    start = f"{SEASON - 5}-01-01"
-    end = date.today().isoformat()
-
+def fetch_missed_calls(player_id: int, df: pd.DataFrame = None) -> dict:
+    """Identify incorrect ball/strike calls from a pre-fetched batter DataFrame."""
     try:
-        df = statcast_batter(start, end, player_id)
         if df is None or df.empty:
             return {}
 
@@ -971,53 +1049,59 @@ def main():
             pid = player["id"]
             full_name = player.get("fullName", "")
             try:
-                arsenal = fetch_pitch_arsenal(pid)
+                # Single Statcast fetch for pitcher data (arsenal)
+                pitcher_df = fetch_statcast_cached(pid, kind="pitcher", years_back=2)
+                arsenal = fetch_pitch_arsenal(pid, df=pitcher_df)
                 write_json(f"players/{pid}/arsenal.json", arsenal)
 
                 # FanGraphs advanced pitching stats
                 fg_stats = fetch_fangraphs_for_player(full_name, is_pitcher=True)
                 write_json(f"players/{pid}/advanced.json", fg_stats)
 
-                # Missed umpire calls (from batter perspective when batting)
-                missed = fetch_missed_calls(pid)
+                # Missed umpire calls (from batter perspective — uses batter data)
+                batter_df = fetch_statcast_cached(pid, kind="batter", years_back=5)
+                missed = fetch_missed_calls(pid, df=batter_df)
                 if missed:
                     write_json(f"players/{pid}/missed_calls.json", missed)
 
                 print(f"    {full_name} (P) - arsenal + FanGraphs + missed calls done")
             except Exception as e:
                 print(f"    statcast error for {full_name}: {e}")
-            time.sleep(1)
+            time.sleep(0.5)
 
         for player in position_players:
             pid = player["id"]
             full_name = player.get("fullName", "")
             try:
-                # Statcast advanced stats
-                advanced = fetch_batter_advanced(pid)
+                # Single Statcast fetch — all features derive from this one DataFrame
+                batter_df = fetch_statcast_cached(pid, kind="batter", years_back=5)
+
+                # Statcast advanced stats (uses last 2 seasons slice)
+                advanced = fetch_batter_advanced(pid, df=batter_df.copy())
 
                 # Enrich with FanGraphs stats
                 fg_stats = fetch_fangraphs_for_player(full_name, is_pitcher=False)
                 advanced.update(fg_stats)
                 write_json(f"players/{pid}/advanced.json", advanced)
 
-                # Career BvP data (lookup by pitcher ID)
-                bvp = fetch_batter_career_statcast(pid)
+                # Career BvP data (uses last 3 seasons slice)
+                bvp = fetch_batter_career_statcast(pid, df=batter_df.copy())
                 write_json(f"players/{pid}/bvp.json", bvp)
 
-                # Spray charts at ALL parks (one statcast call, split by venue)
-                all_sprays = fetch_all_spray_charts(pid)
+                # Spray charts at ALL parks (uses 2020+ slice)
+                all_sprays = fetch_all_spray_charts(pid, df=batter_df.copy())
                 for park_abbr, spray_data in all_sprays.items():
                     write_json(f"players/{pid}/spray/{park_abbr}.json", spray_data)
 
-                # Missed umpire calls
-                missed = fetch_missed_calls(pid)
+                # Missed umpire calls (uses full 5 years)
+                missed = fetch_missed_calls(pid, df=batter_df)
                 if missed:
                     write_json(f"players/{pid}/missed_calls.json", missed)
 
                 print(f"    {full_name} - advanced + FanGraphs + bvp + spray ({len(all_sprays)} parks) + missed calls done")
             except Exception as e:
                 print(f"    statcast error for {full_name}: {e}")
-            time.sleep(1)
+            time.sleep(0.5)
 
         # Season game log
         print(f"  fetching season game log for {abbr}...")
