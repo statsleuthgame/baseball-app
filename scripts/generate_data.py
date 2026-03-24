@@ -464,17 +464,20 @@ def fetch_batter_career_statcast(player_id: int) -> dict:
 def fetch_fangraphs_for_player(full_name: str, is_pitcher: bool) -> dict:
     """Fetch FanGraphs season stats for a player by name."""
     try:
-        if is_pitcher:
-            from pybaseball import pitching_stats
-            df = pitching_stats(SEASON, qual=1)
-            if df is None or df.empty:
-                # Try lower qual threshold for fewer-inning pitchers
-                df = pitching_stats(SEASON, qual=0)
-        else:
-            from pybaseball import batting_stats
-            df = batting_stats(SEASON, qual=1)
-            if df is None or df.empty:
-                df = batting_stats(SEASON, qual=0)
+        df = None
+        for season in [SEASON, SEASON - 1]:
+            if is_pitcher:
+                from pybaseball import pitching_stats
+                df = pitching_stats(season, qual=1)
+                if df is None or df.empty:
+                    df = pitching_stats(season, qual=0)
+            else:
+                from pybaseball import batting_stats
+                df = batting_stats(season, qual=1)
+                if df is None or df.empty:
+                    df = batting_stats(season, qual=0)
+            if df is not None and not df.empty:
+                break
 
         if df is None or df.empty:
             return {}
