@@ -122,7 +122,7 @@ export default function AdvancedPitcherStats({ playerId }) {
   if (!data?.pitches?.length && (!advanced || Object.keys(advanced || {}).length === 0)) return null;
 
   const pitches = data?.pitches || [];
-  const totalPitches = data.totalPitches || pitches.reduce((s, p) => s + (p.count || 0), 0);
+  const totalPitches = data?.totalPitches || pitches.reduce((s, p) => s + (p.count || 0), 0);
 
   // Derive pitcher metrics from arsenal data
   const fastballs = pitches.filter((p) => ["FF", "SI", "FC"].includes(p.pitchType));
@@ -136,12 +136,12 @@ export default function AdvancedPitcherStats({ playerId }) {
   const overallWhiff = pitches.reduce((s, p) => s + (p.whiffRate || 0) * (p.usagePct || 0), 0) / 100;
   const overallBA = pitches.filter(p => p.baAgainst != null).reduce((s, p) => s + p.baAgainst * (p.usagePct || 0), 0) / pitches.filter(p => p.baAgainst != null).reduce((s, p) => s + (p.usagePct || 0), 0) || null;
   const overallCSW = pitches.reduce((s, p) => s + (p.cswPct || 0) * (p.usagePct || 0), 0) / 100;
-  const topWhiffPitch = pitches.reduce((best, p) => (p.whiffRate || 0) > (best.whiffRate || 0) ? p : best, pitches[0]);
+  const topWhiffPitch = pitches.length ? pitches.reduce((best, p) => (p.whiffRate || 0) > (best.whiffRate || 0) ? p : best, pitches[0]) : null;
   const chaseRateAvg = pitches.reduce((s, p) => s + (p.chaseRate || 0) * (p.usagePct || 0), 0) / 100;
 
   // Estimate K% and BB% from arsenal (approximate from put-away and walk rates)
   // These are rough estimates from the pitch data
-  const kRate = topWhiffPitch.putawayRate || (overallWhiff * 1.5) || null;
+  const kRate = topWhiffPitch?.putawayRate || (overallWhiff * 1.5) || null;
   const bbRate = null; // Can't derive accurately from arsenal alone
 
   const stats = [

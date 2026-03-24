@@ -4,6 +4,7 @@ import { useTeam } from "../../context/TeamContext";
 import TopBar from "./TopBar";
 import BottomNav from "./BottomNav";
 import LoadingSpinner from "../common/LoadingSpinner";
+import ErrorBoundary from "../common/ErrorBoundary";
 
 const scrollPositions = {};
 
@@ -56,9 +57,11 @@ export default function AppShell() {
     <div className="app-shell">
       <TopBar />
       <main className="app-content" ref={contentRef} tabIndex={-1}>
-        <Suspense fallback={<LoadingSpinner />}>
-          <Outlet />
-        </Suspense>
+        <ErrorBoundary>
+          <Suspense fallback={<LoadingSpinner />}>
+            <Outlet />
+          </Suspense>
+        </ErrorBoundary>
       </main>
       <BottomNav />
     </div>
