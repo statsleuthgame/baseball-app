@@ -718,7 +718,9 @@ html, body {
   font-size: 9px;
   font-weight: 600;
   letter-spacing: 0.2px;
-  white-space: nowrap;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.2;
 }
 
 .stat-grid-3 {
