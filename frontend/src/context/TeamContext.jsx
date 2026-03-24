@@ -2,15 +2,19 @@ import { createContext, useContext, useState, useEffect, useRef, useCallback, us
 
 const TeamContext = createContext(null);
 
+const BASE = import.meta.env.BASE_URL || "/";
+
 const TEAM_DATA = {
   136: {
     id: 136, name: "Seattle Mariners", abbreviation: "SEA",
     primary: "#0C2C56", secondary: "#00A3A3", accent: "#C4CED4",
+    headerBg: `linear-gradient(rgba(12,44,86,0.55), rgba(12,44,86,0.7)), url(${BASE}images/sea-header.jpg)`,
     venueId: 680, divisionId: 200,
   },
   144: {
     id: 144, name: "Atlanta Braves", abbreviation: "ATL",
     primary: "#13274F", secondary: "#E8365C", accent: "#EAAA00",
+    headerBg: `linear-gradient(rgba(19,39,79,0.55), rgba(19,39,79,0.7)), url(${BASE}images/atl-header.jpg)`,
     venueId: 4705, divisionId: 204,
   },
 };
@@ -45,6 +49,11 @@ export function TeamProvider({ children }) {
         document.documentElement.style.setProperty("--team-primary", team.primary);
         document.documentElement.style.setProperty("--team-secondary", team.secondary);
         document.documentElement.style.setProperty("--team-accent", team.accent);
+        if (team.headerBg) {
+          document.documentElement.style.setProperty("--team-header-bg", team.headerBg);
+        } else {
+          document.documentElement.style.removeProperty("--team-header-bg");
+        }
       }
     } else {
       localStorage.removeItem("selectedTeam");

@@ -98,7 +98,9 @@ html, body {
   gap: 12px;
   padding: 10px 16px;
   padding-top: calc(10px + env(safe-area-inset-top, 0px));
-  background: var(--team-primary);
+  background: var(--team-header-bg, var(--team-primary));
+  background-size: cover;
+  background-position: center;
   border-bottom: 2px solid var(--team-secondary);
   color: white;
   z-index: 100;
