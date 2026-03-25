@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
-import { fetchTodayGame } from "../../api/client";
+import { fetchTodayGame, fetchGameLineup, fetchProjectedLineup } from "../../api/client";
 import { formatGameDate, formatGameTime } from "../../utils/formatters";
 import PlayerPhoto from "../common/PlayerPhoto";
 import UmpireCard from "../common/UmpireCard";
@@ -155,6 +155,10 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
         </div>
       )}
 
+      {!compact && !isLive && !isFinal && game.gamePk && (
+        <LineupPreview gamePk={game.gamePk} teamId={teamId} />
+      )}
+
       {!compact && game.umpireName && (
         <UmpireCard umpireName={game.umpireName} />
       )}
@@ -177,6 +181,56 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
             {isLive ? "Watch" : "MLB.tv"}
           </button>
         )}
+      </div>
+    </div>
+  );
+}
+
+function LineupPreview({ gamePk, teamId }) {
+  const navigate = useNavigate();
+
+  // Try actual lineup first
+  const { data: actualLineup } = useQuery({
+    queryKey: ["gameLineup", gamePk, teamId],
+    queryFn: () => fetchGameLineup(gamePk, teamId),
+    enabled: !!gamePk && !!teamId,
+    staleTime: 1000 * 60 * 2,
+    refetchInterval: 1000 * 60 * 2,
+  });
+
+  // Always fetch projected as fallback
+  const { data: projectedLineup } = useQuery({
+    queryKey: ["projectedLineup", teamId],
+    queryFn: () => fetchProjectedLineup(teamId),
+    enabled: !!teamId && !actualLineup,
+    staleTime: 1000 * 60 * 30,
+  });
+
+  const lineup = actualLineup || projectedLineup;
+  const isProjected = !actualLineup && !!projectedLineup;
+
+  if (!lineup?.length) return null;
+
+  return (
+    <div className="lineup-preview" onClick={(e) => e.stopPropagation()}>
+      <div className="lineup-header">
+        <span className="lineup-title">{isProjected ? "Projected Lineup" : "Starting Lineup"}</span>
+        {isProjected && <span className="lineup-projected-tag">Based on recent games</span>}
+      </div>
+      <div className="lineup-list">
+        {lineup.map((p) => (
+          <div
+            key={p.id}
+            className="lineup-row sb-player-link"
+            onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}
+          >
+            <span className="lineup-order">{p.order}</span>
+            <PlayerPhoto playerId={p.id} name={p.fullName} size={28} />
+            <span className="lineup-name">{p.fullName}</span>
+            <span className="lineup-pos">{p.position}</span>
+            <span className="lineup-avg">{p.avg}</span>
+          </div>
+        ))}
       </div>
     </div>
   );

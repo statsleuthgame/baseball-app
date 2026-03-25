@@ -490,6 +490,81 @@ body {
   color: var(--text-muted);
 }
 
+.lineup-preview {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.lineup-header {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.lineup-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+}
+
+.lineup-projected-tag {
+  font-size: 10px;
+  color: var(--text-muted);
+  opacity: 0.5;
+  font-style: italic;
+}
+
+.lineup-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lineup-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  font-size: 13px;
+}
+
+.lineup-order {
+  width: 16px;
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.lineup-name {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lineup-pos {
+  font-size: 11px;
+  color: var(--text-muted);
+  width: 24px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.lineup-avg {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-bright);
+  width: 36px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
 .today-game-footer {
   display: flex;
   align-items: center;

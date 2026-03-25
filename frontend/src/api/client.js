@@ -201,6 +201,77 @@ export const fetchPlayoffOdds = () =>
 
 export const fetchMeta = () => staticFetch("meta.json").catch(() => null);
 
+// Fetch lineup for a game — returns actual lineup if posted, null if not yet available
+export const fetchGameLineup = async (gamePk, teamId) => {
+  try {
+    const resp = await mlbApi.get(`/game/${gamePk}/boxscore`);
+    const teams = resp.data?.teams || {};
+    const side = teams.home?.team?.id === teamId ? teams.home : teams.away;
+    const order = side?.battingOrder || [];
+    if (!order.length) return null;
+
+    const players = side.players || {};
+    return order.map((pid, i) => {
+      const p = players[`ID${pid}`] || {};
+      const person = p.person || {};
+      const pos = p.position || {};
+      const batting = p.seasonStats?.batting || {};
+      return {
+        id: pid,
+        fullName: person.fullName || "",
+        position: pos.abbreviation || "",
+        avg: batting.avg || ".000",
+        order: i + 1,
+      };
+    });
+  } catch {
+    return null;
+  }
+};
+
+// Projected lineup: position players from roster sorted by typical lineup position
+export const fetchProjectedLineup = async (teamId) => {
+  try {
+    const roster = await fetchRoster(teamId);
+    const posPlayers = roster.filter((p) => p.position.type !== "Pitcher");
+
+    // Fetch season batting avg for each position player
+    const season = new Date().getFullYear();
+    const withStats = await Promise.all(
+      posPlayers.map(async (p) => {
+        try {
+          const resp = await mlbApi.get(`/people/${p.id}/stats`, {
+            params: { stats: "season", season, group: "hitting" },
+          });
+          const avg = resp.data?.stats?.[0]?.splits?.[0]?.stat?.avg || ".000";
+          return { ...p, avg };
+        } catch {
+          return { ...p, avg: ".000" };
+        }
+      })
+    );
+
+    // Typical lineup order by position
+    const posOrder = ["CF", "SS", "RF", "1B", "DH", "3B", "LF", "2B", "C"];
+    withStats.sort((a, b) => {
+      const ai = posOrder.indexOf(a.position.abbreviation);
+      const bi = posOrder.indexOf(b.position.abbreviation);
+      return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+    });
+
+    return withStats.slice(0, 9).map((p, i) => ({
+      id: p.id,
+      fullName: p.fullName,
+      position: p.position.abbreviation,
+      avg: p.avg,
+      order: i + 1,
+      projected: true,
+    }));
+  } catch {
+    return null;
+  }
+};
+
 // ---- New data sources ----
 
 /** Season game log (W/L per game, running win%, from pybaseball schedule_and_record) */
