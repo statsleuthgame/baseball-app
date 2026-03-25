@@ -3,7 +3,7 @@ import os
 MLB_API_BASE = "https://statsapi.mlb.com/api/v1"
 MLB_PHOTOS_BASE = "https://img.mlbstatic.com/mlb-photos/image/upload"
 
-ALLOWED_TEAM_IDS = {136, 144}  # Mariners, Braves
+ALLOWED_TEAM_IDS = {108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 158}
 
 TEAM_META = {
     136: {

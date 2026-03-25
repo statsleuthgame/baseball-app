@@ -405,10 +405,7 @@ export default function Scoreboard() {
     setSelectedDate(fmt(d));
   };
 
-  // Sort: our team first, then the other tracked team, then live, scheduled, final
-  const TRACKED_TEAMS = [136, 144]; // SEA, ATL
-  const otherTeamId = TRACKED_TEAMS.find((id) => id !== teamId);
-
+  // Sort: our team first, then live, scheduled, final
   const sorted = games?.length
     ? [...games].sort((a, b) => {
         const gameTeams = (g) => [g.home.id, g.away.id];
@@ -416,11 +413,6 @@ export default function Scoreboard() {
         const bIsOurs = gameTeams(b).includes(teamId);
         if (aIsOurs && !bIsOurs) return -1;
         if (!aIsOurs && bIsOurs) return 1;
-
-        const aIsOther = gameTeams(a).includes(otherTeamId);
-        const bIsOther = gameTeams(b).includes(otherTeamId);
-        if (aIsOther && !bIsOther) return -1;
-        if (!aIsOther && bIsOther) return 1;
 
         const statusOrder = { "In Progress": 0, "Pre-Game": 1, Warmup: 1, Scheduled: 2, Final: 3 };
         return (statusOrder[a.status] ?? 4) - (statusOrder[b.status] ?? 4);

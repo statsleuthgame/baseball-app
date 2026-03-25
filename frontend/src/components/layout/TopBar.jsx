@@ -2,7 +2,7 @@ import { useTeam } from "../../context/TeamContext";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 
 export default function TopBar() {
-  const { team, teamId, setTeamId, TEAM_DATA } = useTeam();
+  const { team, setTeamId } = useTeam();
   const navigate = useNavigate();
   const location = useLocation();
   const { playerId } = useParams();
@@ -13,15 +13,10 @@ export default function TopBar() {
     navigate(-1);
   };
 
-  const handleSwitch = () => {
-    const newTeamId = teamId === 136 ? 144 : 136;
-    setTeamId(newTeamId);
-    const path = location.pathname;
-    const currentTab = path.split("/").slice(3).join("/");
-    navigate(`/team/${newTeamId}/${currentTab}`);
+  const handleSwitchTeam = () => {
+    setTeamId(null);
+    navigate("/");
   };
-
-  const otherTeam = teamId === 136 ? TEAM_DATA[144] : TEAM_DATA[136];
 
   return (
     <header className="top-bar">
@@ -40,15 +35,13 @@ export default function TopBar() {
             className="top-bar-logo"
           />
           <h1 className="top-bar-title">{team.name}</h1>
-          <button className="top-bar-switch" onClick={handleSwitch} aria-label={`Switch to ${otherTeam?.name}`}>
-            {otherTeam && (
-              <img
-                src={`https://www.mlbstatic.com/team-logos/${otherTeam.id}.svg`}
-                alt=""
-                aria-hidden="true"
-                style={{ width: 24, height: 24 }}
-              />
-            )}
+          <button className="top-bar-switch" onClick={handleSwitchTeam} aria-label="Switch team">
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="17 1 21 5 17 9" />
+              <path d="M3 11V9a4 4 0 014-4h14" />
+              <polyline points="7 23 3 19 7 15" />
+              <path d="M21 13v2a4 4 0 01-4 4H3" />
+            </svg>
           </button>
         </>
       ) : (

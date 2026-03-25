@@ -1,0 +1,36 @@
+const BASE = import.meta.env.BASE_URL || "/";
+
+const ALL_TEAMS = {
+  109: { id: 109, name: "Arizona Diamondbacks", abbreviation: "AZ", primary: "#A71930", secondary: "#E3D4AD", accent: "#000000", league: "NL", division: "NL West", divisionId: 203, venueId: 15 },
+  144: { id: 144, name: "Atlanta Braves", abbreviation: "ATL", primary: "#13274F", secondary: "#CE1141", accent: "#EAAA00", league: "NL", division: "NL East", divisionId: 204, venueId: 4705, headerBg: `url(${BASE}images/atl-header.jpg)`, headerOverlay: "rgba(19,39,79,0.55)" },
+  110: { id: 110, name: "Baltimore Orioles", abbreviation: "BAL", primary: "#DF4601", secondary: "#000000", accent: "#F9A825", league: "AL", division: "AL East", divisionId: 201, venueId: 2 },
+  111: { id: 111, name: "Boston Red Sox", abbreviation: "BOS", primary: "#BD3039", secondary: "#0C2340", accent: "#FFFFFF", league: "AL", division: "AL East", divisionId: 201, venueId: 3 },
+  112: { id: 112, name: "Chicago Cubs", abbreviation: "CHC", primary: "#0E3386", secondary: "#CC3433", accent: "#FFFFFF", league: "NL", division: "NL Central", divisionId: 205, venueId: 17 },
+  145: { id: 145, name: "Chicago White Sox", abbreviation: "CWS", primary: "#27251F", secondary: "#C4CED4", accent: "#FFFFFF", league: "AL", division: "AL Central", divisionId: 202, venueId: 4 },
+  113: { id: 113, name: "Cincinnati Reds", abbreviation: "CIN", primary: "#C6011F", secondary: "#000000", accent: "#FFFFFF", league: "NL", division: "NL Central", divisionId: 205, venueId: 2602 },
+  114: { id: 114, name: "Cleveland Guardians", abbreviation: "CLE", primary: "#00385D", secondary: "#E31937", accent: "#FFFFFF", league: "AL", division: "AL Central", divisionId: 202, venueId: 5 },
+  115: { id: 115, name: "Colorado Rockies", abbreviation: "COL", primary: "#33006F", secondary: "#C4CED4", accent: "#000000", league: "NL", division: "NL West", divisionId: 203, venueId: 19 },
+  116: { id: 116, name: "Detroit Tigers", abbreviation: "DET", primary: "#0C2340", secondary: "#FA4616", accent: "#FFFFFF", league: "AL", division: "AL Central", divisionId: 202, venueId: 2394 },
+  117: { id: 117, name: "Houston Astros", abbreviation: "HOU", primary: "#002D62", secondary: "#EB6E1F", accent: "#F4911E", league: "AL", division: "AL West", divisionId: 200, venueId: 2392 },
+  118: { id: 118, name: "Kansas City Royals", abbreviation: "KC", primary: "#004687", secondary: "#BD9B60", accent: "#FFFFFF", league: "AL", division: "AL Central", divisionId: 202, venueId: 7 },
+  108: { id: 108, name: "Los Angeles Angels", abbreviation: "LAA", primary: "#BA0021", secondary: "#003263", accent: "#C4CED4", league: "AL", division: "AL West", divisionId: 200, venueId: 1 },
+  119: { id: 119, name: "Los Angeles Dodgers", abbreviation: "LAD", primary: "#005A9C", secondary: "#EF3E42", accent: "#FFFFFF", league: "NL", division: "NL West", divisionId: 203, venueId: 22 },
+  146: { id: 146, name: "Miami Marlins", abbreviation: "MIA", primary: "#00A3E0", secondary: "#EF3340", accent: "#000000", league: "NL", division: "NL East", divisionId: 204, venueId: 4169 },
+  158: { id: 158, name: "Milwaukee Brewers", abbreviation: "MIL", primary: "#12284B", secondary: "#FFC52F", accent: "#FFFFFF", league: "NL", division: "NL Central", divisionId: 205, venueId: 32 },
+  142: { id: 142, name: "Minnesota Twins", abbreviation: "MIN", primary: "#002B5C", secondary: "#D31145", accent: "#B9975B", league: "AL", division: "AL Central", divisionId: 202, venueId: 3312 },
+  121: { id: 121, name: "New York Mets", abbreviation: "NYM", primary: "#002D72", secondary: "#FF5910", accent: "#FFFFFF", league: "NL", division: "NL East", divisionId: 204, venueId: 3289 },
+  147: { id: 147, name: "New York Yankees", abbreviation: "NYY", primary: "#003087", secondary: "#C4CED4", accent: "#FFFFFF", league: "AL", division: "AL East", divisionId: 201, venueId: 3313 },
+  133: { id: 133, name: "Oakland Athletics", abbreviation: "ATH", primary: "#003831", secondary: "#EFB21E", accent: "#FFFFFF", league: "AL", division: "AL West", divisionId: 200, venueId: 10 },
+  143: { id: 143, name: "Philadelphia Phillies", abbreviation: "PHI", primary: "#E81828", secondary: "#002D72", accent: "#FFFFFF", league: "NL", division: "NL East", divisionId: 204, venueId: 2681 },
+  134: { id: 134, name: "Pittsburgh Pirates", abbreviation: "PIT", primary: "#27251F", secondary: "#FDB827", accent: "#FFFFFF", league: "NL", division: "NL Central", divisionId: 205, venueId: 31 },
+  135: { id: 135, name: "San Diego Padres", abbreviation: "SD", primary: "#2F241D", secondary: "#FFC425", accent: "#FFFFFF", league: "NL", division: "NL West", divisionId: 203, venueId: 2680 },
+  137: { id: 137, name: "San Francisco Giants", abbreviation: "SF", primary: "#27251F", secondary: "#FD5A1E", accent: "#EFD19F", league: "NL", division: "NL West", divisionId: 203, venueId: 2395 },
+  136: { id: 136, name: "Seattle Mariners", abbreviation: "SEA", primary: "#0C2C56", secondary: "#00A3A3", accent: "#C4CED4", league: "AL", division: "AL West", divisionId: 200, venueId: 680, headerBg: `url(${BASE}images/sea-header.jpg)`, headerOverlay: "rgba(12,44,86,0.55)" },
+  138: { id: 138, name: "St. Louis Cardinals", abbreviation: "STL", primary: "#C41E3A", secondary: "#0C2340", accent: "#FEDB00", league: "NL", division: "NL Central", divisionId: 205, venueId: 2889 },
+  139: { id: 139, name: "Tampa Bay Rays", abbreviation: "TB", primary: "#092C5C", secondary: "#8FBCE6", accent: "#F5D130", league: "AL", division: "AL East", divisionId: 201, venueId: 12 },
+  140: { id: 140, name: "Texas Rangers", abbreviation: "TEX", primary: "#003278", secondary: "#C0111F", accent: "#FFFFFF", league: "AL", division: "AL West", divisionId: 200, venueId: 5325 },
+  141: { id: 141, name: "Toronto Blue Jays", abbreviation: "TOR", primary: "#134A8E", secondary: "#1D2D5C", accent: "#E8291C", league: "AL", division: "AL East", divisionId: 201, venueId: 14 },
+  120: { id: 120, name: "Washington Nationals", abbreviation: "WSH", primary: "#AB0003", secondary: "#14225A", accent: "#FFFFFF", league: "NL", division: "NL East", divisionId: 204, venueId: 3309 },
+};
+
+export default ALL_TEAMS;
