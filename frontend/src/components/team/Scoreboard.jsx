@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
 import { fetchAllGamesToday, fetchPitcherSeasonStats, fetchBvP, fetchRoster, fetchGameDetail } from "../../api/client";
 import { formatGameTime, getTeamAbbr } from "../../utils/formatters";
@@ -306,9 +306,21 @@ function GameDetail({ gamePk, awayAbbr, homeAbbr, teamId }) {
 export default function Scoreboard() {
   const { teamId } = useTeam();
   const navigate = useNavigate();
-  const [selectedDate, setSelectedDate] = useState(fmt(new Date()));
+  const [searchParams, setSearchParams] = useSearchParams();
+  const paramDate = searchParams.get("date");
+  const [selectedDate, setSelectedDateRaw] = useState(paramDate || fmt(new Date()));
   const [expandedGame, setExpandedGame] = useState(null);
   const dateInputRef = useRef(null);
+
+  const setSelectedDate = (d) => {
+    setSelectedDateRaw(d);
+    const today = fmt(new Date());
+    if (d === today) {
+      setSearchParams({}, { replace: false });
+    } else {
+      setSearchParams({ date: d }, { replace: false });
+    }
+  };
 
   const isToday = selectedDate === fmt(new Date());
 
