@@ -71,8 +71,69 @@ export const fetchStandings = async () => {
 export const fetchPlayerDetail = (playerId) =>
   staticFetch(`players/${playerId}/info.json`).then((d) => d.detail);
 
-export const fetchPlayerStats = (playerId) =>
-  staticFetch(`players/${playerId}/info.json`);
+export const fetchPlayerStats = async (playerId) => {
+  // Try static pre-generated data first (our roster players — most comprehensive)
+  try {
+    const data = await staticFetch(`players/${playerId}/info.json`);
+    if (data?.detail?.id) return data;
+  } catch {}
+
+  // Fallback: MLB API for any player (opponents, etc.)
+  const season = new Date().getFullYear();
+  const [detailResp, hittingResp, pitchingResp] = await Promise.all([
+    mlbApi.get(`/people/${playerId}`, { params: { hydrate: "currentTeam" } }),
+    mlbApi.get(`/people/${playerId}/stats`, { params: { stats: "season", season, group: "hitting" } }).catch(() => ({})),
+    mlbApi.get(`/people/${playerId}/stats`, { params: { stats: "season", season, group: "pitching" } }).catch(() => ({})),
+  ]);
+
+  const p = detailResp.data?.people?.[0];
+  if (!p) throw new Error("Player not found");
+
+  const isPitcher = p.primaryPosition?.abbreviation === "P";
+  const group = isPitcher ? "pitching" : "hitting";
+  const statsResp = isPitcher ? pitchingResp : hittingResp;
+  const splits = statsResp.data?.stats?.[0]?.splits || [];
+  const currentStats = splits[0]?.stat || {};
+
+  // Try previous season if no current stats
+  let prevStats = {};
+  if (!Object.keys(currentStats).length) {
+    try {
+      const prev = await mlbApi.get(`/people/${playerId}/stats`, {
+        params: { stats: "season", season: season - 1, group },
+      });
+      const prevSplits = prev.data?.stats?.[0]?.splits || [];
+      prevStats = prevSplits[0]?.stat || {};
+    } catch {}
+  }
+
+  return {
+    detail: {
+      id: p.id,
+      fullName: p.fullName || "",
+      firstName: p.firstName || "",
+      lastName: p.lastName || "",
+      primaryNumber: p.primaryNumber || "",
+      birthDate: p.birthDate || "",
+      age: p.currentAge,
+      height: p.height || "",
+      weight: p.weight,
+      batSide: p.batSide?.code || "",
+      pitchHand: p.pitchHand?.code || "",
+      primaryPosition: p.primaryPosition?.abbreviation || "",
+      mlbDebutDate: p.mlbDebutDate || "",
+      currentTeam: p.currentTeam?.name || "",
+      photoUrl: `https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/${p.id}/headshot/67/current`,
+    },
+    stats: {
+      season,
+      group,
+      stats: currentStats,
+      prevSeason: season - 1,
+      prevStats,
+    },
+  };
+};
 
 export const fetchPlayerAdvanced = (playerId) =>
   staticFetch(`players/${playerId}/advanced.json`).catch(() => ({}));
