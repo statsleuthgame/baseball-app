@@ -280,7 +280,7 @@ export const fetchPriorMatchups = async (team1, team2) => {
 // All MLB games today (scoreboard)
 export const fetchAllGamesToday = async (dateStr) => {
   try {
-    const dateParam = dateStr || new Date().toISOString().split("T")[0];
+    const dateParam = dateStr || (() => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`; })();
     const resp = await mlbApi.get("/schedule", {
       params: {
         sportId: 1, date: dateParam,
