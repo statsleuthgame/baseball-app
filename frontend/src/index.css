@@ -2184,8 +2184,8 @@ th.sb-ls-total {
 }
 
 .sb-atbat-inning {
-  width: 22px;
-  font-size: 9px;
+  width: 28px;
+  font-size: 10px;
   font-weight: 600;
   color: var(--text-muted);
   flex-shrink: 0;

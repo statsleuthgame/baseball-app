@@ -190,7 +190,7 @@ function BatterRow({ batter }) {
         <div className="sb-atbats">
           {batter.atBats.map((ab, i) => (
             <div key={i} className={`sb-atbat ${ab.isScoring ? "sb-atbat-scoring" : ""}`}>
-              <span className="sb-atbat-inning">{ab.halfInning === "top" ? "T" : "B"}{ab.inning}</span>
+              <span className="sb-atbat-inning">{ab.inning}{ab.inning === 1 ? "st" : ab.inning === 2 ? "nd" : ab.inning === 3 ? "rd" : "th"}</span>
               <span className="sb-atbat-event">
                 {ab.event}{ab.hrDistance ? ` (${ab.hrDistance} ft)` : ""}
               </span>
