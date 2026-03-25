@@ -75,7 +75,7 @@ function TeamCard({ team, onSelect }) {
       style={{ "--card-primary": team.primary, "--card-secondary": team.secondary }}
     >
       <img
-        src={`https://www.mlbstatic.com/team-logos/${team.id}.svg`}
+        src={`https://www.mlbstatic.com/team-logos/team-cap-on-dark/${team.id}.svg`}
         alt={team.name}
         className="team-card-logo"
       />
