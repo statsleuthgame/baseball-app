@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
-import { fetchTodayGame, fetchRoster } from "../../api/client";
+import { fetchTodayGame, fetchRoster, fetchGameLineup, fetchProjectedLineup } from "../../api/client";
 import { formatGameDate, formatGameTime } from "../../utils/formatters";
 import LoadingSpinner from "../common/LoadingSpinner";
 import BatterVsPitcher from "./BatterVsPitcher";
@@ -91,6 +91,17 @@ export default function MatchupView() {
         </div>
       )}
 
+      {/* Side-by-side lineups */}
+      {game.gamePk && (
+        <MatchupLineups
+          gamePk={game.gamePk}
+          teamId={teamId}
+          opponentId={opponent.id}
+          usAbbr={us.abbreviation}
+          oppAbbr={opponent.abbreviation}
+        />
+      )}
+
       {/* Opposing pitcher's arsenal */}
       {opponentPitcher && (
         <div className="matchup-section">
@@ -122,6 +133,85 @@ export default function MatchupView() {
         team1Abbr={us.abbreviation}
         team2Abbr={opponent.abbreviation}
       />
+    </div>
+  );
+}
+
+function MatchupLineups({ gamePk, teamId, opponentId, usAbbr, oppAbbr }) {
+  const navigate = useNavigate();
+
+  // Try actual lineups first
+  const { data: actualUs } = useQuery({
+    queryKey: ["gameLineup", gamePk, teamId],
+    queryFn: () => fetchGameLineup(gamePk, teamId),
+    enabled: !!gamePk,
+    staleTime: 1000 * 60 * 2,
+    refetchInterval: 1000 * 60 * 2,
+  });
+
+  const { data: actualOpp } = useQuery({
+    queryKey: ["gameLineup", gamePk, opponentId],
+    queryFn: () => fetchGameLineup(gamePk, opponentId),
+    enabled: !!gamePk,
+    staleTime: 1000 * 60 * 2,
+    refetchInterval: 1000 * 60 * 2,
+  });
+
+  // Projected fallbacks
+  const { data: projUs } = useQuery({
+    queryKey: ["projectedLineup", teamId],
+    queryFn: () => fetchProjectedLineup(teamId),
+    enabled: !actualUs && !!teamId,
+    staleTime: 1000 * 60 * 30,
+  });
+
+  const { data: projOpp } = useQuery({
+    queryKey: ["projectedLineup", opponentId],
+    queryFn: () => fetchProjectedLineup(opponentId),
+    enabled: !actualOpp && !!opponentId,
+    staleTime: 1000 * 60 * 30,
+  });
+
+  const usLineup = actualUs || projUs;
+  const oppLineup = actualOpp || projOpp;
+  const isProjected = !actualUs && !actualOpp;
+
+  if (!usLineup?.length && !oppLineup?.length) return null;
+
+  const rows = Math.max(usLineup?.length || 0, oppLineup?.length || 0);
+
+  return (
+    <div className="matchup-lineups">
+      <div className="matchup-lineups-header">
+        <span className="matchup-lineups-title">
+          {isProjected ? "Projected Lineups" : "Starting Lineups"}
+        </span>
+        {isProjected && <span className="matchup-lineups-tag">Based on recent games</span>}
+      </div>
+      <div className="matchup-lineups-cols">
+        <div className="matchup-lineups-col">
+          <div className="matchup-lineups-col-hdr">{usAbbr}</div>
+          {(usLineup || []).map((p) => (
+            <div key={p.id} className="matchup-lineup-row sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
+              <span className="ml-order">{p.order}</span>
+              <span className="ml-name">{p.fullName.split(" ").pop()}</span>
+              <span className="ml-pos">{p.position}</span>
+              <span className="ml-avg">{p.avg}</span>
+            </div>
+          ))}
+        </div>
+        <div className="matchup-lineups-col">
+          <div className="matchup-lineups-col-hdr">{oppAbbr}</div>
+          {(oppLineup || []).map((p) => (
+            <div key={p.id} className="matchup-lineup-row sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
+              <span className="ml-order">{p.order}</span>
+              <span className="ml-name">{p.fullName.split(" ").pop()}</span>
+              <span className="ml-pos">{p.position}</span>
+              <span className="ml-avg">{p.avg}</span>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
