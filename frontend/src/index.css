@@ -589,6 +589,10 @@ body {
   color: var(--text-muted);
 }
 
+.today-game-venue-loc {
+  opacity: 0.6;
+}
+
 .today-game-watch {
   display: flex;
   align-items: center;

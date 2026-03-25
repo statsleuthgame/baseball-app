@@ -160,7 +160,10 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
       )}
 
       <div className="today-game-footer">
-        <span className="today-game-venue">{game.venue.name}</span>
+        <span className="today-game-venue">
+          {game.venue.name}
+          {game.venueLocation && <span className="today-game-venue-loc"> · {game.venueLocation}</span>}
+        </span>
         {!compact && game.gamePk && (isLive || !isFinal) && (
           <button
             className="today-game-watch"
