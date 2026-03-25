@@ -324,7 +324,7 @@ export const fetchTodayGame = async (teamId) => {
     const todayResp = await mlbApi.get("/schedule", {
       params: {
         sportId: 1, teamId, date: fmt(today),
-        hydrate: "team,linescore,probablePitcher,officials", gameType: "R",
+        hydrate: "team,linescore,probablePitcher,officials,venue(location)", gameType: "R",
       },
     });
 
@@ -343,7 +343,7 @@ export const fetchTodayGame = async (teamId) => {
     const futureResp = await mlbApi.get("/schedule", {
       params: {
         sportId: 1, teamId, startDate: fmt(today), endDate: fmt(endDate),
-        hydrate: "team,linescore,probablePitcher,officials", gameType: "R",
+        hydrate: "team,linescore,probablePitcher,officials,venue(location)", gameType: "R",
       },
     });
 
@@ -849,6 +849,7 @@ function formatGame(g, isNext) {
     status: g.status?.detailedState || "",
     isNextGame: isNext,
     venue: { id: g.venue?.id, name: g.venue?.name || "" },
+    venueLocation: g.venue?.location ? `${g.venue.location.city}, ${g.venue.location.stateAbbrev}` : "",
     umpireName,
     away: {
       id: at.id, name: at.name || "", abbreviation: at.abbreviation || "",

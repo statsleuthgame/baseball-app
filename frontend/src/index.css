@@ -1338,6 +1338,12 @@ button.stat-cell {
   font-weight: 500;
 }
 
+.matchup-venue {
+  font-size: 11px;
+  color: var(--text-muted);
+  opacity: 0.6;
+}
+
 .matchup-section {
   background: var(--bg-card);
   border-radius: 16px;

@@ -68,6 +68,9 @@ export default function MatchupView() {
           {isPreview && (
             <span className="matchup-date">{formatGameDate(game.gameDate)} · {formatGameTime(game.gameDate)}</span>
           )}
+          {game.venue?.name && (
+            <span className="matchup-venue">{game.venue.name}{game.venueLocation ? ` · ${game.venueLocation}` : ""}</span>
+          )}
         </div>
         <div className="matchup-team">
           <img src={opponent.logoUrl} alt={opponent.abbreviation} className="matchup-logo" />
