@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
 import { fetchAllGamesToday, fetchPitcherSeasonStats, fetchBvP, fetchRoster, fetchGameDetail, fetchGameLineup, fetchProjectedLineup } from "../../api/client";
-import { formatGameTime, getTeamAbbr, lastName } from "../../utils/formatters";
+import { formatGameTime, getTeamAbbr, lastName, teamDisplayName } from "../../utils/formatters";
 import LoadingSpinner from "../common/LoadingSpinner";
 import PlayerPhoto from "../common/PlayerPhoto";
 
@@ -218,7 +218,7 @@ function TeamBoxScore({ batters, abbr, teamId }) {
     <div className="sb-team-box">
       <div className="sb-box-header">
         <span className="sb-batter-pos"></span>
-        <span className="sb-batter-name sb-box-team">{abbr}</span>
+        <span className="sb-batter-name sb-box-team">{teamDisplayName(abbr)}</span>
         <span className="sb-batter-stat sb-stat-hdr">AB</span>
         <span className="sb-batter-stat sb-stat-hdr">R</span>
         <span className="sb-batter-stat sb-stat-hdr">H</span>

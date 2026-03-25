@@ -40,6 +40,21 @@ export const getTeamAbbr = (teamId) => {
   return ABBRS[Number(teamId)] || "MLB";
 };
 
+/** Get display name for box score headers (city name, except NY/LA teams use nickname) */
+export const teamDisplayName = (abbr) => {
+  const NAMES = {
+    AZ:"Arizona", ATL:"Atlanta", BAL:"Baltimore", BOS:"Boston",
+    CHC:"Chicago", CWS:"Chicago", CIN:"Cincinnati", CLE:"Cleveland",
+    COL:"Colorado", DET:"Detroit", HOU:"Houston", KC:"Kansas City",
+    LAA:"Angels", LAD:"Dodgers", MIA:"Miami", MIL:"Milwaukee",
+    MIN:"Minnesota", NYM:"Mets", NYY:"Yankees", ATH:"Oakland",
+    PHI:"Philadelphia", PIT:"Pittsburgh", SD:"San Diego",
+    SF:"San Francisco", SEA:"Seattle", STL:"St. Louis",
+    TB:"Tampa Bay", TEX:"Texas", TOR:"Toronto", WSH:"Washington",
+  };
+  return NAMES[abbr] || abbr;
+};
+
 /** Check if a date is today */
 export const isToday = (isoDate) => {
   if (!isoDate) return false;
