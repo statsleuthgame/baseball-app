@@ -1870,7 +1870,7 @@ button.stat-cell {
 
 .sb-venue-weather {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 12px;
   margin-top: 8px;
@@ -1884,18 +1884,29 @@ button.stat-cell {
   display: flex;
   flex-direction: column;
   gap: 1px;
+  min-width: 0;
 }
 
 .sb-venue-name { font-weight: 600; }
 .sb-venue-location { opacity: 0.6; }
+.sb-venue-weather-line { opacity: 0.6; }
 
-.sb-weather-info {
+.sb-venue-watch-btn {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 1px;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  background: var(--team-secondary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
   flex-shrink: 0;
+  min-height: 32px;
 }
+.sb-venue-watch-btn:active { opacity: 0.8; }
 
 .sb-wind { opacity: 0.7; }
 

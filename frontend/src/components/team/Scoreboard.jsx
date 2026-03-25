@@ -487,29 +487,40 @@ export default function Scoreboard() {
                   </div>
                 </div>
 
-                {/* Venue + weather for scheduled games */}
+                {/* Venue + weather + watch for scheduled games */}
                 {isScheduled && (game.venue || game.weather) && (
                   <div className="sb-venue-weather">
                     <div className="sb-venue-info">
                       {game.venue && <span className="sb-venue-name">{game.venue}</span>}
                       {game.venueLocation && <span className="sb-venue-location">{game.venueLocation}</span>}
+                      {game.weather && (
+                        <span className="sb-venue-weather-line">
+                          {weatherIcon(game.weather.condition)} {game.weather.temp}°F
+                          {game.weather.wind && <span className="sb-wind"> · {game.weather.wind}</span>}
+                        </span>
+                      )}
                     </div>
-                    {game.weather && (
-                      <div className="sb-weather-info">
-                        <span>{weatherIcon(game.weather.condition)} {game.weather.temp}°F</span>
-                        {game.weather.wind && <span className="sb-wind">{game.weather.wind}</span>}
-                      </div>
+                    {isOurGame && (
+                      <button
+                        className="sb-venue-watch-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          window.location.href = `mlbatbat://game?game_pk=${game.gamePk}`;
+                          setTimeout(() => window.open(`https://www.mlb.tv/game/${game.gamePk}`, "_blank"), 1500);
+                        }}
+                        aria-label="Watch game"
+                      >
+                        <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                          <polygon points="5 3 19 12 5 21 5 3" />
+                        </svg>
+                        Watch
+                      </button>
                     )}
                   </div>
                 )}
 
-                {/* BvP preview for our scheduled games */}
-                {isOurGame && isScheduled && opposingPitcher?.id && (
-                  <BvPPreview teamId={teamId} pitcherId={opposingPitcher.id} />
-                )}
-
-                {/* Watch button for our game */}
-                {isOurGame && (isLive || isScheduled) && (
+                {/* Watch button for our live games (no venue row) */}
+                {isOurGame && isLive && (
                   <button
                     className="scoreboard-watch-btn"
                     onClick={(e) => {
@@ -524,6 +535,11 @@ export default function Scoreboard() {
                     </svg>
                     Watch
                   </button>
+                )}
+
+                {/* BvP preview for our scheduled games */}
+                {isOurGame && isScheduled && opposingPitcher?.id && (
+                  <BvPPreview teamId={teamId} pitcherId={opposingPitcher.id} />
                 )}
 
                 {/* Gameday link for all active games */}
