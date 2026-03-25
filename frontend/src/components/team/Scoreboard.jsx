@@ -462,25 +462,29 @@ export default function Scoreboard() {
                 {/* Probable pitchers with stats for scheduled games */}
                 {isScheduled && (game.away.probablePitcher || game.home.probablePitcher) && (
                   <div className="scoreboard-pitchers">
-                    {game.away.probablePitcher?.id ? (
-                      <PlayerPhoto playerId={game.away.probablePitcher.id} name={game.away.probablePitcher.fullName} size={32} className="sb-pitcher-photo" />
-                    ) : <div className="sb-pitcher-photo-placeholder" />}
-                    <div className="sb-pitcher-col sb-player-link" onClick={(e) => { if (game.away.probablePitcher?.id) { e.stopPropagation(); navigate(`/team/${teamId}/player/${game.away.probablePitcher.id}`); } }}>
-                      <span>{game.away.probablePitcher?.fullName?.split(" ").pop() || "TBD"}</span>
-                      {game.away.probablePitcher?.id && (
-                        <PitcherStats pitcherId={game.away.probablePitcher.id} />
-                      )}
+                    <div className="sb-pitcher-group sb-player-link" onClick={(e) => { if (game.away.probablePitcher?.id) { e.stopPropagation(); navigate(`/team/${teamId}/player/${game.away.probablePitcher.id}`); } }}>
+                      {game.away.probablePitcher?.id ? (
+                        <PlayerPhoto playerId={game.away.probablePitcher.id} name={game.away.probablePitcher.fullName} size={32} className="sb-pitcher-photo" />
+                      ) : <div className="sb-pitcher-photo-placeholder" />}
+                      <div className="sb-pitcher-col">
+                        <span>{game.away.probablePitcher?.fullName?.split(" ").pop() || "TBD"}</span>
+                        {game.away.probablePitcher?.id && (
+                          <PitcherStats pitcherId={game.away.probablePitcher.id} />
+                        )}
+                      </div>
                     </div>
                     <span className="scoreboard-pitcher-vs">vs</span>
-                    <div className="sb-pitcher-col sb-player-link" onClick={(e) => { if (game.home.probablePitcher?.id) { e.stopPropagation(); navigate(`/team/${teamId}/player/${game.home.probablePitcher.id}`); } }}>
-                      <span>{game.home.probablePitcher?.fullName?.split(" ").pop() || "TBD"}</span>
-                      {game.home.probablePitcher?.id && (
-                        <PitcherStats pitcherId={game.home.probablePitcher.id} />
-                      )}
+                    <div className="sb-pitcher-group sb-player-link" onClick={(e) => { if (game.home.probablePitcher?.id) { e.stopPropagation(); navigate(`/team/${teamId}/player/${game.home.probablePitcher.id}`); } }}>
+                      <div className="sb-pitcher-col">
+                        <span>{game.home.probablePitcher?.fullName?.split(" ").pop() || "TBD"}</span>
+                        {game.home.probablePitcher?.id && (
+                          <PitcherStats pitcherId={game.home.probablePitcher.id} />
+                        )}
+                      </div>
+                      {game.home.probablePitcher?.id ? (
+                        <PlayerPhoto playerId={game.home.probablePitcher.id} name={game.home.probablePitcher.fullName} size={32} className="sb-pitcher-photo" />
+                      ) : <div className="sb-pitcher-photo-placeholder" />}
                     </div>
-                    {game.home.probablePitcher?.id ? (
-                      <PlayerPhoto playerId={game.home.probablePitcher.id} name={game.home.probablePitcher.fullName} size={32} className="sb-pitcher-photo" />
-                    ) : <div className="sb-pitcher-photo-placeholder" />}
                   </div>
                 )}
 

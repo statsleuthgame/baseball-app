@@ -1855,6 +1855,14 @@ button.stat-cell {
   flex-shrink: 0;
 }
 
+.sb-pitcher-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+}
+
 .sb-pitcher-col {
   display: flex;
   flex-direction: column;
