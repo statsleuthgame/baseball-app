@@ -351,8 +351,9 @@ body {
   align-items: center;
   gap: 12px;
   padding: 10px 14px;
-  background: linear-gradient(145deg, var(--card-primary), color-mix(in srgb, var(--card-primary) 60%, black));
-  border: 1px solid color-mix(in srgb, var(--card-secondary) 30%, transparent);
+  background: var(--surface, #1a1a2e);
+  border: 1px solid var(--border, rgba(255,255,255,0.08));
+  border-left: 3px solid var(--card-secondary);
   border-radius: 12px;
   cursor: pointer;
   transition: transform 0.15s, box-shadow 0.15s;
@@ -365,6 +366,7 @@ body {
 .team-card:hover {
   transform: scale(1.02);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  background: color-mix(in srgb, var(--card-primary) 20%, var(--surface, #1a1a2e));
 }
 
 .team-card:active {
