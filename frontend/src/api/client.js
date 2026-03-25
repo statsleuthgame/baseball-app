@@ -75,7 +75,7 @@ export const fetchPlayerStats = async (playerId) => {
   // Try static pre-generated data first (our roster players — most comprehensive)
   try {
     const data = await staticFetch(`players/${playerId}/info.json`);
-    if (data?.detail?.id) return data;
+    if (data?.detail?.id) return { ...data, hasFullData: true };
   } catch {}
 
   // Fallback: MLB API for any player (opponents, etc.)

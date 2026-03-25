@@ -54,7 +54,7 @@ export default function PlayerDetail() {
         </div>
       </div>
 
-      {!isPitcher && (
+      {!isPitcher && playerData?.hasFullData && (
         <div className="player-actions">
           <button
             className="player-action-btn"
