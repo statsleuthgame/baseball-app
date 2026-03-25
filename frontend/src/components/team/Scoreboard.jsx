@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTeam } from "../../context/TeamContext";
-import { fetchAllGamesToday, fetchPitcherSeasonStats, fetchBvP, fetchRoster, fetchScoringPlays } from "../../api/client";
+import { fetchAllGamesToday, fetchPitcherSeasonStats, fetchBvP, fetchRoster, fetchGameDetail } from "../../api/client";
 import { formatGameTime, getTeamAbbr } from "../../utils/formatters";
 import LoadingSpinner from "../common/LoadingSpinner";
 import PlayerPhoto from "../common/PlayerPhoto";
@@ -162,41 +162,119 @@ const TEAM_COLORS = {
   TEX: "#003278", TOR: "#134A8E", WSH: "#AB0003",
 };
 
-function ScoringPlays({ gamePk, awayAbbr, homeAbbr }) {
-  const { data: plays, isLoading } = useQuery({
-    queryKey: ["scoringPlays", gamePk],
-    queryFn: () => fetchScoringPlays(gamePk),
+function BatterRow({ batter }) {
+  const [open, setOpen] = useState(false);
+  const hasABs = batter.atBats.length > 0;
+
+  return (
+    <div className="sb-batter">
+      <div
+        className={`sb-batter-row ${hasABs ? "sb-tappable" : ""}`}
+        onClick={hasABs ? () => setOpen(!open) : undefined}
+      >
+        <span className="sb-batter-pos">{batter.position}</span>
+        <span className="sb-batter-name">{batter.name}</span>
+        <span className="sb-batter-stat">{batter.stats.ab}</span>
+        <span className="sb-batter-stat">{batter.stats.r}</span>
+        <span className="sb-batter-stat">{batter.stats.h}</span>
+        <span className="sb-batter-stat">{batter.stats.rbi}</span>
+        <span className="sb-batter-stat">{batter.stats.bb}</span>
+        <span className="sb-batter-stat">{batter.stats.k}</span>
+        {hasABs && (
+          <svg className="sb-batter-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ transform: open ? "rotate(180deg)" : "none" }}>
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        )}
+      </div>
+      {open && (
+        <div className="sb-atbats">
+          {batter.atBats.map((ab, i) => (
+            <div key={i} className={`sb-atbat ${ab.isScoring ? "sb-atbat-scoring" : ""}`}>
+              <span className="sb-atbat-inning">{ab.halfInning === "top" ? "T" : "B"}{ab.inning}</span>
+              <span className="sb-atbat-event">{ab.event}</span>
+              {ab.rbi > 0 && <span className="sb-atbat-rbi">{ab.rbi} RBI</span>}
+              {ab.hrDistance && <span className="sb-hr-distance">{ab.hrDistance} ft</span>}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function TeamBoxScore({ batters, abbr }) {
+  if (!batters?.length) return null;
+
+  return (
+    <div className="sb-team-box">
+      <div className="sb-box-header">
+        <span className="sb-batter-pos"></span>
+        <span className="sb-batter-name sb-box-team">{abbr}</span>
+        <span className="sb-batter-stat sb-stat-hdr">AB</span>
+        <span className="sb-batter-stat sb-stat-hdr">R</span>
+        <span className="sb-batter-stat sb-stat-hdr">H</span>
+        <span className="sb-batter-stat sb-stat-hdr">RBI</span>
+        <span className="sb-batter-stat sb-stat-hdr">BB</span>
+        <span className="sb-batter-stat sb-stat-hdr">K</span>
+        <span style={{ width: 10 }}></span>
+      </div>
+      {batters.map((b) => (
+        <BatterRow key={b.id} batter={b} />
+      ))}
+    </div>
+  );
+}
+
+function GameDetail({ gamePk, awayAbbr, homeAbbr }) {
+  const [tab, setTab] = useState("scoring");
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["gameDetail", gamePk],
+    queryFn: () => fetchGameDetail(gamePk),
     enabled: !!gamePk,
     staleTime: 1000 * 60 * 5,
   });
 
-  if (isLoading) return <div className="sb-plays-loading">Loading plays...</div>;
-  if (!plays?.length) return <div className="sb-plays-empty">No scoring plays</div>;
+  if (isLoading) return <div className="sb-plays-loading">Loading...</div>;
+  if (!data) return <div className="sb-plays-empty">No data available</div>;
 
   return (
-    <div className="sb-scoring-plays">
-      {plays.map((play, i) => {
-        const isTop = play.halfInning === "top";
-        const battingAbbr = isTop ? awayAbbr : homeAbbr;
-        const color = TEAM_COLORS[battingAbbr] || "var(--team-secondary)";
+    <div>
+      <div className="sb-detail-tabs">
+        <button className={`sb-detail-tab ${tab === "scoring" ? "sb-detail-tab-active" : ""}`} onClick={() => setTab("scoring")}>Scoring</button>
+        <button className={`sb-detail-tab ${tab === "boxscore" ? "sb-detail-tab-active" : ""}`} onClick={() => setTab("boxscore")}>Box Score</button>
+      </div>
 
-        const isHR = play.event === "Home Run";
+      {tab === "scoring" && (
+        <div className="sb-scoring-plays">
+          {!data.scoringPlays?.length ? (
+            <div className="sb-plays-empty">No scoring plays</div>
+          ) : data.scoringPlays.map((play, i) => {
+            const isTop = play.halfInning === "top";
+            const battingAbbr = isTop ? awayAbbr : homeAbbr;
+            const color = TEAM_COLORS[battingAbbr] || "var(--team-secondary)";
+            const isHR = play.event === "Home Run";
 
-        return (
-          <div key={i} className="sb-play" style={{ borderLeftColor: color }}>
-            <div className="sb-play-header">
-              <span className="sb-play-inning">
-                {isTop ? "Top" : "Bot"} {play.inning}
-              </span>
-              <span className="sb-play-score">{play.awayScore}-{play.homeScore}</span>
-            </div>
-            <p className="sb-play-desc">{play.description}</p>
-            {isHR && play.hrDistance && (
-              <span className="sb-hr-distance">{play.hrDistance} ft</span>
-            )}
-          </div>
-        );
-      })}
+            return (
+              <div key={i} className="sb-play" style={{ borderLeftColor: color }}>
+                <div className="sb-play-header">
+                  <span className="sb-play-inning">{isTop ? "Top" : "Bot"} {play.inning}</span>
+                  <span className="sb-play-score">{play.awayScore}-{play.homeScore}</span>
+                </div>
+                <p className="sb-play-desc">{play.description}</p>
+                {isHR && play.hrDistance && <span className="sb-hr-distance">{play.hrDistance} ft</span>}
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {tab === "boxscore" && (
+        <div className="sb-boxscore">
+          <TeamBoxScore batters={data.away} abbr={awayAbbr} />
+          <TeamBoxScore batters={data.home} abbr={homeAbbr} />
+        </div>
+      )}
     </div>
   );
 }
@@ -426,7 +504,7 @@ export default function Scoreboard() {
                 {isExpanded && (
                   <div className="sb-game-detail" onClick={(e) => e.stopPropagation()}>
                     <Linescore linescore={game.linescore} away={game.away} home={game.home} />
-                    <ScoringPlays gamePk={game.gamePk} awayAbbr={game.away.abbreviation} homeAbbr={game.home.abbreviation} />
+                    <GameDetail gamePk={game.gamePk} awayAbbr={game.away.abbreviation} homeAbbr={game.home.abbreviation} />
                   </div>
                 )}
               </div>

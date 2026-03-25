@@ -339,6 +339,97 @@ export const fetchAllGamesToday = async (dateStr) => {
   }
 };
 
+// Box score + at-bat details for expanded game view
+export const fetchGameDetail = async (gamePk) => {
+  try {
+    const [boxResp, pbpResp] = await Promise.all([
+      mlbApi.get(`/game/${gamePk}/boxscore`),
+      mlbApi.get(`/game/${gamePk}/playByPlay`),
+    ]);
+
+    const allPlays = pbpResp.data?.allPlays || [];
+
+    // Build at-bats grouped by batter ID
+    const atBatsByBatter = {};
+    for (const play of allPlays) {
+      const batterId = play.matchup?.batter?.id;
+      if (!batterId || !play.result?.event) continue;
+      if (!atBatsByBatter[batterId]) atBatsByBatter[batterId] = [];
+      let hrDistance = null;
+      if (play.result.event === "Home Run") {
+        const hitEvent = (play.playEvents || []).find((e) => e.hitData?.totalDistance);
+        if (hitEvent) hrDistance = Math.round(hitEvent.hitData.totalDistance);
+      }
+      atBatsByBatter[batterId].push({
+        inning: play.about?.inning || 0,
+        halfInning: play.about?.halfInning || "",
+        event: play.result.event,
+        description: play.result.description || "",
+        rbi: play.result.rbi ?? 0,
+        isScoring: play.about?.isScoringPlay || false,
+        hrDistance,
+      });
+    }
+
+    // Extract scoring plays
+    const scoringPlays = allPlays
+      .filter((p) => p.about?.isScoringPlay)
+      .map((p) => {
+        let hrDistance = null;
+        const event = p.result?.event || "";
+        if (event === "Home Run") {
+          const hitEvent = (p.playEvents || []).find((e) => e.hitData?.totalDistance);
+          if (hitEvent) hrDistance = Math.round(hitEvent.hitData.totalDistance);
+        }
+        return {
+          inning: p.about?.inning || 0,
+          halfInning: p.about?.halfInning || "",
+          description: p.result?.description || "",
+          awayScore: p.result?.awayScore ?? 0,
+          homeScore: p.result?.homeScore ?? 0,
+          rbi: p.result?.rbi ?? 0,
+          event,
+          hrDistance,
+        };
+      });
+
+    // Parse box score for both teams
+    const parseTeam = (teamData) => {
+      const batters = (teamData?.batters || []).map((id) => {
+        const p = teamData.players?.[`ID${id}`];
+        if (!p) return null;
+        const s = p.stats?.batting || {};
+        const isP = p.position?.abbreviation === "P";
+        // Skip pitchers with no at-bats
+        if (isP && !s.atBats) return null;
+        return {
+          id,
+          name: p.person?.fullName || "",
+          position: p.position?.abbreviation || "",
+          battingOrder: p.battingOrder || "",
+          stats: {
+            ab: s.atBats ?? 0, r: s.runs ?? 0, h: s.hits ?? 0,
+            rbi: s.rbi ?? 0, bb: s.baseOnBalls ?? 0, k: s.strikeOuts ?? 0,
+            hr: s.homeRuns ?? 0, avg: s.avg || "",
+          },
+          atBats: atBatsByBatter[id] || [],
+        };
+      }).filter(Boolean);
+
+      return batters;
+    };
+
+    const box = boxResp.data?.teams || {};
+    return {
+      away: parseTeam(box.away),
+      home: parseTeam(box.home),
+      scoringPlays,
+    };
+  } catch {
+    return null;
+  }
+};
+
 // Scoring plays for a game (on-demand when user taps a game card)
 export const fetchScoringPlays = async (gamePk) => {
   try {
