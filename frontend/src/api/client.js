@@ -367,7 +367,7 @@ export const fetchAllGamesToday = async (dateStr) => {
     const resp = await mlbApi.get("/schedule", {
       params: {
         sportId: 1, date: dateParam,
-        hydrate: "team,linescore,probablePitcher,weather", gameType: "R",
+        hydrate: "team,linescore,probablePitcher,weather,venue(location)", gameType: "R",
       },
     });
     const games = [];
@@ -399,6 +399,7 @@ export const fetchAllGamesToday = async (dateStr) => {
           inning: ls.currentInning || null,
           inningHalf: ls.inningHalf || "",
           venue: g.venue?.name || "",
+          venueLocation: g.venue?.location ? `${g.venue.location.city}, ${g.venue.location.stateAbbrev}` : "",
           weather: w.temp ? { temp: w.temp, condition: w.condition || "", wind: w.wind || "" } : null,
           linescore,
           away: {

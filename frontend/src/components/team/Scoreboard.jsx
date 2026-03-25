@@ -443,6 +443,14 @@ export default function Scoreboard() {
                     {game.away.wins != null && (
                       <span className="scoreboard-record">{game.away.wins}-{game.away.losses}</span>
                     )}
+                    {isScheduled && (
+                      <span
+                        className="sb-inline-pitcher sb-player-link"
+                        onClick={(e) => { if (game.away.probablePitcher?.id) { e.stopPropagation(); navigate(`/team/${teamId}/player/${game.away.probablePitcher.id}`); } }}
+                      >
+                        {game.away.probablePitcher?.fullName?.split(" ").pop() || "TBD"}
+                      </span>
+                    )}
                     <span className="scoreboard-score">
                       {(isLive || isFinal) ? game.away.score : ""}
                     </span>
@@ -453,51 +461,33 @@ export default function Scoreboard() {
                     {game.home.wins != null && (
                       <span className="scoreboard-record">{game.home.wins}-{game.home.losses}</span>
                     )}
+                    {isScheduled && (
+                      <span
+                        className="sb-inline-pitcher sb-player-link"
+                        onClick={(e) => { if (game.home.probablePitcher?.id) { e.stopPropagation(); navigate(`/team/${teamId}/player/${game.home.probablePitcher.id}`); } }}
+                      >
+                        {game.home.probablePitcher?.fullName?.split(" ").pop() || "TBD"}
+                      </span>
+                    )}
                     <span className="scoreboard-score">
                       {(isLive || isFinal) ? game.home.score : ""}
                     </span>
                   </div>
                 </div>
 
-                {/* Probable pitchers with stats for scheduled games */}
-                {isScheduled && (game.away.probablePitcher || game.home.probablePitcher) && (
-                  <div className="scoreboard-pitchers">
-                    <div className="sb-pitcher-group sb-player-link" onClick={(e) => { if (game.away.probablePitcher?.id) { e.stopPropagation(); navigate(`/team/${teamId}/player/${game.away.probablePitcher.id}`); } }}>
-                      {game.away.probablePitcher?.id ? (
-                        <PlayerPhoto playerId={game.away.probablePitcher.id} name={game.away.probablePitcher.fullName} size={32} className="sb-pitcher-photo" />
-                      ) : <div className="sb-pitcher-photo-placeholder" />}
-                      <div className="sb-pitcher-col">
-                        <span>{game.away.probablePitcher?.fullName?.split(" ").pop() || "TBD"}</span>
-                        {game.away.probablePitcher?.id && (
-                          <PitcherStats pitcherId={game.away.probablePitcher.id} />
-                        )}
-                      </div>
+                {/* Venue + weather for scheduled games */}
+                {isScheduled && (game.venue || game.weather) && (
+                  <div className="sb-venue-weather">
+                    <div className="sb-venue-info">
+                      {game.venue && <span className="sb-venue-name">{game.venue}</span>}
+                      {game.venueLocation && <span className="sb-venue-location">{game.venueLocation}</span>}
                     </div>
-                    <span className="scoreboard-pitcher-vs">vs</span>
-                    <div className="sb-pitcher-group sb-player-link" onClick={(e) => { if (game.home.probablePitcher?.id) { e.stopPropagation(); navigate(`/team/${teamId}/player/${game.home.probablePitcher.id}`); } }}>
-                      <div className="sb-pitcher-col">
-                        <span>{game.home.probablePitcher?.fullName?.split(" ").pop() || "TBD"}</span>
-                        {game.home.probablePitcher?.id && (
-                          <PitcherStats pitcherId={game.home.probablePitcher.id} />
-                        )}
-                      </div>
-                      {game.home.probablePitcher?.id ? (
-                        <PlayerPhoto playerId={game.home.probablePitcher.id} name={game.home.probablePitcher.fullName} size={32} className="sb-pitcher-photo" />
-                      ) : <div className="sb-pitcher-photo-placeholder" />}
-                    </div>
-                  </div>
-                )}
-
-                {/* Weather + venue for scheduled games */}
-                {isScheduled && (game.weather || game.venue) && (
-                  <div className="sb-weather">
                     {game.weather && (
-                      <>
+                      <div className="sb-weather-info">
                         <span>{weatherIcon(game.weather.condition)} {game.weather.temp}°F</span>
                         {game.weather.wind && <span className="sb-wind">{game.weather.wind}</span>}
-                      </>
+                      </div>
                     )}
-                    {game.venue && <span className="sb-venue">{game.venue}</span>}
                   </div>
                 )}
 
