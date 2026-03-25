@@ -1943,7 +1943,6 @@ button.stat-cell {
 .scoreboard-watch-btn:active { opacity: 0.8; }
 
 .sb-tappable { cursor: pointer; }
-.sb-tappable:active { background: var(--bg-card-hover); }
 
 .sb-expand-hint {
   display: flex;
@@ -2044,14 +2043,7 @@ th.sb-ls-total {
 }
 
 .sb-hr-distance {
-  display: inline-block;
-  margin-top: 3px;
-  padding: 1px 6px;
-  font-size: 10px;
   font-weight: 700;
-  color: #f59e0b;
-  background: rgba(245, 158, 11, 0.1);
-  border-radius: 4px;
 }
 
 .sb-plays-loading, .sb-plays-empty {

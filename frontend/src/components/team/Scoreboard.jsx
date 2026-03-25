@@ -191,9 +191,10 @@ function BatterRow({ batter }) {
           {batter.atBats.map((ab, i) => (
             <div key={i} className={`sb-atbat ${ab.isScoring ? "sb-atbat-scoring" : ""}`}>
               <span className="sb-atbat-inning">{ab.halfInning === "top" ? "T" : "B"}{ab.inning}</span>
-              <span className="sb-atbat-event">{ab.event}</span>
+              <span className="sb-atbat-event">
+                {ab.event}{ab.hrDistance ? ` (${ab.hrDistance} ft)` : ""}
+              </span>
               {ab.rbi > 0 && <span className="sb-atbat-rbi">{ab.rbi} RBI</span>}
-              {ab.hrDistance && <span className="sb-hr-distance">{ab.hrDistance} ft</span>}
             </div>
           ))}
         </div>
@@ -261,8 +262,11 @@ function GameDetail({ gamePk, awayAbbr, homeAbbr }) {
                   <span className="sb-play-inning">{isTop ? "Top" : "Bot"} {play.inning}</span>
                   <span className="sb-play-score">{play.awayScore}-{play.homeScore}</span>
                 </div>
-                <p className="sb-play-desc">{play.description}</p>
-                {isHR && play.hrDistance && <span className="sb-hr-distance">{play.hrDistance} ft</span>}
+                <p className="sb-play-desc">
+                  {isHR && play.hrDistance
+                    ? play.description.replace(/homers/, `homers (${play.hrDistance} ft)`)
+                    : play.description}
+                </p>
               </div>
             );
           })}
