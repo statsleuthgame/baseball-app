@@ -83,7 +83,7 @@ export default function MatchupView() {
 
       {isPreview && (
         <div className="matchup-notice" style={{ color: "var(--team-accent)", fontStyle: "normal", fontWeight: 600 }}>
-          Next Game Preview
+          Game Preview
         </div>
       )}
 
