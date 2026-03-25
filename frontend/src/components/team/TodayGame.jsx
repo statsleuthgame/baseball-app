@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
-import { fetchTodayGame } from "../../api/client";
+import { fetchTodayGame, fetchPitcherSeasonStats } from "../../api/client";
 import { formatGameDate, formatGameTime } from "../../utils/formatters";
 import PlayerPhoto from "../common/PlayerPhoto";
 import UmpireCard from "../common/UmpireCard";
@@ -135,7 +135,10 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
                   name={us.probablePitcher.fullName}
                   size={36}
                 />
-                <span>{us.probablePitcher.fullName}</span>
+                <div className="today-pitcher-info">
+                  <span>{us.probablePitcher.fullName}</span>
+                  <TodayPitcherStats pitcherId={us.probablePitcher.id} />
+                </div>
               </>
             )}
           </div>
@@ -148,7 +151,10 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
                   name={opponent.probablePitcher.fullName}
                   size={36}
                 />
-                <span>{opponent.probablePitcher.fullName}</span>
+                <div className="today-pitcher-info">
+                  <span>{opponent.probablePitcher.fullName}</span>
+                  <TodayPitcherStats pitcherId={opponent.probablePitcher.id} />
+                </div>
               </>
             )}
           </div>
@@ -182,5 +188,22 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
         )}
       </div>
     </div>
+  );
+}
+
+function TodayPitcherStats({ pitcherId }) {
+  const { data } = useQuery({
+    queryKey: ["pitcherSeasonStats", pitcherId],
+    queryFn: () => fetchPitcherSeasonStats(pitcherId),
+    enabled: !!pitcherId,
+    staleTime: 1000 * 60 * 60,
+  });
+
+  if (!data) return null;
+
+  return (
+    <span className="today-pitcher-stats">
+      {data.wins}-{data.losses}, {data.era} ERA
+    </span>
   );
 }

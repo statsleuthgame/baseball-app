@@ -485,6 +485,18 @@ body {
   color: var(--text);
 }
 
+.today-pitcher-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.today-pitcher-stats {
+  font-size: 11px;
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
 .pitcher-vs {
   font-size: 12px;
   color: var(--text-muted);
