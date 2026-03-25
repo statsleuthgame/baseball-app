@@ -408,7 +408,11 @@ export default function Scoreboard() {
                     {game.inningHalf === "Top" ? "Top" : "Bot"} {game.inning}
                   </div>
                 )}
-                {isFinal && <div className="scoreboard-status-badge">Final</div>}
+                {isFinal && (
+                  <div className="scoreboard-status-badge">
+                    Final{game.linescore && game.linescore.innings.length > 9 ? `/${game.linescore.innings.length}` : ""}
+                  </div>
+                )}
                 {isScheduled && <div className="scoreboard-status-badge">{formatGameTime(game.gameDate)}</div>}
 
                 <div className="scoreboard-teams">
@@ -498,7 +502,8 @@ export default function Scoreboard() {
                 {/* Expand indicator for live/final games */}
                 {canExpand && (
                   <div className="sb-expand-hint">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: isExpanded ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
+                    <span className="sb-expand-label">{isExpanded ? "Hide" : "Stats"}</span>
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: isExpanded ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
                       <polyline points="6 9 12 15 18 9" />
                     </svg>
                   </div>

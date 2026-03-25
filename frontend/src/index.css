@@ -1946,10 +1946,17 @@ button.stat-cell {
 
 .sb-expand-hint {
   display: flex;
+  align-items: center;
   justify-content: center;
-  padding-top: 4px;
+  gap: 4px;
+  padding-top: 6px;
   color: var(--text-muted);
-  opacity: 0.5;
+  opacity: 0.6;
+}
+
+.sb-expand-label {
+  font-size: 11px;
+  font-weight: 600;
 }
 
 .sb-game-detail {
