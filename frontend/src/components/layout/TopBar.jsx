@@ -30,7 +30,7 @@ export default function TopBar() {
       {team ? (
         <>
           <img
-            src={`https://www.mlbstatic.com/team-logos/${team.id}.svg`}
+            src={`https://www.mlbstatic.com/team-logos/team-cap-on-dark/${team.id}.svg`}
             alt={`${team.name} logo`}
             className="top-bar-logo"
           />

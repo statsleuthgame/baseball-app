@@ -43,7 +43,7 @@ async def get_team_info(team_id: int) -> dict:
         },
         "league": t.get("league", {}).get("name", ""),
         "division": t.get("division", {}).get("name", ""),
-        "logoUrl": f"https://www.mlbstatic.com/team-logos/{team_id}.svg",
+        "logoUrl": f"https://www.mlbstatic.com/team-logos/team-cap-on-dark/{team_id}.svg",
     }
 
 
@@ -136,7 +136,7 @@ async def get_schedule(team_id: int, season: int) -> list[dict]:
                     "score": away.get("score"),
                     "isWinner": away.get("isWinner", False),
                     "probablePitcher": _extract_pitcher(away.get("probablePitcher")),
-                    "logoUrl": f"https://www.mlbstatic.com/team-logos/{away_team.get('id')}.svg",
+                    "logoUrl": f"https://www.mlbstatic.com/team-logos/team-cap-on-dark/{away_team.get('id')}.svg",
                 },
                 "home": {
                     "id": home_team.get("id"),
@@ -145,7 +145,7 @@ async def get_schedule(team_id: int, season: int) -> list[dict]:
                     "score": home.get("score"),
                     "isWinner": home.get("isWinner", False),
                     "probablePitcher": _extract_pitcher(home.get("probablePitcher")),
-                    "logoUrl": f"https://www.mlbstatic.com/team-logos/{home_team.get('id')}.svg",
+                    "logoUrl": f"https://www.mlbstatic.com/team-logos/team-cap-on-dark/{home_team.get('id')}.svg",
                 },
             })
     return games
@@ -244,7 +244,7 @@ def _format_game(g: dict | None, is_next: bool = False) -> dict | None:
             "abbreviation": away_team.get("abbreviation", ""),
             "score": away.get("score"),
             "probablePitcher": _extract_pitcher(away.get("probablePitcher")),
-            "logoUrl": f"https://www.mlbstatic.com/team-logos/{away_team.get('id')}.svg",
+            "logoUrl": f"https://www.mlbstatic.com/team-logos/team-cap-on-dark/{away_team.get('id')}.svg",
         },
         "home": {
             "id": home_team.get("id"),
@@ -252,7 +252,7 @@ def _format_game(g: dict | None, is_next: bool = False) -> dict | None:
             "abbreviation": home_team.get("abbreviation", ""),
             "score": home.get("score"),
             "probablePitcher": _extract_pitcher(home.get("probablePitcher")),
-            "logoUrl": f"https://www.mlbstatic.com/team-logos/{home_team.get('id')}.svg",
+            "logoUrl": f"https://www.mlbstatic.com/team-logos/team-cap-on-dark/{home_team.get('id')}.svg",
         },
     }
 
@@ -278,7 +278,7 @@ async def get_standings(season: int, league_id: int | None = None) -> list[dict]
                 "gamesBack": tr.get("gamesBack", "-"),
                 "streakCode": tr.get("streak", {}).get("streakCode", ""),
                 "last10": f"{tr.get('records', {}).get('splitRecords', [{}])[0].get('wins', 0)}-{tr.get('records', {}).get('splitRecords', [{}])[0].get('losses', 0)}" if tr.get("records", {}).get("splitRecords") else "",
-                "logoUrl": f"https://www.mlbstatic.com/team-logos/{t.get('id')}.svg",
+                "logoUrl": f"https://www.mlbstatic.com/team-logos/team-cap-on-dark/{t.get('id')}.svg",
             })
         divisions.append({
             "divisionId": div.get("id"),

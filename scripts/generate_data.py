@@ -224,13 +224,13 @@ def fetch_schedule(team_id: int) -> list:
                     "id": at.get("id"), "name": at.get("name", ""), "abbreviation": at.get("abbreviation", ""),
                     "score": away.get("score"), "isWinner": away.get("isWinner", False),
                     "probablePitcher": extract_pitcher(away.get("probablePitcher")),
-                    "logoUrl": f"https://www.mlbstatic.com/team-logos/{at.get('id')}.svg",
+                    "logoUrl": f"https://www.mlbstatic.com/team-logos/team-cap-on-dark/{at.get('id')}.svg",
                 },
                 "home": {
                     "id": ht.get("id"), "name": ht.get("name", ""), "abbreviation": ht.get("abbreviation", ""),
                     "score": home.get("score"), "isWinner": home.get("isWinner", False),
                     "probablePitcher": extract_pitcher(home.get("probablePitcher")),
-                    "logoUrl": f"https://www.mlbstatic.com/team-logos/{ht.get('id')}.svg",
+                    "logoUrl": f"https://www.mlbstatic.com/team-logos/team-cap-on-dark/{ht.get('id')}.svg",
                 },
             })
     return games
@@ -251,7 +251,7 @@ def fetch_standings() -> list:
                 "winPct": tr.get("winningPercentage", ".000"),
                 "gamesBack": tr.get("gamesBack", "-"),
                 "streakCode": tr.get("streak", {}).get("streakCode", ""),
-                "logoUrl": f"https://www.mlbstatic.com/team-logos/{t.get('id')}.svg",
+                "logoUrl": f"https://www.mlbstatic.com/team-logos/team-cap-on-dark/{t.get('id')}.svg",
             })
         divisions.append({"divisionId": div.get("id"), "divisionName": div.get("name", ""), "teams": teams})
     return divisions

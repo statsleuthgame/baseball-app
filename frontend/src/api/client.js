@@ -56,7 +56,7 @@ export const fetchStandings = async () => {
           winPct: tr.winningPercentage || ".000",
           gamesBack: tr.gamesBack || "-",
           streakCode: tr.streak?.streakCode || "",
-          logoUrl: `https://www.mlbstatic.com/team-logos/${t.id}.svg`,
+          logoUrl: `https://www.mlbstatic.com/team-logos/team-cap-on-dark/${t.id}.svg`,
         };
       });
       divisions.push({ divisionId: div.id, divisionName: div.name || "", teams });
@@ -515,13 +515,13 @@ export const fetchAllGamesToday = async (dateStr) => {
             id: at.id, name: at.name || "", abbreviation: at.abbreviation || "",
             score: away.score, wins: away.leagueRecord?.wins, losses: away.leagueRecord?.losses,
             probablePitcher: extractPitcher(away.probablePitcher),
-            logoUrl: `https://www.mlbstatic.com/team-logos/${at.id}.svg`,
+            logoUrl: `https://www.mlbstatic.com/team-logos/team-cap-on-dark/${at.id}.svg`,
           },
           home: {
             id: ht.id, name: ht.name || "", abbreviation: ht.abbreviation || "",
             score: home.score, wins: home.leagueRecord?.wins, losses: home.leagueRecord?.losses,
             probablePitcher: extractPitcher(home.probablePitcher),
-            logoUrl: `https://www.mlbstatic.com/team-logos/${ht.id}.svg`,
+            logoUrl: `https://www.mlbstatic.com/team-logos/team-cap-on-dark/${ht.id}.svg`,
           },
         });
       }
@@ -849,12 +849,12 @@ export const fetchUpcomingSeries = async (teamId) => {
           away: {
             id: away.team?.id, abbreviation: away.team?.abbreviation || "",
             probablePitcher: extractPitcher(away.probablePitcher),
-            logoUrl: `https://www.mlbstatic.com/team-logos/${away.team?.id}.svg`,
+            logoUrl: `https://www.mlbstatic.com/team-logos/team-cap-on-dark/${away.team?.id}.svg`,
           },
           home: {
             id: home.team?.id, abbreviation: home.team?.abbreviation || "",
             probablePitcher: extractPitcher(home.probablePitcher),
-            logoUrl: `https://www.mlbstatic.com/team-logos/${home.team?.id}.svg`,
+            logoUrl: `https://www.mlbstatic.com/team-logos/team-cap-on-dark/${home.team?.id}.svg`,
           },
         });
         if (games.length >= 4) break;
@@ -894,14 +894,14 @@ function formatGame(g, isNext) {
       score: away.score,
       wins: away.leagueRecord?.wins, losses: away.leagueRecord?.losses,
       probablePitcher: extractPitcher(away.probablePitcher),
-      logoUrl: `https://www.mlbstatic.com/team-logos/${at.id}.svg`,
+      logoUrl: `https://www.mlbstatic.com/team-logos/team-cap-on-dark/${at.id}.svg`,
     },
     home: {
       id: ht.id, name: ht.name || "", abbreviation: ht.abbreviation || "",
       score: home.score,
       wins: home.leagueRecord?.wins, losses: home.leagueRecord?.losses,
       probablePitcher: extractPitcher(home.probablePitcher),
-      logoUrl: `https://www.mlbstatic.com/team-logos/${ht.id}.svg`,
+      logoUrl: `https://www.mlbstatic.com/team-logos/team-cap-on-dark/${ht.id}.svg`,
     },
   };
 }
