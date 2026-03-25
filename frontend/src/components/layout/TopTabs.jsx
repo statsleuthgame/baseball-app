@@ -4,8 +4,8 @@ import { useTeam } from "../../context/TeamContext";
 const tabs = [
   { path: "", label: "Home" },
   { path: "matchup", label: "Matchup" },
-  { path: "schedule", label: "Schedule" },
   { path: "scores", label: "Scores" },
+  { path: "schedule", label: "Schedule" },
   { path: "roster", label: "Roster" },
 ];
 
