@@ -261,17 +261,29 @@ function GameDetail({ gamePk, awayAbbr, homeAbbr }) {
             const color = TEAM_COLORS[battingAbbr] || "var(--team-secondary)";
             const isHR = play.event === "Home Run";
 
+            // Inject HR distance and bold the hit type keyword
+            let desc = play.description;
+            if (isHR && play.hrDistance) {
+              desc = desc.replace(/homers/, `homers (${play.hrDistance} ft)`);
+            }
+            const hitPattern = /\b(singles|doubles|triples|homers|walks|grand slam|sacrifice fly|sacrifice bunt|hit by pitch|scores on)\b/i;
+            const hitMatch = desc.match(hitPattern);
+            let descParts;
+            if (hitMatch) {
+              const idx = hitMatch.index;
+              const word = hitMatch[0];
+              descParts = <>{desc.slice(0, idx)}<strong>{word}</strong>{desc.slice(idx + word.length)}</>;
+            } else {
+              descParts = desc;
+            }
+
             return (
               <div key={i} className="sb-play" style={{ borderLeftColor: color }}>
                 <div className="sb-play-header">
                   <span className="sb-play-inning">{isTop ? "Top" : "Bot"} {play.inning}</span>
                   <span className="sb-play-score">{play.awayScore}-{play.homeScore}</span>
                 </div>
-                <p className="sb-play-desc">
-                  {isHR && play.hrDistance
-                    ? play.description.replace(/homers/, `homers (${play.hrDistance} ft)`)
-                    : play.description}
-                </p>
+                <p className="sb-play-desc">{descParts}</p>
               </div>
             );
           })}
