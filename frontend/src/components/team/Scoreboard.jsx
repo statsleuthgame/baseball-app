@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
 import { fetchAllGamesToday, fetchPitcherSeasonStats, fetchBvP, fetchRoster, fetchGameDetail, fetchGameLineup, fetchProjectedLineup } from "../../api/client";
-import { formatGameTime, getTeamAbbr } from "../../utils/formatters";
+import { formatGameTime, getTeamAbbr, lastName } from "../../utils/formatters";
 import LoadingSpinner from "../common/LoadingSpinner";
 import PlayerPhoto from "../common/PlayerPhoto";
 
@@ -103,7 +103,7 @@ function BvPPreview({ teamId, pitcherId }) {
         const avg = m.bvp.ab > 0 ? (m.bvp.hits / m.bvp.ab).toFixed(3).replace(/^0/, "") : ".000";
         return (
           <div key={m.id} className="sb-bvp-row sb-tappable" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${m.id}`); }}>
-            <span className="sb-bvp-name">{m.fullName.split(" ").pop()}</span>
+            <span className="sb-bvp-name">{lastName(m.fullName)}</span>
             <span className="sb-bvp-stat">
               {m.bvp.hits}-{m.bvp.ab} ({avg})
               {m.bvp.homeRuns > 0 ? `, ${m.bvp.homeRuns} HR` : ""}
@@ -349,7 +349,7 @@ function ScoreboardLineups({ gamePk, awayId, homeId, awayAbbr, homeAbbr, teamId 
           {(awayLineup || []).map((p) => (
             <div key={p.id} className="sb-lineups-row sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
               <span className="sb-lu-order">{p.order}</span>
-              <span className="sb-lu-name">{p.fullName.split(" ").pop()}</span>
+              <span className="sb-lu-name">{lastName(p.fullName)}</span>
               <span className="sb-lu-pos">{p.position}</span>
               <span className="sb-lu-avg">{p.avg}</span>
             </div>
@@ -360,7 +360,7 @@ function ScoreboardLineups({ gamePk, awayId, homeId, awayAbbr, homeAbbr, teamId 
           {(homeLineup || []).map((p) => (
             <div key={p.id} className="sb-lineups-row sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
               <span className="sb-lu-order">{p.order}</span>
-              <span className="sb-lu-name">{p.fullName.split(" ").pop()}</span>
+              <span className="sb-lu-name">{lastName(p.fullName)}</span>
               <span className="sb-lu-pos">{p.position}</span>
               <span className="sb-lu-avg">{p.avg}</span>
             </div>

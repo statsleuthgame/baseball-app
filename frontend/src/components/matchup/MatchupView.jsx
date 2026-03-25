@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
 import { fetchTodayGame, fetchRoster, fetchGameLineup, fetchProjectedLineup } from "../../api/client";
-import { formatGameDate, formatGameTime } from "../../utils/formatters";
+import { formatGameDate, formatGameTime, lastName } from "../../utils/formatters";
 import LoadingSpinner from "../common/LoadingSpinner";
 import BatterVsPitcher from "./BatterVsPitcher";
 import PitchArsenal from "../player/PitchArsenal";
@@ -199,7 +199,7 @@ function MatchupLineups({ gamePk, teamId, opponentId, usAbbr, oppAbbr }) {
           {(usLineup || []).map((p) => (
             <div key={p.id} className="matchup-lineup-row sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
               <span className="ml-order">{p.order}</span>
-              <span className="ml-name">{p.fullName.split(" ").pop()}</span>
+              <span className="ml-name">{lastName(p.fullName)}</span>
               <span className="ml-pos">{p.position}</span>
               <span className="ml-avg">{p.avg}</span>
             </div>
@@ -210,7 +210,7 @@ function MatchupLineups({ gamePk, teamId, opponentId, usAbbr, oppAbbr }) {
           {(oppLineup || []).map((p) => (
             <div key={p.id} className="matchup-lineup-row sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
               <span className="ml-order">{p.order}</span>
-              <span className="ml-name">{p.fullName.split(" ").pop()}</span>
+              <span className="ml-name">{lastName(p.fullName)}</span>
               <span className="ml-pos">{p.position}</span>
               <span className="ml-avg">{p.avg}</span>
             </div>

@@ -43,6 +43,14 @@ export const isToday = (isoDate) => {
 export const round1 = (n) => Math.round(n * 10) / 10;
 export const round3 = (n) => Math.round(n * 1000) / 1000;
 
+/** Get last name, preserving suffixes like Jr., Sr., II, III, IV */
+export const lastName = (fullName) => {
+  if (!fullName) return "";
+  const parts = fullName.split(" ");
+  if (parts.length <= 1) return fullName;
+  return parts.slice(1).join(" ");
+};
+
 /** Get game status label */
 export const getGameLabel = (game) => {
   if (!game || game.noGame) return "";

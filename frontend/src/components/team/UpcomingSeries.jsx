@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
 import { fetchUpcomingSeries } from "../../api/client";
-import { formatGameDate, formatGameTime } from "../../utils/formatters";
+import { formatGameDate, formatGameTime, lastName } from "../../utils/formatters";
 import PlayerPhoto from "../common/PlayerPhoto";
 
 export default function UpcomingSeries() {
@@ -41,14 +41,14 @@ export default function UpcomingSeries() {
                 {us.probablePitcher && (
                   <div className="series-pitcher sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${us.probablePitcher.id}`)}>
                     <PlayerPhoto playerId={us.probablePitcher.id} name={us.probablePitcher.fullName} size={24} />
-                    <span>{us.probablePitcher.fullName.split(" ").pop()}</span>
+                    <span>{lastName(us.probablePitcher.fullName)}</span>
                   </div>
                 )}
                 {us.probablePitcher && opp.probablePitcher && <span className="series-pitcher-vs">vs</span>}
                 {opp.probablePitcher && (
                   <div className="series-pitcher sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${opp.probablePitcher.id}`)}>
                     <PlayerPhoto playerId={opp.probablePitcher.id} name={opp.probablePitcher.fullName} size={24} />
-                    <span>{opp.probablePitcher.fullName.split(" ").pop()}</span>
+                    <span>{lastName(opp.probablePitcher.fullName)}</span>
                   </div>
                 )}
                 {!us.probablePitcher && !opp.probablePitcher && (
