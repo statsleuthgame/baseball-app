@@ -468,6 +468,141 @@ body {
   font-weight: 600;
 }
 
+/* Live game detail on home card */
+.live-game-detail {
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.live-inning-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.live-inning {
+  font-weight: 700;
+  color: var(--text-bright);
+}
+
+.live-outs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.live-out-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1.5px solid var(--text-muted);
+  background: transparent;
+}
+
+.live-out-dot.filled {
+  background: var(--team-secondary);
+  border-color: var(--team-secondary);
+}
+
+.live-outs-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-left: 2px;
+}
+
+.live-count {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.live-bases {
+  display: flex;
+  justify-content: center;
+}
+
+.live-base {
+  fill: transparent;
+  stroke: var(--text-muted);
+  stroke-width: 1.5;
+}
+
+.live-base.occupied {
+  fill: var(--team-secondary);
+  stroke: var(--team-secondary);
+}
+
+.live-linescore {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.live-ls-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.live-ls-table th, .live-ls-table td {
+  padding: 3px 4px;
+  min-width: 18px;
+}
+
+.live-ls-table thead th {
+  font-weight: 600;
+  opacity: 0.5;
+}
+
+.live-ls-team {
+  font-weight: 700;
+  text-align: left;
+  color: var(--text-bright);
+}
+
+.live-ls-total {
+  font-weight: 700;
+  color: var(--text-bright);
+}
+
+.live-matchup {
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.live-matchup-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.live-matchup-players {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.live-matchup-player {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.live-matchup-vs {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
 .today-game-pitchers {
   display: flex;
   align-items: center;

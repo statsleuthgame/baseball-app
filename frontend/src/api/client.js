@@ -272,6 +272,44 @@ export const fetchProjectedLineup = async (teamId) => {
   }
 };
 
+// Fetch live game state: current batter/pitcher, inning, count, outs, linescore
+export const fetchLiveGameState = async (gamePk) => {
+  try {
+    const resp = await axios.get(`https://statsapi.mlb.com/api/v1.1/game/${gamePk}/feed/live`, { timeout: 10000 });
+    const ld = resp.data?.liveData || {};
+    const ls = ld.linescore || {};
+    const plays = ld.plays || {};
+    const cp = plays.currentPlay?.matchup || {};
+
+    const innings = (ls.innings || []).map((inn) => ({
+      num: inn.num,
+      away: inn.away?.runs ?? "",
+      home: inn.home?.runs ?? "",
+    }));
+    const teams = ls.teams || {};
+
+    return {
+      inning: ls.currentInning || null,
+      inningHalf: ls.inningHalf || "",
+      outs: ls.outs ?? 0,
+      balls: ls.balls ?? 0,
+      strikes: ls.strikes ?? 0,
+      onFirst: !!ls.offense?.first,
+      onSecond: !!ls.offense?.second,
+      onThird: !!ls.offense?.third,
+      batter: cp.batter ? { id: cp.batter.id, fullName: cp.batter.fullName } : null,
+      pitcher: cp.pitcher ? { id: cp.pitcher.id, fullName: cp.pitcher.fullName } : null,
+      linescore: {
+        innings,
+        away: { runs: teams.away?.runs ?? 0, hits: teams.away?.hits ?? 0, errors: teams.away?.errors ?? 0 },
+        home: { runs: teams.home?.runs ?? 0, hits: teams.home?.hits ?? 0, errors: teams.home?.errors ?? 0 },
+      },
+    };
+  } catch {
+    return null;
+  }
+};
+
 // ---- New data sources ----
 
 /** Season game log (W/L per game, running win%, from pybaseball schedule_and_record) */
