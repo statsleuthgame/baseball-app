@@ -444,12 +444,18 @@ export default function Scoreboard() {
                       <span className="scoreboard-record">{game.away.wins}-{game.away.losses}</span>
                     )}
                     {isScheduled && (
-                      <span
+                      <div
                         className="sb-inline-pitcher sb-player-link"
                         onClick={(e) => { if (game.away.probablePitcher?.id) { e.stopPropagation(); navigate(`/team/${teamId}/player/${game.away.probablePitcher.id}`); } }}
                       >
-                        {game.away.probablePitcher?.fullName?.split(" ").pop() || "TBD"}
-                      </span>
+                        {game.away.probablePitcher?.id && (
+                          <PlayerPhoto playerId={game.away.probablePitcher.id} name={game.away.probablePitcher.fullName} size={24} className="sb-inline-pitcher-photo" />
+                        )}
+                        <div className="sb-inline-pitcher-info">
+                          <span className="sb-inline-pitcher-name">{game.away.probablePitcher?.fullName || "TBD"}</span>
+                          {game.away.probablePitcher?.id && <PitcherStats pitcherId={game.away.probablePitcher.id} />}
+                        </div>
+                      </div>
                     )}
                     <span className="scoreboard-score">
                       {(isLive || isFinal) ? game.away.score : ""}
@@ -462,12 +468,18 @@ export default function Scoreboard() {
                       <span className="scoreboard-record">{game.home.wins}-{game.home.losses}</span>
                     )}
                     {isScheduled && (
-                      <span
+                      <div
                         className="sb-inline-pitcher sb-player-link"
                         onClick={(e) => { if (game.home.probablePitcher?.id) { e.stopPropagation(); navigate(`/team/${teamId}/player/${game.home.probablePitcher.id}`); } }}
                       >
-                        {game.home.probablePitcher?.fullName?.split(" ").pop() || "TBD"}
-                      </span>
+                        {game.home.probablePitcher?.id && (
+                          <PlayerPhoto playerId={game.home.probablePitcher.id} name={game.home.probablePitcher.fullName} size={24} className="sb-inline-pitcher-photo" />
+                        )}
+                        <div className="sb-inline-pitcher-info">
+                          <span className="sb-inline-pitcher-name">{game.home.probablePitcher?.fullName || "TBD"}</span>
+                          {game.home.probablePitcher?.id && <PitcherStats pitcherId={game.home.probablePitcher.id} />}
+                        </div>
+                      </div>
                     )}
                     <span className="scoreboard-score">
                       {(isLive || isFinal) ? game.home.score : ""}
