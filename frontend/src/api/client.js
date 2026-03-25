@@ -853,12 +853,14 @@ function formatGame(g, isNext) {
     away: {
       id: at.id, name: at.name || "", abbreviation: at.abbreviation || "",
       score: away.score,
+      wins: away.leagueRecord?.wins, losses: away.leagueRecord?.losses,
       probablePitcher: extractPitcher(away.probablePitcher),
       logoUrl: `https://www.mlbstatic.com/team-logos/${at.id}.svg`,
     },
     home: {
       id: ht.id, name: ht.name || "", abbreviation: ht.abbreviation || "",
       score: home.score,
+      wins: home.leagueRecord?.wins, losses: home.leagueRecord?.losses,
       probablePitcher: extractPitcher(home.probablePitcher),
       logoUrl: `https://www.mlbstatic.com/team-logos/${ht.id}.svg`,
     },

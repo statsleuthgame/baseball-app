@@ -61,6 +61,7 @@ export default function MatchupView() {
         <div className="matchup-team">
           <img src={us.logoUrl} alt={us.abbreviation} className="matchup-logo" />
           <span>{us.abbreviation}</span>
+          {us.wins != null && <span className="matchup-record">{us.wins}-{us.losses}</span>}
         </div>
         <div className="matchup-header-center">
           <span className="matchup-vs">{isHome ? "vs" : "@"}</span>
@@ -71,6 +72,7 @@ export default function MatchupView() {
         <div className="matchup-team">
           <img src={opponent.logoUrl} alt={opponent.abbreviation} className="matchup-logo" />
           <span>{opponent.abbreviation}</span>
+          {opponent.wins != null && <span className="matchup-record">{opponent.wins}-{opponent.losses}</span>}
         </div>
       </div>
 
