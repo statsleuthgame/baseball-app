@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
-import { fetchAllGamesToday, fetchPitcherSeasonStats, fetchBvP, fetchRoster, fetchGameDetail } from "../../api/client";
+import { fetchAllGamesToday, fetchPitcherSeasonStats, fetchBvP, fetchRoster, fetchGameDetail, fetchGameLineup, fetchProjectedLineup } from "../../api/client";
 import { formatGameTime, getTeamAbbr } from "../../utils/formatters";
 import LoadingSpinner from "../common/LoadingSpinner";
 import PlayerPhoto from "../common/PlayerPhoto";
@@ -303,6 +303,74 @@ function GameDetail({ gamePk, awayAbbr, homeAbbr, teamId }) {
   );
 }
 
+function ScoreboardLineups({ gamePk, awayId, homeId, awayAbbr, homeAbbr, teamId }) {
+  const navigate = useNavigate();
+
+  const { data: actualAway } = useQuery({
+    queryKey: ["gameLineup", gamePk, awayId],
+    queryFn: () => fetchGameLineup(gamePk, awayId),
+    enabled: !!gamePk,
+    staleTime: 1000 * 60 * 2,
+  });
+
+  const { data: actualHome } = useQuery({
+    queryKey: ["gameLineup", gamePk, homeId],
+    queryFn: () => fetchGameLineup(gamePk, homeId),
+    enabled: !!gamePk,
+    staleTime: 1000 * 60 * 2,
+  });
+
+  const { data: projAway } = useQuery({
+    queryKey: ["projectedLineup", awayId],
+    queryFn: () => fetchProjectedLineup(awayId),
+    enabled: !actualAway && !!awayId,
+    staleTime: 1000 * 60 * 30,
+  });
+
+  const { data: projHome } = useQuery({
+    queryKey: ["projectedLineup", homeId],
+    queryFn: () => fetchProjectedLineup(homeId),
+    enabled: !actualHome && !!homeId,
+    staleTime: 1000 * 60 * 30,
+  });
+
+  const awayLineup = actualAway || projAway;
+  const homeLineup = actualHome || projHome;
+  const isProjected = !actualAway && !actualHome;
+
+  if (!awayLineup?.length && !homeLineup?.length) return <div className="sb-plays-loading">Loading lineups...</div>;
+
+  return (
+    <div className="sb-lineups">
+      {isProjected && <div className="sb-lineups-tag">Projected · Based on recent games</div>}
+      <div className="sb-lineups-cols">
+        <div className="sb-lineups-col">
+          <div className="sb-lineups-hdr">{awayAbbr}</div>
+          {(awayLineup || []).map((p) => (
+            <div key={p.id} className="sb-lineups-row sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
+              <span className="sb-lu-order">{p.order}</span>
+              <span className="sb-lu-name">{p.fullName.split(" ").pop()}</span>
+              <span className="sb-lu-pos">{p.position}</span>
+              <span className="sb-lu-avg">{p.avg}</span>
+            </div>
+          ))}
+        </div>
+        <div className="sb-lineups-col">
+          <div className="sb-lineups-hdr">{homeAbbr}</div>
+          {(homeLineup || []).map((p) => (
+            <div key={p.id} className="sb-lineups-row sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
+              <span className="sb-lu-order">{p.order}</span>
+              <span className="sb-lu-name">{p.fullName.split(" ").pop()}</span>
+              <span className="sb-lu-pos">{p.position}</span>
+              <span className="sb-lu-avg">{p.avg}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Scoreboard() {
   const { teamId } = useTeam();
   const navigate = useNavigate();
@@ -425,7 +493,7 @@ export default function Scoreboard() {
               : null;
 
             const isExpanded = expandedGame === game.gamePk;
-            const canExpand = isLive || isFinal;
+            const canExpand = isLive || isFinal || isScheduled;
 
             const awayWon = isFinal && game.away.score > game.home.score;
             const homeWon = isFinal && game.home.score > game.away.score;
@@ -573,10 +641,10 @@ export default function Scoreboard() {
                   </a>
                 )}
 
-                {/* Expand indicator for live/final games */}
+                {/* Expand indicator */}
                 {canExpand && (
                   <div className="sb-expand-hint">
-                    <span className="sb-expand-label">{isExpanded ? "Hide" : "Stats"}</span>
+                    <span className="sb-expand-label">{isExpanded ? "Hide" : (isScheduled ? "Lineups" : "Stats")}</span>
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: isExpanded ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
                       <polyline points="6 9 12 15 18 9" />
                     </svg>
@@ -584,10 +652,24 @@ export default function Scoreboard() {
                 )}
 
                 {/* Expanded game detail */}
-                {isExpanded && (
+                {isExpanded && !isScheduled && (
                   <div className="sb-game-detail" onClick={(e) => e.stopPropagation()}>
                     <Linescore linescore={game.linescore} away={game.away} home={game.home} />
                     <GameDetail gamePk={game.gamePk} awayAbbr={game.away.abbreviation} homeAbbr={game.home.abbreviation} teamId={teamId} />
+                  </div>
+                )}
+
+                {/* Expanded lineups for scheduled games */}
+                {isExpanded && isScheduled && (
+                  <div className="sb-game-detail" onClick={(e) => e.stopPropagation()}>
+                    <ScoreboardLineups
+                      gamePk={game.gamePk}
+                      awayId={game.away.id}
+                      homeId={game.home.id}
+                      awayAbbr={game.away.abbreviation}
+                      homeAbbr={game.home.abbreviation}
+                      teamId={teamId}
+                    />
                   </div>
                 )}
               </div>
