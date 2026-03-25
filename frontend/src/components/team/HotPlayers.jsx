@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
 import { fetchTodayGame, fetchHotPlayers } from "../../api/client";
 import PlayerPhoto from "../common/PlayerPhoto";
@@ -6,6 +7,7 @@ import { formatAvg } from "../../utils/formatters";
 
 export default function HotPlayers() {
   const { teamId } = useTeam();
+  const navigate = useNavigate();
 
   // First get today's game to find the opposing team
   const { data: game } = useQuery({
@@ -42,7 +44,7 @@ export default function HotPlayers() {
       </h3>
       <div className="hot-players-list">
         {hotPlayers.slice(0, 5).map((player) => (
-          <div key={player.playerId} className="hot-player-row">
+          <div key={player.playerId} className="hot-player-row sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${player.playerId}`)}>
             <PlayerPhoto playerId={player.playerId} name={player.playerName} size={40} />
             <div className="hot-player-info">
               <span className="hot-player-name">{player.playerName}</span>

@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
 import { fetchTodayGame } from "../../api/client";
 import { fetchSchedule } from "../../api/client";
@@ -8,6 +9,7 @@ import LoadingSpinner from "../common/LoadingSpinner";
 
 export default function WatchGame() {
   const { teamId } = useTeam();
+  const navigate = useNavigate();
 
   const { data: game, isLoading } = useQuery({
     queryKey: ["todayGame", teamId],
@@ -92,14 +94,14 @@ export default function WatchGame() {
           {(us.probablePitcher || opponent.probablePitcher) && (
             <div className="watch-pitchers">
               {us.probablePitcher && (
-                <div className="watch-pitcher">
+                <div className="watch-pitcher sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${us.probablePitcher.id}`)}>
                   <PlayerPhoto playerId={us.probablePitcher.id} name={us.probablePitcher.fullName} size={32} />
                   <span>{us.probablePitcher.fullName}</span>
                 </div>
               )}
               {us.probablePitcher && opponent.probablePitcher && <span className="watch-pitcher-vs">vs</span>}
               {opponent.probablePitcher && (
-                <div className="watch-pitcher">
+                <div className="watch-pitcher sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${opponent.probablePitcher.id}`)}>
                   <PlayerPhoto playerId={opponent.probablePitcher.id} name={opponent.probablePitcher.fullName} size={32} />
                   <span>{opponent.probablePitcher.fullName}</span>
                 </div>

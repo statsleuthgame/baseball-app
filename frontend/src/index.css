@@ -1962,6 +1962,9 @@ button.stat-cell {
 
 .sb-tappable { cursor: pointer; }
 
+.sb-player-link { cursor: pointer; }
+.sb-player-link:active { opacity: 0.6; }
+
 .sb-expand-hint {
   display: flex;
   align-items: center;

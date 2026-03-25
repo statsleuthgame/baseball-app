@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
 import { fetchAllGamesToday, fetchPitcherSeasonStats, fetchBvP, fetchRoster, fetchGameDetail } from "../../api/client";
 import { formatGameTime, getTeamAbbr } from "../../utils/formatters";
@@ -85,6 +86,7 @@ async function fetchBvPBatch(teamId, pitcherId) {
 }
 
 function BvPPreview({ teamId, pitcherId }) {
+  const navigate = useNavigate();
   const { data: matchups } = useQuery({
     queryKey: ["bvpBatch", teamId, pitcherId],
     queryFn: () => fetchBvPBatch(teamId, pitcherId),
@@ -100,7 +102,7 @@ function BvPPreview({ teamId, pitcherId }) {
       {matchups.map((m) => {
         const avg = m.bvp.ab > 0 ? (m.bvp.hits / m.bvp.ab).toFixed(3).replace(/^0/, "") : ".000";
         return (
-          <div key={m.id} className="sb-bvp-row">
+          <div key={m.id} className="sb-bvp-row sb-tappable" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${m.id}`); }}>
             <span className="sb-bvp-name">{m.fullName.split(" ").pop()}</span>
             <span className="sb-bvp-stat">
               {m.bvp.hits}-{m.bvp.ab} ({avg})
@@ -167,8 +169,9 @@ const TEAM_COLORS = {
   TEX: "#003278", TOR: "#134A8E", WSH: "#AB0003",
 };
 
-function BatterRow({ batter }) {
+function BatterRow({ batter, teamId }) {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
   const hasABs = batter.atBats.length > 0;
 
   return (
@@ -178,7 +181,7 @@ function BatterRow({ batter }) {
         onClick={hasABs ? () => setOpen(!open) : undefined}
       >
         <span className="sb-batter-pos">{batter.position}</span>
-        <span className="sb-batter-name">{batter.name}</span>
+        <span className="sb-batter-name sb-player-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${batter.id}`); }}>{batter.name}</span>
         <span className="sb-batter-stat">{batter.stats.ab}</span>
         <span className="sb-batter-stat">{batter.stats.r}</span>
         <span className="sb-batter-stat">{batter.stats.h}</span>
@@ -208,7 +211,7 @@ function BatterRow({ batter }) {
   );
 }
 
-function TeamBoxScore({ batters, abbr }) {
+function TeamBoxScore({ batters, abbr, teamId }) {
   if (!batters?.length) return null;
 
   return (
@@ -225,13 +228,13 @@ function TeamBoxScore({ batters, abbr }) {
         <span style={{ width: 10 }}></span>
       </div>
       {batters.map((b) => (
-        <BatterRow key={b.id} batter={b} />
+        <BatterRow key={b.id} batter={b} teamId={teamId} />
       ))}
     </div>
   );
 }
 
-function GameDetail({ gamePk, awayAbbr, homeAbbr }) {
+function GameDetail({ gamePk, awayAbbr, homeAbbr, teamId }) {
   const [tab, setTab] = useState("scoring");
 
   const { data, isLoading } = useQuery({
@@ -292,8 +295,8 @@ function GameDetail({ gamePk, awayAbbr, homeAbbr }) {
 
       {tab === "boxscore" && (
         <div className="sb-boxscore">
-          <TeamBoxScore batters={data.away} abbr={awayAbbr} />
-          <TeamBoxScore batters={data.home} abbr={homeAbbr} />
+          <TeamBoxScore batters={data.away} abbr={awayAbbr} teamId={teamId} />
+          <TeamBoxScore batters={data.home} abbr={homeAbbr} teamId={teamId} />
         </div>
       )}
     </div>
@@ -302,6 +305,7 @@ function GameDetail({ gamePk, awayAbbr, homeAbbr }) {
 
 export default function Scoreboard() {
   const { teamId } = useTeam();
+  const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(fmt(new Date()));
   const [expandedGame, setExpandedGame] = useState(null);
   const dateInputRef = useRef(null);
@@ -461,14 +465,14 @@ export default function Scoreboard() {
                     {game.away.probablePitcher?.id ? (
                       <PlayerPhoto playerId={game.away.probablePitcher.id} name={game.away.probablePitcher.fullName} size={32} className="sb-pitcher-photo" />
                     ) : <div className="sb-pitcher-photo-placeholder" />}
-                    <div className="sb-pitcher-col">
+                    <div className="sb-pitcher-col sb-player-link" onClick={(e) => { if (game.away.probablePitcher?.id) { e.stopPropagation(); navigate(`/team/${teamId}/player/${game.away.probablePitcher.id}`); } }}>
                       <span>{game.away.probablePitcher?.fullName?.split(" ").pop() || "TBD"}</span>
                       {game.away.probablePitcher?.id && (
                         <PitcherStats pitcherId={game.away.probablePitcher.id} />
                       )}
                     </div>
                     <span className="scoreboard-pitcher-vs">vs</span>
-                    <div className="sb-pitcher-col">
+                    <div className="sb-pitcher-col sb-player-link" onClick={(e) => { if (game.home.probablePitcher?.id) { e.stopPropagation(); navigate(`/team/${teamId}/player/${game.home.probablePitcher.id}`); } }}>
                       <span>{game.home.probablePitcher?.fullName?.split(" ").pop() || "TBD"}</span>
                       {game.home.probablePitcher?.id && (
                         <PitcherStats pitcherId={game.home.probablePitcher.id} />
@@ -549,7 +553,7 @@ export default function Scoreboard() {
                 {isExpanded && (
                   <div className="sb-game-detail" onClick={(e) => e.stopPropagation()}>
                     <Linescore linescore={game.linescore} away={game.away} home={game.home} />
-                    <GameDetail gamePk={game.gamePk} awayAbbr={game.away.abbreviation} homeAbbr={game.home.abbreviation} />
+                    <GameDetail gamePk={game.gamePk} awayAbbr={game.away.abbreviation} homeAbbr={game.home.abbreviation} teamId={teamId} />
                   </div>
                 )}
               </div>

@@ -127,7 +127,7 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
 
       {!compact && (us.probablePitcher || opponent.probablePitcher) && (
         <div className="today-game-pitchers">
-          <div className="today-game-pitcher">
+          <div className="today-game-pitcher sb-player-link" onClick={() => us.probablePitcher?.id && navigate(`/team/${teamId}/player/${us.probablePitcher.id}`)}>
             {us.probablePitcher && (
               <>
                 <PlayerPhoto
@@ -140,7 +140,7 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
             )}
           </div>
           <span className="pitcher-vs">vs</span>
-          <div className="today-game-pitcher">
+          <div className="today-game-pitcher sb-player-link" onClick={() => opponent.probablePitcher?.id && navigate(`/team/${teamId}/player/${opponent.probablePitcher.id}`)}>
             {opponent.probablePitcher && (
               <>
                 <PlayerPhoto
