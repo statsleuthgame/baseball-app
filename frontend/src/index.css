@@ -584,12 +584,20 @@ body {
   margin-top: 8px;
 }
 
+.today-game-venue-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
 .today-game-venue {
   font-size: 12px;
   color: var(--text-muted);
 }
 
 .today-game-venue-loc {
+  font-size: 11px;
+  color: var(--text-muted);
   opacity: 0.6;
 }
 
