@@ -25,8 +25,36 @@ CACHE_DIR = Path(__file__).parent.parent / ".statcast_cache"
 MLB_API = "https://statsapi.mlb.com/api/v1"
 
 TEAMS = {
-    136: {"abbr": "SEA", "name": "Seattle Mariners", "divisionId": 200},
+    109: {"abbr": "AZ", "name": "Arizona Diamondbacks", "divisionId": 203},
     144: {"abbr": "ATL", "name": "Atlanta Braves", "divisionId": 204},
+    110: {"abbr": "BAL", "name": "Baltimore Orioles", "divisionId": 201},
+    111: {"abbr": "BOS", "name": "Boston Red Sox", "divisionId": 201},
+    112: {"abbr": "CHC", "name": "Chicago Cubs", "divisionId": 205},
+    145: {"abbr": "CWS", "name": "Chicago White Sox", "divisionId": 202},
+    113: {"abbr": "CIN", "name": "Cincinnati Reds", "divisionId": 205},
+    114: {"abbr": "CLE", "name": "Cleveland Guardians", "divisionId": 202},
+    115: {"abbr": "COL", "name": "Colorado Rockies", "divisionId": 203},
+    116: {"abbr": "DET", "name": "Detroit Tigers", "divisionId": 202},
+    117: {"abbr": "HOU", "name": "Houston Astros", "divisionId": 200},
+    118: {"abbr": "KC", "name": "Kansas City Royals", "divisionId": 202},
+    108: {"abbr": "LAA", "name": "Los Angeles Angels", "divisionId": 200},
+    119: {"abbr": "LAD", "name": "Los Angeles Dodgers", "divisionId": 203},
+    146: {"abbr": "MIA", "name": "Miami Marlins", "divisionId": 204},
+    158: {"abbr": "MIL", "name": "Milwaukee Brewers", "divisionId": 205},
+    142: {"abbr": "MIN", "name": "Minnesota Twins", "divisionId": 202},
+    121: {"abbr": "NYM", "name": "New York Mets", "divisionId": 204},
+    147: {"abbr": "NYY", "name": "New York Yankees", "divisionId": 201},
+    133: {"abbr": "ATH", "name": "Oakland Athletics", "divisionId": 200},
+    143: {"abbr": "PHI", "name": "Philadelphia Phillies", "divisionId": 204},
+    134: {"abbr": "PIT", "name": "Pittsburgh Pirates", "divisionId": 205},
+    135: {"abbr": "SD", "name": "San Diego Padres", "divisionId": 203},
+    137: {"abbr": "SF", "name": "San Francisco Giants", "divisionId": 203},
+    136: {"abbr": "SEA", "name": "Seattle Mariners", "divisionId": 200},
+    138: {"abbr": "STL", "name": "St. Louis Cardinals", "divisionId": 205},
+    139: {"abbr": "TB", "name": "Tampa Bay Rays", "divisionId": 201},
+    140: {"abbr": "TEX", "name": "Texas Rangers", "divisionId": 200},
+    141: {"abbr": "TOR", "name": "Toronto Blue Jays", "divisionId": 201},
+    120: {"abbr": "WSH", "name": "Washington Nationals", "divisionId": 204},
 }
 
 SEASON = date.today().year
@@ -1005,128 +1033,151 @@ def fetch_season_gamelog(team_abbr: str, season: int) -> list:
 # Main
 # ---------------------------------------------------------------------------
 
+def process_team(team_id, team_info):
+    """Process all data for a single team. Safe to run in parallel."""
+    abbr = team_info["abbr"]
+    print(f"[{abbr}] Starting...")
+
+    # Roster
+    roster = fetch_roster(team_id)
+    write_json(f"teams/{abbr}/roster.json", roster)
+
+    # Schedule
+    schedule = fetch_schedule(team_id)
+    write_json(f"teams/{abbr}/schedule.json", schedule)
+
+    # Player details and stats
+    print(f"[{abbr}] fetching player details and stats...")
+    for player in roster:
+        pid = player["id"]
+        try:
+            detail = fetch_player_detail(pid)
+            is_pitcher = detail.get("primaryPosition") == "P"
+
+            group = "pitching" if is_pitcher else "hitting"
+            stats = fetch_player_stats(pid, group)
+
+            player_data = {
+                "detail": detail,
+                "stats": {
+                    "season": SEASON,
+                    "group": group,
+                    "stats": stats.get("current", {}),
+                    "prevSeason": SEASON - 1,
+                    "prevStats": stats.get("previous", {}),
+                },
+            }
+            write_json(f"players/{pid}/info.json", player_data)
+        except Exception as e:
+            print(f"[{abbr}]   error for player {pid}: {e}")
+
+    # Statcast data
+    print(f"[{abbr}] fetching Statcast data...")
+    position_players = [p for p in roster if p["position"]["type"] != "Pitcher"]
+    pitchers = [p for p in roster if p["position"]["type"] == "Pitcher"]
+
+    for player in pitchers:
+        pid = player["id"]
+        full_name = player.get("fullName", "")
+        try:
+            pitcher_df = fetch_statcast_cached(pid, kind="pitcher", years_back=2)
+            arsenal = fetch_pitch_arsenal(pid, df=pitcher_df)
+            write_json(f"players/{pid}/arsenal.json", arsenal)
+
+            fg_stats = fetch_fangraphs_for_player(full_name, is_pitcher=True)
+            write_json(f"players/{pid}/advanced.json", fg_stats)
+
+            batter_df = fetch_statcast_cached(pid, kind="batter", years_back=5)
+            missed = fetch_missed_calls(pid, df=batter_df)
+            if missed:
+                write_json(f"players/{pid}/missed_calls.json", missed)
+
+            print(f"[{abbr}]   {full_name} (P) done")
+        except Exception as e:
+            print(f"[{abbr}]   statcast error for {full_name}: {e}")
+        time.sleep(0.5)
+
+    for player in position_players:
+        pid = player["id"]
+        full_name = player.get("fullName", "")
+        try:
+            batter_df = fetch_statcast_cached(pid, kind="batter", years_back=5)
+
+            advanced = fetch_batter_advanced(pid, df=batter_df.copy())
+            fg_stats = fetch_fangraphs_for_player(full_name, is_pitcher=False)
+            advanced.update(fg_stats)
+            write_json(f"players/{pid}/advanced.json", advanced)
+
+            bvp = fetch_batter_career_statcast(pid, df=batter_df.copy())
+            write_json(f"players/{pid}/bvp.json", bvp)
+
+            all_sprays = fetch_all_spray_charts(pid, df=batter_df.copy())
+            for park_abbr, spray_data in all_sprays.items():
+                write_json(f"players/{pid}/spray/{park_abbr}.json", spray_data)
+
+            missed = fetch_missed_calls(pid, df=batter_df)
+            if missed:
+                write_json(f"players/{pid}/missed_calls.json", missed)
+
+            print(f"[{abbr}]   {full_name} - done ({len(all_sprays)} parks)")
+        except Exception as e:
+            print(f"[{abbr}]   statcast error for {full_name}: {e}")
+        time.sleep(0.5)
+
+    # Season game log
+    try:
+        gamelog = fetch_season_gamelog(abbr, SEASON)
+        write_json(f"teams/{abbr}/gamelogs.json", gamelog)
+        print(f"[{abbr}]   {len(gamelog)} games logged")
+    except Exception as e:
+        print(f"[{abbr}]   gamelog error: {e}")
+
+    print(f"[{abbr}] Done!")
+    return abbr
+
+
 def main():
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    # Allow running a subset: python generate_data.py SEA ATL
+    # Or all teams: python generate_data.py
+    requested = [a.upper() for a in sys.argv[1:]] if len(sys.argv) > 1 else []
+    teams_to_run = {
+        tid: info for tid, info in TEAMS.items()
+        if not requested or info["abbr"] in requested
+    }
+
+    max_workers = int(os.environ.get("DATA_WORKERS", 4))
     print(f"Generating data for {SEASON} season...")
+    print(f"Teams: {len(teams_to_run)} | Workers: {max_workers}")
     print(f"Output: {OUTPUT_DIR}\n")
 
     # ---- Standings ----
-    print("[1/5] Standings")
+    print("[1/4] Standings")
     standings = fetch_standings()
     write_json("standings.json", standings)
 
-    # ---- Per-team data ----
-    for team_id, team_info in TEAMS.items():
-        abbr = team_info["abbr"]
-        print(f"\n[2/5] Team: {abbr}")
-
-        # Roster
-        roster = fetch_roster(team_id)
-        write_json(f"teams/{abbr}/roster.json", roster)
-
-        # Schedule
-        schedule = fetch_schedule(team_id)
-        write_json(f"teams/{abbr}/schedule.json", schedule)
-
-        # Player details and stats
-        print(f"  fetching player details and stats...")
-        for player in roster:
-            pid = player["id"]
+    # ---- Per-team data (parallel) ----
+    print(f"\n[2/4] Processing {len(teams_to_run)} teams...")
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = {
+            executor.submit(process_team, tid, info): info["abbr"]
+            for tid, info in teams_to_run.items()
+        }
+        completed = 0
+        for future in as_completed(futures):
+            completed += 1
+            abbr = futures[future]
             try:
-                detail = fetch_player_detail(pid)
-                is_pitcher = detail.get("primaryPosition") == "P"
-
-                group = "pitching" if is_pitcher else "hitting"
-                stats = fetch_player_stats(pid, group)
-
-                player_data = {
-                    "detail": detail,
-                    "stats": {
-                        "season": SEASON,
-                        "group": group,
-                        "stats": stats.get("current", {}),
-                        "prevSeason": SEASON - 1,
-                        "prevStats": stats.get("previous", {}),
-                    },
-                }
-                write_json(f"players/{pid}/info.json", player_data)
+                future.result()
+                print(f"  [{completed}/{len(teams_to_run)}] {abbr} complete")
             except Exception as e:
-                print(f"    error for player {pid}: {e}")
-
-        # Statcast data
-        print(f"  fetching Statcast data (this takes a while)...")
-        position_players = [p for p in roster if p["position"]["type"] != "Pitcher"]
-        pitchers = [p for p in roster if p["position"]["type"] == "Pitcher"]
-
-        for player in pitchers:
-            pid = player["id"]
-            full_name = player.get("fullName", "")
-            try:
-                # Single Statcast fetch for pitcher data (arsenal)
-                pitcher_df = fetch_statcast_cached(pid, kind="pitcher", years_back=2)
-                arsenal = fetch_pitch_arsenal(pid, df=pitcher_df)
-                write_json(f"players/{pid}/arsenal.json", arsenal)
-
-                # FanGraphs advanced pitching stats
-                fg_stats = fetch_fangraphs_for_player(full_name, is_pitcher=True)
-                write_json(f"players/{pid}/advanced.json", fg_stats)
-
-                # Missed umpire calls (from batter perspective — uses batter data)
-                batter_df = fetch_statcast_cached(pid, kind="batter", years_back=5)
-                missed = fetch_missed_calls(pid, df=batter_df)
-                if missed:
-                    write_json(f"players/{pid}/missed_calls.json", missed)
-
-                print(f"    {full_name} (P) - arsenal + FanGraphs + missed calls done")
-            except Exception as e:
-                print(f"    statcast error for {full_name}: {e}")
-            time.sleep(0.5)
-
-        for player in position_players:
-            pid = player["id"]
-            full_name = player.get("fullName", "")
-            try:
-                # Single Statcast fetch — all features derive from this one DataFrame
-                batter_df = fetch_statcast_cached(pid, kind="batter", years_back=5)
-
-                # Statcast advanced stats (uses last 2 seasons slice)
-                advanced = fetch_batter_advanced(pid, df=batter_df.copy())
-
-                # Enrich with FanGraphs stats
-                fg_stats = fetch_fangraphs_for_player(full_name, is_pitcher=False)
-                advanced.update(fg_stats)
-                write_json(f"players/{pid}/advanced.json", advanced)
-
-                # Career BvP data (uses last 3 seasons slice)
-                bvp = fetch_batter_career_statcast(pid, df=batter_df.copy())
-                write_json(f"players/{pid}/bvp.json", bvp)
-
-                # Spray charts at ALL parks (uses 2020+ slice)
-                all_sprays = fetch_all_spray_charts(pid, df=batter_df.copy())
-                for park_abbr, spray_data in all_sprays.items():
-                    write_json(f"players/{pid}/spray/{park_abbr}.json", spray_data)
-
-                # Missed umpire calls (uses full 5 years)
-                missed = fetch_missed_calls(pid, df=batter_df)
-                if missed:
-                    write_json(f"players/{pid}/missed_calls.json", missed)
-
-                print(f"    {full_name} - advanced + FanGraphs + bvp + spray ({len(all_sprays)} parks) + missed calls done")
-            except Exception as e:
-                print(f"    statcast error for {full_name}: {e}")
-            time.sleep(0.5)
-
-        # Season game log
-        print(f"  fetching season game log for {abbr}...")
-        try:
-            gamelog = fetch_season_gamelog(abbr, SEASON)
-            write_json(f"teams/{abbr}/gamelogs.json", gamelog)
-            print(f"    {len(gamelog)} games logged")
-        except Exception as e:
-            print(f"    gamelog error for {abbr}: {e}")
+                print(f"  [{completed}/{len(teams_to_run)}] {abbr} FAILED: {e}")
 
     # ---- League FanGraphs data ----
-    print("\n[3/6] League FanGraphs (team rankings + K-BB% + percentiles)")
+    print("\n[3/4] League FanGraphs (team rankings + K-BB% + percentiles)")
     try:
         league_data = fetch_league_fangraphs(SEASON)
         if not league_data:
@@ -1147,7 +1198,7 @@ def main():
         print(f"  league FanGraphs error: {e}")
 
     # ---- Venues list ----
-    print("\n[4/6] Venues")
+    print("\n[4/4] Venues")
     venues = [
         {"abbr": "ARI", "team": "Diamondbacks", "name": "Chase Field", "dimensions": {"LF": 330, "LCF": 374, "CF": 407, "RCF": 374, "RF": 334}},
         {"abbr": "ATL", "team": "Braves", "name": "Truist Park", "dimensions": {"LF": 335, "LCF": 385, "CF": 400, "RCF": 375, "RF": 325}},
@@ -1183,13 +1234,13 @@ def main():
     write_json("venues.json", venues)
 
     # ---- Metadata (timestamp) ----
-    print("\n[5/6] Metadata")
+    print("\nMetadata")
     write_json("meta.json", {
         "lastUpdated": date.today().isoformat(),
         "season": SEASON,
     })
 
-    print("\n[6/6] Done!")
+    print("\nDone!")
 
 
 if __name__ == "__main__":
