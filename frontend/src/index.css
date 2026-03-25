@@ -1942,6 +1942,24 @@ button.stat-cell {
 
 .scoreboard-watch-btn:active { opacity: 0.8; }
 
+.scoreboard-gameday-link {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 44px;
+  position: absolute;
+  top: 8px;
+  right: 14px;
+  padding: 5px 10px;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 6px;
+  background: var(--surface-alt, rgba(255,255,255,0.08));
+}
+.scoreboard-gameday-link:active { opacity: 0.7; }
+
 .sb-tappable { cursor: pointer; }
 
 .sb-expand-hint {

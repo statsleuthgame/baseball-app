@@ -13,7 +13,7 @@ export default function RosterGrid() {
     queryKey: ["roster", teamId],
     queryFn: () => fetchRoster(teamId),
     enabled: !!teamId,
-    staleTime: 1000 * 60 * 60,
+    staleTime: 1000 * 60 * 15,
   });
 
   if (isLoading) return <LoadingSpinner text="Loading roster..." />;

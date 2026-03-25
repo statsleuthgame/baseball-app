@@ -14,7 +14,29 @@ const mlbApi = axios.create({
 });
 
 // ---- Static data (generated daily) ----
-export const fetchRoster = (teamId) => staticFetch(`teams/${getTeamAbbr(teamId)}/roster.json`);
+export const fetchRoster = async (teamId) => {
+  const season = new Date().getFullYear();
+  const resp = await mlbApi.get(`/teams/${teamId}/roster`, {
+    params: { rosterType: "active", season },
+  });
+  return (resp.data.roster || []).map((entry) => {
+    const p = entry.person || {};
+    const pos = entry.position || {};
+    return {
+      id: p.id,
+      fullName: p.fullName || "",
+      jerseyNumber: entry.jerseyNumber || "",
+      position: {
+        code: pos.code || "",
+        name: pos.name || "",
+        type: pos.type || "",
+        abbreviation: pos.abbreviation || "",
+      },
+      status: entry.status?.description || "Active",
+      photoUrl: `https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/${p.id}/headshot/67/current`,
+    };
+  });
+};
 
 export const fetchSchedule = (teamId) => staticFetch(`teams/${getTeamAbbr(teamId)}/schedule.json`);
 
