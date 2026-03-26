@@ -272,7 +272,7 @@ export const fetchProjectedLineup = async (teamId) => {
   }
 };
 
-// Fetch live game state: current batter/pitcher, inning, count, outs, linescore
+// Fetch live game state: current batter/pitcher, inning, count, outs, linescore, last play
 export const fetchLiveGameState = async (gamePk) => {
   try {
     const resp = await axios.get(`https://statsapi.mlb.com/api/v1.1/game/${gamePk}/feed/live`, { timeout: 10000 });
@@ -280,13 +280,48 @@ export const fetchLiveGameState = async (gamePk) => {
     const ls = ld.linescore || {};
     const plays = ld.plays || {};
     const cp = plays.currentPlay?.matchup || {};
-
-    const innings = (ls.innings || []).map((inn) => ({
-      num: inn.num,
-      away: inn.away?.runs ?? "",
-      home: inn.home?.runs ?? "",
-    }));
     const teams = ls.teams || {};
+
+    // Find pitcher's game stats from boxscore
+    const pitcherId = cp.pitcher?.id;
+    let pitcherGameStats = null;
+    if (pitcherId) {
+      const box = ld.boxscore?.teams || {};
+      for (const side of ["away", "home"]) {
+        const p = box[side]?.players?.[`ID${pitcherId}`];
+        if (p) {
+          const ps = p.stats?.pitching || {};
+          pitcherGameStats = {
+            ip: ps.inningsPitched || "0",
+            pitches: ps.numberOfPitches || 0,
+            strikes: ps.strikes || 0,
+            k: ps.strikeOuts || 0,
+            h: ps.hits || 0,
+            er: ps.earnedRuns || 0,
+          };
+          break;
+        }
+      }
+    }
+
+    // Find batter's season avg from boxscore
+    const batterId = cp.batter?.id;
+    let batterAvg = null;
+    if (batterId) {
+      const box = ld.boxscore?.teams || {};
+      for (const side of ["away", "home"]) {
+        const p = box[side]?.players?.[`ID${batterId}`];
+        if (p) {
+          batterAvg = p.seasonStats?.batting?.avg || ".000";
+          break;
+        }
+      }
+    }
+
+    // Last completed play
+    const allPlays = plays.allPlays || [];
+    const completed = allPlays.filter((p) => p.result?.event);
+    const lastPlay = completed.length > 0 ? completed[completed.length - 1].result.description : null;
 
     return {
       inning: ls.currentInning || null,
@@ -297,10 +332,10 @@ export const fetchLiveGameState = async (gamePk) => {
       onFirst: !!ls.offense?.first,
       onSecond: !!ls.offense?.second,
       onThird: !!ls.offense?.third,
-      batter: cp.batter ? { id: cp.batter.id, fullName: cp.batter.fullName } : null,
-      pitcher: cp.pitcher ? { id: cp.pitcher.id, fullName: cp.pitcher.fullName } : null,
+      batter: cp.batter ? { id: cp.batter.id, fullName: cp.batter.fullName, avg: batterAvg } : null,
+      pitcher: cp.pitcher ? { id: cp.pitcher.id, fullName: cp.pitcher.fullName, gameStats: pitcherGameStats } : null,
+      lastPlay,
       linescore: {
-        innings,
         away: { runs: teams.away?.runs ?? 0, hits: teams.away?.hits ?? 0, errors: teams.away?.errors ?? 0 },
         home: { runs: teams.home?.runs ?? 0, hits: teams.home?.hits ?? 0, errors: teams.home?.errors ?? 0 },
       },
