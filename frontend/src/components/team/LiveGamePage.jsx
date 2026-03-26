@@ -14,7 +14,7 @@ export default function LiveGamePage() {
 
   // Fetch game info
   const { data: gameInfo, isLoading } = useQuery({
-    queryKey: ["specificGame", gamePk],
+    queryKey: ["liveGameInfo", gamePk],
     queryFn: async () => {
       const resp = await fetch(`https://statsapi.mlb.com/api/v1/schedule?gamePk=${gamePk}&sportId=1&hydrate=team,linescore,venue(location)`);
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
