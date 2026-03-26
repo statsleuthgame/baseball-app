@@ -69,10 +69,20 @@ export default function LiveGamePage() {
 
   return (
     <div className="live-game-page">
-      {/* Status badge */}
+      {/* Status badge + watch */}
       <div className="lgp-status">
-        {isLive && <span className="lgp-badge live">LIVE</span>}
-        {isFinal && <span className="lgp-badge final">FINAL</span>}
+        <div className="lgp-status-left">
+          {isLive && <span className="lgp-badge live">LIVE</span>}
+          {isFinal && <span className="lgp-badge final">FINAL</span>}
+        </div>
+        {isLive && (
+          <button className="lgp-watch-btn" onClick={() => { window.location.href = `https://www.mlb.com/tv/g${gamePk}`; }}>
+            <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3" />
+            </svg>
+            Watch
+          </button>
+        )}
       </div>
 
       {/* Teams + score */}

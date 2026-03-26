@@ -3654,8 +3654,30 @@ th.sb-ls-total {
 }
 
 .lgp-status {
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
+
+.lgp-status-left {
+  display: flex;
+  align-items: center;
+}
+
+.lgp-watch-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 14px;
+  background: var(--team-secondary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.lgp-watch-btn:active { opacity: 0.8; }
 
 .lgp-badge {
   display: inline-block;
@@ -3674,6 +3696,11 @@ th.sb-ls-total {
 .lgp-badge.final {
   background: var(--text-muted);
   color: var(--bg);
+}
+
+.live-game-page .live-scoring-list {
+  max-height: none;
+  overflow-y: visible;
 }
 
 .lgp-wp {
