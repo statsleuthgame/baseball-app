@@ -5,6 +5,7 @@ import { useState } from "react";
 import { fetchTodayGame, fetchPitcherSeasonStats, fetchLiveGameState, fetchGameDetail, fetchWinProbability } from "../../api/client";
 import { teamDisplayName } from "../../utils/formatters";
 import { formatGameDate, formatGameTime } from "../../utils/formatters";
+import ALL_TEAMS from "../../data/teams";
 import PlayerPhoto from "../common/PlayerPhoto";
 
 
@@ -290,13 +291,17 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
             <div className="live-scoring">
               <span className="live-scoring-label">Scoring</span>
               <div className="live-scoring-list">
-                {liveState.scoringPlays.map((p, i) => (
-                  <div key={i} className="live-scoring-play">
+                {liveState.scoringPlays.map((p, i) => {
+                  const scoringTeamId = p.halfInning === "top" ? game.away.id : game.home.id;
+                  const teamColor = ALL_TEAMS[scoringTeamId]?.secondary || "var(--team-secondary)";
+                  return (
+                  <div key={i} className="live-scoring-play" style={{ borderLeftColor: teamColor }}>
                     <span className="live-scoring-inn">{p.halfInning === "top" ? "\u25B2" : "\u25BC"}{p.inning}</span>
                     <span className="live-scoring-desc">{p.description}</span>
                     <span className="live-scoring-score">{p.awayScore}-{p.homeScore}</span>
                   </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           )}

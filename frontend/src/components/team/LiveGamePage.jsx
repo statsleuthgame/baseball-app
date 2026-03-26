@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useTeam } from "../../context/TeamContext";
 import { fetchLiveGameState, fetchGameDetail, fetchWinProbability } from "../../api/client";
 import { lastName, teamDisplayName } from "../../utils/formatters";
+import ALL_TEAMS from "../../data/teams";
 import PlayerPhoto from "../common/PlayerPhoto";
 import LoadingSpinner from "../common/LoadingSpinner";
 
@@ -257,13 +258,17 @@ export default function LiveGamePage() {
             <div className="live-scoring">
               <span className="live-scoring-label">Scoring</span>
               <div className="live-scoring-list">
-                {liveState.scoringPlays.map((p, i) => (
-                  <div key={`${p.inning}-${p.halfInning}-${p.awayScore}-${p.homeScore}`} className="live-scoring-play">
-                    <span className="live-scoring-inn">{p.halfInning === "top" ? "\u25B2" : "\u25BC"}{p.inning}</span>
-                    <span className="live-scoring-desc">{p.description}</span>
-                    <span className="live-scoring-score">{p.awayScore}-{p.homeScore}</span>
-                  </div>
-                ))}
+                {liveState.scoringPlays.map((p, i) => {
+                  const scoringTeamId = p.halfInning === "top" ? gameInfo.away.id : gameInfo.home.id;
+                  const teamColor = ALL_TEAMS[scoringTeamId]?.secondary || "var(--team-secondary)";
+                  return (
+                    <div key={`${p.inning}-${p.halfInning}-${p.awayScore}-${p.homeScore}`} className="live-scoring-play" style={{ borderLeftColor: teamColor }}>
+                      <span className="live-scoring-inn">{p.halfInning === "top" ? "\u25B2" : "\u25BC"}{p.inning}</span>
+                      <span className="live-scoring-desc">{p.description}</span>
+                      <span className="live-scoring-score">{p.awayScore}-{p.homeScore}</span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}
