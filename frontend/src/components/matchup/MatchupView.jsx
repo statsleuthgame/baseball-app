@@ -167,34 +167,54 @@ export default function MatchupView() {
         oppStarterId={opponentPitcher?.id}
       />
 
-      {/* Opposing pitcher's arsenal + our lineup vs them */}
-      {opponentPitcher && (
+      {/* Side-by-side pitcher arsenals */}
+      {(opponentPitcher || ourPitcher) && (
         <div className="matchup-section">
-          <h3>{opponentPitcher.fullName}'s Arsenal</h3>
-          <PitchArsenal playerId={opponentPitcher.id} embedded />
+          <h3>Pitcher Arsenals</h3>
+          <div className="matchup-dual-cols">
+            <div className="matchup-dual-col">
+              {opponentPitcher ? (
+                <>
+                  <div className="matchup-dual-hdr">{opponent.abbreviation} — {opponentPitcher.fullName}</div>
+                  <PitchArsenal playerId={opponentPitcher.id} embedded compact />
+                </>
+              ) : <div className="matchup-dual-hdr">TBD</div>}
+            </div>
+            <div className="matchup-dual-col">
+              {ourPitcher ? (
+                <>
+                  <div className="matchup-dual-hdr">{us.abbreviation} — {ourPitcher.fullName}</div>
+                  <PitchArsenal playerId={ourPitcher.id} embedded compact />
+                </>
+              ) : <div className="matchup-dual-hdr">TBD</div>}
+            </div>
+          </div>
         </div>
-      )}
-      {opponentPitcher && ourBatters.length > 0 && (
-        <BatterVsPitcher
-          batters={ourBatters}
-          pitcherId={opponentPitcher.id}
-          pitcherName={opponentPitcher.fullName}
-        />
       )}
 
-      {/* Our pitcher's arsenal + their lineup vs us */}
-      {ourPitcher && (
+      {/* Side-by-side BvP */}
+      {(opponentPitcher || ourPitcher) && (ourBatters.length > 0 || theirBatters.length > 0) && (
         <div className="matchup-section">
-          <h3>{ourPitcher.fullName}'s Arsenal</h3>
-          <PitchArsenal playerId={ourPitcher.id} embedded />
+          <h3>Batter vs Pitcher</h3>
+          <div className="matchup-dual-cols">
+            <div className="matchup-dual-col">
+              {opponentPitcher && ourBatters.length > 0 ? (
+                <>
+                  <div className="matchup-dual-hdr">{us.abbreviation} vs {opponentPitcher.fullName}</div>
+                  <BatterVsPitcher batters={ourBatters} pitcherId={opponentPitcher.id} pitcherName={opponentPitcher.fullName} compact />
+                </>
+              ) : <div className="matchup-dual-hdr">—</div>}
+            </div>
+            <div className="matchup-dual-col">
+              {ourPitcher && theirBatters.length > 0 ? (
+                <>
+                  <div className="matchup-dual-hdr">{opponent.abbreviation} vs {ourPitcher.fullName}</div>
+                  <BatterVsPitcher batters={theirBatters} pitcherId={ourPitcher.id} pitcherName={ourPitcher.fullName} compact />
+                </>
+              ) : <div className="matchup-dual-hdr">—</div>}
+            </div>
+          </div>
         </div>
-      )}
-      {ourPitcher && theirBatters.length > 0 && (
-        <BatterVsPitcher
-          batters={theirBatters}
-          pitcherId={ourPitcher.id}
-          pitcherName={ourPitcher.fullName}
-        />
       )}
 
       {/* Park history */}

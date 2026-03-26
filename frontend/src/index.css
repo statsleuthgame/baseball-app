@@ -1691,6 +1691,60 @@ button.stat-cell {
   border: 1px solid var(--border);
 }
 
+.matchup-dual-cols {
+  display: flex;
+  gap: 12px;
+}
+
+.matchup-dual-col {
+  flex: 1;
+  min-width: 0;
+}
+
+.matchup-dual-hdr {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Compact BvP rows for side-by-side */
+.bvp-compact-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 0;
+  font-size: 12px;
+}
+
+.bvp-compact-name {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bvp-compact-stat {
+  color: var(--text-muted);
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+.bvp-compact-avg {
+  font-weight: 700;
+  color: var(--text-bright);
+  font-size: 11px;
+  flex-shrink: 0;
+  width: 32px;
+  text-align: right;
+}
+
 /* Park Factors */
 .park-factors-card {
   display: flex;
