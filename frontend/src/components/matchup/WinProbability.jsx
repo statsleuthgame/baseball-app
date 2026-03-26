@@ -5,7 +5,7 @@ import { line, area, curveMonotoneX } from "d3-shape";
 
 const WIDTH = 340;
 const HEIGHT = 160;
-const MARGIN = { top: 14, right: 10, bottom: 28, left: 34 };
+const MARGIN = { top: 14, right: 10, bottom: 36, left: 34 };
 const CHART_W = WIDTH - MARGIN.left - MARGIN.right;
 const CHART_H = HEIGHT - MARGIN.top - MARGIN.bottom;
 
@@ -46,17 +46,6 @@ export default function WinProbability({ gamePk, teamId, isHome, awayAbbr, homeA
   const ourLogo = isHome ? homeLogo : awayLogo;
   const theirLogo = isHome ? awayLogo : homeLogo;
 
-  // Find biggest swing
-  let biggestSwingIdx = 0;
-  let biggestSwingVal = 0;
-  points.forEach((p, i) => {
-    const swing = Math.abs(p.probAdded || 0);
-    if (swing > biggestSwingVal) {
-      biggestSwingVal = swing;
-      biggestSwingIdx = i;
-    }
-  });
-
   // Scales
   const xScale = scaleLinear().domain([0, maxInning]).range([0, CHART_W]);
   const yScale = scaleLinear().domain([0, 1]).range([CHART_H, 0]);
@@ -68,10 +57,6 @@ export default function WinProbability({ gamePk, teamId, isHome, awayAbbr, homeA
   const areaD = areaGen(points);
   const yTicks = [0, 0.25, 0.5, 0.75, 1.0];
   const inningTicks = Array.from({ length: maxInning }, (_, i) => i + 1);
-
-  const swingPt = points[biggestSwingIdx];
-  const swingX = xScale(swingPt.x);
-  const swingY = yScale(swingPt.y);
 
   return (
     <div className="matchup-section">
@@ -137,21 +122,16 @@ export default function WinProbability({ gamePk, teamId, isHome, awayAbbr, homeA
             </text>
           ))}
 
+          {/* X-axis title */}
+          <text x={CHART_W / 2} y={CHART_H + 24} fill="#9299ad" fontSize="8" textAnchor="middle" fontWeight="500">
+            Inning
+          </text>
+
           {/* Area fill */}
           <path d={areaD} fill="var(--team-secondary)" opacity="0.15" />
 
           {/* Main line */}
           <path d={pathD} fill="none" stroke="var(--team-secondary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-
-          {/* Biggest swing marker */}
-          {biggestSwingVal > 0.05 && (
-            <g>
-              <circle cx={swingX} cy={swingY} r="4" fill="var(--live)" opacity="0.8" />
-              <text x={swingX} y={swingY - 8} fill="var(--live)" fontSize="7" textAnchor="middle" fontWeight="600">
-                {swingPt.probAdded > 0 ? "+" : ""}{Math.round((swingPt.probAdded || 0) * 100)}%
-              </text>
-            </g>
-          )}
 
           {/* Current value dot */}
           <circle
