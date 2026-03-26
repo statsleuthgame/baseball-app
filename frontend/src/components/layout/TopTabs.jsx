@@ -25,7 +25,7 @@ export default function TopTabs() {
           if (tab.path === "") {
             isActive = location.pathname === `/team/${teamId}` || location.pathname === `/team/${teamId}/`;
           } else if (tab.path === "roster") {
-            isActive = location.pathname.includes(`/team/${teamId}/roster`) || location.pathname.includes(`/team/${teamId}/spray`) || isPlayerPage;
+            isActive = location.pathname === `/team/${teamId}/roster`;
           } else {
             isActive = location.pathname.includes(`/team/${teamId}/${tab.path}`);
           }

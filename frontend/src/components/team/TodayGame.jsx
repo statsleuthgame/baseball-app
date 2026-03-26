@@ -94,8 +94,8 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
     queryKey: ["liveGameState", game.gamePk],
     queryFn: () => fetchLiveGameState(game.gamePk),
     enabled: isLive && !!game.gamePk,
-    staleTime: 1000 * 15,
-    refetchInterval: 1000 * 15,
+    staleTime: 1000 * 30,
+    refetchInterval: 1000 * 30,
   });
 
   return (
@@ -160,7 +160,7 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
                 <thead>
                   <tr>
                     <th></th>
-                    {liveState.linescore.innings.map((inn) => <th key={inn.num}>{inn.num}</th>)}
+                    {(liveState.linescore?.innings || []).map((inn) => <th key={inn.num}>{inn.num}</th>)}
                     <th className="live-ls-total">R</th>
                     <th className="live-ls-total">H</th>
                     <th className="live-ls-total">E</th>
@@ -169,17 +169,17 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
                 <tbody>
                   <tr>
                     <td className="live-ls-team">{game.away.abbreviation}</td>
-                    {liveState.linescore.innings.map((inn) => <td key={inn.num}>{inn.away !== "" ? inn.away : "-"}</td>)}
-                    <td className="live-ls-total">{liveState.linescore.away.runs}</td>
-                    <td className="live-ls-total">{liveState.linescore.away.hits}</td>
-                    <td className="live-ls-total">{liveState.linescore.away.errors}</td>
+                    {(liveState.linescore?.innings || []).map((inn) => <td key={inn.num}>{inn.away !== "" ? inn.away : "-"}</td>)}
+                    <td className="live-ls-total">{(liveState.linescore?.away || {}).runs}</td>
+                    <td className="live-ls-total">{(liveState.linescore?.away || {}).hits}</td>
+                    <td className="live-ls-total">{(liveState.linescore?.away || {}).errors}</td>
                   </tr>
                   <tr>
                     <td className="live-ls-team">{game.home.abbreviation}</td>
-                    {liveState.linescore.innings.map((inn) => <td key={inn.num}>{inn.home !== "" ? inn.home : "-"}</td>)}
-                    <td className="live-ls-total">{liveState.linescore.home.runs}</td>
-                    <td className="live-ls-total">{liveState.linescore.home.hits}</td>
-                    <td className="live-ls-total">{liveState.linescore.home.errors}</td>
+                    {(liveState.linescore?.innings || []).map((inn) => <td key={inn.num}>{inn.home !== "" ? inn.home : "-"}</td>)}
+                    <td className="live-ls-total">{(liveState.linescore?.home || {}).runs}</td>
+                    <td className="live-ls-total">{(liveState.linescore?.home || {}).hits}</td>
+                    <td className="live-ls-total">{(liveState.linescore?.home || {}).errors}</td>
                   </tr>
                 </tbody>
               </table>
@@ -195,7 +195,7 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
           {/* Current matchup */}
           {liveState.batter && liveState.pitcher && (
             <div className="live-ab">
-              <div className="live-ab-row sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${liveState.batter.id}`)}>
+              <div className="live-ab-row sb-player-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${liveState.batter.id}`); }}>
                 <PlayerPhoto playerId={liveState.batter.id} name={liveState.batter.fullName} size={28} />
                 <div className="live-ab-info">
                   <span className="live-ab-name">{liveState.batter.fullName}</span>
@@ -203,7 +203,7 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
                 </div>
                 {liveState.batter.avg && <span className="live-ab-stat">{liveState.batter.avg}</span>}
               </div>
-              <div className="live-ab-row sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${liveState.pitcher.id}`)}>
+              <div className="live-ab-row sb-player-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${liveState.pitcher.id}`); }}>
                 <PlayerPhoto playerId={liveState.pitcher.id} name={liveState.pitcher.fullName} size={28} />
                 <div className="live-ab-info">
                   <span className="live-ab-name">{liveState.pitcher.fullName}</span>

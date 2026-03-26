@@ -232,52 +232,7 @@ body {
   border-radius: 1px;
 }
 
-/* Bottom Nav (legacy, kept for reference) */
-.bottom-nav {
-  flex-shrink: 0;
-  display: none;
-  background: #141a28;
-  border-top: 1px solid var(--border);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-  z-index: 100;
-  -webkit-user-select: none;
-  user-select: none;
-}
 
-.bottom-nav-item {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  padding: 8px 4px 6px;
-  text-decoration: none;
-  color: var(--text-muted);
-  font-size: 12px;
-  font-weight: 500;
-  transition: color 0.2s;
-  position: relative;
-}
-
-.bottom-nav-item:active {
-  opacity: 0.7;
-}
-
-.bottom-nav-item.active {
-  color: var(--team-secondary);
-}
-
-.bottom-nav-item.active::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 24px;
-  height: 2px;
-  background: var(--team-secondary);
-  border-radius: 1px;
-}
 
 /* Team Selector */
 .team-selector {
@@ -731,6 +686,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  max-height: 140px;
+  overflow-y: auto;
 }
 
 .live-scoring-play {

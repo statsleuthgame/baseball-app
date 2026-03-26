@@ -5,9 +5,10 @@ export default function TopBar() {
   const { team, setTeamId } = useTeam();
   const navigate = useNavigate();
   const location = useLocation();
-  const { playerId } = useParams();
+  const { playerId, gamePk } = useParams();
+  const isSprayPage = location.pathname.includes("/spray");
 
-  const isNestedPage = !!playerId;
+  const isNestedPage = !!playerId || isSprayPage || !!gamePk;
 
   const handleBack = () => {
     navigate(-1);

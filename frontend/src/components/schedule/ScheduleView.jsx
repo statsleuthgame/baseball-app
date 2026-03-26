@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
 import { fetchSchedule } from "../../api/client";
 import { formatGameDate, formatGameTime } from "../../utils/formatters";
@@ -10,6 +11,7 @@ const MONTHS = ["Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"];
 
 export default function ScheduleView() {
   const { teamId } = useTeam();
+  const navigate = useNavigate();
   const [selectedMonth, setSelectedMonth] = useState(() => new Date().getMonth());
 
   const { data: games, isLoading, error, refetch } = useQuery({
@@ -60,7 +62,7 @@ export default function ScheduleView() {
           const lost = isFinal && !us.isWinner;
 
           return (
-            <div key={game.gamePk} className={`schedule-row ${won ? "win" : lost ? "loss" : ""}`}>
+            <div key={game.gamePk} className={`schedule-row ${won ? "win" : lost ? "loss" : ""}`} onClick={() => navigate(`/team/${teamId}/matchup/${game.gamePk}`)} style={{ cursor: "pointer" }}>
               <div className="schedule-date">{formatGameDate(game.gameDate)}</div>
               <div className="schedule-opponent">
                 <img src={opponent.logoUrl} alt={opponent.abbreviation} className="schedule-logo" />

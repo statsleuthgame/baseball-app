@@ -68,15 +68,14 @@ export const fetchStandings = async () => {
   }
 };
 
-export const fetchPlayerDetail = (playerId) =>
-  staticFetch(`players/${playerId}/info.json`).then((d) => d.detail);
+
 
 export const fetchPlayerStats = async (playerId) => {
   // Try static pre-generated data first (our roster players — most comprehensive)
   try {
     const data = await staticFetch(`players/${playerId}/info.json`);
     if (data?.detail?.id) return { ...data, hasFullData: true };
-  } catch {}
+  } catch (e) { console.warn("fetch failed:", e.message); }
 
   // Fallback: MLB API for any player (opponents, etc.)
   const season = new Date().getFullYear();
@@ -104,7 +103,7 @@ export const fetchPlayerStats = async (playerId) => {
       });
       const prevSplits = prev.data?.stats?.[0]?.splits || [];
       prevStats = prevSplits[0]?.stat || {};
-    } catch {}
+    } catch (e) { console.warn("fetch failed:", e.message); }
   }
 
   return {
@@ -146,7 +145,7 @@ export const fetchPlayerArsenal = async (playerId) => {
   try {
     const data = await staticFetch(`players/${playerId}/arsenal.json`);
     if (data?.pitches?.length) return data;
-  } catch {}
+  } catch (e) { console.warn("fetch failed:", e.message); }
 
   // Fallback: MLB Stats API (works for any pitcher, our team or opponent)
   const year = new Date().getFullYear();
@@ -157,7 +156,7 @@ export const fetchPlayerArsenal = async (playerId) => {
       });
       const splits = resp.data?.stats?.[0]?.splits || [];
       if (splits.length) return formatMlbArsenal(splits);
-    } catch {}
+    } catch (e) { console.warn("fetch failed:", e.message); }
   }
   return { pitches: [], totalPitches: 0 };
 };
@@ -199,7 +198,7 @@ export const fetchVenues = () => staticFetch("venues.json");
 export const fetchPlayoffOdds = () =>
   Promise.resolve({ teams: [] }); // FanGraphs scraping removed, can add to generate script later
 
-export const fetchMeta = () => staticFetch("meta.json").catch(() => null);
+
 
 // Fetch lineup for a game — returns actual lineup if posted, null if not yet available
 export const fetchGameLineup = async (gamePk, teamId) => {
@@ -235,39 +234,24 @@ export const fetchProjectedLineup = async (teamId) => {
     const roster = await fetchRoster(teamId);
     const posPlayers = roster.filter((p) => p.position.type !== "Pitcher");
 
-    // Fetch season batting avg for each position player
-    const season = new Date().getFullYear();
-    const withStats = await Promise.all(
-      posPlayers.map(async (p) => {
-        try {
-          const resp = await mlbApi.get(`/people/${p.id}/stats`, {
-            params: { stats: "season", season, group: "hitting" },
-          });
-          const avg = resp.data?.stats?.[0]?.splits?.[0]?.stat?.avg || ".000";
-          return { ...p, avg };
-        } catch {
-          return { ...p, avg: ".000" };
-        }
-      })
-    );
-
-    // Typical lineup order by position
+    // Sort by typical lineup position — no per-player API calls
     const posOrder = ["CF", "SS", "RF", "1B", "DH", "3B", "LF", "2B", "C"];
-    withStats.sort((a, b) => {
+    const sorted = [...posPlayers].sort((a, b) => {
       const ai = posOrder.indexOf(a.position.abbreviation);
       const bi = posOrder.indexOf(b.position.abbreviation);
       return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
     });
 
-    return withStats.slice(0, 9).map((p, i) => ({
+    return sorted.slice(0, 9).map((p, i) => ({
       id: p.id,
       fullName: p.fullName,
       position: p.position.abbreviation,
-      avg: p.avg,
+      avg: ".000",
       order: i + 1,
       projected: true,
     }));
-  } catch {
+  } catch (e) {
+    console.warn("fetchProjectedLineup failed:", e.message);
     return null;
   }
 };
@@ -374,26 +358,6 @@ export const fetchUmpireProfile = (umpireName) => {
     // Live backend call
     axios.get(`/api/umpire/${encodeURIComponent(umpireName)}`).then((r) => r.data).catch(() => null)
   );
-};
-
-/** K-BB% pitching leaderboard (best predictor of pitcher performance) */
-export const fetchKBBLeaderboard = () =>
-  staticFetch("leaderboards/k_bb_pct.json").catch(() => ({ top: [], bottom: [] }));
-
-/** League-wide team batting rankings (wRC+, OPS, etc.) */
-export const fetchTeamBattingRankings = () =>
-  staticFetch("league/team_batting.json").catch(() => []);
-
-/** League-wide team pitching rankings (FIP, ERA, K%, etc.) */
-export const fetchTeamPitchingRankings = () =>
-  staticFetch("league/team_pitching.json").catch(() => []);
-
-/** Per-player FanGraphs stats for live lookup (fallback to backend API) */
-export const fetchPlayerFanGraphs = (playerId, name, isPitcher = false) => {
-  const season = new Date().getFullYear();
-  return axios.get(`/api/player/${playerId}/fangraphs`, {
-    params: { name, pitcher: isPitcher, season },
-  }).then((r) => r.data).catch(() => ({}));
 };
 
 // ---- Live data (MLB Stats API, called directly from browser) ----
@@ -583,9 +547,6 @@ export const fetchTeamInjuries = async (teamId) => {
   }
 };
 
-export const fetchHotPlayers = () =>
-  Promise.resolve([]); // Legacy, replaced by fetchHotColdPlayers
-
 export const fetchBvP = async (batterId, pitcherId) => {
   try {
     const bvp = await staticFetch(`players/${batterId}/bvp.json`);
@@ -595,7 +556,7 @@ export const fetchBvP = async (batterId, pitcherId) => {
   }
 };
 
-export const fetchPitchTypeMatchup = () => Promise.resolve([]);
+
 
 export const fetchParkHistory = async (teamId) => {
   try {
@@ -826,36 +787,7 @@ export const fetchGameDetail = async (gamePk) => {
   }
 };
 
-// Scoring plays for a game (on-demand when user taps a game card)
-export const fetchScoringPlays = async (gamePk) => {
-  try {
-    const resp = await mlbApi.get(`/game/${gamePk}/playByPlay`);
-    const allPlays = resp.data?.allPlays || [];
-    return allPlays
-      .filter((p) => p.about?.isScoringPlay)
-      .map((p) => {
-        // Extract HR distance from hit data in playEvents
-        let hrDistance = null;
-        const event = p.result?.event || "";
-        if (event === "Home Run") {
-          const hitEvent = (p.playEvents || []).find((e) => e.hitData?.totalDistance);
-          if (hitEvent) hrDistance = Math.round(hitEvent.hitData.totalDistance);
-        }
-        return {
-          inning: p.about?.inning || 0,
-          halfInning: p.about?.halfInning || "",
-          description: p.result?.description || "",
-          awayScore: p.result?.awayScore ?? 0,
-          homeScore: p.result?.homeScore ?? 0,
-          rbi: p.result?.rbi ?? 0,
-          event,
-          hrDistance,
-        };
-      });
-  } catch {
-    return [];
-  }
-};
+
 
 // Pitcher season stats (ERA, W-L) for scoreboard cards
 export const fetchPitcherSeasonStats = async (pitcherId) => {
@@ -877,7 +809,7 @@ export const fetchPitcherSeasonStats = async (pitcherId) => {
           season,
         };
       }
-    } catch {}
+    } catch (e) { console.warn("fetch failed:", e.message); }
   }
   return null;
 };
@@ -923,7 +855,7 @@ export const fetchPlayerGameLog = async (playerId, group = "hitting") => {
           stat: s.stat,
         }));
       }
-    } catch {}
+    } catch (e) { console.warn("fetch failed:", e.message); }
   }
   return [];
 };
@@ -983,7 +915,7 @@ export const fetchTeamHotCold = async (teamId) => {
           isHot: avg >= .300,
           isCold: avg < .150,
         });
-      } catch {}
+      } catch (e) { console.warn("fetch failed:", e.message); }
     }
 
     results.sort((a, b) => b.avg - a.avg);
@@ -1018,7 +950,7 @@ export const fetchLeagueLeaders = async () => {
           team: l.team?.abbreviation || "",
           teamId: l.team?.id,
         }));
-      } catch {}
+      } catch (e) { console.warn("fetch failed:", e.message); }
     };
 
     await Promise.all([

@@ -10,12 +10,6 @@ export function formatEra(val) {
   return num.toFixed(2);
 }
 
-export function formatPct(val) {
-  if (val == null) return "—";
-  const num = typeof val === "string" ? parseFloat(val) : val;
-  return `${(num * 100).toFixed(1)}%`;
-}
-
 export function formatGameDate(isoDate) {
   if (!isoDate) return "";
   const d = new Date(isoDate);
@@ -53,14 +47,6 @@ export const teamDisplayName = (abbr) => {
     TB:"Tampa Bay", TEX:"Texas", TOR:"Toronto", WSH:"Washington",
   };
   return NAMES[abbr] || abbr;
-};
-
-/** Check if a date is today */
-export const isToday = (isoDate) => {
-  if (!isoDate) return false;
-  const d = new Date(isoDate);
-  const now = new Date();
-  return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth() && d.getDate() === now.getDate();
 };
 
 /** Rounding helpers */

@@ -41,6 +41,7 @@ export default function HitDots({ hits, filters, longestHR }) {
   // D3 scales mapping statcast coords to SVG viewBox
   const xScale = useMemo(() => scaleLinear().domain([-130, 130]).range([SPRAY_HP_X - 130, SPRAY_HP_X + 130]), []);
   const yScale = useMemo(() => scaleLinear().domain([-10, 200]).range([SPRAY_HP_Y + 10, SPRAY_HP_Y - 200]), []);
+  const lastTouchRef = useRef(0);
 
   if (!filtered.length) return null;
 
@@ -48,9 +49,6 @@ export default function HitDots({ hits, filters, longestHR }) {
     longestHR && hit.result === "home_run" &&
     hit.x === longestHR.x && hit.y === longestHR.y &&
     hit.date === longestHR.date;
-
-  // Track touch to prevent onClick from firing after touchStart (causes double-toggle)
-  const lastTouchRef = useRef(0);
 
   const handleSelect = (i, fromTouch = false) => {
     if (fromTouch) lastTouchRef.current = Date.now();

@@ -23,6 +23,7 @@ export default function MatchupView() {
     queryFn: async () => {
       // Fetch game info via schedule search
       const resp = await fetch(`https://statsapi.mlb.com/api/v1/schedule?gamePk=${routeGamePk}&sportId=1&hydrate=team,probablePitcher,venue(location)`);
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
       const data = await resp.json();
       const g = data?.dates?.[0]?.games?.[0];
       if (!g) return null;
@@ -244,13 +245,13 @@ export default function MatchupView() {
 function MatchupLineups({ gamePk, teamId, opponentId, usAbbr, oppAbbr }) {
   const navigate = useNavigate();
 
-  // Try actual lineups first
+  // Try actual lineups first — stop polling once both are populated
   const { data: actualUs, isLoading: loadingUs } = useQuery({
     queryKey: ["gameLineup", gamePk, teamId],
     queryFn: () => fetchGameLineup(gamePk, teamId),
     enabled: !!gamePk,
     staleTime: 1000 * 60 * 2,
-    refetchInterval: 1000 * 60 * 2,
+    refetchInterval: (data) => data ? false : 1000 * 60 * 2,
   });
 
   const { data: actualOpp, isLoading: loadingOpp } = useQuery({
@@ -258,7 +259,7 @@ function MatchupLineups({ gamePk, teamId, opponentId, usAbbr, oppAbbr }) {
     queryFn: () => fetchGameLineup(gamePk, opponentId),
     enabled: !!gamePk,
     staleTime: 1000 * 60 * 2,
-    refetchInterval: 1000 * 60 * 2,
+    refetchInterval: (data) => data ? false : 1000 * 60 * 2,
   });
 
   const actualDone = !loadingUs && !loadingOpp;
