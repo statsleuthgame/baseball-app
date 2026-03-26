@@ -250,9 +250,12 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
               {(() => {
                 const p = liveState.currentAtBat[liveState.currentAtBat.length - 1];
                 return (
-                  <span className="live-pbp-detail">
-                    {p.action}{p.pitchInfo ? ` ${p.pitchInfo}` : ""} — <strong>{p.call}</strong>
-                  </span>
+                  <>
+                    <span className="live-pbp-detail">
+                      {p.action}{p.pitchInfo ? ` ${p.pitchInfo}` : ""} — <strong>{p.call}</strong>
+                    </span>
+                    {p.hitData && <BallInPlayVisual hitData={p.hitData} />}
+                  </>
                 );
               })()}
             </div>
@@ -425,6 +428,38 @@ function LiveBoxScore({ gamePk, awayAbbr, homeAbbr, teamId }) {
           ))}
         </div>
       )}
+    </div>
+  );
+}
+
+function BallInPlayVisual({ hitData }) {
+  if (!hitData) return null;
+  // MLB coordinates: ~250x250 grid, home plate ~(125, 200), CF ~(125, 20)
+  // Normalize to a 60x60 SVG
+  const dotX = (hitData.x / 250) * 60;
+  const dotY = (hitData.y / 250) * 60;
+  const isHit = hitData.trajectory === "line_drive" || hitData.distance > 200;
+  const isHR = hitData.distance >= 300 && hitData.launchAngle > 20;
+  const dotColor = isHR ? "var(--live)" : isHit ? "var(--win)" : "var(--text-muted)";
+
+  return (
+    <div className="bip-visual">
+      <svg width="60" height="60" viewBox="0 0 60 60" className="bip-field">
+        {/* Outfield arc */}
+        <path d="M 5 55 Q 30 -5 55 55" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
+        {/* Infield diamond */}
+        <path d="M 30 42 L 42 30 L 30 18 L 18 30 Z" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="0.5" />
+        {/* Home plate */}
+        <circle cx="30" cy="48" r="2" fill="rgba(255,255,255,0.15)" />
+        {/* Landing spot */}
+        <circle cx={dotX} cy={dotY} r="3.5" fill={dotColor} opacity="0.9" />
+        <circle cx={dotX} cy={dotY} r="6" fill={dotColor} opacity="0.2" />
+      </svg>
+      <div className="bip-stats">
+        {hitData.exitVelo && <span>{hitData.exitVelo} mph</span>}
+        {hitData.launchAngle != null && <span>{hitData.launchAngle}°</span>}
+        {hitData.distance && <span>{hitData.distance} ft</span>}
+      </div>
     </div>
   );
 }

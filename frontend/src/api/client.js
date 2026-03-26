@@ -335,7 +335,16 @@ export const fetchLiveGameState = async (gamePk) => {
           else if (d.isInPlay) action = `${batterName} puts in play`;
           else action = batterName;
           const pitchInfo = pitchType ? `${pitchType}${speed ? ` ${speed} mph` : ""}` : "";
-          return { action, pitchInfo, call };
+          const hd = e.hitData || {};
+          const hitData = d.isInPlay && hd.coordinates?.coordX ? {
+            x: hd.coordinates.coordX,
+            y: hd.coordinates.coordY,
+            exitVelo: hd.launchSpeed,
+            launchAngle: hd.launchAngle,
+            distance: hd.totalDistance ? Math.round(hd.totalDistance) : null,
+            trajectory: hd.trajectory,
+          } : null;
+          return { action, pitchInfo, call, hitData };
         })
         .slice(-6),
       onDeck: ls.offense?.onDeck ? { id: ls.offense.onDeck.id, fullName: ls.offense.onDeck.fullName } : null,
