@@ -2154,6 +2154,15 @@ button.stat-cell {
   min-width: 0;
 }
 
+.sb-live-player:last-child {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.sb-live-player:last-child .sb-live-player-info {
+  align-items: flex-end;
+}
+
 .sb-live-player-info {
   display: flex;
   flex-direction: column;
