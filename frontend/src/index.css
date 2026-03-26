@@ -683,6 +683,83 @@ body {
   color: var(--text);
 }
 
+/* Next due up */
+.live-due-up {
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.live-due-up-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  display: block;
+}
+
+.live-due-up-list {
+  display: flex;
+  gap: 16px;
+}
+
+.live-due-up-player {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+
+/* Scoring summary */
+.live-scoring {
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.live-scoring-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  display: block;
+}
+
+.live-scoring-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.live-scoring-play {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+.live-scoring-inn {
+  font-weight: 700;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  width: 22px;
+}
+
+.live-scoring-desc {
+  flex: 1;
+  min-width: 0;
+  color: var(--text);
+}
+
+.live-scoring-score {
+  font-weight: 700;
+  color: var(--text-bright);
+  flex-shrink: 0;
+}
+
 /* Live box score on home card */
 .live-boxscore-section {
   padding-top: 8px;

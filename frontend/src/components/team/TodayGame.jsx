@@ -223,6 +223,43 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
             </div>
           )}
 
+          {/* Next due up */}
+          {(liveState.onDeck || liveState.inHole) && (
+            <div className="live-due-up">
+              <span className="live-due-up-label">Due Up</span>
+              <div className="live-due-up-list">
+                {liveState.onDeck && (
+                  <div className="live-due-up-player sb-player-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${liveState.onDeck.id}`); }}>
+                    <PlayerPhoto playerId={liveState.onDeck.id} name={liveState.onDeck.fullName} size={24} />
+                    <span>{liveState.onDeck.fullName}</span>
+                  </div>
+                )}
+                {liveState.inHole && (
+                  <div className="live-due-up-player sb-player-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${liveState.inHole.id}`); }}>
+                    <PlayerPhoto playerId={liveState.inHole.id} name={liveState.inHole.fullName} size={24} />
+                    <span>{liveState.inHole.fullName}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Scoring summary */}
+          {liveState.scoringPlays?.length > 0 && (
+            <div className="live-scoring">
+              <span className="live-scoring-label">Scoring</span>
+              <div className="live-scoring-list">
+                {liveState.scoringPlays.map((p, i) => (
+                  <div key={i} className="live-scoring-play">
+                    <span className="live-scoring-inn">{p.halfInning === "top" ? "\u25B2" : "\u25BC"}{p.inning}</span>
+                    <span className="live-scoring-desc">{p.description}</span>
+                    <span className="live-scoring-score">{p.awayScore}-{p.homeScore}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Live box score toggle */}
           <LiveBoxScore gamePk={game.gamePk} awayAbbr={game.away.abbreviation} homeAbbr={game.home.abbreviation} teamId={teamId} />
         </div>

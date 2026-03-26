@@ -335,6 +335,17 @@ export const fetchLiveGameState = async (gamePk) => {
       batter: cp.batter ? { id: cp.batter.id, fullName: cp.batter.fullName, avg: batterAvg } : null,
       pitcher: cp.pitcher ? { id: cp.pitcher.id, fullName: cp.pitcher.fullName, gameStats: pitcherGameStats } : null,
       lastPlay,
+      onDeck: ls.offense?.onDeck ? { id: ls.offense.onDeck.id, fullName: ls.offense.onDeck.fullName } : null,
+      inHole: ls.offense?.inHole ? { id: ls.offense.inHole.id, fullName: ls.offense.inHole.fullName } : null,
+      scoringPlays: allPlays
+        .filter((p) => p.about?.isScoringPlay)
+        .map((p) => ({
+          inning: p.about?.inning || 0,
+          halfInning: p.about?.halfInning || "",
+          description: p.result?.description || "",
+          awayScore: p.result?.awayScore ?? 0,
+          homeScore: p.result?.homeScore ?? 0,
+        })),
       linescore: {
         innings: (ls.innings || []).map((inn) => ({ num: inn.num, away: inn.away?.runs ?? "", home: inn.home?.runs ?? "" })),
         away: { runs: teams.away?.runs ?? 0, hits: teams.away?.hits ?? 0, errors: teams.away?.errors ?? 0 },
