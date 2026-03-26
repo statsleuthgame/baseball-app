@@ -100,6 +100,24 @@ export default function LiveGamePage() {
         </div>
       </div>
 
+      {/* Win probability - between score and live state */}
+      {wpData?.length > 0 && (() => {
+        const lastWp = wpData[wpData.length - 1];
+        const homeWin = lastWp.homeProb >= 0.5;
+        const favProb = Math.round((homeWin ? lastWp.homeProb : lastWp.awayProb) * 100);
+        const favLogo = homeWin ? gameInfo.home.logoUrl : gameInfo.away.logoUrl;
+        const favAbbr = homeWin ? gameInfo.home.abbreviation : gameInfo.away.abbreviation;
+        return (
+          <div className="lgp-wp">
+            <span className="lgp-wp-label">Win Probability</span>
+            <div className="lgp-wp-fav">
+              <img src={favLogo} alt={favAbbr} className="lgp-wp-logo" />
+              <span className="lgp-wp-pct">{favProb}%</span>
+            </div>
+          </div>
+        );
+      })()}
+
       {/* Live state */}
       {liveState && (
         <div className="live-game-detail">
@@ -267,24 +285,6 @@ export default function LiveGamePage() {
           </div>
         </div>
       )}
-
-      {/* Win probability */}
-      {wpData?.length > 0 && (() => {
-        const lastWp = wpData[wpData.length - 1];
-        const homeWin = lastWp.homeProb >= 0.5;
-        const favProb = Math.round((homeWin ? lastWp.homeProb : lastWp.awayProb) * 100);
-        const favLogo = homeWin ? gameInfo.home.logoUrl : gameInfo.away.logoUrl;
-        const favAbbr = homeWin ? gameInfo.home.abbreviation : gameInfo.away.abbreviation;
-        return (
-          <div className="lgp-wp">
-            <span className="lgp-wp-label">Win Probability</span>
-            <div className="lgp-wp-fav">
-              <img src={favLogo} alt={favAbbr} className="lgp-wp-logo" />
-              <span className="lgp-wp-pct">{favProb}%</span>
-            </div>
-          </div>
-        );
-      })()}
 
       {/* Venue */}
       <div className="lgp-venue">

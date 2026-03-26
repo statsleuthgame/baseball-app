@@ -143,6 +143,24 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
         </div>
       </div>
 
+      {/* Win probability - between score and live detail */}
+      {!compact && isLive && wpData?.length > 0 && (() => {
+        const lastWp = wpData[wpData.length - 1];
+        const homeWin = lastWp.homeProb >= 0.5;
+        const favProb = Math.round((homeWin ? lastWp.homeProb : lastWp.awayProb) * 100);
+        const favLogo = homeWin ? game.home.logoUrl : game.away.logoUrl;
+        const favAbbr = homeWin ? game.home.abbreviation : game.away.abbreviation;
+        return (
+          <div className="lgp-wp">
+            <span className="lgp-wp-label">Win Probability</span>
+            <div className="lgp-wp-fav">
+              <img src={favLogo} alt={favAbbr} className="lgp-wp-logo" />
+              <span className="lgp-wp-pct">{favProb}%</span>
+            </div>
+          </div>
+        );
+      })()}
+
       {/* Live game: compact situation + R/H/E + matchup + last play */}
       {!compact && isLive && liveState && (
         <div className="live-game-detail" onClick={(e) => e.stopPropagation()}>
@@ -267,24 +285,6 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
               </div>
             </div>
           )}
-
-          {/* Win probability */}
-          {wpData?.length > 0 && (() => {
-            const lastWp = wpData[wpData.length - 1];
-            const homeWin = lastWp.homeProb >= 0.5;
-            const favProb = Math.round((homeWin ? lastWp.homeProb : lastWp.awayProb) * 100);
-            const favLogo = homeWin ? game.home.logoUrl : game.away.logoUrl;
-            const favAbbr = homeWin ? game.home.abbreviation : game.away.abbreviation;
-            return (
-              <div className="lgp-wp">
-                <span className="lgp-wp-label">Win Probability</span>
-                <div className="lgp-wp-fav">
-                  <img src={favLogo} alt={favAbbr} className="lgp-wp-logo" />
-                  <span className="lgp-wp-pct">{favProb}%</span>
-                </div>
-              </div>
-            );
-          })()}
 
           {/* Live box score toggle */}
           <LiveBoxScore gamePk={game.gamePk} awayAbbr={game.away.abbreviation} homeAbbr={game.home.abbreviation} teamId={teamId} />
