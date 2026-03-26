@@ -306,37 +306,39 @@ function GameDetail({ gamePk, awayAbbr, homeAbbr, teamId }) {
 function ScoreboardLineups({ gamePk, awayId, homeId, awayAbbr, homeAbbr, teamId }) {
   const navigate = useNavigate();
 
-  const { data: actualAway } = useQuery({
+  const { data: actualAway, isLoading: loadingAway } = useQuery({
     queryKey: ["gameLineup", gamePk, awayId],
     queryFn: () => fetchGameLineup(gamePk, awayId),
     enabled: !!gamePk,
     staleTime: 1000 * 60 * 2,
   });
 
-  const { data: actualHome } = useQuery({
+  const { data: actualHome, isLoading: loadingHome } = useQuery({
     queryKey: ["gameLineup", gamePk, homeId],
     queryFn: () => fetchGameLineup(gamePk, homeId),
     enabled: !!gamePk,
     staleTime: 1000 * 60 * 2,
   });
 
+  const actualDone = !loadingAway && !loadingHome;
+
   const { data: projAway } = useQuery({
     queryKey: ["projectedLineup", awayId],
     queryFn: () => fetchProjectedLineup(awayId),
-    enabled: !actualAway && !!awayId,
+    enabled: actualDone && !actualAway && !!awayId,
     staleTime: 1000 * 60 * 30,
   });
 
   const { data: projHome } = useQuery({
     queryKey: ["projectedLineup", homeId],
     queryFn: () => fetchProjectedLineup(homeId),
-    enabled: !actualHome && !!homeId,
+    enabled: actualDone && !actualHome && !!homeId,
     staleTime: 1000 * 60 * 30,
   });
 
   const awayLineup = actualAway || projAway;
   const homeLineup = actualHome || projHome;
-  const isProjected = !actualAway && !actualHome;
+  const isProjected = actualDone && !actualAway && !actualHome;
 
   if (!awayLineup?.length && !homeLineup?.length) return <div className="sb-plays-loading">Loading lineups...</div>;
 

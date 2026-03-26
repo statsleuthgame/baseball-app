@@ -146,7 +146,7 @@ function MatchupLineups({ gamePk, teamId, opponentId, usAbbr, oppAbbr }) {
   const navigate = useNavigate();
 
   // Try actual lineups first
-  const { data: actualUs } = useQuery({
+  const { data: actualUs, isLoading: loadingUs } = useQuery({
     queryKey: ["gameLineup", gamePk, teamId],
     queryFn: () => fetchGameLineup(gamePk, teamId),
     enabled: !!gamePk,
@@ -154,7 +154,7 @@ function MatchupLineups({ gamePk, teamId, opponentId, usAbbr, oppAbbr }) {
     refetchInterval: 1000 * 60 * 2,
   });
 
-  const { data: actualOpp } = useQuery({
+  const { data: actualOpp, isLoading: loadingOpp } = useQuery({
     queryKey: ["gameLineup", gamePk, opponentId],
     queryFn: () => fetchGameLineup(gamePk, opponentId),
     enabled: !!gamePk,
@@ -162,24 +162,26 @@ function MatchupLineups({ gamePk, teamId, opponentId, usAbbr, oppAbbr }) {
     refetchInterval: 1000 * 60 * 2,
   });
 
-  // Projected fallbacks
+  const actualDone = !loadingUs && !loadingOpp;
+
+  // Projected fallbacks — only after actual queries complete
   const { data: projUs } = useQuery({
     queryKey: ["projectedLineup", teamId],
     queryFn: () => fetchProjectedLineup(teamId),
-    enabled: !actualUs && !!teamId,
+    enabled: actualDone && !actualUs && !!teamId,
     staleTime: 1000 * 60 * 30,
   });
 
   const { data: projOpp } = useQuery({
     queryKey: ["projectedLineup", opponentId],
     queryFn: () => fetchProjectedLineup(opponentId),
-    enabled: !actualOpp && !!opponentId,
+    enabled: actualDone && !actualOpp && !!opponentId,
     staleTime: 1000 * 60 * 30,
   });
 
   const usLineup = actualUs || projUs;
   const oppLineup = actualOpp || projOpp;
-  const isProjected = !actualUs && !actualOpp;
+  const isProjected = actualDone && !actualUs && !actualOpp;
 
   if (!usLineup?.length && !oppLineup?.length) return null;
 
