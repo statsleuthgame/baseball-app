@@ -1,6 +1,5 @@
 import { useState, useMemo, useRef } from "react";
 import { SPRAY_HP_X, SPRAY_HP_Y } from "./BallparkSVG";
-import { scaleLinear } from "d3-scale";
 
 const RESULT_COLORS = {
   single: "#4CAF50",
@@ -38,9 +37,11 @@ export default function HitDots({ hits, filters, longestHR }) {
     return filters ? hits.filter((h) => filters.includes(h.result)) : hits;
   }, [hits, filters]);
 
-  // D3 scales mapping statcast coords to SVG viewBox
-  const xScale = useMemo(() => scaleLinear().domain([-130, 130]).range([SPRAY_HP_X - 130, SPRAY_HP_X + 130]), []);
-  const yScale = useMemo(() => scaleLinear().domain([-10, 200]).range([SPRAY_HP_Y + 10, SPRAY_HP_Y - 200]), []);
+  // Convert stored spray coords back to MLBAM pixel coords
+  // Stored: x = hc_x - 125.42, y = 198.27 - hc_y
+  // MLBAM: hc_x = x + 125.42, hc_y = 198.27 - y
+  const xScale = useMemo(() => (x) => x + SPRAY_HP_X, []);
+  const yScale = useMemo(() => (y) => SPRAY_HP_Y - y, []);
   const lastTouchRef = useRef(0);
 
   if (!filtered.length) return null;

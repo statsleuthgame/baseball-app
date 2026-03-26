@@ -163,7 +163,7 @@ export default function SprayChart() {
 
           <div className="spray-chart-container">
             <BallparkSVG
-              dimensions={currentVenue?.dimensions}
+              parkAbbr={selectedPark}
               parkName={currentVenue?.name}
             >
               <HitDots hits={filteredData.hits} filters={filters} longestHR={filteredData.longestHR} />
