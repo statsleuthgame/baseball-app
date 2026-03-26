@@ -1806,6 +1806,29 @@ button.stat-cell {
   font-weight: 500;
 }
 
+.matchup-score-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.matchup-score {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-bright);
+}
+
+.matchup-vs-small {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.matchup-live-hint {
+  font-size: 10px;
+  color: var(--live);
+  opacity: 0.7;
+}
+
 .matchup-venue {
   font-size: 11px;
   color: var(--text-muted);

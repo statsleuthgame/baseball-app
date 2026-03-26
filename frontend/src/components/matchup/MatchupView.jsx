@@ -57,7 +57,9 @@ export default function MatchupView() {
 
   // Fetch both rosters
   const game = rawGame && !rawGame.noGame ? (rawGame.status === "Final" && rawGame.nextGame ? rawGame.nextGame : rawGame) : null;
-  const isPreview = game?.isNextGame;
+  const isLive = game?.status === "In Progress" || game?.status === "Warmup" || game?.status === "Delayed Start" || game?.status === "Delayed";
+  const isFinal = game?.status === "Final";
+  const isPreview = !isLive && !isFinal;
   const awayId = game?.away?.id;
   const homeId = game?.home?.id;
 
@@ -103,22 +105,36 @@ export default function MatchupView() {
   return (
     <div className="matchup-view">
       <div className="matchup-top-row">
+        {isLive && <div className="matchup-preview-title" style={{ color: "var(--live)" }}>LIVE</div>}
         {isPreview && <div className="matchup-preview-title">Game Preview</div>}
-        {!isPreview && <div />}
+        {isFinal && <div className="matchup-preview-title" style={{ color: "var(--text-muted)" }}>Final</div>}
         <GameSwitcher currentGamePk={game?.gamePk} teamId={teamId} />
       </div>
 
-      {/* Game header */}
-      <div className="matchup-header">
+      {/* Game header — tappable to live page when game is in progress */}
+      <div className={`matchup-header ${isLive ? "sb-player-link" : ""}`} onClick={isLive ? () => navigate(`/team/${teamId}/live/${game.gamePk}`) : undefined}>
         <div className="matchup-team">
           <img src={us.logoUrl} alt={us.abbreviation} className="matchup-logo" />
           <span>{us.abbreviation}</span>
           {us.wins != null && <span className="matchup-record">{us.wins}-{us.losses}</span>}
         </div>
         <div className="matchup-header-center">
-          <span className="matchup-vs">{isHome ? "vs" : "@"}</span>
-          {isPreview && (
-            <span className="matchup-date">{formatGameDate(game.gameDate)} · {formatGameTime(game.gameDate)}</span>
+          {(isLive || isFinal) && game.away.score != null ? (
+            <>
+              <div className="matchup-score-row">
+                <span className="matchup-score">{game.away.score}</span>
+                <span className="matchup-vs-small">-</span>
+                <span className="matchup-score">{game.home.score}</span>
+              </div>
+              {isLive && <span className="matchup-live-hint">Tap for live view</span>}
+            </>
+          ) : (
+            <>
+              <span className="matchup-vs">{isHome ? "vs" : "@"}</span>
+              {isPreview && (
+                <span className="matchup-date">{formatGameDate(game.gameDate)} · {formatGameTime(game.gameDate)}</span>
+              )}
+            </>
           )}
           {game.venue?.name && (
             <span className="matchup-venue">{game.venue.name}{game.venueLocation ? ` · ${game.venueLocation}` : ""}</span>
@@ -136,7 +152,7 @@ export default function MatchupView() {
         <WinProbability gamePk={game.gamePk} teamId={teamId} isHome={isHome} awayAbbr={game.away.abbreviation} homeAbbr={game.home.abbreviation} awayLogo={game.away.logoUrl} homeLogo={game.home.logoUrl} />
       )}
 
-      {!opponentPitcher && (
+      {!opponentPitcher && isPreview && (
         <div className="matchup-notice">
           Opposing starter not yet announced. Check back closer to game time.
         </div>
