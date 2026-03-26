@@ -1620,6 +1620,14 @@ button.stat-cell {
   gap: 16px;
 }
 
+.matchup-preview-title {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--team-accent);
+  letter-spacing: -0.3px;
+}
+
 .matchup-header {
   display: flex;
   align-items: center;

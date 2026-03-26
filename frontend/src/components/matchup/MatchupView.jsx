@@ -56,6 +56,10 @@ export default function MatchupView() {
 
   return (
     <div className="matchup-view">
+      {isPreview && (
+        <div className="matchup-preview-title">Game Preview</div>
+      )}
+
       {/* Game header */}
       <div className="matchup-header">
         <div className="matchup-team">
@@ -82,12 +86,6 @@ export default function MatchupView() {
       {/* Win probability chart (shows during/after live games) */}
       {game.gamePk && (game.status === "In Progress" || game.status === "Final") && (
         <WinProbability gamePk={game.gamePk} teamId={teamId} isHome={isHome} />
-      )}
-
-      {isPreview && (
-        <div className="matchup-notice" style={{ color: "var(--team-accent)", fontStyle: "normal", fontWeight: 600 }}>
-          Game Preview
-        </div>
       )}
 
       {!opponentPitcher && (
