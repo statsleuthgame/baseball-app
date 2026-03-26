@@ -248,15 +248,16 @@ function BatterRow({ batter, teamId }) {
       </div>
       {open && (
         <div className="sb-atbats">
-          {batter.atBats.map((ab, i) => (
-            <div key={i} className={`sb-atbat ${ab.isScoring ? "sb-atbat-scoring" : ""}`}>
-              <span className="sb-atbat-inning">{ab.inning}{ab.inning === 1 ? "st" : ab.inning === 2 ? "nd" : ab.inning === 3 ? "rd" : "th"}</span>
-              <span className="sb-atbat-event">
-                {ab.event}{ab.hrDistance ? ` (${ab.hrDistance} ft)` : ""}
-              </span>
-              {ab.rbi > 0 && <span className="sb-atbat-rbi">{ab.rbi} RBI</span>}
-            </div>
-          ))}
+          {batter.atBats.map((ab, i) => {
+            const desc = ab.description?.replace(/^[^.]*?\s(singles|doubles|triples|homers|flies|grounds|lines|pops|strikes|walks|called|reaches|hit by)/, "$1") || ab.event;
+            return (
+              <div key={i} className={`sb-atbat ${ab.isScoring ? "sb-atbat-scoring" : ""}`}>
+                <span className="sb-atbat-inning">{ab.inning}{ab.inning === 1 ? "st" : ab.inning === 2 ? "nd" : ab.inning === 3 ? "rd" : "th"}</span>
+                <span className="sb-atbat-event">{desc}</span>
+                {ab.rbi > 0 && <span className="sb-atbat-rbi">{ab.rbi} RBI</span>}
+              </div>
+            );
+          })}
         </div>
       )}
     </div>

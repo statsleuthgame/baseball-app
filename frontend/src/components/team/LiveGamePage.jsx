@@ -330,13 +330,16 @@ function LgpBoxTeam({ batters, pitchers, abbr, teamId }) {
             </div>
             {isOpen && (
               <div className="lgp-box-abs">
-                {b.atBats.map((ab, i) => (
-                  <div key={i} className={`lgp-box-ab ${ab.isScoring ? "lgp-box-ab-scoring" : ""}`}>
-                    <span className="lgp-box-ab-inn">{ab.inning}</span>
-                    <span className="lgp-box-ab-event">{ab.event}{ab.hrDistance ? ` (${ab.hrDistance} ft)` : ""}</span>
-                    {ab.rbi > 0 && <span className="lgp-box-ab-rbi">{ab.rbi} RBI</span>}
-                  </div>
-                ))}
+                {b.atBats.map((ab, i) => {
+                  // Use full description, strip batter name prefix
+                  const desc = ab.description?.replace(/^[^.]*?\s(singles|doubles|triples|homers|flies|grounds|lines|pops|strikes|walks|called|reaches|hit by)/, "$1") || ab.event;
+                  return (
+                    <div key={i} className={`lgp-box-ab ${ab.isScoring ? "lgp-box-ab-scoring" : ""}`}>
+                      <span className="lgp-box-ab-inn">{ab.inning}</span>
+                      <span className="lgp-box-ab-event">{desc}</span>
+                    </div>
+                  );
+                })}
               </div>
             )}
           </div>
