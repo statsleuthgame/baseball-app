@@ -12,7 +12,7 @@ const PITCH_COLORS = {
   ST: "#5e35b1", KN: "#795548", CS: "#8e24aa",
 };
 
-export default function PitchArsenal({ playerId, embedded }) {
+export default function PitchArsenal({ playerId, embedded, compact }) {
   const { data, isLoading } = useQuery({
     queryKey: ["arsenal", playerId],
     queryFn: () => fetchPlayerArsenal(playerId),
@@ -27,23 +27,30 @@ export default function PitchArsenal({ playerId, embedded }) {
   if (embedded) {
     return (
       <div>
-        <div className="arsenal-bar" style={{ marginBottom: 10 }}>
-          {data.pitches.map((p) => (
-            <div
-              key={p.pitchType}
-              className="arsenal-bar-segment"
-              style={{ width: `${p.usagePct}%`, backgroundColor: PITCH_COLORS[p.pitchType] || "#666" }}
-            />
-          ))}
-        </div>
+        {!compact && (
+          <div className="arsenal-bar" style={{ marginBottom: 10 }}>
+            {data.pitches.map((p) => (
+              <div
+                key={p.pitchType}
+                className="arsenal-bar-segment"
+                style={{ width: `${p.usagePct}%`, backgroundColor: PITCH_COLORS[p.pitchType] || "#666" }}
+              />
+            ))}
+          </div>
+        )}
         <div className="arsenal-compact">
+          <div className="arsenal-compact-row arsenal-compact-hdr">
+            <span className="pitch-dot" style={{ visibility: "hidden" }} />
+            <span className="arsenal-compact-name">Pitch</span>
+            <span className="arsenal-compact-stat">Use%</span>
+            <span className="arsenal-compact-stat">Velo</span>
+          </div>
           {data.pitches.map((p) => (
             <div key={p.pitchType} className="arsenal-compact-row">
               <span className="pitch-dot" style={{ backgroundColor: PITCH_COLORS[p.pitchType] || "#666" }} />
-              <span className="arsenal-compact-name">{p.pitchName}</span>
+              <span className="arsenal-compact-name">{compact ? p.pitchType : p.pitchName}</span>
               <span className="arsenal-compact-stat">{p.usagePct}%</span>
-              <span className="arsenal-compact-stat">{p.avgVelo ?? "—"} mph</span>
-              <span className="arsenal-compact-stat">{p.whiffRate != null ? `${p.whiffRate}% whiff` : ""}</span>
+              <span className="arsenal-compact-stat">{p.avgVelo ?? "—"}</span>
             </div>
           ))}
         </div>

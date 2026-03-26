@@ -1339,6 +1339,18 @@ button.stat-cell {
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
 
+.arsenal-compact-hdr {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  padding: 0 0 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.arsenal-compact-hdr .arsenal-compact-name { color: var(--text-muted); }
+.arsenal-compact-hdr .arsenal-compact-stat { color: var(--text-muted); }
+
 .arsenal-compact-name {
   flex: 1;
   font-weight: 600;
