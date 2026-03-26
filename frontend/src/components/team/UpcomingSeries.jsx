@@ -16,13 +16,15 @@ export default function UpcomingSeries() {
     staleTime: 1000 * 60 * 30,
   });
 
-  if (!games?.length) return null;
+  // Skip the first game since it's already shown in the main game card
+  const upcoming = games?.slice(1) || [];
+  if (!upcoming.length) return null;
 
   return (
     <div className="series-card">
       <h3 className="section-title">Upcoming Games</h3>
       <div className="series-list">
-        {games.map((g) => {
+        {upcoming.map((g) => {
           const isHome = g.home.id == teamId;
           const opp = isHome ? g.away : g.home;
           const us = isHome ? g.home : g.away;

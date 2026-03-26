@@ -3126,6 +3126,27 @@ th.sb-ls-total {
 
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
+/* Pull to refresh */
+.pull-indicator {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+  padding-bottom: 8px;
+  flex-shrink: 0;
+}
+
+.pull-spinner {
+  color: var(--text-muted);
+  display: flex;
+}
+
+.pull-spinner.spinning {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
 /* Responsive */
 @media (min-width: 640px) {
   .app-content {

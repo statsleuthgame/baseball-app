@@ -1,5 +1,6 @@
-import { useEffect, useRef, Suspense } from "react";
+import { useEffect, useRef, useState, useCallback, Suspense } from "react";
 import { Outlet, useParams, useLocation } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 import { useTeam } from "../../context/TeamContext";
 import TopBar from "./TopBar";
 import TopTabs from "./TopTabs";
@@ -23,6 +24,10 @@ export default function AppShell() {
   const location = useLocation();
   const contentRef = useRef(null);
   const prevPath = useRef(location.pathname);
+  const queryClient = useQueryClient();
+
+  const [pullState, setPullState] = useState({ pulling: false, distance: 0, refreshing: false });
+  const touchStart = useRef(null);
 
   useEffect(() => {
     if (urlTeamId) {
@@ -53,11 +58,56 @@ export default function AppShell() {
     });
   }, [location.pathname]);
 
+  const handleTouchStart = useCallback((e) => {
+    const el = contentRef.current;
+    if (el && el.scrollTop <= 0) {
+      touchStart.current = e.touches[0].clientY;
+    } else {
+      touchStart.current = null;
+    }
+  }, []);
+
+  const handleTouchMove = useCallback((e) => {
+    if (touchStart.current === null || pullState.refreshing) return;
+    const diff = e.touches[0].clientY - touchStart.current;
+    if (diff > 0) {
+      setPullState((s) => ({ ...s, pulling: true, distance: Math.min(diff * 0.5, 80) }));
+    }
+  }, [pullState.refreshing]);
+
+  const handleTouchEnd = useCallback(async () => {
+    if (pullState.distance > 50 && !pullState.refreshing) {
+      setPullState({ pulling: false, distance: 40, refreshing: true });
+      await queryClient.invalidateQueries();
+      setPullState({ pulling: false, distance: 0, refreshing: false });
+    } else {
+      setPullState({ pulling: false, distance: 0, refreshing: false });
+    }
+    touchStart.current = null;
+  }, [pullState.distance, pullState.refreshing, queryClient]);
+
   return (
     <div className="app-shell">
       <TopBar />
       <TopTabs />
-      <main className="app-content" ref={contentRef} tabIndex={-1}>
+      {pullState.distance > 0 && (
+        <div className="pull-indicator" style={{ height: pullState.distance }}>
+          <div className={`pull-spinner ${pullState.refreshing ? "spinning" : ""}`}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: `rotate(${pullState.distance * 4}deg)` }}>
+              <polyline points="23 4 23 10 17 10" />
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+            </svg>
+          </div>
+        </div>
+      )}
+      <main
+        className="app-content"
+        ref={contentRef}
+        tabIndex={-1}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
         <ErrorBoundary key={location.pathname}>
           <Suspense fallback={<LoadingSpinner />}>
             <Outlet />
