@@ -3302,7 +3302,6 @@ th.sb-ls-total {
 .sb-batter-name-link:active { opacity: 0.6; }
 
 .sb-batter-spacer { flex: 1; min-width: 4px; }
-}
 
 .sb-batter-stat {
   width: 24px;
