@@ -162,26 +162,34 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
             <span className="live-count">{liveState.balls}-{liveState.strikes}</span>
           </div>
 
-          {/* R/H/E summary */}
-          <div className="live-rhe">
-            <div className="live-rhe-header">
-              <span className="live-rhe-team"></span>
-              <span className="live-rhe-val live-rhe-hdr">R</span>
-              <span className="live-rhe-val live-rhe-hdr">H</span>
-              <span className="live-rhe-val live-rhe-hdr">E</span>
+          {/* R/H/E + diamond */}
+          <div className="live-rhe-diamond">
+            <div className="live-rhe">
+              <div className="live-rhe-header">
+                <span className="live-rhe-team"></span>
+                <span className="live-rhe-val live-rhe-hdr">R</span>
+                <span className="live-rhe-val live-rhe-hdr">H</span>
+                <span className="live-rhe-val live-rhe-hdr">E</span>
+              </div>
+              <div className="live-rhe-row">
+                <span className="live-rhe-team">{game.away.abbreviation}</span>
+                <span className="live-rhe-val">{liveState.linescore.away.runs}</span>
+                <span className="live-rhe-val">{liveState.linescore.away.hits}</span>
+                <span className="live-rhe-val">{liveState.linescore.away.errors}</span>
+              </div>
+              <div className="live-rhe-row">
+                <span className="live-rhe-team">{game.home.abbreviation}</span>
+                <span className="live-rhe-val">{liveState.linescore.home.runs}</span>
+                <span className="live-rhe-val">{liveState.linescore.home.hits}</span>
+                <span className="live-rhe-val">{liveState.linescore.home.errors}</span>
+              </div>
             </div>
-            <div className="live-rhe-row">
-              <span className="live-rhe-team">{game.away.abbreviation}</span>
-              <span className="live-rhe-val">{liveState.linescore.away.runs}</span>
-              <span className="live-rhe-val">{liveState.linescore.away.hits}</span>
-              <span className="live-rhe-val">{liveState.linescore.away.errors}</span>
-            </div>
-            <div className="live-rhe-row">
-              <span className="live-rhe-team">{game.home.abbreviation}</span>
-              <span className="live-rhe-val">{liveState.linescore.home.runs}</span>
-              <span className="live-rhe-val">{liveState.linescore.home.hits}</span>
-              <span className="live-rhe-val">{liveState.linescore.home.errors}</span>
-            </div>
+            <svg className="live-diamond" width="56" height="56" viewBox="0 0 56 56">
+              <rect x="21" y="3" width="14" height="14" rx="2" transform="rotate(45 28 10)" className={`live-diamond-base ${liveState.onSecond ? "occupied" : ""}`} />
+              <rect x="32" y="14" width="14" height="14" rx="2" transform="rotate(45 39 21)" className={`live-diamond-base ${liveState.onFirst ? "occupied" : ""}`} />
+              <rect x="10" y="14" width="14" height="14" rx="2" transform="rotate(45 17 21)" className={`live-diamond-base ${liveState.onThird ? "occupied" : ""}`} />
+              <circle cx="28" cy="42" r="3" fill="var(--text-muted)" opacity="0.3" />
+            </svg>
           </div>
 
           {/* Current matchup */}

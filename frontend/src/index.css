@@ -574,7 +574,31 @@ body {
   color: var(--text-muted);
 }
 
-/* R/H/E summary */
+/* R/H/E + diamond layout */
+.live-rhe-diamond {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.live-diamond {
+  flex-shrink: 0;
+}
+
+.live-diamond-base {
+  fill: transparent;
+  stroke: var(--text-muted);
+  stroke-width: 1.5;
+  opacity: 0.4;
+}
+
+.live-diamond-base.occupied {
+  fill: var(--team-secondary);
+  stroke: var(--team-secondary);
+  opacity: 1;
+}
+
 .live-rhe {
   display: flex;
   flex-direction: column;
