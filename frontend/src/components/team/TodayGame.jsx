@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
 import { useState } from "react";
-import { fetchTodayGame, fetchPitcherSeasonStats, fetchLiveGameState, fetchGameDetail } from "../../api/client";
+import { fetchTodayGame, fetchPitcherSeasonStats, fetchLiveGameState, fetchGameDetail, fetchWinProbability } from "../../api/client";
 import { teamDisplayName } from "../../utils/formatters";
 import { formatGameDate, formatGameTime } from "../../utils/formatters";
 import PlayerPhoto from "../common/PlayerPhoto";
@@ -96,6 +96,14 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
     enabled: isLive && !!game.gamePk,
     staleTime: 1000 * 30,
     refetchInterval: 1000 * 30,
+  });
+
+  const { data: wpData } = useQuery({
+    queryKey: ["winProb", game.gamePk],
+    queryFn: () => fetchWinProbability(game.gamePk),
+    enabled: isLive && !!game.gamePk,
+    staleTime: 1000 * 60,
+    refetchInterval: 1000 * 60,
   });
 
   return (
@@ -259,6 +267,24 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
               </div>
             </div>
           )}
+
+          {/* Win probability */}
+          {wpData?.length > 0 && (() => {
+            const lastWp = wpData[wpData.length - 1];
+            const homeWin = lastWp.homeProb >= 0.5;
+            const favProb = Math.round((homeWin ? lastWp.homeProb : lastWp.awayProb) * 100);
+            const favLogo = homeWin ? game.home.logoUrl : game.away.logoUrl;
+            const favAbbr = homeWin ? game.home.abbreviation : game.away.abbreviation;
+            return (
+              <div className="lgp-wp">
+                <span className="lgp-wp-label">Win Probability</span>
+                <div className="lgp-wp-fav">
+                  <img src={favLogo} alt={favAbbr} className="lgp-wp-logo" />
+                  <span className="lgp-wp-pct">{favProb}%</span>
+                </div>
+              </div>
+            );
+          })()}
 
           {/* Live box score toggle */}
           <LiveBoxScore gamePk={game.gamePk} awayAbbr={game.away.abbreviation} homeAbbr={game.home.abbreviation} teamId={teamId} />

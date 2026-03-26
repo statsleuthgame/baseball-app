@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useTeam } from "../../context/TeamContext";
-import { fetchLiveGameState, fetchGameDetail } from "../../api/client";
+import { fetchLiveGameState, fetchGameDetail, fetchWinProbability } from "../../api/client";
 import { formatGameDate, formatGameTime, lastName, teamDisplayName } from "../../utils/formatters";
 import PlayerPhoto from "../common/PlayerPhoto";
 import LoadingSpinner from "../common/LoadingSpinner";
@@ -41,6 +41,14 @@ export default function LiveGamePage() {
     queryFn: () => fetchLiveGameState(gamePk),
     enabled: !!gamePk,
     staleTime: 1000 * 30,
+    refetchInterval: 1000 * 30,
+  });
+
+  const { data: wpData } = useQuery({
+    queryKey: ["winProb", gamePk],
+    queryFn: () => fetchWinProbability(gamePk),
+    enabled: !!gamePk,
+    staleTime: 1000 * 60,
     refetchInterval: 1000 * 30,
   });
 
@@ -259,6 +267,24 @@ export default function LiveGamePage() {
           </div>
         </div>
       )}
+
+      {/* Win probability */}
+      {wpData?.length > 0 && (() => {
+        const lastWp = wpData[wpData.length - 1];
+        const homeWin = lastWp.homeProb >= 0.5;
+        const favProb = Math.round((homeWin ? lastWp.homeProb : lastWp.awayProb) * 100);
+        const favLogo = homeWin ? gameInfo.home.logoUrl : gameInfo.away.logoUrl;
+        const favAbbr = homeWin ? gameInfo.home.abbreviation : gameInfo.away.abbreviation;
+        return (
+          <div className="lgp-wp">
+            <span className="lgp-wp-label">Win Probability</span>
+            <div className="lgp-wp-fav">
+              <img src={favLogo} alt={favAbbr} className="lgp-wp-logo" />
+              <span className="lgp-wp-pct">{favProb}%</span>
+            </div>
+          </div>
+        );
+      })()}
 
       {/* Venue */}
       <div className="lgp-venue">

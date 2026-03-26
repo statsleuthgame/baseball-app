@@ -3635,6 +3635,40 @@ th.sb-ls-total {
   color: var(--bg);
 }
 
+.lgp-wp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.lgp-wp-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--text-muted);
+}
+
+.lgp-wp-fav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lgp-wp-logo {
+  width: 20px;
+  height: 20px;
+}
+
+.lgp-wp-pct {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--win);
+}
+
 .lgp-venue {
   display: flex;
   flex-direction: column;
