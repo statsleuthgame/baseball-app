@@ -12,6 +12,7 @@ const MatchupView = lazy(() => import("./components/matchup/MatchupView"));
 const RosterGrid = lazy(() => import("./components/team/RosterGrid"));
 const Scoreboard = lazy(() => import("./components/team/Scoreboard"));
 const SprayChart = lazy(() => import("./components/spraychart/SprayChart"));
+const LiveGamePage = lazy(() => import("./components/team/LiveGamePage"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -42,6 +43,7 @@ export default function App() {
               <Route path="matchup" element={<MatchupView />} />
               <Route path="matchup/:gamePk" element={<MatchupView />} />
               <Route path="scores" element={<Scoreboard />} />
+              <Route path="live/:gamePk" element={<LiveGamePage />} />
               <Route path="roster" element={<RosterGrid />} />
               <Route path="spray" element={<SprayChart />} />
             </Route>

@@ -645,7 +645,7 @@ export default function Scoreboard() {
                 className={`scoreboard-card ${isOurGame ? "our-game" : ""} ${isLive ? "live" : ""} ${canExpand ? "sb-tappable" : ""}`}
                 onClick={canExpand ? () => setExpandedGame(isExpanded ? null : game.gamePk) : undefined}
               >
-                <div className="sb-matchup-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/matchup/${game.gamePk}`); }}>
+                <div className="sb-matchup-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/${isLive ? "live" : "matchup"}/${game.gamePk}`); }}>
                 {isLive && (
                   <div className="scoreboard-live-badge">
                     {game.inningHalf === "Top" ? "Top" : "Bot"} {game.inning}
