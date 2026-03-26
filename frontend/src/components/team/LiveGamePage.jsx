@@ -239,7 +239,7 @@ export default function LiveGamePage() {
           {liveState.lastPlay && (
             <div className="live-last-play">
               <span className="live-last-play-label">Last:</span> {liveState.lastPlay}
-              {liveState.lastHitData && <BallInPlayVisual hitData={liveState.lastHitData} venueId={gameInfo.venueId} />}
+              {liveState.lastHitData && <BallInPlayVisual hitData={liveState.lastHitData} venueTeamId={gameInfo.home.id} />}
             </div>
           )}
 

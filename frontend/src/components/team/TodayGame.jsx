@@ -265,7 +265,7 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
           {liveState.lastPlay && (
             <div className="live-last-play">
               <span className="live-last-play-label">Last:</span> {liveState.lastPlay}
-              {liveState.lastHitData && <BallInPlayVisual hitData={liveState.lastHitData} venueId={game.venue?.id} />}
+              {liveState.lastHitData && <BallInPlayVisual hitData={liveState.lastHitData} venueTeamId={game.home.id} />}
             </div>
           )}
 
