@@ -3350,11 +3350,13 @@ th.sb-ls-total {
 }
 
 .sb-atbat-inning {
-  width: 28px;
+  min-width: 28px;
   font-size: 10px;
   font-weight: 600;
   color: var(--text-muted);
   flex-shrink: 0;
+  text-align: right;
+  padding-right: 6px;
 }
 
 .sb-atbat-event {
@@ -3795,9 +3797,11 @@ th.sb-ls-total {
 }
 
 .lgp-box-ab-inn {
-  width: 14px;
+  min-width: 24px;
   flex-shrink: 0;
   font-weight: 600;
+  text-align: right;
+  padding-right: 4px;
 }
 
 .lgp-box-ab-event {
