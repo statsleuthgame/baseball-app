@@ -335,13 +335,9 @@ function GameDetail({ gamePk, awayAbbr, homeAbbr, teamId }) {
       {tab === "boxscore" && (
         <div className="sb-boxscore">
           <TeamBoxScore batters={data.away} abbr={awayAbbr} teamId={teamId} />
+          <TeamPitchingBox pitchers={data.awayPitchers} abbr={awayAbbr} teamId={teamId} />
           <TeamBoxScore batters={data.home} abbr={homeAbbr} teamId={teamId} />
-          {(data.awayPitchers?.length > 0 || data.homePitchers?.length > 0) && (
-            <>
-              <TeamPitchingBox pitchers={data.awayPitchers} abbr={awayAbbr} teamId={teamId} />
-              <TeamPitchingBox pitchers={data.homePitchers} abbr={homeAbbr} teamId={teamId} />
-            </>
-          )}
+          <TeamPitchingBox pitchers={data.homePitchers} abbr={homeAbbr} teamId={teamId} />
         </div>
       )}
     </div>
