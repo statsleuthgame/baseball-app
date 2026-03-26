@@ -133,7 +133,7 @@ export default function MatchupView() {
 
       {/* Win probability chart (shows during/after live games) */}
       {game.gamePk && (game.status === "In Progress" || game.status === "Final") && (
-        <WinProbability gamePk={game.gamePk} teamId={teamId} isHome={isHome} />
+        <WinProbability gamePk={game.gamePk} teamId={teamId} isHome={isHome} awayAbbr={game.away.abbreviation} homeAbbr={game.home.abbreviation} awayLogo={game.away.logoUrl} homeLogo={game.home.logoUrl} />
       )}
 
       {!opponentPitcher && (

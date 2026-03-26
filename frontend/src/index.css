@@ -3543,9 +3543,21 @@ th.sb-ls-total {
 .gamelog-highlight { color: var(--win); font-weight: 700; }
 
 /* Win Probability */
-.wp-header { display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px; }
-.wp-pct { font-size: 28px; font-weight: 800; }
-.wp-label { font-size: 12px; color: var(--text-muted); }
+.wp-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+.wp-team-prob {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.wp-team-logo { width: 24px; height: 24px; }
+.wp-pct { font-size: 24px; font-weight: 800; }
+.wp-label { font-size: 13px; color: var(--text-muted); font-weight: 600; }
 .wp-chart { width: 100%; height: auto; display: block; }
 
 /* Common */
