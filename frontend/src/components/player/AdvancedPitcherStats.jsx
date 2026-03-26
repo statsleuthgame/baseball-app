@@ -148,7 +148,7 @@ export default function AdvancedPitcherStats({ playerId }) {
     { key: "avgVelo", label: "FB Velo", value: avgFBVelo, fmt: (v) => `${v}` },
     { key: "maxVelo", label: "Max Velo", value: maxFBVelo, fmt: (v) => `${v}` },
     { key: "whiffRate", label: "Whiff%", value: overallWhiff ? Math.round(overallWhiff * 10) / 10 : null, fmt: (v) => `${v}%` },
-    { key: "topWhiff", label: "Top Whiff", value: topWhiffPitch.whiffRate, fmt: (v) => `${v}%` },
+    { key: "topWhiff", label: "Top Whiff", value: topWhiffPitch?.whiffRate ?? null, fmt: (v) => `${v}%` },
     { key: "baAgainst", label: "BAA", value: overallBA ? Math.round(overallBA * 1000) / 1000 : null, fmt: (v) => v.toFixed(3).replace(/^0/, "") },
     { key: "pitchCount", label: "Pitches", value: pitches.length, fmt: (v) => `${v}` },
   ];

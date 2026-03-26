@@ -945,22 +945,33 @@ export const fetchTeamHotCold = async (teamId) => {
         const last7 = splits.slice(-7);
         if (last7.length < 3) continue;
 
-        let ab = 0, hits = 0, hr = 0, rbi = 0;
+        let ab = 0, hits = 0, hr = 0, rbi = 0, bb = 0, hbp = 0, sf = 0, doubles = 0, triples = 0;
         for (const g of last7) {
-          ab += g.stat.atBats || 0;
-          hits += g.stat.hits || 0;
-          hr += g.stat.homeRuns || 0;
-          rbi += g.stat.rbi || 0;
+          const s = g.stat;
+          ab += s.atBats || 0;
+          hits += s.hits || 0;
+          hr += s.homeRuns || 0;
+          rbi += s.rbi || 0;
+          bb += s.baseOnBalls || 0;
+          hbp += s.hitByPitch || 0;
+          sf += s.sacFlies || 0;
+          doubles += s.doubles || 0;
+          triples += s.triples || 0;
         }
         if (ab < 10) continue;
         const avg = hits / ab;
-        const ops = parseFloat(last7[0]?.stat?.ops || "0");
+        const pa = ab + bb + hbp + sf;
+        const obp = pa > 0 ? (hits + bb + hbp) / pa : 0;
+        const singles = hits - doubles - triples - hr;
+        const tb = singles + doubles * 2 + triples * 3 + hr * 4;
+        const slg = ab > 0 ? tb / ab : 0;
+        const ops = Math.round((obp + slg) * 1000) / 1000;
 
         results.push({
           id: batter.id,
           name: batter.fullName,
           position: batter.position.abbreviation,
-          games: last7.length, ab, hits, hr, rbi,
+          games: last7.length, ab, hits, hr, rbi, ops,
           avg: Math.round(avg * 1000) / 1000,
           photoUrl: batter.photoUrl,
           isHot: avg >= .300,

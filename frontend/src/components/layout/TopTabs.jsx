@@ -15,8 +15,6 @@ export default function TopTabs() {
   const location = useLocation();
   const teamId = contextTeamId || urlTeamId;
 
-  const isPlayerPage = location.pathname.includes("/player/");
-
   return (
     <nav className="top-tabs" aria-label="Main navigation">
       <div className="top-tabs-scroll">

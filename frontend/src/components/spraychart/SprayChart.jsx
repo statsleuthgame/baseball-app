@@ -11,7 +11,13 @@ import LoadingSpinner from "../common/LoadingSpinner";
 import ErrorMessage from "../common/ErrorMessage";
 
 const ALL_RESULTS = ["single", "double", "triple", "home_run", "out"];
-const TEAM_HOME_PARK = { 136: "SEA", 144: "ATL" };
+const TEAM_HOME_PARK = {
+  109: "AZ", 144: "ATL", 110: "BAL", 111: "BOS", 112: "CHC", 145: "CWS",
+  113: "CIN", 114: "CLE", 115: "COL", 116: "DET", 117: "HOU", 118: "KC",
+  108: "LAA", 119: "LAD", 146: "MIA", 158: "MIL", 142: "MIN", 121: "NYM",
+  147: "NYY", 133: "ATH", 143: "PHI", 134: "PIT", 135: "SD", 137: "SF",
+  136: "SEA", 138: "STL", 139: "TB", 140: "TEX", 141: "TOR", 120: "WSH",
+};
 
 export default function SprayChart() {
   const { teamId } = useTeam();

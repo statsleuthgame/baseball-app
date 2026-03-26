@@ -17,7 +17,7 @@ export default function ParkHistory({ teamId, venueId, venueName }) {
 
   return (
     <div className="matchup-section">
-      <h3>Record at {venueName || "Venue"}</h3>
+      <h3>Season Record</h3>
       <div className="park-record">
         <div className="park-record-main">
           <span className="park-record-wins">{data.wins}</span>
