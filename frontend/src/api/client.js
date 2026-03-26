@@ -446,8 +446,44 @@ export const fetchTodayGame = async (teamId) => {
   }
 };
 
+// Fetch hot/cold players for a team (last 7 games)
+export const fetchHotColdPlayers = async (teamId) => {
+  try {
+    const roster = await fetchRoster(teamId);
+    const batters = roster.filter((p) => p.position.type !== "Pitcher");
+    const results = await Promise.all(
+      batters.map(async (p) => {
+        try {
+          const resp = await mlbApi.get(`/people/${p.id}/stats`, {
+            params: { stats: "lastXGames", group: "hitting", gameType: "R", limit: 7 },
+          });
+          const s = resp.data?.stats?.[0]?.splits?.[0]?.stat || {};
+          const ab = s.atBats || 0;
+          if (ab < 5) return null;
+          return {
+            id: p.id,
+            fullName: p.fullName,
+            position: p.position.abbreviation,
+            avg: s.avg || ".000",
+            ops: s.ops || ".000",
+            hits: s.hits || 0,
+            hr: s.homeRuns || 0,
+            ab,
+          };
+        } catch { return null; }
+      })
+    );
+    const valid = results.filter(Boolean);
+    const hot = [...valid].sort((a, b) => parseFloat(b.ops) - parseFloat(a.ops)).slice(0, 3);
+    const cold = [...valid].sort((a, b) => parseFloat(a.ops) - parseFloat(b.ops)).slice(0, 3);
+    return { hot, cold };
+  } catch {
+    return { hot: [], cold: [] };
+  }
+};
+
 export const fetchHotPlayers = () =>
-  Promise.resolve([]); // Requires pybaseball, not available client-side
+  Promise.resolve([]); // Legacy, replaced by fetchHotColdPlayers
 
 export const fetchBvP = async (batterId, pitcherId) => {
   try {

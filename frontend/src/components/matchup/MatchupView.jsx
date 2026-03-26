@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
-import { fetchTodayGame, fetchRoster, fetchGameLineup, fetchProjectedLineup } from "../../api/client";
-import { formatGameDate, formatGameTime, lastName } from "../../utils/formatters";
+import { fetchTodayGame, fetchRoster, fetchGameLineup, fetchProjectedLineup, fetchHotColdPlayers } from "../../api/client";
+import { formatGameDate, formatGameTime, lastName, formatAvg } from "../../utils/formatters";
+import PARK_FACTORS from "../../data/parkFactors";
 import LoadingSpinner from "../common/LoadingSpinner";
 import BatterVsPitcher from "./BatterVsPitcher";
 import PitchArsenal from "../player/PitchArsenal";
@@ -104,6 +105,14 @@ export default function MatchupView() {
           oppAbbr={opponent.abbreviation}
         />
       )}
+
+      {/* Park Factors */}
+      {game.venue?.id && PARK_FACTORS[game.venue.id] && (
+        <ParkFactorsCard venueId={game.venue.id} venueName={game.venue.name} />
+      )}
+
+      {/* Hot & Cold Players */}
+      <HotColdSection teamId={teamId} opponentId={opponent.id} usAbbr={us.abbreviation} oppAbbr={opponent.abbreviation} />
 
       {/* Opposing pitcher's arsenal */}
       {opponentPitcher && (
@@ -216,6 +225,93 @@ function MatchupLineups({ gamePk, teamId, opponentId, usAbbr, oppAbbr }) {
             </div>
           ))}
         </div>
+      </div>
+    </div>
+  );
+}
+
+function ParkFactorsCard({ venueId, venueName }) {
+  const park = PARK_FACTORS[venueId];
+  if (!park) return null;
+
+  const runBar = Math.min(Math.max(park.runs - 85, 0), 30);
+  const hrBar = Math.min(Math.max(park.hr - 85, 0), 30);
+
+  return (
+    <div className="matchup-section">
+      <h3>Park Factors</h3>
+      <div className="park-factors-card">
+        <div className="park-factor-label-row">
+          <span className="park-factor-venue">{venueName}</span>
+          <span className={`park-factor-tag ${park.runs >= 103 ? "hitter" : park.runs <= 97 ? "pitcher" : "neutral"}`}>
+            {park.label}
+          </span>
+        </div>
+        <div className="park-factor-row">
+          <span className="park-factor-stat">Runs</span>
+          <div className="park-factor-bar-bg">
+            <div className="park-factor-bar" style={{ width: `${(runBar / 30) * 100}%`, background: park.runs >= 100 ? "var(--win)" : "var(--team-secondary)" }} />
+          </div>
+          <span className="park-factor-val">{park.runs}</span>
+        </div>
+        <div className="park-factor-row">
+          <span className="park-factor-stat">HR</span>
+          <div className="park-factor-bar-bg">
+            <div className="park-factor-bar" style={{ width: `${(hrBar / 30) * 100}%`, background: park.hr >= 100 ? "var(--win)" : "var(--team-secondary)" }} />
+          </div>
+          <span className="park-factor-val">{park.hr}</span>
+        </div>
+        <span className="park-factor-note">100 = league average</span>
+      </div>
+    </div>
+  );
+}
+
+function HotColdSection({ teamId, opponentId, usAbbr, oppAbbr }) {
+  const navigate = useNavigate();
+
+  const { data: usData } = useQuery({
+    queryKey: ["hotCold", teamId],
+    queryFn: () => fetchHotColdPlayers(teamId),
+    enabled: !!teamId,
+    staleTime: 1000 * 60 * 30,
+  });
+
+  const { data: oppData } = useQuery({
+    queryKey: ["hotCold", opponentId],
+    queryFn: () => fetchHotColdPlayers(opponentId),
+    enabled: !!opponentId,
+    staleTime: 1000 * 60 * 30,
+  });
+
+  const hasData = usData?.hot?.length || oppData?.hot?.length;
+  if (!hasData) return null;
+
+  const renderList = (players, label, teamAbbr) => {
+    if (!players?.length) return null;
+    return (
+      <div className="hotcold-group">
+        <div className="hotcold-group-title">{label} — {teamAbbr}</div>
+        {players.map((p) => (
+          <div key={p.id} className="hotcold-row sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
+            <span className="hotcold-name">{lastName(p.fullName)}</span>
+            <span className="hotcold-pos">{p.position}</span>
+            <span className="hotcold-stat">{p.avg}</span>
+            <span className="hotcold-ops">{p.ops} OPS</span>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  return (
+    <div className="matchup-section">
+      <h3>Hot & Cold (Last 7 Games)</h3>
+      <div className="hotcold-container">
+        {renderList(usData?.hot, "Hot", usAbbr)}
+        {renderList(oppData?.hot, "Hot", oppAbbr)}
+        {renderList(usData?.cold, "Cold", usAbbr)}
+        {renderList(oppData?.cold, "Cold", oppAbbr)}
       </div>
     </div>
   );
