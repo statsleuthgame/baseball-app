@@ -1015,9 +1015,35 @@ export const fetchLeagueLeaders = async () => {
       } catch (e) { console.warn("fetch failed:", e.message); }
     };
 
+    // Fetch longest HRs from Baseball Savant
+    const fetchLongestHR = async () => {
+      try {
+        const resp = await axios.get(`https://baseballsavant.mlb.com/leaderboard/statcast?type=batter&year=${year}&position=&team=&min=10&sort=11&sortDir=desc&csv=true`, { timeout: 10000 });
+        const text = resp.data.replace(/^\ufeff/, "");
+        const lines = text.split("\n");
+        const headers = lines[0].split(",").map((h) => h.replace(/"/g, "").trim());
+        const nameIdx = 0;
+        const distIdx = headers.indexOf("max_distance");
+        if (distIdx === -1) return;
+        const rows = lines.slice(1).filter((l) => l.trim()).map((line) => {
+          const cols = line.match(/(".*?"|[^,]+)/g)?.map((c) => c.replace(/"/g, "").trim()) || [];
+          return { name: cols[nameIdx], distance: parseInt(cols[distIdx]) || 0 };
+        });
+        rows.sort((a, b) => b.distance - a.distance);
+        hitting.longestHR = rows.slice(0, 5).map((r, i) => ({
+          rank: i + 1,
+          value: String(r.distance),
+          player: { name: r.name?.split(", ").reverse().join(" ") || "Unknown" },
+          team: "",
+          teamId: null,
+        }));
+      } catch (e) { console.warn("Longest HR fetch failed:", e.message); }
+    };
+
     await Promise.all([
       ...hittingCats.map((cat) => fetchCat(cat, "hitting", hitting)),
       ...pitchingCats.map((cat) => fetchCat(cat, "pitching", pitching)),
+      fetchLongestHR(),
     ]);
     return { hitting, pitching };
   } catch {
