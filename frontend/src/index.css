@@ -639,6 +639,23 @@ body {
   color: var(--text);
 }
 
+.live-pbp {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.4;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.live-pbp-detail {
+  margin-left: 4px;
+  color: var(--text);
+}
+
+.live-pbp-detail strong {
+  color: var(--text-bright);
+}
+
 /* Next due up */
 .live-due-up {
   padding-top: 8px;

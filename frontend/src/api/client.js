@@ -320,9 +320,24 @@ export const fetchLiveGameState = async (gamePk) => {
       pitcher: cp.pitcher ? { id: cp.pitcher.id, fullName: cp.pitcher.fullName, gameStats: pitcherGameStats } : null,
       lastPlay,
       currentAtBat: (plays.currentPlay?.playEvents || [])
-        .filter((e) => e.details?.description)
-        .map((e) => e.details.description)
-        .slice(-5),
+        .filter((e) => e.details?.description && e.details?.call?.description)
+        .map((e) => {
+          const d = e.details;
+          const speed = e.pitchData?.startSpeed;
+          const pitchType = d.type?.description || "";
+          const call = d.call?.description || d.description || "";
+          const batterName = cp.batter?.fullName?.split(" ").pop() || "";
+          let action = "";
+          if (d.isStrike && d.code === "C") action = `${batterName} takes`;
+          else if (d.isStrike && d.code === "S") action = `${batterName} swings and misses`;
+          else if (d.isStrike && d.code === "F") action = `${batterName} fouls off`;
+          else if (d.isBall) action = `${batterName} takes`;
+          else if (d.isInPlay) action = `${batterName} puts in play`;
+          else action = batterName;
+          const pitchInfo = pitchType ? `${pitchType}${speed ? ` ${speed} mph` : ""}` : "";
+          return { action, pitchInfo, call };
+        })
+        .slice(-6),
       onDeck: ls.offense?.onDeck ? { id: ls.offense.onDeck.id, fullName: ls.offense.onDeck.fullName } : null,
       inHole: ls.offense?.inHole ? { id: ls.offense.inHole.id, fullName: ls.offense.inHole.fullName } : null,
       scoringPlays: allPlays
