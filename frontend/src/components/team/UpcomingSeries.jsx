@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
 import { fetchUpcomingSeries } from "../../api/client";
-import { formatGameDate, formatGameTime, lastName } from "../../utils/formatters";
+import { formatGameDate, formatGameTime, shortName } from "../../utils/formatters";
 
 export default function UpcomingSeries() {
   const { teamId } = useTeam();
@@ -41,13 +41,13 @@ export default function UpcomingSeries() {
               <div className="series-pitchers">
                 {us.probablePitcher && (
                   <span className="series-pitcher-name sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${us.probablePitcher.id}`)}>
-                    {us.probablePitcher.fullName}
+                    {shortName(us.probablePitcher.fullName)}
                   </span>
                 )}
                 {us.probablePitcher && opp.probablePitcher && <span className="series-pitcher-vs">vs</span>}
                 {opp.probablePitcher && (
                   <span className="series-pitcher-name sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${opp.probablePitcher.id}`)}>
-                    {opp.probablePitcher.fullName}
+                    {shortName(opp.probablePitcher.fullName)}
                   </span>
                 )}
                 {!us.probablePitcher && !opp.probablePitcher && (
