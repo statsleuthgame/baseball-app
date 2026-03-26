@@ -41,13 +41,13 @@ export default function UpcomingSeries() {
               <div className="series-pitchers">
                 {us.probablePitcher && (
                   <span className="series-pitcher-name sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${us.probablePitcher.id}`)}>
-                    {lastName(us.probablePitcher.fullName)}
+                    {us.probablePitcher.fullName}
                   </span>
                 )}
                 {us.probablePitcher && opp.probablePitcher && <span className="series-pitcher-vs">vs</span>}
                 {opp.probablePitcher && (
                   <span className="series-pitcher-name sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${opp.probablePitcher.id}`)}>
-                    {lastName(opp.probablePitcher.fullName)}
+                    {opp.probablePitcher.fullName}
                   </span>
                 )}
                 {!us.probablePitcher && !opp.probablePitcher && (
