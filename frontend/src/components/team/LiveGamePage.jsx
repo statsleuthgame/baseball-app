@@ -70,9 +70,15 @@ export default function LiveGamePage() {
 
   return (
     <div className="live-game-page">
-      {/* Status badge + watch */}
+      {/* Back + status + watch */}
       <div className="lgp-status">
         <div className="lgp-status-left">
+          <button className="lgp-back-btn" onClick={() => navigate(`/team/${teamId}/scores`)} aria-label="Back to scores">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+            Scores
+          </button>
           {isLive && <span className="lgp-badge live">LIVE</span>}
           {isFinal && <span className="lgp-badge final">FINAL</span>}
         </div>
@@ -178,11 +184,11 @@ export default function LiveGamePage() {
                 </tbody>
               </table>
             </div>
-            <svg className="live-diamond" width="60" height="64" viewBox="0 0 60 64">
-              <rect x="21" y="4" width="16" height="16" rx="2" transform="rotate(45 29 12)" className={`live-diamond-base ${liveState.onSecond ? "occupied" : ""}`} />
-              <rect x="33" y="16" width="16" height="16" rx="2" transform="rotate(45 41 24)" className={`live-diamond-base ${liveState.onFirst ? "occupied" : ""}`} />
-              <rect x="9" y="16" width="16" height="16" rx="2" transform="rotate(45 17 24)" className={`live-diamond-base ${liveState.onThird ? "occupied" : ""}`} />
-              <circle cx="29" cy="46" r="3" fill="var(--text-muted)" opacity="0.3" />
+            <svg className="live-diamond" width="72" height="72" viewBox="0 0 72 72">
+              <rect x="24" y="2" width="16" height="16" rx="2" transform="rotate(45 32 10)" className={`live-diamond-base ${liveState.onSecond ? "occupied" : ""}`} />
+              <rect x="40" y="18" width="16" height="16" rx="2" transform="rotate(45 48 26)" className={`live-diamond-base ${liveState.onFirst ? "occupied" : ""}`} />
+              <rect x="8" y="18" width="16" height="16" rx="2" transform="rotate(45 16 26)" className={`live-diamond-base ${liveState.onThird ? "occupied" : ""}`} />
+              <circle cx="32" cy="50" r="3" fill="var(--text-muted)" opacity="0.3" />
             </svg>
           </div>
 

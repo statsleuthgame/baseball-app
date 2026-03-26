@@ -420,10 +420,10 @@ function LiveGameInfo({ gamePk, teamId }) {
             </div>
           </div>
         )}
-        <svg className="sb-live-diamond" width="44" height="46" viewBox="0 0 44 46">
-          <rect x="15" y="4" width="12" height="12" rx="1.5" transform="rotate(45 21 10)" className={`sb-live-base ${liveState.onSecond ? "occupied" : ""}`} />
-          <rect x="25" y="14" width="12" height="12" rx="1.5" transform="rotate(45 31 20)" className={`sb-live-base ${liveState.onFirst ? "occupied" : ""}`} />
-          <rect x="5" y="14" width="12" height="12" rx="1.5" transform="rotate(45 11 20)" className={`sb-live-base ${liveState.onThird ? "occupied" : ""}`} />
+        <svg className="sb-live-diamond" width="52" height="52" viewBox="0 0 52 52">
+          <rect x="17" y="2" width="12" height="12" rx="1.5" transform="rotate(45 23 8)" className={`sb-live-base ${liveState.onSecond ? "occupied" : ""}`} />
+          <rect x="30" y="15" width="12" height="12" rx="1.5" transform="rotate(45 36 21)" className={`sb-live-base ${liveState.onFirst ? "occupied" : ""}`} />
+          <rect x="4" y="15" width="12" height="12" rx="1.5" transform="rotate(45 10 21)" className={`sb-live-base ${liveState.onThird ? "occupied" : ""}`} />
           <circle cx="21" cy="34" r="2.5" fill="var(--text-muted)" opacity="0.3" />
         </svg>
         {liveState.pitcher && (

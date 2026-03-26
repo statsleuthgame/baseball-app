@@ -8,6 +8,7 @@ const HITTING_CATS = [
   { key: "homeRuns", label: "Home Runs", fmt: (v) => v },
   { key: "battingAverage", label: "Batting Avg", fmt: (v) => formatAvg(parseFloat(v)) },
   { key: "runsBattedIn", label: "RBI", fmt: (v) => v },
+  { key: "onBasePlusSlugging", label: "OPS", fmt: (v) => parseFloat(v).toFixed(3) },
   { key: "stolenBases", label: "Stolen Bases", fmt: (v) => v },
   { key: "hits", label: "Hits", fmt: (v) => v },
 ];

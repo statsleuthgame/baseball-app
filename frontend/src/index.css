@@ -2870,6 +2870,9 @@ button.stat-cell {
 
 .sb-inline-pitcher-name {
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 130px;
 }
 
 .sb-pitcher-stats {
@@ -3677,7 +3680,23 @@ th.sb-ls-total {
 .lgp-status-left {
   display: flex;
   align-items: center;
+  gap: 8px;
 }
+
+.lgp-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 8px 4px 2px;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.lgp-back-btn:active { opacity: 0.7; }
 
 .lgp-watch-btn {
   display: flex;

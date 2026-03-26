@@ -994,7 +994,7 @@ export const fetchTeamHotCold = async (teamId) => {
 export const fetchLeagueLeaders = async () => {
   try {
     const year = new Date().getFullYear();
-    const hittingCats = ["homeRuns", "battingAverage", "runsBattedIn", "stolenBases", "hits"];
+    const hittingCats = ["homeRuns", "battingAverage", "runsBattedIn", "onBasePlusSlugging", "stolenBases", "hits"];
     const pitchingCats = ["earnedRunAverage", "strikeouts", "wins", "saves", "whip"];
     const hitting = {};
     const pitching = {};
