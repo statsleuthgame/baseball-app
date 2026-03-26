@@ -242,6 +242,13 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
             </div>
           )}
 
+          {/* Play by play - current at bat */}
+          {liveState.currentAtBat?.length > 0 && (
+            <div className="live-last-play">
+              <span className="live-last-play-label">Play by Play:</span> {liveState.currentAtBat[liveState.currentAtBat.length - 1]}
+            </div>
+          )}
+
           {/* Last play */}
           {liveState.lastPlay && (
             <div className="live-last-play">
