@@ -682,9 +682,9 @@ export default function Scoreboard() {
                         </div>
                       </div>
                     )}
-                    <span className="scoreboard-score">
-                      {(isLive || isFinal) ? game.away.score : ""}
-                    </span>
+                    {(isLive || isFinal) && (
+                      <span className="scoreboard-score">{game.away.score}</span>
+                    )}
                   </div>
                   <div className={`scoreboard-team-row ${isFinal ? (homeWon ? "sb-winner" : "sb-loser") : ""}`}>
                     <img src={game.home.logoUrl} alt={game.home.abbreviation} className="scoreboard-logo" />
@@ -707,9 +707,9 @@ export default function Scoreboard() {
                         </div>
                       </div>
                     )}
-                    <span className="scoreboard-score">
-                      {(isLive || isFinal) ? game.home.score : ""}
-                    </span>
+                    {(isLive || isFinal) && (
+                      <span className="scoreboard-score">{game.home.score}</span>
+                    )}
                   </div>
                 </div>
 
