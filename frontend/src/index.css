@@ -2554,6 +2554,43 @@ th.sb-ls-total {
   transition: transform 0.2s;
 }
 
+/* Pitching box score */
+.sb-pitching-box {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.sb-pitcher-row {
+  display: flex;
+  align-items: center;
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.sb-pitcher-box-name {
+  flex: 1;
+  font-size: 12px;
+  font-weight: 500;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sb-pitcher-stat {
+  width: 24px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--text);
+  flex-shrink: 0;
+}
+
+.sb-pc {
+  color: var(--text-muted);
+  font-size: 10px;
+}
+
 /* At-bat dropdown */
 .sb-atbats {
   padding: 4px 8px 6px 32px;

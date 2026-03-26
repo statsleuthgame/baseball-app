@@ -234,6 +234,43 @@ function TeamBoxScore({ batters, abbr, teamId }) {
   );
 }
 
+function TeamPitchingBox({ pitchers, abbr, teamId }) {
+  const navigate = useNavigate();
+  if (!pitchers?.length) return null;
+
+  return (
+    <div className="sb-team-box sb-pitching-box">
+      <div className="sb-box-header">
+        <span className="sb-pitcher-box-name sb-box-team">{teamDisplayName(abbr)}</span>
+        <span className="sb-pitcher-stat sb-stat-hdr">IP</span>
+        <span className="sb-pitcher-stat sb-stat-hdr">H</span>
+        <span className="sb-pitcher-stat sb-stat-hdr">R</span>
+        <span className="sb-pitcher-stat sb-stat-hdr">ER</span>
+        <span className="sb-pitcher-stat sb-stat-hdr">BB</span>
+        <span className="sb-pitcher-stat sb-stat-hdr">K</span>
+        <span className="sb-pitcher-stat sb-stat-hdr">PC</span>
+      </div>
+      {pitchers.map((p) => (
+        <div key={p.id} className="sb-pitcher-row">
+          <span
+            className="sb-pitcher-box-name sb-batter-name sb-player-link"
+            onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}
+          >
+            {p.name}
+          </span>
+          <span className="sb-pitcher-stat">{p.stats.ip}</span>
+          <span className="sb-pitcher-stat">{p.stats.h}</span>
+          <span className="sb-pitcher-stat">{p.stats.r}</span>
+          <span className="sb-pitcher-stat">{p.stats.er}</span>
+          <span className="sb-pitcher-stat">{p.stats.bb}</span>
+          <span className="sb-pitcher-stat">{p.stats.k}</span>
+          <span className="sb-pitcher-stat sb-pc">{p.stats.pitches}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function GameDetail({ gamePk, awayAbbr, homeAbbr, teamId }) {
   const [tab, setTab] = useState("scoring");
 
@@ -297,6 +334,12 @@ function GameDetail({ gamePk, awayAbbr, homeAbbr, teamId }) {
         <div className="sb-boxscore">
           <TeamBoxScore batters={data.away} abbr={awayAbbr} teamId={teamId} />
           <TeamBoxScore batters={data.home} abbr={homeAbbr} teamId={teamId} />
+          {(data.awayPitchers?.length > 0 || data.homePitchers?.length > 0) && (
+            <>
+              <TeamPitchingBox pitchers={data.awayPitchers} abbr={awayAbbr} teamId={teamId} />
+              <TeamPitchingBox pitchers={data.homePitchers} abbr={homeAbbr} teamId={teamId} />
+            </>
+          )}
         </div>
       )}
     </div>

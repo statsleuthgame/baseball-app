@@ -609,13 +609,38 @@ export const fetchGameDetail = async (gamePk) => {
         };
       }).filter(Boolean);
 
-      return batters;
+      const pitchers = (teamData?.pitchers || []).map((id) => {
+        const p = teamData.players?.[`ID${id}`];
+        if (!p) return null;
+        const s = p.stats?.pitching || {};
+        return {
+          id,
+          name: p.person?.fullName || "",
+          stats: {
+            ip: s.inningsPitched ?? "0",
+            h: s.hits ?? 0,
+            r: s.runs ?? 0,
+            er: s.earnedRuns ?? 0,
+            bb: s.baseOnBalls ?? 0,
+            k: s.strikeOuts ?? 0,
+            pitches: s.numberOfPitches ?? 0,
+            strikes: s.strikes ?? 0,
+          },
+          note: s.note || "",
+        };
+      }).filter(Boolean);
+
+      return { batters, pitchers };
     };
 
     const box = boxResp.data?.teams || {};
+    const away = parseTeam(box.away);
+    const home = parseTeam(box.home);
     return {
-      away: parseTeam(box.away),
-      home: parseTeam(box.home),
+      away: away.batters,
+      home: home.batters,
+      awayPitchers: away.pitchers,
+      homePitchers: home.pitchers,
       scoringPlays,
     };
   } catch {
