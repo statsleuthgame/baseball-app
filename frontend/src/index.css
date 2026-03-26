@@ -3703,6 +3703,105 @@ th.sb-ls-total {
   overflow-y: visible;
 }
 
+/* Live game page side-by-side box score */
+.lgp-box-cols {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.lgp-box-team {
+  flex: 1;
+  min-width: 0;
+}
+
+.lgp-box-hdr {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-bright);
+  padding-bottom: 4px;
+  margin-bottom: 2px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.lgp-box-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 0;
+  font-size: 11px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.lgp-box-pos {
+  width: 16px;
+  font-size: 9px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.lgp-box-name {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-decoration: underline;
+  text-decoration-color: rgba(255,255,255,0.15);
+  text-underline-offset: 2px;
+}
+
+.lgp-box-stat {
+  font-size: 10px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.lgp-box-chev {
+  flex-shrink: 0;
+  color: var(--text-muted);
+  transition: transform 0.2s;
+}
+
+.lgp-box-abs {
+  padding: 2px 0 4px 20px;
+}
+
+.lgp-box-ab {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 0;
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.lgp-box-ab-scoring {
+  color: var(--win);
+}
+
+.lgp-box-ab-inn {
+  width: 14px;
+  flex-shrink: 0;
+  font-weight: 600;
+}
+
+.lgp-box-ab-event {
+  flex: 1;
+}
+
+.lgp-box-ab-rbi {
+  font-weight: 600;
+  color: var(--team-secondary);
+  flex-shrink: 0;
+}
+
+.lgp-box-pitchers {
+  margin-top: 4px;
+  padding-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
 .lgp-wp {
   display: flex;
   flex-direction: column;

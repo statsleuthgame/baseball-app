@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useTeam } from "../../context/TeamContext";
 import { fetchLiveGameState, fetchGameDetail, fetchWinProbability } from "../../api/client";
-import { formatGameDate, formatGameTime, lastName, teamDisplayName } from "../../utils/formatters";
+import { lastName, teamDisplayName } from "../../utils/formatters";
 import PlayerPhoto from "../common/PlayerPhoto";
 import LoadingSpinner from "../common/LoadingSpinner";
 
@@ -277,33 +277,9 @@ export default function LiveGamePage() {
               </svg>
             </button>
             {boxOpen && boxData && (
-              <div className="live-boxscore-content">
+              <div className="lgp-box-cols">
                 {[{ batters: boxData.away, pitchers: boxData.awayPitchers, abbr: gameInfo.away.abbreviation }, { batters: boxData.home, pitchers: boxData.homePitchers, abbr: gameInfo.home.abbreviation }].map(({ batters, pitchers, abbr }) => (
-                  <div key={abbr} className="live-boxscore-team">
-                    <div className="live-boxscore-hdr">{teamDisplayName(abbr)}</div>
-                    {batters?.map((b) => (
-                      <div key={b.id} className="live-boxscore-row">
-                        <span className="live-bs-pos">{b.position}</span>
-                        <span className="live-bs-name sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${b.id}`)}>{b.name}</span>
-                        <span className="live-bs-stat">{b.stats.h}-{b.stats.ab}</span>
-                        {b.stats.rbi > 0 && <span className="live-bs-rbi">{b.stats.rbi} RBI</span>}
-                        {b.stats.hr > 0 && <span className="live-bs-hr">{b.stats.hr} HR</span>}
-                      </div>
-                    ))}
-                    {pitchers?.length > 0 && (
-                      <div className="live-boxscore-pitchers">
-                        {pitchers.map((p) => (
-                          <div key={p.id} className="live-boxscore-row">
-                            <span className="live-bs-pos">P</span>
-                            <span className="live-bs-name sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>{p.name}</span>
-                            <span className="live-bs-stat">{p.stats.ip} IP</span>
-                            <span className="live-bs-stat">{p.stats.k} K</span>
-                            <span className="live-bs-stat">{p.stats.er} ER</span>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
+                  <LgpBoxTeam key={abbr} batters={batters} pitchers={pitchers} abbr={abbr} teamId={teamId} />
                 ))}
               </div>
             )}
@@ -321,6 +297,64 @@ export default function LiveGamePage() {
       <button className="lgp-matchup-btn" onClick={() => navigate(`/team/${teamId}/matchup/${gamePk}`)}>
         View Full Matchup
       </button>
+    </div>
+  );
+}
+
+function LgpBoxTeam({ batters, pitchers, abbr, teamId }) {
+  const [openBatter, setOpenBatter] = useState(null);
+  const navigate = useNavigate();
+
+  return (
+    <div className="lgp-box-team">
+      <div className="lgp-box-hdr">{teamDisplayName(abbr)}</div>
+      {batters?.map((b) => {
+        const isOpen = openBatter === b.id;
+        const hasABs = b.atBats?.length > 0;
+        return (
+          <div key={b.id} className="lgp-box-batter">
+            <div
+              className={`lgp-box-row ${hasABs ? "sb-tappable" : ""}`}
+              onClick={hasABs ? () => setOpenBatter(isOpen ? null : b.id) : undefined}
+            >
+              <span className="lgp-box-pos">{b.position}</span>
+              <span className="lgp-box-name sb-player-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${b.id}`); }}>
+                {lastName(b.name)}
+              </span>
+              <span className="lgp-box-stat">{b.stats.h}-{b.stats.ab}</span>
+              {hasABs && (
+                <svg className="lgp-box-chev" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ transform: isOpen ? "rotate(180deg)" : "none" }}>
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              )}
+            </div>
+            {isOpen && (
+              <div className="lgp-box-abs">
+                {b.atBats.map((ab, i) => (
+                  <div key={i} className={`lgp-box-ab ${ab.isScoring ? "lgp-box-ab-scoring" : ""}`}>
+                    <span className="lgp-box-ab-inn">{ab.inning}</span>
+                    <span className="lgp-box-ab-event">{ab.event}{ab.hrDistance ? ` (${ab.hrDistance} ft)` : ""}</span>
+                    {ab.rbi > 0 && <span className="lgp-box-ab-rbi">{ab.rbi} RBI</span>}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        );
+      })}
+      {pitchers?.length > 0 && (
+        <div className="lgp-box-pitchers">
+          {pitchers.map((p) => (
+            <div key={p.id} className="lgp-box-row">
+              <span className="lgp-box-pos">P</span>
+              <span className="lgp-box-name sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
+                {lastName(p.name)}
+              </span>
+              <span className="lgp-box-stat">{p.stats.ip} IP, {p.stats.k} K</span>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
