@@ -416,7 +416,7 @@ export default function Scoreboard() {
         if (aIsOurs && !bIsOurs) return -1;
         if (!aIsOurs && bIsOurs) return 1;
 
-        const statusOrder = { "In Progress": 0, "Pre-Game": 1, Warmup: 1, Scheduled: 2, Final: 3 };
+        const statusOrder = { "In Progress": 0, "Delayed": 0.5, "Delayed Start": 0.5, "Pre-Game": 1, Warmup: 1, Scheduled: 2, Final: 3 };
         return (statusOrder[a.status] ?? 4) - (statusOrder[b.status] ?? 4);
       })
     : [];
@@ -477,8 +477,9 @@ export default function Scoreboard() {
           {sorted.map((game) => {
             const isOurGame = game.home.id === teamId || game.away.id === teamId;
             const isLive = game.status === "In Progress";
+            const isDelayed = game.status === "Delayed Start" || game.status === "Delayed";
             const isFinal = game.status === "Final";
-            const isScheduled = !isLive && !isFinal;
+            const isScheduled = !isLive && !isDelayed && !isFinal;
 
             // For our scheduled games, figure out opposing pitcher
             const weAreHome = game.home.id === teamId;
@@ -502,6 +503,9 @@ export default function Scoreboard() {
                   <div className="scoreboard-live-badge">
                     {game.inningHalf === "Top" ? "Top" : "Bot"} {game.inning}
                   </div>
+                )}
+                {isDelayed && (
+                  <div className="scoreboard-status-badge sb-delayed-badge">Delayed</div>
                 )}
                 {isFinal && (
                   <div className="scoreboard-status-badge">

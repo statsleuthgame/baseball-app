@@ -370,7 +370,7 @@ export const fetchTodayGame = async (teamId) => {
 
     // Live or scheduled game today
     const liveOrScheduled = todayGames.find((g) =>
-      ["In Progress", "Scheduled", "Pre-Game", "Warmup"].includes(g.status?.detailedState)
+      ["In Progress", "Scheduled", "Pre-Game", "Warmup", "Delayed Start", "Delayed", "Suspended"].includes(g.status?.detailedState)
     );
     if (liveOrScheduled) return formatGame(liveOrScheduled, true);
 

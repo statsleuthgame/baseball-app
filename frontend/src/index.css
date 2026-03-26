@@ -2097,6 +2097,12 @@ button.stat-cell {
   border-color: var(--live);
 }
 
+.sb-delayed-badge {
+  background: #F59E0B !important;
+  color: #000 !important;
+  font-weight: 800 !important;
+}
+
 .scoreboard-live-badge {
   display: inline-block;
   padding: 2px 8px;

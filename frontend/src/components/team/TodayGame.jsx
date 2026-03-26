@@ -30,6 +30,7 @@ export default function TodayGame() {
   }
 
   const isLive = game.status === "In Progress";
+  const isDelayed = game.status === "Delayed Start" || game.status === "Delayed";
   const isFinal = game.status === "Final";
   const isNext = game.isNextGame;
 
@@ -51,6 +52,8 @@ export default function TodayGame() {
         label={
           isLive
             ? "LIVE"
+            : isDelayed
+            ? "DELAYED"
             : isFinal
             ? "FINAL"
             : isToday
