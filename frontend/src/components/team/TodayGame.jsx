@@ -433,58 +433,114 @@ function LiveBoxScore({ gamePk, awayAbbr, homeAbbr, teamId }) {
   );
 }
 
-function BallInPlayVisual({ hitData }) {
+function BallInPlayVisual({ hitData, venueDimensions }) {
   if (!hitData) return null;
 
-  const dotX = (hitData.x / 250) * 200;
-  const dotY = (hitData.y / 250) * 160;
+  // SVG coordinate system: 300x240, home plate at (150, 220)
+  const HP = { x: 150, y: 220 };
+  const SCALE = 0.45; // feet to SVG units
+
+  // Convert MLB hit coordinates (250x250 grid) to our SVG
+  const dotX = (hitData.x / 250) * 300;
+  const dotY = (hitData.y / 250) * 240;
+
   const isHR = hitData.distance >= 300 && hitData.launchAngle > 20;
   const isHit = ["line_drive"].includes(hitData.trajectory) || hitData.distance > 200;
   const accentColor = isHR ? "#ef4444" : isHit ? "#22c55e" : "#64748b";
 
-  const trajLabel = {
-    fly_ball: "Fly Ball", line_drive: "Line Drive",
-    ground_ball: "Ground Ball", popup: "Popup",
-  }[hitData.trajectory] || "Batted Ball";
-
+  const trajLabel = { fly_ball: "Fly Ball", line_drive: "Line Drive", ground_ball: "Ground Ball", popup: "Popup" }[hitData.trajectory] || "Batted Ball";
   const evLabel = hitData.exitVelo >= 100 ? "Barreled" : hitData.exitVelo >= 95 ? "Hard Hit" : hitData.exitVelo >= 85 ? "Medium" : "Soft";
+
+  // Build fence path from venue dimensions
+  const dims = venueDimensions || { LF: 330, LCF: 385, CF: 400, RCF: 385, RF: 330 };
+  const fencePoint = (angle, dist) => {
+    const rad = (angle * Math.PI) / 180;
+    return { x: HP.x + Math.sin(rad) * dist * SCALE, y: HP.y - Math.cos(rad) * dist * SCALE };
+  };
+  const lfCorner = fencePoint(-45, dims.LF);
+  const lcf = fencePoint(-22.5, dims.LCF);
+  const cf = fencePoint(0, dims.CF);
+  const rcf = fencePoint(22.5, dims.RCF);
+  const rfCorner = fencePoint(45, dims.RF);
+  const fencePath = `M ${lfCorner.x},${lfCorner.y} Q ${lcf.x},${lcf.y} ${cf.x},${cf.y} Q ${rcf.x},${rcf.y} ${rfCorner.x},${rfCorner.y}`;
+
+  // Infield positions (90ft basepaths)
+  const baseDist = 90 * SCALE;
+  const first = { x: HP.x + baseDist * 0.707, y: HP.y - baseDist * 0.707 };
+  const second = { x: HP.x, y: HP.y - baseDist * 1.414 };
+  const third = { x: HP.x - baseDist * 0.707, y: HP.y - baseDist * 0.707 };
+
+  // Infield dirt arc (95ft radius)
+  const dirtR = 95 * SCALE;
+
+  // Mound (60.5ft from home)
+  const mound = { x: HP.x, y: HP.y - 60.5 * SCALE };
+
+  const uid = `bip${Math.random().toString(36).slice(2, 6)}`;
 
   return (
     <div className="bip-card">
       <div className="bip-field-wrap">
-        <svg viewBox="0 0 200 160" className="bip-field-lg">
+        <svg viewBox="0 0 300 240" className="bip-field-lg">
           <defs>
-            <radialGradient id="bipGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor={accentColor} stopOpacity="0.4" />
+            <radialGradient id={`${uid}glow`} cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor={accentColor} stopOpacity="0.5" />
               <stop offset="100%" stopColor={accentColor} stopOpacity="0" />
             </radialGradient>
-            <linearGradient id="bipTrail" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor={accentColor} stopOpacity="0" />
-              <stop offset="100%" stopColor={accentColor} stopOpacity="0.8" />
-            </linearGradient>
+            <clipPath id={`${uid}clip`}>
+              <path d={`M ${lfCorner.x},${lfCorner.y} L ${HP.x},${HP.y} L ${rfCorner.x},${rfCorner.y} Q ${rcf.x},${rcf.y} ${cf.x},${cf.y} Q ${lcf.x},${lcf.y} ${lfCorner.x},${lfCorner.y} Z`} />
+            </clipPath>
           </defs>
-          {/* Field background */}
-          <path d="M 20 150 Q 100 -10 180 150" fill="rgba(34,80,34,0.15)" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
-          {/* Infield */}
-          <path d="M 100 120 L 130 90 L 100 60 L 70 90 Z" fill="rgba(139,90,43,0.12)" stroke="rgba(255,255,255,0.08)" strokeWidth="0.8" />
+
+          {/* Outfield grass */}
+          <path d={`M ${lfCorner.x},${lfCorner.y} L ${HP.x},${HP.y} L ${rfCorner.x},${rfCorner.y} Q ${rcf.x},${rcf.y} ${cf.x},${cf.y} Q ${lcf.x},${lcf.y} ${lfCorner.x},${lfCorner.y} Z`}
+            fill="rgba(22,80,22,0.25)" />
+
+          {/* Infield dirt */}
+          <circle cx={HP.x} cy={HP.y} r={dirtR} fill="rgba(139,90,43,0.18)" clipPath={`url(#${uid}clip)`} />
+
+          {/* Grass cutout in infield */}
+          <circle cx={HP.x} cy={HP.y - baseDist * 0.707} r={baseDist * 0.55} fill="rgba(22,80,22,0.2)" />
+
+          {/* Fence line */}
+          <path d={fencePath} fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="2" />
+
+          {/* Fence dimension labels */}
+          <text x={lfCorner.x + 4} y={lfCorner.y - 4} fill="rgba(255,255,255,0.2)" fontSize="8" textAnchor="start">{dims.LF}'</text>
+          <text x={cf.x} y={cf.y - 6} fill="rgba(255,255,255,0.2)" fontSize="8" textAnchor="middle">{dims.CF}'</text>
+          <text x={rfCorner.x - 4} y={rfCorner.y - 4} fill="rgba(255,255,255,0.2)" fontSize="8" textAnchor="end">{dims.RF}'</text>
+
+          {/* Foul lines */}
+          <line x1={HP.x} y1={HP.y} x2={lfCorner.x} y2={lfCorner.y} stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
+          <line x1={HP.x} y1={HP.y} x2={rfCorner.x} y2={rfCorner.y} stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
+
           {/* Base paths */}
-          <line x1="100" y1="130" x2="130" y2="90" stroke="rgba(255,255,255,0.05)" strokeWidth="0.5" />
-          <line x1="130" y1="90" x2="100" y2="60" stroke="rgba(255,255,255,0.05)" strokeWidth="0.5" />
-          <line x1="100" y1="60" x2="70" y2="90" stroke="rgba(255,255,255,0.05)" strokeWidth="0.5" />
-          <line x1="70" y1="90" x2="100" y2="130" stroke="rgba(255,255,255,0.05)" strokeWidth="0.5" />
+          <line x1={HP.x} y1={HP.y} x2={first.x} y2={first.y} stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
+          <line x1={first.x} y1={first.y} x2={second.x} y2={second.y} stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
+          <line x1={second.x} y1={second.y} x2={third.x} y2={third.y} stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
+          <line x1={third.x} y1={third.y} x2={HP.x} y2={HP.y} stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
+
           {/* Bases */}
-          <rect x="126" y="86" width="8" height="8" rx="1" transform="rotate(45 130 90)" fill="rgba(255,255,255,0.15)" />
-          <rect x="96" y="56" width="8" height="8" rx="1" transform="rotate(45 100 60)" fill="rgba(255,255,255,0.15)" />
-          <rect x="66" y="86" width="8" height="8" rx="1" transform="rotate(45 70 90)" fill="rgba(255,255,255,0.15)" />
+          <rect x={first.x - 4} y={first.y - 4} width="8" height="8" rx="1" transform={`rotate(45 ${first.x} ${first.y})`} fill="rgba(255,255,255,0.35)" />
+          <rect x={second.x - 4} y={second.y - 4} width="8" height="8" rx="1" transform={`rotate(45 ${second.x} ${second.y})`} fill="rgba(255,255,255,0.35)" />
+          <rect x={third.x - 4} y={third.y - 4} width="8" height="8" rx="1" transform={`rotate(45 ${third.x} ${third.y})`} fill="rgba(255,255,255,0.35)" />
+
           {/* Home plate */}
-          <polygon points="97,130 100,126 103,130 102,133 98,133" fill="rgba(255,255,255,0.2)" />
+          <polygon points={`${HP.x - 4},${HP.y} ${HP.x},${HP.y - 5} ${HP.x + 4},${HP.y} ${HP.x + 3},${HP.y + 3} ${HP.x - 3},${HP.y + 3}`} fill="rgba(255,255,255,0.4)" />
+
+          {/* Pitcher's mound */}
+          <circle cx={mound.x} cy={mound.y} r="4" fill="rgba(139,90,43,0.25)" stroke="rgba(255,255,255,0.1)" strokeWidth="0.5" />
+          <rect x={mound.x - 3} y={mound.y - 1} width="6" height="2" rx="0.5" fill="rgba(255,255,255,0.25)" />
+
           {/* Ball trail */}
-          <line x1="100" y1="130" x2={dotX} y2={dotY} stroke="url(#bipTrail)" strokeWidth="1.5" strokeDasharray="4,3" />
+          <line x1={HP.x} y1={HP.y} x2={dotX} y2={dotY} stroke={accentColor} strokeWidth="1.5" strokeDasharray="5,4" opacity="0.5" />
+
           {/* Landing glow */}
-          <circle cx={dotX} cy={dotY} r="18" fill="url(#bipGlow)" />
+          <circle cx={dotX} cy={dotY} r="22" fill={`url(#${uid}glow)`} />
+
           {/* Landing dot */}
-          <circle cx={dotX} cy={dotY} r="5" fill={accentColor} />
-          <circle cx={dotX} cy={dotY} r="5" fill="none" stroke="#fff" strokeWidth="1.5" opacity="0.6" />
+          <circle cx={dotX} cy={dotY} r="6" fill={accentColor} />
+          <circle cx={dotX} cy={dotY} r="6" fill="none" stroke="#fff" strokeWidth="2" opacity="0.5" />
         </svg>
       </div>
       <div className="bip-metrics">
