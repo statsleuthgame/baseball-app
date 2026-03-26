@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
-import { fetchTodayGame, fetchRoster, fetchGameLineup, fetchProjectedLineup, fetchHotColdPlayers, fetchBullpenAvailability, fetchAllGamesToday } from "../../api/client";
+import { fetchTodayGame, fetchRoster, fetchGameLineup, fetchProjectedLineup, fetchHotColdPlayers, fetchBullpenAvailability, fetchAllGamesToday, fetchTeamInjuries } from "../../api/client";
 import { formatGameDate, formatGameTime, lastName, formatAvg } from "../../utils/formatters";
 import PARK_FACTORS from "../../data/parkFactors";
 import LoadingSpinner from "../common/LoadingSpinner";
@@ -151,6 +151,9 @@ export default function MatchupView() {
           oppAbbr={opponent.abbreviation}
         />
       )}
+
+      {/* Key Injuries */}
+      <InjurySection awayId={awayId} homeId={homeId} awayAbbr={game.away.abbreviation} homeAbbr={game.home.abbreviation} />
 
       {/* Park Factors */}
       {game.venue?.id && PARK_FACTORS[game.venue.id] && (
@@ -498,6 +501,53 @@ function GameSwitcher({ currentGamePk, teamId }) {
           ))}
         </div>
       )}
+    </div>
+  );
+}
+
+function InjurySection({ awayId, homeId, awayAbbr, homeAbbr }) {
+  const { teamId: contextTeamId } = useTeam();
+  const navigate = useNavigate();
+
+  const { data: awayInjuries } = useQuery({
+    queryKey: ["injuries", awayId],
+    queryFn: () => fetchTeamInjuries(awayId),
+    enabled: !!awayId,
+    staleTime: 1000 * 60 * 60,
+  });
+
+  const { data: homeInjuries } = useQuery({
+    queryKey: ["injuries", homeId],
+    queryFn: () => fetchTeamInjuries(homeId),
+    enabled: !!homeId,
+    staleTime: 1000 * 60 * 60,
+  });
+
+  if (!awayInjuries?.length && !homeInjuries?.length) return null;
+
+  const renderTeam = (injuries, abbr) => {
+    if (!injuries?.length) return null;
+    return (
+      <div className="injury-team">
+        <div className="injury-team-hdr">{abbr}</div>
+        {injuries.map((p) => (
+          <div key={p.id} className="injury-row sb-player-link" onClick={() => navigate(`/team/${contextTeamId}/player/${p.id}`)}>
+            <span className="injury-name">{p.fullName}</span>
+            <span className="injury-pos">{p.position}</span>
+            <span className="injury-il">{p.ilType.replace("Injured ", "IL-")}</span>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  return (
+    <div className="matchup-section">
+      <h3>Key Injuries</h3>
+      <div className="injury-cols">
+        {renderTeam(awayInjuries, awayAbbr)}
+        {renderTeam(homeInjuries, homeAbbr)}
+      </div>
     </div>
   );
 }

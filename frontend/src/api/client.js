@@ -552,6 +552,26 @@ export const fetchBullpenAvailability = async (teamId, starterIds = []) => {
   }
 };
 
+// Fetch injured list for a team (40-man roster IL players)
+export const fetchTeamInjuries = async (teamId) => {
+  try {
+    const season = new Date().getFullYear();
+    const resp = await mlbApi.get(`/teams/${teamId}/roster`, {
+      params: { rosterType: "40Man", season },
+    });
+    return (resp.data?.roster || [])
+      .filter((r) => r.status?.description?.toLowerCase().includes("injured"))
+      .map((r) => ({
+        id: r.person?.id,
+        fullName: r.person?.fullName || "",
+        position: r.position?.abbreviation || "",
+        ilType: r.status?.description || "",
+      }));
+  } catch {
+    return [];
+  }
+};
+
 export const fetchHotPlayers = () =>
   Promise.resolve([]); // Legacy, replaced by fetchHotColdPlayers
 
