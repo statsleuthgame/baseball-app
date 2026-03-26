@@ -771,8 +771,7 @@ export default function Scoreboard() {
                         className="sb-venue-watch-btn"
                         onClick={(e) => {
                           e.stopPropagation();
-                          window.location.href = `mlbatbat://game?game_pk=${game.gamePk}`;
-                          setTimeout(() => window.open(`https://www.mlb.tv/game/${game.gamePk}`, "_blank"), 1500);
+                          window.location.href = `https://www.mlb.com/tv/g${game.gamePk}`;
                         }}
                         aria-label="Watch game"
                       >
@@ -791,7 +790,7 @@ export default function Scoreboard() {
                     className="scoreboard-watch-btn"
                     onClick={(e) => {
                       e.stopPropagation();
-                      window.open(`https://www.mlb.tv/game/${game.gamePk}`, "_blank");
+                      window.location.href = `https://www.mlb.com/tv/g${game.gamePk}`;
                     }}
                     aria-label="Watch game"
                   >
@@ -811,7 +810,7 @@ export default function Scoreboard() {
                 {isLive && !isOurGame && (
                   <a
                     className="scoreboard-gameday-link"
-                    href={`https://www.mlb.com/gameday/${game.gamePk}`}
+                    href={`https://www.mlb.com/tv/g${game.gamePk}`}
                     onClick={(e) => e.stopPropagation()}
                     aria-label="View on MLB Gameday"
                   >
