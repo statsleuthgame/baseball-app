@@ -435,31 +435,78 @@ function LiveBoxScore({ gamePk, awayAbbr, homeAbbr, teamId }) {
 
 function BallInPlayVisual({ hitData }) {
   if (!hitData) return null;
-  // MLB coordinates: ~250x250 grid, home plate ~(125, 200), CF ~(125, 20)
-  // Normalize to a 60x60 SVG
-  const dotX = (hitData.x / 250) * 60;
-  const dotY = (hitData.y / 250) * 60;
-  const isHit = hitData.trajectory === "line_drive" || hitData.distance > 200;
+
+  const dotX = (hitData.x / 250) * 200;
+  const dotY = (hitData.y / 250) * 160;
   const isHR = hitData.distance >= 300 && hitData.launchAngle > 20;
-  const dotColor = isHR ? "var(--live)" : isHit ? "var(--win)" : "var(--text-muted)";
+  const isHit = ["line_drive"].includes(hitData.trajectory) || hitData.distance > 200;
+  const accentColor = isHR ? "#ef4444" : isHit ? "#22c55e" : "#64748b";
+
+  const trajLabel = {
+    fly_ball: "Fly Ball", line_drive: "Line Drive",
+    ground_ball: "Ground Ball", popup: "Popup",
+  }[hitData.trajectory] || "Batted Ball";
+
+  const evLabel = hitData.exitVelo >= 100 ? "Barreled" : hitData.exitVelo >= 95 ? "Hard Hit" : hitData.exitVelo >= 85 ? "Medium" : "Soft";
 
   return (
-    <div className="bip-visual">
-      <svg width="60" height="60" viewBox="0 0 60 60" className="bip-field">
-        {/* Outfield arc */}
-        <path d="M 5 55 Q 30 -5 55 55" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
-        {/* Infield diamond */}
-        <path d="M 30 42 L 42 30 L 30 18 L 18 30 Z" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="0.5" />
-        {/* Home plate */}
-        <circle cx="30" cy="48" r="2" fill="rgba(255,255,255,0.15)" />
-        {/* Landing spot */}
-        <circle cx={dotX} cy={dotY} r="3.5" fill={dotColor} opacity="0.9" />
-        <circle cx={dotX} cy={dotY} r="6" fill={dotColor} opacity="0.2" />
-      </svg>
-      <div className="bip-stats">
-        {hitData.exitVelo && <span>{hitData.exitVelo} mph</span>}
-        {hitData.launchAngle != null && <span>{hitData.launchAngle}°</span>}
-        {hitData.distance && <span>{hitData.distance} ft</span>}
+    <div className="bip-card">
+      <div className="bip-field-wrap">
+        <svg viewBox="0 0 200 160" className="bip-field-lg">
+          <defs>
+            <radialGradient id="bipGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor={accentColor} stopOpacity="0.4" />
+              <stop offset="100%" stopColor={accentColor} stopOpacity="0" />
+            </radialGradient>
+            <linearGradient id="bipTrail" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor={accentColor} stopOpacity="0" />
+              <stop offset="100%" stopColor={accentColor} stopOpacity="0.8" />
+            </linearGradient>
+          </defs>
+          {/* Field background */}
+          <path d="M 20 150 Q 100 -10 180 150" fill="rgba(34,80,34,0.15)" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+          {/* Infield */}
+          <path d="M 100 120 L 130 90 L 100 60 L 70 90 Z" fill="rgba(139,90,43,0.12)" stroke="rgba(255,255,255,0.08)" strokeWidth="0.8" />
+          {/* Base paths */}
+          <line x1="100" y1="130" x2="130" y2="90" stroke="rgba(255,255,255,0.05)" strokeWidth="0.5" />
+          <line x1="130" y1="90" x2="100" y2="60" stroke="rgba(255,255,255,0.05)" strokeWidth="0.5" />
+          <line x1="100" y1="60" x2="70" y2="90" stroke="rgba(255,255,255,0.05)" strokeWidth="0.5" />
+          <line x1="70" y1="90" x2="100" y2="130" stroke="rgba(255,255,255,0.05)" strokeWidth="0.5" />
+          {/* Bases */}
+          <rect x="126" y="86" width="8" height="8" rx="1" transform="rotate(45 130 90)" fill="rgba(255,255,255,0.15)" />
+          <rect x="96" y="56" width="8" height="8" rx="1" transform="rotate(45 100 60)" fill="rgba(255,255,255,0.15)" />
+          <rect x="66" y="86" width="8" height="8" rx="1" transform="rotate(45 70 90)" fill="rgba(255,255,255,0.15)" />
+          {/* Home plate */}
+          <polygon points="97,130 100,126 103,130 102,133 98,133" fill="rgba(255,255,255,0.2)" />
+          {/* Ball trail */}
+          <line x1="100" y1="130" x2={dotX} y2={dotY} stroke="url(#bipTrail)" strokeWidth="1.5" strokeDasharray="4,3" />
+          {/* Landing glow */}
+          <circle cx={dotX} cy={dotY} r="18" fill="url(#bipGlow)" />
+          {/* Landing dot */}
+          <circle cx={dotX} cy={dotY} r="5" fill={accentColor} />
+          <circle cx={dotX} cy={dotY} r="5" fill="none" stroke="#fff" strokeWidth="1.5" opacity="0.6" />
+        </svg>
+      </div>
+      <div className="bip-metrics">
+        <div className="bip-metric-main">
+          {hitData.exitVelo && (
+            <div className="bip-metric-big">
+              <span className="bip-metric-val" style={{ color: accentColor }}>{hitData.exitVelo}</span>
+              <span className="bip-metric-unit">mph exit velo</span>
+            </div>
+          )}
+          {hitData.distance && (
+            <div className="bip-metric-big">
+              <span className="bip-metric-val" style={{ color: accentColor }}>{hitData.distance}</span>
+              <span className="bip-metric-unit">ft distance</span>
+            </div>
+          )}
+        </div>
+        <div className="bip-metric-row">
+          <span className="bip-tag" style={{ borderColor: accentColor, color: accentColor }}>{trajLabel}</span>
+          {hitData.launchAngle != null && <span className="bip-metric-sm">{hitData.launchAngle}° launch</span>}
+          <span className="bip-metric-sm">{evLabel}</span>
+        </div>
       </div>
     </div>
   );

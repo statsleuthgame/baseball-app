@@ -657,32 +657,80 @@ body {
 }
 
 /* Ball in play visual */
-.bip-visual {
+.bip-card {
+  margin-top: 8px;
+  padding: 12px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.bip-field-wrap {
+  width: 100%;
+  max-width: 280px;
+  margin: 0 auto 10px;
+}
+
+.bip-field-lg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.bip-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.bip-metric-main {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+}
+
+.bip-metric-big {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bip-metric-val {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1;
+}
+
+.bip-metric-unit {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 2px;
+}
+
+.bip-metric-row {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-top: 6px;
-  padding: 8px;
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
-.bip-field {
-  flex-shrink: 0;
+.bip-tag {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border: 1.5px solid;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
 }
 
-.bip-stats {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+.bip-metric-sm {
   font-size: 11px;
   color: var(--text-muted);
-}
-
-.bip-stats span {
-  font-weight: 600;
-  color: var(--text);
 }
 
 /* Next due up */
