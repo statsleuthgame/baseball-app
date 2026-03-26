@@ -2587,8 +2587,10 @@ button.stat-cell {
 .sb-inline-pitcher {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 6px;
   margin-left: auto;
+  flex: 1;
   font-size: 12px;
   color: var(--text-muted);
   min-width: 0;
