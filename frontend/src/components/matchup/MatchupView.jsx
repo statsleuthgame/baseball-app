@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
@@ -100,9 +101,11 @@ export default function MatchupView() {
 
   return (
     <div className="matchup-view">
-      {isPreview && (
-        <div className="matchup-preview-title">Game Preview</div>
-      )}
+      <div className="matchup-top-row">
+        {isPreview && <div className="matchup-preview-title">Game Preview</div>}
+        {!isPreview && <div />}
+        <GameSwitcher currentGamePk={game?.gamePk} teamId={teamId} />
+      </div>
 
       {/* Game header */}
       <div className="matchup-header">
@@ -450,6 +453,49 @@ function BullpenSection({ teamId, opponentId, usAbbr, oppAbbr, usStarterId, oppS
         {renderBullpen(usBullpen, usAbbr)}
         {renderBullpen(oppBullpen, oppAbbr)}
       </div>
+    </div>
+  );
+}
+
+function GameSwitcher({ currentGamePk, teamId }) {
+  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const today = new Date();
+  const dateStr = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,"0")}-${String(today.getDate()).padStart(2,"0")}`;
+
+  const { data: games } = useQuery({
+    queryKey: ["allGames", dateStr],
+    queryFn: () => fetchAllGamesToday(dateStr),
+    staleTime: 1000 * 60 * 5,
+  });
+
+  if (!games?.length || games.length <= 1) return null;
+
+  return (
+    <div className="game-switcher">
+      <button className="game-switcher-btn" onClick={() => setOpen(!open)}>
+        All Games
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: open ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
+      {open && (
+        <div className="game-switcher-dropdown">
+          {games.map((g) => (
+            <button
+              key={g.gamePk}
+              className={`game-switcher-item ${g.gamePk === currentGamePk ? "active" : ""}`}
+              onClick={() => { setOpen(false); navigate(`/team/${teamId}/matchup/${g.gamePk}`); }}
+            >
+              <span className="gs-teams">{g.away.abbreviation} @ {g.home.abbreviation}</span>
+              <span className="gs-status">
+                {g.status === "Final" ? "Final" : g.status === "In Progress" ? "Live" : formatGameTime(g.gameDate)}
+              </span>
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

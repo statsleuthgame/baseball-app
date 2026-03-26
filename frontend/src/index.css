@@ -1632,13 +1632,77 @@ button.stat-cell {
   gap: 16px;
 }
 
+.matchup-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .matchup-preview-title {
-  text-align: center;
   font-size: 18px;
   font-weight: 800;
   color: var(--team-accent);
   letter-spacing: -0.3px;
 }
+
+/* Game switcher dropdown */
+.game-switcher {
+  position: relative;
+}
+
+.game-switcher-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--surface, rgba(255,255,255,0.06));
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.game-switcher-btn:active { opacity: 0.7; }
+
+.game-switcher-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 4px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 4px;
+  min-width: 200px;
+  z-index: 50;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.game-switcher-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 8px 10px;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 13px;
+  cursor: pointer;
+}
+.game-switcher-item:active { background: rgba(255,255,255,0.06); }
+.game-switcher-item.active {
+  background: rgba(255,255,255,0.08);
+  color: var(--team-secondary);
+  font-weight: 600;
+}
+
+.gs-teams { font-weight: 500; }
+.gs-status { font-size: 11px; color: var(--text-muted); }
 
 .matchup-header {
   display: flex;
