@@ -355,7 +355,7 @@ export const fetchTodayGame = async (teamId) => {
   const endDate = new Date(today);
   endDate.setDate(endDate.getDate() + 14);
 
-  const fmt = (d) => d.toISOString().split("T")[0];
+  const fmt = (d) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
 
   try {
     // Check today first
@@ -684,7 +684,7 @@ export const fetchTransactions = async (teamId) => {
     const end = new Date();
     const start = new Date();
     start.setDate(start.getDate() - 30);
-    const fmt = (d) => d.toISOString().split("T")[0];
+    const fmt = (d) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
     const resp = await mlbApi.get("/transactions", {
       params: { teamId, startDate: fmt(start), endDate: fmt(end) },
     });
@@ -826,7 +826,7 @@ export const fetchUpcomingSeries = async (teamId) => {
     const today = new Date();
     const end = new Date();
     end.setDate(end.getDate() + 10);
-    const fmt = (d) => d.toISOString().split("T")[0];
+    const fmt = (d) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
 
     const resp = await mlbApi.get("/schedule", {
       params: {
