@@ -48,6 +48,46 @@ function formatDateLabel(dateStr) {
   return `${DAYS[d.getDay()]}, ${MONTHS[d.getMonth()]} ${d.getDate()}`;
 }
 
+function TopPerformer({ gamePk, side, teamId }) {
+  const navigate = useNavigate();
+  const { data } = useQuery({
+    queryKey: ["gameDetail", gamePk],
+    queryFn: () => fetchGameDetail(gamePk),
+    enabled: !!gamePk,
+    staleTime: 1000 * 60 * 60,
+  });
+
+  if (!data) return null;
+
+  const batters = side === "away" ? data.away : data.home;
+  if (!batters?.length) return null;
+
+  let best = null;
+  let bestScore = 0;
+  for (const b of batters) {
+    const s = b.stats;
+    const score = (s.h || 0) * 2 + (s.hr || 0) * 4 + (s.rbi || 0) * 2 + (s.r || 0);
+    if (score > bestScore) {
+      bestScore = score;
+      best = b;
+    }
+  }
+
+  if (!best || bestScore === 0) return null;
+
+  const s = best.stats;
+  const line = `${s.h}-${s.ab}${s.hr ? `, ${s.hr} HR` : ""}${s.rbi ? `, ${s.rbi} RBI` : ""}`;
+
+  return (
+    <span
+      className="sb-top-performer sb-player-link"
+      onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${best.id}`); }}
+    >
+      {lastName(best.name)} {line}
+    </span>
+  );
+}
+
 function PitcherRecord({ pitcherId, type }) {
   const { data } = useQuery({
     queryKey: ["pitcherSeasonStats", pitcherId],
@@ -624,9 +664,10 @@ export default function Scoreboard() {
                   <div className={`scoreboard-team-row ${isFinal ? (awayWon ? "sb-winner" : "sb-loser") : ""}`}>
                     <img src={game.away.logoUrl} alt={game.away.abbreviation} className="scoreboard-logo" />
                     <span className="scoreboard-abbr">{game.away.abbreviation}</span>
-                    {game.away.wins != null && (
+                    {!isFinal && game.away.wins != null && (
                       <span className="scoreboard-record">{game.away.wins}-{game.away.losses}</span>
                     )}
+                    {isFinal && <TopPerformer gamePk={game.gamePk} side="away" teamId={teamId} />}
                     {isScheduled && (
                       <div
                         className="sb-inline-pitcher sb-player-link"
@@ -648,9 +689,10 @@ export default function Scoreboard() {
                   <div className={`scoreboard-team-row ${isFinal ? (homeWon ? "sb-winner" : "sb-loser") : ""}`}>
                     <img src={game.home.logoUrl} alt={game.home.abbreviation} className="scoreboard-logo" />
                     <span className="scoreboard-abbr">{game.home.abbreviation}</span>
-                    {game.home.wins != null && (
+                    {!isFinal && game.home.wins != null && (
                       <span className="scoreboard-record">{game.home.wins}-{game.home.losses}</span>
                     )}
+                    {isFinal && <TopPerformer gamePk={game.gamePk} side="home" teamId={teamId} />}
                     {isScheduled && (
                       <div
                         className="sb-inline-pitcher sb-player-link"

@@ -2745,6 +2745,7 @@ button.stat-cell {
   border-top: 1px solid rgba(255, 255, 255, 0.04);
   font-size: 11px;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .sb-decision {
@@ -2766,6 +2767,16 @@ button.stat-cell {
   color: var(--text-muted);
   font-size: 10px;
   margin-left: 2px;
+}
+
+.sb-top-performer {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 160px;
 }
 
 /* Upcoming games pitcher names without photos */
