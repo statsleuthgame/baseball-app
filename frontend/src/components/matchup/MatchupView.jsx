@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
-import { fetchTodayGame, fetchRoster, fetchGameLineup, fetchProjectedLineup, fetchHotColdPlayers } from "../../api/client";
+import { fetchTodayGame, fetchRoster, fetchGameLineup, fetchProjectedLineup, fetchHotColdPlayers, fetchBullpenAvailability } from "../../api/client";
 import { formatGameDate, formatGameTime, lastName, formatAvg } from "../../utils/formatters";
 import PARK_FACTORS from "../../data/parkFactors";
 import LoadingSpinner from "../common/LoadingSpinner";
@@ -113,6 +113,16 @@ export default function MatchupView() {
 
       {/* Hot & Cold Players */}
       <HotColdSection teamId={teamId} opponentId={opponent.id} usAbbr={us.abbreviation} oppAbbr={opponent.abbreviation} />
+
+      {/* Bullpen Availability */}
+      <BullpenSection
+        teamId={teamId}
+        opponentId={opponent.id}
+        usAbbr={us.abbreviation}
+        oppAbbr={opponent.abbreviation}
+        usStarterId={us.probablePitcher?.id}
+        oppStarterId={opponentPitcher?.id}
+      />
 
       {/* Opposing pitcher's arsenal */}
       {opponentPitcher && (
@@ -312,6 +322,57 @@ function HotColdSection({ teamId, opponentId, usAbbr, oppAbbr }) {
         {renderList(oppData?.hot, "Hot", oppAbbr)}
         {renderList(usData?.cold, "Cold", usAbbr)}
         {renderList(oppData?.cold, "Cold", oppAbbr)}
+      </div>
+    </div>
+  );
+}
+
+function BullpenSection({ teamId, opponentId, usAbbr, oppAbbr, usStarterId, oppStarterId }) {
+  const navigate = useNavigate();
+
+  const { data: usBullpen } = useQuery({
+    queryKey: ["bullpen", teamId, usStarterId],
+    queryFn: () => fetchBullpenAvailability(teamId, usStarterId ? [usStarterId] : []),
+    enabled: !!teamId,
+    staleTime: 1000 * 60 * 30,
+  });
+
+  const { data: oppBullpen } = useQuery({
+    queryKey: ["bullpen", opponentId, oppStarterId],
+    queryFn: () => fetchBullpenAvailability(opponentId, oppStarterId ? [oppStarterId] : []),
+    enabled: !!opponentId,
+    staleTime: 1000 * 60 * 30,
+  });
+
+  if (!usBullpen?.length && !oppBullpen?.length) return null;
+
+  const renderBullpen = (pitchers, abbr) => {
+    if (!pitchers?.length) return null;
+    return (
+      <div className="bullpen-team">
+        <div className="bullpen-team-hdr">{abbr}</div>
+        {pitchers.map((p) => (
+          <div key={p.id} className="bullpen-row sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
+            <span className={`bullpen-status-dot ${p.status}`} />
+            <span className="bullpen-name">{lastName(p.fullName)}</span>
+            <span className="bullpen-rest">{p.daysRest < 99 ? `${p.daysRest}d rest` : "—"}</span>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  return (
+    <div className="matchup-section">
+      <h3>Bullpen Availability</h3>
+      <div className="bullpen-legend">
+        <span><span className="bullpen-status-dot available" /> Available</span>
+        <span><span className="bullpen-status-dot limited" /> Limited</span>
+        <span><span className="bullpen-status-dot unavailable" /> Unavailable</span>
+      </div>
+      <div className="bullpen-cols">
+        {renderBullpen(usBullpen, usAbbr)}
+        {renderBullpen(oppBullpen, oppAbbr)}
       </div>
     </div>
   );

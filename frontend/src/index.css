@@ -1816,6 +1816,75 @@ button.stat-cell {
   text-align: right;
 }
 
+/* Bullpen Availability */
+.bullpen-legend {
+  display: flex;
+  gap: 14px;
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.bullpen-legend span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.bullpen-cols {
+  display: flex;
+  gap: 16px;
+}
+
+.bullpen-team {
+  flex: 1;
+  min-width: 0;
+}
+
+.bullpen-team-hdr {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  padding-bottom: 4px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.bullpen-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 0;
+  font-size: 12px;
+}
+
+.bullpen-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.bullpen-status-dot.available { background: var(--win); }
+.bullpen-status-dot.limited { background: #F59E0B; }
+.bullpen-status-dot.unavailable { background: var(--loss); }
+
+.bullpen-name {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bullpen-rest {
+  font-size: 10px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
 .matchup-section h3 {
   font-size: 14px;
   font-weight: 700;

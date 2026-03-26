@@ -6,7 +6,7 @@ import { fetchTodayGame, fetchPitcherSeasonStats, fetchLiveGameState, fetchGameD
 import { teamDisplayName } from "../../utils/formatters";
 import { formatGameDate, formatGameTime } from "../../utils/formatters";
 import PlayerPhoto from "../common/PlayerPhoto";
-import UmpireCard from "../common/UmpireCard";
+
 
 export default function TodayGame() {
   const { teamId } = useTeam();
@@ -65,10 +65,6 @@ export default function TodayGame() {
         showDate={!isToday}
         onTap={handleViewMatchup}
       />
-
-      {game.umpireName && (
-        <UmpireCard umpireName={game.umpireName} />
-      )}
 
       {/* If today's game is final, also show the next upcoming game */}
       {isFinal && game.nextGame && (

@@ -482,6 +482,64 @@ export const fetchHotColdPlayers = async (teamId) => {
   }
 };
 
+// Fetch bullpen availability for a team
+export const fetchBullpenAvailability = async (teamId, starterIds = []) => {
+  try {
+    const roster = await fetchRoster(teamId);
+    const relievers = roster.filter((p) => p.position.type === "Pitcher" && !starterIds.includes(p.id));
+    const season = new Date().getFullYear();
+    const today = new Date();
+
+    const results = await Promise.all(
+      relievers.map(async (p) => {
+        try {
+          const resp = await mlbApi.get(`/people/${p.id}/stats`, {
+            params: { stats: "gameLog", group: "pitching", gameType: "R", season, limit: 3 },
+          });
+          const splits = resp.data?.stats?.[0]?.splits || [];
+          let lastGameDate = null;
+          let daysRest = 99;
+          let recentPitches = 0;
+          let recentGames = 0;
+
+          for (const s of splits.slice(0, 3)) {
+            const gDate = new Date(s.date);
+            const daysDiff = Math.floor((today - gDate) / (1000 * 60 * 60 * 24));
+            if (!lastGameDate) {
+              lastGameDate = s.date;
+              daysRest = daysDiff;
+            }
+            if (daysDiff <= 3) {
+              recentPitches += s.stat?.numberOfPitches || 0;
+              recentGames++;
+            }
+          }
+
+          let status = "available";
+          if (daysRest === 0) status = "unavailable";
+          else if (daysRest === 1 && recentPitches > 25) status = "limited";
+          else if (recentGames >= 3 && daysRest <= 1) status = "unavailable";
+
+          return {
+            id: p.id,
+            fullName: p.fullName,
+            daysRest,
+            recentPitches,
+            status,
+            lastGameDate,
+          };
+        } catch {
+          return { id: p.id, fullName: p.fullName, daysRest: 99, recentPitches: 0, status: "available", lastGameDate: null };
+        }
+      })
+    );
+
+    return results.sort((a, b) => a.daysRest - b.daysRest);
+  } catch {
+    return [];
+  }
+};
+
 export const fetchHotPlayers = () =>
   Promise.resolve([]); // Legacy, replaced by fetchHotColdPlayers
 
