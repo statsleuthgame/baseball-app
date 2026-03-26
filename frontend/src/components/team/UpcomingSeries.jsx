@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
 import { fetchUpcomingSeries } from "../../api/client";
 import { formatGameDate, formatGameTime, lastName } from "../../utils/formatters";
-import PlayerPhoto from "../common/PlayerPhoto";
 
 export default function UpcomingSeries() {
   const { teamId } = useTeam();
@@ -41,17 +40,15 @@ export default function UpcomingSeries() {
               </div>
               <div className="series-pitchers">
                 {us.probablePitcher && (
-                  <div className="series-pitcher sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${us.probablePitcher.id}`)}>
-                    <PlayerPhoto playerId={us.probablePitcher.id} name={us.probablePitcher.fullName} size={24} />
-                    <span>{lastName(us.probablePitcher.fullName)}</span>
-                  </div>
+                  <span className="series-pitcher-name sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${us.probablePitcher.id}`)}>
+                    {lastName(us.probablePitcher.fullName)}
+                  </span>
                 )}
                 {us.probablePitcher && opp.probablePitcher && <span className="series-pitcher-vs">vs</span>}
                 {opp.probablePitcher && (
-                  <div className="series-pitcher sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${opp.probablePitcher.id}`)}>
-                    <PlayerPhoto playerId={opp.probablePitcher.id} name={opp.probablePitcher.fullName} size={24} />
-                    <span>{lastName(opp.probablePitcher.fullName)}</span>
-                  </div>
+                  <span className="series-pitcher-name sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${opp.probablePitcher.id}`)}>
+                    {lastName(opp.probablePitcher.fullName)}
+                  </span>
                 )}
                 {!us.probablePitcher && !opp.probablePitcher && (
                   <span className="series-tbd">TBD vs TBD</span>

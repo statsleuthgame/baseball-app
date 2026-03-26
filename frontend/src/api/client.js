@@ -618,7 +618,7 @@ export const fetchAllGamesToday = async (dateStr) => {
     const resp = await mlbApi.get("/schedule", {
       params: {
         sportId: 1, date: dateParam,
-        hydrate: "team,linescore,probablePitcher,weather,venue(location)", gameType: "R",
+        hydrate: "team,linescore,probablePitcher,weather,venue(location),decisions", gameType: "R",
       },
     });
     const games = [];
@@ -665,6 +665,11 @@ export const fetchAllGamesToday = async (dateStr) => {
             probablePitcher: extractPitcher(home.probablePitcher),
             logoUrl: `https://www.mlbstatic.com/team-logos/team-cap-on-dark/${ht.id}.svg`,
           },
+          decisions: g.decisions ? {
+            winner: g.decisions.winner ? { id: g.decisions.winner.id, name: g.decisions.winner.fullName } : null,
+            loser: g.decisions.loser ? { id: g.decisions.loser.id, name: g.decisions.loser.fullName } : null,
+            save: g.decisions.save ? { id: g.decisions.save.id, name: g.decisions.save.fullName } : null,
+          } : null,
         });
       }
     }

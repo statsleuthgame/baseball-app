@@ -664,6 +664,36 @@ export default function Scoreboard() {
                   <LiveGameInfo gamePk={game.gamePk} teamId={teamId} />
                 )}
 
+                {/* Decisions for final games */}
+                {isFinal && game.decisions && (
+                  <div className="sb-decisions">
+                    {game.decisions.winner && (
+                      <span className="sb-decision">
+                        <span className="sb-decision-label">W:</span>
+                        <span className="sb-player-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${game.decisions.winner.id}`); }}>
+                          {lastName(game.decisions.winner.name)}
+                        </span>
+                      </span>
+                    )}
+                    {game.decisions.loser && (
+                      <span className="sb-decision">
+                        <span className="sb-decision-label">L:</span>
+                        <span className="sb-player-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${game.decisions.loser.id}`); }}>
+                          {lastName(game.decisions.loser.name)}
+                        </span>
+                      </span>
+                    )}
+                    {game.decisions.save && (
+                      <span className="sb-decision">
+                        <span className="sb-decision-label">SV:</span>
+                        <span className="sb-player-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${game.decisions.save.id}`); }}>
+                          {lastName(game.decisions.save.name)}
+                        </span>
+                      </span>
+                    )}
+                  </div>
+                )}
+
                 {/* Venue + weather + watch for scheduled games */}
                 {isScheduled && (game.venue || game.weather) && (
                   <div className="sb-venue-weather">
