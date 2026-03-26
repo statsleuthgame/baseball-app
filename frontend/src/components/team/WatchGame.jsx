@@ -37,22 +37,11 @@ export default function WatchGame() {
   const opponent = hasGame ? (isHome ? game.away : game.home) : null;
   const us = hasGame ? (isHome ? game.home : game.away) : null;
 
-  // Deep link to MLB app or MLB.tv website
   const gamePk = hasGame ? game.gamePk : null;
-  const mlbAppLink = gamePk ? `mlbatbat://game?game_pk=${gamePk}` : null;
   const mlbWebLink = gamePk ? `https://www.mlb.tv/game/${gamePk}` : null;
 
   const handleWatch = () => {
-    if (!gamePk) return;
-    // Try MLB app first, fall back to web
-    const start = Date.now();
-    window.location.href = mlbAppLink;
-    // If app doesn't open within 1.5s, open web
-    setTimeout(() => {
-      if (Date.now() - start < 2000) {
-        window.open(mlbWebLink, "_blank");
-      }
-    }, 1500);
+    if (mlbWebLink) window.open(mlbWebLink, "_blank");
   };
 
   const handleOpenWeb = () => {

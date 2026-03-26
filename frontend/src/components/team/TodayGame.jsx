@@ -261,8 +261,7 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
             className="today-game-watch"
             onClick={(e) => {
               e.stopPropagation();
-              window.location.href = `mlbatbat://game?game_pk=${game.gamePk}`;
-              setTimeout(() => window.open(`https://www.mlb.tv/game/${game.gamePk}`, "_blank"), 1500);
+              window.open(`https://www.mlb.tv/game/${game.gamePk}`, "_blank");
             }}
             aria-label={isLive ? "Watch live game" : "Open in MLB app"}
           >
