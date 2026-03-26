@@ -40,6 +40,7 @@ export default function App() {
               <Route path="player/:playerId" element={<PlayerDetail />} />
               <Route path="schedule" element={<ScheduleView />} />
               <Route path="matchup" element={<MatchupView />} />
+              <Route path="matchup/:gamePk" element={<MatchupView />} />
               <Route path="scores" element={<Scoreboard />} />
               <Route path="roster" element={<RosterGrid />} />
               <Route path="spray" element={<SprayChart />} />

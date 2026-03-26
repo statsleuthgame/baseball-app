@@ -2732,6 +2732,9 @@ button.stat-cell {
 
 .sb-tappable { cursor: pointer; }
 
+.sb-matchup-link { cursor: pointer; }
+.sb-matchup-link:active { opacity: 0.8; }
+
 .sb-player-link { cursor: pointer; }
 .sb-player-link:active { opacity: 0.6; }
 

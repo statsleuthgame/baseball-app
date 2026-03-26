@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
-import { fetchTodayGame, fetchRoster, fetchGameLineup, fetchProjectedLineup, fetchHotColdPlayers, fetchBullpenAvailability } from "../../api/client";
+import { fetchTodayGame, fetchRoster, fetchGameLineup, fetchProjectedLineup, fetchHotColdPlayers, fetchBullpenAvailability, fetchAllGamesToday } from "../../api/client";
 import { formatGameDate, formatGameTime, lastName, formatAvg } from "../../utils/formatters";
 import PARK_FACTORS from "../../data/parkFactors";
 import LoadingSpinner from "../common/LoadingSpinner";
@@ -13,25 +13,69 @@ import PriorMatchups from "./PriorMatchups";
 
 export default function MatchupView() {
   const { teamId } = useTeam();
+  const { gamePk: routeGamePk } = useParams();
   const navigate = useNavigate();
 
-  const { data: gameData, isLoading } = useQuery({
-    queryKey: ["todayGame", teamId],
-    queryFn: () => fetchTodayGame(teamId),
-    enabled: !!teamId,
+  // If a specific gamePk is in the URL, fetch that game's date to find the game
+  const { data: specificGame, isLoading: loadingSpecific } = useQuery({
+    queryKey: ["specificGame", routeGamePk],
+    queryFn: async () => {
+      // Fetch game info via schedule search
+      const resp = await fetch(`https://statsapi.mlb.com/api/v1/schedule?gamePk=${routeGamePk}&sportId=1&hydrate=team,probablePitcher,venue(location)`);
+      const data = await resp.json();
+      const g = data?.dates?.[0]?.games?.[0];
+      if (!g) return null;
+      const away = g.teams?.away || {};
+      const home = g.teams?.home || {};
+      const at = away.team || {};
+      const ht = home.team || {};
+      const extractP = (p) => p ? { id: p.id, fullName: p.fullName } : null;
+      return {
+        gamePk: g.gamePk, gameDate: g.gameDate, status: g.status?.detailedState || "",
+        isNextGame: true,
+        venue: { id: g.venue?.id, name: g.venue?.name || "" },
+        venueLocation: g.venue?.location ? `${g.venue.location.city}, ${g.venue.location.stateAbbrev}` : "",
+        away: { id: at.id, name: at.name || "", abbreviation: at.abbreviation || "", wins: away.leagueRecord?.wins, losses: away.leagueRecord?.losses, probablePitcher: extractP(away.probablePitcher), logoUrl: `https://www.mlbstatic.com/team-logos/team-cap-on-dark/${at.id}.svg` },
+        home: { id: ht.id, name: ht.name || "", abbreviation: ht.abbreviation || "", wins: home.leagueRecord?.wins, losses: home.leagueRecord?.losses, probablePitcher: extractP(home.probablePitcher), logoUrl: `https://www.mlbstatic.com/team-logos/team-cap-on-dark/${ht.id}.svg` },
+      };
+    },
+    enabled: !!routeGamePk,
     staleTime: 1000 * 60 * 5,
   });
 
-  const { data: roster } = useQuery({
-    queryKey: ["roster", teamId],
-    queryFn: () => fetchRoster(teamId),
-    enabled: !!teamId,
+  const { data: gameData, isLoading: loadingToday } = useQuery({
+    queryKey: ["todayGame", teamId],
+    queryFn: () => fetchTodayGame(teamId),
+    enabled: !!teamId && !routeGamePk,
+    staleTime: 1000 * 60 * 5,
+  });
+
+  const isLoading = routeGamePk ? loadingSpecific : loadingToday;
+  const rawGame = routeGamePk ? specificGame : gameData;
+
+  // Fetch both rosters
+  const game = rawGame && !rawGame.noGame ? (rawGame.status === "Final" && rawGame.nextGame ? rawGame.nextGame : rawGame) : null;
+  const isPreview = game?.isNextGame;
+  const awayId = game?.away?.id;
+  const homeId = game?.home?.id;
+
+  const { data: awayRoster } = useQuery({
+    queryKey: ["roster", awayId],
+    queryFn: () => fetchRoster(awayId),
+    enabled: !!awayId,
+    staleTime: 1000 * 60 * 60,
+  });
+
+  const { data: homeRoster } = useQuery({
+    queryKey: ["roster", homeId],
+    queryFn: () => fetchRoster(homeId),
+    enabled: !!homeId,
     staleTime: 1000 * 60 * 60,
   });
 
   if (isLoading) return <LoadingSpinner text="Loading matchup..." />;
 
-  if (!gameData || gameData.noGame) {
+  if (!game) {
     return (
       <div className="matchup-empty">
         <h2>No Upcoming Games</h2>
@@ -43,17 +87,16 @@ export default function MatchupView() {
     );
   }
 
-  // Use the next game for matchup analysis when today's game is final
-  const isTodayFinal = gameData.status === "Final";
-  const game = (isTodayFinal && gameData.nextGame) ? gameData.nextGame : gameData;
-  const isPreview = game.isNextGame;
-
   const isHome = game.home.id === teamId;
   const opponent = isHome ? game.away : game.home;
   const us = isHome ? game.home : game.away;
   const opponentPitcher = opponent.probablePitcher;
+  const ourPitcher = us.probablePitcher;
 
-  const batters = (roster || []).filter((p) => p.position.type !== "Pitcher");
+  const awayBatters = (awayRoster || []).filter((p) => p.position.type !== "Pitcher");
+  const homeBatters = (homeRoster || []).filter((p) => p.position.type !== "Pitcher");
+  const ourBatters = isHome ? homeBatters : awayBatters;
+  const theirBatters = isHome ? awayBatters : homeBatters;
 
   return (
     <div className="matchup-view">
@@ -124,20 +167,33 @@ export default function MatchupView() {
         oppStarterId={opponentPitcher?.id}
       />
 
-      {/* Opposing pitcher's arsenal */}
+      {/* Opposing pitcher's arsenal + our lineup vs them */}
       {opponentPitcher && (
         <div className="matchup-section">
           <h3>{opponentPitcher.fullName}'s Arsenal</h3>
           <PitchArsenal playerId={opponentPitcher.id} embedded />
         </div>
       )}
-
-      {/* Batter vs Pitcher lineup breakdown */}
-      {opponentPitcher && batters.length > 0 && (
+      {opponentPitcher && ourBatters.length > 0 && (
         <BatterVsPitcher
-          batters={batters}
+          batters={ourBatters}
           pitcherId={opponentPitcher.id}
           pitcherName={opponentPitcher.fullName}
+        />
+      )}
+
+      {/* Our pitcher's arsenal + their lineup vs us */}
+      {ourPitcher && (
+        <div className="matchup-section">
+          <h3>{ourPitcher.fullName}'s Arsenal</h3>
+          <PitchArsenal playerId={ourPitcher.id} embedded />
+        </div>
+      )}
+      {ourPitcher && theirBatters.length > 0 && (
+        <BatterVsPitcher
+          batters={theirBatters}
+          pitcherId={ourPitcher.id}
+          pitcherName={ourPitcher.fullName}
         />
       )}
 
