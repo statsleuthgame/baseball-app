@@ -5,6 +5,7 @@ import { useTeam } from "../../context/TeamContext";
 import { fetchLiveGameState, fetchGameDetail, fetchWinProbability } from "../../api/client";
 import { lastName, teamDisplayName } from "../../utils/formatters";
 import ALL_TEAMS from "../../data/teams";
+import FENCE_DIMENSIONS from "../../data/fenceDimensions";
 import PlayerPhoto from "../common/PlayerPhoto";
 import LoadingSpinner from "../common/LoadingSpinner";
 
@@ -27,6 +28,7 @@ export default function LiveGamePage() {
       return {
         gamePk: g.gamePk, gameDate: g.gameDate, status: g.status?.detailedState || "",
         venue: g.venue?.name || "",
+        venueId: g.venue?.id,
         venueLocation: g.venue?.location ? `${g.venue.location.city}, ${g.venue.location.stateAbbrev}` : "",
         away: { id: away.team?.id, abbreviation: away.team?.abbreviation || "", score: away.score, wins: away.leagueRecord?.wins, losses: away.leagueRecord?.losses, logoUrl: `https://www.mlbstatic.com/team-logos/team-cap-on-dark/${away.team?.id}.svg` },
         home: { id: home.team?.id, abbreviation: home.team?.abbreviation || "", score: home.score, wins: home.leagueRecord?.wins, losses: home.leagueRecord?.losses, logoUrl: `https://www.mlbstatic.com/team-logos/team-cap-on-dark/${home.team?.id}.svg` },
@@ -237,7 +239,7 @@ export default function LiveGamePage() {
           {liveState.lastPlay && (
             <div className="live-last-play">
               <span className="live-last-play-label">Last:</span> {liveState.lastPlay}
-              {liveState.lastHitData && <BallInPlayVisual hitData={liveState.lastHitData} />}
+              {liveState.lastHitData && <BallInPlayVisual hitData={liveState.lastHitData} venueId={gameInfo.venueId} />}
             </div>
           )}
 
@@ -315,26 +317,36 @@ export default function LiveGamePage() {
   );
 }
 
-// Uses the same BallInPlayVisual as TodayGame — imported logic duplicated for isolation
-function BallInPlayVisual({ hitData, venueDimensions }) {
+function BallInPlayVisual({ hitData, venueId }) {
   if (!hitData) return null;
   const HP = { x: 150, y: 240 };
   const SCALE = 0.5;
-  const mlbHPx = 125, mlbHPy = 200;
-  const svgScale = 1.2;
-  const dotX = HP.x + (hitData.x - mlbHPx) * svgScale;
-  const dotY = HP.y + (hitData.y - mlbHPy) * svgScale;
+  const dotX = HP.x + (hitData.x - 125) * 1.2;
+  const dotY = HP.y + (hitData.y - 200) * 1.2;
   const isHR = hitData.distance >= 300 && hitData.launchAngle > 20;
   const isHit = ["line_drive"].includes(hitData.trajectory) || hitData.distance > 200;
   const accentColor = isHR ? "#ef4444" : isHit ? "#22c55e" : "#64748b";
   const trajLabel = { fly_ball: "Fly Ball", line_drive: "Line Drive", ground_ball: "Ground Ball", popup: "Popup" }[hitData.trajectory] || "Batted Ball";
   const evLabel = hitData.exitVelo >= 100 ? "Barreled" : hitData.exitVelo >= 95 ? "Hard Hit" : hitData.exitVelo >= 85 ? "Medium" : "Soft";
-  const dims = venueDimensions || { LF: 330, LCF: 385, CF: 400, RCF: 385, RF: 330 };
+  const dims = FENCE_DIMENSIONS[venueId] || { LF: 330, LCF: 385, CF: 400, RCF: 385, RF: 330 };
   const fp = (a, d) => { const r = (a * Math.PI) / 180; return { x: HP.x + Math.sin(r) * d * SCALE, y: HP.y - Math.cos(r) * d * SCALE }; };
-  const lfl = fp(-45, dims.LF), lf2 = fp(-33.75, (dims.LF + dims.LCF) / 2), lcf = fp(-22.5, dims.LCF), lcf2 = fp(-11.25, (dims.LCF + dims.CF) / 2);
-  const cf = fp(0, dims.CF), rcf2 = fp(11.25, (dims.CF + dims.RCF) / 2), rcf = fp(22.5, dims.RCF), rf2 = fp(33.75, (dims.RCF + dims.RF) / 2), rfl = fp(45, dims.RF);
-  const fencePts = [lfl, lf2, lcf, lcf2, cf, rcf2, rcf, rf2, rfl];
+  const knownAngles = [-45, -22.5, 0, 22.5, 45];
+  const knownDists = [dims.LF, dims.LCF, dims.CF, dims.RCF, dims.RF];
+  const fenceDist = (angle) => {
+    if (angle <= knownAngles[0]) return knownDists[0];
+    if (angle >= knownAngles[4]) return knownDists[4];
+    for (let i = 0; i < 4; i++) {
+      if (angle >= knownAngles[i] && angle <= knownAngles[i + 1]) {
+        const t = (angle - knownAngles[i]) / (knownAngles[i + 1] - knownAngles[i]);
+        return knownDists[i] + t * (knownDists[i + 1] - knownDists[i]);
+      }
+    }
+    return 385;
+  };
+  const fencePts = [];
+  for (let a = -45; a <= 45; a += 5) fencePts.push(fp(a, fenceDist(a)));
   const fencePath = `M ${fencePts[0].x},${fencePts[0].y} ` + fencePts.slice(1).map((p) => `L ${p.x},${p.y}`).join(" ");
+  const lfl = fencePts[0], rfl = fencePts[fencePts.length - 1], cfPt = fp(0, dims.CF);
   const baseDist = 90 * SCALE;
   const first = { x: HP.x + baseDist * 0.707, y: HP.y - baseDist * 0.707 };
   const second = { x: HP.x, y: HP.y - baseDist * 1.414 };
@@ -356,7 +368,9 @@ function BallInPlayVisual({ hitData, venueDimensions }) {
           <circle cx={HP.x} cy={HP.y - baseDist * 0.707} r={baseDist * 0.55} fill="rgba(22,80,22,0.2)" />
           <path d={fencePath} fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
           <text x={lfl.x + 6} y={lfl.y - 5} fill="rgba(255,255,255,0.3)" fontSize="9" fontWeight="600" textAnchor="start">{dims.LF}</text>
-          <text x={cf.x} y={cf.y - 7} fill="rgba(255,255,255,0.35)" fontSize="10" fontWeight="700" textAnchor="middle">{dims.CF}</text>
+          <text x={fp(-22.5, dims.LCF).x} y={fp(-22.5, dims.LCF).y - 5} fill="rgba(255,255,255,0.2)" fontSize="8" textAnchor="middle">{dims.LCF}</text>
+          <text x={cfPt.x} y={cfPt.y - 7} fill="rgba(255,255,255,0.35)" fontSize="10" fontWeight="700" textAnchor="middle">{dims.CF}</text>
+          <text x={fp(22.5, dims.RCF).x} y={fp(22.5, dims.RCF).y - 5} fill="rgba(255,255,255,0.2)" fontSize="8" textAnchor="middle">{dims.RCF}</text>
           <text x={rfl.x - 6} y={rfl.y - 5} fill="rgba(255,255,255,0.3)" fontSize="9" fontWeight="600" textAnchor="end">{dims.RF}</text>
           <line x1={HP.x} y1={HP.y} x2={lfl.x} y2={lfl.y} stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
           <line x1={HP.x} y1={HP.y} x2={rfl.x} y2={rfl.y} stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
