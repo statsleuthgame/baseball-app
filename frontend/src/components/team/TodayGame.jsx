@@ -1,7 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
-import { fetchTodayGame, fetchPitcherSeasonStats, fetchLiveGameState } from "../../api/client";
+import { useState } from "react";
+import { fetchTodayGame, fetchPitcherSeasonStats, fetchLiveGameState, fetchGameDetail } from "../../api/client";
+import { teamDisplayName } from "../../utils/formatters";
 import { formatGameDate, formatGameTime } from "../../utils/formatters";
 import PlayerPhoto from "../common/PlayerPhoto";
 import UmpireCard from "../common/UmpireCard";
@@ -114,30 +116,26 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
       </div>
 
       <div className="today-game-matchup">
-        <div className="today-game-team">
-          <img
-            src={us.logoUrl}
-            alt={us.name}
-            className="today-game-logo"
-          />
-          <span className="today-game-abbr">{us.abbreviation}</span>
-          {(isLive || isFinal) && (
-            <span className="today-game-score">{us.score}</span>
+        <div className="today-game-side">
+          <img src={game.away.logoUrl} alt={game.away.abbreviation} className="today-game-logo-lg" />
+          <span className="today-game-abbr">{game.away.abbreviation}</span>
+          {game.away.wins != null && <span className="today-game-record">{game.away.wins}-{game.away.losses}</span>}
+        </div>
+        <div className="today-game-center">
+          {(isLive || isFinal) ? (
+            <div className="today-game-score-row">
+              <span className="today-game-score">{game.away.score}</span>
+              <span className="today-game-vs-small">-</span>
+              <span className="today-game-score">{game.home.score}</span>
+            </div>
+          ) : (
+            <span className="today-game-vs">@</span>
           )}
         </div>
-
-        <span className="today-game-vs">{isHome ? "vs" : "@"}</span>
-
-        <div className="today-game-team">
-          <img
-            src={opponent.logoUrl}
-            alt={opponent.name}
-            className="today-game-logo"
-          />
-          <span className="today-game-abbr">{opponent.abbreviation}</span>
-          {(isLive || isFinal) && (
-            <span className="today-game-score">{opponent.score}</span>
-          )}
+        <div className="today-game-side">
+          <img src={game.home.logoUrl} alt={game.home.abbreviation} className="today-game-logo-lg" />
+          <span className="today-game-abbr">{game.home.abbreviation}</span>
+          {game.home.wins != null && <span className="today-game-record">{game.home.wins}-{game.home.losses}</span>}
         </div>
       </div>
 
@@ -159,33 +157,42 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
             <span className="live-count">{liveState.balls}-{liveState.strikes}</span>
           </div>
 
-          {/* R/H/E + diamond */}
-          <div className="live-rhe-diamond">
-            <div className="live-rhe">
-              <div className="live-rhe-header">
-                <span className="live-rhe-team"></span>
-                <span className="live-rhe-val live-rhe-hdr">R</span>
-                <span className="live-rhe-val live-rhe-hdr">H</span>
-                <span className="live-rhe-val live-rhe-hdr">E</span>
-              </div>
-              <div className="live-rhe-row">
-                <span className="live-rhe-team">{game.away.abbreviation}</span>
-                <span className="live-rhe-val">{liveState.linescore.away.runs}</span>
-                <span className="live-rhe-val">{liveState.linescore.away.hits}</span>
-                <span className="live-rhe-val">{liveState.linescore.away.errors}</span>
-              </div>
-              <div className="live-rhe-row">
-                <span className="live-rhe-team">{game.home.abbreviation}</span>
-                <span className="live-rhe-val">{liveState.linescore.home.runs}</span>
-                <span className="live-rhe-val">{liveState.linescore.home.hits}</span>
-                <span className="live-rhe-val">{liveState.linescore.home.errors}</span>
-              </div>
+          {/* Full linescore + diamond */}
+          <div className="live-ls-diamond">
+            <div className="live-ls-scroll">
+              <table className="live-ls-table">
+                <thead>
+                  <tr>
+                    <th></th>
+                    {liveState.linescore.innings.map((inn) => <th key={inn.num}>{inn.num}</th>)}
+                    <th className="live-ls-total">R</th>
+                    <th className="live-ls-total">H</th>
+                    <th className="live-ls-total">E</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="live-ls-team">{game.away.abbreviation}</td>
+                    {liveState.linescore.innings.map((inn) => <td key={inn.num}>{inn.away !== "" ? inn.away : "-"}</td>)}
+                    <td className="live-ls-total">{liveState.linescore.away.runs}</td>
+                    <td className="live-ls-total">{liveState.linescore.away.hits}</td>
+                    <td className="live-ls-total">{liveState.linescore.away.errors}</td>
+                  </tr>
+                  <tr>
+                    <td className="live-ls-team">{game.home.abbreviation}</td>
+                    {liveState.linescore.innings.map((inn) => <td key={inn.num}>{inn.home !== "" ? inn.home : "-"}</td>)}
+                    <td className="live-ls-total">{liveState.linescore.home.runs}</td>
+                    <td className="live-ls-total">{liveState.linescore.home.hits}</td>
+                    <td className="live-ls-total">{liveState.linescore.home.errors}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <svg className="live-diamond" width="76" height="80" viewBox="0 0 76 80">
-              <rect x="27" y="6" width="20" height="20" rx="2" transform="rotate(45 37 16)" className={`live-diamond-base ${liveState.onSecond ? "occupied" : ""}`} />
-              <rect x="43" y="22" width="20" height="20" rx="2" transform="rotate(45 53 32)" className={`live-diamond-base ${liveState.onFirst ? "occupied" : ""}`} />
-              <rect x="11" y="22" width="20" height="20" rx="2" transform="rotate(45 21 32)" className={`live-diamond-base ${liveState.onThird ? "occupied" : ""}`} />
-              <circle cx="37" cy="60" r="4" fill="var(--text-muted)" opacity="0.3" />
+            <svg className="live-diamond" width="60" height="64" viewBox="0 0 60 64">
+              <rect x="21" y="4" width="16" height="16" rx="2" transform="rotate(45 29 12)" className={`live-diamond-base ${liveState.onSecond ? "occupied" : ""}`} />
+              <rect x="33" y="16" width="16" height="16" rx="2" transform="rotate(45 41 24)" className={`live-diamond-base ${liveState.onFirst ? "occupied" : ""}`} />
+              <rect x="9" y="16" width="16" height="16" rx="2" transform="rotate(45 17 24)" className={`live-diamond-base ${liveState.onThird ? "occupied" : ""}`} />
+              <circle cx="29" cy="46" r="3" fill="var(--text-muted)" opacity="0.3" />
             </svg>
           </div>
 
@@ -220,6 +227,8 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
             </div>
           )}
 
+          {/* Live box score toggle */}
+          <LiveBoxScore gamePk={game.gamePk} awayAbbr={game.away.abbreviation} homeAbbr={game.home.abbreviation} teamId={teamId} />
         </div>
       )}
 
@@ -282,6 +291,61 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
         )}
       </div>
 
+    </div>
+  );
+}
+
+function LiveBoxScore({ gamePk, awayAbbr, homeAbbr, teamId }) {
+  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const { data } = useQuery({
+    queryKey: ["gameDetail", gamePk],
+    queryFn: () => fetchGameDetail(gamePk),
+    enabled: open && !!gamePk,
+    staleTime: 1000 * 60,
+    refetchInterval: open ? 1000 * 30 : false,
+  });
+
+  return (
+    <div className="live-boxscore-section">
+      <button className="live-boxscore-toggle" onClick={(e) => { e.stopPropagation(); setOpen(!open); }}>
+        <span>{open ? "Hide Box Score" : "Box Score"}</span>
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: open ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
+      {open && data && (
+        <div className="live-boxscore-content" onClick={(e) => e.stopPropagation()}>
+          {[{ batters: data.away, pitchers: data.awayPitchers, abbr: awayAbbr }, { batters: data.home, pitchers: data.homePitchers, abbr: homeAbbr }].map(({ batters, pitchers, abbr }) => (
+            <div key={abbr} className="live-boxscore-team">
+              <div className="live-boxscore-hdr">{teamDisplayName(abbr)}</div>
+              {batters?.map((b) => (
+                <div key={b.id} className="live-boxscore-row">
+                  <span className="live-bs-pos">{b.position}</span>
+                  <span className="live-bs-name sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${b.id}`)}>{b.name}</span>
+                  <span className="live-bs-stat">{b.stats.h}-{b.stats.ab}</span>
+                  {b.stats.rbi > 0 && <span className="live-bs-rbi">{b.stats.rbi} RBI</span>}
+                  {b.stats.hr > 0 && <span className="live-bs-hr">{b.stats.hr} HR</span>}
+                </div>
+              ))}
+              {pitchers?.length > 0 && (
+                <div className="live-boxscore-pitchers">
+                  {pitchers.map((p) => (
+                    <div key={p.id} className="live-boxscore-row">
+                      <span className="live-bs-pos">P</span>
+                      <span className="live-bs-name sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>{p.name}</span>
+                      <span className="live-bs-stat">{p.stats.ip} IP</span>
+                      <span className="live-bs-stat">{p.stats.k} K</span>
+                      <span className="live-bs-stat">{p.stats.er} ER</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

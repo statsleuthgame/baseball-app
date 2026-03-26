@@ -1,18 +1,28 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTeam } from "../../context/TeamContext";
 import { fetchLeagueLeaders } from "../../api/client";
 import { formatAvg } from "../../utils/formatters";
 
-const CATEGORIES = [
+const HITTING_CATS = [
   { key: "homeRuns", label: "Home Runs", fmt: (v) => v },
   { key: "battingAverage", label: "Batting Avg", fmt: (v) => formatAvg(parseFloat(v)) },
+  { key: "runsBattedIn", label: "RBI", fmt: (v) => v },
+  { key: "stolenBases", label: "Stolen Bases", fmt: (v) => v },
+  { key: "hits", label: "Hits", fmt: (v) => v },
+];
+
+const PITCHING_CATS = [
   { key: "earnedRunAverage", label: "ERA", fmt: (v) => parseFloat(v).toFixed(2) },
   { key: "strikeouts", label: "Strikeouts", fmt: (v) => v },
-  { key: "stolenBases", label: "Stolen Bases", fmt: (v) => v },
+  { key: "wins", label: "Wins", fmt: (v) => v },
+  { key: "saves", label: "Saves", fmt: (v) => v },
+  { key: "whip", label: "WHIP", fmt: (v) => parseFloat(v).toFixed(2) },
 ];
 
 export default function LeagueLeaders() {
   const { teamId } = useTeam();
+  const [tab, setTab] = useState("hitting");
 
   const { data } = useQuery({
     queryKey: ["leagueLeaders"],
@@ -20,14 +30,21 @@ export default function LeagueLeaders() {
     staleTime: 1000 * 60 * 60,
   });
 
-  if (!data || Object.keys(data).length === 0) return null;
+  if (!data || (!Object.keys(data.hitting || {}).length && !Object.keys(data.pitching || {}).length)) return null;
+
+  const categories = tab === "hitting" ? HITTING_CATS : PITCHING_CATS;
+  const source = tab === "hitting" ? data.hitting : data.pitching;
 
   return (
     <div className="leaders-card">
       <h3 className="section-title">League Leaders</h3>
+      <div className="leaders-tabs">
+        <button className={`leaders-tab ${tab === "hitting" ? "active" : ""}`} onClick={() => setTab("hitting")}>Hitting</button>
+        <button className={`leaders-tab ${tab === "pitching" ? "active" : ""}`} onClick={() => setTab("pitching")}>Pitching</button>
+      </div>
       <div className="leaders-categories">
-        {CATEGORIES.map(({ key, label, fmt }) => {
-          const leaders = data[key];
+        {categories.map(({ key, label, fmt }) => {
+          const leaders = source?.[key];
           if (!leaders?.length) return null;
           return (
             <div key={key} className="leaders-category">

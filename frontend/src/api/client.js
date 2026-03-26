@@ -336,6 +336,7 @@ export const fetchLiveGameState = async (gamePk) => {
       pitcher: cp.pitcher ? { id: cp.pitcher.id, fullName: cp.pitcher.fullName, gameStats: pitcherGameStats } : null,
       lastPlay,
       linescore: {
+        innings: (ls.innings || []).map((inn) => ({ num: inn.num, away: inn.away?.runs ?? "", home: inn.home?.runs ?? "" })),
         away: { runs: teams.away?.runs ?? 0, hits: teams.away?.hits ?? 0, errors: teams.away?.errors ?? 0 },
         home: { runs: teams.home?.runs ?? 0, hits: teams.home?.hits ?? 0, errors: teams.home?.errors ?? 0 },
       },
@@ -856,10 +857,12 @@ export const fetchTeamHotCold = async (teamId) => {
 export const fetchLeagueLeaders = async () => {
   try {
     const year = new Date().getFullYear();
-    const categories = ["homeRuns", "battingAverage", "earnedRunAverage", "strikeouts", "stolenBases"];
+    const hitting = ["homeRuns", "battingAverage", "runsBattedIn", "stolenBases", "hits"];
+    const pitching = ["earnedRunAverage", "strikeouts", "wins", "saves", "whip"];
+    const all = [...hitting, ...pitching];
     const results = {};
 
-    for (const cat of categories) {
+    await Promise.all(all.map(async (cat) => {
       try {
         const resp = await mlbApi.get("/stats/leaders", {
           params: { leaderCategories: cat, season: year, sportId: 1, limit: 5 },
@@ -873,10 +876,10 @@ export const fetchLeagueLeaders = async () => {
           teamId: l.team?.id,
         }));
       } catch {}
-    }
-    return results;
+    }));
+    return { hitting: results, pitching: results };
   } catch {
-    return {};
+    return { hitting: {}, pitching: {} };
   }
 };
 

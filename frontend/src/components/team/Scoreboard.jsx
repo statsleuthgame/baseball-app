@@ -241,7 +241,6 @@ function TeamPitchingBox({ pitchers, abbr, teamId }) {
   return (
     <div className="sb-team-box sb-pitching-box">
       <div className="sb-box-header">
-        <span className="sb-batter-pos"></span>
         <span className="sb-batter-name sb-box-team">{teamDisplayName(abbr)} Pitching</span>
         <span className="sb-batter-stat sb-stat-hdr">IP</span>
         <span className="sb-batter-stat sb-stat-hdr">H</span>
@@ -249,11 +248,10 @@ function TeamPitchingBox({ pitchers, abbr, teamId }) {
         <span className="sb-batter-stat sb-stat-hdr">ER</span>
         <span className="sb-batter-stat sb-stat-hdr">BB</span>
         <span className="sb-batter-stat sb-stat-hdr">K</span>
-        <span style={{ width: 10 }}></span>
+        <span className="sb-batter-stat sb-stat-hdr sb-pc-hdr">PC</span>
       </div>
       {pitchers.map((p) => (
         <div key={p.id} className="sb-batter-row">
-          <span className="sb-batter-pos"></span>
           <span
             className="sb-batter-name sb-player-link"
             onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}
