@@ -812,8 +812,6 @@ export default function Scoreboard() {
                   <a
                     className="scoreboard-gameday-link"
                     href={`https://www.mlb.com/gameday/${game.gamePk}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     onClick={(e) => e.stopPropagation()}
                     aria-label="View on MLB Gameday"
                   >
