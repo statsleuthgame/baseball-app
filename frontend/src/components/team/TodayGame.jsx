@@ -439,9 +439,12 @@ function BallInPlayVisual({ hitData, venueDimensions }) {
   const HP = { x: 150, y: 240 };
   const SCALE = 0.5;
 
-  // Convert MLB hit coordinates (250x250 grid) to our SVG
-  const dotX = (hitData.x / 250) * 300;
-  const dotY = (hitData.y / 250) * 260;
+  // MLB coordinates: home plate ~(125, 200), CF ~(125, 50)
+  // Map to SVG: HP at (150, 240), field extends upward
+  const mlbHPx = 125, mlbHPy = 200;
+  const svgScale = 1.2;
+  const dotX = HP.x + (hitData.x - mlbHPx) * svgScale;
+  const dotY = HP.y + (hitData.y - mlbHPy) * svgScale;
 
   const isHR = hitData.distance >= 300 && hitData.launchAngle > 20;
   const isHit = ["line_drive"].includes(hitData.trajectory) || hitData.distance > 200;

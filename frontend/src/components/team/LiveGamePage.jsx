@@ -320,8 +320,10 @@ function BallInPlayVisual({ hitData, venueDimensions }) {
   if (!hitData) return null;
   const HP = { x: 150, y: 240 };
   const SCALE = 0.5;
-  const dotX = (hitData.x / 250) * 300;
-  const dotY = (hitData.y / 250) * 260;
+  const mlbHPx = 125, mlbHPy = 200;
+  const svgScale = 1.2;
+  const dotX = HP.x + (hitData.x - mlbHPx) * svgScale;
+  const dotY = HP.y + (hitData.y - mlbHPy) * svgScale;
   const isHR = hitData.distance >= 300 && hitData.launchAngle > 20;
   const isHit = ["line_drive"].includes(hitData.trajectory) || hitData.distance > 200;
   const accentColor = isHR ? "#ef4444" : isHit ? "#22c55e" : "#64748b";
