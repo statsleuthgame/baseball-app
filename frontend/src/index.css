@@ -558,13 +558,14 @@ body {
 .live-rhe-diamond {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 8px;
 }
 
-.live-rhe { flex: 1; }
+.live-rhe { flex: 0 1 auto; }
 
 .live-diamond {
   flex-shrink: 0;
+  margin-right: auto;
 }
 
 .live-diamond-base {

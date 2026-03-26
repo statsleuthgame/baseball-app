@@ -177,11 +177,11 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
                 <span className="live-rhe-val">{liveState.linescore.home.errors}</span>
               </div>
             </div>
-            <svg className="live-diamond" width="76" height="76" viewBox="0 0 76 76">
-              <rect x="27" y="2" width="20" height="20" rx="2" transform="rotate(45 37 12)" className={`live-diamond-base ${liveState.onSecond ? "occupied" : ""}`} />
-              <rect x="43" y="18" width="20" height="20" rx="2" transform="rotate(45 53 28)" className={`live-diamond-base ${liveState.onFirst ? "occupied" : ""}`} />
-              <rect x="11" y="18" width="20" height="20" rx="2" transform="rotate(45 21 28)" className={`live-diamond-base ${liveState.onThird ? "occupied" : ""}`} />
-              <circle cx="37" cy="56" r="4" fill="var(--text-muted)" opacity="0.3" />
+            <svg className="live-diamond" width="76" height="80" viewBox="0 0 76 80">
+              <rect x="27" y="6" width="20" height="20" rx="2" transform="rotate(45 37 16)" className={`live-diamond-base ${liveState.onSecond ? "occupied" : ""}`} />
+              <rect x="43" y="22" width="20" height="20" rx="2" transform="rotate(45 53 32)" className={`live-diamond-base ${liveState.onFirst ? "occupied" : ""}`} />
+              <rect x="11" y="22" width="20" height="20" rx="2" transform="rotate(45 21 32)" className={`live-diamond-base ${liveState.onThird ? "occupied" : ""}`} />
+              <circle cx="37" cy="60" r="4" fill="var(--text-muted)" opacity="0.3" />
             </svg>
           </div>
 
