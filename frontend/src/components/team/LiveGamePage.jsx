@@ -5,7 +5,7 @@ import { useTeam } from "../../context/TeamContext";
 import { fetchLiveGameState, fetchGameDetail, fetchWinProbability } from "../../api/client";
 import { lastName, teamDisplayName } from "../../utils/formatters";
 import ALL_TEAMS from "../../data/teams";
-import FENCE_DIMENSIONS from "../../data/fenceDimensions";
+import BallInPlayVisual from "../common/BallInPlayVisual";
 import PlayerPhoto from "../common/PlayerPhoto";
 import LoadingSpinner from "../common/LoadingSpinner";
 
@@ -313,94 +313,6 @@ export default function LiveGamePage() {
       <button className="lgp-matchup-btn" onClick={() => navigate(`/team/${teamId}/matchup/${gamePk}`)}>
         View Full Matchup
       </button>
-    </div>
-  );
-}
-
-function BallInPlayVisual({ hitData, venueId }) {
-  if (!hitData) return null;
-  const HP = { x: 150, y: 240 };
-  const SCALE = 0.5;
-  const dotX = HP.x + (hitData.x - 125) * 1.2;
-  const dotY = HP.y + (hitData.y - 200) * 1.2;
-  const isHR = hitData.distance >= 300 && hitData.launchAngle > 20;
-  const isHit = ["line_drive"].includes(hitData.trajectory) || hitData.distance > 200;
-  const accentColor = isHR ? "#ef4444" : isHit ? "#22c55e" : "#64748b";
-  const trajLabel = { fly_ball: "Fly Ball", line_drive: "Line Drive", ground_ball: "Ground Ball", popup: "Popup" }[hitData.trajectory] || "Batted Ball";
-  const evLabel = hitData.exitVelo >= 100 ? "Barreled" : hitData.exitVelo >= 95 ? "Hard Hit" : hitData.exitVelo >= 85 ? "Medium" : "Soft";
-  const dims = FENCE_DIMENSIONS[venueId] || { LF: 330, LCF: 385, CF: 400, RCF: 385, RF: 330 };
-  const fp = (a, d) => { const r = (a * Math.PI) / 180; return { x: HP.x + Math.sin(r) * d * SCALE, y: HP.y - Math.cos(r) * d * SCALE }; };
-  const knownAngles = [-45, -22.5, 0, 22.5, 45];
-  const knownDists = [dims.LF, dims.LCF, dims.CF, dims.RCF, dims.RF];
-  const fenceDist = (angle) => {
-    if (angle <= knownAngles[0]) return knownDists[0];
-    if (angle >= knownAngles[4]) return knownDists[4];
-    for (let i = 0; i < 4; i++) {
-      if (angle >= knownAngles[i] && angle <= knownAngles[i + 1]) {
-        const t = (angle - knownAngles[i]) / (knownAngles[i + 1] - knownAngles[i]);
-        return knownDists[i] + t * (knownDists[i + 1] - knownDists[i]);
-      }
-    }
-    return 385;
-  };
-  const fencePts = [];
-  for (let a = -45; a <= 45; a += 5) fencePts.push(fp(a, fenceDist(a)));
-  const fencePath = `M ${fencePts[0].x},${fencePts[0].y} ` + fencePts.slice(1).map((p) => `L ${p.x},${p.y}`).join(" ");
-  const lfl = fencePts[0], rfl = fencePts[fencePts.length - 1], cfPt = fp(0, dims.CF);
-  const baseDist = 90 * SCALE;
-  const first = { x: HP.x + baseDist * 0.707, y: HP.y - baseDist * 0.707 };
-  const second = { x: HP.x, y: HP.y - baseDist * 1.414 };
-  const third = { x: HP.x - baseDist * 0.707, y: HP.y - baseDist * 0.707 };
-  const dirtR = 95 * SCALE, mound = { x: HP.x, y: HP.y - 60.5 * SCALE };
-  const uid = `bip${Math.random().toString(36).slice(2, 6)}`;
-
-  return (
-    <div className="bip-card">
-      <div className="bip-field-wrap">
-        <svg viewBox="0 0 300 260" className="bip-field-lg">
-          <defs>
-            <radialGradient id={`${uid}glow`} cx="50%" cy="50%" r="50%"><stop offset="0%" stopColor={accentColor} stopOpacity="0.5" /><stop offset="100%" stopColor={accentColor} stopOpacity="0" /></radialGradient>
-            <clipPath id={`${uid}clip`}><path d={`${fencePath} L ${HP.x},${HP.y} Z`} /></clipPath>
-          </defs>
-          <path d={`${fencePath} L ${HP.x},${HP.y} Z`} fill="rgba(22,80,22,0.25)" />
-          <path d={fencePath} fill="none" stroke="rgba(139,90,43,0.15)" strokeWidth="8" />
-          <circle cx={HP.x} cy={HP.y} r={dirtR} fill="rgba(139,90,43,0.18)" clipPath={`url(#${uid}clip)`} />
-          <circle cx={HP.x} cy={HP.y - baseDist * 0.707} r={baseDist * 0.55} fill="rgba(22,80,22,0.2)" />
-          <path d={fencePath} fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-          <text x={lfl.x + 6} y={lfl.y - 5} fill="rgba(255,255,255,0.3)" fontSize="9" fontWeight="600" textAnchor="start">{dims.LF}</text>
-          <text x={fp(-22.5, dims.LCF).x} y={fp(-22.5, dims.LCF).y - 5} fill="rgba(255,255,255,0.2)" fontSize="8" textAnchor="middle">{dims.LCF}</text>
-          <text x={cfPt.x} y={cfPt.y - 7} fill="rgba(255,255,255,0.35)" fontSize="10" fontWeight="700" textAnchor="middle">{dims.CF}</text>
-          <text x={fp(22.5, dims.RCF).x} y={fp(22.5, dims.RCF).y - 5} fill="rgba(255,255,255,0.2)" fontSize="8" textAnchor="middle">{dims.RCF}</text>
-          <text x={rfl.x - 6} y={rfl.y - 5} fill="rgba(255,255,255,0.3)" fontSize="9" fontWeight="600" textAnchor="end">{dims.RF}</text>
-          <line x1={HP.x} y1={HP.y} x2={lfl.x} y2={lfl.y} stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
-          <line x1={HP.x} y1={HP.y} x2={rfl.x} y2={rfl.y} stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
-          <line x1={HP.x} y1={HP.y} x2={first.x} y2={first.y} stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-          <line x1={first.x} y1={first.y} x2={second.x} y2={second.y} stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-          <line x1={second.x} y1={second.y} x2={third.x} y2={third.y} stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-          <line x1={third.x} y1={third.y} x2={HP.x} y2={HP.y} stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-          <rect x={first.x - 4} y={first.y - 4} width="8" height="8" rx="1" transform={`rotate(45 ${first.x} ${first.y})`} fill="rgba(255,255,255,0.35)" />
-          <rect x={second.x - 4} y={second.y - 4} width="8" height="8" rx="1" transform={`rotate(45 ${second.x} ${second.y})`} fill="rgba(255,255,255,0.35)" />
-          <rect x={third.x - 4} y={third.y - 4} width="8" height="8" rx="1" transform={`rotate(45 ${third.x} ${third.y})`} fill="rgba(255,255,255,0.35)" />
-          <polygon points={`${HP.x - 4},${HP.y} ${HP.x},${HP.y - 5} ${HP.x + 4},${HP.y} ${HP.x + 3},${HP.y + 3} ${HP.x - 3},${HP.y + 3}`} fill="rgba(255,255,255,0.4)" />
-          <circle cx={mound.x} cy={mound.y} r="4" fill="rgba(139,90,43,0.25)" stroke="rgba(255,255,255,0.1)" strokeWidth="0.5" />
-          <rect x={mound.x - 3} y={mound.y - 1} width="6" height="2" rx="0.5" fill="rgba(255,255,255,0.25)" />
-          <line x1={HP.x} y1={HP.y} x2={dotX} y2={dotY} stroke={accentColor} strokeWidth="1.5" strokeDasharray="5,4" opacity="0.5" />
-          <circle cx={dotX} cy={dotY} r="22" fill={`url(#${uid}glow)`} />
-          <circle cx={dotX} cy={dotY} r="6" fill={accentColor} />
-          <circle cx={dotX} cy={dotY} r="6" fill="none" stroke="#fff" strokeWidth="2" opacity="0.5" />
-        </svg>
-      </div>
-      <div className="bip-metrics">
-        <div className="bip-metric-main">
-          {hitData.exitVelo && (<div className="bip-metric-big"><span className="bip-metric-val" style={{ color: accentColor }}>{hitData.exitVelo}</span><span className="bip-metric-unit">mph exit velo</span></div>)}
-          {hitData.distance && (<div className="bip-metric-big"><span className="bip-metric-val" style={{ color: accentColor }}>{hitData.distance}</span><span className="bip-metric-unit">ft distance</span></div>)}
-        </div>
-        <div className="bip-metric-row">
-          <span className="bip-tag" style={{ borderColor: accentColor, color: accentColor }}>{trajLabel}</span>
-          {hitData.launchAngle != null && <span className="bip-metric-sm">{hitData.launchAngle}° launch</span>}
-          <span className="bip-metric-sm">{evLabel}</span>
-        </div>
-      </div>
     </div>
   );
 }
