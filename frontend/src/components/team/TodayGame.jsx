@@ -216,10 +216,6 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
             </div>
           )}
 
-          {/* Umpire info during live game */}
-          {game.umpireName && (
-            <UmpireCard umpireName={game.umpireName} />
-          )}
         </div>
       )}
 
@@ -260,10 +256,6 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
         </div>
       )}
 
-      {!compact && !isLive && game.umpireName && (
-        <UmpireCard umpireName={game.umpireName} />
-      )}
-
       <div className="today-game-footer">
         <div className="today-game-venue-group">
           <span className="today-game-venue">{game.venue.name}</span>
@@ -285,6 +277,10 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
           </button>
         )}
       </div>
+
+      {!compact && game.umpireName && (
+        <UmpireCard umpireName={game.umpireName} />
+      )}
     </div>
   );
 }
