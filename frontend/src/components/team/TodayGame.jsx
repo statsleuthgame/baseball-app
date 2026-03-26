@@ -222,6 +222,11 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
               <span className="live-last-play-label">Last:</span> {liveState.lastPlay}
             </div>
           )}
+
+          {/* Umpire info during live game */}
+          {game.umpireName && (
+            <UmpireCard umpireName={game.umpireName} />
+          )}
         </div>
       )}
 
@@ -262,7 +267,7 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
         </div>
       )}
 
-      {!compact && game.umpireName && (
+      {!compact && !isLive && game.umpireName && (
         <UmpireCard umpireName={game.umpireName} />
       )}
 

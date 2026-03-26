@@ -899,7 +899,8 @@ export const fetchUpcomingSeries = async (teamId) => {
     const games = [];
     for (const dateEntry of resp.data?.dates || []) {
       for (const g of dateEntry.games || []) {
-        if (g.status?.detailedState === "Final") continue;
+        const status = g.status?.detailedState || "";
+        if (["Final", "In Progress", "Warmup", "Delayed Start", "Delayed", "Suspended", "Game Over"].includes(status)) continue;
         const away = g.teams?.away || {};
         const home = g.teams?.home || {};
         games.push({
