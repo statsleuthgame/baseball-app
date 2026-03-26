@@ -250,11 +250,11 @@ function BatterRow({ batter, teamId }) {
       {open && (
         <div className="sb-atbats">
           {batter.atBats.map((ab, i) => {
-            const desc = ab.description?.replace(/^[^.]*?\s(singles|doubles|triples|homers|flies|grounds|lines|pops|strikes|walks|called|reaches|hit by)/, "$1") || ab.event;
+            const ord = ab.inning === 1 ? "1st" : ab.inning === 2 ? "2nd" : ab.inning === 3 ? "3rd" : `${ab.inning}th`;
             return (
               <div key={i} className={`sb-atbat ${ab.isScoring ? "sb-atbat-scoring" : ""}`}>
-                <span className="sb-atbat-inning">{ab.inning}{ab.inning === 1 ? "st" : ab.inning === 2 ? "nd" : ab.inning === 3 ? "rd" : "th"}</span>
-                <span className="sb-atbat-event">{desc}</span>
+                <span className="sb-atbat-inning">{ord}</span>
+                <span className="sb-atbat-event">{ab.shortDesc || ab.event}</span>
                 {ab.rbi > 0 && <span className="sb-atbat-rbi">{ab.rbi} RBI</span>}
               </div>
             );

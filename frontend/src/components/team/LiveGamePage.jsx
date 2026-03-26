@@ -332,12 +332,12 @@ function LgpBoxTeam({ batters, pitchers, abbr, teamId }) {
             {isOpen && (
               <div className="lgp-box-abs">
                 {b.atBats.map((ab, i) => {
-                  // Use full description, strip batter name prefix
-                  const desc = ab.description?.replace(/^[^.]*?\s(singles|doubles|triples|homers|flies|grounds|lines|pops|strikes|walks|called|reaches|hit by)/, "$1") || ab.event;
+                  const ord = ab.inning === 1 ? "1st" : ab.inning === 2 ? "2nd" : ab.inning === 3 ? "3rd" : `${ab.inning}th`;
                   return (
                     <div key={i} className={`lgp-box-ab ${ab.isScoring ? "lgp-box-ab-scoring" : ""}`}>
-                      <span className="lgp-box-ab-inn">{ab.inning}</span>
-                      <span className="lgp-box-ab-event">{desc}</span>
+                      <span className="lgp-box-ab-inn">{ord}</span>
+                      <span className="lgp-box-ab-event">{ab.shortDesc || ab.event}</span>
+                      {ab.rbi > 0 && <span className="lgp-box-ab-rbi">{ab.rbi} RBI</span>}
                     </div>
                   );
                 })}

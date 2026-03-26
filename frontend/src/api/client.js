@@ -691,6 +691,35 @@ export const fetchAllGamesToday = async (dateStr) => {
 };
 
 // Box score + at-bat details for expanded game view
+function formatAtBatShort(event, desc, hrDistance) {
+  const d = desc.toLowerCase();
+  const dir = d.match(/to (left|right|center|left-center|right-center)\s*(field)?/)?.[1] || "";
+  const dirStr = dir ? ` to ${dir} field` : "";
+
+  switch (event) {
+    case "Strikeout":
+      return d.includes("looking") || d.includes("called") ? "Strikeout looking" : "Strikeout swinging";
+    case "Single": return `Single${dirStr}`;
+    case "Double": return `Double${dirStr}`;
+    case "Triple": return `Triple${dirStr}`;
+    case "Home Run": return `Home run${dirStr}${hrDistance ? ` (${hrDistance} ft)` : ""}`;
+    case "Walk": return "Walk";
+    case "Intent Walk": return "Intentional walk";
+    case "Hit By Pitch": return "Hit by pitch";
+    case "Flyout": return `Flyout${dirStr}`;
+    case "Lineout": return `Lineout${dirStr}`;
+    case "Pop Out": return `Pop out${dirStr}`;
+    case "Groundout": return `Groundout${d.includes("shortstop") ? " to short" : d.includes("second") ? " to second" : d.includes("third") ? " to third" : d.includes("first") ? " to first" : d.includes("pitcher") ? " to pitcher" : ""}`;
+    case "Grounded Into DP": return "Grounded into double play";
+    case "Fielders Choice": return "Fielder's choice";
+    case "Sac Fly": return `Sac fly${dirStr}`;
+    case "Sac Bunt": return "Sac bunt";
+    case "Force Out": return "Force out";
+    case "Field Error": return "Reached on error";
+    default: return event || "Unknown";
+  }
+}
+
 export const fetchGameDetail = async (gamePk) => {
   try {
     const [boxResp, pbpResp] = await Promise.all([
@@ -716,6 +745,7 @@ export const fetchGameDetail = async (gamePk) => {
         halfInning: play.about?.halfInning || "",
         event: play.result.event,
         description: play.result.description || "",
+        shortDesc: formatAtBatShort(play.result.event, play.result.description || "", hrDistance),
         rbi: play.result.rbi ?? 0,
         isScoring: play.about?.isScoringPlay || false,
         hrDistance,
