@@ -493,16 +493,19 @@ export const fetchBullpenAvailability = async (teamId, starterIds = []) => {
     const results = await Promise.all(
       pitchers.map(async (p) => {
         try {
-          // Fetch season stats and game log in parallel
-          const [seasonResp, logResp] = await Promise.all([
+          // Fetch current + prior season stats and game log
+          const [curResp, prevResp, logResp] = await Promise.all([
             mlbApi.get(`/people/${p.id}/stats`, { params: { stats: "season", group: "pitching", season } }),
+            mlbApi.get(`/people/${p.id}/stats`, { params: { stats: "season", group: "pitching", season: season - 1 } }),
             mlbApi.get(`/people/${p.id}/stats`, { params: { stats: "gameLog", group: "pitching", gameType: "R", season, limit: 3 } }),
           ]);
 
-          // Skip starters (GS > 50% of games)
-          const seasonStat = seasonResp.data?.stats?.[0]?.splits?.[0]?.stat || {};
-          const gp = seasonStat.gamesPlayed || 0;
-          const gs = seasonStat.gamesStarted || 0;
+          // Skip starters (GS > 50% of games) — check current season first, fall back to prior
+          const curStat = curResp.data?.stats?.[0]?.splits?.[0]?.stat || {};
+          const prevStat = prevResp.data?.stats?.[0]?.splits?.[0]?.stat || {};
+          const stat = (curStat.gamesPlayed || 0) > 0 ? curStat : prevStat;
+          const gp = stat.gamesPlayed || 0;
+          const gs = stat.gamesStarted || 0;
           if (gp > 0 && gs / gp > 0.5) return null;
 
           const splits = logResp.data?.stats?.[0]?.splits || [];
