@@ -40,16 +40,16 @@ export default function LiveGamePage() {
     queryKey: ["liveGameState", gamePk],
     queryFn: () => fetchLiveGameState(gamePk),
     enabled: !!gamePk,
-    staleTime: 1000 * 30,
-    refetchInterval: 1000 * 30,
+    staleTime: 1000 * 15,
+    refetchInterval: 1000 * 15,
   });
 
   const { data: wpData } = useQuery({
     queryKey: ["winProb", gamePk],
     queryFn: () => fetchWinProbability(gamePk),
     enabled: !!gamePk,
-    staleTime: 1000 * 60,
-    refetchInterval: 1000 * 30,
+    staleTime: 1000 * 30,
+    refetchInterval: 1000 * 15,
   });
 
   const [boxOpen, setBoxOpen] = useState(false);
