@@ -2129,6 +2129,98 @@ button.stat-cell {
   font-weight: 800 !important;
 }
 
+/* Live game info on scoreboard cards */
+.sb-live-info {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sb-live-info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.sb-live-player {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+}
+
+.sb-live-player-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.sb-live-player-name {
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sb-live-player-sub {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.sb-live-diamond {
+  flex-shrink: 0;
+}
+
+.sb-live-base {
+  fill: transparent;
+  stroke: var(--text-muted);
+  stroke-width: 1.5;
+  opacity: 0.4;
+}
+
+.sb-live-base.occupied {
+  fill: var(--team-secondary);
+  stroke: var(--team-secondary);
+  opacity: 1;
+}
+
+.sb-live-situation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.sb-live-outs {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.sb-live-out-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: 1.5px solid var(--text-muted);
+  background: transparent;
+}
+
+.sb-live-out-dot.filled {
+  background: var(--team-secondary);
+  border-color: var(--team-secondary);
+}
+
+.sb-live-count {
+  font-weight: 600;
+}
+
 .scoreboard-live-badge {
   display: inline-block;
   padding: 2px 8px;

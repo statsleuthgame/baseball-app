@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
-import { fetchAllGamesToday, fetchPitcherSeasonStats, fetchBvP, fetchRoster, fetchGameDetail, fetchGameLineup, fetchProjectedLineup } from "../../api/client";
+import { fetchAllGamesToday, fetchPitcherSeasonStats, fetchBvP, fetchRoster, fetchGameDetail, fetchGameLineup, fetchProjectedLineup, fetchLiveGameState } from "../../api/client";
 import { formatGameTime, getTeamAbbr, lastName, teamDisplayName } from "../../utils/formatters";
 import LoadingSpinner from "../common/LoadingSpinner";
 import PlayerPhoto from "../common/PlayerPhoto";
@@ -344,6 +344,59 @@ function GameDetail({ gamePk, awayAbbr, homeAbbr, teamId }) {
   );
 }
 
+function LiveGameInfo({ gamePk, teamId }) {
+  const navigate = useNavigate();
+  const { data: liveState } = useQuery({
+    queryKey: ["liveGameState", gamePk],
+    queryFn: () => fetchLiveGameState(gamePk),
+    enabled: !!gamePk,
+    staleTime: 1000 * 20,
+    refetchInterval: 1000 * 20,
+  });
+
+  if (!liveState) return null;
+
+  return (
+    <div className="sb-live-info">
+      <div className="sb-live-info-row">
+        {liveState.batter && (
+          <div className="sb-live-player sb-player-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${liveState.batter.id}`); }}>
+            <PlayerPhoto playerId={liveState.batter.id} name={liveState.batter.fullName} size={22} />
+            <div className="sb-live-player-info">
+              <span className="sb-live-player-name">{lastName(liveState.batter.fullName)}</span>
+              <span className="sb-live-player-sub">AB{liveState.batter.avg ? ` · ${liveState.batter.avg}` : ""}</span>
+            </div>
+          </div>
+        )}
+        <svg className="sb-live-diamond" width="44" height="46" viewBox="0 0 44 46">
+          <rect x="15" y="4" width="12" height="12" rx="1.5" transform="rotate(45 21 10)" className={`sb-live-base ${liveState.onSecond ? "occupied" : ""}`} />
+          <rect x="25" y="14" width="12" height="12" rx="1.5" transform="rotate(45 31 20)" className={`sb-live-base ${liveState.onFirst ? "occupied" : ""}`} />
+          <rect x="5" y="14" width="12" height="12" rx="1.5" transform="rotate(45 11 20)" className={`sb-live-base ${liveState.onThird ? "occupied" : ""}`} />
+          <circle cx="21" cy="34" r="2.5" fill="var(--text-muted)" opacity="0.3" />
+        </svg>
+        {liveState.pitcher && (
+          <div className="sb-live-player sb-player-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${liveState.pitcher.id}`); }}>
+            <PlayerPhoto playerId={liveState.pitcher.id} name={liveState.pitcher.fullName} size={22} />
+            <div className="sb-live-player-info">
+              <span className="sb-live-player-name">{lastName(liveState.pitcher.fullName)}</span>
+              <span className="sb-live-player-sub">P{liveState.pitcher.gameStats ? ` · ${liveState.pitcher.gameStats.ip} IP` : ""}</span>
+            </div>
+          </div>
+        )}
+      </div>
+      <div className="sb-live-situation">
+        <div className="sb-live-outs">
+          {[0, 1, 2].map((i) => (
+            <span key={i} className={`sb-live-out-dot ${i < liveState.outs ? "filled" : ""}`} />
+          ))}
+          <span>{liveState.outs} out</span>
+        </div>
+        <span className="sb-live-count">{liveState.balls}-{liveState.strikes}</span>
+      </div>
+    </div>
+  );
+}
+
 function ScoreboardLineups({ gamePk, awayId, homeId, awayAbbr, homeAbbr, teamId }) {
   const navigate = useNavigate();
 
@@ -605,6 +658,11 @@ export default function Scoreboard() {
                     </span>
                   </div>
                 </div>
+
+                {/* Live game: batter, pitcher, diamond, outs, count */}
+                {isLive && game.gamePk && (
+                  <LiveGameInfo gamePk={game.gamePk} teamId={teamId} />
+                )}
 
                 {/* Venue + weather + watch for scheduled games */}
                 {isScheduled && (game.venue || game.weather) && (
