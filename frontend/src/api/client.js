@@ -791,9 +791,9 @@ export const fetchWinProbability = async (gamePk) => {
     const resp = await mlbApi.get(`/game/${gamePk}/winProbability`);
     return (resp.data || []).map((wp) => ({
       atBatIndex: wp.atBatIndex,
-      homeProb: wp.homeTeamWinProbability,
-      awayProb: wp.awayTeamWinProbability,
-      probAdded: wp.homeTeamWinProbabilityAdded,
+      homeProb: (wp.homeTeamWinProbability || 0) / 100,
+      awayProb: (wp.awayTeamWinProbability || 0) / 100,
+      probAdded: (wp.homeTeamWinProbabilityAdded || 0) / 100,
       leverage: wp.leverageIndex,
     }));
   } catch {
