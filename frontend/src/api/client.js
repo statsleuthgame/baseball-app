@@ -482,21 +482,30 @@ export const fetchHotColdPlayers = async (teamId) => {
   }
 };
 
-// Fetch bullpen availability for a team
+// Fetch bullpen availability for a team (excludes starters)
 export const fetchBullpenAvailability = async (teamId, starterIds = []) => {
   try {
     const roster = await fetchRoster(teamId);
-    const relievers = roster.filter((p) => p.position.type === "Pitcher" && !starterIds.includes(p.id));
+    const pitchers = roster.filter((p) => p.position.type === "Pitcher" && !starterIds.includes(p.id));
     const season = new Date().getFullYear();
     const today = new Date();
 
     const results = await Promise.all(
-      relievers.map(async (p) => {
+      pitchers.map(async (p) => {
         try {
-          const resp = await mlbApi.get(`/people/${p.id}/stats`, {
-            params: { stats: "gameLog", group: "pitching", gameType: "R", season, limit: 3 },
-          });
-          const splits = resp.data?.stats?.[0]?.splits || [];
+          // Fetch season stats and game log in parallel
+          const [seasonResp, logResp] = await Promise.all([
+            mlbApi.get(`/people/${p.id}/stats`, { params: { stats: "season", group: "pitching", season } }),
+            mlbApi.get(`/people/${p.id}/stats`, { params: { stats: "gameLog", group: "pitching", gameType: "R", season, limit: 3 } }),
+          ]);
+
+          // Skip starters (GS > 50% of games)
+          const seasonStat = seasonResp.data?.stats?.[0]?.splits?.[0]?.stat || {};
+          const gp = seasonStat.gamesPlayed || 0;
+          const gs = seasonStat.gamesStarted || 0;
+          if (gp > 0 && gs / gp > 0.5) return null;
+
+          const splits = logResp.data?.stats?.[0]?.splits || [];
           let lastGameDate = null;
           let daysRest = 99;
           let recentPitches = 0;
@@ -529,12 +538,12 @@ export const fetchBullpenAvailability = async (teamId, starterIds = []) => {
             lastGameDate,
           };
         } catch {
-          return { id: p.id, fullName: p.fullName, daysRest: 99, recentPitches: 0, status: "available", lastGameDate: null };
+          return null;
         }
       })
     );
 
-    return results.sort((a, b) => a.daysRest - b.daysRest);
+    return results.filter(Boolean).sort((a, b) => a.daysRest - b.daysRest);
   } catch {
     return [];
   }
