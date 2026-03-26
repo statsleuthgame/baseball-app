@@ -326,7 +326,7 @@ export const fetchLiveGameState = async (gamePk) => {
           const speed = e.pitchData?.startSpeed;
           const pitchType = d.type?.description || "";
           const call = d.call?.description || d.description || "";
-          const batterName = cp.batter?.fullName?.split(" ").pop() || "";
+          const batterName = cp.batter?.fullName || "";
           let action = "";
           if (d.isStrike && d.code === "C") action = `${batterName} takes`;
           else if (d.isStrike && d.code === "S") action = `${batterName} swings and misses`;
