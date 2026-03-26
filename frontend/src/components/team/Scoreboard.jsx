@@ -241,30 +241,32 @@ function TeamPitchingBox({ pitchers, abbr, teamId }) {
   return (
     <div className="sb-team-box sb-pitching-box">
       <div className="sb-box-header">
-        <span className="sb-pitcher-box-name sb-box-team">{teamDisplayName(abbr)}</span>
-        <span className="sb-pitcher-stat sb-stat-hdr">IP</span>
-        <span className="sb-pitcher-stat sb-stat-hdr">H</span>
-        <span className="sb-pitcher-stat sb-stat-hdr">R</span>
-        <span className="sb-pitcher-stat sb-stat-hdr">ER</span>
-        <span className="sb-pitcher-stat sb-stat-hdr">BB</span>
-        <span className="sb-pitcher-stat sb-stat-hdr">K</span>
-        <span className="sb-pitcher-stat sb-stat-hdr">PC</span>
+        <span className="sb-batter-pos"></span>
+        <span className="sb-batter-name sb-box-team">{teamDisplayName(abbr)} Pitching</span>
+        <span className="sb-batter-stat sb-stat-hdr">IP</span>
+        <span className="sb-batter-stat sb-stat-hdr">H</span>
+        <span className="sb-batter-stat sb-stat-hdr">R</span>
+        <span className="sb-batter-stat sb-stat-hdr">ER</span>
+        <span className="sb-batter-stat sb-stat-hdr">BB</span>
+        <span className="sb-batter-stat sb-stat-hdr">K</span>
+        <span style={{ width: 10 }}></span>
       </div>
       {pitchers.map((p) => (
-        <div key={p.id} className="sb-pitcher-row">
+        <div key={p.id} className="sb-batter-row">
+          <span className="sb-batter-pos"></span>
           <span
-            className="sb-pitcher-box-name sb-batter-name sb-player-link"
+            className="sb-batter-name sb-player-link"
             onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}
           >
-            {p.name}
+            {p.name}{p.note ? ` ${p.note}` : ""}
           </span>
-          <span className="sb-pitcher-stat">{p.stats.ip}</span>
-          <span className="sb-pitcher-stat">{p.stats.h}</span>
-          <span className="sb-pitcher-stat">{p.stats.r}</span>
-          <span className="sb-pitcher-stat">{p.stats.er}</span>
-          <span className="sb-pitcher-stat">{p.stats.bb}</span>
-          <span className="sb-pitcher-stat">{p.stats.k}</span>
-          <span className="sb-pitcher-stat sb-pc">{p.stats.pitches}</span>
+          <span className="sb-batter-stat">{p.stats.ip}</span>
+          <span className="sb-batter-stat">{p.stats.h}</span>
+          <span className="sb-batter-stat">{p.stats.r}</span>
+          <span className="sb-batter-stat">{p.stats.er}</span>
+          <span className="sb-batter-stat">{p.stats.bb}</span>
+          <span className="sb-batter-stat">{p.stats.k}</span>
+          <span className="sb-batter-stat sb-pc">{p.stats.pitches}</span>
         </div>
       ))}
     </div>
