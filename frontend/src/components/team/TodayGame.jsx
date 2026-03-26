@@ -64,6 +64,10 @@ export default function TodayGame() {
         onTap={handleViewMatchup}
       />
 
+      {game.umpireName && (
+        <UmpireCard umpireName={game.umpireName} />
+      )}
+
       {/* If today's game is final, also show the next upcoming game */}
       {isFinal && game.nextGame && (
         <GameCard
@@ -278,9 +282,6 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
         )}
       </div>
 
-      {!compact && game.umpireName && (
-        <UmpireCard umpireName={game.umpireName} />
-      )}
     </div>
   );
 }
