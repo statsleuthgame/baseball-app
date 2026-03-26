@@ -318,9 +318,10 @@ function LgpBoxTeam({ batters, pitchers, abbr, teamId }) {
               onClick={hasABs ? () => setOpenBatter(isOpen ? null : b.id) : undefined}
             >
               <span className="lgp-box-pos">{b.position}</span>
-              <span className="lgp-box-name sb-player-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${b.id}`); }}>
+              <span className="lgp-box-name-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${b.id}`); }}>
                 {lastName(b.name)}
               </span>
+              <span className="lgp-box-spacer" />
               <span className="lgp-box-stat">{b.stats.h}-{b.stats.ab}</span>
               {hasABs && (
                 <svg className="lgp-box-chev" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ transform: isOpen ? "rotate(180deg)" : "none" }}>

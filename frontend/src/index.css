@@ -3282,14 +3282,26 @@ th.sb-ls-total {
   flex: 1;
   font-size: 12px;
   font-weight: 500;
-  text-decoration: underline;
-  text-decoration-color: rgba(255, 255, 255, 0.2);
-  text-underline-offset: 2px;
   color: var(--text);
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.sb-batter-name-link {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.2);
+  text-underline-offset: 2px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.sb-batter-name-link:active { opacity: 0.6; }
+
+.sb-batter-spacer { flex: 1; min-width: 4px; }
 }
 
 .sb-batter-stat {
@@ -3740,16 +3752,17 @@ th.sb-ls-total {
   flex-shrink: 0;
 }
 
-.lgp-box-name {
-  flex: 1;
-  min-width: 0;
+.lgp-box-name-link {
+  font-size: 11px;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   text-decoration: underline;
   text-decoration-color: rgba(255,255,255,0.15);
   text-underline-offset: 2px;
+  cursor: pointer;
 }
+.lgp-box-name-link:active { opacity: 0.6; }
+
+.lgp-box-spacer { flex: 1; min-width: 2px; }
 
 .lgp-box-stat {
   font-size: 10px;

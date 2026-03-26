@@ -233,7 +233,8 @@ function BatterRow({ batter, teamId }) {
         onClick={hasABs ? () => setOpen(!open) : undefined}
       >
         <span className="sb-batter-pos">{batter.position}</span>
-        <span className="sb-batter-name sb-player-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${batter.id}`); }}>{batter.name}</span>
+        <span className="sb-batter-name-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${batter.id}`); }}>{batter.name}</span>
+        <span className="sb-batter-spacer" />
         <span className="sb-batter-stat">{batter.stats.ab}</span>
         <span className="sb-batter-stat">{batter.stats.r}</span>
         <span className="sb-batter-stat">{batter.stats.h}</span>
