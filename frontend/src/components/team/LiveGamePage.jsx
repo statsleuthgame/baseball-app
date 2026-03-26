@@ -238,6 +238,7 @@ export default function LiveGamePage() {
           {liveState.lastPlay && (
             <div className="live-last-play">
               <span className="live-last-play-label">Last:</span> {liveState.lastPlay}
+              {liveState.lastHitData && <BallInPlayVisual hitData={liveState.lastHitData} />}
             </div>
           )}
 

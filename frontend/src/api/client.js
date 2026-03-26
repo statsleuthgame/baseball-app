@@ -319,6 +319,22 @@ export const fetchLiveGameState = async (gamePk) => {
       batter: cp.batter ? { id: cp.batter.id, fullName: cp.batter.fullName, avg: batterAvg } : null,
       pitcher: cp.pitcher ? { id: cp.pitcher.id, fullName: cp.pitcher.fullName, gameStats: pitcherGameStats } : null,
       lastPlay,
+      lastHitData: (() => {
+        const lastAB = completed.length > 0 ? completed[completed.length - 1] : null;
+        if (!lastAB) return null;
+        const hitEvent = (lastAB.playEvents || []).find((e) => e.hitData?.coordinates?.coordX);
+        if (!hitEvent) return null;
+        const hd = hitEvent.hitData;
+        return {
+          x: hd.coordinates.coordX,
+          y: hd.coordinates.coordY,
+          exitVelo: hd.launchSpeed,
+          launchAngle: hd.launchAngle,
+          distance: hd.totalDistance ? Math.round(hd.totalDistance) : null,
+          trajectory: hd.trajectory,
+          event: lastAB.result?.event || "",
+        };
+      })(),
       currentAtBat: (plays.currentPlay?.playEvents || [])
         .filter((e) => e.details?.description && e.details?.call?.description)
         .map((e) => {
