@@ -2762,6 +2762,12 @@ button.stat-cell {
   color: var(--text);
 }
 
+.sb-decision-record {
+  color: var(--text-muted);
+  font-size: 10px;
+  margin-left: 2px;
+}
+
 /* Upcoming games pitcher names without photos */
 .series-pitcher-name {
   font-size: 12px;

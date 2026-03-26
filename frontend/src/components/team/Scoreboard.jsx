@@ -48,6 +48,18 @@ function formatDateLabel(dateStr) {
   return `${DAYS[d.getDay()]}, ${MONTHS[d.getMonth()]} ${d.getDate()}`;
 }
 
+function PitcherRecord({ pitcherId, type }) {
+  const { data } = useQuery({
+    queryKey: ["pitcherSeasonStats", pitcherId],
+    queryFn: () => fetchPitcherSeasonStats(pitcherId),
+    enabled: !!pitcherId,
+    staleTime: 1000 * 60 * 60,
+  });
+  if (!data) return null;
+  if (type === "save") return <span className="sb-decision-record">({data.saves || 0})</span>;
+  return <span className="sb-decision-record">({data.wins}-{data.losses})</span>;
+}
+
 function PitcherStats({ pitcherId }) {
   const { data } = useQuery({
     queryKey: ["pitcherSeasonStats", pitcherId],
@@ -673,6 +685,7 @@ export default function Scoreboard() {
                         <span className="sb-player-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${game.decisions.winner.id}`); }}>
                           {lastName(game.decisions.winner.name)}
                         </span>
+                        <PitcherRecord pitcherId={game.decisions.winner.id} type="wl" />
                       </span>
                     )}
                     {game.decisions.loser && (
@@ -681,6 +694,7 @@ export default function Scoreboard() {
                         <span className="sb-player-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${game.decisions.loser.id}`); }}>
                           {lastName(game.decisions.loser.name)}
                         </span>
+                        <PitcherRecord pitcherId={game.decisions.loser.id} type="wl" />
                       </span>
                     )}
                     {game.decisions.save && (
@@ -689,6 +703,7 @@ export default function Scoreboard() {
                         <span className="sb-player-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${game.decisions.save.id}`); }}>
                           {lastName(game.decisions.save.name)}
                         </span>
+                        <PitcherRecord pitcherId={game.decisions.save.id} type="save" />
                       </span>
                     )}
                   </div>

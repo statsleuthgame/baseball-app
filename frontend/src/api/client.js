@@ -840,6 +840,7 @@ export const fetchPitcherSeasonStats = async (pitcherId) => {
           era: stat.era || "-.--",
           wins: stat.wins || 0,
           losses: stat.losses || 0,
+          saves: stat.saves || 0,
           ip: stat.inningsPitched || "0",
           so: stat.strikeOuts || 0,
           season,
