@@ -3741,241 +3741,145 @@ th.sb-ls-total {
   animation: pulse 1.5s infinite;
 }
 
-/* Live Game Page */
-.live-game-page {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+/* ===== REDESIGNED LIVE GAME PAGE ===== */
+.lgp { display: flex; flex-direction: column; gap: 12px; }
+
+/* Zone A: Hero Scoreboard */
+.lgp-hero {
+  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px 14px 14px;
 }
 
-.lgp-status {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.lgp-hero-top {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;
 }
-
-.lgp-status-left {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+.lgp-hero-badges { display: flex; gap: 6px; }
 
 .lgp-back-btn {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  padding: 4px 8px 4px 2px;
-  background: none;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  color: var(--text-muted);
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
+  display: flex; align-items: center; padding: 4px; background: none; border: none;
+  color: var(--text-muted); cursor: pointer;
 }
-.lgp-back-btn:active { opacity: 0.7; }
+.lgp-back-btn:active { opacity: 0.6; }
 
 .lgp-watch-btn {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 6px 14px;
-  background: var(--team-secondary);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
+  display: flex; align-items: center; gap: 4px; padding: 5px 12px;
+  background: var(--team-secondary); color: white; border: none; border-radius: 6px;
+  font-size: 12px; font-weight: 700; cursor: pointer;
 }
 .lgp-watch-btn:active { opacity: 0.8; }
 
-.lgp-badge {
-  display: inline-block;
-  padding: 4px 12px;
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 800;
-  letter-spacing: 0.5px;
+.lgp-badge { padding: 3px 10px; border-radius: 5px; font-size: 11px; font-weight: 800; letter-spacing: 0.5px; }
+.lgp-badge.live { background: var(--live); color: #fff; }
+.lgp-badge.final { background: var(--text-muted); color: var(--bg); }
+
+.lgp-score-row { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 10px; }
+.lgp-team-col { display: flex; flex-direction: column; align-items: center; gap: 2px; flex: 1; }
+.lgp-logo { width: 52px; height: 52px; }
+.lgp-team-abbr { font-size: 13px; font-weight: 700; color: var(--text-bright); }
+.lgp-score-center { display: flex; flex-direction: column; align-items: center; }
+.lgp-scores { display: flex; align-items: center; gap: 8px; }
+.lgp-score-num { font-size: 44px; font-weight: 800; color: var(--text-bright); line-height: 1; }
+.lgp-score-dash { font-size: 20px; color: var(--text-muted); font-weight: 300; }
+
+/* Situation with inline diamond */
+.lgp-situation {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.06);
+}
+.lgp-inning { font-size: 18px; font-weight: 800; color: var(--text-bright); }
+.lgp-diamond-inline { flex-shrink: 0; }
+.lgp-base { fill: transparent; stroke: var(--text-muted); stroke-width: 1.5; opacity: 0.3; }
+.lgp-base.on { fill: var(--team-secondary); stroke: var(--team-secondary); opacity: 1; filter: drop-shadow(0 0 4px var(--team-secondary)); }
+.lgp-outs { display: flex; align-items: center; gap: 4px; }
+.lgp-out-pip { width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--text-muted); background: transparent; }
+.lgp-out-pip.on { background: var(--team-secondary); border-color: var(--team-secondary); }
+.lgp-outs-text { font-size: 12px; color: var(--text-muted); margin-left: 2px; }
+.lgp-count { font-size: 16px; font-weight: 700; color: var(--text-muted); }
+
+/* Section cards */
+.lgp-section {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 12px;
+}
+.lgp-section-label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--text-muted); display: block; margin-bottom: 6px;
 }
 
-.lgp-badge.live {
-  background: var(--live);
-  color: #000;
+/* Zone B: Current matchup */
+.lgp-matchup { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.lgp-matchup-player { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0; }
+.lgp-matchup-info { display: flex; flex-direction: column; min-width: 0; }
+.lgp-matchup-info-right { align-items: flex-end; text-align: right; }
+.lgp-matchup-name { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lgp-matchup-sub { font-size: 11px; color: var(--text-muted); }
+.lgp-matchup-vs { font-size: 11px; color: var(--text-muted); font-weight: 600; flex-shrink: 0; }
+
+/* Pitch sequence dots */
+.lgp-pitch-seq {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.04);
 }
+.lgp-pitch-seq-label { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
+.lgp-pitch-dots { display: flex; gap: 4px; }
+.lgp-pitch-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.lgp-pitch-last { font-size: 11px; color: var(--text); margin-left: auto; }
 
-.lgp-badge.final {
-  background: var(--text-muted);
-  color: var(--bg);
+/* Zone C: Last event */
+.lgp-last-event { }
+.lgp-last-desc { font-size: 13px; color: var(--text); line-height: 1.4; margin: 0; }
+
+/* Zone D: Win prob + due up side by side */
+.lgp-row-section { display: flex; gap: 10px; }
+.lgp-wp-compact {
+  flex: 0 0 auto; background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 10px 14px; text-align: center;
 }
-
-.live-game-page .live-scoring-list {
-  max-height: none;
-  overflow-y: visible;
+.lgp-wp-inline { display: flex; align-items: center; gap: 6px; justify-content: center; margin-top: 4px; }
+.lgp-wp-logo-sm { width: 18px; height: 18px; }
+.lgp-wp-num { font-size: 22px; font-weight: 800; color: var(--win); }
+.lgp-due-compact {
+  flex: 1; min-width: 0; background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 10px 12px;
 }
+.lgp-due-list { display: flex; flex-direction: column; gap: 4px; margin-top: 4px; }
+.lgp-due-player { display: flex; align-items: center; gap: 6px; font-size: 12px; }
 
-/* Live game page side-by-side box score */
-.lgp-box-cols {
-  display: flex;
-  gap: 10px;
-  margin-top: 8px;
-}
+/* Zone E: Linescore */
+.lgp-ls-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 
-.lgp-box-team {
-  flex: 1;
-  min-width: 0;
-}
-
-.lgp-box-hdr {
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--text-bright);
-  padding-bottom: 4px;
-  margin-bottom: 2px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.lgp-box-row {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 4px 0;
-  font-size: 11px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-}
-
-.lgp-box-pos {
-  width: 16px;
-  font-size: 9px;
-  color: var(--text-muted);
-  flex-shrink: 0;
-}
-
-.lgp-box-name-link {
-  font-size: 11px;
-  white-space: nowrap;
-  text-decoration: underline;
-  text-decoration-color: rgba(255,255,255,0.15);
-  text-underline-offset: 2px;
-  cursor: pointer;
-}
-.lgp-box-name-link:active { opacity: 0.6; }
-
-.lgp-box-spacer { flex: 1; min-width: 2px; }
-
-.lgp-box-stat {
-  font-size: 10px;
-  color: var(--text-muted);
-  flex-shrink: 0;
-}
-
-.lgp-box-chev {
-  flex-shrink: 0;
-  color: var(--text-muted);
-  transition: transform 0.2s;
-}
-
-.lgp-box-abs {
-  padding: 2px 0 4px 20px;
-}
-
-.lgp-box-ab {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 2px 0;
-  font-size: 10px;
-  color: var(--text-muted);
-}
-
-.lgp-box-ab-scoring {
-  color: var(--win);
-}
-
-.lgp-box-ab-inn {
-  min-width: 24px;
-  flex-shrink: 0;
-  font-weight: 600;
-  text-align: right;
-  padding-right: 4px;
-}
-
-.lgp-box-ab-event {
-  flex: 1;
-}
-
-.lgp-box-ab-rbi {
-  font-weight: 600;
-  color: var(--team-secondary);
-  flex-shrink: 0;
-}
-
-.lgp-box-pitchers {
-  margin-top: 4px;
-  padding-top: 4px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.lgp-wp {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  padding: 4px 0;
-}
-
-.lgp-wp-label {
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
-  color: var(--text-muted);
-}
-
-.lgp-wp-fav {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.lgp-wp-logo {
-  width: 20px;
-  height: 20px;
-}
-
-.lgp-wp-pct {
-  font-size: 20px;
-  font-weight: 800;
-  color: var(--win);
-}
-
-.lgp-venue {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  font-size: 12px;
-  color: var(--text-muted);
-}
-
-.lgp-venue-loc {
-  opacity: 0.6;
-}
-
+/* Zone H: Footer */
+.lgp-footer { text-align: center; padding-top: 8px; }
+.lgp-venue-text { font-size: 11px; color: var(--text-muted); opacity: 0.6; display: block; margin-bottom: 8px; }
 .lgp-matchup-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px;
-  background: var(--surface, rgba(255,255,255,0.06));
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  color: var(--text);
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
+  width: 100%; padding: 12px; background: var(--surface, rgba(255,255,255,0.06));
+  border: 1px solid var(--border); border-radius: 10px; color: var(--text);
+  font-size: 14px; font-weight: 600; cursor: pointer;
 }
 .lgp-matchup-btn:active { opacity: 0.7; }
+
+/* Scoring list override for live page */
+.lgp .live-scoring-list { max-height: none; overflow-y: visible; }
+
+/* Box score (kept from before) */
+.lgp-box-cols { display: flex; gap: 10px; margin-top: 8px; }
+.lgp-box-team { flex: 1; min-width: 0; }
+.lgp-box-hdr { font-size: 11px; font-weight: 700; color: var(--text-bright); padding-bottom: 4px; margin-bottom: 2px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.lgp-box-row { display: flex; align-items: center; gap: 4px; padding: 4px 0; font-size: 11px; border-bottom: 1px solid rgba(255,255,255,0.03); }
+.lgp-box-pos { width: 16px; font-size: 9px; color: var(--text-muted); flex-shrink: 0; }
+.lgp-box-name-link { font-size: 11px; white-space: nowrap; text-decoration: underline; text-decoration-color: rgba(255,255,255,0.15); text-underline-offset: 2px; cursor: pointer; }
+.lgp-box-name-link:active { opacity: 0.6; }
+.lgp-box-spacer { flex: 1; min-width: 2px; }
+.lgp-box-stat { font-size: 10px; color: var(--text-muted); flex-shrink: 0; }
+.lgp-box-chev { flex-shrink: 0; color: var(--text-muted); transition: transform 0.2s; }
+.lgp-box-abs { padding: 2px 0 4px 20px; }
+.lgp-box-ab { display: flex; align-items: center; gap: 4px; padding: 2px 0; font-size: 10px; color: var(--text-muted); }
+.lgp-box-ab-scoring { color: var(--win); }
+.lgp-box-ab-inn { min-width: 24px; flex-shrink: 0; font-weight: 600; text-align: right; padding-right: 4px; }
+.lgp-box-ab-event { flex: 1; }
+.lgp-box-ab-rbi { font-weight: 600; color: var(--team-secondary); flex-shrink: 0; }
+.lgp-box-pitchers { margin-top: 4px; padding-top: 4px; border-top: 1px solid rgba(255,255,255,0.06); }
 
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
