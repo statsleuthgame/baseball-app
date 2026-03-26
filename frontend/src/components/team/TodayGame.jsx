@@ -254,7 +254,6 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
                     <span className="live-pbp-detail">
                       {p.action}{p.pitchInfo ? ` ${p.pitchInfo}` : ""} — <strong>{p.call}</strong>
                     </span>
-                    {p.hitData && <BallInPlayVisual hitData={p.hitData} />}
                   </>
                 );
               })()}
@@ -436,13 +435,13 @@ function LiveBoxScore({ gamePk, awayAbbr, homeAbbr, teamId }) {
 function BallInPlayVisual({ hitData, venueDimensions }) {
   if (!hitData) return null;
 
-  // SVG coordinate system: 300x240, home plate at (150, 220)
-  const HP = { x: 150, y: 220 };
-  const SCALE = 0.45; // feet to SVG units
+  // SVG coordinate system: 300x260, home plate at (150, 240)
+  const HP = { x: 150, y: 240 };
+  const SCALE = 0.5;
 
   // Convert MLB hit coordinates (250x250 grid) to our SVG
   const dotX = (hitData.x / 250) * 300;
-  const dotY = (hitData.y / 250) * 240;
+  const dotY = (hitData.y / 250) * 260;
 
   const isHR = hitData.distance >= 300 && hitData.launchAngle > 20;
   const isHit = ["line_drive"].includes(hitData.trajectory) || hitData.distance > 200;
@@ -451,18 +450,25 @@ function BallInPlayVisual({ hitData, venueDimensions }) {
   const trajLabel = { fly_ball: "Fly Ball", line_drive: "Line Drive", ground_ball: "Ground Ball", popup: "Popup" }[hitData.trajectory] || "Batted Ball";
   const evLabel = hitData.exitVelo >= 100 ? "Barreled" : hitData.exitVelo >= 95 ? "Hard Hit" : hitData.exitVelo >= 85 ? "Medium" : "Soft";
 
-  // Build fence path from venue dimensions
+  // Build fence path from venue dimensions with 7 points for smoother shape
   const dims = venueDimensions || { LF: 330, LCF: 385, CF: 400, RCF: 385, RF: 330 };
-  const fencePoint = (angle, dist) => {
+  const fp = (angle, dist) => {
     const rad = (angle * Math.PI) / 180;
     return { x: HP.x + Math.sin(rad) * dist * SCALE, y: HP.y - Math.cos(rad) * dist * SCALE };
   };
-  const lfCorner = fencePoint(-45, dims.LF);
-  const lcf = fencePoint(-22.5, dims.LCF);
-  const cf = fencePoint(0, dims.CF);
-  const rcf = fencePoint(22.5, dims.RCF);
-  const rfCorner = fencePoint(45, dims.RF);
-  const fencePath = `M ${lfCorner.x},${lfCorner.y} Q ${lcf.x},${lcf.y} ${cf.x},${cf.y} Q ${rcf.x},${rcf.y} ${rfCorner.x},${rfCorner.y}`;
+  // Interpolate extra points for a smoother fence
+  const lfl = fp(-45, dims.LF);
+  const lf2 = fp(-33.75, (dims.LF + dims.LCF) / 2);
+  const lcf = fp(-22.5, dims.LCF);
+  const lcf2 = fp(-11.25, (dims.LCF + dims.CF) / 2);
+  const cf = fp(0, dims.CF);
+  const rcf2 = fp(11.25, (dims.CF + dims.RCF) / 2);
+  const rcf = fp(22.5, dims.RCF);
+  const rf2 = fp(33.75, (dims.RCF + dims.RF) / 2);
+  const rfl = fp(45, dims.RF);
+  const fencePts = [lfl, lf2, lcf, lcf2, cf, rcf2, rcf, rf2, rfl];
+  const fencePath = `M ${fencePts[0].x},${fencePts[0].y} ` + fencePts.slice(1).map((p) => `L ${p.x},${p.y}`).join(" ");
+  const fenceSmooth = `M ${lfl.x},${lfl.y} C ${lf2.x},${lf2.y} ${lcf.x},${lcf.y} ${lcf2.x},${lcf2.y} S ${rcf2.x},${rcf2.y} ${cf.x},${cf.y} S ${rcf.x},${rcf.y} ${rf2.x},${rf2.y} S ${rfl.x},${rfl.y} ${rfl.x},${rfl.y}`;
 
   // Infield positions (90ft basepaths)
   const baseDist = 90 * SCALE;
@@ -470,10 +476,7 @@ function BallInPlayVisual({ hitData, venueDimensions }) {
   const second = { x: HP.x, y: HP.y - baseDist * 1.414 };
   const third = { x: HP.x - baseDist * 0.707, y: HP.y - baseDist * 0.707 };
 
-  // Infield dirt arc (95ft radius)
   const dirtR = 95 * SCALE;
-
-  // Mound (60.5ft from home)
   const mound = { x: HP.x, y: HP.y - 60.5 * SCALE };
 
   const uid = `bip${Math.random().toString(36).slice(2, 6)}`;
@@ -481,20 +484,22 @@ function BallInPlayVisual({ hitData, venueDimensions }) {
   return (
     <div className="bip-card">
       <div className="bip-field-wrap">
-        <svg viewBox="0 0 300 240" className="bip-field-lg">
+        <svg viewBox="0 0 300 260" className="bip-field-lg">
           <defs>
             <radialGradient id={`${uid}glow`} cx="50%" cy="50%" r="50%">
               <stop offset="0%" stopColor={accentColor} stopOpacity="0.5" />
               <stop offset="100%" stopColor={accentColor} stopOpacity="0" />
             </radialGradient>
             <clipPath id={`${uid}clip`}>
-              <path d={`M ${lfCorner.x},${lfCorner.y} L ${HP.x},${HP.y} L ${rfCorner.x},${rfCorner.y} Q ${rcf.x},${rcf.y} ${cf.x},${cf.y} Q ${lcf.x},${lcf.y} ${lfCorner.x},${lfCorner.y} Z`} />
+              <path d={`${fencePath} L ${HP.x},${HP.y} Z`} />
             </clipPath>
           </defs>
 
-          {/* Outfield grass */}
-          <path d={`M ${lfCorner.x},${lfCorner.y} L ${HP.x},${HP.y} L ${rfCorner.x},${rfCorner.y} Q ${rcf.x},${rcf.y} ${cf.x},${cf.y} Q ${lcf.x},${lcf.y} ${lfCorner.x},${lfCorner.y} Z`}
-            fill="rgba(22,80,22,0.25)" />
+          {/* Outfield grass — filled by fence shape */}
+          <path d={`${fencePath} L ${HP.x},${HP.y} Z`} fill="rgba(22,80,22,0.25)" />
+
+          {/* Warning track */}
+          <path d={fencePath} fill="none" stroke="rgba(139,90,43,0.15)" strokeWidth="8" />
 
           {/* Infield dirt */}
           <circle cx={HP.x} cy={HP.y} r={dirtR} fill="rgba(139,90,43,0.18)" clipPath={`url(#${uid}clip)`} />
@@ -503,16 +508,18 @@ function BallInPlayVisual({ hitData, venueDimensions }) {
           <circle cx={HP.x} cy={HP.y - baseDist * 0.707} r={baseDist * 0.55} fill="rgba(22,80,22,0.2)" />
 
           {/* Fence line */}
-          <path d={fencePath} fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="2" />
+          <path d={fencePath} fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
 
           {/* Fence dimension labels */}
-          <text x={lfCorner.x + 4} y={lfCorner.y - 4} fill="rgba(255,255,255,0.2)" fontSize="8" textAnchor="start">{dims.LF}'</text>
-          <text x={cf.x} y={cf.y - 6} fill="rgba(255,255,255,0.2)" fontSize="8" textAnchor="middle">{dims.CF}'</text>
-          <text x={rfCorner.x - 4} y={rfCorner.y - 4} fill="rgba(255,255,255,0.2)" fontSize="8" textAnchor="end">{dims.RF}'</text>
+          <text x={lfl.x + 6} y={lfl.y - 5} fill="rgba(255,255,255,0.3)" fontSize="9" fontWeight="600" textAnchor="start">{dims.LF}</text>
+          <text x={lcf.x + 2} y={lcf.y - 5} fill="rgba(255,255,255,0.2)" fontSize="8" textAnchor="middle">{dims.LCF}</text>
+          <text x={cf.x} y={cf.y - 7} fill="rgba(255,255,255,0.35)" fontSize="10" fontWeight="700" textAnchor="middle">{dims.CF}</text>
+          <text x={rcf.x - 2} y={rcf.y - 5} fill="rgba(255,255,255,0.2)" fontSize="8" textAnchor="middle">{dims.RCF}</text>
+          <text x={rfl.x - 6} y={rfl.y - 5} fill="rgba(255,255,255,0.3)" fontSize="9" fontWeight="600" textAnchor="end">{dims.RF}</text>
 
           {/* Foul lines */}
-          <line x1={HP.x} y1={HP.y} x2={lfCorner.x} y2={lfCorner.y} stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
-          <line x1={HP.x} y1={HP.y} x2={rfCorner.x} y2={rfCorner.y} stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
+          <line x1={HP.x} y1={HP.y} x2={lfl.x} y2={lfl.y} stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
+          <line x1={HP.x} y1={HP.y} x2={rfl.x} y2={rfl.y} stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
 
           {/* Base paths */}
           <line x1={HP.x} y1={HP.y} x2={first.x} y2={first.y} stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
