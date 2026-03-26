@@ -857,18 +857,18 @@ export const fetchTeamHotCold = async (teamId) => {
 export const fetchLeagueLeaders = async () => {
   try {
     const year = new Date().getFullYear();
-    const hitting = ["homeRuns", "battingAverage", "runsBattedIn", "stolenBases", "hits"];
-    const pitching = ["earnedRunAverage", "strikeouts", "wins", "saves", "whip"];
-    const all = [...hitting, ...pitching];
-    const results = {};
+    const hittingCats = ["homeRuns", "battingAverage", "runsBattedIn", "stolenBases", "hits"];
+    const pitchingCats = ["earnedRunAverage", "strikeouts", "wins", "saves", "whip"];
+    const hitting = {};
+    const pitching = {};
 
-    await Promise.all(all.map(async (cat) => {
+    const fetchCat = async (cat, group, dest) => {
       try {
         const resp = await mlbApi.get("/stats/leaders", {
-          params: { leaderCategories: cat, season: year, sportId: 1, limit: 5 },
+          params: { leaderCategories: cat, season: year, sportId: 1, limit: 5, statGroup: group },
         });
         const leaders = resp.data?.leagueLeaders?.[0]?.leaders || [];
-        results[cat] = leaders.map((l) => ({
+        dest[cat] = leaders.map((l) => ({
           rank: l.rank,
           value: l.value,
           player: { id: l.person?.id, name: l.person?.fullName },
@@ -876,8 +876,13 @@ export const fetchLeagueLeaders = async () => {
           teamId: l.team?.id,
         }));
       } catch {}
-    }));
-    return { hitting: results, pitching: results };
+    };
+
+    await Promise.all([
+      ...hittingCats.map((cat) => fetchCat(cat, "hitting", hitting)),
+      ...pitchingCats.map((cat) => fetchCat(cat, "pitching", pitching)),
+    ]);
+    return { hitting, pitching };
   } catch {
     return { hitting: {}, pitching: {} };
   }

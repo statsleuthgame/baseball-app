@@ -2134,6 +2134,18 @@ button.stat-cell {
   align-items: center;
   justify-content: center;
   gap: 8px;
+  position: relative;
+}
+
+.scoreboard-date-center {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sb-cal-btn {
+  position: absolute;
+  right: 0;
 }
 
 .scoreboard-date-btn {
