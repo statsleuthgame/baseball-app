@@ -140,18 +140,11 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
       {/* Live game: compact situation + R/H/E + matchup + last play */}
       {!compact && isLive && liveState && (
         <div className="live-game-detail" onClick={(e) => e.stopPropagation()}>
-          {/* Situation line: inning · bases · outs · count */}
+          {/* Situation line: inning · outs · count */}
           <div className="live-situation">
             <span className="live-inning">
               {liveState.inningHalf === "Top" ? "\u25B2" : "\u25BC"} {liveState.inning}
             </span>
-            <span className="live-sep">&middot;</span>
-            <div className="live-bases-inline">
-              <span className={`live-base-dot ${liveState.onThird ? "on" : ""}`} />
-              <span className={`live-base-dot ${liveState.onSecond ? "on" : ""}`} />
-              <span className={`live-base-dot ${liveState.onFirst ? "on" : ""}`} />
-            </div>
-            <span className="live-sep">&middot;</span>
             <div className="live-outs-inline">
               {[0, 1, 2].map((i) => (
                 <span key={i} className={`live-out-pip ${i < liveState.outs ? "filled" : ""}`} />
@@ -184,11 +177,11 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
                 <span className="live-rhe-val">{liveState.linescore.home.errors}</span>
               </div>
             </div>
-            <svg className="live-diamond" width="56" height="56" viewBox="0 0 56 56">
-              <rect x="21" y="3" width="14" height="14" rx="2" transform="rotate(45 28 10)" className={`live-diamond-base ${liveState.onSecond ? "occupied" : ""}`} />
-              <rect x="32" y="14" width="14" height="14" rx="2" transform="rotate(45 39 21)" className={`live-diamond-base ${liveState.onFirst ? "occupied" : ""}`} />
-              <rect x="10" y="14" width="14" height="14" rx="2" transform="rotate(45 17 21)" className={`live-diamond-base ${liveState.onThird ? "occupied" : ""}`} />
-              <circle cx="28" cy="42" r="3" fill="var(--text-muted)" opacity="0.3" />
+            <svg className="live-diamond" width="76" height="76" viewBox="0 0 76 76">
+              <rect x="27" y="2" width="20" height="20" rx="2" transform="rotate(45 37 12)" className={`live-diamond-base ${liveState.onSecond ? "occupied" : ""}`} />
+              <rect x="43" y="18" width="20" height="20" rx="2" transform="rotate(45 53 28)" className={`live-diamond-base ${liveState.onFirst ? "occupied" : ""}`} />
+              <rect x="11" y="18" width="20" height="20" rx="2" transform="rotate(45 21 28)" className={`live-diamond-base ${liveState.onThird ? "occupied" : ""}`} />
+              <circle cx="37" cy="56" r="4" fill="var(--text-muted)" opacity="0.3" />
             </svg>
           </div>
 

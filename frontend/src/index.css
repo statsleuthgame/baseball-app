@@ -523,33 +523,13 @@ body {
 .live-situation {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   font-size: 13px;
-  flex-wrap: wrap;
 }
 
 .live-inning { font-weight: 700; color: var(--text-bright); }
 .live-sep { color: var(--text-muted); opacity: 0.4; }
 .live-count { font-weight: 600; color: var(--text-muted); }
-
-.live-bases-inline {
-  display: flex;
-  gap: 3px;
-}
-
-.live-base-dot {
-  width: 10px;
-  height: 10px;
-  transform: rotate(45deg);
-  border: 1.5px solid var(--text-muted);
-  border-radius: 1px;
-  background: transparent;
-}
-
-.live-base-dot.on {
-  background: var(--team-secondary);
-  border-color: var(--team-secondary);
-}
 
 .live-outs-inline {
   display: flex;
@@ -578,9 +558,10 @@ body {
 .live-rhe-diamond {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+  gap: 16px;
 }
+
+.live-rhe { flex: 1; }
 
 .live-diamond {
   flex-shrink: 0;
