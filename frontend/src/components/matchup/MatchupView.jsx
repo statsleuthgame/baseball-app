@@ -158,16 +158,16 @@ export default function MatchupView() {
       )}
 
       {/* Hot & Cold Players */}
-      <HotColdSection teamId={teamId} opponentId={opponent.id} usAbbr={us.abbreviation} oppAbbr={opponent.abbreviation} />
+      <HotColdSection teamId={awayId} opponentId={homeId} usAbbr={game.away.abbreviation} oppAbbr={game.home.abbreviation} />
 
       {/* Bullpen Availability */}
       <BullpenSection
-        teamId={teamId}
-        opponentId={opponent.id}
-        usAbbr={us.abbreviation}
-        oppAbbr={opponent.abbreviation}
-        usStarterId={us.probablePitcher?.id}
-        oppStarterId={opponentPitcher?.id}
+        teamId={awayId}
+        opponentId={homeId}
+        usAbbr={game.away.abbreviation}
+        oppAbbr={game.home.abbreviation}
+        usStarterId={game.away.probablePitcher?.id}
+        oppStarterId={game.home.probablePitcher?.id}
       />
 
       {/* Side-by-side pitcher arsenals */}
@@ -357,6 +357,7 @@ function ParkFactorsCard({ venueId, venueName }) {
 }
 
 function HotColdSection({ teamId, opponentId, usAbbr, oppAbbr }) {
+  const { teamId: contextTeamId } = useTeam();
   const navigate = useNavigate();
 
   const { data: usData } = useQuery({
@@ -382,7 +383,7 @@ function HotColdSection({ teamId, opponentId, usAbbr, oppAbbr }) {
       <div className="hotcold-group">
         <div className="hotcold-group-title">{label} — {teamAbbr}</div>
         {players.map((p) => (
-          <div key={p.id} className="hotcold-row sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
+          <div key={p.id} className="hotcold-row sb-player-link" onClick={() => navigate(`/team/${contextTeamId}/player/${p.id}`)}>
             <span className="hotcold-name">{lastName(p.fullName)}</span>
             <span className="hotcold-pos">{p.position}</span>
             <span className="hotcold-stat">{p.avg}</span>
@@ -407,6 +408,7 @@ function HotColdSection({ teamId, opponentId, usAbbr, oppAbbr }) {
 }
 
 function BullpenSection({ teamId, opponentId, usAbbr, oppAbbr, usStarterId, oppStarterId }) {
+  const { teamId: contextTeamId } = useTeam();
   const navigate = useNavigate();
 
   const { data: usBullpen } = useQuery({
@@ -431,7 +433,7 @@ function BullpenSection({ teamId, opponentId, usAbbr, oppAbbr, usStarterId, oppS
       <div className="bullpen-team">
         <div className="bullpen-team-hdr">{abbr}</div>
         {pitchers.map((p) => (
-          <div key={p.id} className="bullpen-row sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
+          <div key={p.id} className="bullpen-row sb-player-link" onClick={() => navigate(`/team/${contextTeamId}/player/${p.id}`)}>
             <span className={`bullpen-status-dot ${p.status}`} />
             <span className="bullpen-name">{lastName(p.fullName)}</span>
             <span className="bullpen-rest">{p.daysRest < 99 ? `${p.daysRest}d rest` : "—"}</span>
