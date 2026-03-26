@@ -24,7 +24,7 @@ function pathFromPoints(pts) {
   return `M ${pts[0][0]},${pts[0][1]} ` + pts.slice(1).map((p) => `L ${p[0]},${p[1]}`).join(" ");
 }
 
-export default function BallparkSVG({ parkAbbr, parkName, children }) {
+export default function BallparkSVG({ parkAbbr, parkName, hits, children }) {
   const teamId = ABBR_TO_ID[parkAbbr] || "136";
   const stadium = stadiumPaths[teamId];
 
@@ -34,18 +34,20 @@ export default function BallparkSVG({ parkAbbr, parkName, children }) {
   const infieldOuter = stadium ? pathFromPoints(stadium.infield_outer) : "";
   const foulLines = stadium ? pathFromPoints(stadium.foul_lines) : "";
 
-  // Compute viewBox — generous padding so hits beyond fence are visible
+  // Compute viewBox — include all hit dots so nothing gets clipped
+  const hitPts = (hits || []).map((h) => [h.x + HP.x, HP.y - h.y]);
   const allPts = [
     ...(stadium?.outfield_outer || []),
     ...(stadium?.foul_lines || []),
+    ...hitPts,
     [HP.x, HP.y],
   ];
   const xs = allPts.map((p) => p[0]);
   const ys = allPts.map((p) => p[1]);
-  const minX = Math.min(...xs) - 20;
-  const maxX = Math.max(...xs) + 20;
-  const minY = Math.min(...ys) - 25;
-  const maxY = HP.y + 15; // Always show a bit below home plate
+  const minX = Math.min(...xs) - 15;
+  const maxX = Math.max(...xs) + 15;
+  const minY = Math.min(...ys) - 15;
+  const maxY = HP.y + 12;
   const vw = maxX - minX;
   const vh = maxY - minY;
 

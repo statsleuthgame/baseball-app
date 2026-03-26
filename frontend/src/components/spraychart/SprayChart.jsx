@@ -165,6 +165,7 @@ export default function SprayChart() {
             <BallparkSVG
               parkAbbr={selectedPark}
               parkName={currentVenue?.name}
+              hits={filteredData?.hits}
             >
               <HitDots hits={filteredData.hits} filters={filters} longestHR={filteredData.longestHR} />
             </BallparkSVG>
