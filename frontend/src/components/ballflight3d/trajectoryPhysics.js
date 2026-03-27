@@ -7,17 +7,10 @@
  * where home plate is the origin, +x is toward first base, +y is
  * straight-away center field, and +z is up.
  *
- * Physics references:
- *  - Prof. Alan Nathan's trajectory calculator
- *  - Simplified drag model: F_drag = ½ ρ C_d A v²
  */
 
 const G = 32.174; // ft/s² gravity
-const RHO = 0.0023769; // air density slug/ft³ (sea level, ~70°F)
-const CD = 0.35; // drag coefficient for a baseball
-const BALL_RADIUS = 0.121; // ft (2.9 inches diameter / 2)
-const BALL_AREA = Math.PI * BALL_RADIUS * BALL_RADIUS;
-// Empirical drag factor (per-foot deceleration coefficient, tuned to match real trajectories)
+// Empirical drag factor tuned to match real MLB trajectories
 const DRAG_K = 0.0015;
 
 const DEG_TO_RAD = Math.PI / 180;
