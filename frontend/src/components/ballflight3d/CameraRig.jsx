@@ -7,11 +7,11 @@ import * as THREE from "three";
  * Each defines a position and lookAt target.
  */
 const CAMERA_PRESETS = {
-  // Classic broadcast angle — pulled back to show full field
+  // Classic broadcast angle — shows field with good launch angle visibility
   broadcast: {
-    position: [0, 160, 160],
-    lookAt: [0, 0, -120],
-    fov: 55,
+    position: [0, 110, 130],
+    lookAt: [0, 10, -130],
+    fov: 52,
   },
   // Center field camera — behind the pitcher looking at the batter
   centerField: {

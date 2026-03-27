@@ -12,17 +12,17 @@ const skyVertexShader = `
   }
 `;
 
-// Sky dome fragment shader: 3-stop gradient
+// Sky dome fragment shader: blue sky gradient
 const skyFragmentShader = `
   varying float vWorldY;
   void main() {
     float t = clamp(vWorldY / 500.0, -0.3, 1.0);
-    // Below horizon: warm city glow
-    vec3 belowHorizon = vec3(0.1, 0.063, 0.031); // #1a1008
-    // Horizon: purple-navy
-    vec3 horizon = vec3(0.102, 0.063, 0.188);     // #1a1030
-    // Zenith: deep space
-    vec3 zenith = vec3(0.031, 0.031, 0.063);      // #080810
+    // Below horizon: light haze
+    vec3 belowHorizon = vec3(0.55, 0.62, 0.7);    // soft blue-gray
+    // Horizon: pale blue
+    vec3 horizon = vec3(0.45, 0.6, 0.8);           // light sky blue
+    // Zenith: deeper blue
+    vec3 zenith = vec3(0.15, 0.3, 0.6);            // rich blue
 
     vec3 color;
     if (t < 0.0) {
@@ -242,7 +242,7 @@ export default function StadiumBackground({ fencePoints, teamColor }) {
     <group>
       {/* Seating bowl */}
       <mesh geometry={bowlGeo}>
-        <meshLambertMaterial color="#1a1a2e" side={THREE.DoubleSide} />
+        <meshLambertMaterial color="#3a3a50" side={THREE.DoubleSide} />
       </mesh>
 
       {/* Fascia accent with team color */}
@@ -281,7 +281,7 @@ export default function StadiumBackground({ fencePoints, teamColor }) {
       {/* City skyline */}
       {skylineGeo && (
         <mesh geometry={skylineGeo}>
-          <meshBasicMaterial color="#0a0a0f" />
+          <meshBasicMaterial color="#2a2a35" />
         </mesh>
       )}
 
