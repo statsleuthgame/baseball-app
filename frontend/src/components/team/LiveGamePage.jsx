@@ -358,13 +358,16 @@ function StrikeZone({ pitches }) {
   // pZ: feet above ground → SVG Y (inverted: higher pZ = lower SVG Y)
   const mapZ = (pZ) => zoneT + (szTop - pZ) * SCALE;
 
-  // Fixed viewBox — large enough for any realistic pitch location
-  // pX range: roughly -2.5 to +2.5 feet → SVG: CX ± 150
-  // pZ range: roughly 0 to 5 feet → covers well above and below zone
-  const vMinX = CX - 160;
-  const vMaxX = CX + 160;
-  const vMinY = zoneT - 50;
-  const vMaxY = zoneB + 40;
+  // Fixed viewBox — ESPN-like proportions
+  // ~1 foot padding on each side of zone, ~0.6 feet above/below
+  // Zone takes up ~42% width, ~60% height — prominent but room for off-zone pitches
+  const padSide = 1.0 * SCALE;  // 60 units = 1 foot each side
+  const padTop = 0.6 * SCALE;   // 36 units above
+  const padBot = 0.6 * SCALE;   // 36 units below
+  const vMinX = zoneL - padSide;
+  const vMaxX = zoneR + padSide;
+  const vMinY = zoneT - padTop;
+  const vMaxY = zoneB + padBot;
 
   return (
     <svg viewBox={`${vMinX} ${vMinY} ${vMaxX - vMinX} ${vMaxY - vMinY}`} className="lgp-strike-zone" preserveAspectRatio="xMidYMid meet">
@@ -392,9 +395,9 @@ function StrikeZone({ pitches }) {
         const isLast = i === withCoords.length - 1;
         return (
           <g key={i}>
-            <circle cx={x} cy={y} r="7" fill={color} opacity={isLast ? 1 : 0.7} />
-            {isLast && <circle cx={x} cy={y} r="7" fill="none" stroke="#fff" strokeWidth="1.5" opacity="0.5" />}
-            <text x={x} y={y + 1} textAnchor="middle" fontSize="6" fill="#fff" fontWeight="700" dominantBaseline="middle">{i + 1}</text>
+            <circle cx={x} cy={y} r="5.5" fill={color} opacity={isLast ? 1 : 0.7} />
+            {isLast && <circle cx={x} cy={y} r="5.5" fill="none" stroke="#fff" strokeWidth="1.2" opacity="0.5" />}
+            <text x={x} y={y + 0.5} textAnchor="middle" fontSize="5" fill="#fff" fontWeight="700" dominantBaseline="middle">{i + 1}</text>
           </g>
         );
       })}
