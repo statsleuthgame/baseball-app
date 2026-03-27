@@ -22,17 +22,30 @@ function getTeamColor(teamId) {
 
 function computeRunnerMovements(event, runnersOn) {
   const movements = [];
+  const isOut = event === "Out";
   const batterBases = {
-    "Single": 1, "Double": 2, "Triple": 3, "Home Run": 4, "Out": 0,
+    "Single": 1, "Double": 2, "Triple": 3, "Home Run": 4,
   }[event] || 0;
-
-  if (batterBases === 0) return movements;
 
   const runners = [];
   if (runnersOn?.third) runners.push({ base: 3 });
   if (runnersOn?.second) runners.push({ base: 2 });
   if (runnersOn?.first) runners.push({ base: 1 });
 
+  if (isOut) {
+    // On an out, batter still runs toward first
+    movements.push({
+      from: 0,
+      to: 1,
+      scores: false,
+      isBatter: true,
+      isOut: true,
+    });
+    // Existing runners stay on their bases (static, handled separately)
+    return movements;
+  }
+
+  // On a hit, advance all runners
   for (const runner of runners) {
     const newBase = runner.base + batterBases;
     movements.push({
@@ -132,9 +145,12 @@ export default function BaseRunners3D({
     [movements]
   );
 
+  const isOutPlay = event === "Out";
+
   return (
     <group>
-      {!isAnimating && (
+      {/* Show static runners when not animating, or on outs (they stay on base) */}
+      {(!isAnimating || isOutPlay) && (
         <>
           {runnersOn?.first && <StaticRunner position={BASES.first} color={teamColor} />}
           {runnersOn?.second && <StaticRunner position={BASES.second} color={teamColor} />}
@@ -151,6 +167,7 @@ export default function BaseRunners3D({
           startDelay={movement.isBatter ? 0.15 : 0}
           numBases={Math.min(movement.to - movement.from, 4)}
           color={teamColor}
+          fadeAtEnd={movement.isOut}
         />
       ))}
     </group>
@@ -169,8 +186,9 @@ function StaticRunner({ position, color }) {
 /**
  * Animated runner — straight lines, constant speed, no stopping.
  */
-function AnimatedRunner({ path, ballProgress, scores, startDelay = 0, numBases = 1, color }) {
+function AnimatedRunner({ path, ballProgress, scores, startDelay = 0, numBases = 1, color, fadeAtEnd = false }) {
   const meshRef = useRef();
+  const matRef = useRef();
   const elapsedRef = useRef(0);
   const startedRef = useRef(false);
   const trailPositions = useRef([]);
@@ -216,6 +234,11 @@ function AnimatedRunner({ path, ballProgress, scores, startDelay = 0, numBases =
       meshRef.current.position.y = 0.5 + bob;
     }
 
+    // Fade out batter on outs when they reach the base
+    if (fadeAtEnd && matRef.current && runProgress > 0.8) {
+      matRef.current.opacity = 0.9 * (1 - (runProgress - 0.8) / 0.2);
+    }
+
     // Trail
     if (runProgress > 0 && runProgress < 1) {
       trailPositions.current.push([x, 0.2, z]);
@@ -242,7 +265,7 @@ function AnimatedRunner({ path, ballProgress, scores, startDelay = 0, numBases =
 
       <mesh ref={meshRef} position={[startPos.x, 0.5, startPos.z]}>
         <sphereGeometry args={[2.5, 12, 12]} />
-        <meshBasicMaterial color={color} transparent opacity={0.9} />
+        <meshBasicMaterial ref={matRef} color={color} transparent opacity={0.9} />
       </mesh>
 
       {scores && <ScoreFlash runnerRef={meshRef} color={color} />}
