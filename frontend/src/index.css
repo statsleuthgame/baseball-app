@@ -3874,7 +3874,18 @@ th.sb-ls-total {
   padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.04);
   position: relative; overflow: hidden;
 }
-.lgp-zone-with-logo { }
+.lgp-zone-with-bg {
+  background: url('/images/catchers-view.jpg') center center / cover no-repeat;
+  border-radius: 10px;
+}
+.lgp-zone-with-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 14, 23, 0.85);
+  z-index: 0;
+  border-radius: 10px;
+}
 .lgp-zone-bg-logo {
   position: absolute; top: 50%; left: 50%;
   transform: translate(-50%, -50%);

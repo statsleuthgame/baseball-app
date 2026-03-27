@@ -207,7 +207,7 @@ export default function LiveGamePage() {
             );
 
             if (showZone) return (
-              <div className="lgp-zone-centered lgp-zone-with-logo">
+              <div className="lgp-zone-centered lgp-zone-with-bg">
                 <img src={battingTeamLogo2} alt="" className="lgp-zone-bg-logo" />
                 <span className="lgp-pitch-result">
                   {(() => {
@@ -267,7 +267,7 @@ export default function LiveGamePage() {
             }
             // Normal between-at-bat pause — show empty zone with logo
             return (
-              <div className="lgp-zone-centered lgp-zone-with-logo">
+              <div className="lgp-zone-centered lgp-zone-with-bg">
                 <img src={battingTeamLogo2} alt="" className="lgp-zone-bg-logo" />
                 <StrikeZone pitches={[]} />
               </div>
