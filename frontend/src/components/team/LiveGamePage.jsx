@@ -471,10 +471,11 @@ function StrikeZone({ pitches }) {
         </g>
       ))}
 
-      {/* Pitch dots — all same size */}
+      {/* Pitch dots — clamped to viewBox so balls don't overflow */}
       {withCoords.map((p, i) => {
-        const x = mapX(p.pX);
-        const y = mapZ(p.pZ);
+        const dotR = 5.5;
+        const x = Math.max(vMinX + dotR + 1, Math.min(vMaxX - dotR - 1, mapX(p.pX)));
+        const y = Math.max(vMinY + dotR + 1, Math.min(vMaxY - dotR - 1, mapZ(p.pZ)));
         const isFoul = p.code === "F";
         const countStrikes = p.count ? parseInt(p.count.split("-")[1]) || 0 : 0;
         const prevIdx = withCoords.indexOf(p) > 0 ? withCoords.indexOf(p) - 1 : -1;

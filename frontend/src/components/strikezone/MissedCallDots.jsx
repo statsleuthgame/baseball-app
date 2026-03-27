@@ -6,6 +6,15 @@ const COLORS = {
   gifted: "#3b82f6",   // blue — strike called on pitch outside zone
 };
 
+// Clamp dot positions so the full ball stays inside the SVG viewBox (200x240)
+const DOT_R = 3.5; // max dot radius (selected state)
+const MIN_X = DOT_R + 2;
+const MAX_X = 200 - DOT_R - 2;
+const MIN_Y = DOT_R + 2;
+const MAX_Y = 240 - DOT_R - 2;
+const clampX = (v) => Math.max(MIN_X, Math.min(MAX_X, v));
+const clampY = (v) => Math.max(MIN_Y, Math.min(MAX_Y, v));
+
 export default function MissedCallDots({ squeezed = [], gifted = [], callFilter = "all" }) {
   const [selected, setSelected] = useState(null);
   const lastTouchRef = useRef(0);
@@ -34,8 +43,8 @@ export default function MissedCallDots({ squeezed = [], gifted = [], callFilter 
     <>
       <g className="missed-call-dots">
         {dots.map((dot) => {
-          const cx = xScale(dot.px);
-          const cy = yScale(dot.pz);
+          const cx = clampX(xScale(dot.px));
+          const cy = clampY(yScale(dot.pz));
           const isSel = selected === dot.idx;
           const color = COLORS[dot.type];
 
@@ -63,8 +72,8 @@ export default function MissedCallDots({ squeezed = [], gifted = [], callFilter 
 
         {selectedDot && (
           <circle
-            cx={xScale(selectedDot.px)}
-            cy={yScale(selectedDot.pz)}
+            cx={clampX(xScale(selectedDot.px))}
+            cy={clampY(yScale(selectedDot.pz))}
             r="7" fill="none"
             stroke="#fff" strokeWidth="0.5" opacity="0.5"
           />
