@@ -6,7 +6,7 @@ import AnimatedBall from "./AnimatedBall";
 import Fielders3D from "./Fielders3D";
 import BaseRunners3D, { getTeamColor } from "./BaseRunners3D";
 import CameraRig from "./CameraRig";
-import ThrowToBase, { parseThrowTarget } from "./ThrowToBase";
+import ThrowToBase, { parseThrowTargets } from "./ThrowToBase";
 import OutIndicator from "./OutIndicator";
 import {
   computeTrajectory,
@@ -32,9 +32,9 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
   const [showMetrics, setShowMetrics] = useState(false);
   const [ballPos, setBallPos] = useState(null);
   const [ballProgress, setBallProgress] = useState(0);
-  const [throwPhase, setThrowPhase] = useState(false);
-  const [showOut, setShowOut] = useState(false);
-  const [outPosition, setOutPosition] = useState(null);
+  const [throwIndex, setThrowIndex] = useState(-1); // -1 = no throw, 0+ = which throw in chain
+  const [throwFromPos, setThrowFromPos] = useState(null);
+  const [outPositions, setOutPositions] = useState([]); // array of positions for OUT indicators
 
   // Compute trajectory from hit data
   const { sampledPoints, duration, apexHeight } = useMemo(() => {
@@ -63,11 +63,11 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
     return { x: last.x, z: -last.y }; // y in physics = -z in Three.js
   }, [sampledPoints]);
 
-  // Determine if this play has a throw (only ground balls, not fly outs/popups)
-  const throwTarget = useMemo(() => {
-    if (hitData?.event !== "Out") return null;
-    if (hitData?.trajectory === "fly_ball" || hitData?.trajectory === "popup") return null;
-    return parseThrowTarget(hitData?.description);
+  // Determine throw chain (only ground balls/line drives, not fly outs/popups)
+  const throwTargets = useMemo(() => {
+    if (hitData?.event !== "Out") return [];
+    if (hitData?.trajectory === "fly_ball" || hitData?.trajectory === "popup") return [];
+    return parseThrowTargets(hitData?.description);
   }, [hitData]);
 
   // Auto-start animation after a short delay
@@ -76,43 +76,55 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
     setIsPlaying(false);
     setShowMetrics(false);
     setBallProgress(0);
-    setThrowPhase(false);
-    setShowOut(false);
-    setOutPosition(null);
+    setThrowIndex(-1);
+    setThrowFromPos(null);
+    setOutPositions([]);
 
     const timer = setTimeout(() => setIsPlaying(true), 500);
     return () => clearTimeout(timer);
   }, [hitData]);
 
+  const BASE_POS = {
+    first: { x: 63.64, y: 3, z: -63.64 },
+    second: { x: 0, y: 3, z: -127.28 },
+    third: { x: -63.64, y: 3, z: -63.64 },
+    home: { x: 0, y: 3, z: 0 },
+  };
+
   const handleAnimationComplete = useCallback(() => {
     const event = hitData?.event || "";
     const isOutPlay = event === "Out" || (!["Single", "Double", "Triple", "Home Run"].includes(event) && event !== "");
 
-    if (isOutPlay && throwTarget && landingPos) {
-      // Ground out with throw — start throw phase
-      setThrowPhase(true);
+    if (isOutPlay && throwTargets.length > 0 && landingPos) {
+      // Ground out with throw(s) — start first throw from fielder
+      setThrowFromPos(landingPos);
+      setThrowIndex(0);
     } else if (isOutPlay) {
       // Fly out / popup — show OUT at catch position
-      setShowOut(true);
-      setOutPosition(landingPos ? { x: landingPos.x, y: 5, z: landingPos.z } : null);
+      setOutPositions([landingPos ? { x: landingPos.x, y: 5, z: landingPos.z } : null]);
       setTimeout(() => setShowMetrics(true), 800);
     } else {
       setTimeout(() => setShowMetrics(true), 300);
     }
-  }, [hitData, throwTarget, landingPos]);
+  }, [hitData, throwTargets, landingPos]);
 
   const handleThrowComplete = useCallback(() => {
-    // Throw arrived — show OUT at the base
-    const BASE_POS = {
-      first: { x: 63.64, y: 3, z: -63.64 },
-      second: { x: 0, y: 3, z: -127.28 },
-      third: { x: -63.64, y: 3, z: -63.64 },
-      home: { x: 0, y: 3, z: 0 },
-    };
-    setShowOut(true);
-    setOutPosition(BASE_POS[throwTarget] || null);
-    setTimeout(() => setShowMetrics(true), 800);
-  }, [throwTarget]);
+    // Current throw arrived — show OUT at that base
+    const currentTarget = throwTargets[throwIndex];
+    const outPos = BASE_POS[currentTarget];
+    setOutPositions(prev => [...prev, outPos]);
+
+    const nextIndex = throwIndex + 1;
+    if (nextIndex < throwTargets.length) {
+      // Chain: start next throw from the base we just threw to
+      const fromBase = BASE_POS[currentTarget];
+      setThrowFromPos({ x: fromBase.x, z: fromBase.z });
+      setThrowIndex(nextIndex);
+    } else {
+      // All throws done
+      setTimeout(() => setShowMetrics(true), 800);
+    }
+  }, [throwTargets, throwIndex]);
 
   const handleProgress = useCallback((progress, pos) => {
     setBallProgress(progress);
@@ -123,9 +135,9 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
     setIsPlaying(false);
     setShowMetrics(false);
     setBallProgress(0);
-    setThrowPhase(false);
-    setShowOut(false);
-    setOutPosition(null);
+    setThrowIndex(-1);
+    setThrowFromPos(null);
+    setOutPositions([]);
     setTimeout(() => setIsPlaying(true), 200);
   }, []);
 
@@ -211,6 +223,7 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
           <BaseRunners3D
             runnersOn={runnersOn}
             event={event}
+            description={hitData.description || ""}
             ballProgress={ballProgress}
             isAnimating={isPlaying}
             teamColor={teamColor}
@@ -231,18 +244,19 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
             />
           )}
 
-          {/* Throw to base (ground outs) */}
-          {throwPhase && landingPos && throwTarget && (
+          {/* Throw to base (ground outs / double plays) */}
+          {throwIndex >= 0 && throwFromPos && throwTargets[throwIndex] && (
             <ThrowToBase
-              fromPos={landingPos}
-              targetBase={throwTarget}
+              key={`throw-${throwIndex}`}
+              fromPos={throwFromPos}
+              targetBase={throwTargets[throwIndex]}
               onComplete={handleThrowComplete}
               throwSpeed={0.5}
             />
           )}
 
-          {/* OUT indicator */}
-          {showOut && outPosition && <OutIndicator position={outPosition} />}
+          {/* OUT indicators */}
+          {outPositions.map((pos, i) => pos && <OutIndicator key={`out-${i}`} position={pos} />)}
 
           {/* Fog for depth */}
           <fog attach="fog" args={["#0a0e1a", 300, 800]} />

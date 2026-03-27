@@ -13,20 +13,32 @@ const BASE_POSITIONS = {
 };
 
 /**
- * Parse throw target base from play description.
- * Returns base key ("first", "second", etc.) or null.
+ * Parse throw targets from play description.
+ * Returns array of base keys for each throw in order.
+ * E.g. "shortstop to second baseman to first baseman" → ["second", "first"]
+ * E.g. "shortstop to first baseman" → ["first"]
  */
-export function parseThrowTarget(description) {
-  if (!description) return null;
+export function parseThrowTargets(description) {
+  if (!description) return [];
   const desc = description.toLowerCase();
 
-  // Look for "to first baseman", "to second baseman", etc.
-  if (desc.includes("to first base") || desc.includes("to first baseman")) return "first";
-  if (desc.includes("to second base") || desc.includes("to second baseman")) return "second";
-  if (desc.includes("to third base") || desc.includes("to third baseman")) return "third";
-  if (desc.includes("to catcher") || desc.includes("to home")) return "home";
+  const targets = [];
+  // Split on "to" and check each segment for a position
+  const parts = desc.split(/\bto\b/).slice(1); // skip first part (the fielder)
+  for (const part of parts) {
+    if (part.includes("first base") || part.includes("first baseman")) targets.push("first");
+    else if (part.includes("second base") || part.includes("second baseman")) targets.push("second");
+    else if (part.includes("third base") || part.includes("third baseman")) targets.push("third");
+    else if (part.includes("catcher") || part.includes("home")) targets.push("home");
+  }
 
-  return null;
+  return targets;
+}
+
+// Backwards-compatible single target
+export function parseThrowTarget(description) {
+  const targets = parseThrowTargets(description);
+  return targets.length > 0 ? targets[0] : null;
 }
 
 /**

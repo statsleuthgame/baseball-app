@@ -20,8 +20,9 @@ function getTeamColor(teamId) {
   return ALL_TEAMS[teamId]?.primary || "#3b82f6";
 }
 
-function computeRunnerMovements(event, runnersOn) {
+function computeRunnerMovements(event, runnersOn, description = "") {
   const movements = [];
+  const desc = description.toLowerCase();
   const isOut = event === "Out";
   const batterBases = {
     "Single": 1, "Double": 2, "Triple": 3, "Home Run": 4,
@@ -33,15 +34,38 @@ function computeRunnerMovements(event, runnersOn) {
   if (runnersOn?.first) runners.push({ base: 1 });
 
   if (isOut) {
-    // On an out, batter still runs toward first
-    movements.push({
-      from: 0,
-      to: 1,
-      scores: false,
-      isBatter: true,
-      isOut: true,
-    });
-    // Existing runners stay on their bases (static, handled separately)
+    const isSacFly = desc.includes("sac fly") || desc.includes("sacrifice fly") ||
+      (desc.includes("scores") && (desc.includes("flies out") || desc.includes("fly")));
+    const isDoublePlay = desc.includes("double play");
+
+    if (isSacFly) {
+      // Sac fly: runner on third scores, batter is out
+      if (runnersOn?.third) {
+        movements.push({ from: 3, to: 4, scores: true, startDelay: 0.3 });
+      }
+      // Other runners tag up but stay
+      movements.push({ from: 0, to: 1, scores: false, isBatter: true, isOut: true });
+    } else if (isDoublePlay) {
+      // Double play: batter runs to first (out), lead runner out at next base
+      // Typical: runner on 1st forced at 2nd, batter out at 1st
+      if (runnersOn?.first) {
+        movements.push({ from: 1, to: 2, scores: false, isOut: true });
+      } else if (runnersOn?.second) {
+        movements.push({ from: 2, to: 3, scores: false, isOut: true });
+      }
+      movements.push({ from: 0, to: 1, scores: false, isBatter: true, isOut: true });
+      // Runner on third may score on a DP
+      if (runnersOn?.third && desc.includes("scores")) {
+        movements.push({ from: 3, to: 4, scores: true });
+      }
+    } else {
+      // Simple out: batter runs to first
+      movements.push({ from: 0, to: 1, scores: false, isBatter: true, isOut: true });
+      // If description mentions a runner scoring (e.g. fielder's choice)
+      if (desc.includes("scores") && runnersOn?.third) {
+        movements.push({ from: 3, to: 4, scores: true });
+      }
+    }
     return movements;
   }
 
@@ -131,13 +155,14 @@ function getRunnerPath(fromBase, toBase) {
 export default function BaseRunners3D({
   runnersOn = {},
   event = "",
+  description = "",
   ballProgress = 0,
   isAnimating = false,
   teamColor = "#3b82f6",
 }) {
   const movements = useMemo(
-    () => computeRunnerMovements(event, runnersOn),
-    [event, runnersOn]
+    () => computeRunnerMovements(event, runnersOn, description),
+    [event, runnersOn, description]
   );
 
   const paths = useMemo(
@@ -147,14 +172,25 @@ export default function BaseRunners3D({
 
   const isOutPlay = event === "Out";
 
+  // Figure out which bases have animated runners so we don't double-show them as static
+  const animatedBases = useMemo(() => {
+    const bases = new Set();
+    for (const m of movements) {
+      if (m.from === 1) bases.add("first");
+      if (m.from === 2) bases.add("second");
+      if (m.from === 3) bases.add("third");
+    }
+    return bases;
+  }, [movements]);
+
   return (
     <group>
-      {/* Show static runners when not animating, or on outs (they stay on base) */}
+      {/* Show static runners when not animating, or on outs for runners that aren't moving */}
       {(!isAnimating || isOutPlay) && (
         <>
-          {runnersOn?.first && <StaticRunner position={BASES.first} color={teamColor} />}
-          {runnersOn?.second && <StaticRunner position={BASES.second} color={teamColor} />}
-          {runnersOn?.third && <StaticRunner position={BASES.third} color={teamColor} />}
+          {runnersOn?.first && !animatedBases.has("first") && <StaticRunner position={BASES.first} color={teamColor} />}
+          {runnersOn?.second && !animatedBases.has("second") && <StaticRunner position={BASES.second} color={teamColor} />}
+          {runnersOn?.third && !animatedBases.has("third") && <StaticRunner position={BASES.third} color={teamColor} />}
         </>
       )}
 

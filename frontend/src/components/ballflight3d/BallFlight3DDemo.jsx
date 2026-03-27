@@ -95,6 +95,17 @@ const SAMPLE_HITS = {
     runnersOn: { second: true },
     teamId: 108, // Angels
   },
+  doublePlay: {
+    label: "6-4-3 Double Play — Runner on First",
+    data: {
+      x: 105.0, y: 162.0,
+      exitVelo: 91.2, launchAngle: -5, distance: 95,
+      trajectory: "ground_ball", event: "Out",
+      description: "grounds into double play, shortstop to second baseman to first baseman",
+    },
+    runnersOn: { first: true },
+    teamId: 114, // Guardians
+  },
 };
 
 const TEAM_OPTIONS = [
