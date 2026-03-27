@@ -162,15 +162,13 @@ export default function LiveGamePage() {
 
           {/* Strike zone OR ball-in-play visual */}
           {liveState.lastHitData && (liveState.currentAtBat?.length === 0 || liveState.currentAtBat?.[liveState.currentAtBat.length - 1]?.isInPlay) ? (
-            /* Ball was just put in play — show the field visual */
             <div className="lgp-bip-section">
               <BallInPlayVisual hitData={liveState.lastHitData} venueTeamId={gameInfo.home.id} />
             </div>
           ) : liveState.currentAtBat?.length > 0 ? (
-            /* Pitches in progress — show strike zone */
-            <div className="lgp-zone-wrap">
+            <div className="lgp-zone-centered">
               <StrikeZone pitches={liveState.currentAtBat} />
-              <div className="lgp-pitch-info">
+              <div className="lgp-pitch-bottom">
                 <div className="lgp-pitch-dots">
                   {liveState.currentAtBat.map((p, i) => {
                     let strikes = 0;
@@ -192,14 +190,6 @@ export default function LiveGamePage() {
               </div>
             </div>
           ) : null}
-
-          {/* Previous AB description */}
-          {liveState.lastPlay && (
-            <div className="lgp-prev-ab">
-              <span className="lgp-section-label">Previous AB</span>
-              <p className="lgp-last-desc">{liveState.lastPlay}</p>
-            </div>
-          )}
         </div>
       )}
 
