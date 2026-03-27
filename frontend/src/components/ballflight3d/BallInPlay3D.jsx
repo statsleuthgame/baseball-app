@@ -35,7 +35,7 @@ const CAMERA_LABELS = {
  */
 export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
   const [cameraPreset, setCameraPreset] = useState("broadcast");
-  const [followBall, setFollowBall] = useState(true);
+  const [followBall, setFollowBall] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showMetrics, setShowMetrics] = useState(false);
   const [ballPos, setBallPos] = useState(null);
@@ -73,7 +73,6 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
     if (!hitData) return;
     setIsPlaying(false);
     setShowMetrics(false);
-    setFollowBall(true);
     setBallProgress(0);
     setCameraPreset("broadcast");
 
@@ -82,7 +81,6 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
   }, [hitData]);
 
   const handleAnimationComplete = useCallback(() => {
-    setFollowBall(false);
     setTimeout(() => setShowMetrics(true), 300);
   }, []);
 
@@ -94,7 +92,6 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
   const handleReplay = useCallback(() => {
     setIsPlaying(false);
     setShowMetrics(false);
-    setFollowBall(true);
     setBallProgress(0);
     setTimeout(() => setIsPlaying(true), 200);
   }, []);
