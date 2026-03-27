@@ -178,6 +178,7 @@ export default function LiveGamePage() {
 
           {/* Visual area: strike zone / ball-in-play / next up */}
           {(() => {
+            const battingTeamLogo2 = liveState.inningHalf === "Top" ? gameInfo.away.logoUrl : gameInfo.home.logoUrl;
             const showBip = liveState.lastHitData && !bipCollapsed && (liveState.currentAtBat?.length === 0 || liveState.currentAtBat?.[liveState.currentAtBat.length - 1]?.isInPlay);
             const showZone = liveState.currentAtBat?.length > 0 && !showBip;
             const showNextUp = !showBip && !showZone;
@@ -189,7 +190,8 @@ export default function LiveGamePage() {
             );
 
             if (showZone) return (
-              <div className="lgp-zone-centered">
+              <div className="lgp-zone-centered lgp-zone-with-logo">
+                <img src={battingTeamLogo2} alt="" className="lgp-zone-bg-logo" />
                 <span className="lgp-pitch-result">
                   {(() => {
                     const p = liveState.currentAtBat[liveState.currentAtBat.length - 1];
@@ -246,9 +248,10 @@ export default function LiveGamePage() {
                 </div>
               );
             }
-            // Normal between-at-bat pause — show empty zone
+            // Normal between-at-bat pause — show empty zone with logo
             return (
-              <div className="lgp-zone-centered">
+              <div className="lgp-zone-centered lgp-zone-with-logo">
+                <img src={battingTeamLogo2} alt="" className="lgp-zone-bg-logo" />
                 <StrikeZone pitches={[]} />
               </div>
             );

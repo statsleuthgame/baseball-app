@@ -3875,11 +3875,21 @@ th.sb-ls-total {
 }
 .lgp-matchup-btn:active { opacity: 0.7; }
 
-/* Strike zone — large centered */
+/* Strike zone — large centered with team logo background */
 .lgp-zone-centered {
   display: flex; flex-direction: column; align-items: center; gap: 10px;
   padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.04);
+  position: relative; overflow: hidden;
 }
+.lgp-zone-with-logo { }
+.lgp-zone-bg-logo {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 180px; height: 180px;
+  opacity: 0.06; pointer-events: none;
+  z-index: 0;
+}
+.lgp-zone-centered > *:not(.lgp-zone-bg-logo) { position: relative; z-index: 1; }
 .lgp-strike-zone { width: 100%; max-width: 300px; height: auto; overflow: visible; }
 .lgp-pitch-result {
   font-size: 13px; font-weight: 600; color: var(--text); text-align: center;
