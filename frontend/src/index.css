@@ -3840,11 +3840,12 @@ th.sb-ls-total {
 .lgp-row-section { display: flex; gap: 10px; }
 .lgp-wp-compact {
   flex: 0 0 auto; background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: 12px; padding: 10px 14px; text-align: center;
+  border-radius: 12px; padding: 8px 14px; text-align: center;
+  display: flex; flex-direction: column; justify-content: center;
 }
 .lgp-wp-inline { display: flex; align-items: center; gap: 6px; justify-content: center; margin-top: 4px; }
 .lgp-wp-logo-sm { width: 18px; height: 18px; }
-.lgp-wp-num { font-size: 22px; font-weight: 800; color: var(--win); }
+.lgp-wp-num { font-size: 18px; font-weight: 800; color: var(--win); }
 .lgp-due-compact {
   flex: 1; min-width: 0; background: var(--bg-card); border: 1px solid var(--border);
   border-radius: 12px; padding: 10px 12px;
@@ -3890,10 +3891,11 @@ th.sb-ls-total {
   background: rgba(255,255,255,0.02);
 }
 
-/* Due Up stats */
-.lgp-due-name { font-size: 13px; font-weight: 600; }
-.lgp-due-stats { font-size: 11px; color: var(--text-muted); }
-.lgp-due-player { display: flex; flex-direction: column; gap: 1px; }
+/* Due Up stats — single line */
+.lgp-due-name { font-size: 12px; font-weight: 600; }
+.lgp-due-stats { font-size: 11px; color: var(--text-muted); margin-left: 4px; }
+.lgp-due-player { display: flex; align-items: center; gap: 0; font-size: 12px; }
+.lgp-due-list { display: flex; flex-direction: column; gap: 2px; margin-top: 4px; }
 
 /* Smaller ball-in-play metrics on live page */
 .lgp .bip-metric-val { font-size: 20px; }

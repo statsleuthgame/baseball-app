@@ -35,7 +35,7 @@ export default function BallInPlayVisual({ hitData, venueTeamId }) {
   const isHit = ["Single", "Double", "Triple", "Home Run"].includes(event);
   const accentColor = isHit ? "#22c55e" : "#ef4444";
 
-  const trajLabel = { fly_ball: "Fly Ball", line_drive: "Line Drive", ground_ball: "Ground Ball", popup: "Popup" }[hitData.trajectory] || "Batted Ball";
+  const trajLabel = event === "Home Run" ? "HOME RUN" : { fly_ball: "Fly Ball", line_drive: "Line Drive", ground_ball: "Ground Ball", popup: "Popup" }[hitData.trajectory] || "Batted Ball";
   const evLabel = hitData.exitVelo >= 100 ? "Barreled" : hitData.exitVelo >= 95 ? "Hard Hit" : hitData.exitVelo >= 85 ? "Medium" : "Soft";
 
   // Build SVG paths from stadium data
