@@ -151,30 +151,6 @@ export default function StadiumBackground({ fencePoints, teamColor }) {
     return geo;
   }, [bowlRadius]);
 
-  // Light towers
-  const towers = useMemo(() => {
-    if (!fencePoints?.length) return [];
-
-    const first = fencePoints[0];
-    const last = fencePoints[fencePoints.length - 1];
-    const towerHeight = 120;
-    const offset = 40;
-
-    // 4 tower positions: near foul poles and behind home plate sides
-    const positions = [
-      // Left field foul pole area
-      [first[0] - offset * 0.5, 0, first[2] - offset * 0.3],
-      // Right field foul pole area
-      [last[0] + offset * 0.5, 0, last[2] - offset * 0.3],
-      // Behind home plate left
-      [-60, 0, 40],
-      // Behind home plate right
-      [60, 0, 40],
-    ];
-
-    return positions.map(([x, , z]) => ({ x, z, height: towerHeight }));
-  }, [fencePoints]);
-
   // City skyline — merged boxes + window dots
   // Compute max fence distance from home plate (origin) for proper placement
   const maxFenceDist = useMemo(() => {
@@ -263,31 +239,6 @@ export default function StadiumBackground({ fencePoints, teamColor }) {
         </mesh>
       )}
 
-      {/* Light towers */}
-      {towers.map((t, i) => (
-        <group key={i} position={[t.x, 0, t.z]}>
-          {/* Tower pole */}
-          <mesh position={[0, t.height / 2, 0]}>
-            <boxGeometry args={[3, t.height, 3]} />
-            <meshLambertMaterial color="#2a2a3a" />
-          </mesh>
-          {/* Light housing */}
-          <mesh position={[0, t.height + 3, 0]}>
-            <boxGeometry args={[8, 5, 4]} />
-            <meshBasicMaterial color="#ffffee" />
-          </mesh>
-          {/* Light glow - point light only from the two front towers */}
-          {i < 2 && (
-            <pointLight
-              position={[0, t.height, 0]}
-              intensity={0.4}
-              color="#ffffcc"
-              distance={400}
-              decay={2}
-            />
-          )}
-        </group>
-      ))}
 
       {/* City skyline */}
       {skylineGeo && (
