@@ -13,6 +13,7 @@ const SAMPLE_HITS = {
       x: 125.8, y: 40.5,  // deep center field in MLBAM coords
       exitVelo: 112.4, launchAngle: 28, distance: 425,
       trajectory: "fly_ball", event: "Home Run",
+      description: "Aaron Judge homers to deep center field",
     },
     teamId: 147, // Yankees
   },
@@ -22,6 +23,7 @@ const SAMPLE_HITS = {
       x: 75.2, y: 105.3,
       exitVelo: 101.2, launchAngle: 12, distance: 215,
       trajectory: "line_drive", event: "Single",
+      description: "lines a single past the left fielder",
     },
     teamId: 137, // Giants
   },
@@ -31,6 +33,7 @@ const SAMPLE_HITS = {
       x: 105.0, y: 162.0,
       exitVelo: 88.5, launchAngle: -8, distance: 90,
       trajectory: "ground_ball", event: "Out",
+      description: "grounds out, shortstop to first baseman",
     },
     teamId: 111, // Red Sox
   },
@@ -40,6 +43,7 @@ const SAMPLE_HITS = {
       x: 155.0, y: 62.0,
       exitVelo: 98.7, launchAngle: 32, distance: 380,
       trajectory: "fly_ball", event: "Out",
+      description: "flies out to right fielder at the warning track",
     },
     teamId: 119, // Dodgers
   },
@@ -49,6 +53,7 @@ const SAMPLE_HITS = {
       x: 155.3, y: 55.8,
       exitVelo: 105.1, launchAngle: 18, distance: 370,
       trajectory: "line_drive", event: "Triple",
+      description: "triples to right-center, past the center fielder",
     },
     teamId: 136, // Mariners
   },
@@ -58,6 +63,7 @@ const SAMPLE_HITS = {
       x: 80.5, y: 60.2,
       exitVelo: 108.3, launchAngle: 22, distance: 390,
       trajectory: "fly_ball", event: "Double",
+      description: "doubles off the left field wall",
     },
     teamId: 121, // Mets
   },
@@ -67,6 +73,7 @@ const SAMPLE_HITS = {
       x: 130.5, y: 155.0,
       exitVelo: 72.1, launchAngle: 55, distance: 120,
       trajectory: "popup", event: "Out",
+      description: "pops out to second baseman in shallow right",
     },
     teamId: 112, // Cubs
   },
@@ -76,6 +83,7 @@ const SAMPLE_HITS = {
       x: 195.0, y: 80.5,
       exitVelo: 106.8, launchAngle: 26, distance: 395,
       trajectory: "fly_ball", event: "Home Run",
+      description: "homers to right field, opposite field power",
     },
     teamId: 108, // Angels
   },

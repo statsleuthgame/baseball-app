@@ -24,6 +24,7 @@ function velocityColor(exitVelo) {
  *  - onAnimationComplete: callback when ball lands
  *  - animationSpeed: playback speed multiplier (default 1)
  *  - isPlaying: whether the animation is currently active
+ *  - onProgress: callback with (progress 0-1, {x,y,z} position) each frame
  */
 export default function AnimatedBall({
   sampledPoints,
@@ -31,6 +32,7 @@ export default function AnimatedBall({
   exitVelo = 90,
   isHit = true,
   onAnimationComplete,
+  onProgress,
   animationSpeed = 1,
   isPlaying = true,
 }) {
@@ -94,6 +96,9 @@ export default function AnimatedBall({
       const pulse = 1 + Math.sin(t * 10) * 0.15;
       glowRef.current.scale.setScalar(pulse * 3);
     }
+
+    // Report progress for fielder animation
+    onProgress?.(frac, { x, y: Math.max(y, 0), z });
 
     // Update trail
     trailPositions.current.push([x, Math.max(y, 0), z]);

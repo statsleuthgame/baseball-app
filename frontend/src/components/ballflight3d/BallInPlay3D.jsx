@@ -3,6 +3,7 @@ import { Canvas } from "@react-three/fiber";
 import { Stars } from "@react-three/drei";
 import Field3D from "./Field3D";
 import AnimatedBall from "./AnimatedBall";
+import Fielders3D from "./Fielders3D";
 import CameraRig, { CAMERA_PRESETS } from "./CameraRig";
 import {
   computeTrajectory,
@@ -26,7 +27,7 @@ const CAMERA_LABELS = {
  * Uses React Three Fiber for a full 3D ball flight experience.
  *
  * Props:
- *  - hitData: { x, y, exitVelo, launchAngle, distance, trajectory, event }
+ *  - hitData: { x, y, exitVelo, launchAngle, distance, trajectory, event, description }
  *             x/y in MLBAM coordinates
  *  - venueTeamId: team ID for stadium shape
  */
@@ -36,7 +37,7 @@ export default function BallInPlay3D({ hitData, venueTeamId }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [showMetrics, setShowMetrics] = useState(false);
   const [ballPos, setBallPos] = useState(null);
-  const animFrameRef = useRef(0);
+  const [ballProgress, setBallProgress] = useState(0);
 
   // Compute trajectory from hit data
   const { sampledPoints, duration, apexHeight } = useMemo(() => {
@@ -58,12 +59,20 @@ export default function BallInPlay3D({ hitData, venueTeamId }) {
     };
   }, [hitData]);
 
+  // Compute landing position in Three.js coords for fielders
+  const landingPos = useMemo(() => {
+    if (!sampledPoints?.length) return null;
+    const last = sampledPoints[sampledPoints.length - 1];
+    return { x: last.x, z: -last.y }; // y in physics = -z in Three.js
+  }, [sampledPoints]);
+
   // Auto-start animation after a short delay
   useEffect(() => {
     if (!hitData) return;
     setIsPlaying(false);
     setShowMetrics(false);
     setFollowBall(true);
+    setBallProgress(0);
     setCameraPreset("broadcast");
 
     const timer = setTimeout(() => setIsPlaying(true), 500);
@@ -72,15 +81,19 @@ export default function BallInPlay3D({ hitData, venueTeamId }) {
 
   const handleAnimationComplete = useCallback(() => {
     setFollowBall(false);
-    // Show metrics with a slight delay for dramatic effect
     setTimeout(() => setShowMetrics(true), 300);
+  }, []);
+
+  const handleProgress = useCallback((progress, pos) => {
+    setBallProgress(progress);
+    setBallPos(pos);
   }, []);
 
   const handleReplay = useCallback(() => {
     setIsPlaying(false);
     setShowMetrics(false);
     setFollowBall(true);
-    // Small delay then restart
+    setBallProgress(0);
     setTimeout(() => setIsPlaying(true), 200);
   }, []);
 
@@ -88,6 +101,7 @@ export default function BallInPlay3D({ hitData, venueTeamId }) {
 
   const event = hitData.event || "";
   const isHit = ["Single", "Double", "Triple", "Home Run"].includes(event);
+  const isOut = event === "Out" || (!isHit && event !== "");
   const accentColor = isHit ? "#22c55e" : "#ef4444";
   const isHomeRun = event === "Home Run";
 
@@ -109,7 +123,6 @@ export default function BallInPlay3D({ hitData, venueTeamId }) {
       ? "MEDIUM"
       : "SOFT";
 
-  // Animation speed: slightly faster for ground balls, slower for deep flies
   const animSpeed = hitData.trajectory === "ground_ball" ? 1.5 : 1;
 
   return (
@@ -146,6 +159,15 @@ export default function BallInPlay3D({ hitData, venueTeamId }) {
           {/* The field */}
           <Field3D venueTeamId={venueTeamId} />
 
+          {/* Fielders */}
+          <Fielders3D
+            landingPos={landingPos}
+            isOut={isOut}
+            description={hitData.description || ""}
+            ballProgress={ballProgress}
+            isAnimating={isPlaying}
+          />
+
           {/* Animated ball + trail */}
           {isPlaying && (
             <AnimatedBall
@@ -154,6 +176,7 @@ export default function BallInPlay3D({ hitData, venueTeamId }) {
               exitVelo={hitData.exitVelo || 90}
               isHit={isHit}
               onAnimationComplete={handleAnimationComplete}
+              onProgress={handleProgress}
               animationSpeed={animSpeed}
               isPlaying={isPlaying}
             />
