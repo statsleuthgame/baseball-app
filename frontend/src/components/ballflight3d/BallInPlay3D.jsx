@@ -318,12 +318,6 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
           </div>
         </div>
 
-        {/* Replay button */}
-        {showMetrics && (
-          <button className="bip3d-replay-btn" onClick={handleReplay}>
-            ↻ Replay
-          </button>
-        )}
       </div>
     </div>
   );

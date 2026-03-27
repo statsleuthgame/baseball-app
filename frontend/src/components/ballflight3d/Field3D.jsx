@@ -94,6 +94,9 @@ export default function Field3D({ venueTeamId }) {
       {/* Fence wall — vertical plane along fence line */}
       <FenceWall points={fencePoints} />
 
+      {/* Stands behind the fence */}
+      <Stands points={fencePoints} />
+
       {/* Foul lines */}
       <FoulLines points={foulLinePoints} />
 
@@ -253,6 +256,68 @@ function HomePlate() {
     <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.05, 0]}>
       <shapeGeometry args={[shape]} />
       <meshStandardMaterial color="#ffffff" transparent opacity={0.9} side={THREE.DoubleSide} />
+    </mesh>
+  );
+}
+
+/**
+ * Stadium stands behind the outfield fence.
+ * Rises from fence height to ~60ft, pushed back ~30ft behind the fence.
+ */
+function Stands({ points }) {
+  const geo = useMemo(() => {
+    if (!points?.length) return null;
+
+    const fenceH = 10;
+    const standsH = 60;
+    const pushBack = 30; // feet behind the fence
+
+    const vertices = [];
+    const indices = [];
+
+    for (let i = 0; i < points.length; i++) {
+      const [x, , z] = points[i];
+      // Direction from home plate to this fence point (outward normal)
+      const dist = Math.sqrt(x * x + z * z) || 1;
+      const nx = x / dist;
+      const nz = z / dist;
+      // Pushed-back position
+      const bx = x + nx * pushBack;
+      const bz = z + nz * pushBack;
+
+      // Bottom at fence: fence top
+      vertices.push(x, fenceH, z);
+      // Top: pushed back and raised
+      vertices.push(bx, standsH, bz);
+    }
+
+    for (let i = 0; i < points.length - 1; i++) {
+      const bl = i * 2;
+      const tl = i * 2 + 1;
+      const br = (i + 1) * 2;
+      const tr = (i + 1) * 2 + 1;
+      indices.push(bl, br, tl);
+      indices.push(tl, br, tr);
+    }
+
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.Float32BufferAttribute(vertices, 3));
+    g.setIndex(indices);
+    g.computeVertexNormals();
+    return g;
+  }, [points]);
+
+  if (!geo) return null;
+
+  return (
+    <mesh geometry={geo}>
+      <meshStandardMaterial
+        color="#1a1a2e"
+        transparent
+        opacity={0.7}
+        side={THREE.DoubleSide}
+        roughness={1}
+      />
     </mesh>
   );
 }
