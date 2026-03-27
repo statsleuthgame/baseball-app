@@ -179,6 +179,10 @@ export default function LiveGamePage() {
                     const balls = p.count ? parseInt(p.count.split("-")[0]) || 0 : null;
                     const strikes = p.count ? parseInt(p.count.split("-")[1]) || 0 : null;
                     let countLabel = "";
+                    if (p.isStrike && strikes === 3 && p.code !== "F") {
+                      const soType = p.code === "C" ? "Looking" : p.code === "S" ? "Swinging" : "Called";
+                      return `${p.pitchInfo || ""} — Strikeout ${soType}`;
+                    }
                     if (p.isBall && balls != null) countLabel = ` (${balls})`;
                     else if (p.isStrike && strikes != null && p.code !== "F") countLabel = ` (${strikes})`;
                     else if (p.code === "F" && strikes != null) countLabel = strikes >= 2 ? "" : ` (${strikes})`;
@@ -207,7 +211,7 @@ export default function LiveGamePage() {
                 <div className="lgp-next-up-list">
                   {nextUp.map((p) => {
                     const stats = [];
-                    if (p.ab > 0) stats.push(`${p.h}-${p.ab}`);
+                    if (p.ab != null) stats.push(`${p.h || 0}-${p.ab}`);
                     if (p.hr > 0) stats.push(`${p.hr} HR`);
                     if (p.rbi > 0) stats.push(`${p.rbi} RBI`);
                     if (p.k > 0) stats.push(`${p.k} K`);

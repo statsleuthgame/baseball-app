@@ -3829,7 +3829,11 @@ th.sb-ls-total {
   padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.04);
 }
 .lgp-pitch-seq-label { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
-.lgp-pitch-dots { display: flex; gap: 4px; }
+.lgp-pitch-dots {
+  display: flex; gap: 5px; flex-wrap: wrap;
+  padding: 6px 10px; border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px; min-height: 26px; align-items: center;
+}
 .lgp-pitch-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
 .lgp-pitch-last { font-size: 11px; color: var(--text); margin-left: auto; }
 
