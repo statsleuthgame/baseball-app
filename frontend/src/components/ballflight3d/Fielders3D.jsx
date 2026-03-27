@@ -32,12 +32,20 @@ const FIELDER_KEYWORDS = {
  * Determine which fielder catches/fields the ball based on description or landing position.
  */
 function resolveFielder(description, landingX, landingZ) {
-  // Try to parse from description
+  // Try to parse from description — pick the fielder mentioned FIRST in the text
+  // (e.g. "shortstop to first baseman" → shortstop is the one fielding it)
   if (description) {
     const desc = description.toLowerCase();
+    let earliest = null;
+    let earliestIdx = Infinity;
     for (const [keyword, pos] of Object.entries(FIELDER_KEYWORDS)) {
-      if (desc.includes(keyword)) return pos;
+      const idx = desc.indexOf(keyword);
+      if (idx !== -1 && idx < earliestIdx) {
+        earliestIdx = idx;
+        earliest = pos;
+      }
     }
+    if (earliest) return earliest;
   }
 
   // Fallback: find nearest fielder to landing spot
