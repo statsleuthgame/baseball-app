@@ -179,9 +179,9 @@ export default function LiveGamePage() {
                     const balls = p.count ? parseInt(p.count.split("-")[0]) || 0 : null;
                     const strikes = p.count ? parseInt(p.count.split("-")[1]) || 0 : null;
                     let countLabel = "";
-                    if (p.isBall && balls != null) countLabel = ` (Ball ${balls})`;
-                    else if (p.isStrike && strikes != null && p.code !== "F") countLabel = ` (Strike ${strikes})`;
-                    else if (p.code === "F" && strikes != null) countLabel = strikes >= 2 ? " (Foul)" : ` (Strike ${strikes})`;
+                    if (p.isBall && balls != null) countLabel = ` (${balls})`;
+                    else if (p.isStrike && strikes != null && p.code !== "F") countLabel = ` (${strikes})`;
+                    else if (p.code === "F" && strikes != null) countLabel = strikes >= 2 ? "" : ` (${strikes})`;
                     return `${p.pitchInfo || ""} — ${p.call}${countLabel}`;
                   })()}
                 </span>
@@ -225,7 +225,6 @@ export default function LiveGamePage() {
 
           {/* Pitcher — bottom right */}
           <div className="lgp-pitcher-bottom sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${liveState.pitcher.id}`)}>
-            <span className="lgp-pitcher-label">Pitching</span>
             <span className="lgp-pitcher-name">{liveState.pitcher.fullName}</span>
             <span className="lgp-pitcher-stats">
               {liveState.pitcher.gameStats ? `${liveState.pitcher.gameStats.ip} IP` : ""}
