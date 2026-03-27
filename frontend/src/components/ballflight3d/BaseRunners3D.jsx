@@ -97,28 +97,51 @@ function getRunnerPath(fromBase, toBase) {
     return path;
   }
 
-  // For multi-base runs, use a Catmull-Rom spline for smooth rounding
-  // Add slight outward bulge at each intermediate base to simulate rounding
+  // For multi-base runs, build a path that touches every base but
+  // rounds the turn with a smooth arc on either side of each
+  // intermediate base. Insert: approach point → base → departure point.
   const curvePoints = [];
   for (let i = 0; i < waypoints.length; i++) {
     const wp = waypoints[i];
+
     if (i > 0 && i < waypoints.length - 1) {
-      // Intermediate base: push the point slightly outward from the diamond
-      // to create a natural rounding arc
-      const angle = Math.atan2(wp.x, wp.z);
-      const bulge = 12; // feet outward
+      // Intermediate base the runner rounds:
+      // 1) Approach point — slightly outward from the incoming direction
+      const prev = waypoints[i - 1];
+      const next = waypoints[i + 1];
+      const inDx = wp.x - prev.x;
+      const inDz = wp.z - prev.z;
+      const inLen = Math.sqrt(inDx * inDx + inDz * inDz) || 1;
+      const outDx = next.x - wp.x;
+      const outDz = next.z - wp.z;
+      const outLen = Math.sqrt(outDx * outDx + outDz * outDz) || 1;
+
+      const bulge = 8; // feet of arc before/after the base
+
+      // Approach: come in from the previous base direction, slightly wide
       curvePoints.push(new THREE.Vector3(
-        wp.x + Math.sin(angle) * bulge,
+        wp.x - (inDx / inLen) * bulge + (inDz / inLen) * 4,
         0.5,
-        wp.z + Math.cos(angle) * bulge,
+        wp.z - (inDz / inLen) * bulge - (inDx / inLen) * 4,
+      ));
+
+      // Touch the base
+      curvePoints.push(new THREE.Vector3(wp.x, 0.5, wp.z));
+
+      // Depart: head toward the next base, slightly wide
+      curvePoints.push(new THREE.Vector3(
+        wp.x + (outDx / outLen) * bulge + (inDz / inLen) * 4,
+        0.5,
+        wp.z + (outDz / outLen) * bulge - (inDx / inLen) * 4,
       ));
     } else {
+      // Start or end base — just the position
       curvePoints.push(new THREE.Vector3(wp.x, 0.5, wp.z));
     }
   }
 
   const curve = new THREE.CatmullRomCurve3(curvePoints, false, "centripetal", 0.5);
-  return curve.getPoints(waypoints.length * 20);
+  return curve.getPoints(waypoints.length * 25);
 }
 
 /**
