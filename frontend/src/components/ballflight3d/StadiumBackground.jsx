@@ -217,10 +217,24 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
     const totalArc = arcDist;
     const seatsPerRow = Math.floor(totalArc / seatSpacing);
 
+    // Compute foul line angles from home plate
+    // LF foul line and RF foul line — find the fence points with most extreme
+    // negative-x and positive-x that are still in the outfield (z < -80)
+    let lfAngle = 0, rfAngle = 0;
+    for (let f = 0; f < n; f++) {
+      const [fx, , fz] = pts[f];
+      if (fz > -80) continue; // skip backstop area
+      const angle = Math.atan2(fx, -fz); // angle from center field axis
+      if (angle < lfAngle) lfAngle = angle;
+      if (angle > rfAngle) rfAngle = angle;
+    }
+    // Add small buffer so seats don't go right to the foul pole
+    lfAngle += 0.02;
+    rfAngle -= 0.02;
+
     const addRow = (rowOffset, rowY, rowIdx) => {
       for (let s = 0; s < seatsPerRow; s++) {
         const targetArc = (s + 0.5) * seatSpacing;
-        // Find the fence segment for this arc position
         let fIdx = 0;
         for (let f = 1; f < fenceArcPositions.length; f++) {
           if (fenceArcPositions[f].arc >= targetArc) { fIdx = f - 1; break; }
@@ -233,9 +247,13 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
         const segLen = f1.arc - f0.arc;
         const t = segLen > 0 ? (targetArc - f0.arc) / segLen : 0;
 
-        // Interpolate fence position and normal
         const fx = pts[fIdx][0] + (pts[fIdx + 1][0] - pts[fIdx][0]) * t;
         const fz = pts[fIdx][2] + (pts[fIdx + 1][2] - pts[fIdx][2]) * t;
+
+        // Skip seats past the foul lines (in foul territory behind home)
+        const seatAngle = Math.atan2(fx, -fz);
+        if (seatAngle < lfAngle || seatAngle > rfAngle) continue;
+
         const nx = normals[fIdx][0] + (normals[fIdx + 1][0] - normals[fIdx][0]) * t;
         const nz = normals[fIdx][1] + (normals[fIdx + 1][1] - normals[fIdx][1]) * t;
         const nLen = Math.sqrt(nx * nx + nz * nz) || 1;
@@ -243,7 +261,6 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
         const x = fx + (nx / nLen) * rowOffset;
         const z = fz + (nz / nLen) * rowOffset;
 
-        // Compute tangent direction for rotation
         const tanX = pts[fIdx + 1][0] - pts[fIdx][0];
         const tanZ = pts[fIdx + 1][2] - pts[fIdx][2];
         const angle = Math.atan2(tanX, tanZ);
