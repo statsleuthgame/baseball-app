@@ -136,60 +136,69 @@ export default function LiveGamePage() {
       {/* ===== ZONE B+C: AT-BAT + VISUAL (combined) ===== */}
       {liveState?.batter && liveState?.pitcher && (
         <div className="lgp-section">
-          {/* Batter vs Pitcher */}
-          <div className="lgp-matchup">
-            <div className="lgp-matchup-player sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${liveState.batter.id}`)}>
-              <PlayerPhoto playerId={liveState.batter.id} name={liveState.batter.fullName} size={36} />
-              <div className="lgp-matchup-info">
-                <span className="lgp-matchup-name">{liveState.batter.fullName}</span>
-                <span className="lgp-matchup-sub">At Bat{liveState.batter.avg ? ` · ${liveState.batter.avg}` : ""}</span>
+          {/* Batter vs Pitcher — stacked centered */}
+          <div className="lgp-mu">
+            <div className="lgp-mu-row">
+              <div className="lgp-mu-side sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${liveState.batter.id}`)}>
+                <PlayerPhoto playerId={liveState.batter.id} name={liveState.batter.fullName} size={40} />
+                <div className="lgp-mu-info">
+                  <span className="lgp-mu-name">{liveState.batter.fullName}</span>
+                  <span className="lgp-mu-sub">At Bat{liveState.batter.avg ? ` · ${liveState.batter.avg}` : ""}</span>
+                </div>
               </div>
-            </div>
-            <span className="lgp-matchup-vs">vs</span>
-            <div className="lgp-matchup-player sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${liveState.pitcher.id}`)}>
-              <PlayerPhoto playerId={liveState.pitcher.id} name={liveState.pitcher.fullName} size={36} />
-              <div className="lgp-matchup-info lgp-matchup-info-right">
-                <span className="lgp-matchup-name">{liveState.pitcher.fullName}</span>
-                <span className="lgp-matchup-sub">
-                  Pitching{liveState.pitcher.gameStats ? ` · ${liveState.pitcher.gameStats.ip} IP` : ""}
-                  {liveState.pitcher.gameStats && (
-                    <span style={{ color: pcColor(liveState.pitcher.gameStats.pitches) }}> · {liveState.pitcher.gameStats.pitches}P</span>
-                  )}
-                </span>
+              <span className="lgp-mu-vs">vs</span>
+              <div className="lgp-mu-side lgp-mu-right sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${liveState.pitcher.id}`)}>
+                <div className="lgp-mu-info" style={{ textAlign: "right" }}>
+                  <span className="lgp-mu-name">{liveState.pitcher.fullName}</span>
+                  <span className="lgp-mu-sub">
+                    {liveState.pitcher.gameStats ? `${liveState.pitcher.gameStats.ip} IP` : "Pitching"}
+                    {liveState.pitcher.gameStats && (
+                      <span style={{ color: pcColor(liveState.pitcher.gameStats.pitches) }}> · {liveState.pitcher.gameStats.pitches}P</span>
+                    )}
+                  </span>
+                </div>
+                <PlayerPhoto playerId={liveState.pitcher.id} name={liveState.pitcher.fullName} size={40} />
               </div>
             </div>
           </div>
 
-          {/* Strike zone OR ball-in-play visual */}
+          {/* Strike zone OR ball-in-play visual — always present */}
           {liveState.lastHitData && (liveState.currentAtBat?.length === 0 || liveState.currentAtBat?.[liveState.currentAtBat.length - 1]?.isInPlay) ? (
             <div className="lgp-bip-section">
               <BallInPlayVisual hitData={liveState.lastHitData} venueTeamId={gameInfo.home.id} />
             </div>
-          ) : liveState.currentAtBat?.length > 0 ? (
+          ) : (
             <div className="lgp-zone-centered">
-              <StrikeZone pitches={liveState.currentAtBat} />
-              <div className="lgp-pitch-bottom">
-                <div className="lgp-pitch-dots">
-                  {liveState.currentAtBat.map((p, i) => {
-                    let strikes = 0;
-                    for (let j = 0; j < i; j++) {
-                      const prev = liveState.currentAtBat[j];
-                      if (prev.isStrike && prev.code !== "F") strikes++;
-                    }
-                    const isFoulAfterTwo = (p.code === "F") && strikes >= 2;
-                    const color = p.isBall ? "#22c55e" : (p.code === "F" && !isFoulAfterTwo) ? "#f59e0b" : p.isInPlay ? "#3b82f6" : "#ef4444";
-                    return <span key={i} className="lgp-pitch-dot" style={{ background: color }} title={`${p.call} ${p.count || ""}`} />;
-                  })}
-                </div>
-                <span className="lgp-pitch-last">
-                  {(() => {
-                    const p = liveState.currentAtBat[liveState.currentAtBat.length - 1];
-                    return `${p.pitchInfo || ""} — ${p.call}`;
-                  })()}
-                </span>
-              </div>
+              {liveState.currentAtBat?.length > 0 ? (
+                <>
+                  <StrikeZone pitches={liveState.currentAtBat} />
+                  <div className="lgp-pitch-bottom">
+                    <div className="lgp-pitch-dots">
+                      {liveState.currentAtBat.map((p, i) => {
+                        let strikes = 0;
+                        for (let j = 0; j < i; j++) {
+                          const prev = liveState.currentAtBat[j];
+                          if (prev.isStrike && prev.code !== "F") strikes++;
+                        }
+                        const isFoulAfterTwo = (p.code === "F") && strikes >= 2;
+                        const color = p.isBall ? "#22c55e" : (p.code === "F" && !isFoulAfterTwo) ? "#f59e0b" : p.isInPlay ? "#3b82f6" : "#ef4444";
+                        return <span key={i} className="lgp-pitch-dot" style={{ background: color }} title={`${p.call} ${p.count || ""}`} />;
+                      })}
+                    </div>
+                    <span className="lgp-pitch-last">
+                      {(() => {
+                        const p = liveState.currentAtBat[liveState.currentAtBat.length - 1];
+                        return `${p.pitchInfo || ""} — ${p.call}`;
+                      })()}
+                    </span>
+                  </div>
+                </>
+              ) : (
+                /* Empty zone placeholder — keeps layout stable between at-bats */
+                <StrikeZone pitches={[]} />
+              )}
             </div>
-          ) : null}
+          )}
         </div>
       )}
 
@@ -319,13 +328,12 @@ export default function LiveGamePage() {
 }
 
 function StrikeZone({ pitches }) {
-  if (!pitches?.length) return null;
-  const withCoords = pitches.filter((p) => p.pX != null && p.pZ != null);
-  if (!withCoords.length) return null;
+  const withCoords = (pitches || []).filter((p) => p.pX != null && p.pZ != null);
+  const isEmpty = !withCoords.length;
 
-  // Batter's strike zone bounds (feet)
-  const szTop = withCoords.find((p) => p.szTop)?.szTop || 3.4;
-  const szBot = withCoords.find((p) => p.szBot)?.szBot || 1.5;
+  // Batter's strike zone bounds (feet) — use defaults for empty zone
+  const szTop = (!isEmpty && withCoords.find((p) => p.szTop)?.szTop) || 3.4;
+  const szBot = (!isEmpty && withCoords.find((p) => p.szBot)?.szBot) || 1.5;
   const szH = szTop - szBot; // zone height in feet (~1.8 ft)
 
   // Plate is 17 inches = 1.4167 feet wide → half = 0.7083 feet
@@ -352,12 +360,12 @@ function StrikeZone({ pitches }) {
   const mapZ = (pZ) => zoneT + (szTop - pZ) * SCALE;
 
   // Compute viewBox to fit all pitches + zone with padding
-  const allX = withCoords.map((p) => mapX(p.pX));
-  const allY = withCoords.map((p) => mapZ(p.pZ));
-  const vMinX = Math.min(zoneL, ...allX) - 15;
-  const vMaxX = Math.max(zoneR, ...allX) + 15;
-  const vMinY = Math.min(zoneT, ...allY) - 15;
-  const vMaxY = Math.max(zoneB, ...allY) + 15;
+  const allX = isEmpty ? [] : withCoords.map((p) => mapX(p.pX));
+  const allY = isEmpty ? [] : withCoords.map((p) => mapZ(p.pZ));
+  const vMinX = Math.min(zoneL - 20, ...allX) - 15;
+  const vMaxX = Math.max(zoneR + 20, ...allX) + 15;
+  const vMinY = Math.min(zoneT - 10, ...allY) - 15;
+  const vMaxY = Math.max(zoneB + 10, ...allY) + 15;
 
   return (
     <svg viewBox={`${vMinX} ${vMinY} ${vMaxX - vMinX} ${vMaxY - vMinY}`} className="lgp-strike-zone" preserveAspectRatio="xMidYMid meet">
