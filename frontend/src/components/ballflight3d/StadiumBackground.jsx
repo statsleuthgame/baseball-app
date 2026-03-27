@@ -1,6 +1,5 @@
 import { useMemo, useRef, useEffect } from "react";
 import * as THREE from "three";
-import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 
 // Sky dome vertex shader: gradient based on vertex Y position
 const skyVertexShader = `
@@ -17,12 +16,9 @@ const skyFragmentShader = `
   varying float vWorldY;
   void main() {
     float t = clamp(vWorldY / 500.0, -0.3, 1.0);
-    // Below horizon: light haze
-    vec3 belowHorizon = vec3(0.55, 0.62, 0.7);    // soft blue-gray
-    // Horizon: pale blue
-    vec3 horizon = vec3(0.45, 0.6, 0.8);           // light sky blue
-    // Zenith: deeper blue
-    vec3 zenith = vec3(0.15, 0.3, 0.6);            // rich blue
+    vec3 belowHorizon = vec3(0.55, 0.62, 0.7);
+    vec3 horizon = vec3(0.45, 0.6, 0.8);
+    vec3 zenith = vec3(0.15, 0.3, 0.6);
 
     vec3 color;
     if (t < 0.0) {
@@ -49,16 +45,16 @@ const PHI_LENGTH = Math.PI * 0.70;
 
 /**
  * Procedural 3D stadium background.
- * Seating bowl, instanced seat blocks, city skyline, sky dome.
+ * Seating bowl with instanced team-colored seat blocks, sky dome.
  */
 export default function StadiumBackground({ fencePoints, teamColors }) {
   const seatMeshRef = useRef();
   const primaryColor = teamColors?.primary || "#2a3a5c";
   const secondaryColor = teamColors?.secondary || "#1a2a4c";
 
-  // Compute center and radius of the fence arc for positioning
-  const { bowlRadius } = useMemo(() => {
-    if (!fencePoints?.length) return {};
+  // Compute radius of the fence arc for bowl positioning
+  const bowlRadius = useMemo(() => {
+    if (!fencePoints?.length) return 0;
     let cx = 0, cz = 0;
     for (const [x, , z] of fencePoints) { cx += x; cz += z; }
     cx /= fencePoints.length;
@@ -69,7 +65,7 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
       const d = Math.sqrt((x - cx) ** 2 + (z - cz) ** 2);
       if (d > maxR) maxR = d;
     }
-    return { bowlRadius: maxR };
+    return maxR;
   }, [fencePoints]);
 
   const innerR = bowlRadius ? bowlRadius + PUSH_BACK : 0;
@@ -82,7 +78,6 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
     let y = FENCE_H;
     let r = innerR;
 
-    // Tier 1
     for (let i = 0; i < TIER1_ROWS; i++) {
       profile.push(new THREE.Vector2(r, y));
       y += RISER_H;
@@ -91,14 +86,12 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
       profile.push(new THREE.Vector2(r, y));
     }
 
-    // Concourse gap
     profile.push(new THREE.Vector2(r, y));
     y += CONCOURSE_H;
     profile.push(new THREE.Vector2(r, y));
     r += CONCOURSE_D;
     profile.push(new THREE.Vector2(r, y));
 
-    // Tier 2
     for (let i = 0; i < TIER2_ROWS; i++) {
       profile.push(new THREE.Vector2(r, y));
       y += RISER_H;
@@ -107,7 +100,6 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
       profile.push(new THREE.Vector2(r, y));
     }
 
-    // Back wall drops to ground
     profile.push(new THREE.Vector2(r, y));
     profile.push(new THREE.Vector2(r, 0));
 
@@ -116,7 +108,7 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
     return geo;
   }, [innerR]);
 
-  // Fascia accent strip — thin ring at concourse level with team color
+  // Fascia accent strip at concourse level
   const fasciaGeo = useMemo(() => {
     if (!innerR) return null;
     const fasciaY = FENCE_H + RISER_H * TIER1_ROWS;
@@ -133,7 +125,11 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
   }, [innerR]);
 
   // Instanced seat section blocks
-  const seatBlockGeo = useMemo(() => new THREE.BoxGeometry(10, 1.0, 2.5), []);
+  // LatheGeometry revolves the profile around Y axis:
+  //   x_world = profile_r * cos(phi)
+  //   z_world = profile_r * sin(phi)
+  // where phi goes from PHI_START to PHI_START + PHI_LENGTH
+  const seatBlockGeo = useMemo(() => new THREE.BoxGeometry(8, 1.0, 2.0), []);
 
   const { seatCount, seatMatrices, seatColorArray } = useMemo(() => {
     if (!innerR) return { seatCount: 0, seatMatrices: null, seatColorArray: null };
@@ -144,11 +140,10 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
     const priColor = new THREE.Color(primaryColor);
     const secColor = new THREE.Color(secondaryColor);
 
-    const blockWidth = 10;
-    const gap = 2;
+    const blockWidth = 8;
+    const gap = 1.5;
 
     const addRow = (rowR, rowY) => {
-      // Arc length at this radius
       const arcLen = rowR * PHI_LENGTH;
       const blocksPerRow = Math.floor(arcLen / (blockWidth + gap));
       if (blocksPerRow < 1) return;
@@ -159,34 +154,33 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
       for (let b = 0; b < blocksPerRow; b++) {
         const phi = PHI_START + halfStep + angularStep * b;
 
-        // LatheGeometry convention: x = r*cos(phi), z = r*sin(phi)
+        // Match LatheGeometry's coordinate convention exactly
         const x = rowR * Math.cos(phi);
         const z = rowR * Math.sin(phi);
 
         dummy.position.set(x, rowY, z);
-        // Rotate so block faces inward (toward field center)
-        dummy.rotation.set(0, -phi + Math.PI / 2, 0);
+        // Orient block tangent to the arc, facing inward
+        dummy.rotation.set(0, -phi, 0);
         dummy.updateMatrix();
 
         const mat = new THREE.Matrix4();
         mat.copy(dummy.matrix);
         matrices.push(mat);
 
-        // Alternate colors by section (every ~4 blocks)
-        const section = Math.floor(b / 4);
+        const section = Math.floor(b / 3);
         const c = section % 2 === 0 ? priColor : secColor;
         colors.push(c.r, c.g, c.b);
       }
     };
 
-    // Tier 1 rows
+    // Tier 1 rows — place on each tread surface
     for (let i = 0; i < TIER1_ROWS; i++) {
       const rowR = innerR + TREAD_D * i + TREAD_D / 2;
       const rowY = FENCE_H + RISER_H * (i + 1) + 0.5;
       addRow(rowR, rowY);
     }
 
-    // Tier 2 rows (after concourse)
+    // Tier 2 rows
     const tier2BaseR = innerR + TREAD_D * TIER1_ROWS + CONCOURSE_D;
     const tier2BaseY = FENCE_H + RISER_H * TIER1_ROWS + CONCOURSE_H;
     for (let i = 0; i < TIER2_ROWS; i++) {
@@ -223,63 +217,6 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
     mesh.instanceColor = new THREE.InstancedBufferAttribute(seatColorArray, 3);
     mesh.instanceColor.needsUpdate = true;
   }, [seatCount, seatMatrices, seatColorArray]);
-
-  // City skyline — merged boxes + window dots
-  const maxFenceDist = useMemo(() => {
-    if (!fencePoints?.length) return 400;
-    let maxD = 0;
-    for (const [x, , z] of fencePoints) {
-      const d = Math.sqrt(x * x + z * z);
-      if (d > maxD) maxD = d;
-    }
-    return maxD;
-  }, [fencePoints]);
-
-  const { skylineGeo, windowGeo } = useMemo(() => {
-    if (!bowlRadius) return {};
-
-    const minDist = maxFenceDist + 250;
-    const buildings = [];
-    const windows = [];
-    const rng = mulberry32(42);
-
-    const count = 70;
-    const arcStart = Math.PI * 0.25;
-    const arcEnd = Math.PI * 0.75;
-
-    for (let i = 0; i < count; i++) {
-      const angle = arcStart + (arcEnd - arcStart) * rng();
-      const dist = minDist + rng() * 200;
-      const x = Math.cos(angle) * dist;
-      const z = -Math.sin(angle) * dist;
-      const h = 40 + rng() * 160;
-      const w = 8 + rng() * 20;
-      const d = 8 + rng() * 20;
-
-      const box = new THREE.BoxGeometry(w, h, d);
-      box.translate(x, h / 2, z);
-      buildings.push(box);
-
-      const numWindows = Math.floor(2 + rng() * 6);
-      for (let j = 0; j < numWindows; j++) {
-        const wy = 5 + rng() * (h - 10);
-        const side = rng() > 0.5 ? 1 : -1;
-        const wx = x + side * (w / 2 + 0.1);
-        const wz = z + (rng() - 0.5) * d * 0.6;
-        const win = new THREE.PlaneGeometry(1.5, 1.5);
-        win.rotateY(side > 0 ? 0 : Math.PI);
-        win.translate(wx, wy, wz);
-        windows.push(win);
-      }
-    }
-
-    const skylineGeo = mergeGeometries(buildings, false);
-    buildings.forEach(g => g.dispose());
-    const windowGeo = windows.length > 0 ? mergeGeometries(windows, false) : null;
-    windows.forEach(g => g.dispose());
-
-    return { skylineGeo, windowGeo };
-  }, [bowlRadius, maxFenceDist]);
 
   // Sky dome shader material
   const skyMat = useMemo(() => {
@@ -318,35 +255,10 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
         </mesh>
       )}
 
-      {/* City skyline */}
-      {skylineGeo && (
-        <mesh geometry={skylineGeo}>
-          <meshBasicMaterial color="#2a2a35" />
-        </mesh>
-      )}
-
-      {/* Window dots */}
-      {windowGeo && (
-        <mesh geometry={windowGeo}>
-          <meshBasicMaterial color="#ffd080" transparent opacity={0.7} side={THREE.DoubleSide} />
-        </mesh>
-      )}
-
       {/* Sky dome */}
       <mesh material={skyMat}>
         <sphereGeometry args={[600, 24, 16]} />
       </mesh>
     </group>
   );
-}
-
-// Deterministic PRNG (Mulberry32)
-function mulberry32(seed) {
-  let s = seed | 0;
-  return function () {
-    s = (s + 0x6d2b79f5) | 0;
-    let t = Math.imul(s ^ (s >>> 15), 1 | s);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
 }
