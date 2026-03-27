@@ -274,9 +274,8 @@ export default function LiveGamePage() {
                     const countStrikes = p.count ? parseInt(p.count.split("-")[1]) || 0 : 0;
                     const prevStrikes = i > 0 && liveState.currentAtBat[i - 1].count ? parseInt(liveState.currentAtBat[i - 1].count.split("-")[1]) || 0 : 0;
                     const foulNoAdvance = isFoul && countStrikes === prevStrikes && countStrikes >= 2;
-                    const isFoulBall = p.code === "F";
-                    const color = p.isBall ? "#22c55e" : isFoulBall ? "#888" : p.isInPlay ? "#3b82f6" : "#ef4444";
-                    const border = isFoulBall ? "2px solid #ef4444" : "none";
+                    const color = p.isBall ? "#22c55e" : foulNoAdvance ? "#888" : p.isInPlay ? "#3b82f6" : "#ef4444";
+                    const border = foulNoAdvance ? "2px solid #ef4444" : "none";
                     return <span key={i} className="lgp-pitch-dot" style={{ background: color, border, boxSizing: "border-box" }} title={`${p.call} ${p.count || ""}`} />;
                   })}
                 </div>
@@ -525,14 +524,13 @@ function StrikeZone({ pitches }) {
         const prevIdx = withCoords.indexOf(p) > 0 ? withCoords.indexOf(p) - 1 : -1;
         const prevStrikes = prevIdx >= 0 && withCoords[prevIdx].count ? parseInt(withCoords[prevIdx].count.split("-")[1]) || 0 : 0;
         const foulNoAdvance = isFoul && countStrikes === prevStrikes && countStrikes >= 2;
-        const isFoulBall = p.code === "F";
-        const color = p.isBall ? "#22c55e" : isFoulBall ? "#888" : p.isInPlay ? "#3b82f6" : "#ef4444";
+        const color = p.isBall ? "#22c55e" : foulNoAdvance ? "#888" : p.isInPlay ? "#3b82f6" : "#ef4444";
         const isLast = i === withCoords.length - 1;
         return (
           <g key={i}>
             <circle cx={x} cy={y} r="5.5" fill={color} opacity={isLast ? 1 : 0.7} />
-            {isFoulBall && <circle cx={x} cy={y} r="5.5" fill="none" stroke="#ef4444" strokeWidth="1.2" opacity={isLast ? 1 : 0.7} />}
-            {isLast && !isFoulBall && <circle cx={x} cy={y} r="5.5" fill="none" stroke="#fff" strokeWidth="1.2" opacity="0.5" />}
+            {foulNoAdvance && <circle cx={x} cy={y} r="5.5" fill="none" stroke="#ef4444" strokeWidth="1.2" opacity={isLast ? 1 : 0.7} />}
+            {isLast && !foulNoAdvance && <circle cx={x} cy={y} r="5.5" fill="none" stroke="#fff" strokeWidth="1.2" opacity="0.5" />}
             <text x={x} y={y + 0.5} textAnchor="middle" fontSize="5" fill="#fff" fontWeight="700" dominantBaseline="middle">{i + 1}</text>
           </g>
         );
