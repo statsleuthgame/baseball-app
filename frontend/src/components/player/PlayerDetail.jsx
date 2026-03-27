@@ -31,13 +31,14 @@ export default function PlayerDetail() {
     enabled: !!playerId,
   });
 
-  // Fetch stats for a different season when selector changes
+  // Fetch stats for a different season OR when current season static data is empty
   const isCurrentSeason = selectedSeason === currentYear;
+  const staticStatsEmpty = isCurrentSeason && playerData?.stats?.stats && Object.keys(playerData.stats.stats).length === 0;
   const { data: seasonStats } = useQuery({
     queryKey: ["playerSeasonStats", playerId, selectedSeason],
     queryFn: () => fetchPlayerSeasonStats(playerId, selectedSeason, playerData?.stats?.group || "hitting"),
-    enabled: !!playerId && !isCurrentSeason && !!playerData,
-    staleTime: 1000 * 60 * 60,
+    enabled: !!playerId && (!isCurrentSeason || staticStatsEmpty) && !!playerData,
+    staleTime: 1000 * 60 * 10,
   });
 
   const player = playerData?.detail;
@@ -52,10 +53,11 @@ export default function PlayerDetail() {
   const statsObj = playerData?.stats || {};
   let displayStats, displaySeason;
 
-  if (isCurrentSeason) {
+  if (isCurrentSeason && !staticStatsEmpty) {
     displayStats = statsObj.stats || {};
     displaySeason = currentYear;
   } else {
+    // Either a past season, or current season with empty static data — use API
     displayStats = seasonStats || {};
     displaySeason = selectedSeason;
   }
