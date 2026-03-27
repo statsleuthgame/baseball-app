@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
-import { Stars, Html } from "@react-three/drei";
+import { Html } from "@react-three/drei";
 import Field3D from "./Field3D";
 import AnimatedBall from "./AnimatedBall";
 import Fielders3D from "./Fielders3D";
@@ -210,9 +210,6 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
           <pointLight position={[-200, 150, -200]} intensity={0.5} color="#ffffcc" distance={500} />
           <pointLight position={[0, 150, 50]} intensity={0.3} color="#ffffcc" distance={500} />
 
-          {/* Night sky stars */}
-          <Stars radius={400} depth={50} count={1500} factor={3} saturation={0} fade speed={0.5} />
-
           {/* Camera system */}
           <CameraRig
             preset="broadcast"
@@ -222,7 +219,7 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
           />
 
           {/* The field */}
-          <Field3D venueTeamId={venueTeamId} />
+          <Field3D venueTeamId={venueTeamId} teamColor={teamColor} />
 
           {/* Fielders */}
           <Fielders3D
@@ -273,8 +270,8 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
           {/* OUT indicators */}
           {outPositions.map((pos, i) => pos && <OutIndicator key={`out-${i}`} position={pos} />)}
 
-          {/* Fog for depth */}
-          <fog attach="fog" args={["#0a0e1a", 300, 800]} />
+          {/* Exponential fog for atmospheric depth */}
+          <fogExp2 attach="fog" args={["#0a0a1a", 0.0035]} />
         </Canvas>
 
         {/* Event label overlay (top) */}
