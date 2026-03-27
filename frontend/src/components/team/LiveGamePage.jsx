@@ -359,13 +359,13 @@ function StrikeZone({ pitches }) {
   // pZ: feet above ground → SVG Y (inverted: higher pZ = lower SVG Y)
   const mapZ = (pZ) => zoneT + (szTop - pZ) * SCALE;
 
-  // Compute viewBox to fit all pitches + zone with padding
-  const allX = isEmpty ? [] : withCoords.map((p) => mapX(p.pX));
-  const allY = isEmpty ? [] : withCoords.map((p) => mapZ(p.pZ));
-  const vMinX = Math.min(zoneL - 20, ...allX) - 15;
-  const vMaxX = Math.max(zoneR + 20, ...allX) + 15;
-  const vMinY = Math.min(zoneT - 10, ...allY) - 15;
-  const vMaxY = Math.max(zoneB + 10, ...allY) + 15;
+  // Fixed viewBox — large enough for any realistic pitch location
+  // pX range: roughly -2.5 to +2.5 feet → SVG: CX ± 150
+  // pZ range: roughly 0 to 5 feet → covers well above and below zone
+  const vMinX = CX - 160;
+  const vMaxX = CX + 160;
+  const vMinY = zoneT - 50;
+  const vMaxY = zoneB + 40;
 
   return (
     <svg viewBox={`${vMinX} ${vMinY} ${vMaxX - vMinX} ${vMaxY - vMinY}`} className="lgp-strike-zone" preserveAspectRatio="xMidYMid meet">
