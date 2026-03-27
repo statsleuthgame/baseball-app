@@ -63,33 +63,62 @@ function computeRunnerMovements(event, runnersOn) {
 
 /**
  * Get the path of 3D positions a runner takes from one base to another.
- * Runners follow the base paths (not straight lines).
+ * When rounding bases (going to 2+ bases), the runner takes a smooth
+ * curved arc around each base instead of a sharp stop-and-turn.
  */
 function getRunnerPath(fromBase, toBase) {
-  const path = [];
+  // Collect the base positions the runner passes through
+  const waypoints = [];
   let current = fromBase;
-
-  while (current !== toBase && current < 4) {
-    const fromKey = BASE_ORDER[current % 4];
+  while (current <= toBase && current <= 4) {
+    const key = BASE_ORDER[current % 4];
+    waypoints.push(BASES[key].clone());
     current++;
-    const toKey = BASE_ORDER[current % 4];
+  }
+  // If scoring (toBase >= 4), end at home
+  if (toBase >= 4 && fromBase !== 0) {
+    waypoints.push(BASES.home.clone());
+  }
 
-    const from = BASES[fromKey];
-    const to = current >= 4 ? BASES.home : BASES[toKey];
+  if (waypoints.length < 2) return waypoints;
 
-    // Add intermediate points along the path for smooth running
-    const steps = 10;
+  // If only going one base, straight line is fine
+  if (waypoints.length === 2) {
+    const path = [];
+    const steps = 20;
     for (let i = 0; i <= steps; i++) {
       const t = i / steps;
       path.push(new THREE.Vector3(
-        from.x + (to.x - from.x) * t,
+        waypoints[0].x + (waypoints[1].x - waypoints[0].x) * t,
         0.5,
-        from.z + (to.z - from.z) * t,
+        waypoints[0].z + (waypoints[1].z - waypoints[0].z) * t,
       ));
+    }
+    return path;
+  }
+
+  // For multi-base runs, use a Catmull-Rom spline for smooth rounding
+  // Add slight outward bulge at each intermediate base to simulate rounding
+  const curvePoints = [];
+  for (let i = 0; i < waypoints.length; i++) {
+    const wp = waypoints[i];
+    if (i > 0 && i < waypoints.length - 1) {
+      // Intermediate base: push the point slightly outward from the diamond
+      // to create a natural rounding arc
+      const angle = Math.atan2(wp.x, wp.z);
+      const bulge = 12; // feet outward
+      curvePoints.push(new THREE.Vector3(
+        wp.x + Math.sin(angle) * bulge,
+        0.5,
+        wp.z + Math.cos(angle) * bulge,
+      ));
+    } else {
+      curvePoints.push(new THREE.Vector3(wp.x, 0.5, wp.z));
     }
   }
 
-  return path;
+  const curve = new THREE.CatmullRomCurve3(curvePoints, false, "centripetal", 0.5);
+  return curve.getPoints(waypoints.length * 20);
 }
 
 /**
@@ -195,11 +224,9 @@ function AnimatedRunner({ path, ballProgress, isBatter, scores, startDelay = 0, 
     elapsedRef.current += delta;
     const runProgress = Math.min(elapsedRef.current / totalRunTime, 1);
 
-    // Ease: accelerate out of the box, steady in the middle, slight decel at the base
-    const eased = runProgress < 0.15
-      ? (runProgress / 0.15) * (runProgress / 0.15) * 0.15
-      : runProgress > 0.9
-      ? 0.9 + (1 - Math.pow(1 - (runProgress - 0.9) / 0.1, 2)) * 0.1
+    // Smooth ease: accelerate out of the box, full speed through the middle
+    const eased = runProgress < 0.1
+      ? (runProgress / 0.1) * (runProgress / 0.1) * 0.1
       : runProgress;
 
     const pathIdx = Math.min(Math.floor(eased * (path.length - 1)), path.length - 2);
