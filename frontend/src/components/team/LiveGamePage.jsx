@@ -351,10 +351,16 @@ function StrikeZone({ pitches }) {
   // pZ: feet above ground → SVG Y (inverted: higher pZ = lower SVG Y)
   const mapZ = (pZ) => zoneT + (szTop - pZ) * SCALE;
 
-  const plateY = zoneB + 10;
+  // Compute viewBox to fit all pitches + zone with padding
+  const allX = withCoords.map((p) => mapX(p.pX));
+  const allY = withCoords.map((p) => mapZ(p.pZ));
+  const vMinX = Math.min(zoneL, ...allX) - 15;
+  const vMaxX = Math.max(zoneR, ...allX) + 15;
+  const vMinY = Math.min(zoneT, ...allY) - 15;
+  const vMaxY = Math.max(zoneB, ...allY) + 15;
 
   return (
-    <svg viewBox={`0 0 200 ${plateY + 20}`} className="lgp-strike-zone">
+    <svg viewBox={`${vMinX} ${vMinY} ${vMaxX - vMinX} ${vMaxY - vMinY}`} className="lgp-strike-zone" preserveAspectRatio="xMidYMid meet">
       {/* Zone box */}
       <rect x={zoneL} y={zoneT} width={zoneW} height={zoneH_svg} fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" rx="2" />
       {/* Zone grid (3x3) */}
@@ -364,8 +370,6 @@ function StrikeZone({ pitches }) {
           <line x1={zoneL} y1={zoneT + zoneH_svg * i / 3} x2={zoneR} y2={zoneT + zoneH_svg * i / 3} stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" />
         </g>
       ))}
-      {/* Home plate */}
-      <polygon points={`${CX - 14},${plateY} ${CX - 10},${plateY + 6} ${CX + 10},${plateY + 6} ${CX + 14},${plateY} ${CX},${plateY - 4}`} fill="rgba(255,255,255,0.15)" />
 
       {/* Pitch dots — all same size */}
       {withCoords.map((p, i) => {

@@ -372,7 +372,7 @@ export const fetchLiveGameState = async (gamePk) => {
           };
           return pitch;
         })
-        .slice(-6),
+        ,
       onDeck: ls.offense?.onDeck ? { id: ls.offense.onDeck.id, fullName: ls.offense.onDeck.fullName } : null,
       inHole: ls.offense?.inHole ? { id: ls.offense.inHole.id, fullName: ls.offense.inHole.fullName } : null,
       scoringPlays: allPlays
