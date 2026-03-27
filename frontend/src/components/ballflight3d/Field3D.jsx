@@ -26,7 +26,7 @@ function getStadiumData(teamId) {
 export default function Field3D({ venueTeamId, teamColor }) {
   const stadium = getStadiumData(venueTeamId);
 
-  const { grassShape, dirtShape, infieldGrassShape, fencePoints, foulLinePoints } = useMemo(() => {
+  const { grassShape, dirtShape, infieldGrassShape, fencePoints, foulLinePoints, foulPolePositions } = useMemo(() => {
     if (!stadium) return {};
 
     // Outfield grass shape: fence polygon + home plate to close
@@ -60,7 +60,15 @@ export default function Field3D({ venueTeamId, teamColor }) {
     // Foul line points
     const foulLinePoints = stadium.foul_lines.map(([x, y]) => mlbamTo3D(x, y));
 
-    return { grassShape, dirtShape, infieldGrassShape, fencePoints, foulLinePoints };
+    // Foul pole positions: first and last fence points
+    const firstFence = fencePoints[0];
+    const lastFence = fencePoints[fencePoints.length - 1];
+    const foulPolePositions = [
+      { x: firstFence[0], z: firstFence[2], side: "left" },
+      { x: lastFence[0], z: lastFence[2], side: "right" },
+    ];
+
+    return { grassShape, dirtShape, infieldGrassShape, fencePoints, foulLinePoints, foulPolePositions };
   }, [stadium]);
 
   // Base positions in feet from home plate
@@ -98,6 +106,30 @@ export default function Field3D({ venueTeamId, teamColor }) {
 
       {/* Stadium background: bowl, towers, skyline, sky dome */}
       <StadiumBackground fencePoints={fencePoints} teamColors={{ primary: teamColor, secondary: ALL_TEAMS[venueTeamId]?.secondary || "#1a2a4c" }} />
+
+      {/* Foul poles */}
+      {foulPolePositions && foulPolePositions.map((pole, i) => {
+        const POLE_HEIGHT = 45;
+        const panelW = 4;
+        const panelH = POLE_HEIGHT * 0.65;
+        const panelOffsetX = pole.side === "left" ? panelW / 2 : -panelW / 2;
+        return (
+          <group key={`foul-pole-${i}`} position={[pole.x, 0, pole.z]}>
+            <mesh position={[0, POLE_HEIGHT / 2, 0]}>
+              <cylinderGeometry args={[0.35, 0.45, POLE_HEIGHT, 8]} />
+              <meshStandardMaterial color="#FFD700" emissive="#FFD700" emissiveIntensity={0.2} roughness={0.35} metalness={0.7} />
+            </mesh>
+            <mesh position={[panelOffsetX, POLE_HEIGHT * 0.4, 0]}>
+              <boxGeometry args={[panelW, panelH, 0.15]} />
+              <meshStandardMaterial color="#FFD700" emissive="#FFD700" emissiveIntensity={0.08} transparent opacity={0.4} roughness={0.6} side={THREE.DoubleSide} />
+            </mesh>
+            <mesh position={[0, POLE_HEIGHT + 0.6, 0]}>
+              <sphereGeometry args={[0.7, 8, 8]} />
+              <meshStandardMaterial color="#FFD700" emissive="#FFD700" emissiveIntensity={0.35} roughness={0.25} metalness={0.8} />
+            </mesh>
+          </group>
+        );
+      })}
 
       {/* Foul lines */}
       <FoulLines points={foulLinePoints} />
