@@ -171,26 +171,25 @@ export default function LiveGamePage() {
             <div className="lgp-zone-centered">
               {liveState.currentAtBat?.length > 0 ? (
                 <>
+                  {/* Pitch result — centered above zone */}
+                  <span className="lgp-pitch-result">
+                    {(() => {
+                      const p = liveState.currentAtBat[liveState.currentAtBat.length - 1];
+                      return `${p.pitchInfo || ""} — ${p.call}`;
+                    })()}
+                  </span>
                   <StrikeZone pitches={liveState.currentAtBat} />
-                  <div className="lgp-pitch-bottom">
-                    <div className="lgp-pitch-dots">
-                      {liveState.currentAtBat.map((p, i) => {
-                        let strikes = 0;
-                        for (let j = 0; j < i; j++) {
-                          const prev = liveState.currentAtBat[j];
-                          if (prev.isStrike && prev.code !== "F") strikes++;
-                        }
-                        const isFoulAfterTwo = (p.code === "F") && strikes >= 2;
-                        const color = p.isBall ? "#22c55e" : (p.code === "F" && !isFoulAfterTwo) ? "#f59e0b" : p.isInPlay ? "#3b82f6" : "#ef4444";
-                        return <span key={i} className="lgp-pitch-dot" style={{ background: color }} title={`${p.call} ${p.count || ""}`} />;
-                      })}
-                    </div>
-                    <span className="lgp-pitch-last">
-                      {(() => {
-                        const p = liveState.currentAtBat[liveState.currentAtBat.length - 1];
-                        return `${p.pitchInfo || ""} — ${p.call}`;
-                      })()}
-                    </span>
+                  <div className="lgp-pitch-dots">
+                    {liveState.currentAtBat.map((p, i) => {
+                      let strikes = 0;
+                      for (let j = 0; j < i; j++) {
+                        const prev = liveState.currentAtBat[j];
+                        if (prev.isStrike && prev.code !== "F") strikes++;
+                      }
+                      const isFoul = p.code === "F";
+                      const color = p.isBall ? "#22c55e" : (isFoul && strikes >= 2) ? "#f59e0b" : p.isInPlay ? "#3b82f6" : "#ef4444";
+                      return <span key={i} className="lgp-pitch-dot" style={{ background: color }} title={`${p.call} ${p.count || ""}`} />;
+                    })}
                   </div>
                 </>
               ) : (
@@ -388,8 +387,8 @@ function StrikeZone({ pitches }) {
           const prev = withCoords[j];
           if (prev.isStrike && prev.code !== "F") strikes++;
         }
-        const isFoulAfterTwo = (p.code === "F") && strikes >= 2;
-        const color = p.isBall ? "#22c55e" : (p.code === "F" && !isFoulAfterTwo) ? "#f59e0b" : p.isInPlay ? "#3b82f6" : "#ef4444";
+        const isFoul = p.code === "F";
+        const color = p.isBall ? "#22c55e" : (isFoul && strikes >= 2) ? "#f59e0b" : p.isInPlay ? "#3b82f6" : "#ef4444";
         const isLast = i === withCoords.length - 1;
         return (
           <g key={i}>
