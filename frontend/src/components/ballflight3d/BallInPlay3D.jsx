@@ -263,7 +263,6 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
               fromPos={throwFromPos}
               targetBase={throwTargets[throwIndex]}
               onComplete={handleThrowComplete}
-              throwSpeed={0.5}
             />
           )}
 
