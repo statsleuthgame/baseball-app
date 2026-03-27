@@ -63,6 +63,11 @@ export default function LiveGamePage() {
   const prevRunnersRef = useRef({ first: false, second: false, third: false });
   const [bipRunners, setBipRunners] = useState({ first: false, second: false, third: false });
 
+  // Track side changes (Top↔Bottom) to show "Coming Up" only during transitions
+  const [sideJustChanged, setSideJustChanged] = useState(false);
+  const prevHalfRef = useRef(null);
+  const sideTimerRef = useRef(null);
+
   useEffect(() => {
     const hitKey = liveState?.lastHitData ? `${liveState.lastHitData.x}-${liveState.lastHitData.y}` : null;
     if (hitKey && hitKey !== lastHitRef.current) {
@@ -81,6 +86,20 @@ export default function LiveGamePage() {
     };
     return () => { if (bipTimerRef.current) clearTimeout(bipTimerRef.current); };
   }, [liveState?.lastHitData, liveState?.onFirst, liveState?.onSecond, liveState?.onThird]);
+
+  // Detect inning half changes
+  useEffect(() => {
+    if (!liveState?.inningHalf) return;
+    const currentHalf = `${liveState.inning}-${liveState.inningHalf}`;
+    if (prevHalfRef.current && prevHalfRef.current !== currentHalf) {
+      // Side changed — show "Coming Up" for 30 seconds then revert to empty zone
+      setSideJustChanged(true);
+      if (sideTimerRef.current) clearTimeout(sideTimerRef.current);
+      sideTimerRef.current = setTimeout(() => setSideJustChanged(false), 30000);
+    }
+    prevHalfRef.current = currentHalf;
+    return () => { if (sideTimerRef.current) clearTimeout(sideTimerRef.current); };
+  }, [liveState?.inning, liveState?.inningHalf]);
 
   if (isLoading) return <LoadingSpinner text="Loading game..." />;
   if (!gameInfo) return <div className="matchup-empty"><h2>Game not found</h2></div>;
@@ -192,7 +211,6 @@ export default function LiveGamePage() {
             const battingTeamLogo2 = liveState.inningHalf === "Top" ? gameInfo.away.logoUrl : gameInfo.home.logoUrl;
             const showBip = liveState.lastHitData && !bipCollapsed && (liveState.currentAtBat?.length === 0 || liveState.currentAtBat?.[liveState.currentAtBat.length - 1]?.isInPlay);
             const showZone = liveState.currentAtBat?.length > 0 && !showBip;
-            const showNextUp = !showBip && !showZone;
 
             if (showBip) return (
               <div className="lgp-bip-section">
@@ -205,6 +223,9 @@ export default function LiveGamePage() {
                 </Suspense>
               </div>
             );
+
+            // Once pitches arrive for the new half, clear "Coming Up"
+            if (showZone && sideJustChanged) setSideJustChanged(false);
 
             if (showZone) return (
               <div className="lgp-zone-centered lgp-zone-with-bg">
@@ -239,8 +260,8 @@ export default function LiveGamePage() {
               </div>
             );
 
-            // Coming Up only when side is changing (bipCollapsed AND fresh half-inning with 0 outs)
-            if (bipCollapsed && liveState.outs === 0) {
+            // Coming Up only when the inning half actually changed (Top↔Bottom)
+            if (sideJustChanged) {
               const nextUp = [liveState.batter, liveState.onDeck, liveState.inHole].filter(Boolean);
               return (
                 <div className="lgp-next-up">
