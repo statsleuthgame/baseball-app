@@ -330,7 +330,7 @@ export const fetchLiveGameState = async (gamePk) => {
       onFirst: !!ls.offense?.first,
       onSecond: !!ls.offense?.second,
       onThird: !!ls.offense?.third,
-      batter: cp.batter ? { id: cp.batter.id, fullName: cp.batter.fullName, avg: batterAvg } : null,
+      batter: cp.batter ? { id: cp.batter.id, fullName: cp.batter.fullName, avg: batterAvg, ...getGameBattingLine(ld.boxscore, cp.batter.id) } : null,
       pitcher: cp.pitcher ? { id: cp.pitcher.id, fullName: cp.pitcher.fullName, gameStats: pitcherGameStats } : null,
       lastPlay,
       lastHitData: (() => {

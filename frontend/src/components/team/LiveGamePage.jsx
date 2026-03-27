@@ -153,11 +153,24 @@ export default function LiveGamePage() {
       {/* ===== ZONE B+C: AT-BAT + VISUAL (combined) ===== */}
       {liveState?.batter && liveState?.pitcher && (
         <div className="lgp-section">
-          {/* Batter — full width row */}
-          <div className="lgp-batter-row sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${liveState.batter.id}`)}>
-            <span className="lgp-batter-name">{liveState.batter.fullName}</span>
-            <span className="lgp-batter-avg">{liveState.batter.avg || ".000"}</span>
-          </div>
+          {/* Batter — logo, name, game stats, season avg */}
+          {(() => {
+            const battingTeamLogo = liveState.inningHalf === "Top" ? gameInfo.away.logoUrl : gameInfo.home.logoUrl;
+            const b = liveState.batter;
+            const gameStats = [];
+            if (b.ab != null) gameStats.push(`${b.h || 0}-${b.ab}`);
+            if (b.hr > 0) gameStats.push(`${b.hr} HR`);
+            if (b.rbi > 0) gameStats.push(`${b.rbi} RBI`);
+            if (b.k > 0) gameStats.push(`${b.k} K`);
+            return (
+              <div className="lgp-batter-row sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${b.id}`)}>
+                <img src={battingTeamLogo} alt="" className="lgp-batter-logo" />
+                <span className="lgp-batter-name">{b.fullName}</span>
+                {gameStats.length > 0 && <span className="lgp-batter-game">{gameStats.join(", ")}</span>}
+                <span className="lgp-batter-avg">{b.avg || ".000"}</span>
+              </div>
+            );
+          })()}
 
           {/* Visual area: strike zone / ball-in-play / next up */}
           {(() => {
