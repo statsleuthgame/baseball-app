@@ -176,11 +176,22 @@ export default function StadiumBackground({ fencePoints, teamColor }) {
   }, [fencePoints]);
 
   // City skyline — merged boxes + window dots
+  // Compute max fence distance from home plate (origin) for proper placement
+  const maxFenceDist = useMemo(() => {
+    if (!fencePoints?.length) return 400;
+    let maxD = 0;
+    for (const [x, , z] of fencePoints) {
+      const d = Math.sqrt(x * x + z * z);
+      if (d > maxD) maxD = d;
+    }
+    return maxD;
+  }, [fencePoints]);
+
   const { skylineGeo, windowGeo } = useMemo(() => {
     if (!bowlRadius) return {};
 
-    const pushBack = 25;
-    const outerR = bowlRadius + pushBack + 100;
+    // Place buildings well behind the stadium bowl (500+ ft from home plate)
+    const minDist = maxFenceDist + 250;
     const buildings = [];
     const windows = [];
     const rng = mulberry32(42); // deterministic seed
@@ -192,7 +203,7 @@ export default function StadiumBackground({ fencePoints, teamColor }) {
 
     for (let i = 0; i < count; i++) {
       const angle = arcStart + (arcEnd - arcStart) * rng();
-      const dist = outerR + rng() * 120;
+      const dist = minDist + rng() * 200;
       const x = Math.cos(angle) * dist;
       const z = -Math.sin(angle) * dist;
       const h = 40 + rng() * 160;
