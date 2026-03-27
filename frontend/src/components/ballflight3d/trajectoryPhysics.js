@@ -58,6 +58,11 @@ export function distanceFromMLBAM(hitX, hitY, hpX = 125.42, hpY = 198.27) {
  * @returns {{ points: Array<{x:number,y:number,z:number}>, duration: number, apexHeight: number }}
  */
 export function computeTrajectory(exitVeloMph, launchAngleDeg, sprayAngleDeg, targetDistFt, trajectory) {
+  // Ground balls get a dedicated simple trajectory
+  if (trajectory === "ground_ball") {
+    return computeGroundBall(exitVeloMph, sprayAngleDeg, targetDistFt);
+  }
+
   const v0 = exitVeloMph * MPH_TO_FPS;
   const la = launchAngleDeg * DEG_TO_RAD;
   const sa = sprayAngleDeg * DEG_TO_RAD;
@@ -70,24 +75,10 @@ export function computeTrajectory(exitVeloMph, launchAngleDeg, sprayAngleDeg, ta
   const vx0 = vHoriz * Math.sin(sa); // toward right field (+x)
   const vy0 = vHoriz * Math.cos(sa); // toward center field (+y)
 
-  // For ground balls with negative/very low launch angles, use a small positive
-  // angle so the ball has a realistic low hop. The original negative angle makes
-  // the ball hit the ground instantly, breaking drag calibration.
-  let effectiveLa = la;
-  if (trajectory === "ground_ball" && launchAngleDeg < 5) {
-    effectiveLa = 3 * DEG_TO_RAD; // low hop
-  }
-
-  // Recalculate velocity components with effective launch angle
-  const vHorizEff = v0 * Math.cos(effectiveLa);
-  const vz0Eff = v0 * Math.sin(effectiveLa);
-  const vx0Eff = vHorizEff * Math.sin(sa);
-  const vy0Eff = vHorizEff * Math.cos(sa);
-
   // Adaptive drag to hit target distance if known
   let dragK = DRAG_K;
   if (targetDistFt && targetDistFt > 50) {
-    dragK = calibrateDrag(v0, effectiveLa, sa, targetDistFt);
+    dragK = calibrateDrag(v0, la, sa, targetDistFt);
   }
 
   // Simulate with RK4-lite (Euler with small dt is fine for display)
@@ -96,15 +87,10 @@ export function computeTrajectory(exitVeloMph, launchAngleDeg, sprayAngleDeg, ta
   const points = [];
 
   let x = 0, y = 0, z = 3; // start at ~3ft (bat height)
-  let vx = vx0Eff, vy = vy0Eff, vz = vz0Eff;
+  let vx = vx0, vy = vy0, vz = vz0;
   let t = 0;
   let apexHeight = z;
   let landed = false;
-
-  // For ground balls, start at z = 1 (low contact)
-  if (trajectory === "ground_ball") {
-    z = 1;
-  }
 
   points.push({ x, y, z, t });
 
@@ -131,30 +117,73 @@ export function computeTrajectory(exitVeloMph, launchAngleDeg, sprayAngleDeg, ta
 
     if (z > apexHeight) apexHeight = z;
 
-    // Ground ball bounce / stop
     if (z <= 0) {
       z = 0;
       landed = true;
-
-      // For ground balls, add a couple bounces
-      if (trajectory === "ground_ball" && speed > 20) {
-        vz = Math.abs(vz) * 0.3; // damped bounce
-        z = 0.1;
-        landed = false;
-        // Will land again on next bounce
-      }
     }
 
     points.push({ x, y, z, t });
-
-    // Safety: stop after reasonable ground ball distance
-    if (trajectory === "ground_ball" && t > 5) landed = true;
   }
 
   return {
     points,
     duration: t,
     apexHeight,
+  };
+}
+
+/**
+ * Simple ground ball trajectory: short hop off bat then rolls/decelerates to target distance.
+ */
+function computeGroundBall(exitVeloMph, sprayAngleDeg, targetDistFt) {
+  const dist = targetDistFt || 90;
+  const sa = sprayAngleDeg * DEG_TO_RAD;
+  const dirX = Math.sin(sa);
+  const dirY = Math.cos(sa);
+
+  // Ground ball speed (mph → fps), mostly horizontal
+  const speed0 = exitVeloMph * MPH_TO_FPS * 0.85; // some energy lost hitting ground
+  // Time to travel target distance with linear deceleration
+  // d = v0*t - 0.5*a*t²; v_final = 0 → a = v0/t → d = 0.5*v0*t → t = 2d/v0
+  const totalTime = (2 * dist) / speed0;
+
+  const dt = 0.01;
+  const points = [];
+  let t = 0;
+  const hopHeight = 2; // small initial hop off the bat (feet)
+  const hopDuration = 0.25; // seconds for initial hop
+
+  while (t <= totalTime) {
+    const progress = t / totalTime;
+    // Linear deceleration: distance = dist * (2*progress - progress²)
+    const d = dist * (2 * progress - progress * progress);
+    const x = d * dirX;
+    const y = d * dirY;
+
+    // Small hop at the start, then stays on ground with tiny bounces
+    let z;
+    if (t < hopDuration) {
+      // Initial hop arc
+      const hopProgress = t / hopDuration;
+      z = hopHeight * Math.sin(hopProgress * Math.PI);
+    } else {
+      // Small diminishing bounces
+      const bounceT = t - hopDuration;
+      const bounceAmp = Math.max(0, 0.8 * Math.exp(-bounceT * 4));
+      z = bounceAmp * Math.abs(Math.sin(bounceT * 12));
+    }
+
+    points.push({ x, y, z, t });
+    t += dt;
+  }
+
+  // Ensure final point is exactly at target
+  points.push({ x: dist * dirX, y: dist * dirY, z: 0, t: totalTime });
+
+  return {
+    points,
+    duration: totalTime,
+    apexHeight: hopHeight,
   };
 }
 
