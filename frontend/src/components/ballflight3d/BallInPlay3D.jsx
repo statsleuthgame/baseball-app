@@ -284,65 +284,46 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
         </div>
 
 
+        {/* Metrics overlay (fades in at bottom of canvas after landing) */}
+        <div className={`bip3d-metrics-overlay ${showMetrics ? "visible" : ""}`}>
+          <div className="bip3d-metrics-main">
+            {hitData.exitVelo && (
+              <div className="bip3d-metric">
+                <span className="bip3d-metric-val" style={{ color: accentColor }}>{hitData.exitVelo}</span>
+                <span className="bip3d-metric-unit">mph</span>
+              </div>
+            )}
+            {hitData.distance && (
+              <div className="bip3d-metric">
+                <span className="bip3d-metric-val" style={{ color: accentColor }}>{hitData.distance}</span>
+                <span className="bip3d-metric-unit">ft</span>
+              </div>
+            )}
+            {hitData.launchAngle != null && (
+              <div className="bip3d-metric">
+                <span className="bip3d-metric-val" style={{ color: accentColor }}>{hitData.launchAngle}°</span>
+                <span className="bip3d-metric-unit">LA</span>
+              </div>
+            )}
+            {apexHeight > 10 && (
+              <div className="bip3d-metric">
+                <span className="bip3d-metric-val" style={{ color: accentColor }}>{Math.round(apexHeight)}</span>
+                <span className="bip3d-metric-unit">ft apex</span>
+              </div>
+            )}
+          </div>
+          <div className="bip3d-metrics-tags">
+            <span className="bip3d-tag" style={{ borderColor: accentColor, color: accentColor }}>{evLabel}</span>
+            {isHomeRun && <span className="bip3d-tag hr-tag">HR</span>}
+          </div>
+        </div>
+
         {/* Replay button */}
         {showMetrics && (
           <button className="bip3d-replay-btn" onClick={handleReplay}>
             ↻ Replay
           </button>
         )}
-      </div>
-
-      {/* Metrics panel (slides in after landing) */}
-      <div className={`bip3d-metrics ${showMetrics ? "visible" : ""}`}>
-        <div className="bip3d-metrics-main">
-          {hitData.exitVelo && (
-            <div className="bip3d-metric">
-              <span className="bip3d-metric-val" style={{ color: accentColor }}>
-                {hitData.exitVelo}
-              </span>
-              <span className="bip3d-metric-unit">mph</span>
-              <span className="bip3d-metric-label">EXIT VELO</span>
-            </div>
-          )}
-          {hitData.distance && (
-            <div className="bip3d-metric">
-              <span className="bip3d-metric-val" style={{ color: accentColor }}>
-                {hitData.distance}
-              </span>
-              <span className="bip3d-metric-unit">ft</span>
-              <span className="bip3d-metric-label">DISTANCE</span>
-            </div>
-          )}
-          {hitData.launchAngle != null && (
-            <div className="bip3d-metric">
-              <span className="bip3d-metric-val" style={{ color: accentColor }}>
-                {hitData.launchAngle}°
-              </span>
-              <span className="bip3d-metric-unit">&nbsp;</span>
-              <span className="bip3d-metric-label">LAUNCH ANGLE</span>
-            </div>
-          )}
-          {apexHeight > 10 && (
-            <div className="bip3d-metric">
-              <span className="bip3d-metric-val" style={{ color: accentColor }}>
-                {Math.round(apexHeight)}
-              </span>
-              <span className="bip3d-metric-unit">ft</span>
-              <span className="bip3d-metric-label">APEX HEIGHT</span>
-            </div>
-          )}
-        </div>
-        <div className="bip3d-metrics-tags">
-          <span className="bip3d-tag" style={{ borderColor: accentColor, color: accentColor }}>
-            {trajLabel}
-          </span>
-          <span className="bip3d-tag" style={{ borderColor: accentColor, color: accentColor }}>
-            {evLabel}
-          </span>
-          {isHomeRun && (
-            <span className="bip3d-tag hr-tag">HOME RUN</span>
-          )}
-        </div>
       </div>
     </div>
   );
