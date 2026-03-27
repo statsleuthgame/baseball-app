@@ -214,7 +214,11 @@ export default function LiveGamePage() {
             const lastPitch = liveState.currentAtBat?.[liveState.currentAtBat.length - 1];
             const playStillInProgress = lastPitch?.isInPlay && liveState.currentAtBat?.length > 0;
             const hasCompletedHit = liveState.lastHitData?.event && !playStillInProgress;
-            const showBip = hasCompletedHit && !bipCollapsed;
+            // Check if this is a NEW hit that the effect hasn't processed yet
+            // (bipCollapsed may still be true from previous play's timer)
+            const currentHitKey = liveState.lastHitData ? `${liveState.lastHitData.x}-${liveState.lastHitData.y}` : null;
+            const isNewHit = currentHitKey && currentHitKey !== lastHitRef.current;
+            const showBip = hasCompletedHit && (!bipCollapsed || isNewHit);
             const showZone = liveState.currentAtBat?.length > 0 && !showBip;
 
             if (showBip) return (
