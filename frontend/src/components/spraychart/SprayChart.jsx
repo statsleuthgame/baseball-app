@@ -5,7 +5,7 @@ import { useTeam } from "../../context/TeamContext";
 import { fetchRoster, fetchSprayChart, fetchVenues } from "../../api/client";
 import ALL_TEAMS from "../../data/teams";
 import BallparkSVG from "./BallparkSVG";
-import HitDots from "./HitDots";
+import HitDots, { RESULT_COLORS } from "./HitDots";
 import SprayLegend from "./SprayLegend";
 import SpraySidebar from "./SpraySidebar";
 import LoadingSpinner from "../common/LoadingSpinner";
@@ -224,11 +224,12 @@ export default function SprayChart() {
               ? (hit.pitcherName.includes(", ") ? hit.pitcherName.split(", ").reverse().join(" ") : hit.pitcherName)
               : "";
             const title = isLongestHR ? "Longest Home Run" : (RESULT_LABELS[hit.result] || hit.event || "Hit");
+            const hitColor = isLongestHR ? "#F44336" : (RESULT_COLORS[hit.result] || "#616161");
             return (
-              <div className="longest-hr-card">
+              <div className="longest-hr-card" style={{ borderColor: hitColor, background: `${hitColor}15` }}>
                 {isLongestHR && <span className="longest-hr-star">&#9733;</span>}
                 <div className="longest-hr-info">
-                  <span className="longest-hr-title">{title}</span>
+                  <span className="longest-hr-title" style={{ color: hitColor }}>{title}</span>
                   <span className="longest-hr-detail">
                     {hit.hitDistance ? `${hit.hitDistance} ft` : ""}
                     {hit.exitVelo ? ` · ${hit.exitVelo} mph` : ""}

@@ -2621,10 +2621,10 @@ button.stat-cell {
   align-items: center;
   gap: 10px;
   padding: 10px 14px;
-  background: rgba(244, 67, 54, 0.08);
-  border: 1px solid rgba(244, 67, 54, 0.2);
+  border: 1px solid;
   border-radius: 12px;
   margin-top: 8px;
+  transition: background 0.2s, border-color 0.2s;
 }
 
 .longest-hr-star {
