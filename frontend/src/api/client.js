@@ -515,9 +515,17 @@ export const fetchHotColdPlayers = async (teamId) => {
           const resp = await mlbApi.get(`/people/${p.id}/stats`, {
             params: { stats: "lastXGames", group: "hitting", gameType: "R", limit: 7 },
           });
-          const s = resp.data?.stats?.[0]?.splits?.[0]?.stat || {};
-          const ab = s.atBats || 0;
-          if (ab < 5) return null;
+          let s = resp.data?.stats?.[0]?.splits?.[0]?.stat || {};
+          let ab = s.atBats || 0;
+          // Early season fallback: include spring training if not enough regular season data
+          if (ab < 3) {
+            const stResp = await mlbApi.get(`/people/${p.id}/stats`, {
+              params: { stats: "lastXGames", group: "hitting", gameType: "S", limit: 7 },
+            });
+            const st = stResp.data?.stats?.[0]?.splits?.[0]?.stat || {};
+            if ((st.atBats || 0) > ab) { s = st; ab = st.atBats || 0; }
+          }
+          if (ab < 3) return null;
           return {
             id: p.id,
             fullName: p.fullName,
