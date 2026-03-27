@@ -59,6 +59,8 @@ export default function LiveGamePage() {
   const [bipCollapsed, setBipCollapsed] = useState(false);
   const bipTimerRef = useRef(null);
   const lastHitRef = useRef(null);
+  // Persist hit data across half-inning changes (API resets allPlays on side change)
+  const persistedHitDataRef = useRef(null);
   // Store pre-play runner state so the 3D viewer animates from the correct starting positions
   const prevRunnersRef = useRef({ first: false, second: false, third: false });
   const [bipRunners, setBipRunners] = useState({ first: false, second: false, third: false });
@@ -69,6 +71,11 @@ export default function LiveGamePage() {
   const sideTimerRef = useRef(null);
 
   useEffect(() => {
+    // Persist hit data — API resets allPlays on half-inning change so lastHitData goes null
+    if (liveState?.lastHitData) {
+      persistedHitDataRef.current = liveState.lastHitData;
+    }
+
     const hitKey = liveState?.lastHitData ? `${liveState.lastHitData.x}-${liveState.lastHitData.y}` : null;
     if (hitKey && hitKey !== lastHitRef.current) {
       // New ball in play — snapshot the PREVIOUS poll's runners (pre-play state)
@@ -209,14 +216,12 @@ export default function LiveGamePage() {
           {/* Visual area: strike zone / ball-in-play / next up */}
           {(() => {
             const battingTeamLogo2 = liveState.inningHalf === "Top" ? gameInfo.away.logoUrl : gameInfo.home.logoUrl;
-            // Only show the 3D viewer when we have a completed play with final event data.
-            // Don't show during the transition when isInPlay is true but result isn't finalized yet.
+            // Use persisted hit data (survives half-inning API reset)
+            const hitData = liveState.lastHitData || persistedHitDataRef.current;
             const lastPitch = liveState.currentAtBat?.[liveState.currentAtBat.length - 1];
             const playStillInProgress = lastPitch?.isInPlay && liveState.currentAtBat?.length > 0;
-            const hasCompletedHit = liveState.lastHitData?.event && !playStillInProgress;
-            // Check if this is a NEW hit that the effect hasn't processed yet
-            // (bipCollapsed may still be true from previous play's timer)
-            const currentHitKey = liveState.lastHitData ? `${liveState.lastHitData.x}-${liveState.lastHitData.y}` : null;
+            const hasCompletedHit = hitData?.event && !playStillInProgress;
+            const currentHitKey = hitData ? `${hitData.x}-${hitData.y}` : null;
             const isNewHit = currentHitKey && currentHitKey !== lastHitRef.current;
             const showBip = hasCompletedHit && (!bipCollapsed || isNewHit);
             const showZone = liveState.currentAtBat?.length > 0 && !showBip;
@@ -225,7 +230,7 @@ export default function LiveGamePage() {
               <div className="lgp-bip-section">
                 <Suspense fallback={<div style={{ height: 300, display: "flex", alignItems: "center", justifyContent: "center", color: "#888" }}>Loading 3D viewer...</div>}>
                   <BallInPlay3D
-                    hitData={liveState.lastHitData}
+                    hitData={hitData}
                     venueTeamId={gameInfo.home.id}
                     runnersOn={bipRunners}
                   />
