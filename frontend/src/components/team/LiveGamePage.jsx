@@ -220,8 +220,8 @@ export default function LiveGamePage() {
               </div>
             );
 
-            // Between at-bats: show Coming Up only after side change (bipCollapsed), otherwise empty zone
-            if (bipCollapsed) {
+            // Coming Up only when side is changing (bipCollapsed AND fresh half-inning with 0 outs)
+            if (bipCollapsed && liveState.outs === 0) {
               const nextUp = [liveState.batter, liveState.onDeck, liveState.inHole].filter(Boolean);
               return (
                 <div className="lgp-next-up">
