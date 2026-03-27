@@ -302,6 +302,20 @@ export const fetchLiveGameState = async (gamePk) => {
       }
     }
 
+    // Get game batting line for a player from boxscore
+    const getGameBattingLine = (boxscore, playerId) => {
+      if (!boxscore || !playerId) return {};
+      const box = boxscore.teams || {};
+      for (const side of ["away", "home"]) {
+        const p = box[side]?.players?.[`ID${playerId}`];
+        if (p) {
+          const s = p.stats?.batting || {};
+          return { ab: s.atBats || 0, h: s.hits || 0, hr: s.homeRuns || 0, rbi: s.rbi || 0, k: s.strikeOuts || 0 };
+        }
+      }
+      return {};
+    };
+
     // Last completed play
     const allPlays = plays.allPlays || [];
     const completed = allPlays.filter((p) => p.result?.event);
@@ -373,8 +387,8 @@ export const fetchLiveGameState = async (gamePk) => {
           return pitch;
         })
         ,
-      onDeck: ls.offense?.onDeck ? { id: ls.offense.onDeck.id, fullName: ls.offense.onDeck.fullName } : null,
-      inHole: ls.offense?.inHole ? { id: ls.offense.inHole.id, fullName: ls.offense.inHole.fullName } : null,
+      onDeck: ls.offense?.onDeck ? { id: ls.offense.onDeck.id, fullName: ls.offense.onDeck.fullName, ...getGameBattingLine(ld.boxscore, ls.offense.onDeck.id) } : null,
+      inHole: ls.offense?.inHole ? { id: ls.offense.inHole.id, fullName: ls.offense.inHole.fullName, ...getGameBattingLine(ld.boxscore, ls.offense.inHole.id) } : null,
       scoringPlays: allPlays
         .filter((p) => p.about?.isScoringPlay)
         .map((p) => ({

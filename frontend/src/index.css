@@ -3889,11 +3889,17 @@ th.sb-ls-total {
 /* Scoring list: full colored border */
 .lgp .live-scoring-list { max-height: none; overflow-y: visible; }
 .lgp .live-scoring-play {
-  border: 1px solid;
-  border-radius: 6px;
-  padding: 6px 8px;
+  border: 1.5px solid;
   border-left-width: 3px;
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: rgba(255,255,255,0.02);
 }
+
+/* Due Up stats */
+.lgp-due-name { font-size: 13px; font-weight: 600; }
+.lgp-due-stats { font-size: 11px; color: var(--text-muted); }
+.lgp-due-player { display: flex; flex-direction: column; gap: 1px; }
 
 /* Smaller ball-in-play metrics on live page */
 .lgp .bip-metric-val { font-size: 20px; }

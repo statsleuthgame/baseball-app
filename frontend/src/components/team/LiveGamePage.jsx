@@ -117,7 +117,7 @@ export default function LiveGamePage() {
         {liveState && (
           <div className="lgp-situation">
             <span className="lgp-inning">{liveState.inningHalf === "Top" ? "\u25B2" : "\u25BC"} {liveState.inning}</span>
-            <svg className="lgp-diamond-inline" width="36" height="28" viewBox="0 0 36 28">
+            <svg className="lgp-diamond-inline" width="36" height="32" viewBox="0 -4 36 32">
               <rect x="12" y="0" width="10" height="10" rx="1.5" transform="rotate(45 17 5)" className={`lgp-base ${liveState.onSecond ? "on" : ""}`} />
               <rect x="21" y="9" width="10" height="10" rx="1.5" transform="rotate(45 26 14)" className={`lgp-base ${liveState.onFirst ? "on" : ""}`} />
               <rect x="3" y="9" width="10" height="10" rx="1.5" transform="rotate(45 8 14)" className={`lgp-base ${liveState.onThird ? "on" : ""}`} />
@@ -217,18 +217,18 @@ export default function LiveGamePage() {
             <div className="lgp-due-compact">
               <span className="lgp-section-label">Due Up</span>
               <div className="lgp-due-list">
-                {liveState.onDeck && (
-                  <div className="lgp-due-player sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${liveState.onDeck.id}`)}>
-                    <PlayerPhoto playerId={liveState.onDeck.id} name={liveState.onDeck.fullName} size={22} />
-                    <span>{lastName(liveState.onDeck.fullName)}</span>
+                {[liveState.onDeck, liveState.inHole].filter(Boolean).map((p) => (
+                  <div key={p.id} className="lgp-due-player sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
+                    <span className="lgp-due-name">{p.fullName}</span>
+                    <span className="lgp-due-stats">
+                      {p.ab != null ? `${p.h}-${p.ab}` : ""}
+                      {p.hr > 0 ? `, ${p.hr} HR` : ""}
+                      {p.rbi > 0 ? `, ${p.rbi} RBI` : ""}
+                      {p.k > 0 ? `, ${p.k} K` : ""}
+                      {p.ab === 0 ? "First AB" : ""}
+                    </span>
                   </div>
-                )}
-                {liveState.inHole && (
-                  <div className="lgp-due-player sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${liveState.inHole.id}`)}>
-                    <PlayerPhoto playerId={liveState.inHole.id} name={liveState.inHole.fullName} size={22} />
-                    <span>{lastName(liveState.inHole.fullName)}</span>
-                  </div>
-                )}
+                ))}
               </div>
             </div>
           )}
@@ -287,7 +287,7 @@ export default function LiveGamePage() {
               const scoringTeamId = p.halfInning === "top" ? gameInfo.away.id : gameInfo.home.id;
               const teamColor = ALL_TEAMS[scoringTeamId]?.secondary || "var(--team-secondary)";
               return (
-                <div key={`${p.inning}-${p.halfInning}-${p.awayScore}-${p.homeScore}`} className="live-scoring-play" style={{ borderLeftColor: teamColor }}>
+                <div key={`${p.inning}-${p.halfInning}-${p.awayScore}-${p.homeScore}`} className="live-scoring-play" style={{ borderColor: teamColor }}>
                   <span className="live-scoring-inn">{p.halfInning === "top" ? "\u25B2" : "\u25BC"}{p.inning}</span>
                   <span className="live-scoring-desc">{p.description}</span>
                   <span className="live-scoring-score">{p.awayScore}-{p.homeScore}</span>
