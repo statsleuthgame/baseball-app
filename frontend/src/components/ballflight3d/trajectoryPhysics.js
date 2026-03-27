@@ -70,11 +70,24 @@ export function computeTrajectory(exitVeloMph, launchAngleDeg, sprayAngleDeg, ta
   const vx0 = vHoriz * Math.sin(sa); // toward right field (+x)
   const vy0 = vHoriz * Math.cos(sa); // toward center field (+y)
 
+  // For ground balls with negative/very low launch angles, use a small positive
+  // angle so the ball has a realistic low hop. The original negative angle makes
+  // the ball hit the ground instantly, breaking drag calibration.
+  let effectiveLa = la;
+  if (trajectory === "ground_ball" && launchAngleDeg < 5) {
+    effectiveLa = 3 * DEG_TO_RAD; // low hop
+  }
+
+  // Recalculate velocity components with effective launch angle
+  const vHorizEff = v0 * Math.cos(effectiveLa);
+  const vz0Eff = v0 * Math.sin(effectiveLa);
+  const vx0Eff = vHorizEff * Math.sin(sa);
+  const vy0Eff = vHorizEff * Math.cos(sa);
+
   // Adaptive drag to hit target distance if known
   let dragK = DRAG_K;
   if (targetDistFt && targetDistFt > 50) {
-    // Binary search for drag coefficient that lands at targetDistFt
-    dragK = calibrateDrag(v0, la, sa, targetDistFt);
+    dragK = calibrateDrag(v0, effectiveLa, sa, targetDistFt);
   }
 
   // Simulate with RK4-lite (Euler with small dt is fine for display)
@@ -83,7 +96,7 @@ export function computeTrajectory(exitVeloMph, launchAngleDeg, sprayAngleDeg, ta
   const points = [];
 
   let x = 0, y = 0, z = 3; // start at ~3ft (bat height)
-  let vx = vx0, vy = vy0, vz = vz0;
+  let vx = vx0Eff, vy = vy0Eff, vz = vz0Eff;
   let t = 0;
   let apexHeight = z;
   let landed = false;
