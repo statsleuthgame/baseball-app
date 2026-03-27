@@ -36,8 +36,11 @@ export default function WinProbability({ gamePk, teamId, isHome, awayAbbr, homeA
     };
   });
 
-  const currentProb = points[points.length - 1]?.y || 0.5;
-  const probPct = Math.round(currentProb * 100);
+  const rawProb = points[points.length - 1]?.y || 0.5;
+  // Detect if game is final (probability at exactly 0 or 1, or very close)
+  const isGameOver = rawProb <= 0.01 || rawProb >= 0.99;
+  const currentProb = isGameOver ? (rawProb >= 0.5 ? 1 : 0) : rawProb;
+  const probPct = isGameOver ? (rawProb >= 0.5 ? 100 : 0) : Math.round(rawProb * 100);
   const opponentPct = 100 - probPct;
 
   // Determine which team's probability we're showing
@@ -133,15 +136,17 @@ export default function WinProbability({ gamePk, teamId, isHome, awayAbbr, homeA
           {/* Main line */}
           <path d={pathD} fill="none" stroke="var(--team-secondary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
 
-          {/* Current value dot */}
-          <circle
-            cx={xScale(points[points.length - 1].x)}
-            cy={yScale(currentProb)}
-            r="4"
-            fill={currentProb >= 0.5 ? "var(--win)" : "var(--loss)"}
-            stroke="#fff"
-            strokeWidth="1.5"
-          />
+          {/* Current value dot — hidden when game is over */}
+          {!isGameOver && (
+            <circle
+              cx={xScale(points[points.length - 1].x)}
+              cy={yScale(currentProb)}
+              r="4"
+              fill={currentProb >= 0.5 ? "var(--win)" : "var(--loss)"}
+              stroke="#fff"
+              strokeWidth="1.5"
+            />
+          )}
         </g>
       </svg>
     </div>

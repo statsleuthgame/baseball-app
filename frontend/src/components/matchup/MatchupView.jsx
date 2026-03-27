@@ -37,8 +37,8 @@ export default function MatchupView() {
         isNextGame: true,
         venue: { id: g.venue?.id, name: g.venue?.name || "" },
         venueLocation: g.venue?.location ? `${g.venue.location.city}, ${g.venue.location.stateAbbrev}` : "",
-        away: { id: at.id, name: at.name || "", abbreviation: at.abbreviation || "", wins: away.leagueRecord?.wins, losses: away.leagueRecord?.losses, probablePitcher: extractP(away.probablePitcher), logoUrl: `https://www.mlbstatic.com/team-logos/team-cap-on-dark/${at.id}.svg` },
-        home: { id: ht.id, name: ht.name || "", abbreviation: ht.abbreviation || "", wins: home.leagueRecord?.wins, losses: home.leagueRecord?.losses, probablePitcher: extractP(home.probablePitcher), logoUrl: `https://www.mlbstatic.com/team-logos/team-cap-on-dark/${ht.id}.svg` },
+        away: { id: at.id, name: at.name || "", abbreviation: at.abbreviation || "", score: away.score, wins: away.leagueRecord?.wins, losses: away.leagueRecord?.losses, probablePitcher: extractP(away.probablePitcher), logoUrl: `https://www.mlbstatic.com/team-logos/team-cap-on-dark/${at.id}.svg` },
+        home: { id: ht.id, name: ht.name || "", abbreviation: ht.abbreviation || "", score: home.score, wins: home.leagueRecord?.wins, losses: home.leagueRecord?.losses, probablePitcher: extractP(home.probablePitcher), logoUrl: `https://www.mlbstatic.com/team-logos/team-cap-on-dark/${ht.id}.svg` },
       };
     },
     enabled: !!routeGamePk,
