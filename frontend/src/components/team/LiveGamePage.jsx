@@ -155,7 +155,14 @@ export default function LiveGamePage() {
                   <span className="lgp-pitch-result">
                     {(() => {
                       const p = liveState.currentAtBat[liveState.currentAtBat.length - 1];
-                      return `${p.pitchInfo || ""} — ${p.call}`;
+                      const balls = p.count ? parseInt(p.count.split("-")[0]) || 0 : null;
+                      const strikes = p.count ? parseInt(p.count.split("-")[1]) || 0 : null;
+                      let countLabel = "";
+                      if (p.isBall && balls != null) countLabel = ` (Ball ${balls})`;
+                      else if (p.isStrike && strikes != null && p.code !== "F") countLabel = ` (Strike ${strikes})`;
+                      else if (p.code === "F" && strikes != null) countLabel = strikes >= 2 ? " (Foul)" : ` (Strike ${strikes})`;
+                      else if (p.isInPlay) countLabel = "";
+                      return `${p.pitchInfo || ""} — ${p.call}${countLabel}`;
                     })()}
                   </span>
                   <StrikeZone pitches={liveState.currentAtBat} />
