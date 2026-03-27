@@ -3869,6 +3869,8 @@ th.sb-ls-total {
 
 /* Future innings in linescore */
 .live-ls-future { opacity: 0.25; }
+.lgp .live-ls-table { width: 100%; }
+.lgp .live-ls-table th, .lgp .live-ls-table td { padding: 4px 0; }
 
 /* Scoring list: full colored border */
 .lgp .live-scoring-list { max-height: none; overflow-y: visible; }
