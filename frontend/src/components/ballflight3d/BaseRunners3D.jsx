@@ -75,9 +75,24 @@ function computeRunnerMovements(event, runnersOn, description = "") {
     return movements;
   }
 
-  // On a hit or reach (error), advance all runners
+  // On a hit or reach (error), advance runners based on description
+  const scoring = desc.includes("scores") || desc.includes("score");
+
   for (const runner of runners) {
-    const newBase = runner.base + batterBases;
+    let advance = batterBases;
+
+    // Smarter advancement: runners further ahead advance more
+    if (event === "Single") {
+      if (runner.base === 3) advance = 1; // 3rd scores
+      else if (runner.base === 2) advance = scoring ? 2 : 1; // 2nd scores on most singles
+      else if (runner.base === 1) advance = 1; // 1st to 2nd minimum
+    } else if (event === "Double") {
+      if (runner.base === 3) advance = 1; // 3rd scores
+      else if (runner.base === 2) advance = 2; // 2nd scores
+      else if (runner.base === 1) advance = scoring ? 3 : 2; // 1st scores or to 3rd
+    }
+
+    const newBase = runner.base + advance;
     movements.push({
       from: runner.base,
       to: Math.min(newBase, 4),

@@ -169,8 +169,8 @@ function FielderDot({
     }
   });
 
-  const color = isActive && isAnimating ? "#ffd700" : teamColor;
-  const opacity = isActive && isAnimating ? 0.9 : 0.6;
+  const color = isActive && isAnimating ? "#ffd700" : "#888888";
+  const opacity = isActive && isAnimating ? 0.9 : 0.5;
   const size = isActive ? 3 : 2;
 
   return (
