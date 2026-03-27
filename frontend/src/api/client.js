@@ -135,6 +135,17 @@ export const fetchPlayerStats = async (playerId) => {
   };
 };
 
+export const fetchPlayerSeasonStats = async (playerId, season, group = "hitting") => {
+  try {
+    const resp = await mlbApi.get(`/people/${playerId}/stats`, {
+      params: { stats: "season", season, group },
+    });
+    return resp.data?.stats?.[0]?.splits?.[0]?.stat || {};
+  } catch {
+    return {};
+  }
+};
+
 export const fetchPlayerAdvanced = (playerId) =>
   staticFetch(`players/${playerId}/advanced.json`).catch(() => ({}));
 

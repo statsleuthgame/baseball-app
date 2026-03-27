@@ -1,7 +1,8 @@
+import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useTeam } from "../../context/TeamContext";
-import { fetchPlayerStats } from "../../api/client";
+import { fetchPlayerStats, fetchPlayerSeasonStats } from "../../api/client";
 import ALL_TEAMS from "../../data/teams";
 import PlayerPhoto from "../common/PlayerPhoto";
 import LoadingSpinner from "../common/LoadingSpinner";
@@ -15,10 +16,14 @@ import DominanceProfile from "./DominanceProfile";
 import PlayerGameLog from "./PlayerGameLog";
 import MissedCallsPanel from "../strikezone/MissedCallsPanel";
 
+const currentYear = new Date().getFullYear();
+const SEASON_OPTIONS = Array.from({ length: 6 }, (_, i) => currentYear - i);
+
 export default function PlayerDetail() {
   const { playerId } = useParams();
   const { teamId } = useTeam();
   const navigate = useNavigate();
+  const [selectedSeason, setSelectedSeason] = useState(currentYear);
 
   const { data: playerData, isLoading, error } = useQuery({
     queryKey: ["playerInfo", playerId],
@@ -26,14 +31,35 @@ export default function PlayerDetail() {
     enabled: !!playerId,
   });
 
+  // Fetch stats for a different season when selector changes
+  const isCurrentSeason = selectedSeason === currentYear;
+  const { data: seasonStats } = useQuery({
+    queryKey: ["playerSeasonStats", playerId, selectedSeason],
+    queryFn: () => fetchPlayerSeasonStats(playerId, selectedSeason, playerData?.stats?.group || "hitting"),
+    enabled: !!playerId && !isCurrentSeason && !!playerData,
+    staleTime: 1000 * 60 * 60,
+  });
+
   const player = playerData?.detail;
   const isPitcher = player?.primaryPosition === "P";
 
-  // Use current season stats if available, otherwise fall back to previous season
+  // Resolve team info for display
+  const playerTeamId = player?.currentTeamId
+    || Object.values(ALL_TEAMS).find((t) => t.name === player?.currentTeam)?.id;
+  const playerTeam = ALL_TEAMS[playerTeamId];
+
+  // Determine which stats to show based on season selector
   const statsObj = playerData?.stats || {};
-  const hasCurrentStats = statsObj.stats && Object.keys(statsObj.stats).length > 0;
-  const stats = hasCurrentStats ? statsObj.stats : (statsObj.prevStats || {});
-  const displaySeason = hasCurrentStats ? statsObj.season : statsObj.prevSeason;
+  let displayStats, displaySeason;
+
+  if (isCurrentSeason) {
+    const hasCurrentStats = statsObj.stats && Object.keys(statsObj.stats).length > 0;
+    displayStats = hasCurrentStats ? statsObj.stats : (statsObj.prevStats || {});
+    displaySeason = hasCurrentStats ? statsObj.season : statsObj.prevSeason;
+  } else {
+    displayStats = seasonStats || {};
+    displaySeason = selectedSeason;
+  }
 
   if (isLoading) return <LoadingSpinner text="Loading player..." />;
   if (error || !player?.id) return <ErrorMessage message="Player not found." />;
@@ -44,6 +70,16 @@ export default function PlayerDetail() {
         <PlayerPhoto playerId={player.id} name={player.fullName} size={96} />
         <div className="player-header-info">
           <h2 className="player-name">{player.fullName || "Unknown"}</h2>
+          {playerTeam && (
+            <div className="player-team-row">
+              <img
+                src={`https://www.mlbstatic.com/team-logos/team-cap-on-dark/${playerTeamId}.svg`}
+                alt={playerTeam.abbreviation}
+                className="player-team-logo"
+              />
+              <span className="player-team-name">{playerTeam.name}</span>
+            </div>
+          )}
           <p className="player-meta">
             #{player.primaryNumber || "—"} · {player.primaryPosition || "—"} ·{" "}
             {player.batSide === "R" ? "R" : player.batSide === "L" ? "L" : "S"}/
@@ -60,11 +96,7 @@ export default function PlayerDetail() {
           <button
             className="player-action-btn"
             onClick={() => {
-              // Resolve player's actual team ID: prefer explicit ID, fall back to name lookup
-              const playerTeamId = player.currentTeamId
-                || Object.values(ALL_TEAMS).find((t) => t.name === player.currentTeam)?.id
-                || teamId;
-              navigate(`/team/${teamId}/spray?player=${playerId}&team=${playerTeamId}`);
+              navigate(`/team/${teamId}/spray?player=${playerId}&team=${playerTeamId || teamId}`);
             }}
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -79,9 +111,9 @@ export default function PlayerDetail() {
       )}
 
       {isPitcher ? (
-        <PitcherStats stats={stats} season={displaySeason} />
+        <PitcherStats stats={displayStats} season={displaySeason} selectedSeason={selectedSeason} onSeasonChange={setSelectedSeason} seasons={SEASON_OPTIONS} />
       ) : (
-        <BatterStats stats={stats} season={displaySeason} />
+        <BatterStats stats={displayStats} season={displaySeason} selectedSeason={selectedSeason} onSeasonChange={setSelectedSeason} seasons={SEASON_OPTIONS} />
       )}
 
       <PlayerGameLog playerId={playerId} isPitcher={isPitcher} />

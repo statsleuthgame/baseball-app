@@ -20,26 +20,41 @@ const STAT_ROWS = [
 
 const AVG_KEYS = new Set(["avg", "obp", "slg", "ops"]);
 
-export default function BatterStats({ stats, season }) {
-  if (!stats || Object.keys(stats).length === 0) {
-    return <p className="no-data">No batting stats available.</p>;
-  }
+export default function BatterStats({ stats, season, selectedSeason, onSeasonChange, seasons }) {
+  const hasStats = stats && Object.keys(stats).length > 0;
 
   return (
     <div className="stat-section">
-      <h3 className="stat-section-title">
-        {season ? `${season} Batting` : "Batting Stats"}
-      </h3>
-      <div className="stat-grid">
-        {STAT_ROWS.map(({ label, key }) => (
-          <div key={key} className="stat-cell">
-            <span className="stat-label">{label}</span>
-            <span className="stat-value">
-              {AVG_KEYS.has(key) ? formatAvg(stats[key]) : (stats[key] ?? "—")}
-            </span>
-          </div>
-        ))}
+      <div className="stat-section-header">
+        <h3 className="stat-section-title">
+          {season ? `${season} Batting` : "Batting Stats"}
+        </h3>
+        {seasons && onSeasonChange && (
+          <select
+            className="stat-season-select"
+            value={selectedSeason}
+            onChange={(e) => onSeasonChange(Number(e.target.value))}
+          >
+            {seasons.map((y) => (
+              <option key={y} value={y}>{y}</option>
+            ))}
+          </select>
+        )}
       </div>
+      {!hasStats ? (
+        <p className="no-data">No batting stats available for {season || "this season"}.</p>
+      ) : (
+        <div className="stat-grid">
+          {STAT_ROWS.map(({ label, key }) => (
+            <div key={key} className="stat-cell">
+              <span className="stat-label">{label}</span>
+              <span className="stat-value">
+                {AVG_KEYS.has(key) ? formatAvg(stats[key]) : (stats[key] ?? "—")}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

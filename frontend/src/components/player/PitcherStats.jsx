@@ -18,28 +18,43 @@ const STAT_ROWS = [
   { label: "SV", key: "saves" },
 ];
 
-export default function PitcherStats({ stats, season }) {
-  if (!stats || Object.keys(stats).length === 0) {
-    return <p className="no-data">No pitching stats available.</p>;
-  }
+export default function PitcherStats({ stats, season, selectedSeason, onSeasonChange, seasons }) {
+  const hasStats = stats && Object.keys(stats).length > 0;
 
   return (
     <div className="stat-section">
-      <h3 className="stat-section-title">{season ? `${season} Pitching` : "Pitching Stats"}</h3>
-      <div className="stat-grid">
-        {STAT_ROWS.map(({ label, key, fmt }) => {
-          let val = stats[key];
-          if (fmt === "era") val = formatEra(val);
-          else if (fmt === "avg") val = formatAvg(val);
-          else val = val ?? "—";
-          return (
-            <div key={key} className="stat-cell">
-              <span className="stat-label">{label}</span>
-              <span className="stat-value">{val}</span>
-            </div>
-          );
-        })}
+      <div className="stat-section-header">
+        <h3 className="stat-section-title">{season ? `${season} Pitching` : "Pitching Stats"}</h3>
+        {seasons && onSeasonChange && (
+          <select
+            className="stat-season-select"
+            value={selectedSeason}
+            onChange={(e) => onSeasonChange(Number(e.target.value))}
+          >
+            {seasons.map((y) => (
+              <option key={y} value={y}>{y}</option>
+            ))}
+          </select>
+        )}
       </div>
+      {!hasStats ? (
+        <p className="no-data">No pitching stats available for {season || "this season"}.</p>
+      ) : (
+        <div className="stat-grid">
+          {STAT_ROWS.map(({ label, key, fmt }) => {
+            let val = stats[key];
+            if (fmt === "era") val = formatEra(val);
+            else if (fmt === "avg") val = formatAvg(val);
+            else val = val ?? "—";
+            return (
+              <div key={key} className="stat-cell">
+                <span className="stat-label">{label}</span>
+                <span className="stat-value">{val}</span>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

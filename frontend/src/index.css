@@ -1221,6 +1221,24 @@ body {
   letter-spacing: -0.4px;
 }
 
+.player-team-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 2px 0 4px;
+}
+
+.player-team-logo {
+  width: 18px;
+  height: 18px;
+}
+
+.player-team-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
 .player-meta {
   font-size: 14px;
   color: var(--team-secondary);
@@ -1268,11 +1286,28 @@ body {
   margin-bottom: 16px;
 }
 
+.stat-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
 .stat-section-title {
   font-size: 14px;
   font-weight: 700;
   color: var(--text-bright);
-  margin-bottom: 12px;
+}
+
+.stat-season-select {
+  background: var(--bg-card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .stat-grid {
