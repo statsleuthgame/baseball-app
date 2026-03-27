@@ -245,6 +245,13 @@ export default function LiveGamePage() {
                       const soType = p.code === "C" ? "Looking" : p.code === "S" ? "Swinging" : "Called";
                       return `${p.pitchInfo || ""} — Strikeout ${soType}`;
                     }
+                    if (p.isBall && balls >= 4) {
+                      const batterName = liveState.batter?.fullName || "";
+                      return `${p.pitchInfo || ""} — Ball 4 — ${batterName} Walks`;
+                    }
+                    if (p.isInPlay) {
+                      return `${p.pitchInfo || ""} — In Play`;
+                    }
                     if (p.isBall && balls != null) countLabel = ` (${balls})`;
                     else if (p.isStrike && strikes != null && p.code !== "F") countLabel = ` (${strikes})`;
                     else if (p.code === "F" && strikes != null) countLabel = strikes >= 2 ? "" : ` (${strikes})`;
