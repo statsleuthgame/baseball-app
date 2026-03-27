@@ -4591,3 +4591,31 @@ th.sb-ls-total {
   transform: scale(1.02);
   box-shadow: 0 4px 20px rgba(239, 68, 68, 0.4);
 }
+
+.bip3d-runner-toggles {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.bip3d-runner-toggle {
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.bip3d-runner-toggle.active {
+  color: #3b82f6;
+  border-color: #3b82f6;
+  background: rgba(59, 130, 246, 0.15);
+}
+
+.bip3d-runner-toggle:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+}

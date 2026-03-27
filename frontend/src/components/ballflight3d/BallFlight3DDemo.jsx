@@ -8,83 +8,91 @@ import BallInPlay3D from "./BallInPlay3D";
 
 const SAMPLE_HITS = {
   homeRun: {
-    label: "Aaron Judge HR — 425ft Moonshot",
+    label: "Grand Slam — Bases Loaded",
     data: {
-      x: 125.8, y: 40.5,  // deep center field in MLBAM coords
+      x: 125.8, y: 40.5,
       exitVelo: 112.4, launchAngle: 28, distance: 425,
       trajectory: "fly_ball", event: "Home Run",
-      description: "Aaron Judge homers to deep center field",
+      description: "Aaron Judge hits a grand slam to deep center field",
     },
+    runnersOn: { first: true, second: true, third: true },
     teamId: 147, // Yankees
   },
   lineDriveSingle: {
-    label: "Line Drive Single to Left",
+    label: "RBI Single — Runner on Third",
     data: {
       x: 75.2, y: 105.3,
       exitVelo: 101.2, launchAngle: 12, distance: 215,
       trajectory: "line_drive", event: "Single",
-      description: "lines a single past the left fielder",
+      description: "lines a single past the left fielder, run scores",
     },
+    runnersOn: { third: true },
     teamId: 137, // Giants
   },
   groundBallOut: {
-    label: "Ground Ball to Short",
+    label: "Ground Ball to Short — Runner on First",
     data: {
       x: 105.0, y: 162.0,
       exitVelo: 88.5, launchAngle: -8, distance: 90,
       trajectory: "ground_ball", event: "Out",
       description: "grounds out, shortstop to first baseman",
     },
+    runnersOn: { first: true },
     teamId: 111, // Red Sox
   },
   deepFlyOut: {
-    label: "Deep Fly Ball — Warning Track",
+    label: "Sac Fly — Runner on Third Scores",
     data: {
       x: 155.0, y: 62.0,
       exitVelo: 98.7, launchAngle: 32, distance: 380,
       trajectory: "fly_ball", event: "Out",
-      description: "flies out to right fielder at the warning track",
+      description: "flies out to right fielder, runner scores on the sac fly",
     },
+    runnersOn: { third: true },
     teamId: 119, // Dodgers
   },
   tripleToGap: {
-    label: "Triple to Right-Center Gap",
+    label: "Triple Clears the Bases",
     data: {
       x: 155.3, y: 55.8,
       exitVelo: 105.1, launchAngle: 18, distance: 370,
       trajectory: "line_drive", event: "Triple",
-      description: "triples to right-center, past the center fielder",
+      description: "triples to right-center gap, clears the bases",
     },
+    runnersOn: { first: true, second: true },
     teamId: 136, // Mariners
   },
   barreledDouble: {
-    label: "Barreled Double Off the Wall",
+    label: "Double Off the Wall — Runner Scores",
     data: {
       x: 80.5, y: 60.2,
       exitVelo: 108.3, launchAngle: 22, distance: 390,
       trajectory: "fly_ball", event: "Double",
-      description: "doubles off the left field wall",
+      description: "doubles off the left field wall, runner scores from second",
     },
+    runnersOn: { second: true },
     teamId: 121, // Mets
   },
   popup: {
-    label: "Weak Popup to Second",
+    label: "Popup — Bases Empty",
     data: {
       x: 130.5, y: 155.0,
       exitVelo: 72.1, launchAngle: 55, distance: 120,
       trajectory: "popup", event: "Out",
       description: "pops out to second baseman in shallow right",
     },
+    runnersOn: {},
     teamId: 112, // Cubs
   },
   oppoFieldHR: {
-    label: "Opposite Field HR to Right",
+    label: "2-Run HR to Right",
     data: {
       x: 195.0, y: 80.5,
       exitVelo: 106.8, launchAngle: 26, distance: 395,
       trajectory: "fly_ball", event: "Home Run",
-      description: "homers to right field, opposite field power",
+      description: "homers to right field, two-run shot",
     },
+    runnersOn: { second: true },
     teamId: 108, // Angels
   },
 };
@@ -121,6 +129,7 @@ export default function BallFlight3DDemo() {
   const [event, setEvent] = useState("Home Run");
   const [hitX, setHitX] = useState(125.42);
   const [hitY, setHitY] = useState(50);
+  const [customRunners, setCustomRunners] = useState({ first: false, second: false, third: false });
 
   const currentHit = customMode
     ? {
@@ -131,6 +140,7 @@ export default function BallFlight3DDemo() {
     : SAMPLE_HITS[selectedPreset].data;
 
   const currentTeam = customMode ? teamId : SAMPLE_HITS[selectedPreset].teamId;
+  const currentRunners = customMode ? customRunners : (SAMPLE_HITS[selectedPreset].runnersOn || {});
 
   const handlePresetChange = (key) => {
     setSelectedPreset(key);
@@ -156,6 +166,7 @@ export default function BallFlight3DDemo() {
         key={hitKey}
         hitData={currentHit}
         venueTeamId={currentTeam}
+        runnersOn={currentRunners}
       />
 
       {/* Controls panel */}
@@ -164,8 +175,9 @@ export default function BallFlight3DDemo() {
         <div className="bip3d-demo-section">
           <h3>Sample Hits</h3>
           <div className="bip3d-preset-grid">
-            {Object.entries(SAMPLE_HITS).map(([key, { label, data }]) => {
+            {Object.entries(SAMPLE_HITS).map(([key, { label, data, runnersOn }]) => {
               const isHit = ["Single", "Double", "Triple", "Home Run"].includes(data.event);
+              const runnerCount = [runnersOn?.first, runnersOn?.second, runnersOn?.third].filter(Boolean).length;
               return (
                 <button
                   key={key}
@@ -176,6 +188,7 @@ export default function BallFlight3DDemo() {
                   <span className="bip3d-preset-label">{label}</span>
                   <span className="bip3d-preset-stats">
                     {data.exitVelo} mph · {data.distance}ft · {data.launchAngle}°
+                    {runnerCount > 0 && ` · ${runnerCount} on`}
                   </span>
                 </button>
               );
@@ -225,6 +238,20 @@ export default function BallFlight3DDemo() {
                   <option key={t.id} value={t.id}>{t.name}</option>
                 ))}
               </select>
+            </label>
+            <label>
+              Runners On Base:
+              <div className="bip3d-runner-toggles">
+                {["first", "second", "third"].map((base) => (
+                  <button
+                    key={base}
+                    className={`bip3d-runner-toggle ${customRunners[base] ? "active" : ""}`}
+                    onClick={() => setCustomRunners((r) => ({ ...r, [base]: !r[base] }))}
+                  >
+                    {base === "first" ? "1B" : base === "second" ? "2B" : "3B"}
+                  </button>
+                ))}
+              </div>
             </label>
           </div>
           <button className="bip3d-fire-btn" onClick={handleFireCustom}>

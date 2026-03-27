@@ -134,18 +134,22 @@ export default function Field3D({ venueTeamId }) {
 }
 
 function FenceWall({ points }) {
-  const geometry = useMemo(() => {
-    if (!points?.length) return null;
-    const wallHeight = 10; // ~10ft fence
+  const wallHeight = 10; // ~10ft fence
+
+  const { wallGeo, railGeo } = useMemo(() => {
+    if (!points?.length) return {};
+
+    // Wall surface
     const vertices = [];
     const indices = [];
+    const uvs = [];
 
     for (let i = 0; i < points.length; i++) {
       const [x, , z] = points[i];
-      // Bottom vertex
       vertices.push(x, 0, z);
-      // Top vertex
       vertices.push(x, wallHeight, z);
+      uvs.push(i / points.length, 0);
+      uvs.push(i / points.length, 1);
     }
 
     for (let i = 0; i < points.length - 1; i++) {
@@ -157,18 +161,38 @@ function FenceWall({ points }) {
       indices.push(tl, br, tr);
     }
 
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute("position", new THREE.Float32BufferAttribute(vertices, 3));
-    geo.setIndex(indices);
-    geo.computeVertexNormals();
-    return geo;
+    const wallGeo = new THREE.BufferGeometry();
+    wallGeo.setAttribute("position", new THREE.Float32BufferAttribute(vertices, 3));
+    wallGeo.setAttribute("uv", new THREE.Float32BufferAttribute(uvs, 2));
+    wallGeo.setIndex(indices);
+    wallGeo.computeVertexNormals();
+
+    // Top rail line
+    const railVerts = points.flatMap(([x, , z]) => [x, wallHeight, z]);
+    const railGeo = new THREE.BufferGeometry();
+    railGeo.setAttribute("position", new THREE.Float32BufferAttribute(railVerts, 3));
+
+    return { wallGeo, railGeo };
   }, [points]);
 
-  if (!geometry) return null;
+  if (!wallGeo) return null;
   return (
-    <mesh geometry={geometry}>
-      <meshStandardMaterial color="#1a3a1a" transparent opacity={0.5} side={THREE.DoubleSide} />
-    </mesh>
+    <group>
+      {/* Wall surface — dark green, padded look */}
+      <mesh geometry={wallGeo}>
+        <meshStandardMaterial
+          color="#0d3d0d"
+          transparent
+          opacity={0.85}
+          side={THREE.DoubleSide}
+          roughness={0.9}
+        />
+      </mesh>
+      {/* Yellow top rail */}
+      <line geometry={railGeo}>
+        <lineBasicMaterial color="#ffd700" linewidth={2} />
+      </line>
+    </group>
   );
 }
 

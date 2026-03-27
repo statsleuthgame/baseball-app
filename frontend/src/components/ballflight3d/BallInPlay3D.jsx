@@ -4,6 +4,7 @@ import { Stars } from "@react-three/drei";
 import Field3D from "./Field3D";
 import AnimatedBall from "./AnimatedBall";
 import Fielders3D from "./Fielders3D";
+import BaseRunners3D from "./BaseRunners3D";
 import CameraRig, { CAMERA_PRESETS } from "./CameraRig";
 import {
   computeTrajectory,
@@ -30,8 +31,9 @@ const CAMERA_LABELS = {
  *  - hitData: { x, y, exitVelo, launchAngle, distance, trajectory, event, description }
  *             x/y in MLBAM coordinates
  *  - venueTeamId: team ID for stadium shape
+ *  - runnersOn: { first: bool, second: bool, third: bool } — runners on base
  */
-export default function BallInPlay3D({ hitData, venueTeamId }) {
+export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
   const [cameraPreset, setCameraPreset] = useState("broadcast");
   const [followBall, setFollowBall] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -164,6 +166,14 @@ export default function BallInPlay3D({ hitData, venueTeamId }) {
             landingPos={landingPos}
             isOut={isOut}
             description={hitData.description || ""}
+            ballProgress={ballProgress}
+            isAnimating={isPlaying}
+          />
+
+          {/* Base runners */}
+          <BaseRunners3D
+            runnersOn={runnersOn}
+            event={event}
             ballProgress={ballProgress}
             isAnimating={isPlaying}
           />
