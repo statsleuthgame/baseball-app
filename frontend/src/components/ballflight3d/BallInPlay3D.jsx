@@ -6,6 +6,8 @@ import AnimatedBall from "./AnimatedBall";
 import Fielders3D from "./Fielders3D";
 import BaseRunners3D, { getTeamColor } from "./BaseRunners3D";
 import CameraRig, { CAMERA_PRESETS } from "./CameraRig";
+import ThrowToBase, { parseThrowTarget } from "./ThrowToBase";
+import OutIndicator from "./OutIndicator";
 import {
   computeTrajectory,
   sampleTrajectory,
@@ -40,6 +42,9 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
   const [showMetrics, setShowMetrics] = useState(false);
   const [ballPos, setBallPos] = useState(null);
   const [ballProgress, setBallProgress] = useState(0);
+  const [throwPhase, setThrowPhase] = useState(false);
+  const [showOut, setShowOut] = useState(false);
+  const [outPosition, setOutPosition] = useState(null);
 
   // Compute trajectory from hit data
   const { sampledPoints, duration, apexHeight } = useMemo(() => {
@@ -68,12 +73,21 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
     return { x: last.x, z: -last.y }; // y in physics = -z in Three.js
   }, [sampledPoints]);
 
+  // Determine if this play has a throw (e.g. "shortstop to first baseman")
+  const throwTarget = useMemo(
+    () => (hitData?.event === "Out" ? parseThrowTarget(hitData?.description) : null),
+    [hitData]
+  );
+
   // Auto-start animation after a short delay
   useEffect(() => {
     if (!hitData) return;
     setIsPlaying(false);
     setShowMetrics(false);
     setBallProgress(0);
+    setThrowPhase(false);
+    setShowOut(false);
+    setOutPosition(null);
     setCameraPreset("broadcast");
 
     const timer = setTimeout(() => setIsPlaying(true), 500);
@@ -81,8 +95,34 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
   }, [hitData]);
 
   const handleAnimationComplete = useCallback(() => {
-    setTimeout(() => setShowMetrics(true), 300);
-  }, []);
+    const event = hitData?.event || "";
+    const isOutPlay = event === "Out" || (!["Single", "Double", "Triple", "Home Run"].includes(event) && event !== "");
+
+    if (isOutPlay && throwTarget && landingPos) {
+      // Ground out with throw — start throw phase
+      setThrowPhase(true);
+    } else if (isOutPlay) {
+      // Fly out / popup — show OUT at catch position
+      setShowOut(true);
+      setOutPosition(landingPos ? { x: landingPos.x, y: 5, z: landingPos.z } : null);
+      setTimeout(() => setShowMetrics(true), 800);
+    } else {
+      setTimeout(() => setShowMetrics(true), 300);
+    }
+  }, [hitData, throwTarget, landingPos]);
+
+  const handleThrowComplete = useCallback(() => {
+    // Throw arrived — show OUT at the base
+    const BASE_POS = {
+      first: { x: 63.64, y: 3, z: -63.64 },
+      second: { x: 0, y: 3, z: -127.28 },
+      third: { x: -63.64, y: 3, z: -63.64 },
+      home: { x: 0, y: 3, z: 0 },
+    };
+    setShowOut(true);
+    setOutPosition(BASE_POS[throwTarget] || null);
+    setTimeout(() => setShowMetrics(true), 800);
+  }, [throwTarget]);
 
   const handleProgress = useCallback((progress, pos) => {
     setBallProgress(progress);
@@ -93,6 +133,9 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
     setIsPlaying(false);
     setShowMetrics(false);
     setBallProgress(0);
+    setThrowPhase(false);
+    setShowOut(false);
+    setOutPosition(null);
     setTimeout(() => setIsPlaying(true), 200);
   }, []);
 
@@ -192,6 +235,19 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
               isPlaying={isPlaying}
             />
           )}
+
+          {/* Throw to base (ground outs) */}
+          {throwPhase && landingPos && throwTarget && (
+            <ThrowToBase
+              fromPos={landingPos}
+              targetBase={throwTarget}
+              onComplete={handleThrowComplete}
+              throwSpeed={0.5}
+            />
+          )}
+
+          {/* OUT indicator */}
+          {showOut && outPosition && <OutIndicator position={outPosition} />}
 
           {/* Fog for depth */}
           <fog attach="fog" args={["#0a0e1a", 300, 800]} />
