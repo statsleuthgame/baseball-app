@@ -31,6 +31,7 @@ export default function AnimatedBall({
   duration,
   exitVelo = 90,
   isHit = true,
+  isHomeRun = false,
   onAnimationComplete,
   onProgress,
   animationSpeed = 1,
@@ -41,6 +42,7 @@ export default function AnimatedBall({
   const glowRef = useRef();
   const progressRef = useRef(0);
   const [landed, setLanded] = useState(false);
+  const [behindFence, setBehindFence] = useState(false);
   const trailPositions = useRef([]);
 
   const baseColor = useMemo(() => velocityColor(exitVelo), [exitVelo]);
@@ -81,8 +83,15 @@ export default function AnimatedBall({
     const y = p0.z + (p1.z - p0.z) * localFrac; // z in physics = y in Three.js (up)
     const z = -(p0.y + (p1.y - p0.y) * localFrac); // y in physics = -z in Three.js (into screen)
 
+    // For home runs, hide ball once it's descending past the fence (~75% of flight)
+    const pastFence = isHomeRun && frac > 0.7 && y < 10;
+    if (pastFence && !behindFence) {
+      setBehindFence(true);
+    }
+
     if (ballRef.current) {
       ballRef.current.position.set(x, Math.max(y, 0), z);
+      ballRef.current.visible = !behindFence;
 
       // Ball gets smaller at apex (distance effect) and larger close up
       const distFromCamera = ballRef.current.position.length();
@@ -92,6 +101,7 @@ export default function AnimatedBall({
 
     if (glowRef.current) {
       glowRef.current.position.set(x, Math.max(y, 0), z);
+      glowRef.current.visible = !behindFence;
       // Pulse glow
       const pulse = 1 + Math.sin(t * 10) * 0.15;
       glowRef.current.scale.setScalar(pulse * 3);

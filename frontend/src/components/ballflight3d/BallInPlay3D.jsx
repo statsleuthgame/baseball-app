@@ -150,14 +150,18 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
   const accentColor = isHit ? "#22c55e" : "#ef4444";
   const isHomeRun = event === "Home Run";
 
+  const trajType = {
+    fly_ball: "Fly Ball",
+    line_drive: "Line Drive",
+    ground_ball: "Ground Ball",
+    popup: "Popup",
+  }[hitData.trajectory] || "Batted Ball";
+
   const trajLabel = isHomeRun
     ? "HOME RUN"
-    : {
-        fly_ball: "Fly Ball",
-        line_drive: "Line Drive",
-        ground_ball: "Ground Ball",
-        popup: "Popup",
-      }[hitData.trajectory] || "Batted Ball";
+    : event
+      ? `${trajType} — ${event}`
+      : trajType;
 
   const evLabel =
     hitData.exitVelo >= 100
@@ -230,6 +234,7 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
               duration={duration}
               exitVelo={hitData.exitVelo || 90}
               isHit={isHit}
+              isHomeRun={isHomeRun}
               onAnimationComplete={handleAnimationComplete}
               onProgress={handleProgress}
               animationSpeed={animSpeed}
