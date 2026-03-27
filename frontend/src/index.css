@@ -3826,9 +3826,10 @@ th.sb-ls-total {
 .lgp-pitch-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
 .lgp-pitch-last { font-size: 11px; color: var(--text); margin-left: auto; }
 
-/* Zone C: Last event */
-.lgp-last-event { }
+/* Previous AB within combined card */
+.lgp-prev-ab { padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.04); margin-top: 10px; }
 .lgp-last-desc { font-size: 13px; color: var(--text); line-height: 1.4; margin: 0; }
+.lgp-bip-section { padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.04); margin-top: 10px; }
 
 /* Zone D: Win prob + due up side by side */
 .lgp-row-section { display: flex; gap: 10px; }

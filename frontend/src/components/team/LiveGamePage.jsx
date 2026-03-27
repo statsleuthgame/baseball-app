@@ -133,9 +133,10 @@ export default function LiveGamePage() {
         )}
       </div>
 
-      {/* ===== ZONE B: CURRENT AT-BAT ===== */}
+      {/* ===== ZONE B+C: AT-BAT + VISUAL (combined) ===== */}
       {liveState?.batter && liveState?.pitcher && (
         <div className="lgp-section">
+          {/* Batter vs Pitcher */}
           <div className="lgp-matchup">
             <div className="lgp-matchup-player sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${liveState.batter.id}`)}>
               <PlayerPhoto playerId={liveState.batter.id} name={liveState.batter.fullName} size={36} />
@@ -159,8 +160,14 @@ export default function LiveGamePage() {
             </div>
           </div>
 
-          {/* Strike zone + pitch plot */}
-          {liveState.currentAtBat?.length > 0 && !liveState.lastHitData?.event && (
+          {/* Strike zone OR ball-in-play visual */}
+          {liveState.lastHitData && (liveState.currentAtBat?.length === 0 || liveState.currentAtBat?.[liveState.currentAtBat.length - 1]?.isInPlay) ? (
+            /* Ball was just put in play — show the field visual */
+            <div className="lgp-bip-section">
+              <BallInPlayVisual hitData={liveState.lastHitData} venueTeamId={gameInfo.home.id} />
+            </div>
+          ) : liveState.currentAtBat?.length > 0 ? (
+            /* Pitches in progress — show strike zone */
             <div className="lgp-zone-wrap">
               <StrikeZone pitches={liveState.currentAtBat} />
               <div className="lgp-pitch-info">
@@ -184,18 +191,15 @@ export default function LiveGamePage() {
                 </span>
               </div>
             </div>
-          )}
-        </div>
-      )}
+          ) : null}
 
-      {/* ===== ZONE C: WHAT JUST HAPPENED ===== */}
-      {liveState?.lastPlay && (
-        <div className="lgp-section">
-          <div className="lgp-last-event">
-            <span className="lgp-section-label">Previous AB</span>
-            <p className="lgp-last-desc">{liveState.lastPlay}</p>
-            {liveState.lastHitData && <BallInPlayVisual hitData={liveState.lastHitData} venueTeamId={gameInfo.home.id} />}
-          </div>
+          {/* Previous AB description */}
+          {liveState.lastPlay && (
+            <div className="lgp-prev-ab">
+              <span className="lgp-section-label">Previous AB</span>
+              <p className="lgp-last-desc">{liveState.lastPlay}</p>
+            </div>
+          )}
         </div>
       )}
 
