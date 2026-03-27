@@ -362,6 +362,7 @@ export const fetchLiveGameState = async (gamePk) => {
           distance: hd.totalDistance ? Math.round(hd.totalDistance) : null,
           trajectory: hd.trajectory,
           event: lastAB.result?.event || "",
+          description: lastAB.result?.description || "",
         };
       })(),
       currentAtBat: (plays.currentPlay?.playEvents || [])

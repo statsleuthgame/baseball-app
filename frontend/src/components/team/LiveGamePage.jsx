@@ -5,7 +5,8 @@ import { useTeam } from "../../context/TeamContext";
 import { fetchLiveGameState, fetchGameDetail, fetchWinProbability } from "../../api/client";
 import { lastName, teamDisplayName } from "../../utils/formatters";
 import ALL_TEAMS from "../../data/teams";
-import BallInPlayVisual from "../common/BallInPlayVisual";
+import { lazy, Suspense } from "react";
+const BallInPlay3D = lazy(() => import("../ballflight3d/BallInPlay3D"));
 import PlayerPhoto from "../common/PlayerPhoto";
 import LoadingSpinner from "../common/LoadingSpinner";
 
@@ -66,7 +67,7 @@ export default function LiveGamePage() {
       lastHitRef.current = hitKey;
       setBipCollapsed(false);
       if (bipTimerRef.current) clearTimeout(bipTimerRef.current);
-      bipTimerRef.current = setTimeout(() => setBipCollapsed(true), 20000);
+      bipTimerRef.current = setTimeout(() => setBipCollapsed(true), 30000);
     }
     return () => { if (bipTimerRef.current) clearTimeout(bipTimerRef.current); };
   }, [liveState?.lastHitData]);
@@ -185,7 +186,17 @@ export default function LiveGamePage() {
 
             if (showBip) return (
               <div className="lgp-bip-section">
-                <BallInPlayVisual hitData={liveState.lastHitData} venueTeamId={gameInfo.home.id} />
+                <Suspense fallback={<div style={{ height: 300, display: "flex", alignItems: "center", justifyContent: "center", color: "#888" }}>Loading 3D viewer...</div>}>
+                  <BallInPlay3D
+                    hitData={liveState.lastHitData}
+                    venueTeamId={gameInfo.home.id}
+                    runnersOn={{
+                      first: !!liveState.onFirst,
+                      second: !!liveState.onSecond,
+                      third: !!liveState.onThird,
+                    }}
+                  />
+                </Suspense>
               </div>
             );
 

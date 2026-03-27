@@ -13,6 +13,7 @@ const RosterGrid = lazy(() => import("./components/team/RosterGrid"));
 const Scoreboard = lazy(() => import("./components/team/Scoreboard"));
 const SprayChart = lazy(() => import("./components/spraychart/SprayChart"));
 const LiveGamePage = lazy(() => import("./components/team/LiveGamePage"));
+const BallFlight3DDemo = lazy(() => import("./components/ballflight3d/BallFlight3DDemo"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -46,6 +47,7 @@ export default function App() {
               <Route path="live/:gamePk" element={<LiveGamePage />} />
               <Route path="roster" element={<RosterGrid />} />
               <Route path="spray" element={<SprayChart />} />
+              <Route path="ballflight3d" element={<BallFlight3DDemo />} />
             </Route>
           </Routes>
         </HashRouter>
