@@ -203,26 +203,34 @@ export default function LiveGamePage() {
               </div>
             );
 
-            // Between at-bats — show next 3 due up with stats
-            const nextUp = [liveState.batter, liveState.onDeck, liveState.inHole].filter(Boolean);
-            return (
-              <div className="lgp-next-up">
-                <span className="lgp-section-label">Coming Up</span>
-                <div className="lgp-next-up-list">
-                  {nextUp.map((p) => {
-                    const stats = [];
-                    if (p.ab != null) stats.push(`${p.h || 0}-${p.ab}`);
-                    if (p.hr > 0) stats.push(`${p.hr} HR`);
-                    if (p.rbi > 0) stats.push(`${p.rbi} RBI`);
-                    if (p.k > 0) stats.push(`${p.k} K`);
-                    return (
-                      <div key={p.id} className="lgp-next-up-player sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
-                        <span className="lgp-next-up-name">{p.fullName}</span>
-                        {stats.length > 0 && <span className="lgp-next-up-stats">{stats.join(", ")}</span>}
-                      </div>
-                    );
-                  })}
+            // Between at-bats: show Coming Up only after side change (bipCollapsed), otherwise empty zone
+            if (bipCollapsed) {
+              const nextUp = [liveState.batter, liveState.onDeck, liveState.inHole].filter(Boolean);
+              return (
+                <div className="lgp-next-up">
+                  <span className="lgp-section-label">Coming Up</span>
+                  <div className="lgp-next-up-list">
+                    {nextUp.map((p) => {
+                      const stats = [];
+                      if (p.ab != null) stats.push(`${p.h || 0}-${p.ab}`);
+                      if (p.hr > 0) stats.push(`${p.hr} HR`);
+                      if (p.rbi > 0) stats.push(`${p.rbi} RBI`);
+                      if (p.k > 0) stats.push(`${p.k} K`);
+                      return (
+                        <div key={p.id} className="lgp-next-up-player sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
+                          <span className="lgp-next-up-name">{p.fullName}</span>
+                          {stats.length > 0 && <span className="lgp-next-up-stats">{stats.join(", ")}</span>}
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
+              );
+            }
+            // Normal between-at-bat pause — show empty zone
+            return (
+              <div className="lgp-zone-centered">
+                <StrikeZone pitches={[]} />
               </div>
             );
           })()}

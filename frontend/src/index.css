@@ -3852,8 +3852,10 @@ th.sb-ls-total {
 .lgp-wp-num { font-size: 18px; font-weight: 800; color: var(--win); }
 .lgp-due-compact {
   flex: 1; min-width: 0; background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: 12px; padding: 10px 12px;
+  border-radius: 12px; padding: 8px 12px; text-align: center;
 }
+.lgp-due-compact .lgp-section-label { text-align: center; }
+.lgp-due-compact .lgp-due-list { justify-content: center; }
 .lgp-due-list { display: flex; flex-direction: column; gap: 4px; margin-top: 4px; }
 .lgp-due-player { display: flex; align-items: center; gap: 6px; font-size: 12px; }
 
