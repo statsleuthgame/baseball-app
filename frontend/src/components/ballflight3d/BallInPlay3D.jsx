@@ -4,7 +4,7 @@ import { Stars } from "@react-three/drei";
 import Field3D from "./Field3D";
 import AnimatedBall from "./AnimatedBall";
 import Fielders3D from "./Fielders3D";
-import BaseRunners3D from "./BaseRunners3D";
+import BaseRunners3D, { getTeamColor } from "./BaseRunners3D";
 import CameraRig, { CAMERA_PRESETS } from "./CameraRig";
 import {
   computeTrajectory,
@@ -96,6 +96,8 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
     setTimeout(() => setIsPlaying(true), 200);
   }, []);
 
+  const teamColor = getTeamColor(venueTeamId);
+
   if (!hitData) return null;
 
   const event = hitData.event || "";
@@ -165,6 +167,7 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
             description={hitData.description || ""}
             ballProgress={ballProgress}
             isAnimating={isPlaying}
+            teamColor={teamColor}
           />
 
           {/* Base runners */}
@@ -173,6 +176,7 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
             event={event}
             ballProgress={ballProgress}
             isAnimating={isPlaying}
+            teamColor={teamColor}
           />
 
           {/* Animated ball + trail */}

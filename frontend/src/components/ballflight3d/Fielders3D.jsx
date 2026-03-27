@@ -75,6 +75,7 @@ export default function Fielders3D({
   description = "",
   ballProgress = 0,
   isAnimating = false,
+  teamColor = "#ffffff",
 }) {
   // Determine which fielder is involved
   const activeFielder = useMemo(() => {
@@ -94,6 +95,7 @@ export default function Fielders3D({
           isOut={isOut}
           ballProgress={ballProgress}
           isAnimating={isAnimating}
+          teamColor={teamColor}
         />
       ))}
     </group>
@@ -111,6 +113,7 @@ function FielderDot({
   isOut,
   ballProgress,
   isAnimating,
+  teamColor,
 }) {
   const meshRef = useRef();
   const labelRef = useRef();
@@ -161,8 +164,8 @@ function FielderDot({
     }
   });
 
-  const color = isActive && isAnimating ? "#ffd700" : "#ffffff";
-  const opacity = isActive && isAnimating ? 0.9 : 0.4;
+  const color = isActive && isAnimating ? "#ffd700" : teamColor;
+  const opacity = isActive && isAnimating ? 0.9 : 0.6;
   const size = isActive ? 3 : 2;
 
   return (

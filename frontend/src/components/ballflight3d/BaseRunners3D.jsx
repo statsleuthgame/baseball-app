@@ -1,6 +1,7 @@
 import { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
+import ALL_TEAMS from "../../data/teams";
 
 /**
  * Base positions in Three.js feet coordinates.
@@ -13,46 +14,36 @@ const BASES = {
   third: new THREE.Vector3(-63.64, 0.5, -63.64),
 };
 
-// Ordered base list for path calculations
 const BASE_ORDER = ["home", "first", "second", "third"];
 
-/**
- * Determine how many bases each runner advances based on the hit event.
- *
- * Returns an array of runner movements: { from, to, scores }
- * - from: starting base index (0=home, 1=first, 2=second, 3=third)
- * - to: ending base index
- * - scores: whether the runner crosses home
- */
+function getTeamColor(teamId) {
+  return ALL_TEAMS[teamId]?.primary || "#3b82f6";
+}
+
 function computeRunnerMovements(event, runnersOn) {
   const movements = [];
-
-  // How many bases the batter gets
   const batterBases = {
     "Single": 1, "Double": 2, "Triple": 3, "Home Run": 4, "Out": 0,
   }[event] || 0;
 
   if (batterBases === 0) return movements;
 
-  // Existing runners advance (simplified: each runner advances same as batter, capped at home)
-  // Work from furthest runner to closest to avoid conflicts
   const runners = [];
-  if (runnersOn?.third) runners.push({ base: 3, label: "third" });
-  if (runnersOn?.second) runners.push({ base: 2, label: "second" });
-  if (runnersOn?.first) runners.push({ base: 1, label: "first" });
+  if (runnersOn?.third) runners.push({ base: 3 });
+  if (runnersOn?.second) runners.push({ base: 2 });
+  if (runnersOn?.first) runners.push({ base: 1 });
 
   for (const runner of runners) {
     const newBase = runner.base + batterBases;
     movements.push({
       from: runner.base,
-      to: Math.min(newBase, 4), // 4 = scored (crossed home)
+      to: Math.min(newBase, 4),
       scores: newBase >= 4,
     });
   }
 
-  // Batter runs
   movements.push({
-    from: 0, // home
+    from: 0,
     to: Math.min(batterBases, 4),
     scores: batterBases >= 4,
     isBatter: true,
@@ -62,12 +53,10 @@ function computeRunnerMovements(event, runnersOn) {
 }
 
 /**
- * Get the path of 3D positions a runner takes from one base to another.
- * When rounding bases (going to 2+ bases), the runner takes a smooth
- * curved arc around each base instead of a sharp stop-and-turn.
+ * Simple straight-line path through each base.
+ * Evenly spaced points so runners move at constant speed.
  */
 function getRunnerPath(fromBase, toBase) {
-  // Collect the base positions the runner passes through
   const waypoints = [];
   let current = fromBase;
   while (current <= toBase && current <= 4) {
@@ -75,73 +64,45 @@ function getRunnerPath(fromBase, toBase) {
     waypoints.push(BASES[key].clone());
     current++;
   }
-  // If scoring (toBase >= 4), end at home
   if (toBase >= 4 && fromBase !== 0) {
     waypoints.push(BASES.home.clone());
   }
 
   if (waypoints.length < 2) return waypoints;
 
-  // If only going one base, straight line is fine
-  if (waypoints.length === 2) {
-    const path = [];
-    const steps = 20;
-    for (let i = 0; i <= steps; i++) {
-      const t = i / steps;
-      path.push(new THREE.Vector3(
-        waypoints[0].x + (waypoints[1].x - waypoints[0].x) * t,
-        0.5,
-        waypoints[0].z + (waypoints[1].z - waypoints[0].z) * t,
-      ));
-    }
-    return path;
+  // Build evenly-spaced points along straight segments
+  // First compute total path length
+  let totalLen = 0;
+  const segLens = [];
+  for (let i = 0; i < waypoints.length - 1; i++) {
+    const d = waypoints[i].distanceTo(waypoints[i + 1]);
+    segLens.push(d);
+    totalLen += d;
   }
 
-  // For multi-base runs, build a path that touches every base but
-  // rounds the turn with a smooth arc on either side of each
-  // intermediate base. Insert: approach point → base → departure point.
-  const curvePoints = [];
-  for (let i = 0; i < waypoints.length; i++) {
-    const wp = waypoints[i];
-
-    if (i > 0 && i < waypoints.length - 1) {
-      // Intermediate base the runner rounds:
-      // 1) Approach point — slightly outward from the incoming direction
-      const prev = waypoints[i - 1];
-      const next = waypoints[i + 1];
-      const inDx = wp.x - prev.x;
-      const inDz = wp.z - prev.z;
-      const inLen = Math.sqrt(inDx * inDx + inDz * inDz) || 1;
-      const outDx = next.x - wp.x;
-      const outDz = next.z - wp.z;
-      const outLen = Math.sqrt(outDx * outDx + outDz * outDz) || 1;
-
-      const bulge = 8; // feet of arc before/after the base
-
-      // Approach: come in from the previous base direction, slightly wide
-      curvePoints.push(new THREE.Vector3(
-        wp.x - (inDx / inLen) * bulge + (inDz / inLen) * 4,
-        0.5,
-        wp.z - (inDz / inLen) * bulge - (inDx / inLen) * 4,
-      ));
-
-      // Touch the base
-      curvePoints.push(new THREE.Vector3(wp.x, 0.5, wp.z));
-
-      // Depart: head toward the next base, slightly wide
-      curvePoints.push(new THREE.Vector3(
-        wp.x + (outDx / outLen) * bulge + (inDz / inLen) * 4,
-        0.5,
-        wp.z + (outDz / outLen) * bulge - (inDx / inLen) * 4,
-      ));
-    } else {
-      // Start or end base — just the position
-      curvePoints.push(new THREE.Vector3(wp.x, 0.5, wp.z));
+  // Sample at constant speed (equal distance between points)
+  const numPoints = 60;
+  const path = [];
+  for (let i = 0; i <= numPoints; i++) {
+    const targetDist = (i / numPoints) * totalLen;
+    let accumulated = 0;
+    for (let s = 0; s < segLens.length; s++) {
+      if (accumulated + segLens[s] >= targetDist || s === segLens.length - 1) {
+        const segFrac = segLens[s] > 0 ? (targetDist - accumulated) / segLens[s] : 0;
+        const a = waypoints[s];
+        const b = waypoints[s + 1];
+        path.push(new THREE.Vector3(
+          a.x + (b.x - a.x) * segFrac,
+          0.5,
+          a.z + (b.z - a.z) * segFrac,
+        ));
+        break;
+      }
+      accumulated += segLens[s];
     }
   }
 
-  const curve = new THREE.CatmullRomCurve3(curvePoints, false, "centripetal", 0.5);
-  return curve.getPoints(waypoints.length * 25);
+  return path;
 }
 
 /**
@@ -152,12 +113,14 @@ function getRunnerPath(fromBase, toBase) {
  *  - event: "Single" | "Double" | "Triple" | "Home Run" | "Out"
  *  - ballProgress: 0-1 flight progress
  *  - isAnimating: whether ball is in flight
+ *  - teamColor: hex color string for the team
  */
 export default function BaseRunners3D({
   runnersOn = {},
   event = "",
   ballProgress = 0,
   isAnimating = false,
+  teamColor = "#3b82f6",
 }) {
   const movements = useMemo(
     () => computeRunnerMovements(event, runnersOn),
@@ -171,59 +134,50 @@ export default function BaseRunners3D({
 
   return (
     <group>
-      {/* Static runners at their starting bases (before animation starts) */}
       {!isAnimating && (
         <>
-          {runnersOn?.first && <StaticRunner position={BASES.first} />}
-          {runnersOn?.second && <StaticRunner position={BASES.second} />}
-          {runnersOn?.third && <StaticRunner position={BASES.third} />}
+          {runnersOn?.first && <StaticRunner position={BASES.first} color={teamColor} />}
+          {runnersOn?.second && <StaticRunner position={BASES.second} color={teamColor} />}
+          {runnersOn?.third && <StaticRunner position={BASES.third} color={teamColor} />}
         </>
       )}
 
-      {/* Animated runners */}
       {isAnimating && movements.map((movement, i) => (
         <AnimatedRunner
           key={i}
           path={paths[i]}
           ballProgress={ballProgress}
-          isBatter={movement.isBatter}
           scores={movement.scores}
           startDelay={movement.isBatter ? 0.15 : 0}
           numBases={Math.min(movement.to - movement.from, 4)}
+          color={teamColor}
         />
       ))}
     </group>
   );
 }
 
-/**
- * Static runner dot at a base.
- */
-function StaticRunner({ position }) {
+function StaticRunner({ position, color }) {
   return (
     <mesh position={position}>
       <sphereGeometry args={[2.5, 12, 12]} />
-      <meshBasicMaterial color="#3b82f6" transparent opacity={0.8} />
+      <meshBasicMaterial color={color} transparent opacity={0.9} />
     </mesh>
   );
 }
 
 /**
- * Animated runner that follows a path around the bases.
+ * Animated runner — straight lines, constant speed, no stopping.
  */
-/**
- * @param {number} numBases — how many bases the runner is covering (1-4)
- */
-function AnimatedRunner({ path, ballProgress, isBatter, scores, startDelay = 0, numBases = 1 }) {
+function AnimatedRunner({ path, ballProgress, scores, startDelay = 0, numBases = 1, color }) {
   const meshRef = useRef();
   const elapsedRef = useRef(0);
   const startedRef = useRef(false);
   const trailPositions = useRef([]);
 
-  // ~4 seconds per base — realistic MLB base running speed
+  // ~4 seconds per base
   const totalRunTime = numBases * 4;
 
-  // Pre-compute trail geometry
   const maxTrailLen = 20;
   const trailGeo = useMemo(() => {
     const geo = new THREE.BufferGeometry();
@@ -236,24 +190,17 @@ function AnimatedRunner({ path, ballProgress, isBatter, scores, startDelay = 0, 
   useFrame((_, delta) => {
     if (!meshRef.current || !path?.length) return;
 
-    // Start running once ball is ~50% through flight
     if (ballProgress > 0.5 + startDelay) {
       startedRef.current = true;
     }
-
     if (!startedRef.current) return;
 
-    // Accumulate real elapsed time
     elapsedRef.current += delta;
+    // Linear progress — constant speed, no easing, no stops
     const runProgress = Math.min(elapsedRef.current / totalRunTime, 1);
 
-    // Smooth ease: accelerate out of the box, full speed through the middle
-    const eased = runProgress < 0.1
-      ? (runProgress / 0.1) * (runProgress / 0.1) * 0.1
-      : runProgress;
-
-    const pathIdx = Math.min(Math.floor(eased * (path.length - 1)), path.length - 2);
-    const pathFrac = eased * (path.length - 1) - pathIdx;
+    const pathIdx = Math.min(Math.floor(runProgress * (path.length - 1)), path.length - 2);
+    const pathFrac = runProgress * (path.length - 1) - pathIdx;
 
     const p0 = path[pathIdx];
     const p1 = path[pathIdx + 1] || p0;
@@ -263,15 +210,11 @@ function AnimatedRunner({ path, ballProgress, isBatter, scores, startDelay = 0, 
 
     meshRef.current.position.set(x, 0.5, z);
 
-    // Running bob effect — quicker stride
+    // Subtle bob while running
     if (runProgress > 0 && runProgress < 1) {
-      const bob = Math.abs(Math.sin(elapsedRef.current * 6)) * 1.2;
+      const bob = Math.abs(Math.sin(elapsedRef.current * 6)) * 1.0;
       meshRef.current.position.y = 0.5 + bob;
     }
-
-    // Scale pulse while running
-    const scale = runProgress > 0 && runProgress < 1 ? 1 + Math.sin(elapsedRef.current * 5) * 0.08 : 1;
-    meshRef.current.scale.setScalar(scale);
 
     // Trail
     if (runProgress > 0 && runProgress < 1) {
@@ -289,41 +232,31 @@ function AnimatedRunner({ path, ballProgress, isBatter, scores, startDelay = 0, 
   });
 
   if (!path?.length) return null;
-
-  const color = isBatter ? "#fbbf24" : "#3b82f6"; // gold for batter, blue for runners
   const startPos = path[0];
 
   return (
     <group>
-      {/* Runner trail */}
       <line geometry={trailGeo}>
         <lineBasicMaterial color={color} transparent opacity={0.3} />
       </line>
 
-      {/* Runner dot */}
       <mesh ref={meshRef} position={[startPos.x, 0.5, startPos.z]}>
         <sphereGeometry args={[2.5, 12, 12]} />
         <meshBasicMaterial color={color} transparent opacity={0.9} />
       </mesh>
 
-      {/* Score flash (if runner scores) */}
-      {scores && <ScoreFlash runnerRef={meshRef} />}
+      {scores && <ScoreFlash runnerRef={meshRef} color={color} />}
     </group>
   );
 }
 
-/**
- * Flash effect at home plate when a runner scores.
- * Triggers when the runner mesh gets close to home plate (origin).
- */
-function ScoreFlash({ runnerRef }) {
+function ScoreFlash({ runnerRef, color }) {
   const ringRef = useRef();
   const flashedRef = useRef(false);
 
   useFrame(() => {
     if (!ringRef.current) return;
 
-    // Flash when runner is near home plate
     if (runnerRef?.current && !flashedRef.current) {
       const pos = runnerRef.current.position;
       const distToHome = Math.sqrt(pos.x * pos.x + pos.z * pos.z);
@@ -347,9 +280,9 @@ function ScoreFlash({ runnerRef }) {
   return (
     <mesh ref={ringRef} position={[0, 0.2, 0]} rotation={[-Math.PI / 2, 0, 0]} visible={false}>
       <ringGeometry args={[2, 3.5, 32]} />
-      <meshBasicMaterial color="#fbbf24" transparent opacity={0.8} side={THREE.DoubleSide} depthWrite={false} />
+      <meshBasicMaterial color={color} transparent opacity={0.8} side={THREE.DoubleSide} depthWrite={false} />
     </mesh>
   );
 }
 
-export { BASES, computeRunnerMovements };
+export { BASES, computeRunnerMovements, getTeamColor };
