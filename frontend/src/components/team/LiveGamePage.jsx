@@ -209,7 +209,12 @@ export default function LiveGamePage() {
           {/* Visual area: strike zone / ball-in-play / next up */}
           {(() => {
             const battingTeamLogo2 = liveState.inningHalf === "Top" ? gameInfo.away.logoUrl : gameInfo.home.logoUrl;
-            const showBip = liveState.lastHitData && !bipCollapsed && (liveState.currentAtBat?.length === 0 || liveState.currentAtBat?.[liveState.currentAtBat.length - 1]?.isInPlay);
+            // Only show the 3D viewer when we have a completed play with final event data.
+            // Don't show during the transition when isInPlay is true but result isn't finalized yet.
+            const lastPitch = liveState.currentAtBat?.[liveState.currentAtBat.length - 1];
+            const playStillInProgress = lastPitch?.isInPlay && liveState.currentAtBat?.length > 0;
+            const hasCompletedHit = liveState.lastHitData?.event && !playStillInProgress;
+            const showBip = hasCompletedHit && !bipCollapsed;
             const showZone = liveState.currentAtBat?.length > 0 && !showBip;
 
             if (showBip) return (
