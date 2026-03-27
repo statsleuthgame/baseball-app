@@ -175,8 +175,8 @@ function AnimatedRunner({ path, ballProgress, scores, startDelay = 0, numBases =
   const startedRef = useRef(false);
   const trailPositions = useRef([]);
 
-  // ~4 seconds per base
-  const totalRunTime = numBases * 4;
+  // ~2.67 seconds per base (1.5x speed)
+  const totalRunTime = numBases * 2.67;
 
   const maxTrailLen = 20;
   const trailGeo = useMemo(() => {
