@@ -28,9 +28,11 @@ export default function Field3D({ venueTeamId }) {
     if (!stadium) return {};
 
     // Outfield grass shape: fence polygon + home plate to close
+    // Note: Shape lives in XY plane, rotation -PI/2 around X maps shape_Y → -mesh_Z
+    // So we use -fz to get the correct orientation (outfield at negative Z)
     const outerPts = stadium.outfield_outer.map(([x, y]) => {
       const [fx, , fz] = mlbamTo3D(x, y);
-      return new THREE.Vector2(fx, fz);
+      return new THREE.Vector2(fx, -fz);
     });
     // Close with home plate
     outerPts.push(new THREE.Vector2(0, 0));
@@ -39,14 +41,14 @@ export default function Field3D({ venueTeamId }) {
     // Infield dirt (outer)
     const dirtPts = stadium.infield_outer.map(([x, y]) => {
       const [fx, , fz] = mlbamTo3D(x, y);
-      return new THREE.Vector2(fx, fz);
+      return new THREE.Vector2(fx, -fz);
     });
     const dirtShape = new THREE.Shape(dirtPts);
 
     // Infield grass cutout (inner)
     const innerPts = stadium.infield_inner.map(([x, y]) => {
       const [fx, , fz] = mlbamTo3D(x, y);
-      return new THREE.Vector2(fx, fz);
+      return new THREE.Vector2(fx, -fz);
     });
     const infieldGrassShape = new THREE.Shape(innerPts);
 
