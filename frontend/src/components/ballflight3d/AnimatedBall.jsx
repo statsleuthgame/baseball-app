@@ -110,31 +110,39 @@ export default function AnimatedBall({
     // Report progress for fielder animation
     onProgress?.(frac, { x, y: Math.max(y, 0), z });
 
-    // Update trail
-    trailPositions.current.push([x, Math.max(y, 0), z]);
-    if (trailPositions.current.length > maxTrailLength) {
-      trailPositions.current.shift();
+    // Once behind fence, clear trail and stop updating it
+    if (behindFence) {
+      if (trailPositions.current.length > 0) {
+        trailPositions.current = [];
+        trailGeo.setDrawRange(0, 0);
+      }
+    } else {
+      // Update trail
+      trailPositions.current.push([x, Math.max(y, 0), z]);
+      if (trailPositions.current.length > maxTrailLength) {
+        trailPositions.current.shift();
+      }
+
+      const posAttr = trailGeo.getAttribute("position");
+      const colAttr = trailGeo.getAttribute("color");
+      const len = trailPositions.current.length;
+
+      for (let i = 0; i < len; i++) {
+        const [px, py, pz] = trailPositions.current[i];
+        posAttr.setXYZ(i, px, py, pz);
+
+        // Color fades from base color (old) to bright white (newest)
+        const age = i / len;
+        const r = baseColor.r * (1 - age * 0.3) + age * 0.3;
+        const g = baseColor.g * (1 - age * 0.3) + age * 0.3;
+        const b = baseColor.b * (1 - age * 0.3) + age * 0.3;
+        colAttr.setXYZ(i, r, g, b);
+      }
+
+      posAttr.needsUpdate = true;
+      colAttr.needsUpdate = true;
+      trailGeo.setDrawRange(0, len);
     }
-
-    const posAttr = trailGeo.getAttribute("position");
-    const colAttr = trailGeo.getAttribute("color");
-    const len = trailPositions.current.length;
-
-    for (let i = 0; i < len; i++) {
-      const [px, py, pz] = trailPositions.current[i];
-      posAttr.setXYZ(i, px, py, pz);
-
-      // Color fades from base color (old) to bright white (newest)
-      const age = i / len;
-      const r = baseColor.r * (1 - age * 0.3) + age * 0.3;
-      const g = baseColor.g * (1 - age * 0.3) + age * 0.3;
-      const b = baseColor.b * (1 - age * 0.3) + age * 0.3;
-      colAttr.setXYZ(i, r, g, b);
-    }
-
-    posAttr.needsUpdate = true;
-    colAttr.needsUpdate = true;
-    trailGeo.setDrawRange(0, len);
 
     // Check if landed
     if (t >= duration) {
