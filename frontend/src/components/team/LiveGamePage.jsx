@@ -320,46 +320,57 @@ export default function LiveGamePage() {
 
 function StrikeZone({ pitches }) {
   if (!pitches?.length) return null;
-  // Strike zone: pX in feet from center of plate, pZ in feet height
-  // Plate is 17 inches = 1.417 feet wide, so ±0.708 from center
-  // Zone top/bottom varies per batter — use first pitch with data
   const withCoords = pitches.filter((p) => p.pX != null && p.pZ != null);
   if (!withCoords.length) return null;
 
+  // Batter's strike zone bounds (feet)
   const szTop = withCoords.find((p) => p.szTop)?.szTop || 3.4;
   const szBot = withCoords.find((p) => p.szBot)?.szBot || 1.5;
+  const szH = szTop - szBot; // zone height in feet (~1.8 ft)
 
-  // SVG: 120x140, zone centered at (60, 70)
-  const W = 120, H = 140;
-  const zoneL = 30, zoneR = 90; // plate width in SVG
-  const zoneT = 25, zoneB = 105; // zone top/bottom in SVG
+  // Plate is 17 inches = 1.4167 feet wide → half = 0.7083 feet
+  const HALF_PLATE = 0.7083;
 
-  // Map pitch coords to SVG
-  const mapX = (pX) => 60 + (pX / 1.0) * 30; // ~30px per foot
-  const mapZ = (pZ) => {
-    const zoneMid = (szTop + szBot) / 2;
-    const zoneH = szTop - szBot;
-    return 65 - ((pZ - zoneMid) / zoneH) * (zoneB - zoneT);
-  };
+  // SVG dimensions: 200x240
+  // Zone rectangle: maps exactly to plate width horizontally and szTop/szBot vertically
+  // Scale: 1 foot = 60 SVG units (so plate = 0.7083*2*60 = 85 SVG units wide)
+  const SCALE = 60; // SVG units per foot
+  const CX = 100; // center X
+  const zoneW = HALF_PLATE * 2 * SCALE; // ~85
+  const zoneH_svg = szH * SCALE;        // ~108
+
+  // Zone rectangle position
+  const zoneL = CX - zoneW / 2;
+  const zoneR = CX + zoneW / 2;
+  const zoneT = 30; // top of zone in SVG
+  const zoneB = zoneT + zoneH_svg;
+
+  // Map real coordinates to SVG
+  // pX: feet from center of plate → SVG X
+  const mapX = (pX) => CX + pX * SCALE;
+  // pZ: feet above ground → SVG Y (inverted: higher pZ = lower SVG Y)
+  const mapZ = (pZ) => zoneT + (szTop - pZ) * SCALE;
+
+  const plateY = zoneB + 10;
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="lgp-strike-zone">
+    <svg viewBox={`0 0 200 ${plateY + 20}`} className="lgp-strike-zone">
       {/* Zone box */}
-      <rect x={zoneL} y={zoneT} width={zoneR - zoneL} height={zoneB - zoneT} fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
+      <rect x={zoneL} y={zoneT} width={zoneW} height={zoneH_svg} fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" rx="2" />
       {/* Zone grid (3x3) */}
       {[1, 2].map((i) => (
         <g key={i}>
-          <line x1={zoneL + (zoneR - zoneL) * i / 3} y1={zoneT} x2={zoneL + (zoneR - zoneL) * i / 3} y2={zoneB} stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" />
-          <line x1={zoneL} y1={zoneT + (zoneB - zoneT) * i / 3} x2={zoneR} y2={zoneT + (zoneB - zoneT) * i / 3} stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" />
+          <line x1={zoneL + zoneW * i / 3} y1={zoneT} x2={zoneL + zoneW * i / 3} y2={zoneB} stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" />
+          <line x1={zoneL} y1={zoneT + zoneH_svg * i / 3} x2={zoneR} y2={zoneT + zoneH_svg * i / 3} stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" />
         </g>
       ))}
-      {/* Plate */}
-      <polygon points={`${60 - 12},${zoneB + 15} ${60 - 8},${zoneB + 20} ${60 + 8},${zoneB + 20} ${60 + 12},${zoneB + 15} ${60},${zoneB + 12}`} fill="rgba(255,255,255,0.15)" />
+      {/* Home plate */}
+      <polygon points={`${CX - 14},${plateY} ${CX - 10},${plateY + 6} ${CX + 10},${plateY + 6} ${CX + 14},${plateY} ${CX},${plateY - 4}`} fill="rgba(255,255,255,0.15)" />
 
-      {/* Pitch dots */}
+      {/* Pitch dots — all same size */}
       {withCoords.map((p, i) => {
         const x = mapX(p.pX);
-        const z = mapZ(p.pZ);
+        const y = mapZ(p.pZ);
         let strikes = 0;
         for (let j = 0; j < i; j++) {
           const prev = withCoords[j];
@@ -370,9 +381,9 @@ function StrikeZone({ pitches }) {
         const isLast = i === withCoords.length - 1;
         return (
           <g key={i}>
-            <circle cx={x} cy={z} r={isLast ? 6 : 4} fill={color} opacity={isLast ? 1 : 0.6} />
-            {isLast && <circle cx={x} cy={z} r="6" fill="none" stroke="#fff" strokeWidth="1.5" opacity="0.5" />}
-            <text x={x} y={z + 1} textAnchor="middle" fontSize="5" fill="#fff" fontWeight="700" dominantBaseline="middle">{i + 1}</text>
+            <circle cx={x} cy={y} r="7" fill={color} opacity={isLast ? 1 : 0.7} />
+            {isLast && <circle cx={x} cy={y} r="7" fill="none" stroke="#fff" strokeWidth="1.5" opacity="0.5" />}
+            <text x={x} y={y + 1} textAnchor="middle" fontSize="6" fill="#fff" fontWeight="700" dominantBaseline="middle">{i + 1}</text>
           </g>
         );
       })}
