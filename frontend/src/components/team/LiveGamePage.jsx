@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useTeam } from "../../context/TeamContext";
@@ -53,6 +53,23 @@ export default function LiveGamePage() {
     queryFn: () => fetchGameDetail(gamePk),
     enabled: boxOpen && !!gamePk, staleTime: 1000 * 60, refetchInterval: boxOpen ? 1000 * 30 : false,
   });
+
+  // Auto-collapse ball-in-play visual after 20 seconds
+  const [bipCollapsed, setBipCollapsed] = useState(false);
+  const bipTimerRef = useRef(null);
+  const lastHitRef = useRef(null);
+
+  useEffect(() => {
+    const hitKey = liveState?.lastHitData ? `${liveState.lastHitData.x}-${liveState.lastHitData.y}` : null;
+    if (hitKey && hitKey !== lastHitRef.current) {
+      // New ball in play — show it and start 20s timer
+      lastHitRef.current = hitKey;
+      setBipCollapsed(false);
+      if (bipTimerRef.current) clearTimeout(bipTimerRef.current);
+      bipTimerRef.current = setTimeout(() => setBipCollapsed(true), 20000);
+    }
+    return () => { if (bipTimerRef.current) clearTimeout(bipTimerRef.current); };
+  }, [liveState?.lastHitData]);
 
   if (isLoading) return <LoadingSpinner text="Loading game..." />;
   if (!gameInfo) return <div className="matchup-empty"><h2>Game not found</h2></div>;
@@ -142,50 +159,69 @@ export default function LiveGamePage() {
             <span className="lgp-batter-avg">{liveState.batter.avg || ".000"}</span>
           </div>
 
-          {/* Strike zone OR ball-in-play visual — always present */}
-          {liveState.lastHitData && (liveState.currentAtBat?.length === 0 || liveState.currentAtBat?.[liveState.currentAtBat.length - 1]?.isInPlay) ? (
-            <div className="lgp-bip-section">
-              <BallInPlayVisual hitData={liveState.lastHitData} venueTeamId={gameInfo.home.id} />
-            </div>
-          ) : (
-            <div className="lgp-zone-centered">
-              {liveState.currentAtBat?.length > 0 ? (
-                <>
-                  {/* Pitch result — centered above zone */}
-                  <span className="lgp-pitch-result">
-                    {(() => {
-                      const p = liveState.currentAtBat[liveState.currentAtBat.length - 1];
-                      const balls = p.count ? parseInt(p.count.split("-")[0]) || 0 : null;
-                      const strikes = p.count ? parseInt(p.count.split("-")[1]) || 0 : null;
-                      let countLabel = "";
-                      if (p.isBall && balls != null) countLabel = ` (Ball ${balls})`;
-                      else if (p.isStrike && strikes != null && p.code !== "F") countLabel = ` (Strike ${strikes})`;
-                      else if (p.code === "F" && strikes != null) countLabel = strikes >= 2 ? " (Foul)" : ` (Strike ${strikes})`;
-                      else if (p.isInPlay) countLabel = "";
-                      return `${p.pitchInfo || ""} — ${p.call}${countLabel}`;
-                    })()}
-                  </span>
-                  <StrikeZone pitches={liveState.currentAtBat} />
-                  <div className="lgp-pitch-dots">
-                    {liveState.currentAtBat.map((p, i) => {
-                      const isFoul = p.code === "F";
-                      // Foul is orange ONLY if count didn't change (was already 2 strikes before this pitch)
-                      // If count shows 2 strikes and it's a foul, the count stayed at 2 — meaning we were already at 2
-                      // But if the PREVIOUS pitch had fewer strikes, this foul advanced the count TO 2 — should be red
-                      const countStrikes = p.count ? parseInt(p.count.split("-")[1]) || 0 : 0;
-                      const prevStrikes = i > 0 && liveState.currentAtBat[i - 1].count ? parseInt(liveState.currentAtBat[i - 1].count.split("-")[1]) || 0 : 0;
-                      const foulWithNoStrikeAdvance = isFoul && countStrikes === prevStrikes && countStrikes >= 2;
-                      const color = p.isBall ? "#22c55e" : foulWithNoStrikeAdvance ? "#f59e0b" : p.isInPlay ? "#3b82f6" : "#ef4444";
-                      return <span key={i} className="lgp-pitch-dot" style={{ background: color }} title={`${p.call} ${p.count || ""}`} />;
-                    })}
-                  </div>
-                </>
-              ) : (
-                /* Empty zone placeholder — keeps layout stable between at-bats */
-                <StrikeZone pitches={[]} />
-              )}
-            </div>
-          )}
+          {/* Visual area: strike zone / ball-in-play / next up */}
+          {(() => {
+            const showBip = liveState.lastHitData && !bipCollapsed && (liveState.currentAtBat?.length === 0 || liveState.currentAtBat?.[liveState.currentAtBat.length - 1]?.isInPlay);
+            const showZone = liveState.currentAtBat?.length > 0 && !showBip;
+            const showNextUp = !showBip && !showZone;
+
+            if (showBip) return (
+              <div className="lgp-bip-section">
+                <BallInPlayVisual hitData={liveState.lastHitData} venueTeamId={gameInfo.home.id} />
+              </div>
+            );
+
+            if (showZone) return (
+              <div className="lgp-zone-centered">
+                <span className="lgp-pitch-result">
+                  {(() => {
+                    const p = liveState.currentAtBat[liveState.currentAtBat.length - 1];
+                    const balls = p.count ? parseInt(p.count.split("-")[0]) || 0 : null;
+                    const strikes = p.count ? parseInt(p.count.split("-")[1]) || 0 : null;
+                    let countLabel = "";
+                    if (p.isBall && balls != null) countLabel = ` (Ball ${balls})`;
+                    else if (p.isStrike && strikes != null && p.code !== "F") countLabel = ` (Strike ${strikes})`;
+                    else if (p.code === "F" && strikes != null) countLabel = strikes >= 2 ? " (Foul)" : ` (Strike ${strikes})`;
+                    return `${p.pitchInfo || ""} — ${p.call}${countLabel}`;
+                  })()}
+                </span>
+                <StrikeZone pitches={liveState.currentAtBat} />
+                <div className="lgp-pitch-dots">
+                  {liveState.currentAtBat.map((p, i) => {
+                    const isFoul = p.code === "F";
+                    const countStrikes = p.count ? parseInt(p.count.split("-")[1]) || 0 : 0;
+                    const prevStrikes = i > 0 && liveState.currentAtBat[i - 1].count ? parseInt(liveState.currentAtBat[i - 1].count.split("-")[1]) || 0 : 0;
+                    const foulNoAdvance = isFoul && countStrikes === prevStrikes && countStrikes >= 2;
+                    const color = p.isBall ? "#22c55e" : foulNoAdvance ? "#f59e0b" : p.isInPlay ? "#3b82f6" : "#ef4444";
+                    return <span key={i} className="lgp-pitch-dot" style={{ background: color }} title={`${p.call} ${p.count || ""}`} />;
+                  })}
+                </div>
+              </div>
+            );
+
+            // Between at-bats — show next 3 due up with stats
+            const nextUp = [liveState.batter, liveState.onDeck, liveState.inHole].filter(Boolean);
+            return (
+              <div className="lgp-next-up">
+                <span className="lgp-section-label">Coming Up</span>
+                <div className="lgp-next-up-list">
+                  {nextUp.map((p) => {
+                    const stats = [];
+                    if (p.ab > 0) stats.push(`${p.h}-${p.ab}`);
+                    if (p.hr > 0) stats.push(`${p.hr} HR`);
+                    if (p.rbi > 0) stats.push(`${p.rbi} RBI`);
+                    if (p.k > 0) stats.push(`${p.k} K`);
+                    return (
+                      <div key={p.id} className="lgp-next-up-player sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
+                        <span className="lgp-next-up-name">{p.fullName}</span>
+                        {stats.length > 0 && <span className="lgp-next-up-stats">{stats.join(", ")}</span>}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })()}
 
           {/* Pitcher — bottom right */}
           <div className="lgp-pitcher-bottom sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${liveState.pitcher.id}`)}>
@@ -218,18 +254,19 @@ export default function LiveGamePage() {
             <div className="lgp-due-compact">
               <span className="lgp-section-label">Due Up</span>
               <div className="lgp-due-list">
-                {[liveState.onDeck, liveState.inHole].filter(Boolean).map((p) => (
-                  <div key={p.id} className="lgp-due-player sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
-                    <span className="lgp-due-name">{p.fullName}</span>
-                    <span className="lgp-due-stats">
-                      {p.ab != null ? `${p.h}-${p.ab}` : ""}
-                      {p.hr > 0 ? `, ${p.hr} HR` : ""}
-                      {p.rbi > 0 ? `, ${p.rbi} RBI` : ""}
-                      {p.k > 0 ? `, ${p.k} K` : ""}
-                      {p.ab === 0 ? "First AB" : ""}
-                    </span>
-                  </div>
-                ))}
+                {[liveState.onDeck, liveState.inHole].filter(Boolean).map((p) => {
+                  const stats = [];
+                  if (p.ab > 0) stats.push(`${p.h}-${p.ab}`);
+                  if (p.hr > 0) stats.push(`${p.hr} HR`);
+                  if (p.rbi > 0) stats.push(`${p.rbi} RBI`);
+                  if (p.k > 0) stats.push(`${p.k} K`);
+                  return (
+                    <div key={p.id} className="lgp-due-player sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
+                      <span className="lgp-due-name">{p.fullName}</span>
+                      {stats.length > 0 && <span className="lgp-due-stats">{stats.join(", ")}</span>}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}

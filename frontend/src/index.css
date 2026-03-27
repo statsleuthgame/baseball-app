@@ -3891,11 +3891,18 @@ th.sb-ls-total {
   background: rgba(255,255,255,0.02);
 }
 
-/* Due Up stats — all on one row */
-.lgp-due-name { font-size: 12px; font-weight: 600; }
+/* Due Up stats — side by side on one row */
+.lgp-due-name { font-size: 11px; font-weight: 600; }
 .lgp-due-stats { font-size: 10px; color: var(--text-muted); margin-left: 3px; }
-.lgp-due-player { display: flex; align-items: center; white-space: nowrap; }
-.lgp-due-list { display: flex; gap: 10px; margin-top: 4px; flex-wrap: wrap; }
+.lgp-due-player { display: inline; white-space: nowrap; }
+.lgp-due-list { display: flex; gap: 6px; margin-top: 4px; }
+
+/* Coming Up — between innings after 20s collapse */
+.lgp-next-up { padding: 10px 0; }
+.lgp-next-up-list { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
+.lgp-next-up-player { display: flex; align-items: center; gap: 6px; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.lgp-next-up-name { font-size: 14px; font-weight: 600; }
+.lgp-next-up-stats { font-size: 12px; color: var(--text-muted); }
 
 /* Smaller ball-in-play metrics on live page */
 .lgp .bip-metric-val { font-size: 20px; }
