@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useRef, useEffect } from "react";
 import * as THREE from "three";
 import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 
@@ -34,19 +34,33 @@ const skyFragmentShader = `
   }
 `;
 
+// Shared bowl constants
+const FENCE_H = 10;
+const PUSH_BACK = 25;
+const RISER_H = 3;
+const TREAD_D = 4;
+const TIER1_ROWS = 8;
+const TIER2_ROWS = 6;
+const CONCOURSE_H = 6;
+const CONCOURSE_D = 8;
+const SEGMENTS = 48;
+const PHI_START = Math.PI * 0.15;
+const PHI_LENGTH = Math.PI * 0.70;
+
 /**
  * Procedural 3D stadium background.
- * Seating bowl, light towers, city skyline, sky dome.
+ * Seating bowl, instanced seat blocks, city skyline, sky dome.
  */
-export default function StadiumBackground({ fencePoints, teamColor }) {
+export default function StadiumBackground({ fencePoints, teamColors }) {
+  const seatMeshRef = useRef();
+  const primaryColor = teamColors?.primary || "#2a3a5c";
+  const secondaryColor = teamColors?.secondary || "#1a2a4c";
+
   // Compute center and radius of the fence arc for positioning
-  const { bowlCenter, bowlRadius, foulLeftAngle, foulRightAngle } = useMemo(() => {
+  const { bowlRadius } = useMemo(() => {
     if (!fencePoints?.length) return {};
     let cx = 0, cz = 0;
-    for (const [x, , z] of fencePoints) {
-      cx += x;
-      cz += z;
-    }
+    for (const [x, , z] of fencePoints) { cx += x; cz += z; }
     cx /= fencePoints.length;
     cz /= fencePoints.length;
 
@@ -55,58 +69,41 @@ export default function StadiumBackground({ fencePoints, teamColor }) {
       const d = Math.sqrt((x - cx) ** 2 + (z - cz) ** 2);
       if (d > maxR) maxR = d;
     }
-
-    // Foul pole angles (first and last fence points)
-    const first = fencePoints[0];
-    const last = fencePoints[fencePoints.length - 1];
-    const foulLeftAngle = Math.atan2(first[2], first[0]);
-    const foulRightAngle = Math.atan2(last[2], last[0]);
-
-    return { bowlCenter: [cx, cz], bowlRadius: maxR, foulLeftAngle, foulRightAngle };
+    return { bowlRadius: maxR };
   }, [fencePoints]);
+
+  const innerR = bowlRadius ? bowlRadius + PUSH_BACK : 0;
 
   // Seating bowl geometry — stair-step cross-section revolved around Y axis
   const bowlGeo = useMemo(() => {
-    if (!bowlRadius) return null;
+    if (!innerR) return null;
 
-    const fenceH = 10;
-    const pushBack = 25;
-    const innerR = bowlRadius + pushBack;
-
-    // Cross-section profile: riser/tread stair pattern for 2 tiers
     const profile = [];
-    const riserH = 3;
-    const treadD = 4;
-    const tier1Rows = 8;
-    const tier2Rows = 6;
-    const concourseH = 6;
-    const concourseD = 8;
-
-    let y = fenceH;
+    let y = FENCE_H;
     let r = innerR;
 
     // Tier 1
-    for (let i = 0; i < tier1Rows; i++) {
+    for (let i = 0; i < TIER1_ROWS; i++) {
       profile.push(new THREE.Vector2(r, y));
-      y += riserH;
+      y += RISER_H;
       profile.push(new THREE.Vector2(r, y));
-      r += treadD;
+      r += TREAD_D;
       profile.push(new THREE.Vector2(r, y));
     }
 
     // Concourse gap
     profile.push(new THREE.Vector2(r, y));
-    y += concourseH;
+    y += CONCOURSE_H;
     profile.push(new THREE.Vector2(r, y));
-    r += concourseD;
+    r += CONCOURSE_D;
     profile.push(new THREE.Vector2(r, y));
 
     // Tier 2
-    for (let i = 0; i < tier2Rows; i++) {
+    for (let i = 0; i < TIER2_ROWS; i++) {
       profile.push(new THREE.Vector2(r, y));
-      y += riserH;
+      y += RISER_H;
       profile.push(new THREE.Vector2(r, y));
-      r += treadD;
+      r += TREAD_D;
       profile.push(new THREE.Vector2(r, y));
     }
 
@@ -114,31 +111,16 @@ export default function StadiumBackground({ fencePoints, teamColor }) {
     profile.push(new THREE.Vector2(r, y));
     profile.push(new THREE.Vector2(r, 0));
 
-    // About 270 degrees of coverage — leave center field open
-    // phiStart and phiLength in radians
-    const segments = 48;
-    const phiStart = Math.PI * 0.15;  // start slightly past right field
-    const phiLength = Math.PI * 0.70; // ~252 degrees coverage
-
-    const geo = new THREE.LatheGeometry(profile, segments, phiStart, phiLength);
+    const geo = new THREE.LatheGeometry(profile, SEGMENTS, PHI_START, PHI_LENGTH);
     geo.computeVertexNormals();
     return geo;
-  }, [bowlRadius]);
+  }, [innerR]);
 
   // Fascia accent strip — thin ring at concourse level with team color
   const fasciaGeo = useMemo(() => {
-    if (!bowlRadius) return null;
-    const pushBack = 25;
-    const innerR = bowlRadius + pushBack;
-    const fenceH = 10;
-    const riserH = 3;
-    const tier1Rows = 8;
-    const fasciaY = fenceH + riserH * tier1Rows;
-    const fasciaR = innerR + 4 * tier1Rows;
-
-    const segments = 48;
-    const phiStart = Math.PI * 0.15;
-    const phiLength = Math.PI * 0.70;
+    if (!innerR) return null;
+    const fasciaY = FENCE_H + RISER_H * TIER1_ROWS;
+    const fasciaR = innerR + TREAD_D * TIER1_ROWS;
 
     const profile = [
       new THREE.Vector2(fasciaR - 1, fasciaY),
@@ -147,12 +129,102 @@ export default function StadiumBackground({ fencePoints, teamColor }) {
       new THREE.Vector2(fasciaR + 1, fasciaY),
     ];
 
-    const geo = new THREE.LatheGeometry(profile, segments, phiStart, phiLength);
-    return geo;
-  }, [bowlRadius]);
+    return new THREE.LatheGeometry(profile, SEGMENTS, PHI_START, PHI_LENGTH);
+  }, [innerR]);
+
+  // Instanced seat section blocks
+  const seatBlockGeo = useMemo(() => new THREE.BoxGeometry(10, 1.0, 2.5), []);
+
+  const { seatCount, seatMatrices, seatColorArray } = useMemo(() => {
+    if (!innerR) return { seatCount: 0, seatMatrices: null, seatColorArray: null };
+
+    const matrices = [];
+    const colors = [];
+    const dummy = new THREE.Object3D();
+    const priColor = new THREE.Color(primaryColor);
+    const secColor = new THREE.Color(secondaryColor);
+
+    const blockWidth = 10;
+    const gap = 2;
+
+    const addRow = (rowR, rowY) => {
+      // Arc length at this radius
+      const arcLen = rowR * PHI_LENGTH;
+      const blocksPerRow = Math.floor(arcLen / (blockWidth + gap));
+      if (blocksPerRow < 1) return;
+
+      const angularStep = PHI_LENGTH / blocksPerRow;
+      const halfStep = angularStep * 0.5;
+
+      for (let b = 0; b < blocksPerRow; b++) {
+        const phi = PHI_START + halfStep + angularStep * b;
+
+        // LatheGeometry convention: x = r*cos(phi), z = r*sin(phi)
+        const x = rowR * Math.cos(phi);
+        const z = rowR * Math.sin(phi);
+
+        dummy.position.set(x, rowY, z);
+        // Rotate so block faces inward (toward field center)
+        dummy.rotation.set(0, -phi + Math.PI / 2, 0);
+        dummy.updateMatrix();
+
+        const mat = new THREE.Matrix4();
+        mat.copy(dummy.matrix);
+        matrices.push(mat);
+
+        // Alternate colors by section (every ~4 blocks)
+        const section = Math.floor(b / 4);
+        const c = section % 2 === 0 ? priColor : secColor;
+        colors.push(c.r, c.g, c.b);
+      }
+    };
+
+    // Tier 1 rows
+    for (let i = 0; i < TIER1_ROWS; i++) {
+      const rowR = innerR + TREAD_D * i + TREAD_D / 2;
+      const rowY = FENCE_H + RISER_H * (i + 1) + 0.5;
+      addRow(rowR, rowY);
+    }
+
+    // Tier 2 rows (after concourse)
+    const tier2BaseR = innerR + TREAD_D * TIER1_ROWS + CONCOURSE_D;
+    const tier2BaseY = FENCE_H + RISER_H * TIER1_ROWS + CONCOURSE_H;
+    for (let i = 0; i < TIER2_ROWS; i++) {
+      const rowR = tier2BaseR + TREAD_D * i + TREAD_D / 2;
+      const rowY = tier2BaseY + RISER_H * (i + 1) + 0.5;
+      addRow(rowR, rowY);
+    }
+
+    const count = matrices.length;
+    const matArray = new Float32Array(count * 16);
+    for (let i = 0; i < count; i++) {
+      matrices[i].toArray(matArray, i * 16);
+    }
+
+    return {
+      seatCount: count,
+      seatMatrices: matArray,
+      seatColorArray: new Float32Array(colors),
+    };
+  }, [innerR, primaryColor, secondaryColor]);
+
+  // Apply instance matrices and colors
+  useEffect(() => {
+    if (!seatMeshRef.current || !seatMatrices || seatCount === 0) return;
+    const mesh = seatMeshRef.current;
+    const mat4 = new THREE.Matrix4();
+
+    for (let i = 0; i < seatCount; i++) {
+      mat4.fromArray(seatMatrices, i * 16);
+      mesh.setMatrixAt(i, mat4);
+    }
+    mesh.instanceMatrix.needsUpdate = true;
+
+    mesh.instanceColor = new THREE.InstancedBufferAttribute(seatColorArray, 3);
+    mesh.instanceColor.needsUpdate = true;
+  }, [seatCount, seatMatrices, seatColorArray]);
 
   // City skyline — merged boxes + window dots
-  // Compute max fence distance from home plate (origin) for proper placement
   const maxFenceDist = useMemo(() => {
     if (!fencePoints?.length) return 400;
     let maxD = 0;
@@ -166,14 +238,12 @@ export default function StadiumBackground({ fencePoints, teamColor }) {
   const { skylineGeo, windowGeo } = useMemo(() => {
     if (!bowlRadius) return {};
 
-    // Place buildings well behind the stadium bowl (500+ ft from home plate)
     const minDist = maxFenceDist + 250;
     const buildings = [];
     const windows = [];
-    const rng = mulberry32(42); // deterministic seed
+    const rng = mulberry32(42);
 
     const count = 70;
-    // Arc behind the outfield: roughly center field direction
     const arcStart = Math.PI * 0.25;
     const arcEnd = Math.PI * 0.75;
 
@@ -190,7 +260,6 @@ export default function StadiumBackground({ fencePoints, teamColor }) {
       box.translate(x, h / 2, z);
       buildings.push(box);
 
-      // Scatter a few window dots on each building
       const numWindows = Math.floor(2 + rng() * 6);
       for (let j = 0; j < numWindows; j++) {
         const wy = 5 + rng() * (h - 10);
@@ -206,12 +275,11 @@ export default function StadiumBackground({ fencePoints, teamColor }) {
 
     const skylineGeo = mergeGeometries(buildings, false);
     buildings.forEach(g => g.dispose());
-
     const windowGeo = windows.length > 0 ? mergeGeometries(windows, false) : null;
     windows.forEach(g => g.dispose());
 
     return { skylineGeo, windowGeo };
-  }, [bowlRadius]);
+  }, [bowlRadius, maxFenceDist]);
 
   // Sky dome shader material
   const skyMat = useMemo(() => {
@@ -227,18 +295,28 @@ export default function StadiumBackground({ fencePoints, teamColor }) {
 
   return (
     <group>
-      {/* Seating bowl */}
+      {/* Seating bowl (concrete) */}
       <mesh geometry={bowlGeo}>
         <meshLambertMaterial color="#3a3a50" side={THREE.DoubleSide} />
       </mesh>
 
+      {/* Instanced seat section blocks */}
+      {seatCount > 0 && (
+        <instancedMesh
+          ref={seatMeshRef}
+          args={[seatBlockGeo, null, seatCount]}
+          frustumCulled={false}
+        >
+          <meshLambertMaterial vertexColors />
+        </instancedMesh>
+      )}
+
       {/* Fascia accent with team color */}
       {fasciaGeo && (
         <mesh geometry={fasciaGeo}>
-          <meshLambertMaterial color={teamColor || "#1a1a2e"} emissive={teamColor || "#000000"} emissiveIntensity={0.3} side={THREE.DoubleSide} />
+          <meshLambertMaterial color={primaryColor} emissive={primaryColor} emissiveIntensity={0.3} side={THREE.DoubleSide} />
         </mesh>
       )}
-
 
       {/* City skyline */}
       {skylineGeo && (

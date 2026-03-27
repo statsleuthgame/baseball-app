@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import * as THREE from "three";
 import stadiumPaths from "../../data/stadiumPaths.json";
+import ALL_TEAMS from "../../data/teams";
 import StadiumBackground from "./StadiumBackground";
 
 const HP = { x: 125.42, y: 198.27 };
@@ -96,7 +97,7 @@ export default function Field3D({ venueTeamId, teamColor }) {
       <FenceWall points={fencePoints} />
 
       {/* Stadium background: bowl, towers, skyline, sky dome */}
-      <StadiumBackground fencePoints={fencePoints} teamColor={teamColor} />
+      <StadiumBackground fencePoints={fencePoints} teamColors={{ primary: teamColor, secondary: ALL_TEAMS[venueTeamId]?.secondary || "#1a2a4c" }} />
 
       {/* Foul lines */}
       <FoulLines points={foulLinePoints} />
