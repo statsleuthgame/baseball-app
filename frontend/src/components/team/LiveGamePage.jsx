@@ -162,12 +162,16 @@ export default function LiveGamePage() {
             if (b.hr > 0) gameStats.push(`${b.hr} HR`);
             if (b.rbi > 0) gameStats.push(`${b.rbi} RBI`);
             if (b.k > 0) gameStats.push(`${b.k} K`);
+            if (b.bb > 0) gameStats.push(`${b.bb} BB`);
+            if (b.hbp > 0) gameStats.push(`${b.hbp} HBP`);
             return (
               <div className="lgp-batter-row sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${b.id}`)}>
-                <img src={battingTeamLogo} alt="" className="lgp-batter-logo" />
-                <span className="lgp-batter-name">{b.fullName}</span>
-                {gameStats.length > 0 && <span className="lgp-batter-game">{gameStats.join(", ")}</span>}
-                <span className="lgp-batter-avg">{b.avg || ".000"}</span>
+                <div className="lgp-batter-left">
+                  <img src={battingTeamLogo} alt="" className="lgp-batter-logo" />
+                  <span className="lgp-batter-name">{b.fullName}</span>
+                  {gameStats.length > 0 && <span className="lgp-batter-game">{gameStats.join(", ")}</span>}
+                </div>
+                <span className="lgp-batter-avg">Season Avg. {b.avg || ".000"}</span>
               </div>
             );
           })()}
@@ -229,6 +233,8 @@ export default function LiveGamePage() {
                       if (p.hr > 0) stats.push(`${p.hr} HR`);
                       if (p.rbi > 0) stats.push(`${p.rbi} RBI`);
                       if (p.k > 0) stats.push(`${p.k} K`);
+                    if (p.bb > 0) stats.push(`${p.bb} BB`);
+                    if (p.hbp > 0) stats.push(`${p.hbp} HBP`);
                       return (
                         <div key={p.id} className="lgp-next-up-player sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
                           <span className="lgp-next-up-name">{p.fullName}</span>
@@ -284,6 +290,8 @@ export default function LiveGamePage() {
                   if (p.hr > 0) stats.push(`${p.hr} HR`);
                   if (p.rbi > 0) stats.push(`${p.rbi} RBI`);
                   if (p.k > 0) stats.push(`${p.k} K`);
+                    if (p.bb > 0) stats.push(`${p.bb} BB`);
+                    if (p.hbp > 0) stats.push(`${p.hbp} HBP`);
                   return (
                     <div key={p.id} className="lgp-due-player sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
                       <span className="lgp-due-name">{p.fullName}</span>
