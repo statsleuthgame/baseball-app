@@ -53,9 +53,8 @@ export default function PlayerDetail() {
   let displayStats, displaySeason;
 
   if (isCurrentSeason) {
-    const hasCurrentStats = statsObj.stats && Object.keys(statsObj.stats).length > 0;
-    displayStats = hasCurrentStats ? statsObj.stats : (statsObj.prevStats || {});
-    displaySeason = hasCurrentStats ? statsObj.season : statsObj.prevSeason;
+    displayStats = statsObj.stats || {};
+    displaySeason = currentYear;
   } else {
     displayStats = seasonStats || {};
     displaySeason = selectedSeason;
