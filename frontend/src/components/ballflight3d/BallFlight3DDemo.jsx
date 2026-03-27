@@ -34,7 +34,7 @@ const SAMPLE_HITS = {
     data: {
       x: 105.0, y: 162.0,
       exitVelo: 88.5, launchAngle: -8, distance: 90,
-      trajectory: "ground_ball", event: "Out",
+      trajectory: "ground_ball", event: "Groundout",
       description: "grounds out, shortstop to first baseman",
     },
     runnersOn: { first: true },
@@ -45,7 +45,7 @@ const SAMPLE_HITS = {
     data: {
       x: 155.0, y: 62.0,
       exitVelo: 98.7, launchAngle: 32, distance: 380,
-      trajectory: "fly_ball", event: "Out",
+      trajectory: "fly_ball", event: "Sac Fly",
       description: "flies out to right fielder, runner scores on the sac fly",
     },
     runnersOn: { third: true },
@@ -78,7 +78,7 @@ const SAMPLE_HITS = {
     data: {
       x: 130.5, y: 155.0,
       exitVelo: 72.1, launchAngle: 55, distance: 120,
-      trajectory: "popup", event: "Out",
+      trajectory: "popup", event: "Pop Out",
       description: "pops out to second baseman in shallow right",
     },
     runnersOn: {},
@@ -100,11 +100,44 @@ const SAMPLE_HITS = {
     data: {
       x: 105.0, y: 162.0,
       exitVelo: 91.2, launchAngle: -5, distance: 95,
-      trajectory: "ground_ball", event: "Out",
+      trajectory: "ground_ball", event: "Grounded Into DP",
       description: "grounds into double play, shortstop to second baseman to first baseman",
     },
     runnersOn: { first: true },
     teamId: 114, // Guardians
+  },
+  fieldersChoice: {
+    label: "Fielder's Choice — Runner on First",
+    data: {
+      x: 115.0, y: 165.0,
+      exitVelo: 85.3, launchAngle: -6, distance: 85,
+      trajectory: "ground_ball", event: "Fielders Choice",
+      description: "grounds to shortstop, fielders choice, runner out at second, shortstop to second baseman",
+    },
+    runnersOn: { first: true },
+    teamId: 143, // Phillies
+  },
+  flyout: {
+    label: "Flyout to Center — Bases Empty",
+    data: {
+      x: 130.0, y: 70.0,
+      exitVelo: 99.5, launchAngle: 35, distance: 350,
+      trajectory: "fly_ball", event: "Flyout",
+      description: "flies out to center fielder",
+    },
+    runnersOn: {},
+    teamId: 117, // Astros
+  },
+  error: {
+    label: "Error — Runner on Second",
+    data: {
+      x: 100.0, y: 158.0,
+      exitVelo: 92.0, launchAngle: -3, distance: 100,
+      trajectory: "ground_ball", event: "Field Error",
+      description: "reaches on fielding error by shortstop, runner scores",
+    },
+    runnersOn: { second: true },
+    teamId: 138, // Cardinals
   },
 };
 
@@ -239,7 +272,14 @@ export default function BallFlight3DDemo() {
                 <option value="Triple">Triple</option>
                 <option value="Double">Double</option>
                 <option value="Single">Single</option>
-                <option value="Out">Out</option>
+                <option value="Flyout">Flyout</option>
+                <option value="Groundout">Groundout</option>
+                <option value="Lineout">Lineout</option>
+                <option value="Pop Out">Pop Out</option>
+                <option value="Sac Fly">Sac Fly</option>
+                <option value="Grounded Into DP">Double Play</option>
+                <option value="Fielders Choice">Fielder's Choice</option>
+                <option value="Field Error">Error</option>
               </select>
             </label>
             <label>

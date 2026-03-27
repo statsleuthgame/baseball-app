@@ -2,6 +2,10 @@ import { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import ALL_TEAMS from "../../data/teams";
+import {
+  isOutEvent, isSacFly, isDoublePlay, isFieldersChoice,
+  batterBasesForEvent,
+} from "./eventClassifier";
 
 /**
  * Base positions in Three.js feet coordinates.
@@ -16,38 +20,29 @@ const BASES = {
 
 const BASE_ORDER = ["home", "first", "second", "third"];
 
-function getTeamColor(teamId) {
+export function getTeamColor(teamId) {
   return ALL_TEAMS[teamId]?.primary || "#3b82f6";
 }
 
 function computeRunnerMovements(event, runnersOn, description = "") {
   const movements = [];
   const desc = description.toLowerCase();
-  const isOut = event === "Out";
-  const batterBases = {
-    "Single": 1, "Double": 2, "Triple": 3, "Home Run": 4,
-  }[event] || 0;
+  const batterBases = batterBasesForEvent(event);
 
   const runners = [];
   if (runnersOn?.third) runners.push({ base: 3 });
   if (runnersOn?.second) runners.push({ base: 2 });
   if (runnersOn?.first) runners.push({ base: 1 });
 
-  if (isOut) {
-    const isSacFly = desc.includes("sac fly") || desc.includes("sacrifice fly") ||
-      (desc.includes("scores") && (desc.includes("flies out") || desc.includes("fly")));
-    const isDoublePlay = desc.includes("double play");
-
-    if (isSacFly) {
+  if (isOutEvent(event)) {
+    if (isSacFly(event, description)) {
       // Sac fly: runner on third scores, batter is out
       if (runnersOn?.third) {
         movements.push({ from: 3, to: 4, scores: true, startDelay: 0.3 });
       }
-      // Other runners tag up but stay
       movements.push({ from: 0, to: 1, scores: false, isBatter: true, isOut: true });
-    } else if (isDoublePlay) {
-      // Double play: batter runs to first (out), lead runner out at next base
-      // Typical: runner on 1st forced at 2nd, batter out at 1st
+    } else if (isDoublePlay(event, description)) {
+      // Double play: lead runner forced out, batter out at first
       if (runnersOn?.first) {
         movements.push({ from: 1, to: 2, scores: false, isOut: true });
       } else if (runnersOn?.second) {
@@ -58,10 +53,21 @@ function computeRunnerMovements(event, runnersOn, description = "") {
       if (runnersOn?.third && desc.includes("scores")) {
         movements.push({ from: 3, to: 4, scores: true });
       }
+    } else if (isFieldersChoice(event)) {
+      // Fielder's choice: batter reaches first, a runner is out
+      movements.push({ from: 0, to: 1, scores: false, isBatter: true });
+      // Lead runner is out trying to advance
+      if (runnersOn?.first) {
+        movements.push({ from: 1, to: 2, scores: false, isOut: true });
+      } else if (runnersOn?.second) {
+        movements.push({ from: 2, to: 3, scores: false, isOut: true });
+      } else if (runnersOn?.third) {
+        movements.push({ from: 3, to: 4, scores: false, isOut: true });
+      }
     } else {
       // Simple out: batter runs to first
       movements.push({ from: 0, to: 1, scores: false, isBatter: true, isOut: true });
-      // If description mentions a runner scoring (e.g. fielder's choice)
+      // If description mentions a runner scoring
       if (desc.includes("scores") && runnersOn?.third) {
         movements.push({ from: 3, to: 4, scores: true });
       }
@@ -69,7 +75,7 @@ function computeRunnerMovements(event, runnersOn, description = "") {
     return movements;
   }
 
-  // On a hit, advance all runners
+  // On a hit or reach (error), advance all runners
   for (const runner of runners) {
     const newBase = runner.base + batterBases;
     movements.push({
@@ -170,7 +176,7 @@ export default function BaseRunners3D({
     [movements]
   );
 
-  const isOutPlay = event === "Out";
+  const isOutPlay = isOutEvent(event);
 
   // Figure out which bases have animated runners so we don't double-show them as static
   const animatedBases = useMemo(() => {
@@ -344,4 +350,4 @@ function ScoreFlash({ runnerRef, color }) {
   );
 }
 
-export { BASES, computeRunnerMovements, getTeamColor };
+export { BASES, computeRunnerMovements };

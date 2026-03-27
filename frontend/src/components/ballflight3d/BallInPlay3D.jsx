@@ -9,6 +9,10 @@ import CameraRig from "./CameraRig";
 import ThrowToBase, { parseThrowTargets } from "./ThrowToBase";
 import OutIndicator from "./OutIndicator";
 import {
+  isHitEvent, isOutEvent, isFlyOut, isGroundOut,
+  isDoublePlay as isDoublePlayEvent, eventDisplayLabel,
+} from "./eventClassifier";
+import {
   computeTrajectory,
   sampleTrajectory,
   sprayAngleFromMLBAM,
@@ -63,10 +67,11 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
     return { x: last.x, z: -last.y }; // y in physics = -z in Three.js
   }, [sampledPoints]);
 
-  // Determine throw chain (only ground balls/line drives, not fly outs/popups)
+  // Determine throw chain (only ground-type outs, not fly outs/popups)
   const throwTargets = useMemo(() => {
-    if (hitData?.event !== "Out") return [];
-    if (hitData?.trajectory === "fly_ball" || hitData?.trajectory === "popup") return [];
+    const ev = hitData?.event || "";
+    if (!isOutEvent(ev)) return [];
+    if (isFlyOut(ev)) return [];
     return parseThrowTargets(hitData?.description);
   }, [hitData]);
 
@@ -92,8 +97,8 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
   };
 
   const handleAnimationComplete = useCallback(() => {
-    const event = hitData?.event || "";
-    const isOutPlay = event === "Out" || (!["Single", "Double", "Triple", "Home Run"].includes(event) && event !== "");
+    const ev = hitData?.event || "";
+    const isOutPlay = isOutEvent(ev);
 
     if (isOutPlay && throwTargets.length > 0 && landingPos) {
       // Ground out with throw(s) — start first throw from fielder
@@ -146,8 +151,8 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
   if (!hitData) return null;
 
   const event = hitData.event || "";
-  const isHit = ["Single", "Double", "Triple", "Home Run"].includes(event);
-  const isOut = event === "Out" || (!isHit && event !== "");
+  const isHit = isHitEvent(event);
+  const isOut = isOutEvent(event);
   const accentColor = isHit ? "#22c55e" : "#ef4444";
   const isHomeRun = event === "Home Run";
 
@@ -158,10 +163,11 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
     popup: "Popup",
   }[hitData.trajectory] || "Batted Ball";
 
+  const displayEvent = eventDisplayLabel(event);
   const trajLabel = isHomeRun
     ? "HOME RUN"
-    : event
-      ? `${trajType} — ${event}`
+    : displayEvent
+      ? `${trajType} — ${displayEvent}`
       : trajType;
 
   const evLabel =
