@@ -3807,27 +3807,21 @@ th.sb-ls-total {
   color: var(--text-muted); display: block; margin-bottom: 6px;
 }
 
-/* Zone B: Matchup — batter left, vs center, pitcher right */
-.lgp-mu { margin-bottom: 10px; }
-.lgp-mu-row {
-  display: flex; align-items: center; justify-content: center; gap: 10px;
+/* Zone B: Batter full row + pitcher bottom right */
+.lgp-batter-row {
+  display: flex; align-items: baseline; justify-content: space-between;
+  padding-bottom: 8px; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.06);
 }
-.lgp-mu-side {
-  display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0;
+.lgp-batter-name { font-size: 16px; font-weight: 700; color: var(--text-bright); }
+.lgp-batter-avg { font-size: 14px; font-weight: 600; color: var(--text-muted); }
+
+.lgp-pitcher-bottom {
+  display: flex; align-items: center; gap: 6px; justify-content: flex-end;
+  padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.06); margin-top: 8px;
 }
-.lgp-mu-right {
-  flex-direction: row-reverse; text-align: right;
-}
-.lgp-mu-info { display: flex; flex-direction: column; min-width: 0; }
-.lgp-mu-name {
-  font-size: 14px; font-weight: 600; white-space: nowrap;
-  overflow: hidden; text-overflow: ellipsis;
-}
-.lgp-mu-sub { font-size: 11px; color: var(--text-muted); }
-.lgp-mu-vs {
-  font-size: 12px; color: var(--text-muted); font-weight: 700;
-  flex-shrink: 0; padding: 0 2px;
-}
+.lgp-pitcher-label { font-size: 9px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.3px; }
+.lgp-pitcher-name { font-size: 12px; font-weight: 600; color: var(--text); }
+.lgp-pitcher-stats { font-size: 11px; color: var(--text-muted); }
 
 /* Pitch sequence dots */
 .lgp-pitch-seq {

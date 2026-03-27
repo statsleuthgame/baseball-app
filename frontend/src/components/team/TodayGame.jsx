@@ -238,7 +238,7 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
                   <span className="live-ab-sub">Pitching</span>
                 </div>
                 {liveState.pitcher.gameStats && (
-                  <span className="live-ab-stat">{liveState.pitcher.gameStats.ip} IP · {liveState.pitcher.gameStats.pitches}P</span>
+                  <span className="live-ab-stat">{liveState.pitcher.gameStats.ip} IP · {liveState.pitcher.gameStats.pitches} P</span>
                 )}
               </div>
             </div>

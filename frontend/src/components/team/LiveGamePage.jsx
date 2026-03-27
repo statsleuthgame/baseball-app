@@ -94,7 +94,7 @@ export default function LiveGamePage() {
           )}
         </div>
 
-        {/* Score */}
+        {/* Score — use liveState for real-time, fallback to gameInfo */}
         <div className="lgp-score-row">
           <div className="lgp-team-col">
             <img src={gameInfo.away.logoUrl} alt={gameInfo.away.abbreviation} className="lgp-logo" />
@@ -102,9 +102,9 @@ export default function LiveGamePage() {
           </div>
           <div className="lgp-score-center">
             <div className="lgp-scores">
-              <span className="lgp-score-num">{gameInfo.away.score ?? 0}</span>
+              <span className="lgp-score-num">{liveState?.linescore?.away?.runs ?? gameInfo.away.score ?? 0}</span>
               <span className="lgp-score-dash">-</span>
-              <span className="lgp-score-num">{gameInfo.home.score ?? 0}</span>
+              <span className="lgp-score-num">{liveState?.linescore?.home?.runs ?? gameInfo.home.score ?? 0}</span>
             </div>
           </div>
           <div className="lgp-team-col">
@@ -136,30 +136,10 @@ export default function LiveGamePage() {
       {/* ===== ZONE B+C: AT-BAT + VISUAL (combined) ===== */}
       {liveState?.batter && liveState?.pitcher && (
         <div className="lgp-section">
-          {/* Batter vs Pitcher — stacked centered */}
-          <div className="lgp-mu">
-            <div className="lgp-mu-row">
-              <div className="lgp-mu-side sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${liveState.batter.id}`)}>
-                <PlayerPhoto playerId={liveState.batter.id} name={liveState.batter.fullName} size={40} />
-                <div className="lgp-mu-info">
-                  <span className="lgp-mu-name">{liveState.batter.fullName}</span>
-                  <span className="lgp-mu-sub">At Bat{liveState.batter.avg ? ` · ${liveState.batter.avg}` : ""}</span>
-                </div>
-              </div>
-              <span className="lgp-mu-vs">vs</span>
-              <div className="lgp-mu-side lgp-mu-right sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${liveState.pitcher.id}`)}>
-                <div className="lgp-mu-info" style={{ textAlign: "right" }}>
-                  <span className="lgp-mu-name">{liveState.pitcher.fullName}</span>
-                  <span className="lgp-mu-sub">
-                    {liveState.pitcher.gameStats ? `${liveState.pitcher.gameStats.ip} IP` : "Pitching"}
-                    {liveState.pitcher.gameStats && (
-                      <span style={{ color: pcColor(liveState.pitcher.gameStats.pitches) }}> · {liveState.pitcher.gameStats.pitches}P</span>
-                    )}
-                  </span>
-                </div>
-                <PlayerPhoto playerId={liveState.pitcher.id} name={liveState.pitcher.fullName} size={40} />
-              </div>
-            </div>
+          {/* Batter — full width row */}
+          <div className="lgp-batter-row sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${liveState.batter.id}`)}>
+            <span className="lgp-batter-name">{liveState.batter.fullName}</span>
+            <span className="lgp-batter-avg">{liveState.batter.avg || ".000"}</span>
           </div>
 
           {/* Strike zone OR ball-in-play visual — always present */}
@@ -198,6 +178,19 @@ export default function LiveGamePage() {
               )}
             </div>
           )}
+
+          {/* Pitcher — bottom right */}
+          <div className="lgp-pitcher-bottom sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${liveState.pitcher.id}`)}>
+            <span className="lgp-pitcher-label">Pitching</span>
+            <span className="lgp-pitcher-name">{liveState.pitcher.fullName}</span>
+            <span className="lgp-pitcher-stats">
+              {liveState.pitcher.gameStats ? `${liveState.pitcher.gameStats.ip} IP` : ""}
+              {liveState.pitcher.gameStats && (
+                <span style={{ color: pcColor(liveState.pitcher.gameStats.pitches) }}> · {liveState.pitcher.gameStats.pitches} P</span>
+              )}
+              {liveState.pitcher.gameStats ? ` · ${liveState.pitcher.gameStats.k} K` : ""}
+            </span>
+          </div>
         </div>
       )}
 
