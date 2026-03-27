@@ -360,7 +360,17 @@ export const fetchLiveGameState = async (gamePk) => {
             distance: hd.totalDistance ? Math.round(hd.totalDistance) : null,
             trajectory: hd.trajectory,
           } : null;
-          return { action, pitchInfo, call, hitData };
+          const pCoords = e.pitchData?.coordinates;
+          const pitch = {
+            action, pitchInfo, call, hitData, code: d.code || "",
+            pX: pCoords?.pX ?? null,
+            pZ: pCoords?.pZ ?? null,
+            szTop: e.pitchData?.strikeZoneTop ?? null,
+            szBot: e.pitchData?.strikeZoneBottom ?? null,
+            isBall: !!d.isBall, isStrike: !!d.isStrike, isInPlay: !!d.isInPlay,
+            count: e.count ? `${e.count.balls}-${e.count.strikes}` : null,
+          };
+          return pitch;
         })
         .slice(-6),
       onDeck: ls.offense?.onDeck ? { id: ls.offense.onDeck.id, fullName: ls.offense.onDeck.fullName } : null,

@@ -159,22 +159,30 @@ export default function LiveGamePage() {
             </div>
           </div>
 
-          {/* Pitch sequence dots */}
-          {liveState.currentAtBat?.length > 0 && (
-            <div className="lgp-pitch-seq">
-              <span className="lgp-pitch-seq-label">This AB</span>
-              <div className="lgp-pitch-dots">
-                {liveState.currentAtBat.map((p, i) => {
-                  const color = p.call === "Ball" ? "#22c55e" : p.call === "Foul" || p.call === "Foul Tip" ? "#f59e0b" : p.call?.includes("In play") ? "#3b82f6" : "#ef4444";
-                  return <span key={i} className="lgp-pitch-dot" style={{ background: color }} title={p.call} />;
-                })}
+          {/* Strike zone + pitch plot */}
+          {liveState.currentAtBat?.length > 0 && !liveState.lastHitData?.event && (
+            <div className="lgp-zone-wrap">
+              <StrikeZone pitches={liveState.currentAtBat} />
+              <div className="lgp-pitch-info">
+                <div className="lgp-pitch-dots">
+                  {liveState.currentAtBat.map((p, i) => {
+                    let strikes = 0;
+                    for (let j = 0; j < i; j++) {
+                      const prev = liveState.currentAtBat[j];
+                      if (prev.isStrike && prev.code !== "F") strikes++;
+                    }
+                    const isFoulAfterTwo = (p.code === "F") && strikes >= 2;
+                    const color = p.isBall ? "#22c55e" : (p.code === "F" && !isFoulAfterTwo) ? "#f59e0b" : p.isInPlay ? "#3b82f6" : "#ef4444";
+                    return <span key={i} className="lgp-pitch-dot" style={{ background: color }} title={`${p.call} ${p.count || ""}`} />;
+                  })}
+                </div>
+                <span className="lgp-pitch-last">
+                  {(() => {
+                    const p = liveState.currentAtBat[liveState.currentAtBat.length - 1];
+                    return `${p.pitchInfo || ""} — ${p.call}`;
+                  })()}
+                </span>
               </div>
-              <span className="lgp-pitch-last">
-                {(() => {
-                  const p = liveState.currentAtBat[liveState.currentAtBat.length - 1];
-                  return `${p.pitchInfo || ""} — ${p.call}`;
-                })()}
-              </span>
             </div>
           )}
         </div>
@@ -225,40 +233,48 @@ export default function LiveGamePage() {
         </div>
       )}
 
-      {/* ===== ZONE E: LINESCORE ===== */}
-      {liveState?.linescore && (
-        <div className="lgp-section">
-          <div className="lgp-ls-scroll">
-            <table className="live-ls-table">
-              <thead>
-                <tr>
-                  <th></th>
-                  {(liveState.linescore?.innings || []).map((inn) => <th key={inn.num}>{inn.num}</th>)}
-                  <th className="live-ls-total">R</th>
-                  <th className="live-ls-total">H</th>
-                  <th className="live-ls-total">E</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="live-ls-team">{gameInfo.away.abbreviation}</td>
-                  {(liveState.linescore?.innings || []).map((inn) => <td key={inn.num}>{inn.away !== "" ? inn.away : "-"}</td>)}
-                  <td className="live-ls-total">{(liveState.linescore?.away || {}).runs}</td>
-                  <td className="live-ls-total">{(liveState.linescore?.away || {}).hits}</td>
-                  <td className="live-ls-total">{(liveState.linescore?.away || {}).errors}</td>
-                </tr>
-                <tr>
-                  <td className="live-ls-team">{gameInfo.home.abbreviation}</td>
-                  {(liveState.linescore?.innings || []).map((inn) => <td key={inn.num}>{inn.home !== "" ? inn.home : "-"}</td>)}
-                  <td className="live-ls-total">{(liveState.linescore?.home || {}).runs}</td>
-                  <td className="live-ls-total">{(liveState.linescore?.home || {}).hits}</td>
-                  <td className="live-ls-total">{(liveState.linescore?.home || {}).errors}</td>
-                </tr>
-              </tbody>
-            </table>
+      {/* ===== ZONE E: LINESCORE (always 9 innings) ===== */}
+      {liveState?.linescore && (() => {
+        const innings = liveState.linescore?.innings || [];
+        const maxInn = Math.max(9, innings.length);
+        const fullInnings = Array.from({ length: maxInn }, (_, i) => {
+          const real = innings.find((inn) => inn.num === i + 1);
+          return { num: i + 1, away: real?.away ?? "", home: real?.home ?? "" };
+        });
+        return (
+          <div className="lgp-section">
+            <div className="lgp-ls-scroll">
+              <table className="live-ls-table">
+                <thead>
+                  <tr>
+                    <th></th>
+                    {fullInnings.map((inn) => <th key={inn.num}>{inn.num}</th>)}
+                    <th className="live-ls-total">R</th>
+                    <th className="live-ls-total">H</th>
+                    <th className="live-ls-total">E</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="live-ls-team">{gameInfo.away.abbreviation}</td>
+                    {fullInnings.map((inn) => <td key={inn.num} className={inn.away === "" ? "live-ls-future" : ""}>{inn.away !== "" ? inn.away : "-"}</td>)}
+                    <td className="live-ls-total">{(liveState.linescore?.away || {}).runs}</td>
+                    <td className="live-ls-total">{(liveState.linescore?.away || {}).hits}</td>
+                    <td className="live-ls-total">{(liveState.linescore?.away || {}).errors}</td>
+                  </tr>
+                  <tr>
+                    <td className="live-ls-team">{gameInfo.home.abbreviation}</td>
+                    {fullInnings.map((inn) => <td key={inn.num} className={inn.home === "" ? "live-ls-future" : ""}>{inn.home !== "" ? inn.home : "-"}</td>)}
+                    <td className="live-ls-total">{(liveState.linescore?.home || {}).runs}</td>
+                    <td className="live-ls-total">{(liveState.linescore?.home || {}).hits}</td>
+                    <td className="live-ls-total">{(liveState.linescore?.home || {}).errors}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
 
       {/* ===== ZONE F: SCORING SUMMARY ===== */}
       {liveState?.scoringPlays?.length > 0 && (
@@ -305,6 +321,68 @@ export default function LiveGamePage() {
         </button>
       </div>
     </div>
+  );
+}
+
+function StrikeZone({ pitches }) {
+  if (!pitches?.length) return null;
+  // Strike zone: pX in feet from center of plate, pZ in feet height
+  // Plate is 17 inches = 1.417 feet wide, so ±0.708 from center
+  // Zone top/bottom varies per batter — use first pitch with data
+  const withCoords = pitches.filter((p) => p.pX != null && p.pZ != null);
+  if (!withCoords.length) return null;
+
+  const szTop = withCoords.find((p) => p.szTop)?.szTop || 3.4;
+  const szBot = withCoords.find((p) => p.szBot)?.szBot || 1.5;
+
+  // SVG: 120x140, zone centered at (60, 70)
+  const W = 120, H = 140;
+  const zoneL = 30, zoneR = 90; // plate width in SVG
+  const zoneT = 25, zoneB = 105; // zone top/bottom in SVG
+
+  // Map pitch coords to SVG
+  const mapX = (pX) => 60 + (pX / 1.0) * 30; // ~30px per foot
+  const mapZ = (pZ) => {
+    const zoneMid = (szTop + szBot) / 2;
+    const zoneH = szTop - szBot;
+    return 65 - ((pZ - zoneMid) / zoneH) * (zoneB - zoneT);
+  };
+
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} className="lgp-strike-zone">
+      {/* Zone box */}
+      <rect x={zoneL} y={zoneT} width={zoneR - zoneL} height={zoneB - zoneT} fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
+      {/* Zone grid (3x3) */}
+      {[1, 2].map((i) => (
+        <g key={i}>
+          <line x1={zoneL + (zoneR - zoneL) * i / 3} y1={zoneT} x2={zoneL + (zoneR - zoneL) * i / 3} y2={zoneB} stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" />
+          <line x1={zoneL} y1={zoneT + (zoneB - zoneT) * i / 3} x2={zoneR} y2={zoneT + (zoneB - zoneT) * i / 3} stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" />
+        </g>
+      ))}
+      {/* Plate */}
+      <polygon points={`${60 - 12},${zoneB + 15} ${60 - 8},${zoneB + 20} ${60 + 8},${zoneB + 20} ${60 + 12},${zoneB + 15} ${60},${zoneB + 12}`} fill="rgba(255,255,255,0.15)" />
+
+      {/* Pitch dots */}
+      {withCoords.map((p, i) => {
+        const x = mapX(p.pX);
+        const z = mapZ(p.pZ);
+        let strikes = 0;
+        for (let j = 0; j < i; j++) {
+          const prev = withCoords[j];
+          if (prev.isStrike && prev.code !== "F") strikes++;
+        }
+        const isFoulAfterTwo = (p.code === "F") && strikes >= 2;
+        const color = p.isBall ? "#22c55e" : (p.code === "F" && !isFoulAfterTwo) ? "#f59e0b" : p.isInPlay ? "#3b82f6" : "#ef4444";
+        const isLast = i === withCoords.length - 1;
+        return (
+          <g key={i}>
+            <circle cx={x} cy={z} r={isLast ? 6 : 4} fill={color} opacity={isLast ? 1 : 0.6} />
+            {isLast && <circle cx={x} cy={z} r="6" fill="none" stroke="#fff" strokeWidth="1.5" opacity="0.5" />}
+            <text x={x} y={z + 1} textAnchor="middle" fontSize="5" fill="#fff" fontWeight="700" dominantBaseline="middle">{i + 1}</text>
+          </g>
+        );
+      })}
+    </svg>
   );
 }
 
