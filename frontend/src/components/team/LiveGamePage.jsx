@@ -162,9 +162,13 @@ export default function LiveGamePage() {
                   <div className="lgp-pitch-dots">
                     {liveState.currentAtBat.map((p, i) => {
                       const isFoul = p.code === "F";
+                      // Foul is orange ONLY if count didn't change (was already 2 strikes before this pitch)
+                      // If count shows 2 strikes and it's a foul, the count stayed at 2 — meaning we were already at 2
+                      // But if the PREVIOUS pitch had fewer strikes, this foul advanced the count TO 2 — should be red
                       const countStrikes = p.count ? parseInt(p.count.split("-")[1]) || 0 : 0;
-                      const wasAlreadyTwoStrikes = isFoul && countStrikes >= 2;
-                      const color = p.isBall ? "#22c55e" : wasAlreadyTwoStrikes ? "#f59e0b" : p.isInPlay ? "#3b82f6" : "#ef4444";
+                      const prevStrikes = i > 0 && liveState.currentAtBat[i - 1].count ? parseInt(liveState.currentAtBat[i - 1].count.split("-")[1]) || 0 : 0;
+                      const foulWithNoStrikeAdvance = isFoul && countStrikes === prevStrikes && countStrikes >= 2;
+                      const color = p.isBall ? "#22c55e" : foulWithNoStrikeAdvance ? "#f59e0b" : p.isInPlay ? "#3b82f6" : "#ef4444";
                       return <span key={i} className="lgp-pitch-dot" style={{ background: color }} title={`${p.call} ${p.count || ""}`} />;
                     })}
                   </div>
@@ -377,7 +381,10 @@ function StrikeZone({ pitches }) {
         const y = mapZ(p.pZ);
         const isFoul = p.code === "F";
         const countStrikes = p.count ? parseInt(p.count.split("-")[1]) || 0 : 0;
-        const color = p.isBall ? "#22c55e" : (isFoul && countStrikes >= 2) ? "#f59e0b" : p.isInPlay ? "#3b82f6" : "#ef4444";
+        const prevIdx = withCoords.indexOf(p) > 0 ? withCoords.indexOf(p) - 1 : -1;
+        const prevStrikes = prevIdx >= 0 && withCoords[prevIdx].count ? parseInt(withCoords[prevIdx].count.split("-")[1]) || 0 : 0;
+        const foulNoAdvance = isFoul && countStrikes === prevStrikes && countStrikes >= 2;
+        const color = p.isBall ? "#22c55e" : foulNoAdvance ? "#f59e0b" : p.isInPlay ? "#3b82f6" : "#ef4444";
         const isLast = i === withCoords.length - 1;
         return (
           <g key={i}>

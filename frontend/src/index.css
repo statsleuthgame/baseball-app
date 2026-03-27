@@ -3791,7 +3791,7 @@ th.sb-ls-total {
 .lgp-inning { font-size: 18px; font-weight: 800; color: var(--text-bright); }
 .lgp-diamond-inline { flex-shrink: 0; }
 .lgp-base { fill: transparent; stroke: var(--text-muted); stroke-width: 1.5; opacity: 0.3; }
-.lgp-base.on { fill: var(--team-secondary); stroke: var(--team-secondary); opacity: 1; filter: drop-shadow(0 0 4px var(--team-secondary)); }
+.lgp-base.on { fill: var(--team-secondary); stroke: var(--team-secondary); opacity: 1; }
 .lgp-outs { display: flex; align-items: center; gap: 4px; }
 .lgp-out-pip { width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--text-muted); background: transparent; }
 .lgp-out-pip.on { background: var(--team-secondary); border-color: var(--team-secondary); }
@@ -3891,11 +3891,11 @@ th.sb-ls-total {
   background: rgba(255,255,255,0.02);
 }
 
-/* Due Up stats — single line */
+/* Due Up stats — all on one row */
 .lgp-due-name { font-size: 12px; font-weight: 600; }
-.lgp-due-stats { font-size: 11px; color: var(--text-muted); margin-left: 4px; }
-.lgp-due-player { display: flex; align-items: center; gap: 0; font-size: 12px; }
-.lgp-due-list { display: flex; flex-direction: column; gap: 2px; margin-top: 4px; }
+.lgp-due-stats { font-size: 10px; color: var(--text-muted); margin-left: 3px; }
+.lgp-due-player { display: flex; align-items: center; white-space: nowrap; }
+.lgp-due-list { display: flex; gap: 10px; margin-top: 4px; flex-wrap: wrap; }
 
 /* Smaller ball-in-play metrics on live page */
 .lgp .bip-metric-val { font-size: 20px; }
