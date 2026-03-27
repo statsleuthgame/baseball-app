@@ -55,22 +55,32 @@ export default function LiveGamePage() {
     enabled: boxOpen && !!gamePk, staleTime: 1000 * 60, refetchInterval: boxOpen ? 1000 * 30 : false,
   });
 
-  // Auto-collapse ball-in-play visual after 20 seconds
+  // Auto-collapse ball-in-play visual after 30 seconds
   const [bipCollapsed, setBipCollapsed] = useState(false);
   const bipTimerRef = useRef(null);
   const lastHitRef = useRef(null);
+  // Store pre-play runner state so the 3D viewer animates from the correct starting positions
+  const prevRunnersRef = useRef({ first: false, second: false, third: false });
+  const [bipRunners, setBipRunners] = useState({ first: false, second: false, third: false });
 
   useEffect(() => {
     const hitKey = liveState?.lastHitData ? `${liveState.lastHitData.x}-${liveState.lastHitData.y}` : null;
     if (hitKey && hitKey !== lastHitRef.current) {
-      // New ball in play — show it and start 20s timer
+      // New ball in play — snapshot the PREVIOUS poll's runners (pre-play state)
+      setBipRunners({ ...prevRunnersRef.current });
       lastHitRef.current = hitKey;
       setBipCollapsed(false);
       if (bipTimerRef.current) clearTimeout(bipTimerRef.current);
       bipTimerRef.current = setTimeout(() => setBipCollapsed(true), 30000);
     }
+    // Always update prevRunners to current state for next time
+    prevRunnersRef.current = {
+      first: !!liveState?.onFirst,
+      second: !!liveState?.onSecond,
+      third: !!liveState?.onThird,
+    };
     return () => { if (bipTimerRef.current) clearTimeout(bipTimerRef.current); };
-  }, [liveState?.lastHitData]);
+  }, [liveState?.lastHitData, liveState?.onFirst, liveState?.onSecond, liveState?.onThird]);
 
   if (isLoading) return <LoadingSpinner text="Loading game..." />;
   if (!gameInfo) return <div className="matchup-empty"><h2>Game not found</h2></div>;
@@ -190,11 +200,7 @@ export default function LiveGamePage() {
                   <BallInPlay3D
                     hitData={liveState.lastHitData}
                     venueTeamId={gameInfo.home.id}
-                    runnersOn={{
-                      first: !!liveState.onFirst,
-                      second: !!liveState.onSecond,
-                      third: !!liveState.onThird,
-                    }}
+                    runnersOn={bipRunners}
                   />
                 </Suspense>
               </div>
