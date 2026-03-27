@@ -136,7 +136,8 @@ export default function BaseRunners3D({
           ballProgress={ballProgress}
           isBatter={movement.isBatter}
           scores={movement.scores}
-          startDelay={movement.isBatter ? 0.1 : 0}
+          startDelay={movement.isBatter ? 0.15 : 0}
+          numBases={Math.min(movement.to - movement.from, 4)}
         />
       ))}
     </group>
@@ -158,10 +159,17 @@ function StaticRunner({ position }) {
 /**
  * Animated runner that follows a path around the bases.
  */
-function AnimatedRunner({ path, ballProgress, isBatter, scores, startDelay = 0 }) {
+/**
+ * @param {number} numBases — how many bases the runner is covering (1-4)
+ */
+function AnimatedRunner({ path, ballProgress, isBatter, scores, startDelay = 0, numBases = 1 }) {
   const meshRef = useRef();
-  const trailRef = useRef();
+  const elapsedRef = useRef(0);
+  const startedRef = useRef(false);
   const trailPositions = useRef([]);
+
+  // ~4 seconds per base — realistic MLB base running speed
+  const totalRunTime = numBases * 4;
 
   // Pre-compute trail geometry
   const maxTrailLen = 20;
@@ -173,18 +181,26 @@ function AnimatedRunner({ path, ballProgress, isBatter, scores, startDelay = 0 }
     return geo;
   }, []);
 
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!meshRef.current || !path?.length) return;
 
-    // Runners start moving when ball is ~60% through flight (after contact)
-    // Batter starts slightly later
-    const runStart = 0.5 + startDelay;
-    const runProgress = Math.max(0, Math.min(1, (ballProgress - runStart) / (1 - runStart)));
+    // Start running once ball is ~50% through flight
+    if (ballProgress > 0.5 + startDelay) {
+      startedRef.current = true;
+    }
 
-    // Ease the running with acceleration then deceleration
-    const eased = runProgress < 0.5
-      ? 2 * runProgress * runProgress
-      : 1 - Math.pow(-2 * runProgress + 2, 2) / 2;
+    if (!startedRef.current) return;
+
+    // Accumulate real elapsed time
+    elapsedRef.current += delta;
+    const runProgress = Math.min(elapsedRef.current / totalRunTime, 1);
+
+    // Ease: accelerate out of the box, steady in the middle, slight decel at the base
+    const eased = runProgress < 0.15
+      ? (runProgress / 0.15) * (runProgress / 0.15) * 0.15
+      : runProgress > 0.9
+      ? 0.9 + (1 - Math.pow(1 - (runProgress - 0.9) / 0.1, 2)) * 0.1
+      : runProgress;
 
     const pathIdx = Math.min(Math.floor(eased * (path.length - 1)), path.length - 2);
     const pathFrac = eased * (path.length - 1) - pathIdx;
@@ -197,12 +213,14 @@ function AnimatedRunner({ path, ballProgress, isBatter, scores, startDelay = 0 }
 
     meshRef.current.position.set(x, 0.5, z);
 
-    // Running bob effect
-    const bob = Math.abs(Math.sin(runProgress * Math.PI * 8)) * 1.5;
-    meshRef.current.position.y = 0.5 + bob;
+    // Running bob effect — quicker stride
+    if (runProgress > 0 && runProgress < 1) {
+      const bob = Math.abs(Math.sin(elapsedRef.current * 6)) * 1.2;
+      meshRef.current.position.y = 0.5 + bob;
+    }
 
     // Scale pulse while running
-    const scale = runProgress > 0 && runProgress < 1 ? 1 + Math.sin(runProgress * Math.PI * 6) * 0.1 : 1;
+    const scale = runProgress > 0 && runProgress < 1 ? 1 + Math.sin(elapsedRef.current * 5) * 0.08 : 1;
     meshRef.current.scale.setScalar(scale);
 
     // Trail
@@ -239,25 +257,30 @@ function AnimatedRunner({ path, ballProgress, isBatter, scores, startDelay = 0 }
       </mesh>
 
       {/* Score flash (if runner scores) */}
-      {scores && <ScoreFlash ballProgress={ballProgress} />}
+      {scores && <ScoreFlash runnerRef={meshRef} />}
     </group>
   );
 }
 
 /**
  * Flash effect at home plate when a runner scores.
+ * Triggers when the runner mesh gets close to home plate (origin).
  */
-function ScoreFlash({ ballProgress }) {
+function ScoreFlash({ runnerRef }) {
   const ringRef = useRef();
   const flashedRef = useRef(false);
 
   useFrame(() => {
     if (!ringRef.current) return;
 
-    // Flash when ball progress is near end
-    if (ballProgress > 0.95 && !flashedRef.current) {
-      flashedRef.current = true;
-      ringRef.current.visible = true;
+    // Flash when runner is near home plate
+    if (runnerRef?.current && !flashedRef.current) {
+      const pos = runnerRef.current.position;
+      const distToHome = Math.sqrt(pos.x * pos.x + pos.z * pos.z);
+      if (distToHome < 10) {
+        flashedRef.current = true;
+        ringRef.current.visible = true;
+      }
     }
 
     if (ringRef.current.visible) {
