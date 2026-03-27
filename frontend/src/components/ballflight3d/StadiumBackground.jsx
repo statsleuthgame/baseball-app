@@ -232,30 +232,33 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
 
   return (
     <group>
-      {/* Seating bowl (concrete) */}
-      <mesh geometry={bowlGeo}>
-        <meshLambertMaterial color="#3a3a50" side={THREE.DoubleSide} />
-      </mesh>
-
-      {/* Instanced seat section blocks */}
-      {seatCount > 0 && (
-        <instancedMesh
-          ref={seatMeshRef}
-          args={[seatBlockGeo, null, seatCount]}
-          frustumCulled={false}
-        >
-          <meshLambertMaterial vertexColors />
-        </instancedMesh>
-      )}
-
-      {/* Fascia accent with team color */}
-      {fasciaGeo && (
-        <mesh geometry={fasciaGeo}>
-          <meshLambertMaterial color={primaryColor} emissive={primaryColor} emissiveIntensity={0.3} side={THREE.DoubleSide} />
+      {/* Rotate bowl + seats to face the outfield (-Z direction) */}
+      <group rotation={[0, Math.PI, 0]}>
+        {/* Seating bowl (concrete) */}
+        <mesh geometry={bowlGeo}>
+          <meshLambertMaterial color="#3a3a50" side={THREE.DoubleSide} />
         </mesh>
-      )}
 
-      {/* Sky dome */}
+        {/* Instanced seat section blocks */}
+        {seatCount > 0 && (
+          <instancedMesh
+            ref={seatMeshRef}
+            args={[seatBlockGeo, null, seatCount]}
+            frustumCulled={false}
+          >
+            <meshLambertMaterial vertexColors />
+          </instancedMesh>
+        )}
+
+        {/* Fascia accent with team color */}
+        {fasciaGeo && (
+          <mesh geometry={fasciaGeo}>
+            <meshLambertMaterial color={primaryColor} emissive={primaryColor} emissiveIntensity={0.3} side={THREE.DoubleSide} />
+          </mesh>
+        )}
+      </group>
+
+      {/* Sky dome (not rotated) */}
       <mesh material={skyMat}>
         <sphereGeometry args={[600, 24, 16]} />
       </mesh>
