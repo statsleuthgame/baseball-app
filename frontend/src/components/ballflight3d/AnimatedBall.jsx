@@ -1,5 +1,5 @@
 import { useRef, useMemo, useState } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
 /**
@@ -41,6 +41,7 @@ export default function AnimatedBall({
   const trailRef = useRef();
   const glowRef = useRef();
   const progressRef = useRef(0);
+  const { camera } = useThree();
   const [landed, setLanded] = useState(false);
   const [behindFence, setBehindFence] = useState(false);
   const trailPositions = useRef([]);
@@ -94,7 +95,7 @@ export default function AnimatedBall({
       ballRef.current.visible = !behindFence;
 
       // Ball gets smaller at apex (distance effect) and larger close up
-      const distFromCamera = ballRef.current.position.length();
+      const distFromCamera = camera.position.distanceTo(ballRef.current.position);
       const scale = Math.max(0.5, Math.min(2, distFromCamera / 200));
       ballRef.current.scale.setScalar(scale);
     }

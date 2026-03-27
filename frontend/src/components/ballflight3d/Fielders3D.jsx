@@ -1,4 +1,4 @@
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -129,7 +129,7 @@ function FielderDot({
   const targetPos = useRef(new THREE.Vector3(basePosition.x, 0.5, basePosition.z));
 
   // Determine target: if this fielder is active and ball is in flight, move toward landing
-  useMemo(() => {
+  useEffect(() => {
     if (isActive && landingPos && isAnimating) {
       targetPos.current.set(landingPos.x, 0.5, landingPos.z);
     } else {
@@ -164,10 +164,7 @@ function FielderDot({
       meshRef.current.scale.setScalar(scale);
     } else {
       // Smoothly return to base position
-      meshRef.current.position.lerp(
-        new THREE.Vector3(basePosition.x, 0.5, basePosition.z),
-        delta * 3
-      );
+      meshRef.current.position.lerp(targetPos.current, delta * 3);
       meshRef.current.scale.setScalar(1);
     }
   });

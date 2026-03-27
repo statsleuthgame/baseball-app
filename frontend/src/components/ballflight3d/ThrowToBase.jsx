@@ -1,4 +1,4 @@
-import { useRef, useMemo, useState } from "react";
+import { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -52,7 +52,6 @@ export function parseThrowTarget(description) {
  */
 export default function ThrowToBase({ fromPos, targetBase, onComplete, throwSpeed = 0.6 }) {
   const ballRef = useRef();
-  const trailRef = useRef();
   const elapsedRef = useRef(0);
   const completedRef = useRef(false);
 

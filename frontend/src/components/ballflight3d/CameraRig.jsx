@@ -73,7 +73,7 @@ export default function CameraRig({
     camera.updateProjectionMatrix();
     currentLook.current.set(...p.lookAt);
     camera.lookAt(currentLook.current);
-  }, []);
+  }, [preset, camera]);
 
   useFrame((_, delta) => {
     const p = CAMERA_PRESETS[preset] || CAMERA_PRESETS.broadcast;

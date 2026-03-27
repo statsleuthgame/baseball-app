@@ -17,11 +17,7 @@ const RHO = 0.0023769; // air density slug/ft³ (sea level, ~70°F)
 const CD = 0.35; // drag coefficient for a baseball
 const BALL_RADIUS = 0.121; // ft (2.9 inches diameter / 2)
 const BALL_AREA = Math.PI * BALL_RADIUS * BALL_RADIUS;
-const BALL_MASS = 0.3125; // slugs (5 oz / 16 = 0.3125 lb, already in slugs ≈ 0.00971 but let's use lbs and adjust)
-
-// Use simpler drag factor: k = ½ ρ CD A / m
-// With mass in lbs (divide G out), we work in ft/s units directly.
-// Effective drag deceleration = k * v²  where k ≈ 0.0015 per foot (empirical fit)
+// Empirical drag factor (per-foot deceleration coefficient, tuned to match real trajectories)
 const DRAG_K = 0.0015;
 
 const DEG_TO_RAD = Math.PI / 180;

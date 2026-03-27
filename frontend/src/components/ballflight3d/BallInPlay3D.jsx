@@ -39,6 +39,7 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
   const [throwIndex, setThrowIndex] = useState(-1); // -1 = no throw, 0+ = which throw in chain
   const [throwFromPos, setThrowFromPos] = useState(null);
   const [outPositions, setOutPositions] = useState([]); // array of positions for OUT indicators
+  const timersRef = useRef([]);
 
   // Compute trajectory from hit data
   const { sampledPoints, duration, apexHeight } = useMemo(() => {
@@ -78,6 +79,8 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
   // Auto-start animation after a short delay
   useEffect(() => {
     if (!hitData) return;
+    timersRef.current.forEach(id => clearTimeout(id));
+    timersRef.current = [];
     setIsPlaying(false);
     setShowMetrics(false);
     setBallProgress(0);
@@ -86,7 +89,11 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
     setOutPositions([]);
 
     const timer = setTimeout(() => setIsPlaying(true), 500);
-    return () => clearTimeout(timer);
+    timersRef.current.push(timer);
+    return () => {
+      timersRef.current.forEach(id => clearTimeout(id));
+      timersRef.current = [];
+    };
   }, [hitData]);
 
   const BASE_POS = {
@@ -107,9 +114,9 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
     } else if (isOutPlay) {
       // Fly out / popup — show OUT at catch position
       setOutPositions([landingPos ? { x: landingPos.x, y: 5, z: landingPos.z } : null]);
-      setTimeout(() => setShowMetrics(true), 800);
+      timersRef.current.push(setTimeout(() => setShowMetrics(true), 800));
     } else {
-      setTimeout(() => setShowMetrics(true), 300);
+      timersRef.current.push(setTimeout(() => setShowMetrics(true), 300));
     }
   }, [hitData, throwTargets, landingPos]);
 
@@ -127,7 +134,7 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
       setThrowIndex(nextIndex);
     } else {
       // All throws done
-      setTimeout(() => setShowMetrics(true), 800);
+      timersRef.current.push(setTimeout(() => setShowMetrics(true), 800));
     }
   }, [throwTargets, throwIndex]);
 
@@ -137,13 +144,15 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
   }, []);
 
   const handleReplay = useCallback(() => {
+    timersRef.current.forEach(id => clearTimeout(id));
+    timersRef.current = [];
     setIsPlaying(false);
     setShowMetrics(false);
     setBallProgress(0);
     setThrowIndex(-1);
     setThrowFromPos(null);
     setOutPositions([]);
-    setTimeout(() => setIsPlaying(true), 200);
+    timersRef.current.push(setTimeout(() => setIsPlaying(true), 200));
   }, []);
 
   const teamColor = getTeamColor(venueTeamId);

@@ -107,9 +107,6 @@ function getRunnerPath(fromBase, toBase) {
     waypoints.push(BASES[key].clone());
     current++;
   }
-  if (toBase >= 4 && fromBase !== 0) {
-    waypoints.push(BASES.home.clone());
-  }
 
   if (waypoints.length < 2) return waypoints;
 
