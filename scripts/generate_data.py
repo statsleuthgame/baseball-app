@@ -175,6 +175,7 @@ def fetch_player_detail(player_id: int) -> dict:
         "primaryPosition": p.get("primaryPosition", {}).get("abbreviation", ""),
         "mlbDebutDate": p.get("mlbDebutDate", ""),
         "currentTeam": p.get("currentTeam", {}).get("name", ""),
+        "currentTeamId": p.get("currentTeam", {}).get("id"),
         "photoUrl": f"https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/{p['id']}/headshot/67/current",
     }
 

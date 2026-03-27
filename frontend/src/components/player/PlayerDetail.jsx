@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useTeam } from "../../context/TeamContext";
 import { fetchPlayerStats } from "../../api/client";
+import ALL_TEAMS from "../../data/teams";
 import PlayerPhoto from "../common/PlayerPhoto";
 import LoadingSpinner from "../common/LoadingSpinner";
 import ErrorMessage from "../common/ErrorMessage";
@@ -58,7 +59,13 @@ export default function PlayerDetail() {
         <div className="player-actions">
           <button
             className="player-action-btn"
-            onClick={() => navigate(`/team/${teamId}/spray?player=${playerId}&team=${player.currentTeamId || teamId}`)}
+            onClick={() => {
+              // Resolve player's actual team ID: prefer explicit ID, fall back to name lookup
+              const playerTeamId = player.currentTeamId
+                || Object.values(ALL_TEAMS).find((t) => t.name === player.currentTeam)?.id
+                || teamId;
+              navigate(`/team/${teamId}/spray?player=${playerId}&team=${playerTeamId}`);
+            }}
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <circle cx="12" cy="12" r="10" />
