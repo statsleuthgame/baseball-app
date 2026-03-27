@@ -376,10 +376,11 @@ def fetch_all_spray_charts(player_id: int, df: pd.DataFrame = None) -> dict[str,
                 result_type = event if event in ("single", "double", "triple", "home_run") else "out"
                 summary[result_type] = summary.get(result_type, 0) + 1
                 summary["total"] += 1
-                # Determine opponent team
+                # Determine opponent team using inning_topbot
                 ht = row.get("home_team", "")
                 at = row.get("away_team", "")
-                opponent = at if ht == home_team else ht
+                is_batter_home = str(row.get("inning_topbot", "")).strip().lower() == "bot"
+                opponent = at if is_batter_home else ht
 
                 # Look up pitcher name from ID (player_name is the batter, not the pitcher)
                 pid = int(row["pitcher"]) if pd.notna(row.get("pitcher")) else None

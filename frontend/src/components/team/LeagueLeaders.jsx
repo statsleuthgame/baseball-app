@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
 import { fetchLeagueLeaders } from "../../api/client";
 import { formatAvg } from "../../utils/formatters";
@@ -24,6 +25,7 @@ const PITCHING_CATS = [
 
 export default function LeagueLeaders() {
   const { teamId } = useTeam();
+  const navigate = useNavigate();
   const [tab, setTab] = useState("hitting");
 
   const { data } = useQuery({
@@ -46,15 +48,19 @@ export default function LeagueLeaders() {
       </div>
       <div className="leaders-categories">
         {categories.map(({ key, label, fmt }) => {
-          const leaders = source?.[key];
+          const leaders = source?.[key]?.slice(0, 5);
           if (!leaders?.length) return null;
           return (
             <div key={key} className="leaders-category">
               <h4 className="leaders-cat-title">{label}</h4>
-              {leaders.map((l) => {
+              {leaders.map((l, idx) => {
                 const isOurTeam = l.teamId == teamId;
                 return (
-                  <div key={l.rank} className={`leaders-row ${isOurTeam ? "our-team" : ""}`}>
+                  <div
+                    key={idx}
+                    className={`leaders-row sb-player-link ${isOurTeam ? "our-team" : ""}`}
+                    onClick={() => l.player?.id && navigate(`/team/${teamId}/player/${l.player.id}`)}
+                  >
                     <span className="leaders-rank">{l.rank}</span>
                     <span className="leaders-name">{l.player.name}</span>
                     <span className="leaders-team">{l.team}</span>

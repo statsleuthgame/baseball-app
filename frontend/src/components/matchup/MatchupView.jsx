@@ -162,15 +162,13 @@ export default function MatchupView() {
       {game.gamePk && (
         <MatchupLineups
           gamePk={game.gamePk}
-          teamId={teamId}
-          opponentId={opponent.id}
-          usAbbr={us.abbreviation}
-          oppAbbr={opponent.abbreviation}
+          awayId={awayId}
+          homeId={homeId}
+          awayAbbr={game.away.abbreviation}
+          homeAbbr={game.home.abbreviation}
+          contextTeamId={teamId}
         />
       )}
-
-      {/* Key Injuries */}
-      <InjurySection awayId={awayId} homeId={homeId} awayAbbr={game.away.abbreviation} homeAbbr={game.home.abbreviation} />
 
       {/* Park Factors */}
       {game.venue?.id && PARK_FACTORS[game.venue.id] && (
@@ -179,16 +177,6 @@ export default function MatchupView() {
 
       {/* Hot & Cold Players */}
       <HotColdSection teamId={awayId} opponentId={homeId} usAbbr={game.away.abbreviation} oppAbbr={game.home.abbreviation} />
-
-      {/* Bullpen Availability */}
-      <BullpenSection
-        teamId={awayId}
-        opponentId={homeId}
-        usAbbr={game.away.abbreviation}
-        oppAbbr={game.home.abbreviation}
-        usStarterId={game.away.probablePitcher?.id}
-        oppStarterId={game.home.probablePitcher?.id}
-      />
 
       {/* Side-by-side pitcher arsenals */}
       {(opponentPitcher || ourPitcher) && (
@@ -240,6 +228,19 @@ export default function MatchupView() {
         </div>
       )}
 
+      {/* Key Injuries */}
+      <InjurySection awayId={awayId} homeId={homeId} awayAbbr={game.away.abbreviation} homeAbbr={game.home.abbreviation} />
+
+      {/* Bullpen Availability */}
+      <BullpenSection
+        teamId={awayId}
+        opponentId={homeId}
+        usAbbr={game.away.abbreviation}
+        oppAbbr={game.home.abbreviation}
+        usStarterId={game.away.probablePitcher?.id}
+        oppStarterId={game.home.probablePitcher?.id}
+      />
+
       {/* Park history */}
       <ParkHistory
         teamId={teamId}
@@ -258,50 +259,48 @@ export default function MatchupView() {
   );
 }
 
-function MatchupLineups({ gamePk, teamId, opponentId, usAbbr, oppAbbr }) {
+function MatchupLineups({ gamePk, awayId, homeId, awayAbbr, homeAbbr, contextTeamId }) {
   const navigate = useNavigate();
 
   // Try actual lineups first — stop polling once both are populated
-  const { data: actualUs, isLoading: loadingUs } = useQuery({
-    queryKey: ["gameLineup", gamePk, teamId],
-    queryFn: () => fetchGameLineup(gamePk, teamId),
-    enabled: !!gamePk,
+  const { data: actualAway, isLoading: loadingAway } = useQuery({
+    queryKey: ["gameLineup", gamePk, awayId],
+    queryFn: () => fetchGameLineup(gamePk, awayId),
+    enabled: !!gamePk && !!awayId,
     staleTime: 1000 * 60 * 2,
     refetchInterval: (data) => data ? false : 1000 * 60 * 2,
   });
 
-  const { data: actualOpp, isLoading: loadingOpp } = useQuery({
-    queryKey: ["gameLineup", gamePk, opponentId],
-    queryFn: () => fetchGameLineup(gamePk, opponentId),
-    enabled: !!gamePk,
+  const { data: actualHome, isLoading: loadingHome } = useQuery({
+    queryKey: ["gameLineup", gamePk, homeId],
+    queryFn: () => fetchGameLineup(gamePk, homeId),
+    enabled: !!gamePk && !!homeId,
     staleTime: 1000 * 60 * 2,
     refetchInterval: (data) => data ? false : 1000 * 60 * 2,
   });
 
-  const actualDone = !loadingUs && !loadingOpp;
+  const actualDone = !loadingAway && !loadingHome;
 
-  // Projected fallbacks — only after actual queries complete
-  const { data: projUs } = useQuery({
-    queryKey: ["projectedLineup", teamId],
-    queryFn: () => fetchProjectedLineup(teamId),
-    enabled: actualDone && !actualUs && !!teamId,
+  // Projected fallbacks for both teams — only after actual queries complete
+  const { data: projAway } = useQuery({
+    queryKey: ["projectedLineup", awayId],
+    queryFn: () => fetchProjectedLineup(awayId),
+    enabled: actualDone && !actualAway && !!awayId,
     staleTime: 1000 * 60 * 30,
   });
 
-  const { data: projOpp } = useQuery({
-    queryKey: ["projectedLineup", opponentId],
-    queryFn: () => fetchProjectedLineup(opponentId),
-    enabled: actualDone && !actualOpp && !!opponentId,
+  const { data: projHome } = useQuery({
+    queryKey: ["projectedLineup", homeId],
+    queryFn: () => fetchProjectedLineup(homeId),
+    enabled: actualDone && !actualHome && !!homeId,
     staleTime: 1000 * 60 * 30,
   });
 
-  const usLineup = actualUs || projUs;
-  const oppLineup = actualOpp || projOpp;
-  const isProjected = actualDone && !actualUs && !actualOpp;
+  const awayLineup = actualAway || projAway;
+  const homeLineup = actualHome || projHome;
+  const isProjected = actualDone && !actualAway && !actualHome;
 
-  if (!usLineup?.length && !oppLineup?.length) return null;
-
-  const rows = Math.max(usLineup?.length || 0, oppLineup?.length || 0);
+  if (!awayLineup?.length && !homeLineup?.length) return null;
 
   return (
     <div className="matchup-lineups">
@@ -313,9 +312,9 @@ function MatchupLineups({ gamePk, teamId, opponentId, usAbbr, oppAbbr }) {
       </div>
       <div className="matchup-lineups-cols">
         <div className="matchup-lineups-col">
-          <div className="matchup-lineups-col-hdr">{usAbbr}</div>
-          {(usLineup || []).map((p) => (
-            <div key={p.id} className="matchup-lineup-row sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
+          <div className="matchup-lineups-col-hdr">{awayAbbr}</div>
+          {(awayLineup || []).map((p) => (
+            <div key={p.id} className="matchup-lineup-row sb-player-link" onClick={() => navigate(`/team/${contextTeamId}/player/${p.id}`)}>
               <span className="ml-order">{p.order}</span>
               <span className="ml-name">{lastName(p.fullName)}</span>
               <span className="ml-pos">{p.position}</span>
@@ -324,9 +323,9 @@ function MatchupLineups({ gamePk, teamId, opponentId, usAbbr, oppAbbr }) {
           ))}
         </div>
         <div className="matchup-lineups-col">
-          <div className="matchup-lineups-col-hdr">{oppAbbr}</div>
-          {(oppLineup || []).map((p) => (
-            <div key={p.id} className="matchup-lineup-row sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
+          <div className="matchup-lineups-col-hdr">{homeAbbr}</div>
+          {(homeLineup || []).map((p) => (
+            <div key={p.id} className="matchup-lineup-row sb-player-link" onClick={() => navigate(`/team/${contextTeamId}/player/${p.id}`)}>
               <span className="ml-order">{p.order}</span>
               <span className="ml-name">{lastName(p.fullName)}</span>
               <span className="ml-pos">{p.position}</span>
@@ -343,35 +342,15 @@ function ParkFactorsCard({ venueId, venueName }) {
   const park = PARK_FACTORS[venueId];
   if (!park) return null;
 
-  const runBar = Math.min(Math.max(park.runs - 85, 0), 30);
-  const hrBar = Math.min(Math.max(park.hr - 85, 0), 30);
+  const tagClass = park.runs >= 103 ? "hitter" : park.runs <= 97 ? "pitcher" : "neutral";
 
   return (
-    <div className="matchup-section">
-      <h3>Park Factors</h3>
-      <div className="park-factors-card">
-        <div className="park-factor-label-row">
-          <span className="park-factor-venue">{venueName}</span>
-          <span className={`park-factor-tag ${park.runs >= 103 ? "hitter" : park.runs <= 97 ? "pitcher" : "neutral"}`}>
-            {park.label}
-          </span>
-        </div>
-        <div className="park-factor-row">
-          <span className="park-factor-stat">Runs</span>
-          <div className="park-factor-bar-bg">
-            <div className="park-factor-bar" style={{ width: `${(runBar / 30) * 100}%`, background: park.runs >= 100 ? "var(--win)" : "var(--team-secondary)" }} />
-          </div>
-          <span className="park-factor-val">{park.runs}</span>
-        </div>
-        <div className="park-factor-row">
-          <span className="park-factor-stat">HR</span>
-          <div className="park-factor-bar-bg">
-            <div className="park-factor-bar" style={{ width: `${(hrBar / 30) * 100}%`, background: park.hr >= 100 ? "var(--win)" : "var(--team-secondary)" }} />
-          </div>
-          <span className="park-factor-val">{park.hr}</span>
-        </div>
-        <span className="park-factor-note">100 = league average</span>
-      </div>
+    <div className="park-factors-inline">
+      <span className={`park-factor-tag ${tagClass}`}>{park.label}</span>
+      <span className="park-factor-stats">
+        Runs <strong>{park.runs}</strong> · HR <strong>{park.hr}</strong>
+      </span>
+      <span className="park-factor-note">100 = avg</span>
     </div>
   );
 }
@@ -397,19 +376,33 @@ function HotColdSection({ teamId, opponentId, usAbbr, oppAbbr }) {
   const hasData = usData?.hot?.length || oppData?.hot?.length;
   if (!hasData) return null;
 
-  const renderList = (players, label, teamAbbr) => {
-    if (!players?.length) return null;
+  const renderTeamCol = (data, abbr) => {
+    if (!data?.hot?.length && !data?.cold?.length) return null;
     return (
-      <div className="hotcold-group">
-        <div className="hotcold-group-title">{label} — {teamAbbr}</div>
-        {players.map((p) => (
-          <div key={p.id} className="hotcold-row sb-player-link" onClick={() => navigate(`/team/${contextTeamId}/player/${p.id}`)}>
-            <span className="hotcold-name">{lastName(p.fullName)}</span>
-            <span className="hotcold-pos">{p.position}</span>
-            <span className="hotcold-stat">{p.avg}</span>
-            <span className="hotcold-ops">{p.ops} OPS</span>
+      <div className="hotcold-team-col">
+        <div className="hotcold-team-hdr">{abbr}</div>
+        {data.hot?.length > 0 && (
+          <div className="hotcold-group">
+            <div className="hotcold-group-title hot">Hot</div>
+            {data.hot.map((p) => (
+              <div key={p.id} className="hotcold-row sb-player-link" onClick={() => navigate(`/team/${contextTeamId}/player/${p.id}`)}>
+                <span className="hotcold-name">{lastName(p.fullName)}</span>
+                <span className="hotcold-stat">{p.avg}</span>
+              </div>
+            ))}
           </div>
-        ))}
+        )}
+        {data.cold?.length > 0 && (
+          <div className="hotcold-group">
+            <div className="hotcold-group-title cold">Cold</div>
+            {data.cold.map((p) => (
+              <div key={p.id} className="hotcold-row sb-player-link" onClick={() => navigate(`/team/${contextTeamId}/player/${p.id}`)}>
+                <span className="hotcold-name">{lastName(p.fullName)}</span>
+                <span className="hotcold-stat">{p.avg}</span>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     );
   };
@@ -417,11 +410,9 @@ function HotColdSection({ teamId, opponentId, usAbbr, oppAbbr }) {
   return (
     <div className="matchup-section">
       <h3>Hot & Cold (Last 7 Games)</h3>
-      <div className="hotcold-container">
-        {renderList(usData?.hot, "Hot", usAbbr)}
-        {renderList(oppData?.hot, "Hot", oppAbbr)}
-        {renderList(usData?.cold, "Cold", usAbbr)}
-        {renderList(oppData?.cold, "Cold", oppAbbr)}
+      <div className="hotcold-side-by-side">
+        {renderTeamCol(usData, usAbbr)}
+        {renderTeamCol(oppData, oppAbbr)}
       </div>
     </div>
   );

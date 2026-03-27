@@ -1,8 +1,9 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useTeam } from "../../context/TeamContext";
 import { fetchRoster, fetchSprayChart, fetchVenues } from "../../api/client";
+import ALL_TEAMS from "../../data/teams";
 import BallparkSVG from "./BallparkSVG";
 import HitDots from "./HitDots";
 import SprayLegend from "./SprayLegend";
@@ -12,22 +13,35 @@ import ErrorMessage from "../common/ErrorMessage";
 
 const ALL_RESULTS = ["single", "double", "triple", "home_run", "out"];
 const TEAM_HOME_PARK = {
-  109: "AZ", 144: "ATL", 110: "BAL", 111: "BOS", 112: "CHC", 145: "CWS",
+  109: "ARI", 144: "ATL", 110: "BAL", 111: "BOS", 112: "CHC", 145: "CWS",
   113: "CIN", 114: "CLE", 115: "COL", 116: "DET", 117: "HOU", 118: "KC",
   108: "LAA", 119: "LAD", 146: "MIA", 158: "MIL", 142: "MIN", 121: "NYM",
   147: "NYY", 133: "ATH", 143: "PHI", 134: "PIT", 135: "SD", 137: "SF",
   136: "SEA", 138: "STL", 139: "TB", 140: "TEX", 141: "TOR", 120: "WSH",
 };
 
+const RESULT_LABELS = {
+  single: "Single",
+  double: "Double",
+  triple: "Triple",
+  home_run: "Home Run",
+  out: "Out",
+};
+
+const teamList = Object.values(ALL_TEAMS).sort((a, b) => a.name.localeCompare(b.name));
+
 export default function SprayChart() {
   const { teamId } = useTeam();
   const [searchParams] = useSearchParams();
   const initialPlayer = searchParams.get("player");
+  const initialTeam = searchParams.get("team");
 
+  const [selectedTeamId, setSelectedTeamId] = useState(initialTeam ? Number(initialTeam) : teamId);
   const [selectedPlayer, setSelectedPlayer] = useState(initialPlayer || "");
-  const [selectedPark, setSelectedPark] = useState(TEAM_HOME_PARK[teamId] || "SEA");
+  const [selectedPark, setSelectedPark] = useState(TEAM_HOME_PARK[initialTeam ? Number(initialTeam) : teamId] || "SEA");
   const [season, setSeason] = useState("");
   const [filters, setFilters] = useState(null);
+  const [selectedHit, setSelectedHit] = useState(null);
 
   const { data: venues } = useQuery({
     queryKey: ["venues"],
@@ -36,9 +50,9 @@ export default function SprayChart() {
   });
 
   const { data: roster } = useQuery({
-    queryKey: ["roster", teamId],
-    queryFn: () => fetchRoster(teamId),
-    enabled: !!teamId,
+    queryKey: ["roster", selectedTeamId],
+    queryFn: () => fetchRoster(selectedTeamId),
+    enabled: !!selectedTeamId,
     staleTime: 1000 * 60 * 60,
   });
 
@@ -97,18 +111,47 @@ export default function SprayChart() {
     }
   };
 
+  const handleTeamChange = (newTeamId) => {
+    const tid = Number(newTeamId);
+    setSelectedTeamId(tid);
+    setSelectedPlayer("");
+    setSelectedHit(null);
+    setSelectedPark(TEAM_HOME_PARK[tid] || selectedPark);
+  };
+
+  const handleHitSelect = useCallback((hit) => {
+    setSelectedHit(hit);
+  }, []);
+
   const currentYear = new Date().getFullYear();
   const seasons = Array.from({ length: 6 }, (_, i) => currentYear - i);
+
+  // Determine which hit to show in the info card
+  const displayHit = selectedHit || filteredData?.longestHR;
+  const isLongestHR = displayHit && !selectedHit && filteredData?.longestHR;
 
   return (
     <div className="spray-chart-page">
       <h2 className="spray-page-title">Spray Chart</h2>
 
       <div className="spray-controls">
+        <div className="spray-control-row">
+          <select
+            className="spray-select-sm"
+            value={selectedTeamId}
+            onChange={(e) => handleTeamChange(e.target.value)}
+            aria-label="Select team"
+          >
+            {teamList.map((t) => (
+              <option key={t.id} value={t.id}>{t.name}</option>
+            ))}
+          </select>
+        </div>
+
         <select
           className="spray-select"
           value={selectedPlayer}
-          onChange={(e) => setSelectedPlayer(e.target.value)}
+          onChange={(e) => { setSelectedPlayer(e.target.value); setSelectedHit(null); }}
           aria-label="Select player"
         >
           <option value="">Select a player...</option>
@@ -167,33 +210,33 @@ export default function SprayChart() {
               parkName={currentVenue?.name}
               hits={filteredData?.hits}
             >
-              <HitDots hits={filteredData.hits} filters={filters} longestHR={filteredData.longestHR} />
+              <HitDots hits={filteredData.hits} filters={filters} longestHR={filteredData.longestHR} onHitSelect={handleHitSelect} />
             </BallparkSVG>
           </div>
 
-          {filteredData.longestHR && (() => {
-            const hr = filteredData.longestHR;
-            const dateParts = (hr.date || "").split(" ")[0].split("-");
+          {displayHit && (() => {
+            const hit = displayHit;
+            const dateParts = (hit.date || "").split(" ")[0].split("-");
             const formattedDate = dateParts.length === 3
               ? `${dateParts[1]}/${dateParts[2]}/${dateParts[0]}`
-              : hr.date || "";
-            // pitcherName is "First Last" from MLB API lookup
-            const pitcher = hr.pitcherName
-              ? (hr.pitcherName.includes(", ") ? hr.pitcherName.split(", ").reverse().join(" ") : hr.pitcherName)
+              : hit.date || "";
+            const pitcher = hit.pitcherName
+              ? (hit.pitcherName.includes(", ") ? hit.pitcherName.split(", ").reverse().join(" ") : hit.pitcherName)
               : "";
+            const title = isLongestHR ? "Longest Home Run" : (RESULT_LABELS[hit.result] || hit.event || "Hit");
             return (
               <div className="longest-hr-card">
-                <span className="longest-hr-star">&#9733;</span>
+                {isLongestHR && <span className="longest-hr-star">&#9733;</span>}
                 <div className="longest-hr-info">
-                  <span className="longest-hr-title">Longest Home Run</span>
+                  <span className="longest-hr-title">{title}</span>
                   <span className="longest-hr-detail">
-                    {hr.hitDistance} ft
-                    {hr.exitVelo ? ` · ${hr.exitVelo} mph` : ""}
-                    {hr.launchAngle ? ` · ${hr.launchAngle}°` : ""}
+                    {hit.hitDistance ? `${hit.hitDistance} ft` : ""}
+                    {hit.exitVelo ? ` · ${hit.exitVelo} mph` : ""}
+                    {hit.launchAngle ? ` · ${hit.launchAngle}°` : ""}
                   </span>
                   <span className="longest-hr-date">
                     {formattedDate}
-                    {hr.opponent ? ` vs ${hr.opponent}` : ""}
+                    {hit.opponent ? ` vs ${hit.opponent}` : ""}
                     {pitcher ? ` · off ${pitcher}` : ""}
                   </span>
                 </div>

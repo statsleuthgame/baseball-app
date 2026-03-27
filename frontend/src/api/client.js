@@ -234,15 +234,29 @@ export const fetchProjectedLineup = async (teamId) => {
     const roster = await fetchRoster(teamId);
     const posPlayers = roster.filter((p) => p.position.type !== "Pitcher");
 
-    // Sort by typical lineup position — no per-player API calls
+    // Pick one player per position to ensure all spots are covered (including C)
     const posOrder = ["CF", "SS", "RF", "1B", "DH", "3B", "LF", "2B", "C"];
-    const sorted = [...posPlayers].sort((a, b) => {
-      const ai = posOrder.indexOf(a.position.abbreviation);
-      const bi = posOrder.indexOf(b.position.abbreviation);
-      return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
-    });
+    const picked = [];
+    const used = new Set();
 
-    return sorted.slice(0, 9).map((p, i) => ({
+    for (const pos of posOrder) {
+      const candidate = posPlayers.find((p) => p.position.abbreviation === pos && !used.has(p.id));
+      if (candidate) {
+        picked.push(candidate);
+        used.add(candidate.id);
+      }
+    }
+
+    // Fill remaining slots with unused position players (for OF, utility, etc.)
+    for (const p of posPlayers) {
+      if (picked.length >= 9) break;
+      if (!used.has(p.id)) {
+        picked.push(p);
+        used.add(p.id);
+      }
+    }
+
+    return picked.slice(0, 9).map((p, i) => ({
       id: p.id,
       fullName: p.fullName,
       position: p.position.abbreviation,

@@ -29,7 +29,7 @@ const StarShape = ({ cx, cy, size = 4, fill, stroke, strokeWidth, opacity, style
   return <polygon points={pts.join(" ")} fill={fill} stroke={stroke} strokeWidth={strokeWidth} opacity={opacity} style={style} {...props} />;
 };
 
-export default function HitDots({ hits, filters, longestHR }) {
+export default function HitDots({ hits, filters, longestHR, onHitSelect }) {
   const [selected, setSelected] = useState(null);
 
   const filtered = useMemo(() => {
@@ -53,7 +53,11 @@ export default function HitDots({ hits, filters, longestHR }) {
 
   const handleSelect = (i, fromTouch = false) => {
     if (fromTouch) lastTouchRef.current = Date.now();
-    setSelected(selected === i ? null : i);
+    const newSelected = selected === i ? null : i;
+    setSelected(newSelected);
+    if (onHitSelect) {
+      onHitSelect(newSelected !== null ? filtered[newSelected] : null);
+    }
   };
 
   const handleClick = (i) => {
