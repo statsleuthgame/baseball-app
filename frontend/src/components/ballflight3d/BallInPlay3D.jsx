@@ -5,7 +5,7 @@ import Field3D from "./Field3D";
 import AnimatedBall from "./AnimatedBall";
 import Fielders3D from "./Fielders3D";
 import BaseRunners3D, { getTeamColor } from "./BaseRunners3D";
-import CameraRig, { CAMERA_PRESETS } from "./CameraRig";
+import CameraRig from "./CameraRig";
 import ThrowToBase, { parseThrowTarget } from "./ThrowToBase";
 import OutIndicator from "./OutIndicator";
 import {
@@ -14,14 +14,6 @@ import {
   sprayAngleFromMLBAM,
 } from "./trajectoryPhysics";
 
-const CAMERA_LABELS = {
-  broadcast: "Broadcast",
-  centerField: "Center Field",
-  overhead: "Overhead",
-  firstBase: "1B Side",
-  thirdBase: "3B Side",
-  battersEye: "Batter's Eye",
-};
 
 /**
  * 3D Ball-In-Play Visualization.
@@ -36,8 +28,6 @@ const CAMERA_LABELS = {
  *  - runnersOn: { first: bool, second: bool, third: bool } — runners on base
  */
 export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
-  const [cameraPreset, setCameraPreset] = useState("broadcast");
-  const [followBall, setFollowBall] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showMetrics, setShowMetrics] = useState(false);
   const [ballPos, setBallPos] = useState(null);
@@ -89,7 +79,6 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
     setThrowPhase(false);
     setShowOut(false);
     setOutPosition(null);
-    setCameraPreset("broadcast");
 
     const timer = setTimeout(() => setIsPlaying(true), 500);
     return () => clearTimeout(timer);
@@ -199,8 +188,8 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
 
           {/* Camera system */}
           <CameraRig
-            preset={cameraPreset}
-            followBall={followBall && isPlaying}
+            preset="broadcast"
+            followBall={false}
             ballPosition={ballPos}
             transitionSpeed={2}
           />
@@ -265,27 +254,6 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
           {trajLabel}
         </div>
 
-        {/* Camera controls overlay */}
-        <div className="bip3d-camera-controls">
-          {Object.entries(CAMERA_LABELS).map(([key, label]) => (
-            <button
-              key={key}
-              className={`bip3d-cam-btn ${cameraPreset === key ? "active" : ""}`}
-              onClick={() => {
-                setCameraPreset(key);
-                setFollowBall(false);
-              }}
-            >
-              {label}
-            </button>
-          ))}
-          <button
-            className={`bip3d-cam-btn ${followBall ? "active" : ""}`}
-            onClick={() => setFollowBall(true)}
-          >
-            Follow Ball
-          </button>
-        </div>
 
         {/* Replay button */}
         {showMetrics && (
