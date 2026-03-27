@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
-import { Stars } from "@react-three/drei";
+import { Stars, Html } from "@react-three/drei";
 import Field3D from "./Field3D";
 import AnimatedBall from "./AnimatedBall";
 import Fielders3D from "./Fielders3D";
@@ -73,11 +73,12 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
     return { x: last.x, z: -last.y }; // y in physics = -z in Three.js
   }, [sampledPoints]);
 
-  // Determine if this play has a throw (e.g. "shortstop to first baseman")
-  const throwTarget = useMemo(
-    () => (hitData?.event === "Out" ? parseThrowTarget(hitData?.description) : null),
-    [hitData]
-  );
+  // Determine if this play has a throw (only ground balls, not fly outs/popups)
+  const throwTarget = useMemo(() => {
+    if (hitData?.event !== "Out") return null;
+    if (hitData?.trajectory === "fly_ball" || hitData?.trajectory === "popup") return null;
+    return parseThrowTarget(hitData?.description);
+  }, [hitData]);
 
   // Auto-start animation after a short delay
   useEffect(() => {

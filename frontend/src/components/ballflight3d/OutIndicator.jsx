@@ -1,100 +1,96 @@
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
+import { Html } from "@react-three/drei";
 import * as THREE from "three";
 
 /**
  * 3D "OUT" indicator that flashes above a position.
  *
- * Shows an expanding red ring burst + a floating red sphere
- * that pulses and fades out.
+ * Shows a small expanding red ring + "OUT" text overlay.
  *
  * Props:
  *  - position: { x, y, z } in Three.js coords where the out happened
  */
 export default function OutIndicator({ position }) {
-  const groupRef = useRef();
-  const ring1Ref = useRef();
+  const ringRef = useRef();
   const ring2Ref = useRef();
-  const sphereRef = useRef();
+  const htmlRef = useRef();
   const timeRef = useRef(0);
 
   const x = position?.x || 0;
-  const y = (position?.y || 0) + 8;
+  const y = (position?.y || 0) + 5;
   const z = position?.z || 0;
 
   useFrame((_, delta) => {
     timeRef.current += delta;
     const t = timeRef.current;
 
-    // Expanding rings
-    if (ring1Ref.current) {
-      const scale = 1 + t * 20;
-      if (scale > 30) {
-        ring1Ref.current.visible = false;
+    // Small expanding ring
+    if (ringRef.current) {
+      const scale = 1 + t * 6;
+      if (scale > 10) {
+        ringRef.current.visible = false;
       } else {
-        ring1Ref.current.scale.set(scale, scale, 1);
-        ring1Ref.current.material.opacity = Math.max(0, 0.8 - t * 0.4);
+        ringRef.current.scale.set(scale, scale, 1);
+        ringRef.current.material.opacity = Math.max(0, 0.7 - t * 0.35);
       }
     }
 
     if (ring2Ref.current) {
-      const age = Math.max(0, t - 0.1);
-      const scale = 1 + age * 18;
-      if (scale > 30) {
+      const age = Math.max(0, t - 0.08);
+      const scale = 1 + age * 5;
+      if (scale > 10) {
         ring2Ref.current.visible = false;
       } else {
         ring2Ref.current.scale.set(scale, scale, 1);
-        ring2Ref.current.material.opacity = Math.max(0, 0.6 - age * 0.35);
-      }
-    }
-
-    // Pulsing sphere rises and fades
-    if (sphereRef.current) {
-      const rise = Math.min(t * 8, 12);
-      sphereRef.current.position.set(x, y + rise, z);
-      const pulse = 1 + Math.sin(t * 12) * 0.3;
-      sphereRef.current.scale.setScalar(pulse * 3);
-      if (t > 2) {
-        sphereRef.current.material.opacity = Math.max(0, 1 - (t - 2) * 0.8);
+        ring2Ref.current.material.opacity = Math.max(0, 0.5 - age * 0.3);
       }
     }
   });
 
   return (
-    <group ref={groupRef}>
-      {/* Burst rings at the out position */}
-      <mesh ref={ring1Ref} position={[x, y, z]} rotation={[-Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[1.5, 3, 32]} />
+    <group>
+      {/* Small burst rings */}
+      <mesh ref={ringRef} position={[x, y, z]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[0.8, 1.5, 24]} />
         <meshBasicMaterial
           color="#ef4444"
           transparent
-          opacity={0.8}
+          opacity={0.7}
           side={THREE.DoubleSide}
           depthWrite={false}
         />
       </mesh>
 
       <mesh ref={ring2Ref} position={[x, y, z]} rotation={[-Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[1, 2.5, 32]} />
+        <ringGeometry args={[0.5, 1.2, 24]} />
         <meshBasicMaterial
           color="#ff6666"
           transparent
-          opacity={0.6}
+          opacity={0.5}
           side={THREE.DoubleSide}
           depthWrite={false}
         />
       </mesh>
 
-      {/* Glowing red sphere that rises */}
-      <mesh ref={sphereRef} position={[x, y, z]}>
-        <sphereGeometry args={[2, 16, 16]} />
-        <meshBasicMaterial
-          color="#ef4444"
-          transparent
-          opacity={0.9}
-          depthWrite={false}
-        />
-      </mesh>
+      {/* "OUT" text as HTML overlay */}
+      <Html position={[x, y + 6, z]} center distanceFactor={200} zIndexRange={[100, 0]}>
+        <div
+          style={{
+            color: "#ef4444",
+            fontSize: "28px",
+            fontWeight: 900,
+            fontFamily: "'Segoe UI', system-ui, sans-serif",
+            textShadow: "0 0 12px rgba(239,68,68,0.8), 0 0 24px rgba(239,68,68,0.4), 0 2px 4px rgba(0,0,0,0.8)",
+            letterSpacing: "4px",
+            userSelect: "none",
+            pointerEvents: "none",
+            animation: "outFlash 0.6s ease-out",
+          }}
+        >
+          OUT
+        </div>
+      </Html>
     </group>
   );
 }
