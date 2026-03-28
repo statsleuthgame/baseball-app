@@ -1,5 +1,5 @@
 import { useRef, useMemo, useState } from "react";
-import { useFrame, useThree } from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
 /**
@@ -41,9 +41,9 @@ export default function AnimatedBall({
   const trailRef = useRef();
   const glowRef = useRef();
   const progressRef = useRef(0);
-  const { camera } = useThree();
-  const [landed, setLanded] = useState(false);
-  const [behindFence, setBehindFence] = useState(false);
+  const landedRef = useRef(false);
+  const [showImpact, setShowImpact] = useState(false); // only for render trigger
+  const behindFenceRef = useRef(false);
   const trailPositions = useRef([]);
 
   const baseColor = useMemo(() => velocityColor(exitVelo), [exitVelo]);
@@ -68,57 +68,44 @@ export default function AnimatedBall({
   }, []);
 
   useFrame((_, delta) => {
-    if (!isPlaying || !sampledPoints?.length || landed) return;
+    if (!isPlaying || !sampledPoints?.length || landedRef.current) return;
 
-    // Advance time
     progressRef.current += delta * animationSpeed;
     const t = Math.min(progressRef.current, duration);
     const frac = t / duration;
     const idx = Math.min(Math.floor(frac * (sampledPoints.length - 1)), sampledPoints.length - 2);
     const localFrac = frac * (sampledPoints.length - 1) - idx;
 
-    // Interpolate position
     const p0 = sampledPoints[idx];
     const p1 = sampledPoints[idx + 1];
     const x = p0.x + (p1.x - p0.x) * localFrac;
-    const y = p0.z + (p1.z - p0.z) * localFrac; // z in physics = y in Three.js (up)
-    const z = -(p0.y + (p1.y - p0.y) * localFrac); // y in physics = -z in Three.js (into screen)
+    const y = p0.z + (p1.z - p0.z) * localFrac;
+    const z = -(p0.y + (p1.y - p0.y) * localFrac);
 
-    // For home runs, hide ball once it's descending past the fence (~75% of flight)
     const pastFence = isHomeRun && frac > 0.7 && y < 10;
-    if (pastFence && !behindFence) {
-      setBehindFence(true);
-    }
+    if (pastFence) behindFenceRef.current = true;
 
     if (ballRef.current) {
       ballRef.current.position.set(x, Math.max(y, 0), z);
-      ballRef.current.visible = !behindFence;
-
-      // Ball gets smaller at apex (distance effect) and larger close up
-      const distFromCamera = camera.position.distanceTo(ballRef.current.position);
-      const scale = Math.max(0.5, Math.min(2, distFromCamera / 200));
-      ballRef.current.scale.setScalar(scale);
+      ballRef.current.visible = !behindFenceRef.current;
+      ballRef.current.scale.setScalar(1);
     }
 
     if (glowRef.current) {
       glowRef.current.position.set(x, Math.max(y, 0), z);
-      glowRef.current.visible = !behindFence;
-      // Pulse glow
+      glowRef.current.visible = !behindFenceRef.current;
       const pulse = 1 + Math.sin(t * 10) * 0.15;
       glowRef.current.scale.setScalar(pulse * 3);
     }
 
-    // Report progress for fielder animation
     onProgress?.(frac, { x, y: Math.max(y, 0), z });
 
-    // Once behind fence, clear trail and stop updating it
-    if (behindFence) {
+    if (behindFenceRef.current) {
       if (trailPositions.current.length > 0) {
         trailPositions.current = [];
         trailGeo.setDrawRange(0, 0);
       }
     } else {
-      // Update trail
       trailPositions.current.push([x, Math.max(y, 0), z]);
       if (trailPositions.current.length > maxTrailLength) {
         trailPositions.current.shift();
@@ -131,13 +118,12 @@ export default function AnimatedBall({
       for (let i = 0; i < len; i++) {
         const [px, py, pz] = trailPositions.current[i];
         posAttr.setXYZ(i, px, py, pz);
-
-        // Color fades from base color (old) to bright white (newest)
         const age = i / len;
-        const r = baseColor.r * (1 - age * 0.3) + age * 0.3;
-        const g = baseColor.g * (1 - age * 0.3) + age * 0.3;
-        const b = baseColor.b * (1 - age * 0.3) + age * 0.3;
-        colAttr.setXYZ(i, r, g, b);
+        colAttr.setXYZ(i,
+          baseColor.r * (1 - age * 0.3) + age * 0.3,
+          baseColor.g * (1 - age * 0.3) + age * 0.3,
+          baseColor.b * (1 - age * 0.3) + age * 0.3,
+        );
       }
 
       posAttr.needsUpdate = true;
@@ -145,9 +131,9 @@ export default function AnimatedBall({
       trailGeo.setDrawRange(0, len);
     }
 
-    // Check if landed
     if (t >= duration) {
-      setLanded(true);
+      landedRef.current = true;
+      setShowImpact(true);
       onAnimationComplete?.();
     }
   });
@@ -189,7 +175,7 @@ export default function AnimatedBall({
       </mesh>
 
       {/* Landing impact effect (shows after ball lands) */}
-      {landed && <LandingImpact position={sampledPoints[sampledPoints.length - 1]} accentColor={accentColor} exitVelo={exitVelo} />}
+      {showImpact && <LandingImpact position={sampledPoints[sampledPoints.length - 1]} accentColor={accentColor} exitVelo={exitVelo} />}
     </group>
   );
 }
@@ -202,18 +188,20 @@ function LandingImpact({ position, accentColor, exitVelo }) {
   const ring2Ref = useRef();
   const ring3Ref = useRef();
   const timeRef = useRef(0);
+  const doneRef = useRef(false);
 
   const pos = useMemo(() => {
     if (!position) return [0, 0, 0];
     return [position.x, 0.1, -position.y];
   }, [position]);
 
-  // Number of rings based on exit velo
   const numRings = exitVelo >= 100 ? 3 : exitVelo >= 90 ? 2 : 1;
 
   useFrame((_, delta) => {
+    if (doneRef.current) return;
     timeRef.current += delta;
     const t = timeRef.current;
+    if (t > 3) { doneRef.current = true; return; }
 
     const animateRing = (ref, delay) => {
       if (!ref.current) return;

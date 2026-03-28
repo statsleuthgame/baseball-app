@@ -18,6 +18,13 @@ import {
   sprayAngleFromMLBAM,
 } from "./trajectoryPhysics";
 
+// Module-level constant — avoids re-creation on every render
+const BASE_POS = {
+  first: { x: 63.64, y: 3, z: -63.64 },
+  second: { x: 0, y: 3, z: -127.28 },
+  third: { x: -63.64, y: 3, z: -63.64 },
+  home: { x: 0, y: 3, z: 0 },
+};
 
 /**
  * 3D Ball-In-Play Visualization.
@@ -96,12 +103,6 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
     };
   }, [hitData]);
 
-  const BASE_POS = {
-    first: { x: 63.64, y: 3, z: -63.64 },
-    second: { x: 0, y: 3, z: -127.28 },
-    third: { x: -63.64, y: 3, z: -63.64 },
-    home: { x: 0, y: 3, z: 0 },
-  };
 
   const handleAnimationComplete = useCallback(() => {
     const ev = hitData?.event || "";
@@ -200,15 +201,10 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
           gl={{ antialias: true, alpha: true }}
           style={{ background: "linear-gradient(180deg, #040810 0%, #0a1020 100%)" }}
         >
-          {/* Lighting */}
-          <ambientLight intensity={0.4} />
+          {/* Lighting — minimal for mobile perf */}
+          <ambientLight intensity={0.5} />
           <directionalLight position={[100, 200, 50]} intensity={0.8} color="#ffffff" />
-          <directionalLight position={[-50, 100, -100]} intensity={0.3} color="#b4c7ff" />
-
-          {/* Subtle stadium lights */}
-          <pointLight position={[200, 150, -200]} intensity={0.5} color="#ffffcc" distance={500} />
-          <pointLight position={[-200, 150, -200]} intensity={0.5} color="#ffffcc" distance={500} />
-          <pointLight position={[0, 150, 50]} intensity={0.3} color="#ffffcc" distance={500} />
+          <pointLight position={[0, 150, -200]} intensity={0.6} color="#ffffcc" distance={500} />
 
           {/* Camera system */}
           <CameraRig

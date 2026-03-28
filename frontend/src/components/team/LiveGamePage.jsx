@@ -70,6 +70,9 @@ export default function LiveGamePage() {
   const prevHalfRef = useRef(null);
   const sideTimerRef = useRef(null);
 
+  // On first mount, initialize lastHitRef so we don't replay stale BIPs
+  const initializedRef = useRef(false);
+
   useEffect(() => {
     // Persist hit data — API resets allPlays on half-inning change so lastHitData goes null
     if (liveState?.lastHitData) {
@@ -77,13 +80,26 @@ export default function LiveGamePage() {
     }
 
     const hitKey = liveState?.lastHitData ? `${liveState.lastHitData.x}-${liveState.lastHitData.y}` : null;
+
+    // On first load, just record the current hit key without triggering animation
+    if (!initializedRef.current && hitKey) {
+      lastHitRef.current = hitKey;
+      initializedRef.current = true;
+      setBipCollapsed(true); // suppress stale BIP from before page load
+      return;
+    }
+    initializedRef.current = true;
+
     if (hitKey && hitKey !== lastHitRef.current) {
       // New ball in play — snapshot the PREVIOUS poll's runners (pre-play state)
       setBipRunners({ ...prevRunnersRef.current });
       lastHitRef.current = hitKey;
       setBipCollapsed(false);
       if (bipTimerRef.current) clearTimeout(bipTimerRef.current);
-      bipTimerRef.current = setTimeout(() => setBipCollapsed(true), 30000);
+      bipTimerRef.current = setTimeout(() => {
+        setBipCollapsed(true);
+        persistedHitDataRef.current = null; // clear persisted data after collapse
+      }, 30000);
     }
     // Always update prevRunners to current state for next time
     prevRunnersRef.current = {
@@ -107,6 +123,13 @@ export default function LiveGamePage() {
     prevHalfRef.current = currentHalf;
     return () => { if (sideTimerRef.current) clearTimeout(sideTimerRef.current); };
   }, [liveState?.inning, liveState?.inningHalf]);
+
+  // Clear "Coming Up" when pitches arrive for the new half
+  useEffect(() => {
+    if (sideJustChanged && liveState?.currentAtBat?.length > 0) {
+      setSideJustChanged(false);
+    }
+  }, [sideJustChanged, liveState?.currentAtBat?.length]);
 
   if (isLoading) return <LoadingSpinner text="Loading game..." />;
   if (!gameInfo) return <div className="matchup-empty"><h2>Game not found</h2></div>;
@@ -238,8 +261,6 @@ export default function LiveGamePage() {
               </div>
             );
 
-            // Once pitches arrive for the new half, clear "Coming Up"
-            if (showZone && sideJustChanged) setSideJustChanged(false);
 
             if (showZone) return (
               <div className="lgp-zone-centered lgp-zone-with-bg">

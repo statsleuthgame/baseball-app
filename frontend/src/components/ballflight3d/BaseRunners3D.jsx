@@ -1,4 +1,4 @@
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import ALL_TEAMS from "../../data/teams";
@@ -40,6 +40,10 @@ function computeRunnerMovements(event, runnersOn, description = "") {
       if (runnersOn?.third) {
         movements.push({ from: 3, to: 4, scores: true, startDelay: 0.3 });
       }
+      // Runner on second tags up to third on sac fly
+      if (runnersOn?.second) {
+        movements.push({ from: 2, to: 3, scores: false, startDelay: 0.4 });
+      }
       movements.push({ from: 0, to: 1, scores: false, isBatter: true, isOut: true });
     } else if (isDoublePlay(event, description)) {
       // Double play: lead runner forced out, batter out at first
@@ -48,15 +52,20 @@ function computeRunnerMovements(event, runnersOn, description = "") {
       } else if (runnersOn?.second) {
         movements.push({ from: 2, to: 3, scores: false, isOut: true });
       }
+      // Runner on second advances (if first was the one forced)
+      if (runnersOn?.first && runnersOn?.second) {
+        movements.push({ from: 2, to: 3, scores: false });
+      }
       movements.push({ from: 0, to: 1, scores: false, isBatter: true, isOut: true });
       // Runner on third may score on a DP
       if (runnersOn?.third && desc.includes("scores")) {
         movements.push({ from: 3, to: 4, scores: true });
+      } else if (runnersOn?.third) {
+        // Third stays put on most DPs
       }
     } else if (isFieldersChoice(event)) {
       // Fielder's choice: batter reaches first, a runner is out
       movements.push({ from: 0, to: 1, scores: false, isBatter: true });
-      // Lead runner is out trying to advance
       if (runnersOn?.first) {
         movements.push({ from: 1, to: 2, scores: false, isOut: true });
       } else if (runnersOn?.second) {
@@ -64,12 +73,22 @@ function computeRunnerMovements(event, runnersOn, description = "") {
       } else if (runnersOn?.third) {
         movements.push({ from: 3, to: 4, scores: false, isOut: true });
       }
+      // Other runners advance
+      if (runnersOn?.third && runnersOn?.first) {
+        movements.push({ from: 3, to: 4, scores: desc.includes("scores") });
+      }
+      if (runnersOn?.second && runnersOn?.first) {
+        movements.push({ from: 2, to: 3, scores: false });
+      }
     } else {
       // Simple out: batter runs to first
       movements.push({ from: 0, to: 1, scores: false, isBatter: true, isOut: true });
-      // If description mentions a runner scoring
       if (desc.includes("scores") && runnersOn?.third) {
         movements.push({ from: 3, to: 4, scores: true });
+      }
+      // Runner on second may advance on a groundout
+      if (runnersOn?.second && !runnersOn?.third) {
+        movements.push({ from: 2, to: 3, scores: false });
       }
     }
     return movements;
@@ -247,6 +266,13 @@ function AnimatedRunner({ path, ballProgress, scores, startDelay = 0, numBases =
   const startedRef = useRef(false);
   const trailPositions = useRef([]);
 
+  // Reset animation state when path changes (replay or new play)
+  useEffect(() => {
+    elapsedRef.current = 0;
+    startedRef.current = false;
+    trailPositions.current = [];
+  }, [path]);
+
   // ~2.67 seconds per base (1.5x speed)
   const totalRunTime = numBases * 2.67;
 
@@ -331,7 +357,7 @@ function ScoreFlash({ runnerRef, color }) {
   const ringRef = useRef();
   const flashedRef = useRef(false);
 
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!ringRef.current) return;
 
     if (runnerRef?.current && !flashedRef.current) {
@@ -344,7 +370,7 @@ function ScoreFlash({ runnerRef, color }) {
     }
 
     if (ringRef.current.visible) {
-      const scale = ringRef.current.scale.x + 0.5;
+      const scale = ringRef.current.scale.x + delta * 30;
       if (scale > 15) {
         ringRef.current.visible = false;
         return;

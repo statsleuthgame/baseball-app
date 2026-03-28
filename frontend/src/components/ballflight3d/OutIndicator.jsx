@@ -14,18 +14,20 @@ import * as THREE from "three";
 export default function OutIndicator({ position }) {
   const ringRef = useRef();
   const ring2Ref = useRef();
-  const htmlRef = useRef();
   const timeRef = useRef(0);
+  const doneRef = useRef(false);
 
   const x = position?.x || 0;
   const y = (position?.y || 0) + 5;
   const z = position?.z || 0;
 
   useFrame((_, delta) => {
+    if (doneRef.current) return;
     timeRef.current += delta;
     const t = timeRef.current;
 
-    // Small expanding ring
+    if (t > 3) { doneRef.current = true; return; }
+
     if (ringRef.current) {
       const scale = 1 + t * 6;
       if (scale > 10) {

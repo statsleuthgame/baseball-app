@@ -23,6 +23,12 @@ function getStadiumData(teamId) {
  * 3D Baseball Field.
  * Renders grass, dirt, fence, bases, foul lines, pitcher's mound.
  */
+// Module-level constants — avoid re-creation on every render
+const B1 = [63.64, 0, -63.64];
+const B2 = [0, 0, -127.28];
+const B3 = [-63.64, 0, -63.64];
+const MOUND = [0, 0.75, -60.5];
+
 export default function Field3D({ venueTeamId, teamColor }) {
   const stadium = getStadiumData(venueTeamId);
 
@@ -71,33 +77,27 @@ export default function Field3D({ venueTeamId, teamColor }) {
     return { grassShape, dirtShape, infieldGrassShape, fencePoints, foulLinePoints, foulPolePositions };
   }, [stadium]);
 
-  // Base positions in feet from home plate
-  const B1 = [63.64, 0, -63.64];  // 90ft at 45 degrees
-  const B2 = [0, 0, -127.28];     // 2nd base
-  const B3 = [-63.64, 0, -63.64]; // 3rd base
-  const MOUND = [0, 0.75, -60.5]; // pitcher's mound slightly raised
-
   if (!grassShape) return null;
 
   return (
     <group>
       {/* Outfield grass */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.01, 0]}>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
         <shapeGeometry args={[grassShape]} />
-        <meshStandardMaterial color="#1a5c1a" transparent opacity={0.85} side={THREE.DoubleSide} />
+        <meshLambertMaterial color="#1a5c1a" />
       </mesh>
 
       {/* Infield dirt */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.1, 0]}>
         <shapeGeometry args={[dirtShape]} />
-        <meshStandardMaterial color="#8B6B3D" transparent opacity={0.7} side={THREE.DoubleSide} />
+        <meshLambertMaterial color="#8B6B3D" />
       </mesh>
 
       {/* Infield grass cutout */}
       {infieldGrassShape && (
-        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.01, 0]}>
+        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.15, 0]}>
           <shapeGeometry args={[infieldGrassShape]} />
-          <meshStandardMaterial color="#1a6e1a" transparent opacity={0.9} side={THREE.DoubleSide} />
+          <meshLambertMaterial color="#1a6e1a" />
         </mesh>
       )}
 
@@ -117,15 +117,15 @@ export default function Field3D({ venueTeamId, teamColor }) {
           <group key={`foul-pole-${i}`} position={[pole.x, 0, pole.z]}>
             <mesh position={[0, POLE_HEIGHT / 2, 0]}>
               <cylinderGeometry args={[0.35, 0.45, POLE_HEIGHT, 8]} />
-              <meshStandardMaterial color="#FFD700" emissive="#FFD700" emissiveIntensity={0.2} roughness={0.35} metalness={0.7} />
+              <meshLambertMaterial color="#FFD700" emissive="#FFD700" emissiveIntensity={0.2} />
             </mesh>
             <mesh position={[panelOffsetX, POLE_HEIGHT * 0.4, 0]}>
               <boxGeometry args={[panelW, panelH, 0.15]} />
-              <meshStandardMaterial color="#FFD700" emissive="#FFD700" emissiveIntensity={0.08} transparent opacity={0.4} roughness={0.6} side={THREE.DoubleSide} />
+              <meshLambertMaterial color="#FFD700" emissive="#FFD700" emissiveIntensity={0.08} transparent opacity={0.4} />
             </mesh>
             <mesh position={[0, POLE_HEIGHT + 0.6, 0]}>
               <sphereGeometry args={[0.7, 8, 8]} />
-              <meshStandardMaterial color="#FFD700" emissive="#FFD700" emissiveIntensity={0.35} roughness={0.25} metalness={0.8} />
+              <meshLambertMaterial color="#FFD700" emissive="#FFD700" emissiveIntensity={0.35} />
             </mesh>
           </group>
         );
@@ -152,19 +152,19 @@ export default function Field3D({ venueTeamId, teamColor }) {
       <group position={MOUND}>
         <mesh>
           <cylinderGeometry args={[9, 10, 0.75, 32]} />
-          <meshStandardMaterial color="#8B6B3D" transparent opacity={0.6} />
+          <meshLambertMaterial color="#8B6B3D" transparent opacity={0.6} />
         </mesh>
         {/* Rubber */}
         <mesh position={[0, 0.4, 0]}>
           <boxGeometry args={[2, 0.15, 0.5]} />
-          <meshStandardMaterial color="#ffffff" transparent opacity={0.8} />
+          <meshLambertMaterial color="#ffffff" transparent opacity={0.8} />
         </mesh>
       </group>
 
       {/* Ground plane (dark area beyond the field) */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.1, 0]}>
-        <planeGeometry args={[800, 800]} />
-        <meshStandardMaterial color="#0a1a0a" />
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.2, 0]}>
+        <planeGeometry args={[1200, 1200]} />
+        <meshBasicMaterial color="#050808" />
       </mesh>
     </group>
   );
@@ -217,12 +217,11 @@ function FenceWall({ points }) {
     <group>
       {/* Wall surface — dark green, padded look */}
       <mesh geometry={wallGeo}>
-        <meshStandardMaterial
+        <meshLambertMaterial
           color="#0d3d0d"
           transparent
           opacity={0.85}
           side={THREE.DoubleSide}
-          roughness={0.9}
         />
       </mesh>
       {/* Yellow top rail */}
@@ -268,7 +267,7 @@ function Base({ position }) {
   return (
     <mesh position={position} rotation={[-Math.PI / 2, Math.PI / 4, 0]}>
       <planeGeometry args={[3, 3]} />
-      <meshStandardMaterial color="#ffffff" transparent opacity={0.9} side={THREE.DoubleSide} />
+      <meshLambertMaterial color="#ffffff" transparent opacity={0.9} side={THREE.DoubleSide} />
     </mesh>
   );
 }
@@ -289,7 +288,7 @@ function HomePlate() {
   return (
     <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.05, 0]}>
       <shapeGeometry args={[shape]} />
-      <meshStandardMaterial color="#ffffff" transparent opacity={0.9} side={THREE.DoubleSide} />
+      <meshLambertMaterial color="#ffffff" transparent opacity={0.9} side={THREE.DoubleSide} />
     </mesh>
   );
 }

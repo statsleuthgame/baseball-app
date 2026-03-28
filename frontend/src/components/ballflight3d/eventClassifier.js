@@ -18,7 +18,14 @@ const OUT_EVENTS = new Set([
   "Bunt Groundout", "Bunt Pop Out", "Bunt Lineout",
 ]);
 
-const REACH_EVENTS = new Set(["Field Error", "Fielders Choice"]);
+const REACH_EVENTS = new Set(["Field Error", "Fielders Choice", "Catcher Interf", "Catcher Interference"]);
+
+// Events that are NOT balls in play — should never be classified as outs
+const NON_BIP_EVENTS = new Set([
+  "Walk", "Intent Walk", "Hit By Pitch", "Strikeout",
+  "Strikeout - DP", "Catcher Interf", "Catcher Interference",
+  "Fan Interference", "Runner Out", "Sac Fly DP",
+]);
 
 /**
  * Is this event a hit (batter reaches safely on a base hit)?
@@ -32,8 +39,9 @@ export function isHitEvent(event) {
  */
 export function isOutEvent(event) {
   if (OUT_EVENTS.has(event)) return true;
-  // Fallback: anything not a hit and not a reach is probably an out
-  if (event && !HIT_EVENTS.has(event) && !REACH_EVENTS.has(event)) return true;
+  if (NON_BIP_EVENTS.has(event)) return false;
+  if (HIT_EVENTS.has(event) || REACH_EVENTS.has(event)) return false;
+  // Unknown event — default to false (don't animate as out)
   return false;
 }
 
