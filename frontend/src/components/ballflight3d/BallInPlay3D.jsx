@@ -199,12 +199,11 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
           camera={{ fov: 45, near: 1, far: 2000, position: [0, 120, 80] }}
           dpr={[1, 1.5]}
           gl={{ antialias: true, alpha: true }}
-          style={{ background: "linear-gradient(180deg, #040810 0%, #0a1020 100%)" }}
+          style={{ background: "linear-gradient(180deg, #1a4a7a 0%, #4a80b0 100%)" }}
         >
-          {/* Lighting — minimal for mobile perf */}
-          <ambientLight intensity={0.5} />
-          <directionalLight position={[100, 200, 50]} intensity={0.8} color="#ffffff" />
-          <pointLight position={[0, 150, -200]} intensity={0.6} color="#ffffcc" distance={500} />
+          {/* Lighting — bright daytime */}
+          <ambientLight intensity={0.7} />
+          <directionalLight position={[100, 250, 50]} intensity={1.0} color="#ffffff" />
 
           {/* Camera system */}
           <CameraRig

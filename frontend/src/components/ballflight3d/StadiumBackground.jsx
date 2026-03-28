@@ -14,19 +14,15 @@ const skyVertexShader = `
 const skyFragmentShader = `
   varying vec3 vWorldPos;
 
-  float hash(vec2 p) {
-    return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
-  }
-
   void main() {
     float y = vWorldPos.y;
     float t = clamp(y / 500.0, -0.3, 1.0);
 
-    // Night sky gradient
-    vec3 belowHorizon = vec3(0.08, 0.10, 0.16);
-    vec3 horizon = vec3(0.12, 0.18, 0.30);
-    vec3 mid = vec3(0.06, 0.10, 0.22);
-    vec3 zenith = vec3(0.02, 0.04, 0.12);
+    // Daytime sky gradient
+    vec3 belowHorizon = vec3(0.6, 0.68, 0.75);   // hazy blue-gray
+    vec3 horizon = vec3(0.52, 0.70, 0.88);        // pale sky blue
+    vec3 mid = vec3(0.30, 0.55, 0.85);            // bright blue
+    vec3 zenith = vec3(0.15, 0.35, 0.70);         // deep blue
 
     vec3 color;
     if (t < 0.0) {
@@ -35,22 +31,6 @@ const skyFragmentShader = `
       color = mix(horizon, mid, t / 0.3);
     } else {
       color = mix(mid, zenith, (t - 0.3) / 0.7);
-    }
-
-    // Warm horizon glow (stadium light wash)
-    float horizonGlow = exp(-abs(y - 30.0) * 0.008);
-    color += vec3(0.12, 0.08, 0.04) * horizonGlow * 0.5;
-
-    // Stars
-    if (t > 0.15) {
-      vec2 starUV = vWorldPos.xz * 0.02;
-      float starDensity = hash(floor(starUV * 80.0));
-      float starBright = step(0.985, starDensity) * (t - 0.15) * 2.0;
-      float twinkle = 0.7 + 0.3 * hash(floor(starUV * 80.0) + 0.5);
-      color += vec3(0.9, 0.92, 1.0) * starBright * twinkle;
-
-      float bigStar = step(0.998, hash(floor(starUV * 40.0)));
-      color += vec3(1.0, 0.95, 0.85) * bigStar * (t - 0.15) * 3.0;
     }
 
     gl_FragColor = vec4(color, 1.0);
@@ -78,9 +58,10 @@ function mountainHeight(angle, seed, octaves) {
   let amp = 1;
   let freq = 1;
   for (let i = 0; i < octaves; i++) {
+    // Smoother, wider peaks: lower frequency multiplier
     h += pseudoNoise(angle * freq, seed + i * 13.37) * amp;
-    amp *= 0.5;
-    freq *= 2.1;
+    amp *= 0.45;
+    freq *= 1.6;
   }
   return h;
 }
@@ -347,9 +328,9 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
     const n = pts.length;
 
     const ranges = [
-      { dist: 120, baseY: 0, peak: 80,  color: "#0c1520", seed: 1.0,  octaves: 5, opacity: 0.95 },
-      { dist: 200, baseY: 0, peak: 140, color: "#0a1828", seed: 7.5,  octaves: 4, opacity: 0.85 },
-      { dist: 320, baseY: 0, peak: 220, color: "#0e2040", seed: 15.3, octaves: 3, opacity: 0.70 },
+      { dist: 180, baseY: 0, peak: 100, color: "#2d4a2d", seed: 1.0,  octaves: 4, opacity: 0.95 }, // near — dark green forest
+      { dist: 320, baseY: 0, peak: 180, color: "#3a5a5a", seed: 7.5,  octaves: 3, opacity: 0.85 }, // mid — blue-green ridgeline
+      { dist: 500, baseY: 0, peak: 280, color: "#6a7a8a", seed: 15.3, octaves: 2, opacity: 0.70 }, // far — hazy gray-blue peaks
     ];
 
     return ranges.map((range) => {
@@ -372,7 +353,7 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
         const x = fx + (nx / nLen) * dist;
         const z = fz + (nz / nLen) * dist;
         const angle = Math.atan2(x, z);
-        const h = mountainHeight(angle * 3.0, seed, octaves);
+        const h = mountainHeight(angle * 1.5, seed, octaves);
         const peakY = baseY + peak * 0.3 + h * peak * 0.7;
 
         vertices.push(x, baseY, z);

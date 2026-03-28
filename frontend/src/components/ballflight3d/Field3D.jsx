@@ -66,13 +66,18 @@ export default function Field3D({ venueTeamId, teamColor }) {
     // Foul line points
     const foulLinePoints = stadium.foul_lines.map(([x, y]) => mlbamTo3D(x, y));
 
-    // Foul pole positions: first and last fence points
-    const firstFence = fencePoints[0];
-    const lastFence = fencePoints[fencePoints.length - 1];
-    const foulPolePositions = [
-      { x: firstFence[0], z: firstFence[2], side: "left" },
-      { x: lastFence[0], z: lastFence[2], side: "right" },
-    ];
+    // Foul pole positions: find the fence points at the extremes of fair territory
+    // (most negative-x for LF foul pole, most positive-x for RF foul pole)
+    // Only consider points in the outfield (z < -80)
+    let lfPole = null, rfPole = null;
+    let lfAngle = Infinity, rfAngle = -Infinity;
+    for (const [x, , z] of fencePoints) {
+      if (z > -80) continue; // skip backstop
+      const angle = Math.atan2(x, -z);
+      if (angle < lfAngle) { lfAngle = angle; lfPole = { x, z, side: "left" }; }
+      if (angle > rfAngle) { rfAngle = angle; rfPole = { x, z, side: "right" }; }
+    }
+    const foulPolePositions = [lfPole, rfPole].filter(Boolean);
 
     return { grassShape, dirtShape, infieldGrassShape, fencePoints, foulLinePoints, foulPolePositions };
   }, [stadium]);
@@ -109,22 +114,22 @@ export default function Field3D({ venueTeamId, teamColor }) {
 
       {/* Foul poles */}
       {foulPolePositions && foulPolePositions.map((pole, i) => {
-        const POLE_HEIGHT = 45;
-        const panelW = 4;
+        const POLE_HEIGHT = 90;
+        const panelW = 8;
         const panelH = POLE_HEIGHT * 0.65;
         const panelOffsetX = pole.side === "left" ? panelW / 2 : -panelW / 2;
         return (
           <group key={`foul-pole-${i}`} position={[pole.x, 0, pole.z]}>
             <mesh position={[0, POLE_HEIGHT / 2, 0]}>
-              <cylinderGeometry args={[0.35, 0.45, POLE_HEIGHT, 8]} />
+              <cylinderGeometry args={[0.7, 0.9, POLE_HEIGHT, 8]} />
               <meshLambertMaterial color="#FFD700" emissive="#FFD700" emissiveIntensity={0.2} />
             </mesh>
             <mesh position={[panelOffsetX, POLE_HEIGHT * 0.4, 0]}>
-              <boxGeometry args={[panelW, panelH, 0.15]} />
+              <boxGeometry args={[panelW, panelH, 0.3]} />
               <meshLambertMaterial color="#FFD700" emissive="#FFD700" emissiveIntensity={0.08} transparent opacity={0.4} />
             </mesh>
-            <mesh position={[0, POLE_HEIGHT + 0.6, 0]}>
-              <sphereGeometry args={[0.7, 8, 8]} />
+            <mesh position={[0, POLE_HEIGHT + 1.2, 0]}>
+              <sphereGeometry args={[1.4, 8, 8]} />
               <meshLambertMaterial color="#FFD700" emissive="#FFD700" emissiveIntensity={0.35} />
             </mesh>
           </group>
