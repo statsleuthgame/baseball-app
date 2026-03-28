@@ -275,6 +275,7 @@ export default function LiveGamePage() {
                     hitData={hitData}
                     venueTeamId={gameInfo.home.id}
                     runnersOn={bipRunners}
+                    outs={liveState?.outs}
                   />
                 </Suspense>
               </div>

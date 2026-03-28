@@ -4210,7 +4210,7 @@ th.sb-ls-total {
 .lgp-pitch-last { font-size: 11px; color: var(--text); margin-left: auto; }
 
 .lgp-last-desc { font-size: 13px; color: var(--text); line-height: 1.4; margin: 0; }
-.lgp-bip-section { padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.04); margin-top: 10px; }
+.lgp-bip-section { padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.04); margin-top: 10px; margin-bottom: 8px; }
 
 /* Zone D: Win prob + due up side by side */
 .lgp-row-section { display: flex; gap: 8px; align-items: stretch; }
@@ -4705,7 +4705,7 @@ th.sb-ls-total {
   top: 12px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
@@ -4714,7 +4714,10 @@ th.sb-ls-total {
   display: flex;
   align-items: center;
   gap: 6px;
+  white-space: nowrap;
 }
+.bip3d-out-count { font-size: 11px; opacity: 0.9; }
+.bip3d-three-outs { color: #ef4444 !important; animation: three-outs-flash 1.5s ease-in-out 2; }
 
 .bip3d-hr-icon {
   font-size: 18px;

@@ -38,7 +38,7 @@ const BASE_POS = {
  *  - venueTeamId: team ID for stadium shape
  *  - runnersOn: { first: bool, second: bool, third: bool } — runners on base
  */
-export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
+export default function BallInPlay3D({ hitData, venueTeamId, runnersOn, outs }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [showMetrics, setShowMetrics] = useState(false);
   const [ballPos, setBallPos] = useState(null);
@@ -173,8 +173,13 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
     popup: "Popup",
   }[hitData.trajectory] || "Batted Ball";
 
-  // Only reveal the result for home runs — everything else just shows trajectory type
-  const trajLabel = isHomeRun ? "HOME RUN" : trajType;
+  const displayEvent = eventDisplayLabel(event);
+  // During animation: just trajectory type. After landing: add result + outs
+  const trajLabel = isHomeRun
+    ? "HOME RUN"
+    : showMetrics && displayEvent
+      ? `${trajType} — ${displayEvent}`
+      : trajType;
 
   const evLabel =
     hitData.exitVelo >= 100
@@ -267,6 +272,9 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
         <div className="bip3d-event-label" style={{ color: accentColor }}>
           {isHomeRun && <span className="bip3d-hr-icon">💥</span>}
           {trajLabel}
+          {showMetrics && isOut && outs != null && (
+            <span className={`bip3d-out-count ${outs >= 3 ? "bip3d-three-outs" : ""}`}> — {outs} Out{outs !== 1 ? "s" : ""}</span>
+          )}
         </div>
 
 
