@@ -38,8 +38,6 @@ export default function AnimatedBall({
   isPlaying = true,
 }) {
   const ballRef = useRef();
-  const trailRef = useRef();
-  const glowRef = useRef();
   const progressRef = useRef(0);
   const landedRef = useRef(false);
   const [showImpact, setShowImpact] = useState(false); // only for render trigger
@@ -51,9 +49,6 @@ export default function AnimatedBall({
     () => (isHit ? new THREE.Color("#22c55e") : new THREE.Color("#ef4444")),
     [isHit]
   );
-
-  // Ball glow intensity based on exit velo
-  const glowIntensity = exitVelo >= 100 ? 3 : exitVelo >= 95 ? 2 : 1;
 
   // Pre-compute trail geometry buffer
   const maxTrailLength = 60;
@@ -91,12 +86,6 @@ export default function AnimatedBall({
       ballRef.current.scale.setScalar(1);
     }
 
-    if (glowRef.current) {
-      glowRef.current.position.set(x, Math.max(y, 0), z);
-      glowRef.current.visible = !behindFenceRef.current;
-      const pulse = 1 + Math.sin(t * 10) * 0.15;
-      glowRef.current.scale.setScalar(pulse * 1.2);
-    }
 
     onProgress?.(frac, { x, y: Math.max(y, 0), z });
 
@@ -152,25 +141,13 @@ export default function AnimatedBall({
         />
       </line>
 
-      {/* Subtle ball glow */}
-      <mesh ref={glowRef}>
-        <sphereGeometry args={[1.5, 12, 12]} />
-        <meshBasicMaterial
-          color={baseColor}
-          transparent
-          opacity={0.08 * glowIntensity}
-          depthWrite={false}
-        />
-      </mesh>
-
-      {/* The baseball itself */}
+      {/* The baseball — flashes green (hit) or red (out) */}
       <mesh ref={ballRef}>
         <sphereGeometry args={[1.2, 16, 16]} />
-        <meshStandardMaterial
-          color="#ffffff"
-          emissive={baseColor}
-          emissiveIntensity={0.5}
-          roughness={0.3}
+        <meshLambertMaterial
+          color={isHit ? "#22c55e" : "#ef4444"}
+          emissive={isHit ? "#22c55e" : "#ef4444"}
+          emissiveIntensity={0.4}
         />
       </mesh>
 

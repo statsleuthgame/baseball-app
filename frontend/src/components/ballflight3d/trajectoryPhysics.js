@@ -47,8 +47,9 @@ export function distanceFromMLBAM(hitX, hitY, hpX = 125.42, hpY = 198.27) {
  * @returns {{ points: Array<{x:number,y:number,z:number}>, duration: number, apexHeight: number }}
  */
 export function computeTrajectory(exitVeloMph, launchAngleDeg, sprayAngleDeg, targetDistFt, trajectory) {
-  // Ground balls get a dedicated simple trajectory
-  if (trajectory === "ground_ball") {
+  // Ground balls and negative launch angles use the ground trajectory
+  // (negative LA means the ball was hit downward — it rolls/bounces to the target distance)
+  if (trajectory === "ground_ball" || launchAngleDeg < 0) {
     return computeGroundBall(exitVeloMph, sprayAngleDeg, targetDistFt);
   }
 
