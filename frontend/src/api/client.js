@@ -450,18 +450,27 @@ export const fetchLiveGameState = async (gamePk) => {
       scoringPlays: allPlays
         .filter((p) => p.about?.isScoringPlay)
         .map((p) => {
-          let hrDistance = null;
-          if (p.result?.event === "Home Run") {
-            const hitEv = (p.playEvents || []).find((e) => e.hitData?.totalDistance);
-            if (hitEv) hrDistance = Math.round(hitEv.hitData.totalDistance);
-          }
+          const hitEv = (p.playEvents || []).find((e) => e.hitData?.coordinates?.coordX);
+          const hd = hitEv?.hitData;
           return {
             inning: p.about?.inning || 0,
             halfInning: p.about?.halfInning || "",
             description: p.result?.description || "",
+            event: p.result?.event || "",
             awayScore: p.result?.awayScore ?? 0,
             homeScore: p.result?.homeScore ?? 0,
-            hrDistance,
+            hrDistance: hd?.totalDistance ? Math.round(hd.totalDistance) : null,
+            hitData: hd ? {
+              x: hd.coordinates.coordX,
+              y: hd.coordinates.coordY,
+              exitVelo: hd.launchSpeed,
+              launchAngle: hd.launchAngle,
+              distance: hd.totalDistance ? Math.round(hd.totalDistance) : null,
+              trajectory: hd.trajectory,
+              event: p.result?.event || "",
+              description: p.result?.description || "",
+              batterName: p.matchup?.batter?.fullName || "",
+            } : null,
           };
         }),
       linescore: {

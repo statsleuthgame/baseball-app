@@ -970,6 +970,36 @@ body {
   flex-shrink: 0;
 }
 
+.lgp-replay-btn {
+  display: flex; align-items: center; gap: 3px;
+  padding: 2px 8px; border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 4px; background: none; color: var(--text-muted);
+  font-size: 9px; font-weight: 700; cursor: pointer;
+  text-transform: uppercase; letter-spacing: 0.5px;
+  flex-shrink: 0; margin-left: auto;
+}
+.lgp-replay-btn:active { opacity: 0.6; }
+.lgp-replay-btn svg { opacity: 0.7; }
+
+.lgp-replay-overlay {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; overflow: hidden; margin-bottom: 8px;
+}
+.lgp-replay-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 6px 12px;
+}
+.lgp-replay-label {
+  font-size: 10px; font-weight: 800; letter-spacing: 1px;
+  text-transform: uppercase; color: var(--text-muted);
+}
+.lgp-replay-close {
+  background: none; border: none; color: var(--text-muted);
+  font-size: 16px; cursor: pointer; padding: 2px 6px;
+  line-height: 1;
+}
+.lgp-replay-close:active { opacity: 0.6; }
+
 /* Live box score on home card */
 .live-boxscore-section {
   padding-top: 8px;
@@ -4304,6 +4334,7 @@ th.sb-ls-total {
   border-radius: 8px;
   padding: 8px 10px;
   background: rgba(255,255,255,0.02);
+  flex-wrap: wrap;
 }
 
 /* Due Up stats — compact inline */

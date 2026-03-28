@@ -60,6 +60,8 @@ export default function LiveGamePage() {
   });
 
   const [boxOpen, setBoxOpen] = useState(false);
+  const [replayData, setReplayData] = useState(null); // scoring play hit data for replay
+  const [replayKey, setReplayKey] = useState(0);
   const { data: boxData } = useQuery({
     queryKey: ["gameDetail", gamePk],
     queryFn: () => fetchGameDetail(gamePk),
@@ -474,6 +476,25 @@ export default function LiveGamePage() {
       })()}
 
       {/* ===== ZONE F: SCORING SUMMARY ===== */}
+      {/* Scoring play replay overlay */}
+      {replayData && (
+        <div className="lgp-replay-overlay">
+          <div className="lgp-replay-header">
+            <span className="lgp-replay-label">REPLAY</span>
+            <button className="lgp-replay-close" onClick={() => setReplayData(null)}>✕</button>
+          </div>
+          <Suspense fallback={<div style={{ height: 300, display: "flex", alignItems: "center", justifyContent: "center", color: "#888" }}>Loading...</div>}>
+            <BallInPlay3D
+              key={replayKey}
+              hitData={replayData}
+              venueTeamId={gameInfo.home.id}
+              runnersOn={{}}
+            />
+          </Suspense>
+        </div>
+      )}
+
+      {/* ===== ZONE F: SCORING SUMMARY ===== */}
       {liveState?.scoringPlays?.length > 0 && (
         <div className="lgp-section">
           <span className="lgp-section-label">Scoring</span>
@@ -486,6 +507,12 @@ export default function LiveGamePage() {
                   <span className="live-scoring-inn">{p.halfInning === "top" ? "\u25B2" : "\u25BC"}{p.inning}</span>
                   <span className="live-scoring-desc" dangerouslySetInnerHTML={{ __html: formatScoringDesc(p.description, p.hrDistance) }} />
                   <span className="live-scoring-score">{p.awayScore}-{p.homeScore}</span>
+                  {p.hitData && (
+                    <button className="lgp-replay-btn" onClick={() => { setReplayData(p.hitData); setReplayKey(k => k + 1); }}>
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21" /></svg>
+                      Replay
+                    </button>
+                  )}
                 </div>
               );
             })}
