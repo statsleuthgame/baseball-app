@@ -102,13 +102,20 @@ function computeRunnerMovements(event, runnersOn, description = "") {
 
     // Smarter advancement: runners further ahead advance more
     if (event === "Single") {
-      if (runner.base === 3) advance = 1; // 3rd scores
+      if (runner.base === 3) advance = 1; // 3rd always scores
       else if (runner.base === 2) advance = scoring ? 2 : 1; // 2nd scores on most singles
-      else if (runner.base === 1) advance = 1; // 1st to 2nd minimum
+      else if (runner.base === 1) advance = scoring ? 2 : 1; // 1st to 2nd, or to 3rd/scores if desc says so
     } else if (event === "Double") {
-      if (runner.base === 3) advance = 1; // 3rd scores
-      else if (runner.base === 2) advance = 2; // 2nd scores
+      if (runner.base === 3) advance = 1; // 3rd always scores
+      else if (runner.base === 2) advance = 2; // 2nd always scores
       else if (runner.base === 1) advance = scoring ? 3 : 2; // 1st scores or to 3rd
+    } else if (event === "Triple") {
+      advance = 4 - runner.base; // everyone scores on a triple
+    } else if (event === "Field Error") {
+      // On errors, runners advance an extra base (ball is loose)
+      if (runner.base === 3) advance = 1; // 3rd always scores
+      else if (runner.base === 2) advance = scoring ? 2 : 1; // 2nd scores or to 3rd
+      else if (runner.base === 1) advance = scoring ? 2 : 1; // 1st to 2nd or 3rd
     }
 
     const newBase = runner.base + advance;
