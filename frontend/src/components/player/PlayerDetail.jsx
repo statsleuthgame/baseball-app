@@ -5,7 +5,7 @@ import { useTeam } from "../../context/TeamContext";
 import { fetchPlayerStats, fetchPlayerSeasonStats } from "../../api/client";
 import ALL_TEAMS from "../../data/teams";
 import PlayerPhoto from "../common/PlayerPhoto";
-import LoadingSpinner from "../common/LoadingSpinner";
+import SkeletonLoader from "../common/SkeletonLoader";
 import ErrorMessage from "../common/ErrorMessage";
 import BatterStats from "./BatterStats";
 import PitcherStats from "./PitcherStats";
@@ -62,7 +62,7 @@ export default function PlayerDetail() {
     displaySeason = selectedSeason;
   }
 
-  if (isLoading) return <LoadingSpinner text="Loading player..." />;
+  if (isLoading) return <SkeletonLoader variant="player" />;
   if (error || !player?.id) return <ErrorMessage message="Player not found." />;
 
   return (

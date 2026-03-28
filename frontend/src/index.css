@@ -179,6 +179,162 @@ body {
   opacity: 0.7;
 }
 
+.top-bar-search {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  padding: 12px;
+  margin: -6px -2px -6px -6px;
+  border-radius: 8px;
+  display: flex;
+}
+
+@media (hover: hover) {
+  .top-bar-search:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+}
+
+.top-bar-search:active {
+  opacity: 0.7;
+}
+
+/* Player Search Overlay */
+.player-search-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+}
+
+.player-search-panel {
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  background: var(--bg);
+}
+
+.player-search-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  padding-top: calc(8px + env(safe-area-inset-top, 0px));
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+}
+
+.player-search-icon {
+  flex-shrink: 0;
+  color: var(--text-muted);
+}
+
+.player-search-input {
+  flex: 1;
+  height: 44px;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 17px;
+  font-family: inherit;
+  outline: none;
+}
+
+.player-search-input::placeholder {
+  color: var(--text-muted);
+}
+
+.player-search-close {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 10px;
+  margin: -6px;
+  border-radius: 8px;
+  display: flex;
+}
+
+.player-search-results {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  max-height: calc(100vh - 60px - env(safe-area-inset-top, 0px));
+}
+
+.player-search-status {
+  padding: 24px 16px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 15px;
+}
+
+.player-search-result {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 16px;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+}
+
+.player-search-result:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.player-search-result:not(:disabled):active {
+  background: var(--bg-card-hover);
+}
+
+@media (hover: hover) {
+  .player-search-result:not(:disabled):hover {
+    background: var(--bg-card-hover);
+  }
+}
+
+.player-search-photo {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--bg-card);
+  flex-shrink: 0;
+}
+
+.player-search-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.player-search-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-bright);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player-search-meta {
+  font-size: 13px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* Bottom Nav — fixed at bottom. Body background matches so any gap is invisible. */
 /* Top Tabs */
 .top-tabs {
@@ -1790,6 +1946,90 @@ button.stat-cell {
 .matchup-empty h2 {
   color: var(--text-bright);
   margin-bottom: 8px;
+}
+
+/* Off-day fallback */
+.matchup-offday {
+  text-align: left;
+  padding: 32px 16px;
+}
+.matchup-offday > h2,
+.matchup-offday > p { text-align: center; }
+.offday-loading { text-align: center; font-size: 0.85rem; }
+.offday-card {
+  background: var(--card-bg);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-top: 16px;
+}
+.offday-card-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.offday-card-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.offday-logo {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+}
+.offday-card-detail {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+.offday-matchup {
+  font-weight: 600;
+  color: var(--text-bright);
+  font-size: 0.95rem;
+}
+.offday-date {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.offday-result {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.offday-wl {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+.offday-wl.win { color: var(--win); }
+.offday-wl.loss { color: var(--loss); }
+.offday-score {
+  font-size: 0.95rem;
+  color: var(--text-bright);
+  font-variant-numeric: tabular-nums;
+}
+.offday-pitcher {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-shrink: 0;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.offday-pitcher-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+.matchup-offday .btn-retry {
+  margin-top: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .matchup-view {
@@ -3783,6 +4023,73 @@ th.sb-ls-total {
   background: var(--bg-card);
   border-radius: 16px;
   animation: pulse 1.5s infinite;
+}
+
+/* ===== Skeleton Loader ===== */
+.skeleton-pulse {
+  background: linear-gradient(90deg, var(--bg-card) 25%, rgba(255,255,255,0.06) 50%, var(--bg-card) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  border-radius: 6px;
+}
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.skeleton-container { padding: 20px; }
+.skeleton-card {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 20px;
+}
+.skeleton-player {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 8px 0;
+}
+.skeleton-circle {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.skeleton-player-lines {
+  flex: 1;
+  padding-top: 8px;
+}
+.skeleton-matchup {
+  text-align: center;
+  padding: 24px 0;
+}
+.skeleton-matchup-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+.skeleton-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+.skeleton-scores {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.skeleton-score-card {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.skeleton-score-teams {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /* ===== REDESIGNED LIVE GAME PAGE ===== */

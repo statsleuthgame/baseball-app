@@ -2,10 +2,10 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
-import { fetchTodayGame, fetchRoster, fetchGameLineup, fetchProjectedLineup, fetchHotColdPlayers, fetchBullpenAvailability, fetchAllGamesToday, fetchTeamInjuries } from "../../api/client";
+import { fetchTodayGame, fetchRoster, fetchGameLineup, fetchProjectedLineup, fetchHotColdPlayers, fetchBullpenAvailability, fetchAllGamesToday, fetchTeamInjuries, fetchSchedule } from "../../api/client";
 import { formatGameDate, formatGameTime, lastName, formatAvg } from "../../utils/formatters";
 import PARK_FACTORS from "../../data/parkFactors";
-import LoadingSpinner from "../common/LoadingSpinner";
+import SkeletonLoader from "../common/SkeletonLoader";
 import BatterVsPitcher from "./BatterVsPitcher";
 import PitchArsenal from "../player/PitchArsenal";
 import WinProbability from "./WinProbability";
@@ -77,18 +77,10 @@ export default function MatchupView() {
     staleTime: 1000 * 60 * 60,
   });
 
-  if (isLoading) return <LoadingSpinner text="Loading matchup..." />;
+  if (isLoading) return <SkeletonLoader variant="matchup" />;
 
   if (!game) {
-    return (
-      <div className="matchup-empty">
-        <h2>No Upcoming Games</h2>
-        <p>No games scheduled in the next 14 days.</p>
-        <button className="btn-retry" onClick={() => navigate(`/team/${teamId}/schedule`)}>
-          View Schedule
-        </button>
-      </div>
-    );
+    return <MatchupOffDay teamId={teamId} />;
   }
 
   const isHome = game.home.id === teamId;
@@ -509,6 +501,102 @@ function GameSwitcher({ currentGamePk, teamId }) {
           ))}
         </div>
       )}
+    </div>
+  );
+}
+
+function MatchupOffDay({ teamId }) {
+  const navigate = useNavigate();
+
+  const { data: schedule, isLoading } = useQuery({
+    queryKey: ["schedule", teamId],
+    queryFn: () => fetchSchedule(teamId),
+    enabled: !!teamId,
+    staleTime: 1000 * 60 * 60,
+  });
+
+  const now = new Date();
+
+  const lastGame = schedule
+    ?.filter((g) => g.status === "Final")
+    .sort((a, b) => new Date(b.gameDate) - new Date(a.gameDate))[0] || null;
+
+  const nextGame = schedule
+    ?.filter((g) => g.status !== "Final" && new Date(g.gameDate) > now)
+    .sort((a, b) => new Date(a.gameDate) - new Date(b.gameDate))[0] || null;
+
+  const getResult = (g) => {
+    if (!g) return {};
+    const isHome = Number(g.home.id) === Number(teamId);
+    const us = isHome ? g.home : g.away;
+    const them = isHome ? g.away : g.home;
+    const won = us.isWinner;
+    return { us, them, isHome, won };
+  };
+
+  return (
+    <div className="matchup-empty matchup-offday">
+      <h2>Off Day</h2>
+      <p>No game today.</p>
+
+      {isLoading && <p className="offday-loading">Loading schedule...</p>}
+
+      {lastGame && (() => {
+        const { us, them, isHome, won } = getResult(lastGame);
+        return (
+          <div className="offday-card">
+            <div className="offday-card-label">Last Game</div>
+            <div className="offday-card-row">
+              <img src={them.logoUrl} alt={them.abbreviation} className="offday-logo" />
+              <div className="offday-card-detail">
+                <span className="offday-matchup">
+                  {isHome ? "vs" : "@"} {them.abbreviation}
+                </span>
+                <span className="offday-date">{formatGameDate(lastGame.gameDate)}</span>
+              </div>
+              <div className="offday-result">
+                <span className={`offday-wl ${won ? "win" : "loss"}`}>{won ? "W" : "L"}</span>
+                <span className="offday-score">{us.score}–{them.score}</span>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
+
+      {nextGame && (() => {
+        const isHome = Number(nextGame.home.id) === Number(teamId);
+        const them = isHome ? nextGame.away : nextGame.home;
+        return (
+          <div className="offday-card">
+            <div className="offday-card-label">Next Game</div>
+            <div className="offday-card-row">
+              <img src={them.logoUrl} alt={them.abbreviation} className="offday-logo" />
+              <div className="offday-card-detail">
+                <span className="offday-matchup">
+                  {isHome ? "vs" : "@"} {them.abbreviation}
+                </span>
+                <span className="offday-date">
+                  {formatGameDate(nextGame.gameDate)} · {formatGameTime(nextGame.gameDate)}
+                </span>
+              </div>
+              {them.probablePitcher && (
+                <div className="offday-pitcher">
+                  <span className="offday-pitcher-label">SP</span>
+                  <span>{them.probablePitcher.fullName}</span>
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      })()}
+
+      {!isLoading && !lastGame && !nextGame && (
+        <p>No games scheduled in the next 14 days.</p>
+      )}
+
+      <button className="btn-retry" onClick={() => navigate(`/team/${teamId}/schedule`)}>
+        View Schedule
+      </button>
     </div>
   );
 }

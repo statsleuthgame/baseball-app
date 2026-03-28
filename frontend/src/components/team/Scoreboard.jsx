@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
 import { fetchAllGamesToday, fetchPitcherSeasonStats, fetchBvP, fetchRoster, fetchGameDetail, fetchGameLineup, fetchProjectedLineup, fetchLiveGameState } from "../../api/client";
 import { formatGameTime, getTeamAbbr, lastName, teamDisplayName } from "../../utils/formatters";
-import LoadingSpinner from "../common/LoadingSpinner";
+import SkeletonLoader from "../common/SkeletonLoader";
 import PlayerPhoto from "../common/PlayerPhoto";
 
 const fmt = (d) => {
@@ -611,7 +611,7 @@ export default function Scoreboard() {
         </button>
       </div>
 
-      {isLoading && <LoadingSpinner text="Loading scores..." />}
+      {isLoading && <SkeletonLoader variant="scores" />}
 
       {!isLoading && !sorted.length && (
         <div className="scoreboard-empty">
