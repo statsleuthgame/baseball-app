@@ -447,13 +447,21 @@ export const fetchLiveGameState = async (gamePk) => {
       inHole: ls.offense?.inHole ? { id: ls.offense.inHole.id, fullName: ls.offense.inHole.fullName, ...getGameBattingLine(ld.boxscore, ls.offense.inHole.id) } : null,
       scoringPlays: allPlays
         .filter((p) => p.about?.isScoringPlay)
-        .map((p) => ({
-          inning: p.about?.inning || 0,
-          halfInning: p.about?.halfInning || "",
-          description: p.result?.description || "",
-          awayScore: p.result?.awayScore ?? 0,
-          homeScore: p.result?.homeScore ?? 0,
-        })),
+        .map((p) => {
+          let hrDistance = null;
+          if (p.result?.event === "Home Run") {
+            const hitEv = (p.playEvents || []).find((e) => e.hitData?.totalDistance);
+            if (hitEv) hrDistance = Math.round(hitEv.hitData.totalDistance);
+          }
+          return {
+            inning: p.about?.inning || 0,
+            halfInning: p.about?.halfInning || "",
+            description: p.result?.description || "",
+            awayScore: p.result?.awayScore ?? 0,
+            homeScore: p.result?.homeScore ?? 0,
+            hrDistance,
+          };
+        }),
       linescore: {
         innings: (ls.innings || []).map((inn) => ({ num: inn.num, away: inn.away?.runs ?? "", home: inn.home?.runs ?? "" })),
         away: { runs: teams.away?.runs ?? 0, hits: teams.away?.hits ?? 0, errors: teams.away?.errors ?? 0 },
