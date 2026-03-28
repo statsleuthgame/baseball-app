@@ -9,6 +9,10 @@ from fastapi.responses import JSONResponse
 
 from app.config import FRONTEND_ORIGIN
 from app.services import mlb_api
+# NOTE: The frontend bypasses most backend endpoints, using static pre-generated
+# JSON + direct MLB API calls from the browser instead. These routers are kept
+# for potential future use (e.g., if we need server-side caching or CORS proxying).
+# Only the umpire router receives any live frontend traffic currently.
 from app.routers import team, schedule, standings, player, hotplayers, spraychart, matchup, umpire, leaderboards
 
 
