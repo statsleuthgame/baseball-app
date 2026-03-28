@@ -4273,6 +4273,17 @@ th.sb-ls-total {
 .lgp-pitch-result {
   font-size: 13px; font-weight: 600; color: var(--text); text-align: center;
 }
+.lgp-out-count {
+  font-size: 11px; font-weight: 700; color: var(--text-muted);
+}
+.lgp-three-outs {
+  color: #ef4444;
+  animation: three-outs-flash 1.5s ease-in-out 2;
+}
+@keyframes three-outs-flash {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
 
 /* Future innings in linescore */
 .live-ls-future { opacity: 0.25; }

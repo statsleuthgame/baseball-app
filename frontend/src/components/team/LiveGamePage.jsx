@@ -289,17 +289,18 @@ export default function LiveGamePage() {
                     const p = liveState.currentAtBat[liveState.currentAtBat.length - 1];
                     const balls = p.count ? parseInt(p.count.split("-")[0]) || 0 : null;
                     const strikes = p.count ? parseInt(p.count.split("-")[1]) || 0 : null;
+                    const outs = liveState.outs;
                     let countLabel = "";
                     if (p.isStrike && strikes === 3 && p.code !== "F") {
                       const soType = p.code === "C" ? "Looking" : p.code === "S" ? "Swinging" : "Called";
-                      return `${p.pitchInfo || ""} — Strikeout ${soType}`;
+                      return <>{p.pitchInfo || ""} — Strikeout {soType} <span className={`lgp-out-count ${outs >= 3 ? "lgp-three-outs" : ""}`}>— {outs} Out{outs !== 1 ? "s" : ""}</span></>;
                     }
                     if (p.isBall && balls >= 4) {
                       const batterName = liveState.batter?.fullName || "";
                       return `${p.pitchInfo || ""} — Ball 4 — ${batterName} Walks`;
                     }
                     if (p.isInPlay) {
-                      return `${p.pitchInfo || ""} — In Play`;
+                      return <>{p.pitchInfo || ""} — In Play <span className={`lgp-out-count ${outs >= 3 ? "lgp-three-outs" : ""}`}>— {outs} Out{outs !== 1 ? "s" : ""}</span></>;
                     }
                     if (p.isBall && balls != null) countLabel = ` (${balls})`;
                     else if (p.isStrike && strikes != null && p.code !== "F") countLabel = ` (${strikes})`;
