@@ -654,7 +654,7 @@ function BoxScoreSection({ boxOpen, setBoxOpen, boxData, gameInfo, teamId }) {
                   <span className="lgp-box-col-name">
                     <span className="lgp-box-pos">{b.position}</span>
                     <span className="lgp-box-name-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${b.id}`); }}>
-                      {lastName(b.name)}
+                      {b.name}
                     </span>
                   </span>
                   <span className="lgp-box-col-stat">{s.ab ?? "—"}</span>
@@ -707,7 +707,7 @@ function BoxScoreSection({ boxOpen, setBoxOpen, boxData, gameInfo, teamId }) {
                   <div key={p.id} className="lgp-box-row-full">
                     <span className="lgp-box-col-name">
                       <span className="lgp-box-name-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
-                        {lastName(p.name)}
+                        {p.name}
                       </span>
                     </span>
                     <span className="lgp-box-col-stat">{s.ip ?? "—"}</span>
