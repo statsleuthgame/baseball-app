@@ -4271,7 +4271,9 @@ th.sb-ls-total {
 .lgp-zone-centered > *:not(.lgp-zone-bg-logo) { position: relative; z-index: 1; }
 .lgp-strike-zone { width: 100%; max-width: 300px; height: auto; overflow: visible; }
 .lgp-pitch-result {
-  font-size: 13px; font-weight: 600; color: var(--text); text-align: center;
+  font-size: 12px; font-weight: 600; color: var(--text); text-align: center;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  padding: 0 4px;
 }
 .lgp-out-count {
   font-size: 11px; font-weight: 700; color: var(--text-muted);
