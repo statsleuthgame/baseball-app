@@ -16,6 +16,7 @@ import {
   computeTrajectory,
   sampleTrajectory,
   sprayAngleFromMLBAM,
+  distanceFromMLBAM,
 } from "./trajectoryPhysics";
 
 // Module-level constant — avoids re-creation on every render
@@ -53,11 +54,14 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn, runnerNa
     if (!hitData) return { sampledPoints: [], duration: 0, apexHeight: 0 };
 
     const sprayAngle = sprayAngleFromMLBAM(hitData.x, hitData.y);
+    // Use coordinate-based distance as floor — API totalDistance is often wrong for ground balls
+    const coordDist = distanceFromMLBAM(hitData.x, hitData.y);
+    const distance = Math.max(hitData.distance || 0, coordDist);
     const traj = computeTrajectory(
       hitData.exitVelo || 90,
       hitData.launchAngle || 20,
       sprayAngle,
-      hitData.distance,
+      distance,
       hitData.trajectory
     );
     const sampled = sampleTrajectory(traj, 150);
