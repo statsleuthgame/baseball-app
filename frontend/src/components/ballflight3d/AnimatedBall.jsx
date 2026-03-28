@@ -95,7 +95,7 @@ export default function AnimatedBall({
       glowRef.current.position.set(x, Math.max(y, 0), z);
       glowRef.current.visible = !behindFenceRef.current;
       const pulse = 1 + Math.sin(t * 10) * 0.15;
-      glowRef.current.scale.setScalar(pulse * 3);
+      glowRef.current.scale.setScalar(pulse * 1.2);
     }
 
     onProgress?.(frac, { x, y: Math.max(y, 0), z });
@@ -152,13 +152,13 @@ export default function AnimatedBall({
         />
       </line>
 
-      {/* Ball glow (larger transparent sphere) */}
+      {/* Subtle ball glow */}
       <mesh ref={glowRef}>
-        <sphereGeometry args={[2, 16, 16]} />
+        <sphereGeometry args={[1.5, 12, 12]} />
         <meshBasicMaterial
           color={baseColor}
           transparent
-          opacity={0.15 * glowIntensity}
+          opacity={0.08 * glowIntensity}
           depthWrite={false}
         />
       </mesh>
