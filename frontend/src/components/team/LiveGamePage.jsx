@@ -69,7 +69,8 @@ export default function LiveGamePage() {
   });
 
   // Auto-collapse ball-in-play visual after 30 seconds
-  const [bipCollapsed, setBipCollapsed] = useState(false);
+  // Start collapsed to prevent stale BIP flash on first render
+  const [bipCollapsed, setBipCollapsed] = useState(true);
   const bipTimerRef = useRef(null);
   const lastHitRef = useRef(null);
   // Persist hit data across half-inning changes (API resets allPlays on side change)
@@ -273,8 +274,9 @@ export default function LiveGamePage() {
             const playStillInProgress = lastPitch?.isInPlay && !liveState.currentPlayComplete;
             const hasCompletedHit = hitData?.event && !playStillInProgress;
             const currentHitKey = hitData ? `${hitData.x}-${hitData.y}` : null;
-            const isNewHit = currentHitKey && currentHitKey !== lastHitRef.current;
-            const showBip = hasCompletedHit && (!bipCollapsed || isNewHit);
+            // Only treat as new hit if we've been initialized (prevents first-render flash)
+            const isNewHit = initializedRef.current && currentHitKey && currentHitKey !== lastHitRef.current;
+            const showBip = hasCompletedHit && !bipCollapsed;
             // After BIP collapses, don't show the old at-bat's pitches — show empty zone
             const bipJustEnded = bipCollapsed && hasCompletedHit && !isNewHit;
             const showZone = liveState.currentAtBat?.length > 0 && !showBip && !bipJustEnded;
