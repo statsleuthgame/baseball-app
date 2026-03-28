@@ -173,12 +173,8 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
     popup: "Popup",
   }[hitData.trajectory] || "Batted Ball";
 
-  const displayEvent = eventDisplayLabel(event);
-  const trajLabel = isHomeRun
-    ? "HOME RUN"
-    : displayEvent
-      ? `${trajType} — ${displayEvent}`
-      : trajType;
+  // Only reveal the result for home runs — everything else just shows trajectory type
+  const trajLabel = isHomeRun ? "HOME RUN" : trajType;
 
   const evLabel =
     hitData.exitVelo >= 100
