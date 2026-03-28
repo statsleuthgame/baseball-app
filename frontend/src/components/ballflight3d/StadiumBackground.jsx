@@ -396,30 +396,6 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
     });
   }, [fencePoints, normals]);
 
-  // ─── Light towers ───────────────────────────────────────────────
-  const lightTowers = useMemo(() => {
-    if (!fencePoints?.length || !normals.length) return [];
-    const pts = fencePoints;
-    const n = pts.length;
-    const towers = [];
-    const towerOffset = PUSH_BACK + TREAD_D * (TIER1_ROWS + TIER2_ROWS) + CONCOURSE_D + 10;
-    const towerCount = 6;
-
-    for (let i = 0; i < towerCount; i++) {
-      const fIdx = Math.floor((i + 0.5) * (n - 1) / towerCount);
-      if (fIdx >= n) continue;
-      const [fx, , fz] = pts[fIdx];
-      const [nx, nz] = normals[fIdx];
-      const len = Math.sqrt(nx * nx + nz * nz) || 1;
-      towers.push({
-        x: fx + (nx / len) * towerOffset,
-        z: fz + (nz / len) * towerOffset,
-        height: 100 + (pseudoNoise(i, 42) * 20),
-      });
-    }
-    return towers;
-  }, [fencePoints, normals]);
-
   // ─── Sky material ───────────────────────────────────────────────
   const skyMat = useMemo(() => new THREE.ShaderMaterial({
     vertexShader: skyVertexShader,
@@ -462,20 +438,6 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
         </mesh>
       ))}
 
-      {/* Light towers */}
-      {lightTowers.map((tower, i) => (
-        <group key={`light-tower-${i}`} position={[tower.x, 0, tower.z]}>
-          <mesh position={[0, tower.height / 2, 0]}>
-            <cylinderGeometry args={[0.8, 1.5, tower.height, 6]} />
-            <meshLambertMaterial color="#1a1a2e" />
-          </mesh>
-          <mesh position={[0, tower.height, 0]}>
-            <boxGeometry args={[8, 3, 4]} />
-            <meshBasicMaterial color="#ffffcc" transparent opacity={0.9} />
-          </mesh>
-          <pointLight position={[0, tower.height + 2, 0]} intensity={0.6} color="#ffffdd" distance={300} decay={2} />
-        </group>
-      ))}
 
       {/* Press box */}
       {fencePoints?.length > 0 && (() => {

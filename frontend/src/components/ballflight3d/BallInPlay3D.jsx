@@ -270,7 +270,6 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
           {outPositions.map((pos, i) => pos && <OutIndicator key={`out-${i}`} position={pos} />)}
 
           {/* Exponential fog for atmospheric depth */}
-          <fogExp2 attach="fog" args={["#0a0e1a", 0.002]} />
         </Canvas>
 
         {/* Event label overlay (top) */}
