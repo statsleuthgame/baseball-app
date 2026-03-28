@@ -4216,7 +4216,7 @@ th.sb-ls-total {
 .lgp-bip-section { padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.04); margin-top: 10px; margin-bottom: 8px; }
 
 /* Zone D: Win prob + due up side by side */
-.lgp-row-section { display: flex; gap: 6px; align-items: flex-start; }
+.lgp-row-section { display: flex; gap: 6px; align-items: stretch; }
 .lgp-wp-compact {
   flex: 0 0 auto; background: var(--bg-card); border: 1px solid var(--border);
   border-radius: 6px; padding: 4px 8px;
