@@ -633,6 +633,11 @@ function BoxScoreSection({ boxOpen, setBoxOpen, boxData, gameInfo, teamId }) {
                   <span className="lgp-box-col-stat">{s.rbi ?? "—"}</span>
                   <span className="lgp-box-col-stat">{s.bb ?? "—"}</span>
                   <span className="lgp-box-col-stat">{s.k ?? "—"}</span>
+                  {hasABs && (
+                    <svg className="lgp-box-chev" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: isOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s", flexShrink: 0, marginLeft: 2 }}>
+                      <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                  )}
                 </div>
                 {isOpen && (
                   <div className="lgp-box-abs">
@@ -641,7 +646,7 @@ function BoxScoreSection({ boxOpen, setBoxOpen, boxData, gameInfo, teamId }) {
                       return (
                         <div key={i} className={`lgp-box-ab ${ab.isScoring ? "lgp-box-ab-scoring" : ""}`}>
                           <span className="lgp-box-ab-inn">{ord}</span>
-                          <span className="lgp-box-ab-event">{ab.description || ab.shortDesc || ab.event}</span>
+                          <span className="lgp-box-ab-event" dangerouslySetInnerHTML={{ __html: formatScoringDesc(ab.description || ab.shortDesc || ab.event, ab.hrDistance) }} />
                         </div>
                       );
                     })}
