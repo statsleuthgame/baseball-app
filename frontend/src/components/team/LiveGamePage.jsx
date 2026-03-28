@@ -630,8 +630,7 @@ function BoxScoreSection({ boxOpen, setBoxOpen, boxData, gameInfo, teamId }) {
                       return (
                         <div key={i} className={`lgp-box-ab ${ab.isScoring ? "lgp-box-ab-scoring" : ""}`}>
                           <span className="lgp-box-ab-inn">{ord}</span>
-                          <span className="lgp-box-ab-event">{ab.shortDesc || ab.event}</span>
-                          {ab.rbi > 0 && <span className="lgp-box-ab-rbi">{ab.rbi} RBI</span>}
+                          <span className="lgp-box-ab-event">{ab.description || ab.shortDesc || ab.event}</span>
                         </div>
                       );
                     })}
