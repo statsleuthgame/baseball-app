@@ -1152,12 +1152,17 @@ body {
 
 .matchup-lineups-cols {
   display: flex;
-  gap: 12px;
+  gap: 0;
 }
 
 .matchup-lineups-col {
   flex: 1;
   min-width: 0;
+}
+.matchup-lineups-col + .matchup-lineups-col {
+  border-left: 1px solid rgba(255, 255, 255, 0.06);
+  padding-left: 10px;
+  margin-left: 10px;
 }
 
 .matchup-lineups-col-hdr {
@@ -1177,10 +1182,7 @@ body {
   gap: 4px;
   padding: 5px 4px;
   font-size: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-}
-.matchup-lineup-row:nth-child(even) {
-  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .ml-order {
@@ -2232,12 +2234,17 @@ button.stat-cell {
 
 .matchup-dual-cols {
   display: flex;
-  gap: 12px;
+  gap: 0;
 }
 
 .matchup-dual-col {
   flex: 1;
   min-width: 0;
+}
+.matchup-dual-col + .matchup-dual-col {
+  border-left: 1px solid rgba(255, 255, 255, 0.06);
+  padding-left: 10px;
+  margin-left: 10px;
 }
 
 .matchup-dual-hdr {
@@ -2259,10 +2266,7 @@ button.stat-cell {
   gap: 4px;
   padding: 5px 4px;
   font-size: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-}
-.bvp-compact-row:nth-child(even) {
-  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .bvp-compact-name {
@@ -2424,11 +2428,15 @@ button.stat-cell {
 .bullpen-cols {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0 16px;
+  gap: 0;
 }
 
 .bullpen-team {
   min-width: 0;
+}
+.bullpen-team + .bullpen-team {
+  border-left: 1px solid rgba(255, 255, 255, 0.06);
+  padding-left: 10px;
 }
 
 .bullpen-team-hdr {
