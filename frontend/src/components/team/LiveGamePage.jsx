@@ -10,6 +10,17 @@ const BallInPlay3D = lazy(() => import("../ballflight3d/BallInPlay3D"));
 import PlayerPhoto from "../common/PlayerPhoto";
 import LoadingSpinner from "../common/LoadingSpinner";
 
+// Bold hit types and add HR distance in scoring descriptions
+function formatScoringDesc(desc, hrDistance) {
+  if (!desc) return "";
+  let html = desc
+    .replace(/\b(singles|doubles|triples|homers|walks|hit by pitch|grand slam|sacrifice fly|sac fly)\b/gi, "<strong>$1</strong>");
+  if (hrDistance && html.includes("<strong>homers</strong>")) {
+    html = html.replace("<strong>homers</strong>", `<strong>homers</strong> (${hrDistance} ft)`);
+  }
+  return html;
+}
+
 export default function LiveGamePage() {
   const { gamePk } = useParams();
   const { teamId } = useTeam();
@@ -444,7 +455,7 @@ export default function LiveGamePage() {
               return (
                 <div key={`${p.inning}-${p.halfInning}-${p.awayScore}-${p.homeScore}`} className="live-scoring-play" style={{ borderColor: teamColor }}>
                   <span className="live-scoring-inn">{p.halfInning === "top" ? "\u25B2" : "\u25BC"}{p.inning}</span>
-                  <span className="live-scoring-desc">{p.description}</span>
+                  <span className="live-scoring-desc" dangerouslySetInnerHTML={{ __html: formatScoringDesc(p.description, p.hrDistance) }} />
                   <span className="live-scoring-score">{p.awayScore}-{p.homeScore}</span>
                 </div>
               );
