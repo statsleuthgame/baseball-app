@@ -33,7 +33,26 @@ const BASE_MAP = { "1B": 1, "2B": 2, "3B": 3, "score": 4 };
 function computeRunnerMovements(event, runnersOn, description = "", apiRunners = []) {
   // If we have API runner data, use it directly — no guessing
   if (apiRunners?.length > 0) {
-    return apiRunners.map((r) => {
+    // Merge multiple entries for the same player (e.g., batter singles to 1B
+    // then advances to 2B on throw = two entries, one movement home→2B)
+    const byName = {};
+    for (const r of apiRunners) {
+      const name = r.name || `anon-${r.start || "home"}`;
+      if (!byName[name]) {
+        byName[name] = { ...r };
+      } else {
+        // Keep the earliest start and latest end
+        const existing = byName[name];
+        const existingEnd = existing.end ? (BASE_MAP[existing.end] || 0) : 0;
+        const newEnd = r.end ? (BASE_MAP[r.end] || 0) : 0;
+        if (r.end === "score" || newEnd > existingEnd) {
+          existing.end = r.end;
+        }
+        if (r.isOut) existing.isOut = true;
+      }
+    }
+
+    return Object.values(byName).map((r) => {
       const from = r.start ? (BASE_MAP[r.start] || 0) : 0;
       const to = r.end ? (BASE_MAP[r.end] || 0) : (r.isOut ? Math.min(from + 1, 4) : from);
       return {
@@ -41,9 +60,10 @@ function computeRunnerMovements(event, runnersOn, description = "", apiRunners =
         to,
         scores: r.end === "score",
         isOut: r.isOut,
-        isBatter: !r.start, // null start = batter from home
+        isBatter: !r.start,
+        name: r.name || "",
       };
-    }).filter((m) => m.from !== m.to || m.isOut); // skip runners that don't move
+    }).filter((m) => m.from !== m.to || m.isOut);
   }
 
   // Fallback: basic logic when API data not available (replays without runner data)
@@ -131,18 +151,16 @@ export default function BaseRunners3D({
     [event, runnersOn, description, apiRunners]
   );
 
-  // Map each movement to a last name — prefer API runner names
+  // Map each movement to a last name — prefer name from merged movement
   const movementNames = useMemo(() => {
-    if (apiRunners?.length > 0) {
-      return movements.map((m, i) => apiRunners[i]?.name || "");
-    }
-    const baseNameMap = { 1: "first", 2: "second", 3: "third" };
     return movements.map((m) => {
+      if (m.name) return m.name; // from API data (merged)
       if (m.isBatter) return runnerNames?.batter || "";
+      const baseNameMap = { 1: "first", 2: "second", 3: "third" };
       const key = baseNameMap[m.from];
       return key ? (runnerNames?.[key] || "") : "";
     });
-  }, [movements, runnerNames, apiRunners]);
+  }, [movements, runnerNames]);
 
   const paths = useMemo(
     () => movements.map((m) => getRunnerPath(m.from, m.to)),
