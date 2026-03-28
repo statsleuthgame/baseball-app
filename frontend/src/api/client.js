@@ -452,6 +452,17 @@ export const fetchLiveGameState = async (gamePk) => {
         .map((p) => {
           const hitEv = (p.playEvents || []).find((e) => e.hitData?.coordinates?.coordX);
           const hd = hitEv?.hitData;
+          // Extract pre-play runner state from runners array
+          const runners = p.runners || [];
+          const runnersOn = { first: false, second: false, third: false };
+          const runnerNames = {};
+          for (const r of runners) {
+            const origin = r.movement?.originBase || r.movement?.start;
+            const name = r.details?.runner?.fullName || "";
+            if (origin === "1B") { runnersOn.first = true; runnerNames.first = name; }
+            else if (origin === "2B") { runnersOn.second = true; runnerNames.second = name; }
+            else if (origin === "3B") { runnersOn.third = true; runnerNames.third = name; }
+          }
           return {
             inning: p.about?.inning || 0,
             halfInning: p.about?.halfInning || "",
@@ -460,6 +471,8 @@ export const fetchLiveGameState = async (gamePk) => {
             awayScore: p.result?.awayScore ?? 0,
             homeScore: p.result?.homeScore ?? 0,
             hrDistance: hd?.totalDistance ? Math.round(hd.totalDistance) : null,
+            runnersOn,
+            runnerNames,
             hitData: hd ? {
               x: hd.coordinates.coordX,
               y: hd.coordinates.coordY,

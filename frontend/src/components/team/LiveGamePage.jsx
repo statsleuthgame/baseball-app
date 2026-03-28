@@ -487,10 +487,10 @@ export default function LiveGamePage() {
           <Suspense fallback={<div style={{ height: 300, display: "flex", alignItems: "center", justifyContent: "center", color: "#888" }}>Loading...</div>}>
             <BallInPlay3D
               key={replayKey}
-              hitData={replayData}
+              hitData={replayData.hitData}
               venueTeamId={gameInfo.home.id}
-              runnersOn={{}}
-              runnerNames={{ batter: replayData?.batterName || "" }}
+              runnersOn={replayData.runnersOn || {}}
+              runnerNames={{ ...(replayData.runnerNames || {}), batter: replayData.hitData?.batterName || "" }}
             />
           </Suspense>
         </div>
@@ -510,7 +510,7 @@ export default function LiveGamePage() {
                   <span className="live-scoring-desc" dangerouslySetInnerHTML={{ __html: formatScoringDesc(p.description, p.hrDistance) }} />
                   <span className="live-scoring-score">{p.awayScore}-{p.homeScore}</span>
                   {p.hitData && (
-                    <button className="lgp-replay-btn" onClick={() => { setReplayData(p.hitData); setReplayKey(k => k + 1); }}>
+                    <button className="lgp-replay-btn" onClick={() => { setReplayData(p); setReplayKey(k => k + 1); }}>
                       <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21" /></svg>
                       Replay
                     </button>
