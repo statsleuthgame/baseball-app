@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
-import { fetchSchedule } from "../../api/client";
+import { fetchSchedule, fetchLiveSchedule } from "../../api/client";
 import { formatGameDate, formatGameTime } from "../../utils/formatters";
 import LoadingSpinner from "../common/LoadingSpinner";
 import ErrorMessage from "../common/ErrorMessage";
@@ -14,12 +14,35 @@ export default function ScheduleView() {
   const navigate = useNavigate();
   const [selectedMonth, setSelectedMonth] = useState(() => new Date().getMonth());
 
-  const { data: games, isLoading, error, refetch } = useQuery({
+  const { data: staticGames, isLoading, error, refetch } = useQuery({
     queryKey: ["schedule", teamId],
     queryFn: () => fetchSchedule(teamId),
     enabled: !!teamId,
     staleTime: 1000 * 60 * 30,
   });
+
+  // Supplement static data with live scores from MLB API
+  const { data: liveScores } = useQuery({
+    queryKey: ["liveSchedule", teamId],
+    queryFn: () => fetchLiveSchedule(teamId),
+    enabled: !!teamId,
+    staleTime: 1000 * 60 * 10,
+  });
+
+  // Merge live scores into static schedule
+  const games = useMemo(() => {
+    if (!staticGames) return null;
+    if (!liveScores) return staticGames;
+    const liveByPk = {};
+    for (const g of liveScores) liveByPk[g.gamePk] = g;
+    return staticGames.map((g) => {
+      const live = liveByPk[g.gamePk];
+      if (live && live.status === "Final") {
+        return { ...g, status: live.status, away: { ...g.away, score: live.awayScore, isWinner: live.awayScore > live.homeScore }, home: { ...g.home, score: live.homeScore, isWinner: live.homeScore > live.awayScore } };
+      }
+      return g;
+    });
+  }, [staticGames, liveScores]);
 
   if (isLoading) return <LoadingSpinner text="Loading schedule..." />;
   if (error) return <ErrorMessage message="Failed to load schedule." onRetry={refetch} />;

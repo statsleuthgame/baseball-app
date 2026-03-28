@@ -40,6 +40,33 @@ export const fetchRoster = async (teamId) => {
 
 export const fetchSchedule = (teamId) => staticFetch(`teams/${getTeamAbbr(teamId)}/schedule.json`);
 
+// Fetch recent + upcoming schedule from live MLB API to supplement static data
+export const fetchLiveSchedule = async (teamId) => {
+  try {
+    const now = new Date();
+    const start = new Date(now);
+    start.setDate(start.getDate() - 7); // last 7 days
+    const end = new Date(now);
+    end.setDate(end.getDate() + 1);
+    const fmt = (d) => d.toISOString().split("T")[0];
+    const resp = await mlbApi.get("/schedule", {
+      params: { sportId: 1, teamId, startDate: fmt(start), endDate: fmt(end), hydrate: "team,linescore", gameType: "R" },
+    });
+    const games = [];
+    for (const date of resp.data?.dates || []) {
+      for (const g of date.games || []) {
+        games.push({
+          gamePk: g.gamePk,
+          status: g.status?.detailedState || "",
+          awayScore: g.teams?.away?.score ?? null,
+          homeScore: g.teams?.home?.score ?? null,
+        });
+      }
+    }
+    return games;
+  } catch { return []; }
+};
+
 export const fetchStandings = async () => {
   // Fetch live from MLB API for freshest standings
   try {
