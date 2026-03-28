@@ -4158,6 +4158,15 @@ th.sb-ls-total {
 .lgp-outs-text { font-size: 12px; color: var(--text-muted); margin-left: 2px; }
 .lgp-count { font-size: 16px; font-weight: 700; color: var(--text-muted); }
 
+.lgp-runners-line {
+  display: flex; justify-content: center; gap: 10px;
+  padding: 3px 0; margin-top: 2px;
+}
+.lgp-runner-tag {
+  font-size: 10px; font-weight: 600; color: var(--text-muted);
+  background: rgba(255,255,255,0.04); padding: 2px 6px; border-radius: 4px;
+}
+
 /* Section cards */
 .lgp-section {
   background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 12px;
@@ -4204,10 +4213,11 @@ th.sb-ls-total {
 .lgp-bip-section { padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.04); margin-top: 10px; }
 
 /* Zone D: Win prob + due up side by side */
-.lgp-row-section { display: flex; gap: 8px; align-items: flex-start; }
+.lgp-row-section { display: flex; gap: 8px; align-items: stretch; }
 .lgp-wp-compact {
   flex: 0 0 auto; background: var(--bg-card); border: 1px solid var(--border);
   border-radius: 8px; padding: 4px 10px; text-align: center;
+  display: flex; flex-direction: column; justify-content: center;
 }
 .lgp-wp-inline { display: flex; align-items: center; gap: 4px; justify-content: center; }
 .lgp-wp-logo-sm { width: 14px; height: 14px; }
@@ -4217,7 +4227,7 @@ th.sb-ls-total {
   border-radius: 8px; padding: 4px 10px;
 }
 .lgp-due-compact .lgp-section-label { margin-bottom: 1px; }
-.lgp-due-list { display: flex; flex-wrap: wrap; gap: 1px 10px; margin-top: 1px; }
+.lgp-due-list { display: flex; flex-direction: column; gap: 1px; margin-top: 1px; }
 .lgp-due-player { font-size: 11px; white-space: nowrap; }
 
 /* Zone E: Linescore */

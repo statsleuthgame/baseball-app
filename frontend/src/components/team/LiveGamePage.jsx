@@ -219,6 +219,13 @@ export default function LiveGamePage() {
             <span className="lgp-count">{liveState.balls}-{liveState.strikes}</span>
           </div>
         )}
+        {liveState && (liveState.runnerFirst || liveState.runnerSecond || liveState.runnerThird) && (
+          <div className="lgp-runners-line">
+            {liveState.runnerThird && <span className="lgp-runner-tag">3B: {lastName(liveState.runnerThird.fullName)}</span>}
+            {liveState.runnerSecond && <span className="lgp-runner-tag">2B: {lastName(liveState.runnerSecond.fullName)}</span>}
+            {liveState.runnerFirst && <span className="lgp-runner-tag">1B: {lastName(liveState.runnerFirst.fullName)}</span>}
+          </div>
+        )}
       </div>
 
       {/* ===== ZONE B+C: AT-BAT + VISUAL (combined) ===== */}
