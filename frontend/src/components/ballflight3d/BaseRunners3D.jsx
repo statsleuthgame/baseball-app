@@ -3,10 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import * as THREE from "three";
 import ALL_TEAMS from "../../data/teams";
-import {
-  isOutEvent, isSacFly, isDoublePlay, isFieldersChoice,
-  batterBasesForEvent,
-} from "./eventClassifier";
+import { isOutEvent, batterBasesForEvent } from "./eventClassifier";
 
 /**
  * Base positions in Three.js feet coordinates.
@@ -25,116 +22,37 @@ export function getTeamColor(teamId) {
   return ALL_TEAMS[teamId]?.primary || "#3b82f6";
 }
 
-function computeRunnerMovements(event, runnersOn, description = "") {
+const BASE_MAP = { "1B": 1, "2B": 2, "3B": 3, "score": 4 };
+
+/**
+ * Convert MLB API runner data directly to movements.
+ * Each runner has: { start, end, isOut, name }
+ * start: null (batter) | "1B" | "2B" | "3B"
+ * end: null (out without base) | "1B" | "2B" | "3B" | "score"
+ */
+function computeRunnerMovements(event, runnersOn, description = "", apiRunners = []) {
+  // If we have API runner data, use it directly — no guessing
+  if (apiRunners?.length > 0) {
+    return apiRunners.map((r) => {
+      const from = r.start ? (BASE_MAP[r.start] || 0) : 0;
+      const to = r.end ? (BASE_MAP[r.end] || 0) : (r.isOut ? Math.min(from + 1, 4) : from);
+      return {
+        from,
+        to,
+        scores: r.end === "score",
+        isOut: r.isOut,
+        isBatter: !r.start, // null start = batter from home
+      };
+    }).filter((m) => m.from !== m.to || m.isOut); // skip runners that don't move
+  }
+
+  // Fallback: basic logic when API data not available (replays without runner data)
   const movements = [];
-  const desc = description.toLowerCase();
   const batterBases = batterBasesForEvent(event);
-
-  const runners = [];
-  if (runnersOn?.third) runners.push({ base: 3 });
-  if (runnersOn?.second) runners.push({ base: 2 });
-  if (runnersOn?.first) runners.push({ base: 1 });
-
-  if (isOutEvent(event)) {
-    if (isSacFly(event, description)) {
-      // Sac fly: runner on third scores, batter is out
-      if (runnersOn?.third) {
-        movements.push({ from: 3, to: 4, scores: true, startDelay: 0.3 });
-      }
-      // Runner on second tags up to third on sac fly
-      if (runnersOn?.second) {
-        movements.push({ from: 2, to: 3, scores: false, startDelay: 0.4 });
-      }
-      movements.push({ from: 0, to: 1, scores: false, isBatter: true, isOut: true });
-    } else if (isDoublePlay(event, description)) {
-      // Double play: lead runner forced out, batter out at first
-      if (runnersOn?.first) {
-        movements.push({ from: 1, to: 2, scores: false, isOut: true });
-      } else if (runnersOn?.second) {
-        movements.push({ from: 2, to: 3, scores: false, isOut: true });
-      }
-      // Runner on second advances (if first was the one forced)
-      if (runnersOn?.first && runnersOn?.second) {
-        movements.push({ from: 2, to: 3, scores: false });
-      }
-      movements.push({ from: 0, to: 1, scores: false, isBatter: true, isOut: true });
-      // Runner on third may score on a DP
-      if (runnersOn?.third && desc.includes("scores")) {
-        movements.push({ from: 3, to: 4, scores: true });
-      } else if (runnersOn?.third) {
-        // Third stays put on most DPs
-      }
-    } else if (isFieldersChoice(event)) {
-      // Fielder's choice: batter reaches first, a runner is out
-      movements.push({ from: 0, to: 1, scores: false, isBatter: true });
-      if (runnersOn?.first) {
-        movements.push({ from: 1, to: 2, scores: false, isOut: true });
-      } else if (runnersOn?.second) {
-        movements.push({ from: 2, to: 3, scores: false, isOut: true });
-      } else if (runnersOn?.third) {
-        movements.push({ from: 3, to: 4, scores: false, isOut: true });
-      }
-      // Other runners advance
-      if (runnersOn?.third && runnersOn?.first) {
-        movements.push({ from: 3, to: 4, scores: desc.includes("scores") });
-      }
-      if (runnersOn?.second && runnersOn?.first) {
-        movements.push({ from: 2, to: 3, scores: false });
-      }
-    } else {
-      // Simple out: batter runs to first
-      movements.push({ from: 0, to: 1, scores: false, isBatter: true, isOut: true });
-      if (desc.includes("scores") && runnersOn?.third) {
-        movements.push({ from: 3, to: 4, scores: true });
-      }
-      // Runner on second advances ONLY on ground outs (not fly outs)
-      const isGround = desc.includes("ground") || desc.includes("shortstop to") || desc.includes("second baseman to") || desc.includes("third baseman to");
-      if (runnersOn?.second && !runnersOn?.third && isGround && desc.includes("advance")) {
-        movements.push({ from: 2, to: 3, scores: false });
-      }
-    }
-    return movements;
-  }
-
-  // On a hit or reach (error), advance runners based on description
-  const scoring = desc.includes("scores") || desc.includes("score");
-
-  for (const runner of runners) {
-    let advance = batterBases;
-
-    // Smarter advancement: runners further ahead advance more
-    if (event === "Single") {
-      if (runner.base === 3) advance = 1; // 3rd always scores
-      else if (runner.base === 2) advance = scoring ? 2 : 1; // 2nd scores on most singles
-      else if (runner.base === 1) advance = scoring ? 2 : 1; // 1st to 2nd, or to 3rd/scores if desc says so
-    } else if (event === "Double") {
-      if (runner.base === 3) advance = 1; // 3rd always scores
-      else if (runner.base === 2) advance = 2; // 2nd always scores
-      else if (runner.base === 1) advance = scoring ? 3 : 2; // 1st scores or to 3rd
-    } else if (event === "Triple") {
-      advance = 4 - runner.base; // everyone scores on a triple
-    } else if (event === "Field Error") {
-      // On errors, runners advance an extra base (ball is loose)
-      if (runner.base === 3) advance = 1; // 3rd always scores
-      else if (runner.base === 2) advance = scoring ? 2 : 1; // 2nd scores or to 3rd
-      else if (runner.base === 1) advance = scoring ? 2 : 1; // 1st to 2nd or 3rd
-    }
-
-    const newBase = runner.base + advance;
-    movements.push({
-      from: runner.base,
-      to: Math.min(newBase, 4),
-      scores: newBase >= 4,
-    });
-  }
-
-  movements.push({
-    from: 0,
-    to: Math.min(batterBases, 4),
-    scores: batterBases >= 4,
-    isBatter: true,
-  });
-
+  if (runnersOn?.third) movements.push({ from: 3, to: 4, scores: true });
+  if (runnersOn?.second) movements.push({ from: 2, to: Math.min(2 + batterBases, 4), scores: 2 + batterBases >= 4 });
+  if (runnersOn?.first) movements.push({ from: 1, to: Math.min(1 + batterBases, 4), scores: 1 + batterBases >= 4 });
+  movements.push({ from: 0, to: Math.min(batterBases, 4), scores: batterBases >= 4, isBatter: true });
   return movements;
 }
 
@@ -203,24 +121,28 @@ export default function BaseRunners3D({
   runnerNames = {},
   event = "",
   description = "",
+  apiRunners,
   ballProgress = 0,
   isAnimating = false,
   teamColor = "#3b82f6",
 }) {
   const movements = useMemo(
-    () => computeRunnerMovements(event, runnersOn, description),
-    [event, runnersOn, description]
+    () => computeRunnerMovements(event, runnersOn, description, apiRunners),
+    [event, runnersOn, description, apiRunners]
   );
 
-  // Map each movement to a last name
+  // Map each movement to a last name — prefer API runner names
   const movementNames = useMemo(() => {
+    if (apiRunners?.length > 0) {
+      return movements.map((m, i) => apiRunners[i]?.name || "");
+    }
     const baseNameMap = { 1: "first", 2: "second", 3: "third" };
     return movements.map((m) => {
       if (m.isBatter) return runnerNames?.batter || "";
       const key = baseNameMap[m.from];
       return key ? (runnerNames?.[key] || "") : "";
     });
-  }, [movements, runnerNames]);
+  }, [movements, runnerNames, apiRunners]);
 
   const paths = useMemo(
     () => movements.map((m) => getRunnerPath(m.from, m.to)),

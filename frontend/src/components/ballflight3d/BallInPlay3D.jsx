@@ -233,6 +233,7 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn, runnerNa
             runnerNames={runnerNames}
             event={event}
             description={hitData.description || ""}
+            apiRunners={hitData.runners}
             ballProgress={ballProgress}
             isAnimating={isPlaying}
             teamColor={teamColor}

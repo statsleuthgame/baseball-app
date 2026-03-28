@@ -367,6 +367,13 @@ export const fetchLiveGameState = async (gamePk) => {
       lastHitData: (() => {
         // Try completed plays first
         const lastAB = completed.length > 0 ? completed[completed.length - 1] : null;
+        const extractRunners = (play) => (play.runners || []).map((r) => ({
+          name: r.details?.runner?.fullName || "",
+          start: r.movement?.start || null, // null = batter from home
+          end: r.movement?.end || null,      // "1B","2B","3B","score", null = out
+          isOut: r.movement?.isOut || false,
+        }));
+
         if (lastAB) {
           const hitEvent = (lastAB.playEvents || []).find((e) => e.hitData?.coordinates?.coordX);
           if (hitEvent) {
@@ -381,11 +388,10 @@ export const fetchLiveGameState = async (gamePk) => {
               event: lastAB.result?.event || "",
               description: lastAB.result?.description || "",
               batterName: lastAB.matchup?.batter?.fullName || "",
+              runners: extractRunners(lastAB),
             };
           }
         }
-        // Fallback: check current play if it has a completed result with hit data
-        // (handles 3rd out when allPlays resets on half-inning change)
         const cp2 = plays.currentPlay;
         if (cp2?.result?.event) {
           const hitEvent = (cp2.playEvents || []).find((e) => e.hitData?.coordinates?.coordX);
@@ -401,6 +407,7 @@ export const fetchLiveGameState = async (gamePk) => {
               event: cp2.result.event,
               description: cp2.result.description || "",
               batterName: cp2.matchup?.batter?.fullName || "",
+              runners: extractRunners(cp2),
             };
           }
         }
