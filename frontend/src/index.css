@@ -3358,6 +3358,9 @@ button.stat-cell {
   min-height: 36px;
   display: inline-flex;
   align-items: center;
+  text-decoration: underline;
+  text-decoration-color: rgba(255,255,255,0.2);
+  text-underline-offset: 2px;
 }
 .sb-player-link:active { opacity: 0.6; }
 
@@ -4356,7 +4359,7 @@ th.sb-ls-total {
 }
 .lgp-box-row-full .lgp-box-col-stat { font-size: 12px; color: var(--text); font-weight: 500; font-variant-numeric: tabular-nums; }
 .lgp-box-pos { width: 20px; font-size: 9px; color: var(--text-muted); flex-shrink: 0; }
-.lgp-box-name-link { font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; color: var(--text-bright); }
+.lgp-box-name-link { font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; color: var(--text-bright); text-decoration: underline; text-decoration-color: rgba(255,255,255,0.25); text-underline-offset: 2px; }
 .lgp-box-name-link:active { opacity: 0.6; }
 .lgp-box-col-chev {
   width: 14px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
