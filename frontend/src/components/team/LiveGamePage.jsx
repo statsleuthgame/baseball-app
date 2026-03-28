@@ -66,9 +66,14 @@ export default function LiveGamePage() {
     queryFn: () => fetchAllGamesToday(todayStr),
     staleTime: 1000 * 60, refetchInterval: 1000 * 30,
   });
-  const liveGames = (allGames || []).filter(g =>
-    ["In Progress", "Warmup", "Delayed", "Delayed Start"].includes(g.status)
-  );
+  const liveGames = (allGames || [])
+    .filter(g => ["In Progress", "Warmup", "Delayed", "Delayed Start"].includes(g.status))
+    .sort((a, b) => {
+      // Sort by games closest to finishing: higher inning first, bottom before top
+      const innA = (a.inning || 0) * 2 + (a.inningHalf === "Bottom" ? 1 : 0);
+      const innB = (b.inning || 0) * 2 + (b.inningHalf === "Bottom" ? 1 : 0);
+      return innB - innA;
+    });
 
   const [boxOpen, setBoxOpen] = useState(false);
   const [replayData, setReplayData] = useState(null); // scoring play hit data for replay
