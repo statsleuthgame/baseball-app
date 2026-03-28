@@ -4300,23 +4300,49 @@ th.sb-ls-total {
 .lgp .bip-field-wrap { max-width: 220px; }
 
 /* Box score (kept from before) */
-.lgp-box-cols { display: flex; gap: 10px; margin-top: 8px; }
-.lgp-box-team { flex: 1; min-width: 0; }
-.lgp-box-hdr { font-size: 11px; font-weight: 700; color: var(--text-bright); padding-bottom: 4px; margin-bottom: 2px; border-bottom: 1px solid rgba(255,255,255,0.08); }
-.lgp-box-row { display: flex; align-items: center; gap: 4px; padding: 4px 0; font-size: 11px; border-bottom: 1px solid rgba(255,255,255,0.03); }
-.lgp-box-pos { width: 16px; font-size: 9px; color: var(--text-muted); flex-shrink: 0; }
-.lgp-box-name-link { font-size: 11px; white-space: nowrap; text-decoration: underline; text-decoration-color: rgba(255,255,255,0.15); text-underline-offset: 2px; cursor: pointer; }
+/* Box Score — full-width tabbed layout */
+.lgp-box-full { margin-top: 8px; }
+
+.lgp-box-tabs {
+  display: flex; gap: 0; margin-bottom: 8px;
+  background: rgba(255,255,255,0.04); border-radius: 8px; padding: 2px;
+}
+.lgp-box-tab {
+  flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 8px 0; border: none; background: none; color: var(--text-muted);
+  font-size: 13px; font-weight: 700; cursor: pointer; border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+}
+.lgp-box-tab.active {
+  background: var(--bg-card); color: var(--text-bright);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+.lgp-box-tab-logo { width: 20px; height: 20px; }
+
+.lgp-box-table-hdr {
+  display: flex; align-items: center; padding: 4px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  font-size: 9px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.5px; color: var(--text-muted);
+}
+.lgp-box-pitch-hdr { margin-top: 8px; }
+.lgp-box-col-name { flex: 1; min-width: 0; display: flex; align-items: center; gap: 4px; }
+.lgp-box-col-stat { width: 28px; text-align: center; flex-shrink: 0; }
+
+.lgp-box-row-full {
+  display: flex; align-items: center; padding: 6px 0;
+  font-size: 12px; border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+.lgp-box-row-full .lgp-box-col-stat { font-size: 12px; color: var(--text); font-weight: 500; font-variant-numeric: tabular-nums; }
+.lgp-box-pos { width: 20px; font-size: 9px; color: var(--text-muted); flex-shrink: 0; }
+.lgp-box-name-link { font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; color: var(--text-bright); }
 .lgp-box-name-link:active { opacity: 0.6; }
-.lgp-box-spacer { flex: 1; min-width: 2px; }
-.lgp-box-stat { font-size: 10px; color: var(--text-muted); flex-shrink: 0; }
-.lgp-box-chev { flex-shrink: 0; color: var(--text-muted); transition: transform 0.2s; }
-.lgp-box-abs { padding: 2px 0 4px 20px; }
-.lgp-box-ab { display: flex; align-items: center; gap: 4px; padding: 2px 0; font-size: 10px; color: var(--text-muted); }
+.lgp-box-abs { padding: 2px 0 4px 24px; }
+.lgp-box-ab { display: flex; align-items: center; gap: 4px; padding: 3px 0; font-size: 11px; color: var(--text-muted); }
 .lgp-box-ab-scoring { color: var(--win); }
-.lgp-box-ab-inn { min-width: 24px; flex-shrink: 0; font-weight: 600; text-align: right; padding-right: 4px; }
+.lgp-box-ab-inn { min-width: 28px; flex-shrink: 0; font-weight: 600; text-align: right; padding-right: 4px; }
 .lgp-box-ab-event { flex: 1; }
 .lgp-box-ab-rbi { font-weight: 600; color: var(--team-secondary); flex-shrink: 0; }
-.lgp-box-pitchers { margin-top: 4px; padding-top: 4px; border-top: 1px solid rgba(255,255,255,0.06); }
 
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 @keyframes live-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }

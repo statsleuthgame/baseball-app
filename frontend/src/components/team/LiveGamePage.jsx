@@ -454,21 +454,13 @@ export default function LiveGamePage() {
       )}
 
       {/* ===== ZONE G: BOX SCORE ===== */}
-      <div className="lgp-section">
-        <button className="live-boxscore-toggle" onClick={() => setBoxOpen(!boxOpen)}>
-          <span>{boxOpen ? "Hide Box Score" : "Box Score"}</span>
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ transform: boxOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
-            <polyline points="6 9 12 15 18 9" />
-          </svg>
-        </button>
-        {boxOpen && boxData && (
-          <div className="lgp-box-cols">
-            {[{ batters: boxData.away, pitchers: boxData.awayPitchers, abbr: gameInfo.away.abbreviation }, { batters: boxData.home, pitchers: boxData.homePitchers, abbr: gameInfo.home.abbreviation }].map(({ batters, pitchers, abbr }) => (
-              <LgpBoxTeam key={abbr} batters={batters} pitchers={pitchers} abbr={abbr} teamId={teamId} />
-            ))}
-          </div>
-        )}
-      </div>
+      <BoxScoreSection
+        boxOpen={boxOpen}
+        setBoxOpen={setBoxOpen}
+        boxData={boxData}
+        gameInfo={gameInfo}
+        teamId={teamId}
+      />
 
       {/* ===== ZONE H: VENUE + MATCHUP ===== */}
       <div className="lgp-footer">
@@ -561,51 +553,126 @@ function StrikeZone({ pitches }) {
   );
 }
 
-function LgpBoxTeam({ batters, pitchers, abbr, teamId }) {
+function BoxScoreSection({ boxOpen, setBoxOpen, boxData, gameInfo, teamId }) {
+  const [selectedTeam, setSelectedTeam] = useState("away");
   const [openBatter, setOpenBatter] = useState(null);
   const navigate = useNavigate();
+
+  const teams = {
+    away: { batters: boxData?.away, pitchers: boxData?.awayPitchers, abbr: gameInfo.away.abbreviation, logo: gameInfo.away.logoUrl },
+    home: { batters: boxData?.home, pitchers: boxData?.homePitchers, abbr: gameInfo.home.abbreviation, logo: gameInfo.home.logoUrl },
+  };
+  const team = teams[selectedTeam];
+
   return (
-    <div className="lgp-box-team">
-      <div className="lgp-box-hdr">{teamDisplayName(abbr)}</div>
-      {batters?.map((b) => {
-        const isOpen = openBatter === b.id;
-        const hasABs = b.atBats?.length > 0;
-        return (
-          <div key={b.id} className="lgp-box-batter">
-            <div className={`lgp-box-row ${hasABs ? "sb-tappable" : ""}`} onClick={hasABs ? () => setOpenBatter(isOpen ? null : b.id) : undefined}>
-              <span className="lgp-box-pos">{b.position}</span>
-              <span className="lgp-box-name-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${b.id}`); }}>{lastName(b.name)}</span>
-              <span className="lgp-box-spacer" />
-              <span className="lgp-box-stat">{b.stats.h}-{b.stats.ab}</span>
-              {hasABs && <svg className="lgp-box-chev" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ transform: isOpen ? "rotate(180deg)" : "none" }}><polyline points="6 9 12 15 18 9" /></svg>}
-            </div>
-            {isOpen && (
-              <div className="lgp-box-abs">
-                {b.atBats.map((ab, i) => {
-                  const ord = ab.inning === 1 ? "1st" : ab.inning === 2 ? "2nd" : ab.inning === 3 ? "3rd" : `${ab.inning}th`;
-                  return (
-                    <div key={i} className={`lgp-box-ab ${ab.isScoring ? "lgp-box-ab-scoring" : ""}`}>
-                      <span className="lgp-box-ab-inn">{ord}</span>
-                      <span className="lgp-box-ab-event">{ab.shortDesc || ab.event}</span>
-                      {ab.rbi > 0 && <span className="lgp-box-ab-rbi">{ab.rbi} RBI</span>}
-                    </div>
-                  );
-                })}
-              </div>
-            )}
+    <div className="lgp-section">
+      <button className="live-boxscore-toggle" onClick={() => setBoxOpen(!boxOpen)}>
+        <span>{boxOpen ? "Hide Box Score" : "Box Score"}</span>
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ transform: boxOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
+      {boxOpen && boxData && (
+        <div className="lgp-box-full">
+          {/* Team selector tabs */}
+          <div className="lgp-box-tabs">
+            {["away", "home"].map((side) => (
+              <button
+                key={side}
+                className={`lgp-box-tab ${selectedTeam === side ? "active" : ""}`}
+                onClick={() => { setSelectedTeam(side); setOpenBatter(null); }}
+              >
+                <img src={teams[side].logo} alt="" className="lgp-box-tab-logo" />
+                <span>{teams[side].abbr}</span>
+              </button>
+            ))}
           </div>
-        );
-      })}
-      {pitchers?.length > 0 && (
-        <div className="lgp-box-pitchers">
-          {pitchers.map((p) => (
-            <div key={p.id} className="lgp-box-row">
-              <span className="lgp-box-pos">P</span>
-              <span className="lgp-box-name-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>{lastName(p.name)}</span>
-              <span className="lgp-box-spacer" />
-              <span className="lgp-box-stat">{p.stats.ip} IP, {p.stats.k} K</span>
-            </div>
-          ))}
+
+          {/* Batting header */}
+          <div className="lgp-box-table-hdr">
+            <span className="lgp-box-col-name">Batter</span>
+            <span className="lgp-box-col-stat">AB</span>
+            <span className="lgp-box-col-stat">H</span>
+            <span className="lgp-box-col-stat">R</span>
+            <span className="lgp-box-col-stat">RBI</span>
+            <span className="lgp-box-col-stat">BB</span>
+            <span className="lgp-box-col-stat">K</span>
+          </div>
+
+          {/* Batters */}
+          {team.batters?.map((b) => {
+            const isOpen = openBatter === b.id;
+            const hasABs = b.atBats?.length > 0;
+            const s = b.stats || {};
+            return (
+              <div key={b.id} className="lgp-box-batter">
+                <div
+                  className={`lgp-box-row-full ${hasABs ? "sb-tappable" : ""}`}
+                  onClick={hasABs ? () => setOpenBatter(isOpen ? null : b.id) : undefined}
+                >
+                  <span className="lgp-box-col-name">
+                    <span className="lgp-box-pos">{b.position}</span>
+                    <span className="lgp-box-name-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${b.id}`); }}>
+                      {lastName(b.name)}
+                    </span>
+                  </span>
+                  <span className="lgp-box-col-stat">{s.ab ?? "—"}</span>
+                  <span className="lgp-box-col-stat">{s.h ?? "—"}</span>
+                  <span className="lgp-box-col-stat">{s.r ?? "—"}</span>
+                  <span className="lgp-box-col-stat">{s.rbi ?? "—"}</span>
+                  <span className="lgp-box-col-stat">{s.bb ?? "—"}</span>
+                  <span className="lgp-box-col-stat">{s.k ?? "—"}</span>
+                </div>
+                {isOpen && (
+                  <div className="lgp-box-abs">
+                    {b.atBats.map((ab, i) => {
+                      const ord = ab.inning === 1 ? "1st" : ab.inning === 2 ? "2nd" : ab.inning === 3 ? "3rd" : `${ab.inning}th`;
+                      return (
+                        <div key={i} className={`lgp-box-ab ${ab.isScoring ? "lgp-box-ab-scoring" : ""}`}>
+                          <span className="lgp-box-ab-inn">{ord}</span>
+                          <span className="lgp-box-ab-event">{ab.shortDesc || ab.event}</span>
+                          {ab.rbi > 0 && <span className="lgp-box-ab-rbi">{ab.rbi} RBI</span>}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+
+          {/* Pitching header */}
+          {team.pitchers?.length > 0 && (
+            <>
+              <div className="lgp-box-table-hdr lgp-box-pitch-hdr">
+                <span className="lgp-box-col-name">Pitcher</span>
+                <span className="lgp-box-col-stat">IP</span>
+                <span className="lgp-box-col-stat">H</span>
+                <span className="lgp-box-col-stat">R</span>
+                <span className="lgp-box-col-stat">ER</span>
+                <span className="lgp-box-col-stat">BB</span>
+                <span className="lgp-box-col-stat">K</span>
+              </div>
+              {team.pitchers.map((p) => {
+                const s = p.stats || {};
+                return (
+                  <div key={p.id} className="lgp-box-row-full">
+                    <span className="lgp-box-col-name">
+                      <span className="lgp-box-name-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
+                        {lastName(p.name)}
+                      </span>
+                    </span>
+                    <span className="lgp-box-col-stat">{s.ip ?? "—"}</span>
+                    <span className="lgp-box-col-stat">{s.h ?? "—"}</span>
+                    <span className="lgp-box-col-stat">{s.r ?? "—"}</span>
+                    <span className="lgp-box-col-stat">{s.er ?? "—"}</span>
+                    <span className="lgp-box-col-stat">{s.bb ?? "—"}</span>
+                    <span className="lgp-box-col-stat">{s.k ?? "—"}</span>
+                  </div>
+                );
+              })}
+            </>
+          )}
         </div>
       )}
     </div>
