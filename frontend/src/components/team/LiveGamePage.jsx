@@ -185,6 +185,27 @@ export default function LiveGamePage() {
 
   return (
     <div className="lgp">
+      {/* Game switcher strip — between nav and hero, only when 2+ live games */}
+      {liveGames.length >= 2 && (
+        <div className="lgp-game-strip">
+          {liveGames.map(g => {
+            const half = g.inningHalf === "Top" ? "T" : g.inningHalf === "Bottom" ? "B" : "";
+            return (
+              <button
+                key={g.gamePk}
+                className={`lgp-game-pill${String(g.gamePk) === String(gamePk) ? " active" : ""}`}
+                onClick={() => navigate(`/team/${teamId}/live/${g.gamePk}`)}
+              >
+                <span className="lgp-pill-teams">{g.away.abbreviation} {g.away.score ?? 0}</span>
+                <span className="lgp-pill-at">@</span>
+                <span className="lgp-pill-teams">{g.home.abbreviation} {g.home.score ?? 0}</span>
+                {g.inning && <span className="lgp-pill-inning">· {half}{g.inning}</span>}
+              </button>
+            );
+          })}
+        </div>
+      )}
+
       {/* ===== ZONE A: HERO SCOREBOARD ===== */}
       <div className="lgp-hero">
         <div className="lgp-hero-top">
@@ -202,27 +223,6 @@ export default function LiveGamePage() {
             </button>
           )}
         </div>
-
-        {/* Game switcher strip — only when 2+ live games */}
-        {liveGames.length >= 2 && (
-          <div className="lgp-game-strip">
-            {liveGames.map(g => {
-              const half = g.inningHalf === "Top" ? "T" : g.inningHalf === "Bottom" ? "B" : "";
-              return (
-                <button
-                  key={g.gamePk}
-                  className={`lgp-game-pill${String(g.gamePk) === String(gamePk) ? " active" : ""}`}
-                  onClick={() => navigate(`/team/${teamId}/live/${g.gamePk}`)}
-                >
-                  <span className="lgp-pill-teams">{g.away.abbreviation} {g.away.score ?? 0}</span>
-                  <span className="lgp-pill-at">@</span>
-                  <span className="lgp-pill-teams">{g.home.abbreviation} {g.home.score ?? 0}</span>
-                  {g.inning && <span className="lgp-pill-inning">· {half}{g.inning}</span>}
-                </button>
-              );
-            })}
-          </div>
-        )}
 
         {/* Score — use liveState for real-time, fallback to gameInfo */}
         <div className="lgp-score-row">
