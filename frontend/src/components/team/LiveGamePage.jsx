@@ -242,7 +242,8 @@ export default function LiveGamePage() {
             // Use persisted hit data (survives half-inning API reset)
             const hitData = liveState.lastHitData || persistedHitDataRef.current;
             const lastPitch = liveState.currentAtBat?.[liveState.currentAtBat.length - 1];
-            const playStillInProgress = lastPitch?.isInPlay && liveState.currentAtBat?.length > 0;
+            // Play is still in progress if the last pitch is in-play BUT the play hasn't completed yet
+            const playStillInProgress = lastPitch?.isInPlay && !liveState.currentPlayComplete;
             const hasCompletedHit = hitData?.event && !playStillInProgress;
             const currentHitKey = hitData ? `${hitData.x}-${hitData.y}` : null;
             const isNewHit = currentHitKey && currentHitKey !== lastHitRef.current;

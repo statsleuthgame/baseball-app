@@ -360,21 +360,44 @@ export const fetchLiveGameState = async (gamePk) => {
       pitcher: cp.pitcher ? { id: cp.pitcher.id, fullName: cp.pitcher.fullName, gameStats: pitcherGameStats } : null,
       lastPlay,
       lastHitData: (() => {
+        // Try completed plays first
         const lastAB = completed.length > 0 ? completed[completed.length - 1] : null;
-        if (!lastAB) return null;
-        const hitEvent = (lastAB.playEvents || []).find((e) => e.hitData?.coordinates?.coordX);
-        if (!hitEvent) return null;
-        const hd = hitEvent.hitData;
-        return {
-          x: hd.coordinates.coordX,
-          y: hd.coordinates.coordY,
-          exitVelo: hd.launchSpeed,
-          launchAngle: hd.launchAngle,
-          distance: hd.totalDistance ? Math.round(hd.totalDistance) : null,
-          trajectory: hd.trajectory,
-          event: lastAB.result?.event || "",
-          description: lastAB.result?.description || "",
-        };
+        if (lastAB) {
+          const hitEvent = (lastAB.playEvents || []).find((e) => e.hitData?.coordinates?.coordX);
+          if (hitEvent) {
+            const hd = hitEvent.hitData;
+            return {
+              x: hd.coordinates.coordX,
+              y: hd.coordinates.coordY,
+              exitVelo: hd.launchSpeed,
+              launchAngle: hd.launchAngle,
+              distance: hd.totalDistance ? Math.round(hd.totalDistance) : null,
+              trajectory: hd.trajectory,
+              event: lastAB.result?.event || "",
+              description: lastAB.result?.description || "",
+            };
+          }
+        }
+        // Fallback: check current play if it has a completed result with hit data
+        // (handles 3rd out when allPlays resets on half-inning change)
+        const cp2 = plays.currentPlay;
+        if (cp2?.result?.event) {
+          const hitEvent = (cp2.playEvents || []).find((e) => e.hitData?.coordinates?.coordX);
+          if (hitEvent) {
+            const hd = hitEvent.hitData;
+            return {
+              x: hd.coordinates.coordX,
+              y: hd.coordinates.coordY,
+              exitVelo: hd.launchSpeed,
+              launchAngle: hd.launchAngle,
+              distance: hd.totalDistance ? Math.round(hd.totalDistance) : null,
+              trajectory: hd.trajectory,
+              event: cp2.result.event,
+              description: cp2.result.description || "",
+            };
+          }
+        }
+        return null;
       })(),
       currentAtBat: (plays.currentPlay?.playEvents || [])
         .filter((e) => e.details?.description && e.details?.call?.description)
@@ -414,6 +437,7 @@ export const fetchLiveGameState = async (gamePk) => {
           return pitch;
         })
         ,
+      currentPlayComplete: !!plays.currentPlay?.result?.event,
       onDeck: ls.offense?.onDeck ? { id: ls.offense.onDeck.id, fullName: ls.offense.onDeck.fullName, ...getGameBattingLine(ld.boxscore, ls.offense.onDeck.id) } : null,
       inHole: ls.offense?.inHole ? { id: ls.offense.inHole.id, fullName: ls.offense.inHole.fullName, ...getGameBattingLine(ld.boxscore, ls.offense.inHole.id) } : null,
       scoringPlays: allPlays
