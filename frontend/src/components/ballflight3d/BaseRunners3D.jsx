@@ -3,7 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import * as THREE from "three";
 import ALL_TEAMS from "../../data/teams";
-import { isOutEvent, batterBasesForEvent } from "./eventClassifier";
+import { isOutEvent, isFlyOut, batterBasesForEvent } from "./eventClassifier";
 
 /**
  * Base positions in Three.js feet coordinates.
@@ -191,19 +191,27 @@ export default function BaseRunners3D({
         </>
       )}
 
-      {isAnimating && movements.map((movement, i) => (
-        <AnimatedRunner
-          key={`${movement.from}-${movement.to}-${movement.isBatter ? 'b' : 'r'}`}
-          path={paths[i]}
-          ballProgress={ballProgress}
-          scores={movement.scores}
-          startDelay={movement.isBatter ? 0.15 : 0}
-          numBases={Math.min(movement.to - movement.from, 4)}
-          color={teamColor}
-          fadeAtEnd={movement.isOut}
-          name={movementNames[i]}
-        />
-      ))}
+      {isAnimating && movements.map((movement, i) => {
+        // On fly outs (sac fly, flyout), scoring runners tag up — wait for the catch
+        const isFly = isFlyOut(event);
+        let delay = movement.isBatter ? 0.15 : 0;
+        if (isFly && !movement.isBatter && movement.scores) {
+          delay = 1.0; // wait until ball is caught, then run
+        }
+        return (
+          <AnimatedRunner
+            key={`${movement.from}-${movement.to}-${movement.isBatter ? 'b' : 'r'}`}
+            path={paths[i]}
+            ballProgress={ballProgress}
+            scores={movement.scores}
+            startDelay={delay}
+            numBases={Math.min(movement.to - movement.from, 4)}
+            color={teamColor}
+            fadeAtEnd={movement.isOut}
+            name={movementNames[i]}
+          />
+        );
+      })}
     </group>
   );
 }
@@ -275,7 +283,10 @@ function AnimatedRunner({ path, ballProgress, scores, startDelay = 0, numBases =
   useFrame((_, delta) => {
     if (!meshRef.current || !path?.length) return;
 
-    if (ballProgress > 0.5 + startDelay) {
+    // Tag-up runners (startDelay >= 1.0) wait until ball is caught (progress = 1.0)
+    // Normal runners start partway through the flight
+    const triggerAt = startDelay >= 1.0 ? 0.99 : (0.5 + startDelay);
+    if (ballProgress > triggerAt) {
       startedRef.current = true;
     }
     if (!startedRef.current) return;
