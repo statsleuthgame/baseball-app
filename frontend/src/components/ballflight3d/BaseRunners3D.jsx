@@ -1,4 +1,4 @@
-import { useRef, useMemo, useEffect } from "react";
+import { useRef, useMemo, useEffect, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import * as THREE from "three";
@@ -87,8 +87,9 @@ function computeRunnerMovements(event, runnersOn, description = "") {
       if (desc.includes("scores") && runnersOn?.third) {
         movements.push({ from: 3, to: 4, scores: true });
       }
-      // Runner on second may advance on a groundout
-      if (runnersOn?.second && !runnersOn?.third) {
+      // Runner on second advances ONLY on ground outs (not fly outs)
+      const isGround = desc.includes("ground") || desc.includes("shortstop to") || desc.includes("second baseman to") || desc.includes("third baseman to");
+      if (runnersOn?.second && !runnersOn?.third && isGround && desc.includes("advance")) {
         movements.push({ from: 2, to: 3, scores: false });
       }
     }
@@ -267,16 +268,24 @@ export default function BaseRunners3D({
   );
 }
 
-function RunnerLabel({ name }) {
+const SUFFIXES = new Set(["Jr.", "Jr", "Sr.", "Sr", "II", "III", "IV", "V"]);
+
+function RunnerLabel({ name, opacity = 1 }) {
   if (!name) return null;
   const parts = name.split(" ");
-  const lastName = parts.length > 1 ? parts[parts.length - 1] : name;
+  // Get last name, but skip suffixes like Jr., II, III
+  let last = parts.length > 1 ? parts[parts.length - 1] : name;
+  if (SUFFIXES.has(last) && parts.length > 2) {
+    last = parts[parts.length - 2] + " " + last;
+  }
+  if (opacity <= 0) return null;
   return (
     <Html position={[0, 9, 0]} center distanceFactor={250} zIndexRange={[50, 0]}>
       <div style={{
         color: "#fff", fontSize: "10px", fontWeight: 700, textShadow: "0 1px 4px rgba(0,0,0,0.9)",
         whiteSpace: "nowrap", pointerEvents: "none", userSelect: "none",
-      }}>{lastName}</div>
+        opacity,
+      }}>{last}</div>
     </Html>
   );
 }
@@ -299,6 +308,7 @@ function StaticRunner({ position, color, name }) {
 function AnimatedRunner({ path, ballProgress, scores, startDelay = 0, numBases = 1, color, fadeAtEnd = false, name }) {
   const meshRef = useRef();
   const matRef = useRef();
+  const [labelOpacity, setLabelOpacity] = useState(1);
   const elapsedRef = useRef(0);
   const startedRef = useRef(false);
   const trailPositions = useRef([]);
@@ -351,9 +361,11 @@ function AnimatedRunner({ path, ballProgress, scores, startDelay = 0, numBases =
       meshRef.current.position.y = 0.5 + bob;
     }
 
-    // Fade out batter on outs when they reach the base
-    if (fadeAtEnd && matRef.current && runProgress > 0.8) {
-      matRef.current.opacity = 0.9 * (1 - (runProgress - 0.8) / 0.2);
+    // Fade out batter on outs when approaching the base
+    if (fadeAtEnd && runProgress > 0.6) {
+      const fade = Math.max(0, 1 - (runProgress - 0.6) / 0.4);
+      if (matRef.current) matRef.current.opacity = 0.9 * fade;
+      setLabelOpacity(fade);
     }
 
     // Trail
@@ -385,7 +397,7 @@ function AnimatedRunner({ path, ballProgress, scores, startDelay = 0, numBases =
           <sphereGeometry args={[2.5, 12, 12]} />
           <meshBasicMaterial ref={matRef} color={color} transparent opacity={0.9} />
         </mesh>
-        <RunnerLabel name={name} />
+        <RunnerLabel name={name} opacity={labelOpacity} />
       </group>
 
       {scores && <ScoreFlash runnerRef={meshRef} color={color} />}

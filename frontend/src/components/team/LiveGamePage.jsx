@@ -211,8 +211,8 @@ export default function LiveGamePage() {
           </div>
         </div>
 
-        {/* Situation line with inline diamond */}
-        {liveState && (
+        {/* Situation line with inline diamond — hide when final */}
+        {liveState && !isFinal && (
           <div className="lgp-situation">
             <span className="lgp-inning">{liveState.inningHalf === "Top" ? "\u25B2" : "\u25BC"} {liveState.inning}</span>
             <svg className="lgp-diamond-inline" width="36" height="32" viewBox="0 -4 36 32">
@@ -229,7 +229,7 @@ export default function LiveGamePage() {
             <span className="lgp-count">{liveState.balls}-{liveState.strikes}</span>
           </div>
         )}
-        {liveState && (liveState.runnerFirst || liveState.runnerSecond || liveState.runnerThird) && (
+        {!isFinal && liveState && (liveState.runnerFirst || liveState.runnerSecond || liveState.runnerThird) && (
           <div className="lgp-runners-line">
             {liveState.runnerThird && <span className="lgp-runner-tag">3B: {lastName(liveState.runnerThird.fullName)}</span>}
             {liveState.runnerSecond && <span className="lgp-runner-tag">2B: {lastName(liveState.runnerSecond.fullName)}</span>}
@@ -238,8 +238,8 @@ export default function LiveGamePage() {
         )}
       </div>
 
-      {/* ===== ZONE B+C: AT-BAT + VISUAL (combined) ===== */}
-      {liveState?.batter && liveState?.pitcher && (
+      {/* ===== ZONE B+C: AT-BAT + VISUAL (combined) — hide when game is final ===== */}
+      {!isFinal && liveState?.batter && liveState?.pitcher && (
         <div className="lgp-section">
           {/* Batter — logo, name, game stats, season avg */}
           {(() => {
@@ -395,8 +395,8 @@ export default function LiveGamePage() {
         </div>
       )}
 
-      {/* ===== ZONE D: WIN PROB + DUE UP (side by side) ===== */}
-      {(wp || liveState?.onDeck) && (
+      {/* ===== ZONE D: WIN PROB + DUE UP (side by side) — hide when final ===== */}
+      {!isFinal && (wp || liveState?.onDeck) && (
         <div className="lgp-row-section">
           {wp && (
             <div className="lgp-wp-compact">
