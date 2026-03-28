@@ -38,7 +38,7 @@ const BASE_POS = {
  *  - venueTeamId: team ID for stadium shape
  *  - runnersOn: { first: bool, second: bool, third: bool } — runners on base
  */
-export default function BallInPlay3D({ hitData, venueTeamId, runnersOn, outs }) {
+export default function BallInPlay3D({ hitData, venueTeamId, runnersOn, runnerNames, outs }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [showMetrics, setShowMetrics] = useState(false);
   const [ballPos, setBallPos] = useState(null);
@@ -230,6 +230,7 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn, outs }) 
           {/* Base runners */}
           <BaseRunners3D
             runnersOn={runnersOn}
+            runnerNames={runnerNames}
             event={event}
             description={hitData.description || ""}
             ballProgress={ballProgress}

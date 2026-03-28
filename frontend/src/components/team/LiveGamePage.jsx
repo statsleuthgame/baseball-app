@@ -74,7 +74,9 @@ export default function LiveGamePage() {
   const persistedHitDataRef = useRef(null);
   // Store pre-play runner state so the 3D viewer animates from the correct starting positions
   const prevRunnersRef = useRef({ first: false, second: false, third: false });
+  const prevRunnerNamesRef = useRef({});
   const [bipRunners, setBipRunners] = useState({ first: false, second: false, third: false });
+  const [bipRunnerNames, setBipRunnerNames] = useState({});
 
   // Track side changes (Top↔Bottom) to show "Coming Up" only during transitions
   const [sideJustChanged, setSideJustChanged] = useState(false);
@@ -104,6 +106,7 @@ export default function LiveGamePage() {
     if (hitKey && hitKey !== lastHitRef.current) {
       // New ball in play — snapshot the PREVIOUS poll's runners (pre-play state)
       setBipRunners({ ...prevRunnersRef.current });
+      setBipRunnerNames({ ...prevRunnerNamesRef.current, batter: liveState?.batter?.fullName || "" });
       lastHitRef.current = hitKey;
       setBipCollapsed(false);
       if (bipTimerRef.current) clearTimeout(bipTimerRef.current);
@@ -117,6 +120,11 @@ export default function LiveGamePage() {
       first: !!liveState?.onFirst,
       second: !!liveState?.onSecond,
       third: !!liveState?.onThird,
+    };
+    prevRunnerNamesRef.current = {
+      first: liveState?.runnerFirst?.fullName || "",
+      second: liveState?.runnerSecond?.fullName || "",
+      third: liveState?.runnerThird?.fullName || "",
     };
     return () => { if (bipTimerRef.current) clearTimeout(bipTimerRef.current); };
   }, [liveState?.lastHitData, liveState?.onFirst, liveState?.onSecond, liveState?.onThird]);
@@ -275,6 +283,7 @@ export default function LiveGamePage() {
                     hitData={hitData}
                     venueTeamId={gameInfo.home.id}
                     runnersOn={bipRunners}
+                    runnerNames={bipRunnerNames}
                     outs={liveState?.outs}
                   />
                 </Suspense>
@@ -290,10 +299,11 @@ export default function LiveGamePage() {
                     const p = liveState.currentAtBat[liveState.currentAtBat.length - 1];
                     const balls = p.count ? parseInt(p.count.split("-")[0]) || 0 : null;
                     const strikes = p.count ? parseInt(p.count.split("-")[1]) || 0 : null;
+                    const outs = liveState.outs;
                     let countLabel = "";
                     if (p.isStrike && strikes === 3 && p.code !== "F") {
                       const soType = p.code === "C" ? "Looking" : p.code === "S" ? "Swinging" : "Called";
-                      return `${p.pitchInfo || ""} — Strikeout ${soType}`;
+                      return <>{p.pitchInfo || ""} — Strikeout {soType} <span className={`lgp-out-count ${outs >= 3 ? "lgp-three-outs" : ""}`}>— {outs} Out{outs !== 1 ? "s" : ""}</span></>;
                     }
                     if (p.isBall && balls >= 4) {
                       const batterName = liveState.batter?.fullName || "";

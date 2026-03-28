@@ -1,5 +1,6 @@
 import { useRef, useMemo, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
+import { Html } from "@react-three/drei";
 import * as THREE from "three";
 import ALL_TEAMS from "../../data/teams";
 import {
@@ -198,6 +199,7 @@ function getRunnerPath(fromBase, toBase) {
  */
 export default function BaseRunners3D({
   runnersOn = {},
+  runnerNames = {},
   event = "",
   description = "",
   ballProgress = 0,
@@ -208,6 +210,16 @@ export default function BaseRunners3D({
     () => computeRunnerMovements(event, runnersOn, description),
     [event, runnersOn, description]
   );
+
+  // Map each movement to a last name
+  const movementNames = useMemo(() => {
+    const baseNameMap = { 1: "first", 2: "second", 3: "third" };
+    return movements.map((m) => {
+      if (m.isBatter) return runnerNames?.batter || "";
+      const key = baseNameMap[m.from];
+      return key ? (runnerNames?.[key] || "") : "";
+    });
+  }, [movements, runnerNames]);
 
   const paths = useMemo(
     () => movements.map((m) => getRunnerPath(m.from, m.to)),
@@ -232,9 +244,9 @@ export default function BaseRunners3D({
       {/* Show static runners when not animating, or on outs for runners that aren't moving */}
       {(!isAnimating || isOutPlay) && (
         <>
-          {runnersOn?.first && !animatedBases.has("first") && <StaticRunner position={BASES.first} color={teamColor} />}
-          {runnersOn?.second && !animatedBases.has("second") && <StaticRunner position={BASES.second} color={teamColor} />}
-          {runnersOn?.third && !animatedBases.has("third") && <StaticRunner position={BASES.third} color={teamColor} />}
+          {runnersOn?.first && !animatedBases.has("first") && <StaticRunner position={BASES.first} color={teamColor} name={runnerNames?.first} />}
+          {runnersOn?.second && !animatedBases.has("second") && <StaticRunner position={BASES.second} color={teamColor} name={runnerNames?.second} />}
+          {runnersOn?.third && !animatedBases.has("third") && <StaticRunner position={BASES.third} color={teamColor} name={runnerNames?.third} />}
         </>
       )}
 
@@ -248,25 +260,43 @@ export default function BaseRunners3D({
           numBases={Math.min(movement.to - movement.from, 4)}
           color={teamColor}
           fadeAtEnd={movement.isOut}
+          name={movementNames[i]}
         />
       ))}
     </group>
   );
 }
 
-function StaticRunner({ position, color }) {
+function RunnerLabel({ name }) {
+  if (!name) return null;
+  const parts = name.split(" ");
+  const lastName = parts.length > 1 ? parts[parts.length - 1] : name;
   return (
-    <mesh position={position}>
-      <sphereGeometry args={[2.5, 12, 12]} />
-      <meshBasicMaterial color={color} transparent opacity={0.9} />
-    </mesh>
+    <Html position={[0, 6, 0]} center distanceFactor={250} zIndexRange={[50, 0]}>
+      <div style={{
+        color: "#fff", fontSize: "10px", fontWeight: 700, textShadow: "0 1px 4px rgba(0,0,0,0.9)",
+        whiteSpace: "nowrap", pointerEvents: "none", userSelect: "none",
+      }}>{lastName}</div>
+    </Html>
+  );
+}
+
+function StaticRunner({ position, color, name }) {
+  return (
+    <group position={position}>
+      <mesh>
+        <sphereGeometry args={[2.5, 12, 12]} />
+        <meshBasicMaterial color={color} transparent opacity={0.9} />
+      </mesh>
+      <RunnerLabel name={name} />
+    </group>
   );
 }
 
 /**
  * Animated runner — straight lines, constant speed, no stopping.
  */
-function AnimatedRunner({ path, ballProgress, scores, startDelay = 0, numBases = 1, color, fadeAtEnd = false }) {
+function AnimatedRunner({ path, ballProgress, scores, startDelay = 0, numBases = 1, color, fadeAtEnd = false, name }) {
   const meshRef = useRef();
   const matRef = useRef();
   const elapsedRef = useRef(0);
@@ -350,10 +380,13 @@ function AnimatedRunner({ path, ballProgress, scores, startDelay = 0, numBases =
         <lineBasicMaterial color={color} transparent opacity={0.3} />
       </line>
 
-      <mesh ref={meshRef} position={[startPos.x, 0.5, startPos.z]}>
-        <sphereGeometry args={[2.5, 12, 12]} />
-        <meshBasicMaterial ref={matRef} color={color} transparent opacity={0.9} />
-      </mesh>
+      <group ref={meshRef} position={[startPos.x, 0.5, startPos.z]}>
+        <mesh>
+          <sphereGeometry args={[2.5, 12, 12]} />
+          <meshBasicMaterial ref={matRef} color={color} transparent opacity={0.9} />
+        </mesh>
+        <RunnerLabel name={name} />
+      </group>
 
       {scores && <ScoreFlash runnerRef={meshRef} color={color} />}
     </group>
