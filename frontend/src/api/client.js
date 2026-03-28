@@ -301,6 +301,7 @@ export const fetchLiveGameState = async (gamePk) => {
         const p = box[side]?.players?.[`ID${pitcherId}`];
         if (p) {
           const ps = p.stats?.pitching || {};
+          const seasonPitching = p.seasonStats?.pitching || {};
           pitcherGameStats = {
             ip: ps.inningsPitched || "0",
             pitches: ps.numberOfPitches || 0,
@@ -308,6 +309,7 @@ export const fetchLiveGameState = async (gamePk) => {
             k: ps.strikeOuts || 0,
             h: ps.hits || 0,
             er: ps.earnedRuns || 0,
+            era: seasonPitching.era || "—",
           };
           break;
         }

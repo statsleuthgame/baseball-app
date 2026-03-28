@@ -350,17 +350,28 @@ export default function LiveGamePage() {
             );
           })()}
 
-          {/* Pitcher — bottom right */}
-          <div className="lgp-pitcher-bottom sb-player-link" role="button" tabIndex={0} onClick={() => navigate(`/team/${teamId}/player/${liveState.pitcher.id}`)} onKeyDown={(e) => e.key === "Enter" && navigate(`/team/${teamId}/player/${liveState.pitcher.id}`)}>
-            <span className="lgp-pitcher-name">{liveState.pitcher.fullName}</span>
-            <span className="lgp-pitcher-stats">
-              {liveState.pitcher.gameStats ? `${liveState.pitcher.gameStats.ip} IP` : ""}
-              {liveState.pitcher.gameStats && (
-                <span style={{ color: pcColor(liveState.pitcher.gameStats.pitches) }}> · {liveState.pitcher.gameStats.pitches} P</span>
-              )}
-              {liveState.pitcher.gameStats ? ` · ${liveState.pitcher.gameStats.k} K` : ""}
-            </span>
-          </div>
+          {/* Pitcher — same layout as batter row */}
+          {(() => {
+            const pitchingTeamLogo = liveState.inningHalf === "Top" ? gameInfo.home.logoUrl : gameInfo.away.logoUrl;
+            const p = liveState.pitcher;
+            const gs = p.gameStats;
+            const gameStatParts = [];
+            if (gs) {
+              gameStatParts.push(`${gs.ip} IP`);
+              gameStatParts.push(`${gs.pitches} P`);
+              gameStatParts.push(`${gs.k} K`);
+            }
+            return (
+              <div className="lgp-batter-row sb-player-link" role="button" tabIndex={0} onClick={() => navigate(`/team/${teamId}/player/${p.id}`)} onKeyDown={(e) => e.key === "Enter" && navigate(`/team/${teamId}/player/${p.id}`)}>
+                <div className="lgp-batter-left">
+                  <img src={pitchingTeamLogo} alt="" className="lgp-batter-logo" />
+                  <span className="lgp-batter-name">{p.fullName}</span>
+                  {gameStatParts.length > 0 && <span className="lgp-batter-game">{gameStatParts.join(", ")}</span>}
+                </div>
+                <span className="lgp-batter-avg">Season ERA {gs?.era || "—"}</span>
+              </div>
+            );
+          })()}
         </div>
       )}
 
