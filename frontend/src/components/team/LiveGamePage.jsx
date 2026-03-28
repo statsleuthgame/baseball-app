@@ -96,14 +96,13 @@ export default function LiveGamePage() {
 
     const hitKey = liveState?.lastHitData ? `${liveState.lastHitData.x}-${liveState.lastHitData.y}` : null;
 
-    // On first load, just record the current hit key without triggering animation
-    if (!initializedRef.current && hitKey) {
-      lastHitRef.current = hitKey;
+    // On first load, record the current hit key without triggering animation
+    if (!initializedRef.current) {
       initializedRef.current = true;
+      if (hitKey) lastHitRef.current = hitKey;
       setBipCollapsed(true); // suppress stale BIP from before page load
       return;
     }
-    initializedRef.current = true;
 
     if (hitKey && hitKey !== lastHitRef.current) {
       // New ball in play — snapshot the PREVIOUS poll's runners (pre-play state)
@@ -276,7 +275,9 @@ export default function LiveGamePage() {
             const currentHitKey = hitData ? `${hitData.x}-${hitData.y}` : null;
             const isNewHit = currentHitKey && currentHitKey !== lastHitRef.current;
             const showBip = hasCompletedHit && (!bipCollapsed || isNewHit);
-            const showZone = liveState.currentAtBat?.length > 0 && !showBip;
+            // After BIP collapses, don't show the old at-bat's pitches — show empty zone
+            const bipJustEnded = bipCollapsed && hasCompletedHit && !isNewHit;
+            const showZone = liveState.currentAtBat?.length > 0 && !showBip && !bipJustEnded;
 
             if (showBip) return (
               <div className="lgp-bip-section">
@@ -489,6 +490,7 @@ export default function LiveGamePage() {
               hitData={replayData}
               venueTeamId={gameInfo.home.id}
               runnersOn={{}}
+              runnerNames={{ batter: replayData?.batterName || "" }}
             />
           </Suspense>
         </div>

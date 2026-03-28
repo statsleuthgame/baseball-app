@@ -4260,9 +4260,9 @@ th.sb-ls-total {
   flex: 1; min-width: 0; background: var(--bg-card); border: 1px solid var(--border);
   border-radius: 6px; padding: 4px 8px;
 }
-.lgp-due-compact .lgp-section-label { margin-bottom: 0; }
-.lgp-due-list { display: flex; flex-direction: column; gap: 0; margin-top: 0; }
-.lgp-due-player { font-size: 10px; white-space: nowrap; line-height: 1.5; min-height: 0; }
+.lgp-due-compact .lgp-section-label { margin-bottom: 0; text-align: center; }
+.lgp-due-compact .lgp-due-list { display: flex; flex-direction: column; gap: 0; margin-top: 0; align-items: center; }
+.lgp-due-compact .lgp-due-player { font-size: 10px; white-space: nowrap; line-height: 1.5; min-height: 0; }
 
 /* Zone E: Linescore */
 .lgp-ls-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
@@ -4337,11 +4337,9 @@ th.sb-ls-total {
   flex-wrap: wrap;
 }
 
-/* Due Up stats — compact inline */
+/* Due Up stats */
 .lgp-due-name { font-size: 10px; font-weight: 600; }
 .lgp-due-stats { font-size: 9px; color: var(--text-muted); margin-left: 2px; }
-.lgp-due-player { display: inline; white-space: nowrap; }
-.lgp-due-list { display: flex; gap: 4px; margin-top: 2px; }
 
 /* Coming Up — between innings after 20s collapse */
 .lgp-next-up { padding: 10px 0; }
