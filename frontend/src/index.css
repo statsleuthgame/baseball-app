@@ -4155,6 +4155,26 @@ th.sb-ls-total {
 }
 .lgp-watch-btn:active { opacity: 0.8; }
 
+/* Game switcher strip */
+.lgp-game-strip {
+  display: flex; gap: 6px; overflow-x: auto; padding: 2px 0 8px;
+  scrollbar-width: none; -ms-overflow-style: none;
+}
+.lgp-game-strip::-webkit-scrollbar { display: none; }
+.lgp-game-pill {
+  display: flex; align-items: center; gap: 3px; flex-shrink: 0;
+  height: 36px; padding: 4px 10px; font-size: 10px; line-height: 1;
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px; color: #fff; cursor: pointer; white-space: nowrap;
+}
+.lgp-game-pill.active {
+  background: color-mix(in srgb, var(--team-secondary) 20%, transparent);
+  border-color: var(--team-secondary);
+}
+.lgp-pill-teams { font-weight: 700; }
+.lgp-pill-at { opacity: 0.5; margin: 0 1px; }
+.lgp-pill-inning { opacity: 0.5; margin-left: 2px; }
+
 .lgp-badge { font-size: 12px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
 .lgp-badge.live { color: #ef4444; display: inline-flex; align-items: center; gap: 4px; }
 .lgp-badge.final { color: var(--text-muted); }

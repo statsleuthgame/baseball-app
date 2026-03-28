@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useTeam } from "../../context/TeamContext";
-import { fetchLiveGameState, fetchGameDetail, fetchWinProbability } from "../../api/client";
+import { fetchLiveGameState, fetchGameDetail, fetchWinProbability, fetchAllGamesToday } from "../../api/client";
 import { lastName, teamDisplayName } from "../../utils/formatters";
 import ALL_TEAMS from "../../data/teams";
 import { lazy, Suspense } from "react";
@@ -58,6 +58,17 @@ export default function LiveGamePage() {
     queryFn: () => fetchWinProbability(gamePk),
     enabled: !!gamePk, staleTime: 1000 * 30, refetchInterval: 1000 * 30,
   });
+
+  // All live games for game switcher strip
+  const todayStr = (() => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`; })();
+  const { data: allGames } = useQuery({
+    queryKey: ["allGamesToday", todayStr],
+    queryFn: () => fetchAllGamesToday(todayStr),
+    staleTime: 1000 * 60, refetchInterval: 1000 * 30,
+  });
+  const liveGames = (allGames || []).filter(g =>
+    ["In Progress", "Warmup", "Delayed", "Delayed Start"].includes(g.status)
+  );
 
   const [boxOpen, setBoxOpen] = useState(false);
   const [replayData, setReplayData] = useState(null); // scoring play hit data for replay
@@ -191,6 +202,27 @@ export default function LiveGamePage() {
             </button>
           )}
         </div>
+
+        {/* Game switcher strip — only when 2+ live games */}
+        {liveGames.length >= 2 && (
+          <div className="lgp-game-strip">
+            {liveGames.map(g => {
+              const half = g.inningHalf === "Top" ? "T" : g.inningHalf === "Bottom" ? "B" : "";
+              return (
+                <button
+                  key={g.gamePk}
+                  className={`lgp-game-pill${String(g.gamePk) === String(gamePk) ? " active" : ""}`}
+                  onClick={() => navigate(`/team/${teamId}/live/${g.gamePk}`)}
+                >
+                  <span className="lgp-pill-teams">{g.away.abbreviation} {g.away.score ?? 0}</span>
+                  <span className="lgp-pill-at">@</span>
+                  <span className="lgp-pill-teams">{g.home.abbreviation} {g.home.score ?? 0}</span>
+                  {g.inning && <span className="lgp-pill-inning">· {half}{g.inning}</span>}
+                </button>
+              );
+            })}
+          </div>
+        )}
 
         {/* Score — use liveState for real-time, fallback to gameInfo */}
         <div className="lgp-score-row">
