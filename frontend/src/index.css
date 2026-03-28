@@ -3112,7 +3112,13 @@ button.stat-cell {
 .sb-matchup-link { cursor: pointer; }
 .sb-matchup-link:active { opacity: 0.8; }
 
-.sb-player-link { cursor: pointer; }
+.sb-player-link {
+  cursor: pointer;
+  color: var(--text-bright);
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+}
 .sb-player-link:active { opacity: 0.6; }
 
 /* Decisions on final games */
@@ -3810,8 +3816,16 @@ th.sb-ls-total {
 .lgp-watch-btn:active { opacity: 0.8; }
 
 .lgp-badge { font-size: 12px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
-.lgp-badge.live { color: #ef4444; }
+.lgp-badge.live { color: #ef4444; display: inline-flex; align-items: center; gap: 4px; }
 .lgp-badge.final { color: var(--text-muted); }
+.lgp-live-dot {
+  width: 6px; height: 6px; border-radius: 50%; background: #ef4444;
+  animation: live-dot-flash 0.6s ease-out;
+}
+@keyframes live-dot-flash {
+  0% { opacity: 1; transform: scale(1.8); }
+  100% { opacity: 1; transform: scale(1); }
+}
 
 .lgp-score-row { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 10px; }
 .lgp-team-col { display: flex; flex-direction: column; align-items: center; gap: 2px; flex: 1; }

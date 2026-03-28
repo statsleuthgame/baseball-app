@@ -36,7 +36,7 @@ export default function LiveGamePage() {
     enabled: !!gamePk, staleTime: 1000 * 30, refetchInterval: 1000 * 30,
   });
 
-  const { data: liveState } = useQuery({
+  const { data: liveState, dataUpdatedAt } = useQuery({
     queryKey: ["liveGameState", gamePk],
     queryFn: () => fetchLiveGameState(gamePk),
     enabled: !!gamePk, staleTime: 1000 * 5, refetchInterval: 1000 * 5,
@@ -156,11 +156,11 @@ export default function LiveGamePage() {
       {/* ===== ZONE A: HERO SCOREBOARD ===== */}
       <div className="lgp-hero">
         <div className="lgp-hero-top">
-          <button className="lgp-back-btn" onClick={() => navigate(`/team/${teamId}/scores`)} aria-label="Back to scores">
+          <button className="lgp-back-btn" onClick={() => navigate(-1)} aria-label="Go back">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="15 18 9 12 15 6" /></svg>
           </button>
           <div className="lgp-hero-badges">
-            {isLive && <span className="lgp-badge live">LIVE</span>}
+            {isLive && <span className="lgp-badge live">LIVE <span key={dataUpdatedAt} className="lgp-live-dot" /></span>}
             {isFinal && <span className="lgp-badge final">FINAL</span>}
           </div>
           {isLive && (

@@ -22,13 +22,13 @@ async def team_info(team_id: int):
         return cached
 
     info = await mlb_api.get_team_info(team_id)
-    meta = TEAM_META[team_id]
+    meta = TEAM_META.get(team_id, {})
     result = {
         **info,
         "colors": {
-            "primary": meta["primary_color"],
-            "secondary": meta["secondary_color"],
-            "accent": meta["accent_color"],
+            "primary": meta.get("primary_color", "#333333"),
+            "secondary": meta.get("secondary_color", "#666666"),
+            "accent": meta.get("accent_color", "#999999"),
         },
     }
     cache.set(key, result, CACHE_TTL_TEAM_INFO)

@@ -1,6 +1,4 @@
-import traceback
-from fastapi import APIRouter
-from fastapi.responses import JSONResponse
+from fastapi import APIRouter, HTTPException
 
 from app.config import CACHE_TTL_STATCAST
 from app.services import cache
@@ -62,4 +60,4 @@ async def spray_chart(player_id: int, homeTeam: str | None = None, season: int |
         cache.set(key, data, CACHE_TTL_STATCAST)
         return data
     except Exception as e:
-        return {"error": str(e), "hits": [], "summary": {}}
+        raise HTTPException(status_code=500, detail=f"Spray chart fetch failed: {e}")

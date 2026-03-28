@@ -168,26 +168,23 @@ async def get_next_game(team_id: int) -> dict | None:
         "gameType": "R",
     })
 
-    # Also check if there's a game in progress or final today
-    # by looking at today specifically
-    today_data = await fetch("/schedule", params={
-        "sportId": 1,
-        "teamId": team_id,
-        "date": today.isoformat(),
-        "hydrate": "team,linescore,probablePitcher",
-        "gameType": "R",
-    })
+    # Extract today's games from the range response (no second API call needed)
+    today_str = today.isoformat()
+    today_games = []
+    for date_entry in data.get("dates", []):
+        if date_entry.get("date") == today_str:
+            today_games = date_entry.get("games", [])
+            break
 
     # First priority: a game today that's live or scheduled
-    for date_entry in today_data.get("dates", []):
+    for g in today_games:
         for g in date_entry.get("games", []):
             status = g.get("status", {}).get("detailedState", "")
             if status in ("In Progress", "Scheduled", "Pre-Game", "Warmup"):
                 return _format_game(g, is_next=True)
 
     # Second priority: a game today that's Final (show the result)
-    for date_entry in today_data.get("dates", []):
-        for g in date_entry.get("games", []):
+    for g in today_games:
             status = g.get("status", {}).get("detailedState", "")
             if status == "Final":
                 # Find the next future game to show alongside

@@ -1,5 +1,5 @@
 from datetime import date
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 
 from app.config import CACHE_TTL_PLAYER_STATS, CACHE_TTL_STATCAST
 from app.services import cache
@@ -18,7 +18,7 @@ async def player_detail(player_id: int):
 
     detail = await mlb_api.get_player_detail(player_id)
     if not detail:
-        return {"error": "Player not found"}
+        raise HTTPException(status_code=404, detail="Player not found")
     cache.set(key, detail, CACHE_TTL_PLAYER_STATS)
     return detail
 
