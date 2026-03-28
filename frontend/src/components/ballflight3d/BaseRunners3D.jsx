@@ -164,8 +164,8 @@ export default function BaseRunners3D({
 
   return (
     <group>
-      {/* Show static runners when not animating, or on outs for runners that aren't moving */}
-      {(!isAnimating || isOutPlay) && (
+      {/* Show static runners when not animating — skip if API runners handle everything */}
+      {!apiRunners?.length && (!isAnimating || isOutPlay) && (
         <>
           {runnersOn?.first && !animatedBases.has("first") && <StaticRunner position={BASES.first} color={teamColor} name={runnerNames?.first} />}
           {runnersOn?.second && !animatedBases.has("second") && <StaticRunner position={BASES.second} color={teamColor} name={runnerNames?.second} />}

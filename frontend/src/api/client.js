@@ -490,6 +490,12 @@ export const fetchLiveGameState = async (gamePk) => {
               event: p.result?.event || "",
               description: p.result?.description || "",
               batterName: p.matchup?.batter?.fullName || "",
+              runners: runners.map((r) => ({
+                name: r.details?.runner?.fullName || "",
+                start: r.movement?.start || null,
+                end: r.movement?.end || null,
+                isOut: r.movement?.isOut || false,
+              })),
             } : null,
           };
         }),
