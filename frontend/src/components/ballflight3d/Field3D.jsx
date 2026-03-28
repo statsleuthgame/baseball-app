@@ -1,4 +1,4 @@
-import { useMemo, useEffect } from "react";
+import { useMemo, useEffect, useRef } from "react";
 import * as THREE from "three";
 import stadiumPaths from "../../data/stadiumPaths.json";
 import ALL_TEAMS from "../../data/teams";
@@ -215,9 +215,12 @@ function FenceWall({ points }) {
     return { wallGeo, railGeo };
   }, [points]);
 
+  // Dispose on unmount only (not on dep change — meshes still reference them)
+  const geosRef = useRef({ wallGeo, railGeo });
+  geosRef.current = { wallGeo, railGeo };
   useEffect(() => {
-    return () => { wallGeo?.dispose(); railGeo?.dispose(); };
-  }, [wallGeo, railGeo]);
+    return () => { geosRef.current.wallGeo?.dispose(); geosRef.current.railGeo?.dispose(); };
+  }, []);
 
   if (!wallGeo) return null;
   return (

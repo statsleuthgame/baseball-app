@@ -278,8 +278,7 @@ function AnimatedRunner({ path, ballProgress, scores, startDelay = 0, numBases =
     elapsedRef.current = 0;
     startedRef.current = false;
     trailPositions.current = [];
-    return () => { trailGeo?.dispose(); };
-  }, [path, trailGeo]);
+  }, [path]);
 
   // ~2.67 seconds per base (1.5x speed)
   const totalRunTime = numBases * 2.67;

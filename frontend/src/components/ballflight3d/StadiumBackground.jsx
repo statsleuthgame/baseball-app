@@ -387,16 +387,19 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
     depthWrite: false,
   }), []);
 
-  // Dispose geometries and materials on unmount
+  // Dispose geometries and materials on unmount only
+  const geosRef = useRef({ bowlGeo, fasciaGeo, seatBlockGeo, skyMat, mountainGeos });
+  geosRef.current = { bowlGeo, fasciaGeo, seatBlockGeo, skyMat, mountainGeos };
   useEffect(() => {
     return () => {
-      bowlGeo?.dispose();
-      fasciaGeo?.dispose();
-      seatBlockGeo?.dispose();
-      skyMat?.dispose();
-      mountainGeos.forEach(r => r.geo?.dispose());
+      const g = geosRef.current;
+      g.bowlGeo?.dispose();
+      g.fasciaGeo?.dispose();
+      g.seatBlockGeo?.dispose();
+      g.skyMat?.dispose();
+      g.mountainGeos?.forEach(r => r.geo?.dispose());
     };
-  }, [bowlGeo, fasciaGeo, seatBlockGeo, skyMat, mountainGeos]);
+  }, []);
 
   if (!bowlGeo) return null;
 
