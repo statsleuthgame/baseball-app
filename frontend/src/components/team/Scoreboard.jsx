@@ -553,14 +553,24 @@ export default function Scoreboard() {
     setSelectedDate(fmt(d));
   };
 
-  // Sort: our team first, then live, scheduled, final
+  // Sort: our team first, partner team second (SEA↔ATL), then live, scheduled, final
+  const PARTNER_TEAMS = { 136: 144, 144: 136 }; // SEA ↔ ATL
+  const partnerTeamId = PARTNER_TEAMS[teamId];
+
   const sorted = games?.length
     ? [...games].sort((a, b) => {
         const gameTeams = (g) => [g.home.id, g.away.id];
         const aIsOurs = gameTeams(a).includes(teamId);
         const bIsOurs = gameTeams(b).includes(teamId);
+        const aIsPartner = partnerTeamId && gameTeams(a).includes(partnerTeamId);
+        const bIsPartner = partnerTeamId && gameTeams(b).includes(partnerTeamId);
+
+        // Our team always first
         if (aIsOurs && !bIsOurs) return -1;
         if (!aIsOurs && bIsOurs) return 1;
+        // Partner team second
+        if (aIsPartner && !bIsPartner && !bIsOurs) return -1;
+        if (!aIsPartner && !aIsOurs && bIsPartner) return 1;
 
         const statusOrder = { "In Progress": 0, "Delayed": 0.5, "Delayed Start": 0.5, "Pre-Game": 1, Warmup: 1, Scheduled: 2, Final: 3 };
         return (statusOrder[a.status] ?? 4) - (statusOrder[b.status] ?? 4);
