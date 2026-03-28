@@ -1,34 +1,63 @@
 import { useMemo, useRef, useEffect } from "react";
 import * as THREE from "three";
 
-// Sky dome shaders
+// ─── Sky Dome Shaders ────────────────────────────────────────────────
 const skyVertexShader = `
-  varying float vWorldY;
+  varying vec3 vWorldPos;
   void main() {
     vec4 worldPos = modelMatrix * vec4(position, 1.0);
-    vWorldY = worldPos.y;
+    vWorldPos = worldPos.xyz;
     gl_Position = projectionMatrix * viewMatrix * worldPos;
   }
 `;
 
 const skyFragmentShader = `
-  varying float vWorldY;
+  varying vec3 vWorldPos;
+
+  float hash(vec2 p) {
+    return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+  }
+
   void main() {
-    float t = clamp(vWorldY / 500.0, -0.3, 1.0);
-    vec3 belowHorizon = vec3(0.55, 0.62, 0.7);
-    vec3 horizon = vec3(0.45, 0.6, 0.8);
-    vec3 zenith = vec3(0.15, 0.3, 0.6);
+    float y = vWorldPos.y;
+    float t = clamp(y / 500.0, -0.3, 1.0);
+
+    // Night sky gradient
+    vec3 belowHorizon = vec3(0.08, 0.10, 0.16);
+    vec3 horizon = vec3(0.12, 0.18, 0.30);
+    vec3 mid = vec3(0.06, 0.10, 0.22);
+    vec3 zenith = vec3(0.02, 0.04, 0.12);
+
     vec3 color;
     if (t < 0.0) {
       color = mix(belowHorizon, horizon, t + 1.0);
+    } else if (t < 0.3) {
+      color = mix(horizon, mid, t / 0.3);
     } else {
-      color = mix(horizon, zenith, t);
+      color = mix(mid, zenith, (t - 0.3) / 0.7);
     }
+
+    // Warm horizon glow (stadium light wash)
+    float horizonGlow = exp(-abs(y - 30.0) * 0.008);
+    color += vec3(0.12, 0.08, 0.04) * horizonGlow * 0.5;
+
+    // Stars
+    if (t > 0.15) {
+      vec2 starUV = vWorldPos.xz * 0.02;
+      float starDensity = hash(floor(starUV * 80.0));
+      float starBright = step(0.985, starDensity) * (t - 0.15) * 2.0;
+      float twinkle = 0.7 + 0.3 * hash(floor(starUV * 80.0) + 0.5);
+      color += vec3(0.9, 0.92, 1.0) * starBright * twinkle;
+
+      float bigStar = step(0.998, hash(floor(starUV * 40.0)));
+      color += vec3(1.0, 0.95, 0.85) * bigStar * (t - 0.15) * 3.0;
+    }
+
     gl_FragColor = vec4(color, 1.0);
   }
 `;
 
-// Bowl constants
+// ─── Bowl Constants ──────────────────────────────────────────────────
 const FENCE_H = 10;
 const RISER_H = 2.5;
 const TREAD_D = 3.5;
@@ -36,18 +65,35 @@ const TIER1_ROWS = 8;
 const TIER2_ROWS = 6;
 const CONCOURSE_H = 5;
 const CONCOURSE_D = 6;
-const PUSH_BACK = 15; // gap between fence and first row
+const PUSH_BACK = 15;
+
+// ─── Simple seeded noise for mountain heights ────────────────────────
+function pseudoNoise(x, seed) {
+  const s = Math.sin(x * 127.1 + seed * 311.7) * 43758.5453;
+  return s - Math.floor(s);
+}
+
+function mountainHeight(angle, seed, octaves) {
+  let h = 0;
+  let amp = 1;
+  let freq = 1;
+  for (let i = 0; i < octaves; i++) {
+    h += pseudoNoise(angle * freq, seed + i * 13.37) * amp;
+    amp *= 0.5;
+    freq *= 2.1;
+  }
+  return h;
+}
 
 /**
- * Procedural 3D stadium background.
- * Bowl + seats built directly from fence points (not LatheGeometry).
+ * Procedural 3D stadium background with mountain backdrop.
  */
 export default function StadiumBackground({ fencePoints, teamColors }) {
   const seatMeshRef = useRef();
   const primaryColor = teamColors?.primary || "#2a3a5c";
   const secondaryColor = teamColors?.secondary || "#1a2a4c";
 
-  // Compute outward normals for each fence point (away from home plate)
+  // ─── Outward normals ────────────────────────────────────────────
   const normals = useMemo(() => {
     if (!fencePoints?.length) return [];
     return fencePoints.map(([x, , z]) => {
@@ -56,74 +102,51 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
     });
   }, [fencePoints]);
 
-  // Build bowl geometry from fence points — extrude outward with stair-step profile
+  // ─── Bowl geometry ──────────────────────────────────────────────
   const bowlGeo = useMemo(() => {
     if (!fencePoints?.length || !normals.length) return null;
 
     const pts = fencePoints;
     const n = pts.length;
-
-    // Build the cross-section heights and radial offsets for each row
     const rows = [];
     let y = FENCE_H;
     let offset = PUSH_BACK;
 
-    // Tier 1
     for (let i = 0; i < TIER1_ROWS; i++) {
-      rows.push({ offset, y }); // tread surface
+      rows.push({ offset, y });
       y += RISER_H;
       offset += TREAD_D;
     }
-
-    // Concourse
-    const concourseOffset = offset;
-    const concourseY = y;
     y += CONCOURSE_H;
     offset += CONCOURSE_D;
-
-    // Tier 2
     for (let i = 0; i < TIER2_ROWS; i++) {
       rows.push({ offset, y });
       y += RISER_H;
       offset += TREAD_D;
     }
-
-    // Add a top edge and back wall drop
-    rows.push({ offset, y }); // top
+    rows.push({ offset, y });
     const topOffset = offset;
-    const topY = y;
 
-    // For each fence point and each row, generate a vertex
-    // Total rows for the raked surface + back wall
-    const profilePts = [];
-    // Bottom edge at fence height
-    profilePts.push({ offset: PUSH_BACK, y: FENCE_H });
-    // Each row: tread then riser (simplified: just the tread tops)
-    for (const r of rows) {
-      profilePts.push(r);
-    }
-    // Back wall bottom
+    const profilePts = [{ offset: PUSH_BACK, y: FENCE_H }];
+    for (const r of rows) profilePts.push(r);
     profilePts.push({ offset: topOffset, y: 0 });
 
     const numProfile = profilePts.length;
     const vertices = new Float32Array(n * numProfile * 3);
     const indices = [];
 
-    // Generate vertices
     for (let f = 0; f < n; f++) {
       const [fx, , fz] = pts[f];
       const [nx, nz] = normals[f];
-
       for (let p = 0; p < numProfile; p++) {
-        const { offset, y: py } = profilePts[p];
+        const { offset: off, y: py } = profilePts[p];
         const idx = (f * numProfile + p) * 3;
-        vertices[idx] = fx + nx * offset;
+        vertices[idx] = fx + nx * off;
         vertices[idx + 1] = py;
-        vertices[idx + 2] = fz + nz * offset;
+        vertices[idx + 2] = fz + nz * off;
       }
     }
 
-    // Generate indices — connect adjacent fence points
     for (let f = 0; f < n - 1; f++) {
       for (let p = 0; p < numProfile - 1; p++) {
         const bl = f * numProfile + p;
@@ -142,7 +165,7 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
     return geo;
   }, [fencePoints, normals]);
 
-  // Fascia strip at concourse level
+  // ─── Fascia ─────────────────────────────────────────────────────
   const fasciaGeo = useMemo(() => {
     if (!fencePoints?.length || !normals.length) return null;
 
@@ -159,12 +182,9 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
       const [nx, nz] = normals[f];
       const bx = fx + nx * fasciaOffset;
       const bz = fz + nz * fasciaOffset;
-
-      // Bottom of fascia
       vertices[(f * 2) * 3] = bx;
       vertices[(f * 2) * 3 + 1] = fasciaY;
       vertices[(f * 2) * 3 + 2] = bz;
-      // Top of fascia
       vertices[(f * 2 + 1) * 3] = bx;
       vertices[(f * 2 + 1) * 3 + 1] = fasciaY + CONCOURSE_H;
       vertices[(f * 2 + 1) * 3 + 2] = bz;
@@ -186,8 +206,8 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
     return geo;
   }, [fencePoints, normals]);
 
-  // Instanced seat blocks — placed on each tread of the bowl
-  const seatBlockGeo = useMemo(() => new THREE.BoxGeometry(6, 0.8, 2.0), []);
+  // ─── Seats ──────────────────────────────────────────────────────
+  const seatBlockGeo = useMemo(() => new THREE.BoxGeometry(5, 1.6, 1.2), []);
 
   const { seatCount, seatMatrices, seatColorArray } = useMemo(() => {
     if (!fencePoints?.length || !normals.length)
@@ -199,12 +219,11 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
     const colors = [];
     const priColor = new THREE.Color(primaryColor);
     const secColor = new THREE.Color(secondaryColor);
+    const priLight = new THREE.Color(primaryColor).lerp(new THREE.Color("#ffffff"), 0.15);
+    const secLight = new THREE.Color(secondaryColor).lerp(new THREE.Color("#ffffff"), 0.15);
     const dummy = new THREE.Object3D();
+    const seatSpacing = 6;
 
-    // Place seats every ~8ft along the fence arc, on each row
-    const seatSpacing = 8;
-
-    // Walk fence points and place seats at intervals
     let arcDist = 0;
     const fenceArcPositions = [{ idx: 0, arc: 0 }];
     for (let f = 1; f < n; f++) {
@@ -213,22 +232,18 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
       arcDist += Math.sqrt(dx * dx + dz * dz);
       fenceArcPositions.push({ idx: f, arc: arcDist });
     }
-
     const totalArc = arcDist;
     const seatsPerRow = Math.floor(totalArc / seatSpacing);
 
-    // Compute foul line angles from home plate
-    // LF foul line and RF foul line — find the fence points with most extreme
-    // negative-x and positive-x that are still in the outfield (z < -80)
+    // Foul line angles
     let lfAngle = 0, rfAngle = 0;
     for (let f = 0; f < n; f++) {
       const [fx, , fz] = pts[f];
-      if (fz > -80) continue; // skip backstop area
-      const angle = Math.atan2(fx, -fz); // angle from center field axis
+      if (fz > -80) continue;
+      const angle = Math.atan2(fx, -fz);
       if (angle < lfAngle) lfAngle = angle;
       if (angle > rfAngle) rfAngle = angle;
     }
-    // Add small buffer so seats don't go right to the foul pole
     lfAngle += 0.02;
     rfAngle -= 0.02;
 
@@ -250,7 +265,6 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
         const fx = pts[fIdx][0] + (pts[fIdx + 1][0] - pts[fIdx][0]) * t;
         const fz = pts[fIdx][2] + (pts[fIdx + 1][2] - pts[fIdx][2]) * t;
 
-        // Skip seats past the foul lines (in foul territory behind home)
         const seatAngle = Math.atan2(fx, -fz);
         if (seatAngle < lfAngle || seatAngle > rfAngle) continue;
 
@@ -273,20 +287,24 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
         mat.copy(dummy.matrix);
         matrices.push(mat);
 
-        const section = Math.floor(s / 4);
-        const c = (section + rowIdx) % 2 === 0 ? priColor : secColor;
+        const section = Math.floor(s / 6);
+        const isOddRow = rowIdx % 2 === 1;
+        let c;
+        if ((section + rowIdx) % 2 === 0) {
+          c = isOddRow ? priLight : priColor;
+        } else {
+          c = isOddRow ? secLight : secColor;
+        }
         colors.push(c.r, c.g, c.b);
       }
     };
 
-    // Tier 1
     for (let i = 0; i < TIER1_ROWS; i++) {
       const rowOffset = PUSH_BACK + TREAD_D * i + TREAD_D / 2;
       const rowY = FENCE_H + RISER_H * (i + 1) + 0.4;
       addRow(rowOffset, rowY, i);
     }
 
-    // Tier 2
     const t2BaseOff = PUSH_BACK + TREAD_D * TIER1_ROWS + CONCOURSE_D;
     const t2BaseY = FENCE_H + RISER_H * TIER1_ROWS + CONCOURSE_H;
     for (let i = 0; i < TIER2_ROWS; i++) {
@@ -308,7 +326,6 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
     };
   }, [fencePoints, normals, primaryColor, secondaryColor]);
 
-  // Apply instance matrices and colors
   useEffect(() => {
     if (!seatMeshRef.current || !seatMatrices || seatCount === 0) return;
     const mesh = seatMeshRef.current;
@@ -322,7 +339,88 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
     mesh.instanceColor.needsUpdate = true;
   }, [seatCount, seatMatrices, seatColorArray]);
 
-  // Sky dome
+  // ─── Mountain ranges ────────────────────────────────────────────
+  const mountainGeos = useMemo(() => {
+    if (!fencePoints?.length || !normals.length) return [];
+
+    const pts = fencePoints;
+    const n = pts.length;
+
+    const ranges = [
+      { dist: 120, baseY: 0, peak: 80,  color: "#0c1520", seed: 1.0,  octaves: 5, opacity: 0.95 },
+      { dist: 200, baseY: 0, peak: 140, color: "#0a1828", seed: 7.5,  octaves: 4, opacity: 0.85 },
+      { dist: 320, baseY: 0, peak: 220, color: "#0e2040", seed: 15.3, octaves: 3, opacity: 0.70 },
+    ];
+
+    return ranges.map((range) => {
+      const { dist, baseY, peak, color, seed, octaves, opacity } = range;
+      const segments = n * 2;
+      const vertices = [];
+      const indices = [];
+
+      for (let i = 0; i <= segments; i++) {
+        const frac = i / segments;
+        const fIdx = Math.min(Math.floor(frac * (n - 1)), n - 2);
+        const localFrac = frac * (n - 1) - fIdx;
+
+        const fx = pts[fIdx][0] + (pts[fIdx + 1][0] - pts[fIdx][0]) * localFrac;
+        const fz = pts[fIdx][2] + (pts[fIdx + 1][2] - pts[fIdx][2]) * localFrac;
+        const nx = normals[fIdx][0] + (normals[fIdx + 1][0] - normals[fIdx][0]) * localFrac;
+        const nz = normals[fIdx][1] + (normals[fIdx + 1][1] - normals[fIdx][1]) * localFrac;
+        const nLen = Math.sqrt(nx * nx + nz * nz) || 1;
+
+        const x = fx + (nx / nLen) * dist;
+        const z = fz + (nz / nLen) * dist;
+        const angle = Math.atan2(x, z);
+        const h = mountainHeight(angle * 3.0, seed, octaves);
+        const peakY = baseY + peak * 0.3 + h * peak * 0.7;
+
+        vertices.push(x, baseY, z);
+        vertices.push(x, peakY, z);
+      }
+
+      for (let i = 0; i < segments; i++) {
+        const bl = i * 2;
+        const tl = i * 2 + 1;
+        const br = (i + 1) * 2;
+        const tr = (i + 1) * 2 + 1;
+        indices.push(bl, br, tl);
+        indices.push(tl, br, tr);
+      }
+
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute("position", new THREE.Float32BufferAttribute(new Float32Array(vertices), 3));
+      geo.setIndex(indices);
+      geo.computeVertexNormals();
+      return { geo, color, opacity };
+    });
+  }, [fencePoints, normals]);
+
+  // ─── Light towers ───────────────────────────────────────────────
+  const lightTowers = useMemo(() => {
+    if (!fencePoints?.length || !normals.length) return [];
+    const pts = fencePoints;
+    const n = pts.length;
+    const towers = [];
+    const towerOffset = PUSH_BACK + TREAD_D * (TIER1_ROWS + TIER2_ROWS) + CONCOURSE_D + 10;
+    const towerCount = 6;
+
+    for (let i = 0; i < towerCount; i++) {
+      const fIdx = Math.floor((i + 0.5) * (n - 1) / towerCount);
+      if (fIdx >= n) continue;
+      const [fx, , fz] = pts[fIdx];
+      const [nx, nz] = normals[fIdx];
+      const len = Math.sqrt(nx * nx + nz * nz) || 1;
+      towers.push({
+        x: fx + (nx / len) * towerOffset,
+        z: fz + (nz / len) * towerOffset,
+        height: 100 + (pseudoNoise(i, 42) * 20),
+      });
+    }
+    return towers;
+  }, [fencePoints, normals]);
+
+  // ─── Sky material ───────────────────────────────────────────────
   const skyMat = useMemo(() => new THREE.ShaderMaterial({
     vertexShader: skyVertexShader,
     fragmentShader: skyFragmentShader,
@@ -336,7 +434,7 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
     <group>
       {/* Seating bowl */}
       <mesh geometry={bowlGeo}>
-        <meshLambertMaterial color="#3a3a50" side={THREE.DoubleSide} />
+        <meshLambertMaterial color="#2a2a3a" side={THREE.DoubleSide} />
       </mesh>
 
       {/* Seat blocks */}
@@ -357,9 +455,55 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
         </mesh>
       )}
 
+      {/* Mountain ranges */}
+      {mountainGeos.map((range, i) => (
+        <mesh key={`mountain-${i}`} geometry={range.geo}>
+          <meshLambertMaterial color={range.color} transparent opacity={range.opacity} side={THREE.DoubleSide} />
+        </mesh>
+      ))}
+
+      {/* Light towers */}
+      {lightTowers.map((tower, i) => (
+        <group key={`light-tower-${i}`} position={[tower.x, 0, tower.z]}>
+          <mesh position={[0, tower.height / 2, 0]}>
+            <cylinderGeometry args={[0.8, 1.5, tower.height, 6]} />
+            <meshLambertMaterial color="#1a1a2e" />
+          </mesh>
+          <mesh position={[0, tower.height, 0]}>
+            <boxGeometry args={[8, 3, 4]} />
+            <meshBasicMaterial color="#ffffcc" transparent opacity={0.9} />
+          </mesh>
+          <pointLight position={[0, tower.height + 2, 0]} intensity={0.6} color="#ffffdd" distance={300} decay={2} />
+        </group>
+      ))}
+
+      {/* Press box */}
+      {fencePoints?.length > 0 && (() => {
+        const pressBoxOffset = PUSH_BACK + TREAD_D * (TIER1_ROWS + TIER2_ROWS) + CONCOURSE_D + 5;
+        const pressBoxY = FENCE_H + RISER_H * TIER1_ROWS + CONCOURSE_H + RISER_H * TIER2_ROWS;
+        const midIdx = Math.floor(fencePoints.length / 2);
+        const [mx, , mz] = fencePoints[midIdx];
+        const [mnx, mnz] = normals[midIdx];
+        const mLen = Math.sqrt(mnx * mnx + mnz * mnz) || 1;
+        const pbX = mx + (mnx / mLen) * pressBoxOffset;
+        const pbZ = mz + (mnz / mLen) * pressBoxOffset;
+        return (
+          <group position={[pbX, pressBoxY, pbZ]}>
+            <mesh>
+              <boxGeometry args={[60, 8, 12]} />
+              <meshLambertMaterial color="#1a1a2e" />
+            </mesh>
+            <mesh position={[0, 0, 6.1]}>
+              <boxGeometry args={[56, 4, 0.2]} />
+              <meshBasicMaterial color="#88aacc" transparent opacity={0.4} />
+            </mesh>
+          </group>
+        );
+      })()}
+
       {/* Sky dome */}
       <mesh material={skyMat}>
-        <sphereGeometry args={[600, 24, 16]} />
+        <sphereGeometry args={[600, 32, 20]} />
       </mesh>
     </group>
   );

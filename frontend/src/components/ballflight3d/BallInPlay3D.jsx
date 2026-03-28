@@ -198,7 +198,7 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
           camera={{ fov: 45, near: 1, far: 2000, position: [0, 120, 80] }}
           dpr={[1, 1.5]}
           gl={{ antialias: true, alpha: true }}
-          style={{ background: "linear-gradient(180deg, #1a3a6a 0%, #3a6a90 100%)" }}
+          style={{ background: "linear-gradient(180deg, #040810 0%, #0a1020 100%)" }}
         >
           {/* Lighting */}
           <ambientLight intensity={0.4} />
@@ -270,7 +270,7 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn }) {
           {outPositions.map((pos, i) => pos && <OutIndicator key={`out-${i}`} position={pos} />)}
 
           {/* Exponential fog for atmospheric depth */}
-          <fogExp2 attach="fog" args={["#8aaccc", 0.0012]} />
+          <fogExp2 attach="fog" args={["#0a0e1a", 0.002]} />
         </Canvas>
 
         {/* Event label overlay (top) */}
