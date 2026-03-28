@@ -66,16 +66,14 @@ export default function Field3D({ venueTeamId, teamColor }) {
     // Foul line points
     const foulLinePoints = stadium.foul_lines.map(([x, y]) => mlbamTo3D(x, y));
 
-    // Foul pole positions: find the fence points at the extremes of fair territory
-    // (most negative-x for LF foul pole, most positive-x for RF foul pole)
-    // Only consider points in the outfield (z < -80)
+    // Foul pole positions: the two furthest points on the foul lines
+    // (one on each side of home plate — negative x = LF, positive x = RF)
     let lfPole = null, rfPole = null;
-    let lfAngle = Infinity, rfAngle = -Infinity;
-    for (const [x, , z] of fencePoints) {
-      if (z > -80) continue; // skip backstop
-      const angle = Math.atan2(x, -z);
-      if (angle < lfAngle) { lfAngle = angle; lfPole = { x, z, side: "left" }; }
-      if (angle > rfAngle) { rfAngle = angle; rfPole = { x, z, side: "right" }; }
+    let lfDist = 0, rfDist = 0;
+    for (const [x, , z] of foulLinePoints) {
+      const dist = Math.sqrt(x * x + z * z);
+      if (x < -20 && dist > lfDist) { lfDist = dist; lfPole = { x, z, side: "left" }; }
+      if (x > 20 && dist > rfDist) { rfDist = dist; rfPole = { x, z, side: "right" }; }
     }
     const foulPolePositions = [lfPole, rfPole].filter(Boolean);
 
