@@ -2414,13 +2414,13 @@ button.stat-cell {
 }
 
 .bullpen-cols {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 16px;
 }
 
 .bullpen-team {
-  width: 100%;
+  min-width: 0;
 }
 
 .bullpen-team-hdr {
@@ -2430,21 +2430,22 @@ button.stat-cell {
   letter-spacing: 0.5px;
   color: var(--text-muted);
   padding-bottom: 4px;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .bullpen-row {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 3px 0;
+  gap: 5px;
+  padding: 4px 0;
   font-size: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .bullpen-status-dot {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   flex-shrink: 0;
 }
@@ -2459,12 +2460,14 @@ button.stat-cell {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 500;
 }
 
 .bullpen-rest {
   font-size: 10px;
   color: var(--text-muted);
   flex-shrink: 0;
+  text-align: right;
 }
 
 /* Injuries */
