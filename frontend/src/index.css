@@ -2787,23 +2787,25 @@ button.stat-cell {
 
 .scoreboard-empty h2 { color: var(--text-bright); margin-bottom: 8px; }
 
-.scoreboard-list { display: flex; flex-direction: column; gap: 8px; }
+.scoreboard-list { display: flex; flex-direction: column; gap: 6px; }
 
 .scoreboard-card {
   background: var(--bg-card);
-  border-radius: 12px;
-  padding: 12px 14px;
+  border-radius: 8px;
+  padding: 10px 12px;
   border: 1px solid var(--border);
   position: relative;
 }
 
 .scoreboard-card.our-game {
   border-color: var(--team-secondary);
-  box-shadow: 0 0 8px rgba(0, 163, 163, 0.1);
+  border-left: 3px solid var(--team-secondary);
+  box-shadow: 0 0 12px rgba(0, 163, 163, 0.15);
 }
 
 .scoreboard-card.live {
   border-color: var(--live);
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.04), var(--bg-card));
 }
 
 .sb-delayed-badge {
@@ -2814,8 +2816,8 @@ button.stat-cell {
 
 /* Live game info on scoreboard cards */
 .sb-live-info {
-  margin-top: 8px;
-  padding-top: 8px;
+  margin-top: 4px;
+  padding-top: 4px;
   border-top: 1px solid rgba(255, 255, 255, 0.04);
   display: flex;
   flex-direction: column;
@@ -2918,35 +2920,43 @@ button.stat-cell {
   padding: 2px 8px;
   background: var(--live);
   color: #fff;
+  animation: live-pulse 2s ease-in-out infinite;
   border-radius: 4px;
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.5px;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .scoreboard-status-badge {
   font-size: 12px;
   color: var(--text-muted);
   font-weight: 600;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
-.scoreboard-teams { display: flex; flex-direction: column; gap: 6px; }
+.scoreboard-teams { display: flex; flex-direction: column; gap: 4px; }
 
 .scoreboard-team-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
-.scoreboard-logo { width: 32px; height: 32px; flex-shrink: 0; }
-.scoreboard-abbr { font-size: 16px; font-weight: 700; color: var(--text-bright); width: 40px; }
+.scoreboard-logo { width: 24px; height: 24px; flex-shrink: 0; }
+.scoreboard-abbr { font-size: 14px; font-weight: 700; color: var(--text-bright); width: 36px; letter-spacing: 0.3px; }
 .scoreboard-record { font-size: 12px; color: var(--text-muted); flex: 1; }
-.scoreboard-score { font-size: 22px; font-weight: 800; color: var(--text-bright); min-width: 32px; text-align: right; }
+.scoreboard-score { font-size: 20px; font-weight: 800; color: var(--text-bright); min-width: 32px; text-align: right; font-variant-numeric: tabular-nums; }
 
-.sb-loser { opacity: 0.45; }
-.sb-winner .scoreboard-score { font-size: 24px; }
+.sb-loser { opacity: 0.55; }
+.sb-winner .scoreboard-score { font-size: 22px; }
+
+/* De-emphasize non-user-team cards */
+.scoreboard-card:not(.our-game) .scoreboard-abbr { color: var(--text); }
+.scoreboard-card:not(.our-game) .scoreboard-score { color: var(--text); font-weight: 700; }
+
+/* Scheduled time distinct color */
+.scoreboard-status-badge.sb-scheduled-time { color: var(--text); }
 
 .sb-inline-pitcher {
   display: flex;
@@ -2991,8 +3001,8 @@ button.stat-cell {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin-top: 8px;
-  padding-top: 8px;
+  margin-top: 6px;
+  padding-top: 6px;
   border-top: 1px solid rgba(255, 255, 255, 0.04);
   font-size: 11px;
   color: var(--text-muted);
@@ -3029,8 +3039,8 @@ button.stat-cell {
 .sb-wind { opacity: 0.7; }
 
 .sb-bvp-preview {
-  margin-top: 8px;
-  padding-top: 8px;
+  margin-top: 6px;
+  padding-top: 6px;
   border-top: 1px solid rgba(255, 255, 255, 0.04);
 }
 
@@ -3109,8 +3119,8 @@ button.stat-cell {
 .sb-decisions {
   display: flex;
   gap: 12px;
-  margin-top: 6px;
-  padding-top: 6px;
+  margin-top: 4px;
+  padding-top: 4px;
   border-top: 1px solid rgba(255, 255, 255, 0.04);
   font-size: 11px;
   flex-wrap: wrap;
@@ -3191,7 +3201,7 @@ button.stat-cell {
   align-items: center;
   justify-content: center;
   gap: 4px;
-  padding-top: 6px;
+  padding-top: 3px;
   color: var(--text-muted);
   opacity: 0.6;
 }
@@ -3988,6 +3998,7 @@ th.sb-ls-total {
 .lgp-box-pitchers { margin-top: 4px; padding-top: 4px; border-top: 1px solid rgba(255,255,255,0.06); }
 
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+@keyframes live-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
 
 /* Pull to refresh */
 .pull-indicator {

@@ -661,7 +661,7 @@ export default function Scoreboard() {
                     Final{game.linescore && game.linescore.innings.length > 9 ? `/${game.linescore.innings.length}` : ""}
                   </div>
                 )}
-                {isScheduled && <div className="scoreboard-status-badge">{formatGameTime(game.gameDate)}</div>}
+                {isScheduled && <div className="scoreboard-status-badge sb-scheduled-time">{formatGameTime(game.gameDate)}</div>}
 
                 <div className="scoreboard-teams">
                   <div className={`scoreboard-team-row ${isFinal ? (awayWon ? "sb-winner" : "sb-loser") : ""}`}>
@@ -755,37 +755,6 @@ export default function Scoreboard() {
                   </div>
                 )}
 
-                {/* Venue + weather + watch for scheduled games */}
-                {isScheduled && (game.venue || game.weather) && (
-                  <div className="sb-venue-weather">
-                    <div className="sb-venue-info">
-                      {game.venue && <span className="sb-venue-name">{game.venue}</span>}
-                      {game.venueLocation && <span className="sb-venue-location">{game.venueLocation}</span>}
-                      {game.weather && (
-                        <span className="sb-venue-weather-line">
-                          {weatherIcon(game.weather.condition)} {game.weather.temp}°F
-                          {game.weather.wind && <span className="sb-wind"> · {game.weather.wind}</span>}
-                        </span>
-                      )}
-                    </div>
-                    {isOurGame && (
-                      <button
-                        className="sb-venue-watch-btn"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          window.location.href = `https://www.mlb.com/tv/g${game.gamePk}`;
-                        }}
-                        aria-label="Watch game"
-                      >
-                        <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                          <polygon points="5 3 19 12 5 21 5 3" />
-                        </svg>
-                        Watch
-                      </button>
-                    )}
-                  </div>
-                )}
-
                 {/* Watch button for our live games (no venue row) */}
                 {isOurGame && isLive && (
                   <button
@@ -801,11 +770,6 @@ export default function Scoreboard() {
                     </svg>
                     Watch
                   </button>
-                )}
-
-                {/* BvP preview for our scheduled games */}
-                {isOurGame && isScheduled && opposingPitcher?.id && (
-                  <BvPPreview teamId={teamId} pitcherId={opposingPitcher.id} />
                 )}
 
                 {/* Gameday link for all active games */}
@@ -846,6 +810,23 @@ export default function Scoreboard() {
                 {/* Expanded lineups for scheduled games */}
                 {isExpanded && isScheduled && (
                   <div className="sb-game-detail" onClick={(e) => e.stopPropagation()}>
+                    {(game.venue || game.weather) && (
+                      <div className="sb-venue-weather">
+                        <div className="sb-venue-info">
+                          {game.venue && <span className="sb-venue-name">{game.venue}</span>}
+                          {game.venueLocation && <span className="sb-venue-location">{game.venueLocation}</span>}
+                          {game.weather && (
+                            <span className="sb-venue-weather-line">
+                              {weatherIcon(game.weather.condition)} {game.weather.temp}°F
+                              {game.weather.wind && <span className="sb-wind"> · {game.weather.wind}</span>}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                    {isOurGame && opposingPitcher?.id && (
+                      <BvPPreview teamId={teamId} pitcherId={opposingPitcher.id} />
+                    )}
                     <ScoreboardLineups
                       gamePk={game.gamePk}
                       awayId={game.away.id}
