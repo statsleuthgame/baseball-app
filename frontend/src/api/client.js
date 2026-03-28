@@ -380,6 +380,7 @@ export const fetchLiveGameState = async (gamePk) => {
               trajectory: hd.trajectory,
               event: lastAB.result?.event || "",
               description: lastAB.result?.description || "",
+              batterName: lastAB.matchup?.batter?.fullName || "",
             };
           }
         }
@@ -399,6 +400,7 @@ export const fetchLiveGameState = async (gamePk) => {
               trajectory: hd.trajectory,
               event: cp2.result.event,
               description: cp2.result.description || "",
+              batterName: cp2.matchup?.batter?.fullName || "",
             };
           }
         }

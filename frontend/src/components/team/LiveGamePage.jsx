@@ -106,7 +106,7 @@ export default function LiveGamePage() {
     if (hitKey && hitKey !== lastHitRef.current) {
       // New ball in play — snapshot the PREVIOUS poll's runners (pre-play state)
       setBipRunners({ ...prevRunnersRef.current });
-      setBipRunnerNames({ ...prevRunnerNamesRef.current, batter: liveState?.batter?.fullName || "" });
+      setBipRunnerNames({ ...prevRunnerNamesRef.current, batter: liveState?.lastHitData?.batterName || liveState?.batter?.fullName || "" });
       lastHitRef.current = hitKey;
       setBipCollapsed(false);
       if (bipTimerRef.current) clearTimeout(bipTimerRef.current);
