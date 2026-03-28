@@ -1163,7 +1163,7 @@ body {
 .matchup-lineups-col-hdr {
   font-size: 11px;
   font-weight: 700;
-  color: var(--text-muted);
+  color: var(--text-bright);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   padding-bottom: 4px;
@@ -1175,8 +1175,12 @@ body {
   display: flex;
   align-items: center;
   gap: 4px;
-  padding: 3px 0;
+  padding: 5px 4px;
   font-size: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+.matchup-lineup-row:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .ml-order {
@@ -2239,10 +2243,10 @@ button.stat-cell {
 .matchup-dual-hdr {
   font-size: 11px;
   font-weight: 700;
-  color: var(--text-muted);
-  margin-bottom: 6px;
+  color: var(--text-bright);
+  margin-bottom: 4px;
   padding-bottom: 4px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2253,8 +2257,12 @@ button.stat-cell {
   display: flex;
   align-items: center;
   gap: 4px;
-  padding: 3px 0;
+  padding: 5px 4px;
   font-size: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+.bvp-compact-row:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .bvp-compact-name {
