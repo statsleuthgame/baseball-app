@@ -272,7 +272,7 @@ function RunnerLabel({ name }) {
   const parts = name.split(" ");
   const lastName = parts.length > 1 ? parts[parts.length - 1] : name;
   return (
-    <Html position={[0, 6, 0]} center distanceFactor={250} zIndexRange={[50, 0]}>
+    <Html position={[0, 9, 0]} center distanceFactor={250} zIndexRange={[50, 0]}>
       <div style={{
         color: "#fff", fontSize: "10px", fontWeight: 700, textShadow: "0 1px 4px rgba(0,0,0,0.9)",
         whiteSpace: "nowrap", pointerEvents: "none", userSelect: "none",
