@@ -4358,7 +4358,10 @@ th.sb-ls-total {
 .lgp-box-pos { width: 20px; font-size: 9px; color: var(--text-muted); flex-shrink: 0; }
 .lgp-box-name-link { font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; color: var(--text-bright); }
 .lgp-box-name-link:active { opacity: 0.6; }
-.lgp-box-chev { color: var(--text-muted); }
+.lgp-box-col-chev {
+  width: 14px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  color: var(--text-muted);
+}
 .lgp-box-abs { padding: 2px 0 4px 24px; }
 .lgp-box-ab { display: flex; align-items: center; gap: 4px; padding: 3px 0; font-size: 11px; color: var(--text-muted); }
 .lgp-box-ab-scoring { color: var(--win); }

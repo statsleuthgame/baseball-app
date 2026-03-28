@@ -637,6 +637,7 @@ function BoxScoreSection({ boxOpen, setBoxOpen, boxData, gameInfo, teamId }) {
             <span className="lgp-box-col-stat">RBI</span>
             <span className="lgp-box-col-stat">BB</span>
             <span className="lgp-box-col-stat">K</span>
+            <span className="lgp-box-col-chev" />
           </div>
 
           {/* Batters */}
@@ -662,11 +663,13 @@ function BoxScoreSection({ boxOpen, setBoxOpen, boxData, gameInfo, teamId }) {
                   <span className="lgp-box-col-stat">{s.rbi ?? "—"}</span>
                   <span className="lgp-box-col-stat">{s.bb ?? "—"}</span>
                   <span className="lgp-box-col-stat">{s.k ?? "—"}</span>
-                  {hasABs && (
-                    <svg className="lgp-box-chev" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: isOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s", flexShrink: 0, marginLeft: 2 }}>
-                      <polyline points="6 9 12 15 18 9" />
-                    </svg>
-                  )}
+                  <span className="lgp-box-col-chev">
+                    {hasABs && (
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: isOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
+                        <polyline points="6 9 12 15 18 9" />
+                      </svg>
+                    )}
+                  </span>
                 </div>
                 {isOpen && (
                   <div className="lgp-box-abs">
@@ -696,6 +699,7 @@ function BoxScoreSection({ boxOpen, setBoxOpen, boxData, gameInfo, teamId }) {
                 <span className="lgp-box-col-stat">ER</span>
                 <span className="lgp-box-col-stat">BB</span>
                 <span className="lgp-box-col-stat">K</span>
+                <span className="lgp-box-col-chev" />
               </div>
               {team.pitchers.map((p) => {
                 const s = p.stats || {};
@@ -712,6 +716,7 @@ function BoxScoreSection({ boxOpen, setBoxOpen, boxData, gameInfo, teamId }) {
                     <span className="lgp-box-col-stat">{s.er ?? "—"}</span>
                     <span className="lgp-box-col-stat">{s.bb ?? "—"}</span>
                     <span className="lgp-box-col-stat">{s.k ?? "—"}</span>
+                    <span className="lgp-box-col-chev" />
                   </div>
                 );
               })}
