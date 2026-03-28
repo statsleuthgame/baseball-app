@@ -4163,8 +4163,8 @@ th.sb-ls-total {
   background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 12px;
 }
 .lgp-section-label {
-  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
-  color: var(--text-muted); display: block; margin-bottom: 6px;
+  font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--text-muted); display: block; margin-bottom: 3px;
 }
 
 /* Zone B: Batter full row + pitcher bottom right */
@@ -4207,20 +4207,20 @@ th.sb-ls-total {
 .lgp-row-section { display: flex; gap: 10px; }
 .lgp-wp-compact {
   flex: 0 0 auto; background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: 12px; padding: 8px 14px; text-align: center;
+  border-radius: 8px; padding: 6px 10px; text-align: center;
   display: flex; flex-direction: column; justify-content: center;
 }
-.lgp-wp-inline { display: flex; align-items: center; gap: 6px; justify-content: center; margin-top: 4px; }
-.lgp-wp-logo-sm { width: 18px; height: 18px; }
-.lgp-wp-num { font-size: 18px; font-weight: 800; color: var(--win); }
+.lgp-wp-inline { display: flex; align-items: center; gap: 4px; justify-content: center; }
+.lgp-wp-logo-sm { width: 14px; height: 14px; }
+.lgp-wp-num { font-size: 15px; font-weight: 800; color: var(--win); }
 .lgp-due-compact {
   flex: 1; min-width: 0; background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: 12px; padding: 8px 12px; text-align: center;
+  border-radius: 8px; padding: 6px 10px;
 }
 .lgp-due-compact .lgp-section-label { text-align: center; }
 .lgp-due-compact .lgp-due-list { justify-content: center; }
-.lgp-due-list { display: flex; flex-direction: column; gap: 4px; margin-top: 4px; }
-.lgp-due-player { display: flex; align-items: center; gap: 6px; font-size: 12px; }
+.lgp-due-list { display: flex; flex-direction: column; gap: 2px; margin-top: 2px; }
+.lgp-due-player { display: flex; align-items: center; gap: 4px; font-size: 11px; }
 
 /* Zone E: Linescore */
 .lgp-ls-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
@@ -4281,11 +4281,11 @@ th.sb-ls-total {
   background: rgba(255,255,255,0.02);
 }
 
-/* Due Up stats — side by side on one row */
-.lgp-due-name { font-size: 11px; font-weight: 600; }
-.lgp-due-stats { font-size: 10px; color: var(--text-muted); margin-left: 3px; }
+/* Due Up stats — compact inline */
+.lgp-due-name { font-size: 10px; font-weight: 600; }
+.lgp-due-stats { font-size: 9px; color: var(--text-muted); margin-left: 2px; }
 .lgp-due-player { display: inline; white-space: nowrap; }
-.lgp-due-list { display: flex; gap: 6px; margin-top: 4px; }
+.lgp-due-list { display: flex; gap: 4px; margin-top: 2px; }
 
 /* Coming Up — between innings after 20s collapse */
 .lgp-next-up { padding: 10px 0; }
