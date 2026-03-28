@@ -42,7 +42,7 @@ export default function MatchupView() {
       };
     },
     enabled: !!routeGamePk,
-    staleTime: 1000 * 60 * 5,
+    staleTime: 0, // always refetch for specific games to avoid showing wrong game
   });
 
   const { data: gameData, isLoading: loadingToday } = useQuery({
