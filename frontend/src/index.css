@@ -4232,7 +4232,7 @@ th.sb-ls-total {
 }
 .lgp-due-compact .lgp-section-label { margin-bottom: 0; }
 .lgp-due-list { display: flex; flex-direction: column; gap: 0; margin-top: 0; }
-.lgp-due-player { font-size: 10px; white-space: nowrap; line-height: 1.5; }
+.lgp-due-player { font-size: 10px; white-space: nowrap; line-height: 1.5; min-height: 0; }
 
 /* Zone E: Linescore */
 .lgp-ls-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
