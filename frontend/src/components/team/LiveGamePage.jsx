@@ -225,7 +225,7 @@ export default function LiveGamePage() {
             if (b.bb > 0) gameStats.push(`${b.bb} BB`);
             if (b.hbp > 0) gameStats.push(`${b.hbp} HBP`);
             return (
-              <div className="lgp-batter-row sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${b.id}`)}>
+              <div className="lgp-batter-row sb-player-link" role="button" tabIndex={0} onClick={() => navigate(`/team/${teamId}/player/${b.id}`)} onKeyDown={(e) => e.key === "Enter" && navigate(`/team/${teamId}/player/${b.id}`)}>
                 <div className="lgp-batter-left">
                   <img src={battingTeamLogo} alt="" className="lgp-batter-logo" />
                   <span className="lgp-batter-name">{b.fullName}</span>
@@ -317,8 +317,8 @@ export default function LiveGamePage() {
                       if (p.hr > 0) stats.push(`${p.hr} HR`);
                       if (p.rbi > 0) stats.push(`${p.rbi} RBI`);
                       if (p.k > 0) stats.push(`${p.k} K`);
-                    if (p.bb > 0) stats.push(`${p.bb} BB`);
-                    if (p.hbp > 0) stats.push(`${p.hbp} HBP`);
+                      if (p.bb > 0) stats.push(`${p.bb} BB`);
+                      if (p.hbp > 0) stats.push(`${p.hbp} HBP`);
                       return (
                         <div key={p.id} className="lgp-next-up-player sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
                           <span className="lgp-next-up-name">{p.fullName}</span>
@@ -340,7 +340,7 @@ export default function LiveGamePage() {
           })()}
 
           {/* Pitcher — bottom right */}
-          <div className="lgp-pitcher-bottom sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${liveState.pitcher.id}`)}>
+          <div className="lgp-pitcher-bottom sb-player-link" role="button" tabIndex={0} onClick={() => navigate(`/team/${teamId}/player/${liveState.pitcher.id}`)} onKeyDown={(e) => e.key === "Enter" && navigate(`/team/${teamId}/player/${liveState.pitcher.id}`)}>
             <span className="lgp-pitcher-name">{liveState.pitcher.fullName}</span>
             <span className="lgp-pitcher-stats">
               {liveState.pitcher.gameStats ? `${liveState.pitcher.gameStats.ip} IP` : ""}

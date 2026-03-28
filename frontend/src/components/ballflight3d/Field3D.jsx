@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import * as THREE from "three";
 import stadiumPaths from "../../data/stadiumPaths.json";
 import ALL_TEAMS from "../../data/teams";
@@ -214,6 +214,10 @@ function FenceWall({ points }) {
 
     return { wallGeo, railGeo };
   }, [points]);
+
+  useEffect(() => {
+    return () => { wallGeo?.dispose(); railGeo?.dispose(); };
+  }, [wallGeo, railGeo]);
 
   if (!wallGeo) return null;
   return (

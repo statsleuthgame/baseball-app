@@ -75,7 +75,7 @@ export const fetchPlayerStats = async (playerId) => {
   try {
     const data = await staticFetch(`players/${playerId}/info.json`);
     if (data?.detail?.id) return { ...data, hasFullData: true };
-  } catch (e) { console.warn("fetch failed:", e.message); }
+  } catch { /* expected fallback */ }
 
   // Fallback: MLB API for any player (opponents, etc.)
   const season = new Date().getFullYear();
@@ -103,7 +103,7 @@ export const fetchPlayerStats = async (playerId) => {
       });
       const prevSplits = prev.data?.stats?.[0]?.splits || [];
       prevStats = prevSplits[0]?.stat || {};
-    } catch (e) { console.warn("fetch failed:", e.message); }
+    } catch { /* expected fallback */ }
   }
 
   return {
@@ -157,7 +157,7 @@ export const fetchPlayerArsenal = async (playerId) => {
   try {
     const data = await staticFetch(`players/${playerId}/arsenal.json`);
     if (data?.pitches?.length) return data;
-  } catch (e) { console.warn("fetch failed:", e.message); }
+  } catch { /* expected fallback */ }
 
   // Fallback: MLB Stats API (works for any pitcher, our team or opponent)
   const year = new Date().getFullYear();
@@ -168,7 +168,7 @@ export const fetchPlayerArsenal = async (playerId) => {
       });
       const splits = resp.data?.stats?.[0]?.splits || [];
       if (splits.length) return formatMlbArsenal(splits);
-    } catch (e) { console.warn("fetch failed:", e.message); }
+    } catch { /* expected fallback */ }
   }
   return { pitches: [], totalPitches: 0 };
 };
@@ -277,7 +277,7 @@ export const fetchProjectedLineup = async (teamId) => {
       projected: true,
     }));
   } catch (e) {
-    console.warn("fetchProjectedLineup failed:", e.message);
+    /* projected lineup unavailable */
     return null;
   }
 };
@@ -535,7 +535,7 @@ export const fetchTodayGame = async (teamId) => {
     if (nextGame) return formatGame(nextGame, true);
     return { noGame: true, message: "No games scheduled in the next 14 days." };
   } catch (e) {
-    console.error("Failed to fetch game:", e);
+    /* game fetch failed */
     return { noGame: true, message: "Unable to load game data." };
   }
 };
@@ -966,7 +966,7 @@ export const fetchPitcherSeasonStats = async (pitcherId) => {
           season,
         };
       }
-    } catch (e) { console.warn("fetch failed:", e.message); }
+    } catch { /* expected fallback */ }
   }
   return null;
 };
@@ -1012,7 +1012,7 @@ export const fetchPlayerGameLog = async (playerId, group = "hitting") => {
           stat: s.stat,
         }));
       }
-    } catch (e) { console.warn("fetch failed:", e.message); }
+    } catch { /* expected fallback */ }
   }
   return [];
 };
@@ -1085,7 +1085,7 @@ export const fetchTeamHotCold = async (teamId) => {
           isHot: avg >= .300,
           isCold: avg < .150,
         });
-      } catch (e) { console.warn("fetch failed:", e.message); }
+      } catch { /* expected fallback */ }
     }
 
     results.sort((a, b) => b.avg - a.avg);
@@ -1120,7 +1120,7 @@ export const fetchLeagueLeaders = async () => {
           team: l.team?.abbreviation || "",
           teamId: l.team?.id,
         }));
-      } catch (e) { console.warn("fetch failed:", e.message); }
+      } catch { /* expected fallback */ }
     };
 
     // Fetch longest HRs from Baseball Savant
@@ -1145,7 +1145,7 @@ export const fetchLeagueLeaders = async () => {
           team: "",
           teamId: null,
         }));
-      } catch (e) { console.warn("Longest HR fetch failed:", e.message); }
+      } catch { /* longest HR fetch unavailable */ }
     };
 
     await Promise.all([

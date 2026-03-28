@@ -46,6 +46,8 @@ const TIER2_ROWS = 6;
 const CONCOURSE_H = 5;
 const CONCOURSE_D = 6;
 const PUSH_BACK = 15;
+const SEAT_Y_OFFSET = 0.4;   // seats sit slightly above the tread surface
+const FOUL_ANGLE_BUFFER = 0.02; // radians — small gap from foul pole
 
 // ─── Simple seeded noise for mountain heights ────────────────────────
 function pseudoNoise(x, seed) {
@@ -225,8 +227,8 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
       if (angle < lfAngle) lfAngle = angle;
       if (angle > rfAngle) rfAngle = angle;
     }
-    lfAngle += 0.02;
-    rfAngle -= 0.02;
+    lfAngle += FOUL_ANGLE_BUFFER;
+    rfAngle -= FOUL_ANGLE_BUFFER;
 
     const addRow = (rowOffset, rowY, rowIdx) => {
       for (let s = 0; s < seatsPerRow; s++) {
@@ -282,7 +284,7 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
 
     for (let i = 0; i < TIER1_ROWS; i++) {
       const rowOffset = PUSH_BACK + TREAD_D * i + TREAD_D / 2;
-      const rowY = FENCE_H + RISER_H * (i + 1) + 0.4;
+      const rowY = FENCE_H + RISER_H * (i + 1) + SEAT_Y_OFFSET;
       addRow(rowOffset, rowY, i);
     }
 
@@ -290,7 +292,7 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
     const t2BaseY = FENCE_H + RISER_H * TIER1_ROWS + CONCOURSE_H;
     for (let i = 0; i < TIER2_ROWS; i++) {
       const rowOffset = t2BaseOff + TREAD_D * i + TREAD_D / 2;
-      const rowY = t2BaseY + RISER_H * (i + 1) + 0.4;
+      const rowY = t2BaseY + RISER_H * (i + 1) + SEAT_Y_OFFSET;
       addRow(rowOffset, rowY, TIER1_ROWS + i);
     }
 
@@ -384,6 +386,17 @@ export default function StadiumBackground({ fencePoints, teamColors }) {
     side: THREE.BackSide,
     depthWrite: false,
   }), []);
+
+  // Dispose geometries and materials on unmount
+  useEffect(() => {
+    return () => {
+      bowlGeo?.dispose();
+      fasciaGeo?.dispose();
+      seatBlockGeo?.dispose();
+      skyMat?.dispose();
+      mountainGeos.forEach(r => r.geo?.dispose());
+    };
+  }, [bowlGeo, fasciaGeo, seatBlockGeo, skyMat, mountainGeos]);
 
   if (!bowlGeo) return null;
 

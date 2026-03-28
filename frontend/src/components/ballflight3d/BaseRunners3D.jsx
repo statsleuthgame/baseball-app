@@ -240,7 +240,7 @@ export default function BaseRunners3D({
 
       {isAnimating && movements.map((movement, i) => (
         <AnimatedRunner
-          key={i}
+          key={`${movement.from}-${movement.to}-${movement.isBatter ? 'b' : 'r'}`}
           path={paths[i]}
           ballProgress={ballProgress}
           scores={movement.scores}
@@ -278,7 +278,8 @@ function AnimatedRunner({ path, ballProgress, scores, startDelay = 0, numBases =
     elapsedRef.current = 0;
     startedRef.current = false;
     trailPositions.current = [];
-  }, [path]);
+    return () => { trailGeo?.dispose(); };
+  }, [path, trailGeo]);
 
   // ~2.67 seconds per base (1.5x speed)
   const totalRunTime = numBases * 2.67;
