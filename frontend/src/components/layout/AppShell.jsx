@@ -71,12 +71,12 @@ export default function AppShell() {
     if (touchStart.current === null || pullState.refreshing) return;
     const diff = e.touches[0].clientY - touchStart.current;
     if (diff > 0) {
-      setPullState((s) => ({ ...s, pulling: true, distance: Math.min(diff * 0.5, 80) }));
+      setPullState((s) => ({ ...s, pulling: true, distance: Math.min(diff * 0.35, 80) }));
     }
   }, [pullState.refreshing]);
 
   const handleTouchEnd = useCallback(async () => {
-    if (pullState.distance > 50 && !pullState.refreshing) {
+    if (pullState.distance > 65 && !pullState.refreshing) {
       setPullState({ pulling: false, distance: 40, refreshing: true });
       await queryClient.invalidateQueries();
       setPullState({ pulling: false, distance: 0, refreshing: false });

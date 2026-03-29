@@ -85,7 +85,7 @@ export default function ScheduleView() {
           const lost = isFinal && !us.isWinner;
 
           return (
-            <div key={game.gamePk} className={`schedule-row ${won ? "win" : lost ? "loss" : ""}`} onClick={() => navigate(`/team/${teamId}/matchup/${game.gamePk}`)} style={{ cursor: "pointer" }}>
+            <div key={game.gamePk} className={`schedule-row ${won ? "win" : lost ? "loss" : ""}`} onClick={() => navigate(`/team/${teamId}/${isFinal ? "live" : "matchup"}/${game.gamePk}`)} style={{ cursor: "pointer" }}>
               <div className="schedule-date">{formatGameDate(game.gameDate)}</div>
               <div className="schedule-opponent">
                 <img src={opponent.logoUrl} alt={opponent.abbreviation} className="schedule-logo" />

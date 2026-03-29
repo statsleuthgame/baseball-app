@@ -47,16 +47,18 @@ export default function LiveGamePage() {
     enabled: !!gamePk, staleTime: 1000 * 30, refetchInterval: 1000 * 30,
   });
 
+  const gameIsFinal = gameInfo?.status === "Final";
+
   const { data: liveState, dataUpdatedAt } = useQuery({
     queryKey: ["liveGameState", gamePk],
     queryFn: () => fetchLiveGameState(gamePk),
-    enabled: !!gamePk, staleTime: 1000 * 5, refetchInterval: 1000 * 5,
+    enabled: !!gamePk, staleTime: gameIsFinal ? Infinity : 1000 * 5, refetchInterval: gameIsFinal ? false : 1000 * 5,
   });
 
   const { data: wpData } = useQuery({
     queryKey: ["winProb", gamePk],
     queryFn: () => fetchWinProbability(gamePk),
-    enabled: !!gamePk, staleTime: 1000 * 30, refetchInterval: 1000 * 30,
+    enabled: !!gamePk, staleTime: gameIsFinal ? Infinity : 1000 * 30, refetchInterval: gameIsFinal ? false : 1000 * 30,
   });
 
   // All live games for game switcher strip
@@ -173,6 +175,9 @@ export default function LiveGamePage() {
 
   const isLive = ["In Progress", "Warmup", "Delayed Start", "Delayed"].includes(gameInfo.status);
   const isFinal = gameInfo.status === "Final";
+
+  // Auto-open box score for final games
+  useEffect(() => { if (isFinal) setBoxOpen(true); }, [isFinal]);
 
   // Win probability
   const wp = wpData?.length > 0 ? (() => {
