@@ -170,14 +170,14 @@ export default function LiveGamePage() {
     }
   }, [sideJustChanged, liveState?.currentAtBat?.length]);
 
-  if (isLoading) return <LoadingSpinner text="Loading game..." />;
-  if (!gameInfo) return <div className="matchup-empty"><h2>Game not found</h2></div>;
-
-  const isLive = ["In Progress", "Warmup", "Delayed Start", "Delayed"].includes(gameInfo.status);
-  const isFinal = gameInfo.status === "Final";
+  const isLive = gameInfo ? ["In Progress", "Warmup", "Delayed Start", "Delayed"].includes(gameInfo.status) : false;
+  const isFinal = gameInfo?.status === "Final";
 
   // Auto-open box score for final games
   useEffect(() => { if (isFinal) setBoxOpen(true); }, [isFinal]);
+
+  if (isLoading) return <LoadingSpinner text="Loading game..." />;
+  if (!gameInfo) return <div className="matchup-empty"><h2>Game not found</h2></div>;
 
   // Win probability
   const wp = wpData?.length > 0 ? (() => {
