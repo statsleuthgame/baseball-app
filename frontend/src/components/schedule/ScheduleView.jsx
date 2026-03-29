@@ -37,7 +37,7 @@ export default function ScheduleView() {
     for (const g of liveScores) liveByPk[g.gamePk] = g;
     return staticGames.map((g) => {
       const live = liveByPk[g.gamePk];
-      if (live && live.status === "Final") {
+      if (live && (live.status === "Final" || live.status === "Game Over")) {
         return { ...g, status: live.status, away: { ...g.away, score: live.awayScore, isWinner: live.awayScore > live.homeScore }, home: { ...g.home, score: live.homeScore, isWinner: live.homeScore > live.awayScore } };
       }
       return g;

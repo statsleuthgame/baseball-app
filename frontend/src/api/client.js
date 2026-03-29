@@ -7,6 +7,9 @@ const dataUrl = (path) => `${BASE}data/${path}`;
 
 const staticFetch = (path) => axios.get(dataUrl(path)).then((r) => r.data);
 
+// Normalize "Game Over" to "Final" — MLB API uses both for completed games
+const normalizeStatus = (s) => s === "Game Over" ? "Final" : (s || "");
+
 // MLB Stats API called directly from browser (no backend needed, free & fast)
 const mlbApi = axios.create({
   baseURL: "https://statsapi.mlb.com/api/v1",
@@ -57,7 +60,7 @@ export const fetchLiveSchedule = async (teamId) => {
       for (const g of date.games || []) {
         games.push({
           gamePk: g.gamePk,
-          status: g.status?.detailedState || "",
+          status: normalizeStatus(g.status?.detailedState),
           awayScore: g.teams?.away?.score ?? null,
           homeScore: g.teams?.home?.score ?? null,
         });
@@ -582,7 +585,7 @@ export const fetchTodayGame = async (teamId) => {
     if (liveOrScheduled) return formatGame(liveOrScheduled, true);
 
     // Final game today - also find next game
-    const finalGame = todayGames.find((g) => g.status?.detailedState === "Final");
+    const finalGame = todayGames.find((g) => g.status?.detailedState === "Final" || g.status?.detailedState === "Game Over");
 
     // Get upcoming games
     const futureResp = await mlbApi.get("/schedule", {
@@ -842,7 +845,7 @@ export const fetchAllGamesToday = async (dateStr) => {
         games.push({
           gamePk: g.gamePk,
           gameDate: g.gameDate || "",
-          status: g.status?.detailedState || "",
+          status: normalizeStatus(g.status?.detailedState),
           inning: ls.currentInning || null,
           inningHalf: ls.inningHalf || "",
           venue: g.venue?.name || "",
@@ -1301,7 +1304,7 @@ function formatGame(g, isNext) {
   return {
     gamePk: g.gamePk,
     gameDate: g.gameDate || "",
-    status: g.status?.detailedState || "",
+    status: normalizeStatus(g.status?.detailedState),
     isNextGame: isNext,
     venue: { id: g.venue?.id, name: g.venue?.name || "" },
     venueLocation: g.venue?.location ? `${g.venue.location.city}, ${g.venue.location.stateAbbrev}` : "",

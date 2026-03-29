@@ -33,7 +33,7 @@ export default function MatchupView() {
       const ht = home.team || {};
       const extractP = (p) => p ? { id: p.id, fullName: p.fullName } : null;
       return {
-        gamePk: g.gamePk, gameDate: g.gameDate, status: g.status?.detailedState || "",
+        gamePk: g.gamePk, gameDate: g.gameDate, status: g.status?.detailedState === "Game Over" ? "Final" : (g.status?.detailedState || ""),
         isNextGame: true,
         venue: { id: g.venue?.id, name: g.venue?.name || "" },
         venueLocation: g.venue?.location ? `${g.venue.location.city}, ${g.venue.location.stateAbbrev}` : "",

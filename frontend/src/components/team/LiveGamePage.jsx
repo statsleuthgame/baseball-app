@@ -37,7 +37,7 @@ export default function LiveGamePage() {
       const away = g.teams?.away || {};
       const home = g.teams?.home || {};
       return {
-        gamePk: g.gamePk, gameDate: g.gameDate, status: g.status?.detailedState || "",
+        gamePk: g.gamePk, gameDate: g.gameDate, status: g.status?.detailedState === "Game Over" ? "Final" : (g.status?.detailedState || ""),
         venue: g.venue?.name || "", venueId: g.venue?.id,
         venueLocation: g.venue?.location ? `${g.venue.location.city}, ${g.venue.location.stateAbbrev}` : "",
         away: { id: away.team?.id, abbreviation: away.team?.abbreviation || "", score: away.score, logoUrl: `https://www.mlbstatic.com/team-logos/team-cap-on-dark/${away.team?.id}.svg` },

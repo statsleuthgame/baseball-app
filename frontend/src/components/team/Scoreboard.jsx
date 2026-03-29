@@ -636,7 +636,7 @@ export default function Scoreboard() {
             const isOurGame = game.home.id === teamId || game.away.id === teamId;
             const isLive = game.status === "In Progress";
             const isDelayed = game.status === "Delayed Start" || game.status === "Delayed";
-            const isFinal = game.status === "Final";
+            const isFinal = game.status === "Final" || game.status === "Game Over";
             const isScheduled = !isLive && !isDelayed && !isFinal;
 
             // For our scheduled games, figure out opposing pitcher
