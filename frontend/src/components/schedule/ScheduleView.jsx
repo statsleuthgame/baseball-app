@@ -44,10 +44,6 @@ export default function ScheduleView() {
     });
   }, [staticGames, liveScores]);
 
-  if (isLoading) return <LoadingSpinner text="Loading schedule..." />;
-  if (error) return <ErrorMessage message="Failed to load schedule." onRetry={refetch} />;
-  if (!games?.length) return <p className="no-data">No schedule available.</p>;
-
   // Compute rolling record for each game (cumulative W-L up to that point)
   const gamesWithRecord = useMemo(() => {
     if (!games) return [];
@@ -65,6 +61,10 @@ export default function ScheduleView() {
   const filtered = selectedMonth != null
     ? gamesWithRecord.filter((g) => new Date(g.gameDate).getMonth() === selectedMonth)
     : gamesWithRecord;
+
+  if (isLoading) return <LoadingSpinner text="Loading schedule..." />;
+  if (error) return <ErrorMessage message="Failed to load schedule." onRetry={refetch} />;
+  if (!games?.length) return <p className="no-data">No schedule available.</p>;
 
   return (
     <div className="schedule-view">
