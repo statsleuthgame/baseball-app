@@ -104,18 +104,18 @@ export default function ScheduleView() {
               <div className="schedule-opponent">
                 <img src={opponent.logoUrl} alt={opponent.abbreviation} className="schedule-logo" />
                 <span>{isHome ? "vs" : "@"} {opponent.abbreviation}</span>
-                {isFinal && (
+              </div>
+              <div className="schedule-center">
+                {isFinal ? (
                   <span className={`schedule-score ${won ? "win-text" : "loss-text"}`}>
                     {won ? "W" : "L"} {us.score}-{opponent.score}
                   </span>
-                )}
-              </div>
-              <div className="schedule-right">
-                {isFinal ? (
-                  <span className="schedule-record">{game.record}</span>
                 ) : (
                   <span className="schedule-time">{formatGameTime(game.gameDate)}</span>
                 )}
+              </div>
+              <div className="schedule-right">
+                {isFinal && <span className="schedule-record">{game.record}</span>}
               </div>
             </div>
           );

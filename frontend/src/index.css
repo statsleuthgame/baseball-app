@@ -1949,10 +1949,10 @@ button.stat-cell {
   display: flex;
   align-items: center;
   gap: 8px;
-  flex: 1;
   font-size: 14px;
   color: var(--text);
   font-weight: 500;
+  flex-shrink: 0;
 }
 
 .schedule-logo {
@@ -1960,10 +1960,14 @@ button.stat-cell {
   height: 24px;
 }
 
+.schedule-center {
+  flex: 1;
+  text-align: center;
+}
+
 .schedule-score {
   font-size: 13px;
   font-weight: 600;
-  margin-left: 4px;
 }
 
 .schedule-right {
