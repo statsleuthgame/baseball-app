@@ -1960,17 +1960,27 @@ button.stat-cell {
   height: 24px;
 }
 
-.schedule-result {
-  font-size: 14px;
+.schedule-score {
+  font-size: 13px;
   font-weight: 600;
-  text-align: right;
-  min-width: 70px;
+  margin-left: 4px;
+}
+
+.schedule-right {
   flex-shrink: 0;
+  text-align: right;
+  min-width: 44px;
+}
+
+.schedule-record {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
 }
 
 .win-text { color: var(--win); }
 .loss-text { color: var(--loss); }
-.schedule-time { color: var(--text-muted); }
+.schedule-time { color: var(--text-muted); font-size: 13px; }
 
 /* Matchup */
 .matchup-empty {
@@ -2426,17 +2436,9 @@ button.stat-cell {
 }
 
 .bullpen-cols {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-}
-
-.bullpen-team {
-  min-width: 0;
-}
-.bullpen-team + .bullpen-team {
-  border-left: 1px solid rgba(255, 255, 255, 0.06);
-  padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .bullpen-team-hdr {

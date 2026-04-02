@@ -10,6 +10,31 @@ const staticFetch = (path) => axios.get(dataUrl(path)).then((r) => r.data);
 // Normalize "Game Over" to "Final" — MLB API uses both for completed games
 const normalizeStatus = (s) => s === "Game Over" ? "Final" : (s || "");
 
+// MLB API sometimes marks isScoringPlay=false when runs score on mid-AB events
+// (e.g. pickoff errors, wild pitches, passed balls during a strikeout).
+// Check runners array as fallback.
+const didRunScore = (play) =>
+  play.about?.isScoringPlay ||
+  (play.runners || []).some((r) => r.details?.isScoringEvent);
+
+// Build description for plays where the scoring event is a mid-AB runner event
+// (the result.description won't mention the run scoring in these cases)
+const scoringDescription = (play) => {
+  const desc = play.result?.description || "";
+  if (play.about?.isScoringPlay) return desc;
+  const scoredRunners = (play.runners || [])
+    .filter((r) => r.details?.isScoringEvent)
+    .map((r) => r.details?.runner?.fullName || "");
+  if (!scoredRunners.length) return desc;
+  const event = (play.runners || [])
+    .find((r) => r.details?.isScoringEvent)?.details?.event || "";
+  const eventDesc = event.replace(/_/g, " ");
+  const scored = scoredRunners.join(", ");
+  return desc
+    ? `${scored} scores on ${eventDesc.toLowerCase()}. ${desc}`
+    : `${scored} scores on ${eventDesc.toLowerCase()}.`;
+};
+
 // MLB Stats API called directly from browser (no backend needed, free & fast)
 const mlbApi = axios.create({
   baseURL: "https://statsapi.mlb.com/api/v1",
@@ -485,7 +510,7 @@ export const fetchLiveGameState = async (gamePk) => {
       onDeck: ls.offense?.onDeck ? { id: ls.offense.onDeck.id, fullName: ls.offense.onDeck.fullName, ...getGameBattingLine(ld.boxscore, ls.offense.onDeck.id) } : null,
       inHole: ls.offense?.inHole ? { id: ls.offense.inHole.id, fullName: ls.offense.inHole.fullName, ...getGameBattingLine(ld.boxscore, ls.offense.inHole.id) } : null,
       scoringPlays: allPlays
-        .filter((p) => p.about?.isScoringPlay)
+        .filter(didRunScore)
         .map((p) => {
           const hitEv = (p.playEvents || []).find((e) => e.hitData?.coordinates?.coordX);
           const hd = hitEv?.hitData;
@@ -503,7 +528,7 @@ export const fetchLiveGameState = async (gamePk) => {
           return {
             inning: p.about?.inning || 0,
             halfInning: p.about?.halfInning || "",
-            description: p.result?.description || "",
+            description: scoringDescription(p),
             event: p.result?.event || "",
             awayScore: p.result?.awayScore ?? 0,
             homeScore: p.result?.homeScore ?? 0,
@@ -690,19 +715,19 @@ export const fetchBullpenAvailability = async (teamId, starterIds = []) => {
           const gs = stat.gamesStarted || 0;
           if (gp > 0 && gs / gp > 0.5) return null;
 
+          // Game log returns chronological (oldest first) — most recent is last
           const splits = logResp.data?.stats?.[0]?.splits || [];
           let lastGameDate = null;
           let daysRest = 99;
           let recentPitches = 0;
           let recentGames = 0;
 
-          for (const s of splits.slice(0, 3)) {
+          for (const s of splits) {
             const gDate = new Date(s.date);
             const daysDiff = Math.floor((today - gDate) / (1000 * 60 * 60 * 24));
-            if (!lastGameDate) {
-              lastGameDate = s.date;
-              daysRest = daysDiff;
-            }
+            // Always update — last iteration wins (most recent game)
+            lastGameDate = s.date;
+            daysRest = daysDiff;
             if (daysDiff <= 3) {
               recentPitches += s.stat?.numberOfPitches || 0;
               recentGames++;
@@ -935,14 +960,14 @@ export const fetchGameDetail = async (gamePk) => {
         description: play.result.description || "",
         shortDesc: formatAtBatShort(play.result.event, play.result.description || "", hrDistance),
         rbi: play.result.rbi ?? 0,
-        isScoring: play.about?.isScoringPlay || false,
+        isScoring: didRunScore(play),
         hrDistance,
       });
     }
 
     // Extract scoring plays
     const scoringPlays = allPlays
-      .filter((p) => p.about?.isScoringPlay)
+      .filter(didRunScore)
       .map((p) => {
         let hrDistance = null;
         const event = p.result?.event || "";
@@ -953,7 +978,7 @@ export const fetchGameDetail = async (gamePk) => {
         return {
           inning: p.about?.inning || 0,
           halfInning: p.about?.halfInning || "",
-          description: p.result?.description || "",
+          description: scoringDescription(p),
           awayScore: p.result?.awayScore ?? 0,
           homeScore: p.result?.homeScore ?? 0,
           rbi: p.result?.rbi ?? 0,
@@ -1203,10 +1228,16 @@ export const fetchLeagueLeaders = async () => {
       } catch { /* expected fallback */ }
     };
 
-    await Promise.all([
+    const longestHrPromise = axios.get("/api/leaderboards/longest-hr", { params: { season: year, limit: 5 }, timeout: 30000 })
+      .then((r) => r.data)
+      .catch(() => []);
+
+    const [longestHrs] = await Promise.all([
+      longestHrPromise,
       ...hittingCats.map((cat) => fetchCat(cat, "hitting", hitting)),
       ...pitchingCats.map((cat) => fetchCat(cat, "pitching", pitching)),
     ]);
+    if (longestHrs.length) hitting.longestHomeRun = longestHrs;
     return { hitting, pitching };
   } catch {
     return { hitting: {}, pitching: {} };

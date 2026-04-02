@@ -1,7 +1,7 @@
 from datetime import date
 
 from fastapi import APIRouter, Query
-from app.services import fangraphs_stats
+from app.services import fangraphs_stats, statcast
 from app.services.cache import get as cache_get, set as cache_set
 
 router = APIRouter()
@@ -93,6 +93,22 @@ async def get_team_pitching(season: int = Query(default=None)):
 
     import asyncio
     data = await asyncio.to_thread(fangraphs_stats.get_team_pitching_stats, season)
+    cache_set(cache_key, data, CACHE_TTL)
+    return data
+
+
+@router.get("/api/leaderboards/longest-hr")
+async def get_longest_hr_leaderboard(season: int = Query(default=None), limit: int = Query(default=5)):
+    """Top longest home runs of the season by Statcast hit distance."""
+    if season is None:
+        season = date.today().year
+
+    cache_key = f"leaderboard:longest_hr:{season}:{limit}"
+    cached = cache_get(cache_key)
+    if cached is not None:
+        return cached
+
+    data = await statcast.get_longest_home_runs(season, limit)
     cache_set(cache_key, data, CACHE_TTL)
     return data
 

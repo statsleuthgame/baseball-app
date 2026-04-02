@@ -12,6 +12,7 @@ const HITTING_CATS = [
   { key: "onBasePlusSlugging", label: "OPS", fmt: (v) => parseFloat(v).toFixed(3) },
   { key: "stolenBases", label: "Stolen Bases", fmt: (v) => v },
   { key: "hits", label: "Hits", fmt: (v) => v },
+  { key: "longestHomeRun", label: "Longest HR (ft)", fmt: (v) => `${v}` },
 ];
 
 const PITCHING_CATS = [

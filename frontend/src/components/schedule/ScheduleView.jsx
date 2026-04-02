@@ -48,9 +48,23 @@ export default function ScheduleView() {
   if (error) return <ErrorMessage message="Failed to load schedule." onRetry={refetch} />;
   if (!games?.length) return <p className="no-data">No schedule available.</p>;
 
+  // Compute rolling record for each game (cumulative W-L up to that point)
+  const gamesWithRecord = useMemo(() => {
+    if (!games) return [];
+    let wins = 0, losses = 0;
+    return games.map((g) => {
+      const isHome = g.home.id === teamId;
+      const us = isHome ? g.home : g.away;
+      const isFinal = g.status === "Final";
+      if (isFinal && us.isWinner) wins++;
+      else if (isFinal && !us.isWinner) losses++;
+      return { ...g, record: isFinal ? `${wins}-${losses}` : null };
+    });
+  }, [games, teamId]);
+
   const filtered = selectedMonth != null
-    ? games.filter((g) => new Date(g.gameDate).getMonth() === selectedMonth)
-    : games;
+    ? gamesWithRecord.filter((g) => new Date(g.gameDate).getMonth() === selectedMonth)
+    : gamesWithRecord;
 
   return (
     <div className="schedule-view">
@@ -90,12 +104,15 @@ export default function ScheduleView() {
               <div className="schedule-opponent">
                 <img src={opponent.logoUrl} alt={opponent.abbreviation} className="schedule-logo" />
                 <span>{isHome ? "vs" : "@"} {opponent.abbreviation}</span>
-              </div>
-              <div className="schedule-result">
-                {isFinal ? (
-                  <span className={won ? "win-text" : "loss-text"}>
+                {isFinal && (
+                  <span className={`schedule-score ${won ? "win-text" : "loss-text"}`}>
                     {won ? "W" : "L"} {us.score}-{opponent.score}
                   </span>
+                )}
+              </div>
+              <div className="schedule-right">
+                {isFinal ? (
+                  <span className="schedule-record">{game.record}</span>
                 ) : (
                   <span className="schedule-time">{formatGameTime(game.gameDate)}</span>
                 )}

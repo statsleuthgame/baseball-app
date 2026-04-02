@@ -518,6 +518,59 @@ def _compute_pitcher_split_stats(df: pd.DataFrame) -> dict:
     }
 
 
+async def get_longest_home_runs(season: int | None = None, limit: int = 5) -> list[dict]:
+    """Get the longest home runs of the season by hit distance."""
+    try:
+        result = await asyncio.to_thread(_fetch_longest_hrs, season or date.today().year, limit)
+        return result
+    except Exception as e:
+        print(f"Longest HR fetch failed: {e}")
+        return []
+
+
+def _fetch_longest_hrs(season: int, limit: int) -> list[dict]:
+    from pybaseball import statcast
+    import requests
+
+    start_dt = f"{season}-03-20"
+    end_dt = date.today().isoformat()
+
+    df = statcast(start_dt=start_dt, end_dt=end_dt)
+    if df is None or df.empty:
+        return []
+
+    hrs = df[df["events"] == "home_run"].copy()
+    hrs = hrs[hrs["hit_distance_sc"].notna()]
+    hrs = hrs.sort_values("hit_distance_sc", ascending=False).head(limit)
+
+    results = []
+    for _, row in hrs.iterrows():
+        batter_id = int(row["batter"])
+        try:
+            resp = requests.get(
+                f"https://statsapi.mlb.com/api/v1/people/{batter_id}",
+                timeout=5,
+            )
+            person = resp.json().get("people", [{}])[0]
+            name = person.get("fullName", f"ID:{batter_id}")
+            team_abbr = person.get("currentTeam", {}).get("abbreviation", "")
+            team_id = person.get("currentTeam", {}).get("id")
+        except Exception:
+            name = f"ID:{batter_id}"
+            team_abbr = ""
+            team_id = None
+
+        results.append({
+            "rank": len(results) + 1,
+            "value": int(row["hit_distance_sc"]),
+            "player": {"id": batter_id, "name": name},
+            "team": team_abbr,
+            "teamId": team_id,
+        })
+
+    return results
+
+
 async def get_batter_advanced_stats(player_id: int, season: int | None = None) -> dict:
     """Get advanced batting metrics from Statcast data."""
     try:
