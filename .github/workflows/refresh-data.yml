@@ -18,7 +18,7 @@ concurrency:
 jobs:
   generate-and-deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 120
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -43,6 +43,7 @@ jobs:
           restore-keys: |
             statcast-cache-${{ hashFiles('scripts/generate_data.py') }}-
             statcast-cache-
+          save-always: true
 
       - name: Generate static data
         run: python scripts/generate_data.py
