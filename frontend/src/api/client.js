@@ -99,22 +99,60 @@ export const fetchStandings = async () => {
   // Fetch live from MLB API for freshest standings
   try {
     const season = new Date().getFullYear();
-    const resp = await mlbApi.get("/standings", { params: { season, sportId: 1, leagueId: "103,104" } });
+    const resp = await mlbApi.get("/standings", {
+      params: {
+        season, sportId: 1, leagueId: "103,104",
+        hydrate: "team,league,division,records",
+      },
+    });
     const divisions = [];
     for (const record of resp.data?.records || []) {
       const div = record.division || {};
+      const lg = record.league || {};
       const teams = (record.teamRecords || []).map((tr) => {
         const t = tr.team || {};
+        // splitRecords holds home/away/lastTen/etc. as { wins, losses, type, pct }
+        const splits = tr.records?.splitRecords || [];
+        const getSplit = (type) => splits.find((s) => s.type === type) || { wins: 0, losses: 0 };
+        const home = getSplit("home");
+        const away = getSplit("away");
+        const lastTen = getSplit("lastTen");
         return {
-          id: t.id, name: t.name || "", abbreviation: t.abbreviation || "",
-          wins: tr.wins || 0, losses: tr.losses || 0,
+          id: t.id,
+          name: t.name || "",
+          abbreviation: t.abbreviation || "",
+          wins: tr.wins || 0,
+          losses: tr.losses || 0,
           winPct: tr.winningPercentage || ".000",
           gamesBack: tr.gamesBack || "-",
+          wildCardGamesBack: tr.wildCardGamesBack || "-",
+          leagueGamesBack: tr.leagueGamesBack || "-",
+          divisionRank: tr.divisionRank ? Number(tr.divisionRank) : null,
+          leagueRank: tr.leagueRank ? Number(tr.leagueRank) : null,
+          wildCardRank: tr.wildCardRank ? Number(tr.wildCardRank) : null,
           streakCode: tr.streak?.streakCode || "",
+          runsScored: tr.runsScored ?? 0,
+          runsAllowed: tr.runsAllowed ?? 0,
+          runDifferential: tr.runDifferential ?? 0,
+          clinchIndicator: tr.clinchIndicator || "",
+          eliminationNumber: tr.eliminationNumber || "",
+          homeRecord: `${home.wins}-${home.losses}`,
+          awayRecord: `${away.wins}-${away.losses}`,
+          lastTenRecord: `${lastTen.wins}-${lastTen.losses}`,
+          leagueId: lg.id,
+          leagueName: lg.name || "",
+          divisionId: div.id,
+          divisionName: div.name || "",
           logoUrl: `https://www.mlbstatic.com/team-logos/team-cap-on-dark/${t.id}.svg`,
         };
       });
-      divisions.push({ divisionId: div.id, divisionName: div.name || "", teams });
+      divisions.push({
+        divisionId: div.id,
+        divisionName: div.name || "",
+        leagueId: lg.id,
+        leagueName: lg.name || "",
+        teams,
+      });
     }
     return divisions;
   } catch {

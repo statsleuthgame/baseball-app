@@ -30,7 +30,19 @@ export default function StandingsCard() {
 
   return (
     <div className="standings-card">
-      <h2 className="standings-header">Standings</h2>
+      <div className="standings-header-row">
+        <h2 className="standings-header">Standings</h2>
+        <button
+          className="standings-full-link"
+          onClick={() => navigate(`/team/${team?.id}/standings`)}
+          aria-label="View full standings"
+        >
+          Full Standings
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+      </div>
       <h3 className="standings-title">{myDivision.divisionName}</h3>
       <table className="standings-table">
         <caption className="sr-only">{myDivision.divisionName} standings</caption>
