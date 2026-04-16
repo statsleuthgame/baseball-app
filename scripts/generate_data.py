@@ -682,28 +682,58 @@ def fetch_missed_calls(player_id: int, df: pd.DataFrame = None) -> dict:
         return {}
 
 
+# ---- FanGraphs league-wide cache ----
+# Downloading the full leaderboard per player is expensive and triggers FanGraphs
+# rate-limiting (403s). Fetch once per (season, kind) and reuse for all lookups.
+# If the first fetch fails, set a flag so subsequent calls skip the network
+# entirely (avoids 1500+ wasted HTTP retries per run).
+_FG_DF_CACHE: dict = {}
+_FG_BLOCKED: dict = {"batters": False, "pitchers": False}
+
+
+def _fg_get_df(season: int, is_pitcher: bool):
+    """Return cached FanGraphs leaderboard df for (season, kind). None if blocked or failed."""
+    key = (season, "pit" if is_pitcher else "bat")
+    if key in _FG_DF_CACHE:
+        return _FG_DF_CACHE[key]
+    kind = "pitchers" if is_pitcher else "batters"
+    if _FG_BLOCKED[kind]:
+        return None
+    try:
+        if is_pitcher:
+            from pybaseball import pitching_stats
+            df = pitching_stats(season, qual=1)
+            if df is None or df.empty:
+                df = pitching_stats(season, qual=0)
+        else:
+            from pybaseball import batting_stats
+            df = batting_stats(season, qual=1)
+            if df is None or df.empty:
+                df = batting_stats(season, qual=0)
+        if df is None or df.empty:
+            _FG_DF_CACHE[key] = None
+            return None
+        # Pre-compute normalized name column for fast player lookup
+        if "Name" in df.columns:
+            df = df.copy()
+            df["_norm_name"] = df["Name"].apply(lambda x: strip_accents(str(x)).lower())
+        _FG_DF_CACHE[key] = df
+        return df
+    except Exception as e:
+        print(f"    FanGraphs {kind} {season} league fetch failed: {e} — skipping FG {kind} for remainder of run")
+        _FG_BLOCKED[kind] = True
+        _FG_DF_CACHE[key] = None
+        return None
+
+
 def fetch_fangraphs_for_player(full_name: str, is_pitcher: bool) -> dict:
-    """Fetch FanGraphs season stats for a player by name."""
+    """Fetch FanGraphs season stats for a player by name, using cached league df."""
     try:
         df = None
         for season in [SEASON, SEASON - 1]:
-            try:
-                if is_pitcher:
-                    from pybaseball import pitching_stats
-                    df = pitching_stats(season, qual=1)
-                    if df is None or df.empty:
-                        df = pitching_stats(season, qual=0)
-                else:
-                    from pybaseball import batting_stats
-                    df = batting_stats(season, qual=1)
-                    if df is None or df.empty:
-                        df = batting_stats(season, qual=0)
-                if df is not None and not df.empty:
-                    break
-            except Exception as e:
-                print(f"    FanGraphs {season} failed for {full_name}: {e}")
-                df = None
-                continue
+            df = _fg_get_df(season, is_pitcher)
+            if df is not None and not df.empty:
+                break
 
         if df is None or df.empty:
             return {}
@@ -713,8 +743,11 @@ def fetch_fangraphs_for_player(full_name: str, is_pitcher: bool) -> dict:
             return {}
 
         # Normalize accents for matching (e.g. Rodríguez -> Rodriguez)
+        # _norm_name is pre-computed by _fg_get_df; compute it here only as a fallback
         norm_name = strip_accents(full_name).lower()
-        df["_norm_name"] = df[name_col].apply(lambda x: strip_accents(str(x)).lower())
+        if "_norm_name" not in df.columns:
+            df = df.copy()
+            df["_norm_name"] = df[name_col].apply(lambda x: strip_accents(str(x)).lower())
 
         row = df[df["_norm_name"] == norm_name]
         if row.empty:
