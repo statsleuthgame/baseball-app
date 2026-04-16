@@ -847,32 +847,53 @@ export const fetchParkHistory = async (teamId) => {
 
 export const fetchPriorMatchups = async (team1, team2) => {
   try {
-    const abbr = getTeamAbbr(team1);
-    const schedule = await staticFetch(`teams/${abbr}/schedule.json`);
-    const matchups = schedule.filter((g) => {
-      return Number(g.away.id) === Number(team2) || Number(g.home.id) === Number(team2);
+    // Fetch live from MLB API so the series is always current (static data can be stale)
+    const season = new Date().getFullYear();
+    const startDate = `${season}-03-01`;
+    const endDate = `${season}-11-30`;
+    const resp = await mlbApi.get("/schedule", {
+      params: {
+        sportId: 1,
+        teamId: team1,
+        opponentId: team2,
+        startDate,
+        endDate,
+        gameType: "R",
+      },
     });
-    if (!matchups.length) return null;
 
-    const played = matchups.filter(g => g.status === "Final");
-    const upcoming = matchups.filter(g => g.status !== "Final");
+    const games = [];
+    for (const date of resp.data?.dates || []) {
+      for (const g of date.games || []) games.push(g);
+    }
+    if (!games.length) return null;
 
-    const wins = played.filter((g) => {
-      const isHome = Number(g.home.id) === Number(team1);
-      return isHome ? g.home.isWinner : g.away.isWinner;
-    }).length;
+    const isFinalStatus = (s) => s === "Final" || s === "Game Over" || s === "Completed Early";
+    const played = games.filter((g) => isFinalStatus(g.status?.detailedState));
+    const upcoming = games.filter((g) => !isFinalStatus(g.status?.detailedState));
+
+    const computeWon = (g) => {
+      const isHome = Number(g.teams?.home?.team?.id) === Number(team1);
+      const homeScore = g.teams?.home?.score ?? 0;
+      const awayScore = g.teams?.away?.score ?? 0;
+      return isHome ? homeScore > awayScore : awayScore > homeScore;
+    };
+
+    const wins = played.filter(computeWon).length;
+
+    const mapGame = (g) => ({
+      gamePk: g.gamePk,
+      date: g.gameDate,
+      homeAbbr: g.teams?.home?.team?.abbreviation || getTeamAbbr(g.teams?.home?.team?.id),
+      awayAbbr: g.teams?.away?.team?.abbreviation || getTeamAbbr(g.teams?.away?.team?.id),
+      homeScore: g.teams?.home?.score,
+      awayScore: g.teams?.away?.score,
+      won: computeWon(g),
+    });
 
     return {
-      played: played.map((g) => ({
-        gamePk: g.gamePk, date: g.gameDate,
-        homeAbbr: g.home.abbreviation, awayAbbr: g.away.abbreviation,
-        homeScore: g.home.score, awayScore: g.away.score,
-        won: Number(g.home.id) === Number(team1) ? g.home.isWinner : g.away.isWinner,
-      })),
-      upcoming: upcoming.map((g) => ({
-        gamePk: g.gamePk, date: g.gameDate,
-        homeAbbr: g.home.abbreviation, awayAbbr: g.away.abbreviation,
-      })),
+      played: played.map(mapGame),
+      upcoming: upcoming.map(mapGame),
       record: { wins, losses: played.length - wins },
     };
   } catch {

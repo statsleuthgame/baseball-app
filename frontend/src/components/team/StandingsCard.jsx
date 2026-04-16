@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
 import { fetchStandings, fetchPlayoffOdds } from "../../api/client";
-import { teamNickname } from "../../utils/formatters";
+import { teamNickname, getTeamAbbr } from "../../utils/formatters";
 
 export default function StandingsCard() {
   const { team, setTeamId } = useTeam();
@@ -53,7 +53,7 @@ export default function StandingsCard() {
                   alt={t.abbreviation}
                   className="standings-logo"
                 />
-                <span className="standings-team-name">{teamNickname(t.abbreviation)}</span>
+                <span className="standings-team-name">{teamNickname(t.abbreviation || getTeamAbbr(t.id))}</span>
               </td>
               <td>{t.wins}</td>
               <td>{t.losses}</td>
