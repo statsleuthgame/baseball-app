@@ -2826,12 +2826,14 @@ button.stat-cell {
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.bullpen-row {
+/* Force block-level flex so sb-player-link's inline-flex doesn't make rows flow inline */
+.bullpen-team .bullpen-row {
   display: flex;
   align-items: center;
   gap: 5px;
   padding: 4px 0;
   font-size: 12px;
+  width: 100%;
   border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 }
 
