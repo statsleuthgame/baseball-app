@@ -90,7 +90,7 @@ def _fetch_and_parse_odds() -> list[dict]:
 
             entry = {
                 "teamId": team_id,
-                "teamName": TEAM_META[team_id]["name"],
+                "teamName": TEAM_META.get(team_id, {}).get("name", f"Team {team_id}"),
                 "winDivision": _safe_cell(cells, div_col),
                 "makePlayoffs": _safe_cell(cells, playoff_col),
                 "winWorldSeries": _safe_cell(cells, ws_col),

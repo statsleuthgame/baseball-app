@@ -238,6 +238,7 @@ function BatterRow({ batter, teamId }) {
         <span className="sb-batter-stat">{batter.stats.ab}</span>
         <span className="sb-batter-stat">{batter.stats.r}</span>
         <span className="sb-batter-stat">{batter.stats.h}</span>
+        <span className="sb-batter-stat">{batter.stats.hr}</span>
         <span className="sb-batter-stat">{batter.stats.rbi}</span>
         <span className="sb-batter-stat">{batter.stats.bb}</span>
         <span className="sb-batter-stat">{batter.stats.k}</span>
@@ -276,6 +277,7 @@ function TeamBoxScore({ batters, abbr, teamId }) {
         <span className="sb-batter-stat sb-stat-hdr">AB</span>
         <span className="sb-batter-stat sb-stat-hdr">R</span>
         <span className="sb-batter-stat sb-stat-hdr">H</span>
+        <span className="sb-batter-stat sb-stat-hdr">HR</span>
         <span className="sb-batter-stat sb-stat-hdr">RBI</span>
         <span className="sb-batter-stat sb-stat-hdr">BB</span>
         <span className="sb-batter-stat sb-stat-hdr">K</span>

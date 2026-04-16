@@ -223,7 +223,7 @@ export const fetchPlayerArsenal = async (playerId) => {
       });
       const splits = resp.data?.stats?.[0]?.splits || [];
       if (splits.length) return formatMlbArsenal(splits);
-    } catch { /* expected fallback */ }
+    } catch { continue; }
   }
   return { pitches: [], totalPitches: 0 };
 };
@@ -1118,7 +1118,7 @@ export const fetchPitcherSeasonStats = async (pitcherId) => {
           season,
         };
       }
-    } catch { /* expected fallback */ }
+    } catch { continue; }
   }
   return null;
 };
@@ -1164,7 +1164,7 @@ export const fetchPlayerGameLog = async (playerId, group = "hitting") => {
           stat: s.stat,
         }));
       }
-    } catch { /* expected fallback */ }
+    } catch { continue; }
   }
   return [];
 };
@@ -1237,7 +1237,7 @@ export const fetchTeamHotCold = async (teamId) => {
           isHot: avg >= .300,
           isCold: avg < .150,
         });
-      } catch { /* expected fallback */ }
+      } catch { continue; }
     }
 
     results.sort((a, b) => b.avg - a.avg);
@@ -1272,7 +1272,7 @@ export const fetchLeagueLeaders = async () => {
           team: l.team?.abbreviation || "",
           teamId: l.team?.id,
         }));
-      } catch { /* expected fallback */ }
+      } catch { dest[cat] = []; }
     };
 
     const longestHrPromise = axios.get("/api/leaderboards/longest-hr", { params: { season: year, limit: 5 }, timeout: 30000 })

@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
 import { fetchTodayGame, fetchRoster, fetchGameLineup, fetchProjectedLineup, fetchHotColdPlayers, fetchBullpenAvailability, fetchAllGamesToday, fetchTeamInjuries, fetchSchedule } from "../../api/client";
-import { formatGameDate, formatGameTime, lastName, formatAvg } from "../../utils/formatters";
+import { formatGameDate, formatGameTime, lastName } from "../../utils/formatters";
 import PARK_FACTORS from "../../data/parkFactors";
 import SkeletonLoader from "../common/SkeletonLoader";
 import BatterVsPitcher from "./BatterVsPitcher";
@@ -77,6 +77,24 @@ export default function MatchupView() {
     staleTime: 1000 * 60 * 60,
   });
 
+  // Lineup data for BvP ordering (React Query deduplicates with MatchupLineups queries)
+  const { data: awayLineupRaw } = useQuery({
+    queryKey: ["gameLineup", game?.gamePk, awayId],
+    queryFn: () => fetchGameLineup(game.gamePk, awayId),
+    enabled: !!game?.gamePk && !!awayId,
+    staleTime: 1000 * 60 * 2,
+  });
+
+  const { data: homeLineupRaw } = useQuery({
+    queryKey: ["gameLineup", game?.gamePk, homeId],
+    queryFn: () => fetchGameLineup(game.gamePk, homeId),
+    enabled: !!game?.gamePk && !!homeId,
+    staleTime: 1000 * 60 * 2,
+  });
+
+  const awayLineupIds = awayLineupRaw?.map(p => p.id) || [];
+  const homeLineupIds = homeLineupRaw?.map(p => p.id) || [];
+
   if (isLoading) return <SkeletonLoader variant="matchup" />;
 
   if (!game) {
@@ -84,15 +102,9 @@ export default function MatchupView() {
   }
 
   const isHome = game.home.id === teamId;
-  const opponent = isHome ? game.away : game.home;
-  const us = isHome ? game.home : game.away;
-  const opponentPitcher = opponent.probablePitcher;
-  const ourPitcher = us.probablePitcher;
 
   const awayBatters = (awayRoster || []).filter((p) => p.position.type !== "Pitcher");
   const homeBatters = (homeRoster || []).filter((p) => p.position.type !== "Pitcher");
-  const ourBatters = isHome ? homeBatters : awayBatters;
-  const theirBatters = isHome ? awayBatters : homeBatters;
 
   return (
     <div className="matchup-view">
@@ -103,12 +115,12 @@ export default function MatchupView() {
         <GameSwitcher currentGamePk={game?.gamePk} teamId={teamId} />
       </div>
 
-      {/* Game header — tappable to live page when game is in progress */}
+      {/* Game header — always away on left, home on right */}
       <div className={`matchup-header ${isLive ? "sb-player-link" : ""}`} onClick={isLive ? () => navigate(`/team/${teamId}/live/${game.gamePk}`) : undefined}>
         <div className="matchup-team">
-          <img src={us.logoUrl} alt={us.abbreviation} className="matchup-logo" />
-          <span>{us.abbreviation}</span>
-          {us.wins != null && <span className="matchup-record">{us.wins}-{us.losses}</span>}
+          <img src={game.away.logoUrl} alt={game.away.abbreviation} className="matchup-logo" />
+          <span>{game.away.abbreviation}</span>
+          {game.away.wins != null && <span className="matchup-record">{game.away.wins}-{game.away.losses}</span>}
         </div>
         <div className="matchup-header-center">
           {(isLive || isFinal) && game.away.score != null ? (
@@ -122,7 +134,7 @@ export default function MatchupView() {
             </>
           ) : (
             <>
-              <span className="matchup-vs">{isHome ? "vs" : "@"}</span>
+              <span className="matchup-vs">@</span>
               {isPreview && (
                 <span className="matchup-date">{formatGameDate(game.gameDate)} · {formatGameTime(game.gameDate)}</span>
               )}
@@ -133,9 +145,9 @@ export default function MatchupView() {
           )}
         </div>
         <div className="matchup-team">
-          <img src={opponent.logoUrl} alt={opponent.abbreviation} className="matchup-logo" />
-          <span>{opponent.abbreviation}</span>
-          {opponent.wins != null && <span className="matchup-record">{opponent.wins}-{opponent.losses}</span>}
+          <img src={game.home.logoUrl} alt={game.home.abbreviation} className="matchup-logo" />
+          <span>{game.home.abbreviation}</span>
+          {game.home.wins != null && <span className="matchup-record">{game.home.wins}-{game.home.losses}</span>}
         </div>
       </div>
 
@@ -144,9 +156,9 @@ export default function MatchupView() {
         <WinProbability gamePk={game.gamePk} teamId={teamId} isHome={isHome} awayAbbr={game.away.abbreviation} homeAbbr={game.home.abbreviation} awayLogo={game.away.logoUrl} homeLogo={game.home.logoUrl} />
       )}
 
-      {!opponentPitcher && isPreview && (
+      {!game.home.probablePitcher && !game.away.probablePitcher && isPreview && (
         <div className="matchup-notice">
-          Opposing starter not yet announced. Check back closer to game time.
+          Starters not yet announced. Check back closer to game time.
         </div>
       )}
 
@@ -168,56 +180,54 @@ export default function MatchupView() {
       )}
 
       {/* Hot & Cold Players */}
-      <HotColdSection teamId={awayId} opponentId={homeId} usAbbr={game.away.abbreviation} oppAbbr={game.home.abbreviation} />
+      <HotColdSection awayId={awayId} homeId={homeId} awayAbbr={game.away.abbreviation} homeAbbr={game.home.abbreviation} />
 
       {/* Side-by-side pitcher arsenals */}
-      {(opponentPitcher || ourPitcher) && (
-        <div className="matchup-section">
-          <h3>Pitcher Arsenals</h3>
+      {(game.away.probablePitcher || game.home.probablePitcher) && (
+        <CollapsibleSection title="Pitcher Arsenals">
           <div className="matchup-dual-cols">
             <div className="matchup-dual-col">
-              {opponentPitcher ? (
+              {game.away.probablePitcher ? (
                 <>
-                  <div className="matchup-dual-hdr">{opponent.abbreviation} — {opponentPitcher.fullName}</div>
-                  <PitchArsenal playerId={opponentPitcher.id} embedded compact />
+                  <div className="matchup-dual-hdr">{game.away.abbreviation} — {game.away.probablePitcher.fullName}</div>
+                  <PitchArsenal playerId={game.away.probablePitcher.id} embedded compact />
                 </>
               ) : <div className="matchup-dual-hdr">TBD</div>}
             </div>
             <div className="matchup-dual-col">
-              {ourPitcher ? (
+              {game.home.probablePitcher ? (
                 <>
-                  <div className="matchup-dual-hdr">{us.abbreviation} — {ourPitcher.fullName}</div>
-                  <PitchArsenal playerId={ourPitcher.id} embedded compact />
+                  <div className="matchup-dual-hdr">{game.home.abbreviation} — {game.home.probablePitcher.fullName}</div>
+                  <PitchArsenal playerId={game.home.probablePitcher.id} embedded compact />
                 </>
               ) : <div className="matchup-dual-hdr">TBD</div>}
             </div>
           </div>
-        </div>
+        </CollapsibleSection>
       )}
 
       {/* Side-by-side BvP */}
-      {(opponentPitcher || ourPitcher) && (ourBatters.length > 0 || theirBatters.length > 0) && (
-        <div className="matchup-section">
-          <h3>Batter vs Pitcher</h3>
+      {(game.away.probablePitcher || game.home.probablePitcher) && (awayBatters.length > 0 || homeBatters.length > 0) && (
+        <CollapsibleSection title="Batter vs Pitcher">
           <div className="matchup-dual-cols">
             <div className="matchup-dual-col">
-              {opponentPitcher && ourBatters.length > 0 ? (
+              {game.home.probablePitcher && awayBatters.length > 0 ? (
                 <>
-                  <div className="matchup-dual-hdr">{us.abbreviation} vs {opponentPitcher.fullName}</div>
-                  <BatterVsPitcher batters={ourBatters} pitcherId={opponentPitcher.id} pitcherName={opponentPitcher.fullName} compact />
+                  <div className="matchup-dual-hdr">{game.away.abbreviation} vs {game.home.probablePitcher.fullName}</div>
+                  <BatterVsPitcher batters={awayBatters} pitcherId={game.home.probablePitcher.id} pitcherName={game.home.probablePitcher.fullName} compact lineupIds={awayLineupIds} />
                 </>
               ) : <div className="matchup-dual-hdr">—</div>}
             </div>
             <div className="matchup-dual-col">
-              {ourPitcher && theirBatters.length > 0 ? (
+              {game.away.probablePitcher && homeBatters.length > 0 ? (
                 <>
-                  <div className="matchup-dual-hdr">{opponent.abbreviation} vs {ourPitcher.fullName}</div>
-                  <BatterVsPitcher batters={theirBatters} pitcherId={ourPitcher.id} pitcherName={ourPitcher.fullName} compact />
+                  <div className="matchup-dual-hdr">{game.home.abbreviation} vs {game.away.probablePitcher.fullName}</div>
+                  <BatterVsPitcher batters={homeBatters} pitcherId={game.away.probablePitcher.id} pitcherName={game.away.probablePitcher.fullName} compact lineupIds={homeLineupIds} />
                 </>
               ) : <div className="matchup-dual-hdr">—</div>}
             </div>
           </div>
-        </div>
+        </CollapsibleSection>
       )}
 
       {/* Key Injuries */}
@@ -225,12 +235,12 @@ export default function MatchupView() {
 
       {/* Bullpen Availability */}
       <BullpenSection
-        teamId={awayId}
-        opponentId={homeId}
-        usAbbr={game.away.abbreviation}
-        oppAbbr={game.home.abbreviation}
-        usStarterId={game.away.probablePitcher?.id}
-        oppStarterId={game.home.probablePitcher?.id}
+        awayId={awayId}
+        homeId={homeId}
+        awayAbbr={game.away.abbreviation}
+        homeAbbr={game.home.abbreviation}
+        awayStarterId={game.away.probablePitcher?.id}
+        homeStarterId={game.home.probablePitcher?.id}
       />
 
       {/* Park history */}
@@ -242,10 +252,10 @@ export default function MatchupView() {
 
       {/* Prior matchups this season */}
       <PriorMatchups
-        team1Id={teamId}
-        team2Id={opponent.id}
-        team1Abbr={us.abbreviation}
-        team2Abbr={opponent.abbreviation}
+        team1Id={awayId}
+        team2Id={homeId}
+        team1Abbr={game.away.abbreviation}
+        team2Abbr={game.home.abbreviation}
       />
     </div>
   );
@@ -330,7 +340,7 @@ function MatchupLineups({ gamePk, awayId, homeId, awayAbbr, homeAbbr, contextTea
   );
 }
 
-function ParkFactorsCard({ venueId, venueName }) {
+function ParkFactorsCard({ venueId }) {
   const park = PARK_FACTORS[venueId];
   if (!park) return null;
 
@@ -347,25 +357,25 @@ function ParkFactorsCard({ venueId, venueName }) {
   );
 }
 
-function HotColdSection({ teamId, opponentId, usAbbr, oppAbbr }) {
+function HotColdSection({ awayId, homeId, awayAbbr, homeAbbr }) {
   const { teamId: contextTeamId } = useTeam();
   const navigate = useNavigate();
 
-  const { data: usData } = useQuery({
-    queryKey: ["hotCold", teamId],
-    queryFn: () => fetchHotColdPlayers(teamId),
-    enabled: !!teamId,
+  const { data: awayData } = useQuery({
+    queryKey: ["hotCold", awayId],
+    queryFn: () => fetchHotColdPlayers(awayId),
+    enabled: !!awayId,
     staleTime: 1000 * 60 * 30,
   });
 
-  const { data: oppData } = useQuery({
-    queryKey: ["hotCold", opponentId],
-    queryFn: () => fetchHotColdPlayers(opponentId),
-    enabled: !!opponentId,
+  const { data: homeData } = useQuery({
+    queryKey: ["hotCold", homeId],
+    queryFn: () => fetchHotColdPlayers(homeId),
+    enabled: !!homeId,
     staleTime: 1000 * 60 * 30,
   });
 
-  const hasData = usData?.hot?.length || oppData?.hot?.length;
+  const hasData = awayData?.hot?.length || homeData?.hot?.length;
   if (!hasData) return null;
 
   const renderTeamCol = (data, abbr) => {
@@ -400,40 +410,39 @@ function HotColdSection({ teamId, opponentId, usAbbr, oppAbbr }) {
   };
 
   return (
-    <div className="matchup-section">
-      <h3>Hot & Cold (Last 7 Games)</h3>
+    <CollapsibleSection title="Hot & Cold (Last 7 Games)">
       <div className="hotcold-side-by-side">
-        {renderTeamCol(usData, usAbbr)}
-        {renderTeamCol(oppData, oppAbbr)}
+        {renderTeamCol(awayData, awayAbbr)}
+        {renderTeamCol(homeData, homeAbbr)}
       </div>
-    </div>
+    </CollapsibleSection>
   );
 }
 
-function BullpenSection({ teamId, opponentId, usAbbr, oppAbbr, usStarterId, oppStarterId }) {
+function BullpenSection({ awayId, homeId, awayAbbr, homeAbbr, awayStarterId, homeStarterId }) {
   const { teamId: contextTeamId } = useTeam();
   const navigate = useNavigate();
 
-  const { data: usBullpen } = useQuery({
-    queryKey: ["bullpen", teamId, usStarterId],
-    queryFn: () => fetchBullpenAvailability(teamId, usStarterId ? [usStarterId] : []),
-    enabled: !!teamId,
+  const { data: awayBullpen } = useQuery({
+    queryKey: ["bullpen", awayId, awayStarterId],
+    queryFn: () => fetchBullpenAvailability(awayId, awayStarterId ? [awayStarterId] : []),
+    enabled: !!awayId,
     staleTime: 1000 * 60 * 30,
   });
 
-  const { data: oppBullpen } = useQuery({
-    queryKey: ["bullpen", opponentId, oppStarterId],
-    queryFn: () => fetchBullpenAvailability(opponentId, oppStarterId ? [oppStarterId] : []),
-    enabled: !!opponentId,
+  const { data: homeBullpen } = useQuery({
+    queryKey: ["bullpen", homeId, homeStarterId],
+    queryFn: () => fetchBullpenAvailability(homeId, homeStarterId ? [homeStarterId] : []),
+    enabled: !!homeId,
     staleTime: 1000 * 60 * 30,
   });
 
-  if (!usBullpen?.length && !oppBullpen?.length) return null;
+  if (!awayBullpen?.length && !homeBullpen?.length) return null;
 
   const renderBullpen = (pitchers, abbr) => {
     if (!pitchers?.length) return null;
     return (
-      <div className="bullpen-team">
+      <div className="bullpen-team matchup-dual-col">
         <div className="bullpen-team-hdr">{abbr}</div>
         {pitchers.map((p) => (
           <div key={p.id} className="bullpen-row sb-player-link" onClick={() => navigate(`/team/${contextTeamId}/player/${p.id}`)}>
@@ -447,18 +456,17 @@ function BullpenSection({ teamId, opponentId, usAbbr, oppAbbr, usStarterId, oppS
   };
 
   return (
-    <div className="matchup-section">
-      <h3>Bullpen Availability</h3>
+    <CollapsibleSection title="Bullpen Availability">
       <div className="bullpen-legend">
         <span><span className="bullpen-status-dot available" /> Available</span>
         <span><span className="bullpen-status-dot limited" /> Limited</span>
         <span><span className="bullpen-status-dot unavailable" /> Unavailable</span>
       </div>
-      <div className="bullpen-cols">
-        {renderBullpen(usBullpen, usAbbr)}
-        {renderBullpen(oppBullpen, oppAbbr)}
+      <div className="matchup-dual-cols">
+        {renderBullpen(awayBullpen, awayAbbr)}
+        {renderBullpen(homeBullpen, homeAbbr)}
       </div>
-    </div>
+    </CollapsibleSection>
   );
 }
 
@@ -638,12 +646,26 @@ function InjurySection({ awayId, homeId, awayAbbr, homeAbbr }) {
   };
 
   return (
-    <div className="matchup-section">
-      <h3>Key Injuries</h3>
+    <CollapsibleSection title="Key Injuries">
       <div className="injury-cols">
         {renderTeam(awayInjuries, awayAbbr)}
         {renderTeam(homeInjuries, homeAbbr)}
       </div>
+    </CollapsibleSection>
+  );
+}
+
+function CollapsibleSection({ title, children, defaultOpen = true }) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div className="matchup-section collapsible-section">
+      <div className="collapsible-header" onClick={() => setOpen(!open)}>
+        <h3>{title}</h3>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: open ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </div>
+      {open && children}
     </div>
   );
 }

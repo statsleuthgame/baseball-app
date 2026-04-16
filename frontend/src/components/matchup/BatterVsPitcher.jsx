@@ -2,27 +2,52 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
 import { fetchBvP } from "../../api/client";
-import { formatAvg } from "../../utils/formatters";
+import { formatAvg, lastName } from "../../utils/formatters";
 import PlayerPhoto from "../common/PlayerPhoto";
 import LoadingSpinner from "../common/LoadingSpinner";
 
-export default function BatterVsPitcher({ batters, pitcherId, pitcherName, compact }) {
+export default function BatterVsPitcher({ batters, pitcherId, pitcherName, compact, lineupIds }) {
   if (!batters?.length || !pitcherId) return null;
 
-  const list = (
-    <div className="bvp-list">
-      {batters.map((batter) => (
-        <BvPRow key={batter.id} batter={batter} pitcherId={pitcherId} compact={compact} />
-      ))}
-    </div>
-  );
+  let content;
+  if (lineupIds?.length) {
+    const idSet = new Set(lineupIds);
+    const lineupBatters = lineupIds
+      .map((id) => batters.find((b) => b.id === id))
+      .filter(Boolean);
+    const benchBatters = batters.filter((b) => !idSet.has(b.id));
 
-  if (compact) return list;
+    content = (
+      <div className="bvp-list">
+        {lineupBatters.map((batter) => (
+          <BvPRow key={batter.id} batter={batter} pitcherId={pitcherId} compact={compact} />
+        ))}
+        {benchBatters.length > 0 && (
+          <>
+            <div className="bvp-bench-sep">Bench</div>
+            {benchBatters.map((batter) => (
+              <BvPRow key={batter.id} batter={batter} pitcherId={pitcherId} compact={compact} />
+            ))}
+          </>
+        )}
+      </div>
+    );
+  } else {
+    content = (
+      <div className="bvp-list">
+        {batters.map((batter) => (
+          <BvPRow key={batter.id} batter={batter} pitcherId={pitcherId} compact={compact} />
+        ))}
+      </div>
+    );
+  }
+
+  if (compact) return content;
 
   return (
     <div className="matchup-section">
       <h3>Lineup vs {pitcherName || "Starter"}</h3>
-      {list}
+      {content}
     </div>
   );
 }
@@ -40,7 +65,7 @@ function BvPRow({ batter, pitcherId, compact }) {
   if (compact) {
     return (
       <div className="bvp-compact-row sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${batter.id}`)}>
-        <span className="bvp-compact-name">{batter.fullName?.split(" ").pop()}</span>
+        <span className="bvp-compact-name">{lastName(batter.fullName)}</span>
         <span className="bvp-compact-stat">
           {isLoading ? "..." : !data || data.pa === 0 ? "—" : `${data.hits}-${data.ab}`}
         </span>

@@ -34,6 +34,21 @@ export const getTeamAbbr = (teamId) => {
   return ABBRS[Number(teamId)] || "MLB";
 };
 
+/** Get team nickname from abbreviation (e.g. "ATL" → "Braves") */
+export const teamNickname = (abbr) => {
+  const NICKS = {
+    AZ:"D-backs", ATL:"Braves", BAL:"Orioles", BOS:"Red Sox",
+    CHC:"Cubs", CWS:"White Sox", CIN:"Reds", CLE:"Guardians",
+    COL:"Rockies", DET:"Tigers", HOU:"Astros", KC:"Royals",
+    LAA:"Angels", LAD:"Dodgers", MIA:"Marlins", MIL:"Brewers",
+    MIN:"Twins", NYM:"Mets", NYY:"Yankees", ATH:"Athletics",
+    PHI:"Phillies", PIT:"Pirates", SD:"Padres",
+    SF:"Giants", SEA:"Mariners", STL:"Cardinals",
+    TB:"Rays", TEX:"Rangers", TOR:"Blue Jays", WSH:"Nationals",
+  };
+  return NICKS[abbr] || abbr;
+};
+
 /** Get display name for box score headers (city name, except NY/LA teams use nickname) */
 export const teamDisplayName = (abbr) => {
   const NAMES = {

@@ -1,9 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
 import { fetchStandings, fetchPlayoffOdds } from "../../api/client";
+import { teamNickname } from "../../utils/formatters";
 
 export default function StandingsCard() {
-  const { team } = useTeam();
+  const { team, setTeamId } = useTeam();
+  const navigate = useNavigate();
 
   const { data: divisions, isLoading } = useQuery({
     queryKey: ["standings"],
@@ -43,14 +46,14 @@ export default function StandingsCard() {
         </thead>
         <tbody>
           {myDivision.teams.map((t) => (
-            <tr key={t.id} className={t.id === team?.id ? "my-team" : ""} aria-current={t.id === team?.id ? "true" : undefined}>
+            <tr key={t.id} className={`${t.id === team?.id ? "my-team" : ""} standings-clickable`} aria-current={t.id === team?.id ? "true" : undefined} onClick={() => { setTeamId(t.id); navigate(`/team/${t.id}`); }} style={{ cursor: "pointer" }}>
               <td className="standings-team-cell">
                 <img
                   src={t.logoUrl}
                   alt={t.abbreviation}
                   className="standings-logo"
                 />
-                <span>{t.abbreviation}</span>
+                <span className="standings-team-name">{teamNickname(t.abbreviation)}</span>
               </td>
               <td>{t.wins}</td>
               <td>{t.losses}</td>

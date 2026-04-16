@@ -178,15 +178,14 @@ async def get_next_game(team_id: int) -> dict | None:
 
     # First priority: a game today that's live or scheduled
     for g in today_games:
-        for g in date_entry.get("games", []):
-            status = g.get("status", {}).get("detailedState", "")
-            if status in ("In Progress", "Scheduled", "Pre-Game", "Warmup"):
-                return _format_game(g, is_next=True)
+        status = g.get("status", {}).get("detailedState", "")
+        if status in ("In Progress", "Scheduled", "Pre-Game", "Warmup"):
+            return _format_game(g, is_next=True)
 
     # Second priority: a game today that's Final (show the result)
     for g in today_games:
-            status = g.get("status", {}).get("detailedState", "")
-            if status == "Final":
+        status = g.get("status", {}).get("detailedState", "")
+        if status == "Final":
                 # Find the next future game to show alongside
                 next_future = _find_next_future_game(data, today)
                 result = _format_game(g, is_next=False)

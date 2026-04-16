@@ -706,6 +706,7 @@ function BoxScoreSection({ boxOpen, setBoxOpen, boxData, gameInfo, teamId }) {
             <span className="lgp-box-col-name">Batter</span>
             <span className="lgp-box-col-stat">AB</span>
             <span className="lgp-box-col-stat">H</span>
+            <span className="lgp-box-col-stat">HR</span>
             <span className="lgp-box-col-stat">R</span>
             <span className="lgp-box-col-stat">RBI</span>
             <span className="lgp-box-col-stat">BB</span>
@@ -732,6 +733,7 @@ function BoxScoreSection({ boxOpen, setBoxOpen, boxData, gameInfo, teamId }) {
                   </span>
                   <span className="lgp-box-col-stat">{s.ab ?? "—"}</span>
                   <span className="lgp-box-col-stat">{s.h ?? "—"}</span>
+                  <span className="lgp-box-col-stat">{s.hr ?? "—"}</span>
                   <span className="lgp-box-col-stat">{s.r ?? "—"}</span>
                   <span className="lgp-box-col-stat">{s.rbi ?? "—"}</span>
                   <span className="lgp-box-col-stat">{s.bb ?? "—"}</span>
