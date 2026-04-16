@@ -295,44 +295,82 @@ export const fetchGameLineup = async (gamePk, teamId) => {
   }
 };
 
-// Projected lineup: position players from roster sorted by typical lineup position
+// Projected lineup: use recent game boxscores, fallback to roster-based projection
 export const fetchProjectedLineup = async (teamId) => {
   try {
+    // Try to build lineup from recent games
+    const today = new Date();
+    const startDate = new Date(today);
+    startDate.setDate(startDate.getDate() - 14);
+    const startStr = `${startDate.getFullYear()}-${String(startDate.getMonth()+1).padStart(2,"0")}-${String(startDate.getDate()).padStart(2,"0")}`;
+    const endStr = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,"0")}-${String(today.getDate()).padStart(2,"0")}`;
+
+    const schedResp = await mlbApi.get("/schedule", {
+      params: { teamId, sportId: 1, startDate: startStr, endDate: endStr, gameType: "R", hydrate: "linescore" },
+    });
+
+    const recentGames = [];
+    for (const date of schedResp.data?.dates || []) {
+      for (const g of date.games || []) {
+        if (g.status?.detailedState === "Final" || g.status?.detailedState === "Game Over") {
+          recentGames.push(g.gamePk);
+        }
+      }
+    }
+
+    // Get batting orders from recent games (last 5 max)
+    const gamePks = recentGames.slice(-5);
+    if (gamePks.length > 0) {
+      const lineups = await Promise.all(
+        gamePks.map(async (gpk) => {
+          try {
+            const resp = await mlbApi.get(`/game/${gpk}/boxscore`);
+            const teams = resp.data?.teams || {};
+            const side = teams.home?.team?.id === Number(teamId) ? teams.home : teams.away;
+            const order = side?.battingOrder || [];
+            if (order.length < 9) return null;
+            const players = side?.players || {};
+            return order.slice(0, 9).map((id, i) => {
+              const p = players[`ID${id}`];
+              return {
+                id,
+                fullName: p?.person?.fullName || "",
+                position: p?.position?.abbreviation || "",
+                avg: p?.seasonStats?.batting?.avg || ".000",
+                order: i + 1,
+                projected: true,
+              };
+            });
+          } catch { return null; }
+        })
+      );
+
+      // Use the most recent valid lineup
+      const validLineups = lineups.filter(Boolean);
+      if (validLineups.length > 0) {
+        return validLineups[validLineups.length - 1];
+      }
+    }
+
+    // Fallback: position-based projection
     const roster = await fetchRoster(teamId);
     const posPlayers = roster.filter((p) => p.position.type !== "Pitcher");
-
-    // Pick one player per position to ensure all spots are covered (including C)
     const posOrder = ["CF", "SS", "RF", "1B", "DH", "3B", "LF", "2B", "C"];
     const picked = [];
     const used = new Set();
-
     for (const pos of posOrder) {
       const candidate = posPlayers.find((p) => p.position.abbreviation === pos && !used.has(p.id));
-      if (candidate) {
-        picked.push(candidate);
-        used.add(candidate.id);
-      }
+      if (candidate) { picked.push(candidate); used.add(candidate.id); }
     }
-
-    // Fill remaining slots with unused position players (for OF, utility, etc.)
     for (const p of posPlayers) {
       if (picked.length >= 9) break;
-      if (!used.has(p.id)) {
-        picked.push(p);
-        used.add(p.id);
-      }
+      if (!used.has(p.id)) { picked.push(p); used.add(p.id); }
     }
-
     return picked.slice(0, 9).map((p, i) => ({
-      id: p.id,
-      fullName: p.fullName,
-      position: p.position.abbreviation,
-      avg: ".000",
-      order: i + 1,
-      projected: true,
+      id: p.id, fullName: p.fullName, position: p.position.abbreviation,
+      avg: ".000", order: i + 1, projected: true,
     }));
   } catch (e) {
-    /* projected lineup unavailable */
     return null;
   }
 };
@@ -812,24 +850,33 @@ export const fetchPriorMatchups = async (team1, team2) => {
     const abbr = getTeamAbbr(team1);
     const schedule = await staticFetch(`teams/${abbr}/schedule.json`);
     const matchups = schedule.filter((g) => {
-      return g.status === "Final" && (Number(g.away.id) === Number(team2) || Number(g.home.id) === Number(team2));
+      return Number(g.away.id) === Number(team2) || Number(g.home.id) === Number(team2);
     });
-    if (!matchups.length) return null; // Season hasn't started
-    const wins = matchups.filter((g) => {
+    if (!matchups.length) return null;
+
+    const played = matchups.filter(g => g.status === "Final");
+    const upcoming = matchups.filter(g => g.status !== "Final");
+
+    const wins = played.filter((g) => {
       const isHome = Number(g.home.id) === Number(team1);
       return isHome ? g.home.isWinner : g.away.isWinner;
     }).length;
+
     return {
-      games: matchups.map((g) => ({
+      played: played.map((g) => ({
         gamePk: g.gamePk, date: g.gameDate,
         homeAbbr: g.home.abbreviation, awayAbbr: g.away.abbreviation,
         homeScore: g.home.score, awayScore: g.away.score,
         won: Number(g.home.id) === Number(team1) ? g.home.isWinner : g.away.isWinner,
       })),
-      record: { wins, losses: matchups.length - wins },
+      upcoming: upcoming.map((g) => ({
+        gamePk: g.gamePk, date: g.gameDate,
+        homeAbbr: g.home.abbreviation, awayAbbr: g.away.abbreviation,
+      })),
+      record: { wins, losses: played.length - wins },
     };
   } catch {
-    return { games: [], record: { wins: 0, losses: 0 } };
+    return { played: [], upcoming: [], record: { wins: 0, losses: 0 } };
   }
 };
 

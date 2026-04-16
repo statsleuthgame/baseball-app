@@ -1183,6 +1183,7 @@ body {
   padding: 5px 4px;
   font-size: 12px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  width: 100%;
 }
 
 .ml-order {
@@ -2394,6 +2395,7 @@ button.stat-cell {
   gap: 6px;
   padding: 4px 0;
   font-size: 13px;
+  cursor: pointer;
 }
 
 .hotcold-name {
@@ -2402,7 +2404,8 @@ button.stat-cell {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: 500;
+  font-weight: 600;
+  color: var(--text-bright);
 }
 
 .hotcold-pos {
@@ -2441,8 +2444,16 @@ button.stat-cell {
 
 .bullpen-cols {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  gap: 0;
+}
+.bullpen-team {
+  flex: 1;
+  min-width: 0;
+}
+.bullpen-team + .bullpen-team {
+  border-left: 1px solid rgba(255, 255, 255, 0.06);
+  padding-left: 10px;
+  margin-left: 10px;
 }
 
 .bullpen-team-hdr {
@@ -2765,6 +2776,64 @@ button.stat-cell {
 .prior-date { width: 80px; flex-shrink: 0; color: var(--text-muted); }
 .prior-teams { flex: 1; color: var(--text); }
 .prior-score { font-weight: 700; }
+
+.prior-upcoming-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.prior-game-row.upcoming {
+  color: var(--text-muted);
+}
+.prior-time {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.collapsible-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 4px 0;
+  user-select: none;
+}
+.collapsible-header h3 {
+  margin: 0;
+}
+.collapsible-section {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding-bottom: 12px;
+}
+
+.bvp-bench-sep {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0 2px;
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.bvp-bench-sep::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.standings-clickable:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+.standings-team-name {
+  font-weight: 600;
+}
 
 /* Playoff Odds */
 .playoff-odds {
@@ -3842,43 +3911,7 @@ th.sb-ls-total {
 .transaction-desc { display: block; font-size: 12px; color: var(--text); line-height: 1.4; }
 .transaction-date { font-size: 12px; color: var(--text-muted); }
 
-/* Hot/Cold */
-.hotcold-card {
-  background: var(--bg-card);
-  border-radius: 16px;
-  padding: 16px;
-  border: 1px solid var(--border);
-}
-
-.hotcold-hot-title { color: var(--win); }
-.hotcold-cold-title { color: var(--loss); margin-top: 14px; }
-
-.hotcold-list { display: flex; flex-direction: column; gap: 6px; }
-
-.hotcold-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 6px 8px;
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: 10px;
-  border: none;
-  color: inherit;
-  text-align: left;
-  cursor: pointer;
-  width: 100%;
-  font: inherit;
-}
-
-.hotcold-info { flex: 1; min-width: 0; }
-.hotcold-name { display: block; font-size: 13px; font-weight: 600; color: var(--text-bright); }
-.hotcold-pos { font-size: 12px; color: var(--text-muted); }
-
-.hotcold-stats { text-align: right; }
-.hotcold-avg { display: block; font-size: 16px; font-weight: 800; }
-.hotcold-avg.hot { color: var(--win); }
-.hotcold-avg.cold { color: var(--loss); }
-.hotcold-line { font-size: 12px; color: var(--text-muted); }
+/* Hot/Cold (duplicate removed — primary rules are above in matchup section) */
 
 /* League Leaders */
 .leaders-card {
