@@ -361,15 +361,18 @@ function HotColdSection({ awayId, homeId, awayAbbr, homeAbbr }) {
   const { teamId: contextTeamId } = useTeam();
   const navigate = useNavigate();
 
+  // Use matchup-specific key — fetchHotColdPlayers returns a different shape than
+  // fetchTeamHotCold (live MLB API vs static roster.json), so they must not share
+  // the same React Query cache key or the dashboard's cached data leaks into here.
   const { data: awayData } = useQuery({
-    queryKey: ["hotCold", awayId],
+    queryKey: ["matchupHotCold", awayId],
     queryFn: () => fetchHotColdPlayers(awayId),
     enabled: !!awayId,
     staleTime: 1000 * 60 * 30,
   });
 
   const { data: homeData } = useQuery({
-    queryKey: ["hotCold", homeId],
+    queryKey: ["matchupHotCold", homeId],
     queryFn: () => fetchHotColdPlayers(homeId),
     enabled: !!homeId,
     staleTime: 1000 * 60 * 30,
