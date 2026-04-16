@@ -1,6 +1,10 @@
 import asyncio
+import logging
+
 import httpx
 from bs4 import BeautifulSoup
+
+logger = logging.getLogger(__name__)
 
 from app.config import TEAM_META
 
@@ -22,7 +26,7 @@ async def scrape_playoff_odds() -> list[dict]:
         result = await asyncio.to_thread(_fetch_and_parse_odds)
         return result
     except Exception as e:
-        print(f"FanGraphs scraping failed: {e}")
+        logger.warning("FanGraphs scraping failed: %s", e)
         return []
 
 

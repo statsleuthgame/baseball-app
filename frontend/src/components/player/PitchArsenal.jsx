@@ -154,7 +154,7 @@ function PitchMovementChart({ pitches }) {
           ))}
 
           {/* Axis labels */}
-          {gridTicks.filter((t) => t % 10 === 0 && t !== 0).map((t) => (
+          {gridTicks.filter((t) => t % 10 === 0).map((t) => (
             <g key={`label-${t}`}>
               <text x={xScale(t)} y={MV_H + 14} fill="#9299ad" fontSize="8" textAnchor="middle">{t}"</text>
               <text x={-8} y={yScale(t) + 3} fill="#9299ad" fontSize="8" textAnchor="end">{t}"</text>

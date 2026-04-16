@@ -1,8 +1,13 @@
 import asyncio
+import logging
 import math
 from datetime import date, timedelta
 
 import pandas as pd
+
+from app.config import get_current_season
+
+logger = logging.getLogger(__name__)
 
 
 def _safe_float(val, decimals=1):
@@ -15,13 +20,21 @@ def _safe_float(val, decimals=1):
         return None
 
 
+def _safe_str(val, default=""):
+    """Return string value, handling NaN/None/NaT."""
+    if val is None or (isinstance(val, float) and (val != val)):  # NaN check
+        return default
+    s = str(val)
+    return default if s in ("NaT", "nan", "None") else s
+
+
 async def get_hot_batters(team_roster_ids: list[int], days: int = 14) -> list[dict]:
     """Get batting stats for players over the last N days using pybaseball."""
     try:
         result = await asyncio.to_thread(_fetch_hot_batters, team_roster_ids, days)
         return result
     except Exception as e:
-        print(f"Hot batters fetch failed: {e}")
+        logger.warning("Hot batters fetch failed: %s", e)
         return []
 
 
@@ -126,7 +139,7 @@ def _compute_batter_stats(df: pd.DataFrame, player_id: int) -> dict:
 
     return {
         "playerId": player_id,
-        "playerName": player_name,
+        "playerName": _safe_str(player_name),
         "pa": total_pa,
         "ab": ab,
         "hits": total_hits,
@@ -135,10 +148,10 @@ def _compute_batter_stats(df: pd.DataFrame, player_id: int) -> dict:
         "homeRuns": home_runs,
         "walks": walks,
         "strikeouts": strikeouts,
-        "avg": round(avg, 3),
-        "obp": round(obp, 3),
-        "slg": round(slg, 3),
-        "ops": round(ops, 3),
+        "avg": _safe_float(avg, 3),
+        "obp": _safe_float(obp, 3),
+        "slg": _safe_float(slg, 3),
+        "ops": _safe_float(ops, 3),
         "photoUrl": (
             f"https://img.mlbstatic.com/mlb-photos/image/upload/"
             f"d_people:generic:headshot:67:current.png/"
@@ -153,7 +166,7 @@ async def get_spray_chart_data(player_id: int, home_team: str | None = None, sea
         result = await asyncio.to_thread(_fetch_spray_data, player_id, home_team, season)
         return result
     except Exception as e:
-        print(f"Spray chart fetch failed: {e}")
+        logger.warning("Spray chart fetch failed: %s", e)
         return {"hits": [], "summary": {}}
 
 
@@ -200,10 +213,10 @@ def _fetch_spray_data(player_id: int, home_team: str | None, season: int | None)
             "y": _safe_float(y),
             "result": result_type,
             "event": event,
-            "date": str(row.get("game_date", "")),
+            "date": _safe_str(row.get("game_date", "")),
             "exitVelo": _safe_float(row.get("launch_speed")),
             "launchAngle": _safe_float(row.get("launch_angle")),
-            "pitchType": row.get("pitch_type", "") if pd.notna(row.get("pitch_type")) else "",
+            "pitchType": _safe_str(row.get("pitch_type", "")),
             "hitDistance": _safe_float(row.get("hit_distance_sc"), 0),
         })
 
@@ -216,7 +229,7 @@ async def get_pitch_arsenal(player_id: int, season: int | None = None) -> dict:
         result = await asyncio.to_thread(_fetch_pitch_arsenal, player_id, season)
         return result
     except Exception as e:
-        print(f"Pitch arsenal fetch failed: {e}")
+        logger.warning("Pitch arsenal fetch failed: %s", e)
         return {"pitches": [], "totalPitches": 0}
 
 
@@ -227,7 +240,7 @@ def _fetch_pitch_arsenal(player_id: int, season: int | None) -> dict:
         start_dt = f"{season}-03-01"
         end_dt = f"{season}-11-30"
     else:
-        start_dt = f"{date.today().year}-03-01"
+        start_dt = f"{get_current_season()}-03-01"
         end_dt = date.today().isoformat()
 
     df = statcast_pitcher(start_dt, end_dt, player_id)
@@ -291,18 +304,18 @@ def _fetch_pitch_arsenal(player_id: int, season: int | None) -> dict:
         avg_pfx_z = round(group["pfx_z"].mean() * 12, 1) if group["pfx_z"].notna().any() else None
 
         arsenal.append({
-            "pitchType": pitch_type,
-            "pitchName": PITCH_NAMES.get(pitch_type, pitch_type),
+            "pitchType": _safe_str(pitch_type),
+            "pitchName": PITCH_NAMES.get(pitch_type, _safe_str(pitch_type)),
             "count": count,
-            "usagePct": usage_pct,
-            "avgVelo": avg_velo,
+            "usagePct": _safe_float(usage_pct, 1),
+            "avgVelo": _safe_float(avg_velo, 1),
             "avgSpin": int(avg_spin) if avg_spin else None,
-            "whiffRate": whiff_rate,
-            "cswPct": csw_pct,
-            "putawayRate": putaway_rate,
-            "baAgainst": ba_against,
-            "horzBreak": avg_pfx_x,
-            "vertBreak": avg_pfx_z,
+            "whiffRate": _safe_float(whiff_rate, 1),
+            "cswPct": _safe_float(csw_pct, 1),
+            "putawayRate": _safe_float(putaway_rate, 1),
+            "baAgainst": _safe_float(ba_against, 3),
+            "horzBreak": _safe_float(avg_pfx_x, 1),
+            "vertBreak": _safe_float(avg_pfx_z, 1),
         })
 
     arsenal.sort(key=lambda x: x["usagePct"], reverse=True)
@@ -315,7 +328,7 @@ async def get_dominance_profile(player_id: int, season: int | None = None) -> di
         result = await asyncio.to_thread(_fetch_dominance_profile, player_id, season)
         return result
     except Exception as e:
-        print(f"Dominance profile fetch failed: {e}")
+        logger.warning("Dominance profile fetch failed: %s", e)
         return {}
 
 
@@ -326,7 +339,7 @@ def _fetch_dominance_profile(player_id: int, season: int | None) -> dict:
         start_dt = f"{season}-03-01"
         end_dt = f"{season}-11-30"
     else:
-        start_dt = f"{date.today().year}-03-01"
+        start_dt = f"{get_current_season()}-03-01"
         end_dt = date.today().isoformat()
 
     df = statcast_pitcher(start_dt, end_dt, player_id)
@@ -442,14 +455,14 @@ def _situational_stats(df: pd.DataFrame) -> dict:
     fstrike_pct = round(len(first_strikes) / len(first_pitches) * 100, 1) if len(first_pitches) > 0 else None
 
     return {
-        "kPct": k_pct,
-        "bbPct": bb_pct,
-        "hrPct": hr_pct,
-        "babip": babip,
-        "avgExitVelo": avg_ev,
-        "hardHitPct": hard_hit_pct,
-        "barrelPct": barrel_pct,
-        "fStrikePct": fstrike_pct,
+        "kPct": _safe_float(k_pct, 1),
+        "bbPct": _safe_float(bb_pct, 1),
+        "hrPct": _safe_float(hr_pct, 1),
+        "babip": _safe_float(babip, 3),
+        "avgExitVelo": _safe_float(avg_ev, 1),
+        "hardHitPct": _safe_float(hard_hit_pct, 1),
+        "barrelPct": _safe_float(barrel_pct, 1),
+        "fStrikePct": _safe_float(fstrike_pct, 1),
         "dominantAgainst": "LHB" if _is_more_dominant_vs(df, "L") else "RHB",
     }
 
@@ -487,12 +500,12 @@ def _compute_pitcher_split_stats(df: pd.DataFrame) -> dict:
     if ab == 0:
         return {"pa": total_pa}
 
-    ba = round(total_hits / ab, 3)
-    obp = round((total_hits + walks + hbp) / total_pa, 3) if total_pa > 0 else 0
-    slg = round((singles + 2 * doubles + 3 * triples + 4 * home_runs) / ab, 3)
-    ops = round(obp + slg, 3)
-    k_pct = round(strikeouts / total_pa * 100, 1)
-    bb_pct = round(walks / total_pa * 100, 1)
+    ba = _safe_float(total_hits / ab, 3)
+    obp = _safe_float((total_hits + walks + hbp) / total_pa, 3) if total_pa > 0 else 0
+    slg = _safe_float((singles + 2 * doubles + 3 * triples + 4 * home_runs) / ab, 3)
+    ops = _safe_float((obp or 0) + (slg or 0), 3)
+    k_pct = _safe_float(strikeouts / total_pa * 100, 1)
+    bb_pct = _safe_float(walks / total_pa * 100, 1)
 
     # Whiff rate across all pitches in this split
     all_pitches = df[df["description"].notna()]
@@ -521,10 +534,10 @@ def _compute_pitcher_split_stats(df: pd.DataFrame) -> dict:
 async def get_longest_home_runs(season: int | None = None, limit: int = 5) -> list[dict]:
     """Get the longest home runs of the season by hit distance."""
     try:
-        result = await asyncio.to_thread(_fetch_longest_hrs, season or date.today().year, limit)
+        result = await asyncio.to_thread(_fetch_longest_hrs, season or get_current_season(), limit)
         return result
     except Exception as e:
-        print(f"Longest HR fetch failed: {e}")
+        logger.warning("Longest HR fetch failed: %s", e)
         return []
 
 
@@ -577,7 +590,7 @@ async def get_batter_advanced_stats(player_id: int, season: int | None = None) -
         result = await asyncio.to_thread(_fetch_batter_advanced, player_id, season)
         return result
     except Exception as e:
-        print(f"Batter advanced stats failed: {e}")
+        logger.warning("Batter advanced stats failed: %s", e)
         return {}
 
 
@@ -588,7 +601,7 @@ def _fetch_batter_advanced(player_id: int, season: int | None) -> dict:
         start_dt = f"{season}-03-01"
         end_dt = f"{season}-11-30"
     else:
-        start_dt = f"{date.today().year}-03-01"
+        start_dt = f"{get_current_season()}-03-01"
         end_dt = date.today().isoformat()
 
     df = statcast_batter(start_dt, end_dt, player_id)
@@ -646,17 +659,17 @@ def _fetch_batter_advanced(player_id: int, season: int | None) -> dict:
     xwoba = round(df["estimated_woba_using_speedangle"].mean(), 3) if "estimated_woba_using_speedangle" in df.columns and df["estimated_woba_using_speedangle"].notna().any() else None
 
     return {
-        "avgExitVelo": avg_ev,
-        "maxExitVelo": max_ev,
-        "hardHitPct": hard_hit_pct,
-        "barrelPct": barrel_pct,
-        "avgLaunchAngle": avg_la,
-        "gbPct": gb_pct,
-        "fbPct": fb_pct,
-        "ldPct": ld_pct,
-        "whiffRate": whiff_rate,
-        "chaseRate": chase_rate,
-        "xBA": xba,
-        "xSLG": xslg,
-        "xwOBA": xwoba,
+        "avgExitVelo": _safe_float(avg_ev, 1),
+        "maxExitVelo": _safe_float(max_ev, 1),
+        "hardHitPct": _safe_float(hard_hit_pct, 1),
+        "barrelPct": _safe_float(barrel_pct, 1),
+        "avgLaunchAngle": _safe_float(avg_la, 1),
+        "gbPct": _safe_float(gb_pct, 1),
+        "fbPct": _safe_float(fb_pct, 1),
+        "ldPct": _safe_float(ld_pct, 1),
+        "whiffRate": _safe_float(whiff_rate, 1),
+        "chaseRate": _safe_float(chase_rate, 1),
+        "xBA": _safe_float(xba, 3),
+        "xSLG": _safe_float(xslg, 3),
+        "xwOBA": _safe_float(xwoba, 3),
     }

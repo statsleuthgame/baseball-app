@@ -380,3 +380,12 @@ CACHE_TTL_STATCAST = 86400     # 24 hours
 CACHE_TTL_HOT_PLAYERS = 21600  # 6 hours
 
 FRONTEND_ORIGIN = os.getenv("FRONTEND_ORIGIN", "http://localhost:5173")
+
+
+def get_current_season() -> int:
+    """Return the current MLB season year. Before March, return previous year."""
+    from datetime import date
+    today = date.today()
+    if today.month < 3:
+        return today.year - 1
+    return today.year

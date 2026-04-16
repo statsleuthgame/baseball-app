@@ -1,4 +1,5 @@
 import json
+import logging
 import math
 import traceback
 from contextlib import asynccontextmanager
@@ -6,6 +7,8 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+
+logger = logging.getLogger(__name__)
 
 from app.config import FRONTEND_ORIGIN
 from app.services import mlb_api
@@ -79,7 +82,7 @@ app.include_router(leaderboards.router)
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
     tb = traceback.format_exc()
-    print(f"Unhandled error on {request.url}: {exc}\n{tb}")
+    logger.error("Unhandled error on %s: %s\n%s", request.url, exc, tb)
     return SafeJSONResponse(
         status_code=500,
         content={"error": str(exc), "path": str(request.url)},

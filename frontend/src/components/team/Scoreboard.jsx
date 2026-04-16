@@ -81,6 +81,8 @@ function TopPerformer({ gamePk, side, teamId }) {
   return (
     <span
       className="sb-top-performer sb-player-link"
+      role="link"
+      tabIndex={0}
       onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${best.id}`); }}
     >
       {lastName(best.name)} {line}
@@ -233,7 +235,7 @@ function BatterRow({ batter, teamId }) {
         onClick={hasABs ? () => setOpen(!open) : undefined}
       >
         <span className="sb-batter-pos">{batter.position}</span>
-        <span className="sb-batter-name-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${batter.id}`); }}>{batter.name}</span>
+        <span className="sb-batter-name-link" role="link" tabIndex={0} onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${batter.id}`); }}>{batter.name}</span>
         <span className="sb-batter-spacer" />
         <span className="sb-batter-stat">{batter.stats.ab}</span>
         <span className="sb-batter-stat">{batter.stats.r}</span>
@@ -525,7 +527,8 @@ export default function Scoreboard() {
   const { teamId } = useTeam();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const paramDate = searchParams.get("date");
+  const rawDate = searchParams.get("date");
+  const paramDate = rawDate && /^\d{4}-\d{2}-\d{2}$/.test(rawDate) ? rawDate : null;
   const [selectedDate, setSelectedDateRaw] = useState(paramDate || fmt(new Date()));
   const [expandedGame, setExpandedGame] = useState(null);
   const dateInputRef = useRef(null);
@@ -542,7 +545,7 @@ export default function Scoreboard() {
 
   const isToday = selectedDate === fmt(new Date());
 
-  const { data: games, isLoading } = useQuery({
+  const { data: games, isLoading, error } = useQuery({
     queryKey: ["allGames", selectedDate],
     queryFn: () => fetchAllGamesToday(selectedDate),
     staleTime: isToday ? 1000 * 60 * 2 : 1000 * 60 * 60,
@@ -625,7 +628,9 @@ export default function Scoreboard() {
 
       {isLoading && <SkeletonLoader variant="scores" />}
 
-      {!isLoading && !sorted.length && (
+      {error && <div className="scoreboard-error">Failed to load scores. Pull down to refresh.</div>}
+
+      {!isLoading && !error && !sorted.length && (
         <div className="scoreboard-empty">
           <h2>No Games</h2>
           <p>No games scheduled for {formatDateLabel(selectedDate)}.</p>
@@ -658,6 +663,9 @@ export default function Scoreboard() {
                 key={game.gamePk}
                 className={`scoreboard-card ${isOurGame ? "our-game" : ""} ${isLive ? "live" : ""} ${canExpand ? "sb-tappable" : ""}`}
                 onClick={canExpand ? () => setExpandedGame(isExpanded ? null : game.gamePk) : undefined}
+                role={canExpand ? "button" : undefined}
+                tabIndex={canExpand ? 0 : undefined}
+                onKeyDown={canExpand ? (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setExpandedGame(isExpanded ? null : game.gamePk); } } : undefined}
               >
                 <div className="sb-matchup-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/${isLive || isFinal ? "live" : "matchup"}/${game.gamePk}`); }}>
                 {isLive && (

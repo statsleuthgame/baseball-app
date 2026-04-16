@@ -5,10 +5,13 @@ for batters and pitchers by season.
 """
 
 import asyncio
+import logging
 import math
 from datetime import date
 
 import pandas as pd
+
+logger = logging.getLogger(__name__)
 
 
 def _sf(val, decimals=1):
@@ -106,7 +109,7 @@ def _get_batting_df(season: int) -> pd.DataFrame | None:
             _batting_cache[season] = df
             return df
     except Exception as e:
-        print(f"FanGraphs batting_stats({season}) failed: {e}")
+        logger.warning("FanGraphs batting_stats(%d) failed: %s", season, e)
     return None
 
 
@@ -116,7 +119,7 @@ def _get_batting_range_df(start_dt: str, end_dt: str) -> pd.DataFrame | None:
         df = batting_stats_range(start_dt, end_dt)
         return df if df is not None and not df.empty else None
     except Exception as e:
-        print(f"FanGraphs batting_stats_range failed: {e}")
+        logger.warning("FanGraphs batting_stats_range failed: %s", e)
         return None
 
 
@@ -231,7 +234,7 @@ def _get_pitching_df(season: int) -> pd.DataFrame | None:
             _pitching_cache[season] = df
             return df
     except Exception as e:
-        print(f"FanGraphs pitching_stats({season}) failed: {e}")
+        logger.warning("FanGraphs pitching_stats(%d) failed: %s", season, e)
     return None
 
 
@@ -537,7 +540,7 @@ def get_team_batting_stats(season: int) -> list[dict]:
             row["rank"] = i + 1
         return rows
     except Exception as e:
-        print(f"team_batting({season}) failed: {e}")
+        logger.warning("team_batting(%d) failed: %s", season, e)
         return []
 
 
@@ -572,5 +575,5 @@ def get_team_pitching_stats(season: int) -> list[dict]:
             row["rank"] = i + 1
         return rows
     except Exception as e:
-        print(f"team_pitching({season}) failed: {e}")
+        logger.warning("team_pitching(%d) failed: %s", season, e)
         return []
