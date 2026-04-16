@@ -1,3 +1,6 @@
+import asyncio
+import logging
+
 import httpx
 
 from app.config import MLB_API_BASE
@@ -19,11 +22,21 @@ async def close_client() -> None:
         _client = None
 
 
-async def fetch(path: str, params: dict | None = None) -> dict:
-    client = get_client()
-    resp = await client.get(path, params=params)
-    resp.raise_for_status()
-    return resp.json()
+async def fetch(path: str, params: dict | None = None, retries: int = 2) -> dict:
+    for attempt in range(retries + 1):
+        try:
+            client = get_client()
+            resp = await client.get(path, params=params)
+            resp.raise_for_status()
+            return resp.json()
+        except Exception as e:
+            if attempt < retries:
+                await asyncio.sleep(1 * (attempt + 1))  # 1s, 2s backoff
+                continue
+            logging.getLogger(__name__).warning(
+                f"MLB API fetch failed for {path} after {retries + 1} attempts: {e}"
+            )
+            return {}
 
 
 async def get_team_info(team_id: int) -> dict:

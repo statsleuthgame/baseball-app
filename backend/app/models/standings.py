@@ -1,12 +1,12 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class StandingsTeam(BaseModel):
     id: int | None = None
     name: str = ""
     abbreviation: str = ""
-    wins: int = 0
-    losses: int = 0
+    wins: int = Field(default=0, ge=0)
+    losses: int = Field(default=0, ge=0)
     winPct: str = ".000"
     gamesBack: str = "-"
     streakCode: str = ""
