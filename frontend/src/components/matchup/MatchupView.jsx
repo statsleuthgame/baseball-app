@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
 import { fetchTodayGame, fetchRoster, fetchGameLineup, fetchProjectedLineup, fetchHotColdPlayers, fetchBullpenAvailability, fetchAllGamesToday, fetchTeamInjuries, fetchSchedule } from "../../api/client";
-import { formatGameDate, formatGameTime, lastName } from "../../utils/formatters";
+import { formatGameDate, formatGameTime, lastName, formatAvg } from "../../utils/formatters";
 import PARK_FACTORS from "../../data/parkFactors";
 import SkeletonLoader from "../common/SkeletonLoader";
 import BatterVsPitcher from "./BatterVsPitcher";
@@ -388,8 +388,8 @@ function HotColdSection({ awayId, homeId, awayAbbr, homeAbbr }) {
             <div className="hotcold-group-title hot">Hot</div>
             {data.hot.map((p) => (
               <div key={p.id} className="hotcold-row sb-player-link" onClick={() => navigate(`/team/${contextTeamId}/player/${p.id}`)}>
-                <span className="hotcold-name">{lastName(p.fullName)}</span>
-                <span className="hotcold-stat">{p.avg}</span>
+                <span className="hotcold-name">{lastName(p.fullName) || p.fullName || "—"}</span>
+                <span className="hotcold-stat">{formatAvg(p.avg)}</span>
               </div>
             ))}
           </div>
@@ -399,8 +399,8 @@ function HotColdSection({ awayId, homeId, awayAbbr, homeAbbr }) {
             <div className="hotcold-group-title cold">Cold</div>
             {data.cold.map((p) => (
               <div key={p.id} className="hotcold-row sb-player-link" onClick={() => navigate(`/team/${contextTeamId}/player/${p.id}`)}>
-                <span className="hotcold-name">{lastName(p.fullName)}</span>
-                <span className="hotcold-stat">{p.avg}</span>
+                <span className="hotcold-name">{lastName(p.fullName) || p.fullName || "—"}</span>
+                <span className="hotcold-stat">{formatAvg(p.avg)}</span>
               </div>
             ))}
           </div>

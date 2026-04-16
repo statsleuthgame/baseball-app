@@ -2884,12 +2884,14 @@ button.stat-cell {
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.injury-row {
+/* Force block-level flex so sb-player-link's inline-flex doesn't make rows flow inline */
+.injury-team .injury-row {
   display: flex;
   align-items: center;
   gap: 6px;
   padding: 4px 0;
   font-size: 12px;
+  width: 100%;
 }
 
 .injury-name {
