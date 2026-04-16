@@ -1192,14 +1192,18 @@ export const fetchTransactions = async (teamId) => {
     const resp = await mlbApi.get("/transactions", {
       params: { teamId, startDate: fmt(start), endDate: fmt(end) },
     });
-    return (resp.data?.transactions || []).map((t) => ({
+    const mapped = (resp.data?.transactions || []).map((t) => ({
       id: t.id,
       date: t.date,
       type: t.typeCode,
       typeDesc: t.typeDesc,
       description: t.description,
       player: t.person ? { id: t.person.id, name: t.person.fullName } : null,
-    })).slice(0, 10);
+    }));
+    // MLB API returns oldest-first; sort descending so newest appears first
+    // and slice AFTER sorting so we keep the 10 most recent (not the 10 oldest).
+    mapped.sort((a, b) => new Date(b.date) - new Date(a.date));
+    return mapped.slice(0, 10);
   } catch {
     return [];
   }
