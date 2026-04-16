@@ -2389,16 +2389,18 @@ button.stat-cell {
 .hotcold-group-title.hot { color: var(--win); }
 .hotcold-group-title.cold { color: var(--loss); }
 
-.hotcold-row {
+/* Matchup page Hot & Cold rows — force block-level flex (overrides sb-player-link's inline-flex) */
+.hotcold-group .hotcold-row {
   display: flex;
   align-items: center;
   gap: 6px;
   padding: 4px 0;
   font-size: 13px;
   cursor: pointer;
+  width: 100%;
 }
 
-.hotcold-name {
+.hotcold-group .hotcold-name {
   flex: 1;
   min-width: 0;
   white-space: nowrap;
@@ -2408,23 +2410,120 @@ button.stat-cell {
   color: var(--text-bright);
 }
 
-.hotcold-pos {
+.hotcold-group .hotcold-pos {
   font-size: 10px;
   color: var(--text-muted);
 }
 
-.hotcold-stat {
+.hotcold-group .hotcold-stat {
   font-weight: 700;
   color: var(--text-bright);
   width: 36px;
   text-align: right;
 }
 
-.hotcold-ops {
+.hotcold-group .hotcold-ops {
   font-size: 11px;
   color: var(--text-muted);
   width: 60px;
   text-align: right;
+}
+
+/* Home page TeamHotCold card — different layout (photo + info + stats) */
+.hotcold-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hotcold-card .hotcold-hot-title {
+  color: var(--win);
+  font-size: 13px;
+  font-weight: 700;
+  margin: 8px 0 4px;
+}
+
+.hotcold-card .hotcold-cold-title {
+  color: var(--loss);
+  font-size: 13px;
+  font-weight: 700;
+  margin: 8px 0 4px;
+}
+
+.hotcold-card .hotcold-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hotcold-card .hotcold-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  color: var(--text-bright);
+  transition: background 0.15s;
+}
+
+.hotcold-card .hotcold-row:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.hotcold-card .hotcold-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.hotcold-card .hotcold-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-bright);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hotcold-card .hotcold-pos {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.hotcold-card .hotcold-stats {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+  flex-shrink: 0;
+}
+
+.hotcold-card .hotcold-avg {
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.hotcold-card .hotcold-avg.hot {
+  color: var(--win);
+}
+
+.hotcold-card .hotcold-avg.cold {
+  color: var(--loss);
+}
+
+.hotcold-card .hotcold-line {
+  font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
 }
 
 /* Bullpen Availability */
