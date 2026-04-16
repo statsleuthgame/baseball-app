@@ -13,7 +13,9 @@ import LoadingSpinner from "../common/LoadingSpinner";
 // Bold hit types and add HR distance in scoring descriptions
 function formatScoringDesc(desc, hrDistance) {
   if (!desc) return "";
-  let html = desc
+  // Escape any HTML in the description first
+  const escaped = desc.replace(/[<>&"']/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;'}[c]));
+  let html = escaped
     .replace(/\b(singles|doubles|triples|homers|walks|hit by pitch|grand slam|sacrifice fly|sac fly)\b/gi, "<strong>$1</strong>");
   if (hrDistance && html.includes("<strong>homers</strong>")) {
     html = html.replace("<strong>homers</strong>", `<strong>homers</strong> (${hrDistance} ft)`);
@@ -130,9 +132,9 @@ export default function LiveGamePage() {
       lastHitRef.current = hitKey;
       setBipCollapsed(false);
       if (bipTimerRef.current) clearTimeout(bipTimerRef.current);
+      persistedHitDataRef.current = null; // clear immediately so stale data doesn't block next batter
       bipTimerRef.current = setTimeout(() => {
         setBipCollapsed(true);
-        persistedHitDataRef.current = null; // clear persisted data after collapse
       }, 30000);
     }
     // Always update prevRunners to current state for next time
@@ -169,6 +171,24 @@ export default function LiveGamePage() {
       setSideJustChanged(false);
     }
   }, [sideJustChanged, liveState?.currentAtBat?.length]);
+
+  // Clear BIP suppression when new batter's pitches arrive
+  useEffect(() => {
+    if (!liveState?.currentAtBat?.length) return;
+    // If we have fresh pitches and BIP is collapsed, ensure the hit data ref is clear
+    // so bipJustEnded computes to false and the strike zone can render
+    if (bipCollapsed && persistedHitDataRef.current) {
+      persistedHitDataRef.current = null;
+    }
+  }, [bipCollapsed, liveState?.currentAtBat?.length]);
+
+  // Cleanup all timers on unmount
+  useEffect(() => {
+    return () => {
+      if (bipTimerRef.current) clearTimeout(bipTimerRef.current);
+      if (sideTimerRef.current) clearTimeout(sideTimerRef.current);
+    };
+  }, []);
 
   const isLive = gameInfo ? ["In Progress", "Warmup", "Delayed Start", "Delayed"].includes(gameInfo.status) : false;
   const isFinal = gameInfo?.status === "Final";
@@ -310,7 +330,7 @@ export default function LiveGamePage() {
           {(() => {
             const battingTeamLogo2 = liveState.inningHalf === "Top" ? gameInfo.away.logoUrl : gameInfo.home.logoUrl;
             // Use persisted hit data (survives half-inning API reset)
-            const hitData = liveState.lastHitData || persistedHitDataRef.current;
+            const hitData = liveState.lastHitData || (!bipCollapsed ? persistedHitDataRef.current : null);
             const lastPitch = liveState.currentAtBat?.[liveState.currentAtBat.length - 1];
             // Play is still in progress if the last pitch is in-play BUT the play hasn't completed yet
             const playStillInProgress = lastPitch?.isInPlay && !liveState.currentPlayComplete;

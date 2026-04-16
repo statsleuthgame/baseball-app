@@ -16,13 +16,16 @@ export function TeamProvider({ children }) {
     setTeamIdRaw(id);
   }, []);
 
+  const teamIdRef = useRef(teamId);
+  teamIdRef.current = teamId;
+
   const syncTeamFromUrl = useCallback((urlTeamId) => {
     if (switchingRef.current) return;
     const parsed = Number(urlTeamId);
-    if (parsed && parsed !== teamId) {
+    if (parsed && parsed !== teamIdRef.current) {
       setTeamIdRaw(parsed);
     }
-  }, [teamId]);
+  }, []);
 
   useEffect(() => {
     if (teamId) {
