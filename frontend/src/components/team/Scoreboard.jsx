@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
@@ -6,6 +6,7 @@ import { fetchAllGamesToday, fetchPitcherSeasonStats, fetchBvP, fetchRoster, fet
 import { formatGameTime, getTeamAbbr, lastName, teamDisplayName } from "../../utils/formatters";
 import SkeletonLoader from "../common/SkeletonLoader";
 import PlayerPhoto from "../common/PlayerPhoto";
+import ALL_TEAMS from "../../data/teams";
 
 const fmt = (d) => {
   const y = d.getFullYear();
@@ -211,17 +212,83 @@ function Linescore({ linescore, away, home }) {
   );
 }
 
-// Most prominent logo color per team
-const TEAM_COLORS = {
-  ARI: "#A71930", ATL: "#CE1141", BAL: "#DF4601", BOS: "#BD3039",
-  CHC: "#0E3386", CWS: "#C4CED4", CIN: "#C6011F", CLE: "#E31937",
-  COL: "#333366", DET: "#0C2C56", HOU: "#EB6E1F", KC: "#004687",
-  LAA: "#BA0021", LAD: "#005A9C", MIA: "#00A3E0", MIL: "#12284B",
-  MIN: "#D31145", NYM: "#FF5910", NYY: "#003087", OAK: "#003831",
-  ATH: "#003831", PHI: "#E81828", PIT: "#FDB827", SD: "#2F241D",
-  SF: "#FD5A1E", SEA: "#005C5C", STL: "#C41E3A", TB: "#092C5C",
-  TEX: "#003278", TOR: "#134A8E", WSH: "#AB0003",
-};
+function MatchupHero({ game, teamId, navigate }) {
+  const away = game.away.probablePitcher;
+  const home = game.home.probablePitcher;
+
+  return (
+    <div className="sb-matchup-hero">
+      <HeroPitcher side="away" pitcher={away} teamId={teamId} navigate={navigate} />
+      <span className="sb-hero-vs" aria-hidden="true">VS</span>
+      <HeroPitcher side="home" pitcher={home} teamId={teamId} navigate={navigate} />
+    </div>
+  );
+}
+
+function HeroPitcher({ side, pitcher, teamId, navigate }) {
+  const hasPitcher = !!pitcher?.id;
+  const handleClick = (e) => {
+    if (!hasPitcher) return;
+    e.stopPropagation();
+    navigate(`/team/${teamId}/player/${pitcher.id}`);
+  };
+  return (
+    <div
+      className={`sb-hero-pitcher sb-hero-${side} ${hasPitcher ? "sb-player-link" : ""}`}
+      onClick={handleClick}
+    >
+      {hasPitcher ? (
+        <PlayerPhoto playerId={pitcher.id} name={pitcher.fullName} size={56} className="sb-hero-pitcher-photo" />
+      ) : (
+        <div className="sb-hero-pitcher-photo" />
+      )}
+      <span className="sb-hero-pitcher-name">{pitcher?.fullName ? lastName(pitcher.fullName) : "TBD"}</span>
+      {hasPitcher && (
+        <span className="sb-hero-pitcher-stats">
+          <PitcherStats pitcherId={pitcher.id} />
+        </span>
+      )}
+    </div>
+  );
+}
+
+function ScoreDisplay({ value, className = "" }) {
+  const prev = useRef(value);
+  const [flash, setFlash] = useState(false);
+  useEffect(() => {
+    if (prev.current !== value && prev.current !== undefined && prev.current !== null) {
+      setFlash(true);
+      const t = setTimeout(() => setFlash(false), 700);
+      prev.current = value;
+      return () => clearTimeout(t);
+    }
+    prev.current = value;
+  }, [value]);
+  return <span className={`scoreboard-score ${className} ${flash ? "sb-score-just-changed" : ""}`}>{value}</span>;
+}
+
+function InningProgressBar({ inning, total = 9 }) {
+  const segs = Math.max(total, inning ?? 0);
+  return (
+    <div className="sb-inning-bar" aria-hidden="true">
+      {Array.from({ length: segs }).map((_, i) => {
+        const n = i + 1;
+        const cls = inning != null && n < inning ? "done" : n === inning ? "current" : "";
+        return <span key={n} className={`sb-inning-seg ${cls}`} />;
+      })}
+    </div>
+  );
+}
+
+function deriveWeatherMod(condition) {
+  if (!condition) return "";
+  const c = condition.toLowerCase();
+  if (c.includes("rain") || c.includes("drizzle") || c.includes("shower")) return "sb-weather-rain";
+  if (c.includes("sunny") || c.includes("clear")) return "sb-weather-sunny";
+  if (c.includes("cloud") || c.includes("overcast")) return "sb-weather-cloudy";
+  if (c.includes("dome") || c.includes("roof")) return "sb-weather-dome";
+  return "";
+}
 
 function BatterRow({ batter, teamId }) {
   const [open, setOpen] = useState(false);
@@ -329,7 +396,7 @@ function TeamPitchingBox({ pitchers, abbr, teamId }) {
   );
 }
 
-function GameDetail({ gamePk, awayAbbr, homeAbbr, teamId }) {
+function GameDetail({ gamePk, awayAbbr, homeAbbr, awayId, homeId, teamId }) {
   const [tab, setTab] = useState("scoring");
 
   const { data, isLoading } = useQuery({
@@ -356,7 +423,8 @@ function GameDetail({ gamePk, awayAbbr, homeAbbr, teamId }) {
           ) : data.scoringPlays.map((play, i) => {
             const isTop = play.halfInning === "top";
             const battingAbbr = isTop ? awayAbbr : homeAbbr;
-            const color = TEAM_COLORS[battingAbbr] || "var(--team-secondary)";
+            const battingTeamId = isTop ? awayId : homeId;
+            const color = ALL_TEAMS[battingTeamId]?.primary || "var(--team-secondary)";
             const isHR = play.event === "Home Run";
 
             // Inject HR distance and bold the hit type keyword
@@ -400,7 +468,7 @@ function GameDetail({ gamePk, awayAbbr, homeAbbr, teamId }) {
   );
 }
 
-function LiveGameInfo({ gamePk, teamId }) {
+function LiveGameInfo({ gamePk, teamId, isOurGame }) {
   const navigate = useNavigate();
   const { data: liveState } = useQuery({
     queryKey: ["liveGameState", gamePk],
@@ -410,7 +478,20 @@ function LiveGameInfo({ gamePk, teamId }) {
     refetchInterval: 1000 * 20,
   });
 
+  const { data: gameDetail } = useQuery({
+    queryKey: ["gameDetail", gamePk],
+    queryFn: () => fetchGameDetail(gamePk),
+    enabled: !!gamePk,
+    staleTime: 1000 * 60 * 2,
+    refetchInterval: 1000 * 60,
+  });
+
   if (!liveState) return null;
+
+  const lastPlay = gameDetail?.scoringPlays?.[gameDetail.scoringPlays.length - 1];
+  const tickerText = lastPlay
+    ? `Top ${lastPlay.inning === undefined ? "" : lastPlay.inning} · ${lastPlay.description}`
+    : null;
 
   return (
     <div className="sb-live-info">
@@ -424,7 +505,7 @@ function LiveGameInfo({ gamePk, teamId }) {
             </div>
           </div>
         )}
-        <svg className="sb-live-diamond" width="52" height="52" viewBox="0 0 52 52">
+        <svg className={`sb-live-diamond ${isOurGame ? "sb-our-diamond" : ""}`} width="52" height="52" viewBox="0 0 52 52">
           <rect x="17" y="2" width="12" height="12" rx="1.5" transform="rotate(45 23 8)" className={`sb-live-base ${liveState.onSecond ? "occupied" : ""}`} />
           <rect x="30" y="15" width="12" height="12" rx="1.5" transform="rotate(45 36 21)" className={`sb-live-base ${liveState.onFirst ? "occupied" : ""}`} />
           <rect x="4" y="15" width="12" height="12" rx="1.5" transform="rotate(45 10 21)" className={`sb-live-base ${liveState.onThird ? "occupied" : ""}`} />
@@ -449,6 +530,11 @@ function LiveGameInfo({ gamePk, teamId }) {
         </div>
         <span className="sb-live-count">{liveState.balls}-{liveState.strikes}</span>
       </div>
+      {tickerText && (
+        <div className="sb-ticker" aria-live="polite">
+          <span className="sb-ticker-inner">• {tickerText} •</span>
+        </div>
+      )}
     </div>
   );
 }
@@ -658,15 +744,31 @@ export default function Scoreboard() {
             const awayWon = isFinal && game.away.score > game.home.score;
             const homeWon = isFinal && game.home.score > game.away.score;
 
+            const awayColor = ALL_TEAMS[game.away.id]?.primary || "transparent";
+            const homeColor = ALL_TEAMS[game.home.id]?.primary || "transparent";
+            const scoreDiff = Math.abs((game.away.score ?? 0) - (game.home.score ?? 0));
+            const isCloseGame = isLive && scoreDiff <= 2 && (game.inning ?? 0) >= 6;
+            const isBlowout = isLive && scoreDiff >= 6 && (game.inning ?? 0) >= 6;
+            const weatherMod = isScheduled ? deriveWeatherMod(game.weather?.condition) : "";
+
             return (
               <div
                 key={game.gamePk}
-                className={`scoreboard-card ${isOurGame ? "our-game" : ""} ${isLive ? "live" : ""} ${canExpand ? "sb-tappable" : ""}`}
+                className={`scoreboard-card ${isOurGame ? "our-game" : ""} ${isLive ? "live" : ""} ${isCloseGame ? "sb-close-game" : ""} ${isBlowout ? "sb-blowout" : ""} ${weatherMod} ${canExpand ? "sb-tappable" : ""}`}
+                style={{ "--away-color": awayColor, "--home-color": homeColor }}
                 onClick={canExpand ? () => setExpandedGame(isExpanded ? null : game.gamePk) : undefined}
                 role={canExpand ? "button" : undefined}
                 tabIndex={canExpand ? 0 : undefined}
                 onKeyDown={canExpand ? (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setExpandedGame(isExpanded ? null : game.gamePk); } } : undefined}
               >
+                {isOurGame && (
+                  <img
+                    className="sb-hero-watermark"
+                    src={game.home.id === teamId ? game.home.logoUrl : game.away.logoUrl}
+                    alt=""
+                    aria-hidden="true"
+                  />
+                )}
                 <div className="sb-matchup-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/${isLive || isFinal ? "live" : "matchup"}/${game.gamePk}`); }}>
                 {isLive && (
                   <div className="scoreboard-live-badge">
@@ -683,6 +785,10 @@ export default function Scoreboard() {
                 )}
                 {isScheduled && <div className="scoreboard-status-badge sb-scheduled-time">{formatGameTime(game.gameDate)}</div>}
 
+                {isScheduled && (
+                  <MatchupHero game={game} teamId={teamId} navigate={navigate} />
+                )}
+
                 <div className="scoreboard-teams">
                   <div className={`scoreboard-team-row ${isFinal ? (awayWon ? "sb-winner" : "sb-loser") : ""}`}>
                     <img src={game.away.logoUrl} alt={game.away.abbreviation} className="scoreboard-logo" />
@@ -691,22 +797,8 @@ export default function Scoreboard() {
                       <span className="scoreboard-record">{game.away.wins}-{game.away.losses}</span>
                     )}
                     {isFinal && <TopPerformer gamePk={game.gamePk} side="away" teamId={teamId} />}
-                    {isScheduled && (
-                      <div
-                        className="sb-inline-pitcher sb-player-link"
-                        onClick={(e) => { if (game.away.probablePitcher?.id) { e.stopPropagation(); navigate(`/team/${teamId}/player/${game.away.probablePitcher.id}`); } }}
-                      >
-                        {game.away.probablePitcher?.id && (
-                          <PlayerPhoto playerId={game.away.probablePitcher.id} name={game.away.probablePitcher.fullName} size={24} className="sb-inline-pitcher-photo" />
-                        )}
-                        <div className="sb-inline-pitcher-info">
-                          <span className="sb-inline-pitcher-name">{game.away.probablePitcher?.fullName || "TBD"}</span>
-                          {game.away.probablePitcher?.id && <PitcherStats pitcherId={game.away.probablePitcher.id} />}
-                        </div>
-                      </div>
-                    )}
                     {(isLive || isFinal) && (
-                      <span className="scoreboard-score">{game.away.score}</span>
+                      <ScoreDisplay value={game.away.score} />
                     )}
                   </div>
                   <div className={`scoreboard-team-row ${isFinal ? (homeWon ? "sb-winner" : "sb-loser") : ""}`}>
@@ -716,30 +808,22 @@ export default function Scoreboard() {
                       <span className="scoreboard-record">{game.home.wins}-{game.home.losses}</span>
                     )}
                     {isFinal && <TopPerformer gamePk={game.gamePk} side="home" teamId={teamId} />}
-                    {isScheduled && (
-                      <div
-                        className="sb-inline-pitcher sb-player-link"
-                        onClick={(e) => { if (game.home.probablePitcher?.id) { e.stopPropagation(); navigate(`/team/${teamId}/player/${game.home.probablePitcher.id}`); } }}
-                      >
-                        {game.home.probablePitcher?.id && (
-                          <PlayerPhoto playerId={game.home.probablePitcher.id} name={game.home.probablePitcher.fullName} size={24} className="sb-inline-pitcher-photo" />
-                        )}
-                        <div className="sb-inline-pitcher-info">
-                          <span className="sb-inline-pitcher-name">{game.home.probablePitcher?.fullName || "TBD"}</span>
-                          {game.home.probablePitcher?.id && <PitcherStats pitcherId={game.home.probablePitcher.id} />}
-                        </div>
-                      </div>
-                    )}
                     {(isLive || isFinal) && (
-                      <span className="scoreboard-score">{game.home.score}</span>
+                      <ScoreDisplay value={game.home.score} />
                     )}
                   </div>
                 </div>
+                {(isLive || isFinal) && (
+                  <InningProgressBar
+                    inning={isFinal ? (game.linescore?.innings?.length ?? 9) + 1 : game.inning}
+                    total={isFinal ? (game.linescore?.innings?.length ?? 9) : 9}
+                  />
+                )}
                 </div>
 
                 {/* Live game: batter, pitcher, diamond, outs, count */}
                 {isLive && game.gamePk && (
-                  <LiveGameInfo gamePk={game.gamePk} teamId={teamId} />
+                  <LiveGameInfo gamePk={game.gamePk} teamId={teamId} isOurGame={isOurGame} />
                 )}
 
                 {/* Decisions for final games */}
@@ -823,7 +907,7 @@ export default function Scoreboard() {
                 {isExpanded && !isScheduled && (
                   <div className="sb-game-detail" onClick={(e) => e.stopPropagation()}>
                     <Linescore linescore={game.linescore} away={game.away} home={game.home} />
-                    <GameDetail gamePk={game.gamePk} awayAbbr={game.away.abbreviation} homeAbbr={game.home.abbreviation} teamId={teamId} />
+                    <GameDetail gamePk={game.gamePk} awayAbbr={game.away.abbreviation} homeAbbr={game.home.abbreviation} awayId={game.away.id} homeId={game.home.id} teamId={teamId} />
                   </div>
                 )}
 
@@ -857,6 +941,8 @@ export default function Scoreboard() {
                     />
                   </div>
                 )}
+
+                {isLive && <span className="sb-grass-strip" aria-hidden="true" />}
               </div>
             );
           })}
