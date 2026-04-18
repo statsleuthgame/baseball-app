@@ -6,7 +6,7 @@ import {
   fetchAllGamesToday,
   fetchHotColdPlayers,
   fetchBvP,
-  fetchPlayerGameLog,
+  fetchPlayerVsTeam,
 } from "../../api/client";
 import { formatAvg, getTeamAbbr, lastName } from "../../utils/formatters";
 import PlayerPhoto from "../common/PlayerPhoto";
@@ -22,10 +22,11 @@ import {
  * $ icon in TopBar; intentionally not listed in TopTabs.
  *
  * Data flow:
- *   fetchAllGamesToday()            → today's slate
- *   fetchHotColdPlayers(teamId)     → top-3 hot batters per team (L7 OPS)
- *   fetchBvP(batterId, pitcherId)   → batter-vs-pitcher career line
- *   fetchPlayerGameLog(batterId)    → (lazy on expand) vs-team recent history
+ *   fetchAllGamesToday()                       → today's slate
+ *   fetchHotColdPlayers(teamId)                → top-3 hot batters per team (L7 OPS)
+ *   fetchBvP(batterId, pitcherId)              → batter-vs-pitcher career line
+ *   fetchPlayerVsTeam(batterId, oppTeamId)     → aggregated vs-team career
+ *                                                (feeds both score + expand panel)
  *
  * Scoring lives in utils/edgeScoring.js.
  */
@@ -115,20 +116,41 @@ export default function BettingEdge() {
     })),
   });
 
+  // 4b. Aggregated vs-team history per pair (broader than last-10 game log) --
+  const vsTeamQueries = useQueries({
+    queries: pairs.map((p) => ({
+      queryKey: ["edge", "vsTeam", p.batter.id, p.opposingTeam?.id],
+      queryFn: () => fetchPlayerVsTeam(p.batter.id, p.opposingTeam?.id),
+      staleTime: 24 * 60 * 60 * 1000,
+      enabled: !!p.opposingTeam?.id,
+    })),
+  });
+
   // 5. Score + sort + rank --------------------------------------------------
   const picks = useMemo(() => {
     const scored = pairs.map((p, i) => {
       const bvp = bvpQueries[i]?.data || { pa: 0 };
+      const vsTeam = vsTeamQueries[i]?.data || {
+        games: 0,
+        ab: 0,
+        hits: 0,
+        hr: 0,
+        avg: null,
+        ops: null,
+        pa: 0,
+      };
       const score = computeEdgeScore({
         l7OPS: p.batter.ops,
         bvpOPS: bvp.ops,
         bvpPA: bvp.pa,
+        teamContextOPS: vsTeam.ops,
+        teamContextAB: vsTeam.ab,
       });
       const confidence = confidenceBucket({
         l7OPS: p.batter.ops,
         bvpPA: bvp.pa,
       });
-      return { ...p, bvp, score, confidence };
+      return { ...p, bvp, vsTeam, score, confidence };
     });
 
     let sorted;
@@ -147,7 +169,12 @@ export default function BettingEdge() {
 
     return rankPicks(sorted, { maxTotal: 15, maxPerTeam: 3 });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pairs, sort, bvpQueries.map((q) => q.data?.pa ?? "_").join("|")]);
+  }, [
+    pairs,
+    sort,
+    bvpQueries.map((q) => q.data?.pa ?? "_").join("|"),
+    vsTeamQueries.map((q) => q.data?.ab ?? "_").join("|"),
+  ]);
 
   const filteredPicks = useMemo(() => {
     if (!myTeamsOnly || !team?.id) return picks;
@@ -273,6 +300,7 @@ function PickCard({ pick, onSelectPlayer }) {
   const {
     batter,
     bvp,
+    vsTeam,
     opposingPitcher,
     opposingTeam,
     teamAbbr,
@@ -280,40 +308,7 @@ function PickCard({ pick, onSelectPlayer }) {
     score,
   } = pick;
   const bvpHasHistory = (bvp.pa || 0) > 0;
-
-  // Lazy: only fetches the batter's game log once the card is expanded.
-  const logQuery = useQuery({
-    queryKey: ["edge", "gameLog", batter.id],
-    queryFn: () => fetchPlayerGameLog(batter.id),
-    staleTime: 30 * 60 * 1000,
-    enabled: open,
-  });
-
-  const vsTeamGames = useMemo(() => {
-    const oppAbbr = opposingTeam?.abbreviation;
-    if (!logQuery.data || !oppAbbr) return [];
-    return logQuery.data.filter((g) => g.opponent === oppAbbr);
-  }, [logQuery.data, opposingTeam]);
-
-  const vsTeamAggregate = useMemo(() => {
-    if (!vsTeamGames.length) return null;
-    let ab = 0,
-      h = 0,
-      hr = 0;
-    for (const g of vsTeamGames) {
-      const s = g.stat || {};
-      ab += parseInt(s.atBats || 0, 10);
-      h += parseInt(s.hits || 0, 10);
-      hr += parseInt(s.homeRuns || 0, 10);
-    }
-    return {
-      games: vsTeamGames.length,
-      ab,
-      h,
-      hr,
-      avg: ab > 0 ? h / ab : 0,
-    };
-  }, [vsTeamGames]);
+  const vsTeamHasHistory = (vsTeam?.ab || 0) > 0;
 
   const pitcherDisplay =
     lastName(opposingPitcher?.fullName || opposingPitcher?.name || "") ||
@@ -387,45 +382,36 @@ function PickCard({ pick, onSelectPlayer }) {
 
       {open && (
         <div className="edge-details">
-          {logQuery.isLoading ? (
-            <div className="edge-details-loading">Loading history…</div>
-          ) : vsTeamAggregate ? (
+          {vsTeamHasHistory ? (
             <>
-              <div className="edge-details-line">
-                Last {vsTeamAggregate.games} vs{" "}
-                {opposingTeam?.abbreviation || "OPP"}:{" "}
-                {vsTeamAggregate.h}-for-{vsTeamAggregate.ab} (
-                {formatAvg(vsTeamAggregate.avg)}) · {vsTeamAggregate.hr} HR
+              <div className="edge-details-label">
+                Career vs {opposingTeam?.abbreviation || "OPP"}
               </div>
-              <table className="edge-details-table">
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Opp</th>
-                    <th>AB</th>
-                    <th>H</th>
-                    <th>HR</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {vsTeamGames.map((g) => (
-                    <tr key={g.date}>
-                      <td>{g.date?.slice(5) || "—"}</td>
-                      <td>
-                        {g.isHome ? "vs" : "@"} {g.opponent}
-                      </td>
-                      <td>{g.stat?.atBats ?? "—"}</td>
-                      <td>{g.stat?.hits ?? "—"}</td>
-                      <td>{g.stat?.homeRuns ?? "—"}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <div className="edge-details-line">
+                {vsTeam.hits}-for-{vsTeam.ab} ({formatAvg(vsTeam.avg)}) ·{" "}
+                {vsTeam.hr} HR
+                {vsTeam.ops != null && (
+                  <>
+                    {" "}
+                    · {formatAvg(vsTeam.ops)} OPS
+                  </>
+                )}
+                {vsTeam.games > 0 && (
+                  <span className="edge-details-sample">
+                    {" "}
+                    · {vsTeam.games} {vsTeam.games === 1 ? "game" : "games"}
+                  </span>
+                )}
+              </div>
+              {vsTeam.ab < 10 && (
+                <div className="edge-details-note">
+                  Small sample — team context not factored into score.
+                </div>
+              )}
             </>
           ) : (
             <div className="edge-details-line edge-no-history">
-              No recent game log entries vs{" "}
-              {opposingTeam?.abbreviation || "this team"}.
+              No prior history vs {opposingTeam?.abbreviation || "this team"}.
             </div>
           )}
         </div>

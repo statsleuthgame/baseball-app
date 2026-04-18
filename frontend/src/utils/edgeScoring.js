@@ -29,10 +29,20 @@ export function bvpWeight(pa) {
 }
 
 // The composite EdgeScore used as the default sort.
-export function computeEdgeScore({ l7OPS, bvpOPS, bvpPA, teamContextOPS }) {
+// teamContext is sample-gated: below 10 AB vs the opposing team we fall back
+// to L7 OPS so picks aren't penalized for lack of history.
+export function computeEdgeScore({
+  l7OPS,
+  bvpOPS,
+  bvpPA,
+  teamContextOPS,
+  teamContextAB,
+}) {
   const l7 = normL7OPS(l7OPS);
   const bvpContrib = bvpWeight(bvpPA) * normL7OPS(bvpOPS);
-  const teamContext = teamContextOPS != null ? normL7OPS(teamContextOPS) : l7;
+  const ab = Number(teamContextAB) || 0;
+  const hasTeamSample = ab >= 10 && teamContextOPS != null;
+  const teamContext = hasTeamSample ? normL7OPS(teamContextOPS) : l7;
   return 0.5 * l7 + 0.3 * bvpContrib + 0.2 * teamContext;
 }
 

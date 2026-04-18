@@ -1232,6 +1232,51 @@ export const fetchPlayerGameLog = async (playerId, group = "hitting") => {
   return [];
 };
 
+// Aggregated batter-vs-team stats (broader sample than last-10 game log).
+// Tries MLB's native vsTeam5Y / vsTeamTotal / vsTeam stat types in order,
+// aggregates across any per-season splits, and returns normalized numbers.
+// Returns the empty shape when no history exists.
+export const fetchPlayerVsTeam = async (playerId, opposingTeamId, group = "hitting") => {
+  const empty = { games: 0, ab: 0, hits: 0, hr: 0, avg: null, ops: null, pa: 0 };
+  if (!playerId || !opposingTeamId) return empty;
+  for (const statsType of ["vsTeam5Y", "vsTeamTotal", "vsTeam"]) {
+    try {
+      const resp = await mlbApi.get(`/people/${playerId}/stats`, {
+        params: { stats: statsType, group, opposingTeamId },
+      });
+      const splits = resp.data?.stats?.[0]?.splits || [];
+      let ab = 0, hits = 0, hr = 0, pa = 0, games = 0;
+      let obpSum = 0, slgSum = 0;
+      for (const sp of splits) {
+        const s = sp.stat || {};
+        const abSp = s.atBats || 0;
+        if (abSp <= 0) continue;
+        ab += abSp;
+        hits += s.hits || 0;
+        hr += s.homeRuns || 0;
+        pa += s.plateAppearances || 0;
+        games += s.gamesPlayed || 0;
+        obpSum += (parseFloat(s.obp) || 0) * abSp;
+        slgSum += (parseFloat(s.slg) || 0) * abSp;
+      }
+      if (ab > 0) {
+        return {
+          games,
+          ab,
+          hits,
+          hr,
+          avg: hits / ab,
+          ops: obpSum / ab + slgSum / ab,
+          pa,
+        };
+      }
+    } catch {
+      continue;
+    }
+  }
+  return empty;
+};
+
 // 5. Win probability for a game
 export const fetchWinProbability = async (gamePk) => {
   try {
