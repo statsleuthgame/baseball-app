@@ -12,6 +12,7 @@ import {
 import { formatAvg, getTeamAbbr, lastName } from "../../utils/formatters";
 import PlayerPhoto from "../common/PlayerPhoto";
 import SkeletonLoader from "../common/SkeletonLoader";
+import FantasyProjections from "./FantasyProjections";
 import {
   computeEdgeScore,
   computeFadeScore,
@@ -348,6 +349,8 @@ export default function BettingEdge() {
               </div>
             )}
           </section>
+
+          <FantasyProjections myTeamsOnly={myTeamsOnly} />
         </>
       )}
 

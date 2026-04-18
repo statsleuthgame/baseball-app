@@ -7333,6 +7333,14 @@ th.sb-ls-total {
   color: #ef4444;
 }
 
+.edge-section-fantasy {
+  color: #eab308;
+}
+
+.edge-section-fantasy .edge-section-accent {
+  color: #eab308;
+}
+
 .edge-empty-inline {
   padding: 16px 14px;
   font-size: 13px;
@@ -7643,6 +7651,55 @@ th.sb-ls-total {
 
 .edge-details-table tr:last-child td {
   border-bottom: none;
+}
+
+/* ---- Fantasy section tweaks ----------------------------------------- */
+.edge-fantasy-efp-row .edge-fantasy-efp {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: #eab308;
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.edge-fantasy-pa-default {
+  color: var(--text-muted, #9ca3af);
+  font-size: 10px;
+  font-style: italic;
+  margin-left: 4px;
+}
+
+.edge-fantasy-breakdown {
+  width: 100%;
+  margin-top: 4px;
+}
+
+.edge-fantasy-breakdown td:first-child {
+  color: var(--text-muted, #9ca3af);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  width: 72px;
+}
+
+.edge-fantasy-breakdown td:last-child {
+  text-align: right;
+  color: var(--text-bright, #fff);
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.edge-fantasy-footer {
+  margin: 10px 0 0;
+  font-size: 10px;
+  text-align: center;
+  color: var(--text-muted, #9ca3af);
+  opacity: 0.75;
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  letter-spacing: 0.3px;
 }
 
 /* ---- Disclaimer ------------------------------------------------------ */

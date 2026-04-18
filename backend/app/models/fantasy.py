@@ -1,0 +1,91 @@
+"""Pydantic response models for the Fantasy projections endpoint."""
+
+from __future__ import annotations
+
+from typing import Optional
+
+from pydantic import BaseModel
+
+
+class OppPitcher(BaseModel):
+    id: Optional[int] = None
+    fullName: Optional[str] = None
+
+
+class ParkInfo(BaseModel):
+    id: Optional[int] = None
+    name: Optional[str] = None
+    runs: Optional[int] = None
+    hr: Optional[int] = None
+    label: Optional[str] = None
+
+
+class Weather(BaseModel):
+    temp: Optional[float | str] = None
+    condition: Optional[str] = None
+    wind: Optional[str] = None
+
+
+class PerEvent(BaseModel):
+    singles: float
+    doubles: float
+    triples: float
+    home_runs: float
+    bb_hbp: float
+    r: float
+    rbi: float
+    sb: float
+
+
+class Multipliers(BaseModel):
+    park_hr: float
+    park_runs: float
+    weather_hr: float
+
+
+class Rates(BaseModel):
+    singles: float
+    doubles: float
+    triples: float
+    home_runs: float
+    bb_hbp: float
+    r_per_pa: float
+    rbi_per_pa: float
+
+
+class ProjectionRow(BaseModel):
+    player_id: int
+    name: str
+    position: Optional[str] = None
+    team_id: int
+    team_abbr: str
+    opp_team_id: Optional[int] = None
+    opp_abbr: Optional[str] = None
+    opp_pitcher: Optional[OppPitcher] = None
+    park: ParkInfo
+    weather: Optional[Weather] = None
+    pa: float
+    pa_source: str
+    efp: float
+    tier: str
+    per_event: PerEvent
+    multipliers: Multipliers
+    rates: Rates
+
+
+class Metrics(BaseModel):
+    r2: Optional[float] = None
+    mae: Optional[float] = None
+    spearman: Optional[float] = None
+    n: int = 0
+
+
+class ProjectionResponse(BaseModel):
+    date: str
+    season: int
+    weights_version: Optional[str] = None
+    calibrated: bool = False
+    metrics: Metrics = Metrics()
+    game_count: int
+    projection_count: int
+    projections: list[ProjectionRow]

@@ -660,6 +660,19 @@ export const fetchUmpireProfile = (umpireName) => {
   );
 };
 
+// Fantasy Score projections (backend FastAPI endpoint).
+// Returns { date, season, weights_version, calibrated, metrics, game_count,
+//           projection_count, projections: [...] } or an empty shape on error.
+export const fetchFantasyProjections = async (dateStr) => {
+  try {
+    const params = dateStr ? { date: dateStr } : undefined;
+    const resp = await axios.get("/api/fantasy/projections", { params, timeout: 60000 });
+    return resp.data || { projections: [] };
+  } catch {
+    return { projections: [], projection_count: 0, game_count: 0 };
+  }
+};
+
 // ---- Live data (MLB Stats API, called directly from browser) ----
 export const fetchTodayGame = async (teamId) => {
   const today = new Date();

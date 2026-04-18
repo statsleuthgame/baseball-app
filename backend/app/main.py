@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 from app.config import FRONTEND_ORIGIN
 from app.services import mlb_api
-from app.routers import umpire, leaderboards
+from app.routers import umpire, leaderboards, fantasy
 
 
 class SafeJSONEncoder(json.JSONEncoder):
@@ -77,6 +77,7 @@ app.add_middleware(
 
 app.include_router(umpire.router)
 app.include_router(leaderboards.router)
+app.include_router(fantasy.router)
 
 
 @app.exception_handler(Exception)
