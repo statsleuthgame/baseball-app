@@ -518,44 +518,32 @@ export default function LiveGamePage() {
         </div>
       )}
 
-      {/* ===== ZONE D: WIN PROB + DUE UP (side by side) — hide when final ===== */}
-      {!isFinal && (wp || liveState?.onDeck) && (
-        <div className="lgp-row-section">
-          {wp && (
-            <div className="lgp-wp-compact">
-              <span className="lgp-section-label">Win Prob</span>
-              <div className="lgp-wp-inline">
-                <img src={wp.logo} alt={wp.abbr} className="lgp-wp-logo-sm" />
-                <span className="lgp-wp-num">{wp.pct}%</span>
-              </div>
-            </div>
-          )}
-          {(liveState?.onDeck || liveState?.inHole) && (
-            <div className="lgp-due-compact">
-              <span className="lgp-section-label">Due Up</span>
-              <div className="lgp-due-list">
-                {[liveState.onDeck, liveState.inHole].filter(Boolean).map((p) => {
-                  const stats = [];
-                  if (p.ab > 0) stats.push(`${p.h}-${p.ab}`);
-                  if (p.hr > 0) stats.push(`${p.hr} HR`);
-                  if (p.rbi > 0) stats.push(`${p.rbi} RBI`);
-                  if (p.k > 0) stats.push(`${p.k} K`);
-                    if (p.bb > 0) stats.push(`${p.bb} BB`);
-                    if (p.hbp > 0) stats.push(`${p.hbp} HBP`);
-                  return (
-                    <div key={p.id} className="lgp-due-player sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
-                      <span className="lgp-due-name">{p.fullName}</span>
-                      {stats.length > 0 && <span className="lgp-due-stats">{stats.join(", ")}</span>}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
+      {/* ===== WIN PROBABILITY SPARKLINE + DUE UP ===== */}
+      {wpData?.length > 1 && (
+        <WPSparkline wpData={wpData} gameInfo={gameInfo} />
+      )}
+
+      {!isFinal && (liveState?.onDeck || liveState?.inHole) && (
+        <div className="lgp-due-strip">
+          <span className="lgp-due-strip-label">Due Up</span>
+          <div className="lgp-due-strip-list">
+            {[liveState.onDeck, liveState.inHole].filter(Boolean).map((p) => {
+              const stats = [];
+              if (p.ab > 0) stats.push(`${p.h}-${p.ab}`);
+              if (p.hr > 0) stats.push(`${p.hr} HR`);
+              if (p.rbi > 0) stats.push(`${p.rbi} RBI`);
+              return (
+                <div key={p.id} className="lgp-due-strip-player sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
+                  <span className="lgp-due-strip-name">{lastName(p.fullName)}</span>
+                  {stats.length > 0 && <span className="lgp-due-strip-stats">{stats.join(" · ")}</span>}
+                </div>
+              );
+            })}
+          </div>
         </div>
       )}
 
-      {/* ===== ZONE E: LINESCORE (always 9 innings) ===== */}
+      {/* ===== INNING TIMELINE (tappable to jump to scoring) + LINESCORE ===== */}
       {liveState?.linescore && (() => {
         const innings = liveState.linescore?.innings || [];
         const maxInn = Math.max(9, innings.length);
@@ -563,38 +551,72 @@ export default function LiveGamePage() {
           const real = innings.find((inn) => inn.num === i + 1);
           return { num: i + 1, away: real?.away ?? "", home: real?.home ?? "" };
         });
+        const currentInning = liveState.inning;
+
+        const scrollToScoringInning = (n) => {
+          const el = document.querySelector(`[data-scoring-inning="${n}"]`);
+          if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+        };
+
         return (
-          <div className="lgp-section">
-            <div className="lgp-ls-scroll">
-              <table className="live-ls-table">
-                <thead>
-                  <tr>
-                    <th></th>
-                    {fullInnings.map((inn) => <th key={inn.num}>{inn.num}</th>)}
-                    <th className="live-ls-total">R</th>
-                    <th className="live-ls-total">H</th>
-                    <th className="live-ls-total">E</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td className="live-ls-team">{gameInfo.away.abbreviation}</td>
-                    {fullInnings.map((inn) => <td key={inn.num} className={inn.away === "" ? "live-ls-future" : ""}>{inn.away !== "" ? inn.away : "-"}</td>)}
-                    <td className="live-ls-total">{(liveState.linescore?.away || {}).runs}</td>
-                    <td className="live-ls-total">{(liveState.linescore?.away || {}).hits}</td>
-                    <td className="live-ls-total">{(liveState.linescore?.away || {}).errors}</td>
-                  </tr>
-                  <tr>
-                    <td className="live-ls-team">{gameInfo.home.abbreviation}</td>
-                    {fullInnings.map((inn) => <td key={inn.num} className={inn.home === "" ? "live-ls-future" : ""}>{inn.home !== "" ? inn.home : "-"}</td>)}
-                    <td className="live-ls-total">{(liveState.linescore?.home || {}).runs}</td>
-                    <td className="live-ls-total">{(liveState.linescore?.home || {}).hits}</td>
-                    <td className="live-ls-total">{(liveState.linescore?.home || {}).errors}</td>
-                  </tr>
-                </tbody>
-              </table>
+          <>
+            <div className="lgp-inning-timeline">
+              {fullInnings.map((inn) => {
+                const isCurrent = !isFinal && inn.num === currentInning;
+                const awayScored = inn.away !== "" && inn.away > 0;
+                const homeScored = inn.home !== "" && inn.home > 0;
+                return (
+                  <button
+                    key={inn.num}
+                    className={`lgp-tl-chip ${isCurrent ? "current" : ""} ${inn.away === "" && inn.home === "" ? "future" : ""}`}
+                    onClick={() => scrollToScoringInning(inn.num)}
+                    aria-label={`Jump to inning ${inn.num} scoring`}
+                  >
+                    <span className="lgp-tl-num">{inn.num}</span>
+                    <span className={`lgp-tl-half ${awayScored ? "scored" : ""}`}>
+                      <span className="lgp-tl-half-label">T</span>
+                      <span className="lgp-tl-half-val">{inn.away === "" ? "—" : inn.away}</span>
+                    </span>
+                    <span className={`lgp-tl-half ${homeScored ? "scored" : ""}`}>
+                      <span className="lgp-tl-half-label">B</span>
+                      <span className="lgp-tl-half-val">{inn.home === "" ? "—" : inn.home}</span>
+                    </span>
+                  </button>
+                );
+              })}
             </div>
-          </div>
+            <div className="lgp-section">
+              <div className="lgp-ls-scroll">
+                <table className="live-ls-table">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      {fullInnings.map((inn) => <th key={inn.num}>{inn.num}</th>)}
+                      <th className="live-ls-total">R</th>
+                      <th className="live-ls-total">H</th>
+                      <th className="live-ls-total">E</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="live-ls-team">{gameInfo.away.abbreviation}</td>
+                      {fullInnings.map((inn) => <td key={inn.num} className={inn.away === "" ? "live-ls-future" : ""}>{inn.away !== "" ? inn.away : "-"}</td>)}
+                      <td className="live-ls-total">{(liveState.linescore?.away || {}).runs}</td>
+                      <td className="live-ls-total">{(liveState.linescore?.away || {}).hits}</td>
+                      <td className="live-ls-total">{(liveState.linescore?.away || {}).errors}</td>
+                    </tr>
+                    <tr>
+                      <td className="live-ls-team">{gameInfo.home.abbreviation}</td>
+                      {fullInnings.map((inn) => <td key={inn.num} className={inn.home === "" ? "live-ls-future" : ""}>{inn.home !== "" ? inn.home : "-"}</td>)}
+                      <td className="live-ls-total">{(liveState.linescore?.home || {}).runs}</td>
+                      <td className="live-ls-total">{(liveState.linescore?.home || {}).hits}</td>
+                      <td className="live-ls-total">{(liveState.linescore?.home || {}).errors}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </>
         );
       })()}
 
@@ -618,21 +640,41 @@ export default function LiveGamePage() {
         </div>
       )}
 
-      {/* ===== ZONE F: SCORING SUMMARY ===== */}
+      {/* ===== SCORING SUMMARY — rich cards with hit metrics chyron ===== */}
       {liveState?.scoringPlays?.length > 0 && (
         <div className="lgp-section">
           <span className="lgp-section-label">Scoring</span>
           <div className="live-scoring-list">
             {liveState.scoringPlays.map((p) => {
               const scoringTeamId = p.halfInning === "top" ? gameInfo.away.id : gameInfo.home.id;
-              const teamColor = ALL_TEAMS[scoringTeamId]?.secondary || "var(--team-secondary)";
+              const teamColor = ALL_TEAMS[scoringTeamId]?.primary || "var(--team-secondary)";
+              const hd = p.hitData;
+              const metrics = [];
+              if (hd?.exitVelo) metrics.push(`${Math.round(hd.exitVelo * 10) / 10} MPH`);
+              if (hd?.distance) metrics.push(`${Math.round(hd.distance)} FT`);
+              if (hd?.launchAngle != null) metrics.push(`${Math.round(hd.launchAngle)}° LA`);
               return (
-                <div key={`${p.inning}-${p.halfInning}-${p.awayScore}-${p.homeScore}`} className="live-scoring-play" style={{ borderColor: teamColor }}>
-                  <span className="live-scoring-inn">{p.halfInning === "top" ? "\u25B2" : "\u25BC"}{p.inning}</span>
-                  <span className="live-scoring-desc" dangerouslySetInnerHTML={{ __html: formatScoringDesc(p.description, p.hrDistance) }} />
-                  <span className="live-scoring-score">{p.awayScore}-{p.homeScore}</span>
-                  {p.hitData && (
-                    <button className="lgp-replay-btn" onClick={() => { setReplayData(p); setReplayKey(k => k + 1); }}>
+                <div
+                  key={`${p.inning}-${p.halfInning}-${p.awayScore}-${p.homeScore}`}
+                  className="lgp-scoring-card"
+                  data-scoring-inning={p.inning}
+                  style={{ "--card-color": teamColor }}
+                >
+                  <div className="lgp-scoring-top">
+                    <span className="lgp-scoring-inning-chip">{p.halfInning === "top" ? "T" : "B"}{p.inning}</span>
+                    <span className="lgp-scoring-desc" dangerouslySetInnerHTML={{ __html: formatScoringDesc(p.description, p.hrDistance) }} />
+                    <span className="lgp-scoring-score-box">{p.awayScore}<span>–</span>{p.homeScore}</span>
+                  </div>
+                  {metrics.length > 0 && (
+                    <div className="lgp-scoring-metrics">
+                      {metrics.map((m, i) => (
+                        <span key={i} className="lgp-scoring-metric">{m}</span>
+                      ))}
+                      {hd?.event && <span className="lgp-scoring-event">{hd.event}</span>}
+                    </div>
+                  )}
+                  {hd && (
+                    <button className="lgp-scoring-replay" onClick={() => { setReplayData(p); setReplayKey(k => k + 1); }}>
                       <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21" /></svg>
                       Replay
                     </button>
@@ -659,6 +701,55 @@ export default function LiveGamePage() {
         <button className="lgp-matchup-btn" onClick={() => navigate(`/team/${teamId}/matchup/${gamePk}`)}>
           View Full Matchup
         </button>
+      </div>
+    </div>
+  );
+}
+
+function WPSparkline({ wpData, gameInfo }) {
+  const W = 600;
+  const H = 56;
+
+  const last = wpData[wpData.length - 1];
+  const homePct = Math.max(0, Math.min(100, Math.round(last.homeProb * 100)));
+  const awayPct = 100 - homePct;
+  const homeColor = ALL_TEAMS[gameInfo.home.id]?.primary || "#22c55e";
+  const awayColor = ALL_TEAMS[gameInfo.away.id]?.primary || "#ef4444";
+
+  const pts = wpData.map((d, i) => {
+    const x = (i / Math.max(1, wpData.length - 1)) * W;
+    const y = (1 - d.homeProb) * H;
+    return `${x},${y}`;
+  }).join(" ");
+
+  const awayArea = `0,0 ${pts} ${W},0`;
+  const homeArea = `0,${H} ${pts} ${W},${H}`;
+
+  return (
+    <div className="lgp-wp-section">
+      <div className="lgp-wp-header">
+        <span className="lgp-section-label">Win Probability</span>
+      </div>
+      <div className="lgp-wp-labels">
+        <span className="lgp-wp-team">
+          <img src={gameInfo.away.logoUrl} alt="" className="lgp-wp-logo" />
+          <span className="lgp-wp-abbr">{gameInfo.away.abbreviation}</span>
+          <span className="lgp-wp-pct">{awayPct}%</span>
+        </span>
+        <span className="lgp-wp-team lgp-wp-team-right">
+          <span className="lgp-wp-pct">{homePct}%</span>
+          <span className="lgp-wp-abbr">{gameInfo.home.abbreviation}</span>
+          <img src={gameInfo.home.logoUrl} alt="" className="lgp-wp-logo" />
+        </span>
+      </div>
+      <div className="lgp-wp-chart-wrap">
+        <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" className="lgp-wp-chart">
+          <line x1="0" y1={H / 2} x2={W} y2={H / 2} stroke="rgba(255,255,255,0.08)" strokeDasharray="4 4" />
+          <polygon points={awayArea} fill={awayColor} opacity="0.22" />
+          <polygon points={homeArea} fill={homeColor} opacity="0.22" />
+          <polyline points={pts} fill="none" stroke="rgba(255,255,255,0.65)" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
+          <circle cx={W} cy={(1 - last.homeProb) * H} r="3" fill="#fff" stroke={homePct >= 50 ? homeColor : awayColor} strokeWidth="1.5" />
+        </svg>
       </div>
     </div>
   );
