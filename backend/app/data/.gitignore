@@ -1,0 +1,4 @@
+# Backtest row-level CSVs are large and regeneratable via
+# `scripts/backtest_fantasy.py`. Only the calibrated weights
+# (fantasy_weights.json) belong in git.
+backtest_*.csv

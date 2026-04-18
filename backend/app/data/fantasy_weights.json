@@ -1,24 +1,24 @@
 {
   "version": "2026-04-18",
-  "calibrated": false,
-  "l7_blend": 0.30,
+  "calibrated": true,
+  "l7_blend": 0.2,
   "l7_min_pa": 10,
-  "bvp_blend": 0.20,
+  "bvp_blend": 0.0,
   "bvp_min_pa": 20,
   "bvp_blend_ramp_floor": 5,
   "bvp_multiplier_cap": 0.25,
-  "r_per_pa_coef": 0.35,
-  "rbi_per_pa_coef": 0.25,
+  "r_per_pa_coef": 0.42,
+  "rbi_per_pa_coef": 0.32,
   "default_pa": 4.0,
-  "lineup_pa_adj": 0.30,
+  "lineup_pa_adj": 0.3,
   "pa_floor": 3.0,
   "pa_ceil": 5.2,
   "tier_high": 11.0,
   "tier_medium": 8.0,
   "metrics": {
-    "r2": null,
-    "mae": null,
-    "spearman": null,
-    "n": 0
+    "r2": 0.0943,
+    "mae": 4.722,
+    "spearman": 0.416,
+    "n": 167
   }
 }
