@@ -1,9 +1,10 @@
-import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useState, useMemo } from "react";
+import { useQuery, useQueries } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
-import { fetchTodayGame, fetchRoster, fetchGameLineup, fetchProjectedLineup, fetchHotColdPlayers, fetchBullpenAvailability, fetchAllGamesToday, fetchTeamInjuries, fetchSchedule } from "../../api/client";
+import { fetchTodayGame, fetchRoster, fetchGameLineup, fetchProjectedLineup, fetchHotColdPlayers, fetchBullpenAvailability, fetchAllGamesToday, fetchTeamInjuries, fetchSchedule, fetchBvP, fetchPlayerCareerVsTeam } from "../../api/client";
 import { formatGameDate, formatGameTime, lastName, formatAvg } from "../../utils/formatters";
+import { computeEdgeScore, computeFadeScore, scoreBucket } from "../../utils/edgeScoring";
 import PARK_FACTORS from "../../data/parkFactors";
 import SkeletonLoader from "../common/SkeletonLoader";
 import BatterVsPitcher from "./BatterVsPitcher";
@@ -178,6 +179,16 @@ export default function MatchupView() {
       {game.venue?.id && PARK_FACTORS[game.venue.id] && (
         <ParkFactorsCard venueId={game.venue.id} venueName={game.venue.name} />
       )}
+
+      {/* Bet Edge (pre-collapsed): top 3 bet-on + top 3 bet-against per team */}
+      <MatchupEdgeSection
+        awayId={awayId}
+        homeId={homeId}
+        awayAbbr={game.away.abbreviation}
+        homeAbbr={game.home.abbreviation}
+        awayPitcher={game.away.probablePitcher}
+        homePitcher={game.home.probablePitcher}
+      />
 
       {/* Hot & Cold Players */}
       <HotColdSection awayId={awayId} homeId={homeId} awayAbbr={game.away.abbreviation} homeAbbr={game.home.abbreviation} />
@@ -354,6 +365,187 @@ function ParkFactorsCard({ venueId }) {
       </span>
       <span className="park-factor-note">100 = avg</span>
     </div>
+  );
+}
+
+// Pre-collapsed per-matchup edge summary: top 3 bet-on and top 3 bet-against
+// for each team. Reuses the ["matchupHotCold", teamId] query cache that
+// HotColdSection already populates, then fans out BvP + career-vs-team per
+// (batter, opposing pitcher/team) and scores with the same functions powering
+// the main /edge tab.
+function MatchupEdgeSection({
+  awayId,
+  homeId,
+  awayAbbr,
+  homeAbbr,
+  awayPitcher,
+  homePitcher,
+}) {
+  const { teamId: contextTeamId } = useTeam();
+  const navigate = useNavigate();
+
+  const { data: awayHC } = useQuery({
+    queryKey: ["matchupHotCold", awayId],
+    queryFn: () => fetchHotColdPlayers(awayId),
+    enabled: !!awayId,
+    staleTime: 1000 * 60 * 30,
+  });
+  const { data: homeHC } = useQuery({
+    queryKey: ["matchupHotCold", homeId],
+    queryFn: () => fetchHotColdPlayers(homeId),
+    enabled: !!homeId,
+    staleTime: 1000 * 60 * 30,
+  });
+
+  // Candidates: every hot batter becomes a pick candidate, every cold batter
+  // a fade candidate, keyed by which pitcher/team they'll face.
+  const candidates = useMemo(() => {
+    const out = [];
+    const push = (list, kind, ownTeamId, ownAbbr, oppPitcher, oppTeamId, oppAbbr) => {
+      for (const b of list || []) {
+        out.push({
+          key: `${ownTeamId}-${kind}-${b.id}`,
+          kind,
+          teamId: ownTeamId,
+          teamAbbr: ownAbbr,
+          batter: b,
+          oppPitcher,
+          oppTeamId,
+          oppAbbr,
+        });
+      }
+    };
+    push(awayHC?.hot, "pick", awayId, awayAbbr, homePitcher, homeId, homeAbbr);
+    push(awayHC?.cold, "fade", awayId, awayAbbr, homePitcher, homeId, homeAbbr);
+    push(homeHC?.hot, "pick", homeId, homeAbbr, awayPitcher, awayId, awayAbbr);
+    push(homeHC?.cold, "fade", homeId, homeAbbr, awayPitcher, awayId, awayAbbr);
+    return out;
+  }, [awayHC, homeHC, awayId, homeId, awayAbbr, homeAbbr, awayPitcher, homePitcher]);
+
+  // BvP per candidate (skip if no opposing pitcher published yet).
+  const bvpQueries = useQueries({
+    queries: candidates.map((c) => ({
+      queryKey: ["edge", "bvp", c.batter.id, c.oppPitcher?.id],
+      queryFn: () => fetchBvP(c.batter.id, c.oppPitcher?.id),
+      staleTime: 1000 * 60 * 60 * 24,
+      enabled: !!c.oppPitcher?.id,
+    })),
+  });
+
+  // Career vs team per candidate.
+  const careerQueries = useQueries({
+    queries: candidates.map((c) => ({
+      queryKey: ["edge", "careerVsTeam", c.batter.id, c.oppTeamId],
+      queryFn: () => fetchPlayerCareerVsTeam(c.batter.id, c.oppTeamId),
+      staleTime: 1000 * 60 * 60 * 24,
+      enabled: !!c.oppTeamId,
+    })),
+  });
+
+  const scored = useMemo(() => {
+    return candidates.map((c, i) => {
+      const bvp = bvpQueries[i]?.data || { pa: 0 };
+      const career = careerQueries[i]?.data || { ab: 0, ops: null };
+      const score =
+        c.kind === "fade"
+          ? computeFadeScore({
+              l7OPS: c.batter.ops,
+              bvpOPS: bvp.ops,
+              bvpPA: bvp.pa,
+              bvpK: bvp.strikeouts,
+              teamContextOPS: career.ops,
+              teamContextAB: career.ab,
+            })
+          : computeEdgeScore({
+              l7OPS: c.batter.ops,
+              bvpOPS: bvp.ops,
+              bvpPA: bvp.pa,
+              teamContextOPS: career.ops,
+              teamContextAB: career.ab,
+            });
+      return { ...c, bvp, career, score, confidence: scoreBucket(score) };
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    candidates,
+    bvpQueries.map((q) => q.data?.pa ?? "_").join("|"),
+    careerQueries.map((q) => q.data?.ab ?? "_").join("|"),
+  ]);
+
+  const top3 = (teamId, kind) =>
+    scored
+      .filter((s) => s.teamId === teamId && s.kind === kind)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 3);
+
+  const awayPicks = top3(awayId, "pick");
+  const awayFades = top3(awayId, "fade");
+  const homePicks = top3(homeId, "pick");
+  const homeFades = top3(homeId, "fade");
+
+  const nothing =
+    !awayPicks.length &&
+    !awayFades.length &&
+    !homePicks.length &&
+    !homeFades.length;
+  if (nothing) return null;
+
+  const renderRow = (row) => (
+    <div
+      key={row.key}
+      className="matchup-edge-row sb-player-link"
+      onClick={() =>
+        navigate(`/team/${contextTeamId || row.teamId}/player/${row.batter.id}`)
+      }
+    >
+      <span className="matchup-edge-name">
+        {lastName(row.batter.fullName) || row.batter.fullName || "—"}
+      </span>
+      <span
+        className={`matchup-edge-tier matchup-edge-tier-${row.confidence.tone}`}
+      >
+        {row.confidence.label}
+      </span>
+      <span className="matchup-edge-score">{row.score.toFixed(2)}</span>
+    </div>
+  );
+
+  const renderTeamCol = (abbr, picks, fades) => (
+    <div className="matchup-edge-col">
+      <div className="matchup-edge-team-hdr">{abbr}</div>
+      <div className="matchup-edge-group">
+        <div className="matchup-edge-group-title pick">
+          <span className="matchup-edge-arrow" aria-hidden="true">▲</span> Bet on
+        </div>
+        {picks.length ? (
+          picks.map(renderRow)
+        ) : (
+          <div className="matchup-edge-empty">No strong picks.</div>
+        )}
+      </div>
+      <div className="matchup-edge-group">
+        <div className="matchup-edge-group-title fade">
+          <span className="matchup-edge-arrow" aria-hidden="true">▼</span> Bet against
+        </div>
+        {fades.length ? (
+          fades.map(renderRow)
+        ) : (
+          <div className="matchup-edge-empty">No strong fades.</div>
+        )}
+      </div>
+    </div>
+  );
+
+  return (
+    <CollapsibleSection title="Bet Edge" defaultOpen={false}>
+      <div className="matchup-edge-grid">
+        {renderTeamCol(awayAbbr, awayPicks, awayFades)}
+        {renderTeamCol(homeAbbr, homePicks, homeFades)}
+      </div>
+      <p className="matchup-edge-disclaimer">
+        For entertainment only. Not financial advice.
+      </p>
+    </CollapsibleSection>
   );
 }
 
