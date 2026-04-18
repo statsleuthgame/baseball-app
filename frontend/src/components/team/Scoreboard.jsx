@@ -850,7 +850,7 @@ export default function Scoreboard() {
                       {!isFinal && game.away.wins != null && (
                         <span className="scoreboard-record">{game.away.wins}-{game.away.losses}</span>
                       )}
-                      {isFinal && !isMobile && <TopPerformer gamePk={game.gamePk} side="away" teamId={teamId} />}
+                      {isFinal && (!isMobile || isMyTeamGame(game)) && <TopPerformer gamePk={game.gamePk} side="away" teamId={teamId} />}
                       {(isLive || isFinal) && (
                         <ScoreDisplay value={game.away.score} />
                       )}
@@ -861,7 +861,7 @@ export default function Scoreboard() {
                       {!isFinal && game.home.wins != null && (
                         <span className="scoreboard-record">{game.home.wins}-{game.home.losses}</span>
                       )}
-                      {isFinal && !isMobile && <TopPerformer gamePk={game.gamePk} side="home" teamId={teamId} />}
+                      {isFinal && (!isMobile || isMyTeamGame(game)) && <TopPerformer gamePk={game.gamePk} side="home" teamId={teamId} />}
                       {(isLive || isFinal) && (
                         <ScoreDisplay value={game.home.score} />
                       )}

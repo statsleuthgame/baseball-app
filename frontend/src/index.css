@@ -3840,6 +3840,10 @@ button.stat-cell {
   min-width: 34px;
   text-align: right;
   letter-spacing: 1px;
+  /* Push the score to the far right of the team row when there's no
+     record / top performer filler (e.g. mobile Final cards without
+     top performers) */
+  margin-left: auto;
 }
 
 .scoreboard-card.our-game .scoreboard-score { font-size: 24px; }
