@@ -112,24 +112,24 @@ export default function LiveGamePage() {
     enabled: boxOpen && !!gamePk, staleTime: 1000 * 60, refetchInterval: boxOpen ? 1000 * 30 : false,
   });
 
-  // Auto-collapse ball-in-play visual after 12 seconds
-  // Start collapsed to prevent stale BIP flash on first render
-  const [bipCollapsed, setBipCollapsed] = useState(true);
+  // === BIP state model ===
+  // activeBipHit is the ONLY signal that shows the 3D viewer. It is set to a
+  // snapshot of the hit at the moment we detect a fresh hit during polling,
+  // and cleared after ~12s / on batter change / on game switch. It is NEVER
+  // populated from the initial liveState read, so pre-existing hits in the
+  // game (which liveState.lastHitData always contains) can't flash the BIP
+  // on refresh or navigation.
+  const [activeBipHit, setActiveBipHit] = useState(null);
   const bipTimerRef = useRef(null);
   const lastHitRef = useRef(null);
-  // Persist hit data across half-inning changes (API resets allPlays on side change)
-  const persistedHitDataRef = useRef(null);
-  // Store pre-play runner state so the 3D viewer animates from the correct starting positions
+  // Pre-play runner snapshot for the 3D animation
   const prevRunnersRef = useRef({ first: false, second: false, third: false });
   const prevRunnerNamesRef = useRef({});
-  const [bipRunners, setBipRunners] = useState({ first: false, second: false, third: false });
-  const [bipRunnerNames, setBipRunnerNames] = useState({});
-  // Track current batter so we can collapse BIP as soon as a new batter steps up
   const lastBatterIdRef = useRef(null);
 
   // Sticky at-bat cache — preserves the last non-empty pitch list for the current
-  // batter so the strike zone doesn't flicker/blank if the API momentarily returns
-  // an empty currentAtBat between polls (seen in the wild during AB transitions).
+  // batter so the strike zone doesn't flicker if the API momentarily returns an
+  // empty currentAtBat between polls (seen during AB transitions).
   const [stickyAtBat, setStickyAtBat] = useState({ batterId: null, pitches: [] });
 
   // Track side changes (Top↔Bottom) to show "Coming Up" only during transitions
@@ -137,22 +137,24 @@ export default function LiveGamePage() {
   const prevHalfRef = useRef(null);
   const sideTimerRef = useRef(null);
 
-  // On first mount, initialize lastHitRef so we don't replay stale BIPs
+  // On first mount for a given game, record the current hit key without triggering BIP
   const initializedRef = useRef(false);
 
-  // Reset all state when switching between games (same LiveGamePage route,
+  const clearBip = () => {
+    setActiveBipHit(null);
+    if (bipTimerRef.current) { clearTimeout(bipTimerRef.current); bipTimerRef.current = null; }
+  };
+
+  // Reset everything when switching between games (same LiveGamePage route,
   // different gamePk — refs otherwise persist across the nav)
   useEffect(() => {
     initializedRef.current = false;
     lastHitRef.current = null;
-    persistedHitDataRef.current = null;
     lastBatterIdRef.current = null;
     prevRunnersRef.current = { first: false, second: false, third: false };
     prevRunnerNamesRef.current = {};
     prevHalfRef.current = null;
-    setBipCollapsed(true);
-    setBipRunners({ first: false, second: false, third: false });
-    setBipRunnerNames({});
+    setActiveBipHit(null);
     setSideJustChanged(false);
     setStickyAtBat({ batterId: null, pitches: [] });
     if (bipTimerRef.current) { clearTimeout(bipTimerRef.current); bipTimerRef.current = null; }
@@ -167,51 +169,58 @@ export default function LiveGamePage() {
     setStickyAtBat((prev) => {
       if (prev.batterId !== bid) return { batterId: bid, pitches };
       if (pitches.length >= prev.pitches.length) return { batterId: bid, pitches };
-      return prev; // API blip returned fewer pitches — preserve
+      return prev;
     });
   }, [liveState?.currentAtBat, liveState?.batter?.id]);
 
-  // Collapse BIP immediately when a new batter steps up
+  // Clear any active BIP as soon as a new batter steps up
   useEffect(() => {
     const id = liveState?.batter?.id;
     if (!id) return;
-    if (lastBatterIdRef.current && id !== lastBatterIdRef.current && !bipCollapsed) {
-      setBipCollapsed(true);
-      if (bipTimerRef.current) { clearTimeout(bipTimerRef.current); bipTimerRef.current = null; }
-      persistedHitDataRef.current = null;
+    if (lastBatterIdRef.current && id !== lastBatterIdRef.current) {
+      clearBip();
     }
     lastBatterIdRef.current = id;
-  }, [liveState?.batter?.id, bipCollapsed]);
+  }, [liveState?.batter?.id]);
 
+  // Hit detection — only fires activeBipHit for hits detected AFTER the game was opened
   useEffect(() => {
-    // Persist hit data — API resets allPlays on half-inning change so lastHitData goes null
-    if (liveState?.lastHitData) {
-      persistedHitDataRef.current = liveState.lastHitData;
-    }
+    const hit = liveState?.lastHitData;
+    const hitKey = hit ? `${hit.batterName || ""}|${hit.event || ""}|${hit.x}|${hit.y}` : null;
 
-    const hitKey = liveState?.lastHitData ? `${liveState.lastHitData.x}-${liveState.lastHitData.y}` : null;
-
-    // On first load, record the current hit key without triggering animation
+    // First poll for this game: record the hit key but DO NOT trigger BIP.
+    // This guarantees stale game state (any hit that occurred before the user
+    // opened the page) is never replayed.
     if (!initializedRef.current) {
       initializedRef.current = true;
       if (hitKey) lastHitRef.current = hitKey;
-      setBipCollapsed(true); // suppress stale BIP from before page load
+      prevRunnersRef.current = {
+        first: !!liveState?.onFirst,
+        second: !!liveState?.onSecond,
+        third: !!liveState?.onThird,
+      };
+      prevRunnerNamesRef.current = {
+        first: liveState?.runnerFirst?.fullName || "",
+        second: liveState?.runnerSecond?.fullName || "",
+        third: liveState?.runnerThird?.fullName || "",
+      };
       return;
     }
 
     if (hitKey && hitKey !== lastHitRef.current) {
-      // New ball in play — snapshot the PREVIOUS poll's runners (pre-play state)
-      setBipRunners({ ...prevRunnersRef.current });
-      setBipRunnerNames({ ...prevRunnerNamesRef.current, batter: liveState?.lastHitData?.batterName || liveState?.batter?.fullName || "" });
       lastHitRef.current = hitKey;
-      setBipCollapsed(false);
+      setActiveBipHit({
+        hitData: hit,
+        runners: { ...prevRunnersRef.current },
+        runnerNames: {
+          ...prevRunnerNamesRef.current,
+          batter: hit?.batterName || liveState?.batter?.fullName || "",
+        },
+      });
       if (bipTimerRef.current) clearTimeout(bipTimerRef.current);
-      persistedHitDataRef.current = null; // clear immediately so stale data doesn't block next batter
-      bipTimerRef.current = setTimeout(() => {
-        setBipCollapsed(true);
-      }, 12000);
+      bipTimerRef.current = setTimeout(() => setActiveBipHit(null), 12000);
     }
-    // Always update prevRunners to current state for next time
+
     prevRunnersRef.current = {
       first: !!liveState?.onFirst,
       second: !!liveState?.onSecond,
@@ -222,7 +231,6 @@ export default function LiveGamePage() {
       second: liveState?.runnerSecond?.fullName || "",
       third: liveState?.runnerThird?.fullName || "",
     };
-    return () => { if (bipTimerRef.current) clearTimeout(bipTimerRef.current); };
   }, [liveState?.lastHitData, liveState?.onFirst, liveState?.onSecond, liveState?.onThird]);
 
   // Detect inning half changes
@@ -230,7 +238,6 @@ export default function LiveGamePage() {
     if (!liveState?.inningHalf) return;
     const currentHalf = `${liveState.inning}-${liveState.inningHalf}`;
     if (prevHalfRef.current && prevHalfRef.current !== currentHalf) {
-      // Side changed — show "Coming Up" for 30 seconds then revert to empty zone
       setSideJustChanged(true);
       if (sideTimerRef.current) clearTimeout(sideTimerRef.current);
       sideTimerRef.current = setTimeout(() => setSideJustChanged(false), 30000);
@@ -245,16 +252,6 @@ export default function LiveGamePage() {
       setSideJustChanged(false);
     }
   }, [sideJustChanged, liveState?.currentAtBat?.length]);
-
-  // Clear BIP suppression when new batter's pitches arrive
-  useEffect(() => {
-    if (!liveState?.currentAtBat?.length) return;
-    // If we have fresh pitches and BIP is collapsed, ensure the hit data ref is clear
-    // so bipJustEnded computes to false and the strike zone can render
-    if (bipCollapsed && persistedHitDataRef.current) {
-      persistedHitDataRef.current = null;
-    }
-  }, [bipCollapsed, liveState?.currentAtBat?.length]);
 
   // Cleanup all timers on unmount
   useEffect(() => {
@@ -421,20 +418,9 @@ export default function LiveGamePage() {
           {/* Visual area: strike zone / ball-in-play / next up (framed as a broadcast feature) */}
           {(() => {
             const battingTeamLogo2 = liveState.inningHalf === "Top" ? gameInfo.away.logoUrl : gameInfo.home.logoUrl;
-            const hitData = liveState.lastHitData || (!bipCollapsed ? persistedHitDataRef.current : null);
-            const lastPitch = liveState.currentAtBat?.[liveState.currentAtBat.length - 1];
-            const playStillInProgress = lastPitch?.isInPlay && !liveState.currentPlayComplete;
-            const hasCompletedHit = hitData?.event && !playStillInProgress;
-            const currentHitKey = hitData ? `${hitData.x}-${hitData.y}` : null;
-            const isNewHit = initializedRef.current && currentHitKey && currentHitKey !== lastHitRef.current;
-            const showBip = hasCompletedHit && !bipCollapsed;
-            // Only treat "BIP just ended" as a strike-zone blocker if the hit belongs to the
-            // currently-displayed batter. Once a new batter steps up the old hit is stale
-            // and shouldn't hide the fresh strike zone.
-            const isBipForCurrentBatter = !!hitData?.batterName && !!liveState.batter?.fullName && hitData.batterName === liveState.batter.fullName;
-            const bipJustEnded = bipCollapsed && hasCompletedHit && !isNewHit && isBipForCurrentBatter;
+            const showBip = !!activeBipHit;
             const pitchesForZone = stickyAtBat.batterId === liveState.batter?.id ? stickyAtBat.pitches : (liveState.currentAtBat || []);
-            const showZone = pitchesForZone.length > 0 && !showBip && !bipJustEnded;
+            const showZone = pitchesForZone.length > 0 && !showBip;
 
             const halfLabel = liveState.inningHalf === "Top" ? "TOP" : "BOT";
             const frameHeader = (label) => (
@@ -455,10 +441,10 @@ export default function LiveGamePage() {
                 <div className="lgp-bip-section">
                   <Suspense fallback={<div style={{ height: 300, display: "flex", alignItems: "center", justifyContent: "center", color: "#888" }}>Loading 3D viewer...</div>}>
                     <BallInPlay3D
-                      hitData={hitData}
+                      hitData={activeBipHit.hitData}
                       venueTeamId={gameInfo.home.id}
-                      runnersOn={bipRunners}
-                      runnerNames={bipRunnerNames}
+                      runnersOn={activeBipHit.runners}
+                      runnerNames={activeBipHit.runnerNames}
                       outs={liveState?.outs}
                     />
                   </Suspense>
