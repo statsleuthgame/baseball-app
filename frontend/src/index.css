@@ -6214,7 +6214,7 @@ th.sb-ls-total {
   position: relative; overflow: hidden;
 }
 .lgp-zone-with-bg {
-  background: url('/images/catchers-view.jpg') center center / cover no-repeat;
+  background: url('/images/catchers-view.png') center center / cover no-repeat;
   border-radius: 10px;
 }
 .lgp-zone-with-bg::before {
