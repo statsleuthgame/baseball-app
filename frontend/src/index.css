@@ -208,6 +208,36 @@ body {
   opacity: 0.7;
 }
 
+/* Secret "Edge" entry point — green $ between Search and Switch */
+.top-bar-edge {
+  background: none;
+  border: none;
+  color: #22c55e;
+  cursor: pointer;
+  padding: 12px;
+  margin: -6px -2px;
+  border-radius: 8px;
+  display: flex;
+  opacity: 0.85;
+  transition: opacity 120ms ease, background-color 120ms ease;
+}
+
+@media (hover: hover) {
+  .top-bar-edge:hover {
+    background: rgba(34, 197, 94, 0.15);
+    opacity: 1;
+  }
+}
+
+.top-bar-edge:active {
+  opacity: 0.6;
+}
+
+.top-bar-edge:focus-visible {
+  outline: 2px solid #22c55e;
+  outline-offset: 2px;
+}
+
 /* Player Search Overlay */
 .player-search-overlay {
   position: fixed;
@@ -7116,4 +7146,125 @@ th.sb-ls-total {
 
 .bip3d-runner-toggle:hover {
   border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* =====================================================================
+   Secret "Edge" tab — daily bet candidate picks
+   Phase 1: entry point + placeholder. Full card grid / sort chips /
+   confidence pills land in later phases.
+   ===================================================================== */
+.edge-page {
+  padding: 16px 12px 48px;
+  max-width: 900px;
+  margin: 0 auto;
+  color: var(--text, #e5e7eb);
+}
+
+.edge-header {
+  margin-bottom: 16px;
+}
+
+.edge-header-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.edge-title {
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin: 0;
+  color: var(--text-bright, #fff);
+}
+
+.edge-dollar {
+  color: #22c55e;
+  margin-left: 6px;
+}
+
+.edge-back {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: var(--text-muted, #9ca3af);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+}
+
+.edge-back:hover {
+  color: var(--text-bright, #fff);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.edge-subtitle {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: var(--text-muted, #9ca3af);
+  letter-spacing: 0.3px;
+}
+
+.edge-placeholder {
+  background: linear-gradient(180deg, rgba(34, 197, 94, 0.08), rgba(34, 197, 94, 0.02));
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  border-radius: 14px;
+  padding: 28px 20px;
+  text-align: center;
+}
+
+.edge-placeholder-icon {
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  font-size: 40px;
+  font-weight: 800;
+  color: #22c55e;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.edge-placeholder-title {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-bright, #fff);
+}
+
+.edge-placeholder-copy {
+  margin: 0 auto 20px;
+  max-width: 520px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text, #d1d5db);
+}
+
+.edge-disclaimer {
+  margin: 16px 0 0;
+  font-size: 11px;
+  letter-spacing: 0.3px;
+  color: var(--text-muted, #9ca3af);
+  opacity: 0.75;
+}
+
+@media (max-width: 640px) {
+  .edge-page {
+    padding: 12px 10px 40px;
+  }
+  .edge-title {
+    font-size: 18px;
+    letter-spacing: 1.5px;
+  }
+  .edge-placeholder {
+    padding: 22px 14px;
+  }
+  .edge-placeholder-icon {
+    font-size: 34px;
+  }
+  .edge-placeholder-title {
+    font-size: 16px;
+  }
 }

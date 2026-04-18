@@ -15,6 +15,7 @@ const SprayChart = lazy(() => import("./components/spraychart/SprayChart"));
 const LiveGamePage = lazy(() => import("./components/team/LiveGamePage"));
 const BallFlight3DDemo = lazy(() => import("./components/ballflight3d/BallFlight3DDemo"));
 const FullStandings = lazy(() => import("./components/team/FullStandings"));
+const BettingEdge = lazy(() => import("./components/team/BettingEdge"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -50,6 +51,7 @@ export default function App() {
               <Route path="spray" element={<SprayChart />} />
               <Route path="ballflight3d" element={<BallFlight3DDemo />} />
               <Route path="standings" element={<FullStandings />} />
+              <Route path="edge" element={<BettingEdge />} />
             </Route>
           </Routes>
         </HashRouter>
