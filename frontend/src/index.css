@@ -3566,6 +3566,31 @@ button.stat-cell {
   flex-shrink: 0;
 }
 
+.sb-upcoming-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px;
+}
+
+/* Expanded lineup cards in the upcoming grid should span both columns */
+.sb-upcoming-grid > .scoreboard-card:has(.sb-game-detail) {
+  grid-column: 1 / -1;
+}
+
+/* Compact the hero for the narrower 2-column cards */
+.sb-upcoming-grid .sb-matchup-hero {
+  gap: 6px;
+  padding: 3px 2px 1px;
+}
+.sb-upcoming-grid .sb-hero-team { gap: 6px; }
+.sb-upcoming-grid .sb-hero-team-logo-wrap { width: 36px; height: 36px; }
+.sb-upcoming-grid .sb-hero-team-logo { width: 24px; height: 24px; }
+.sb-upcoming-grid .sb-hero-team-name { font-size: 13px; }
+.sb-upcoming-grid .sb-hero-team-record { font-size: 10px; }
+.sb-upcoming-grid .sb-hero-vs { font-size: 11px; letter-spacing: 1px; }
+.sb-upcoming-grid .sb-pitcher-line { font-size: 9px; gap: 4px; padding: 3px 2px 0; }
+.sb-upcoming-grid .sb-pitcher-line-label { font-size: 8px; }
+
 .scoreboard-card {
   position: relative;
   isolation: isolate;

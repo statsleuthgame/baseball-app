@@ -999,7 +999,9 @@ export default function Scoreboard() {
               {groups.upcoming.length > 0 && (
                 <>
                   <h3 className="sb-section-hdr">Upcoming</h3>
-                  {groups.upcoming.map(renderCard)}
+                  <div className="sb-upcoming-grid">
+                    {groups.upcoming.map(renderCard)}
+                  </div>
                 </>
               )}
               {groups.final.length > 0 && (
