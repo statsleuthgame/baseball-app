@@ -7,6 +7,7 @@ import { formatGameTime, getTeamAbbr, lastName, teamDisplayName } from "../../ut
 import SkeletonLoader from "../common/SkeletonLoader";
 import PlayerPhoto from "../common/PlayerPhoto";
 import ALL_TEAMS from "../../data/teams";
+import { useIsMobile } from "../../utils/useIsMobile";
 
 const fmt = (d) => {
   const y = d.getFullYear();
@@ -652,6 +653,7 @@ function ScoreboardLineups({ gamePk, awayId, homeId, awayAbbr, homeAbbr, teamId 
 
 export default function Scoreboard() {
   const { teamId } = useTeam();
+  const isMobile = useIsMobile();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const rawDate = searchParams.get("date");
@@ -849,7 +851,7 @@ export default function Scoreboard() {
                       {!isFinal && game.away.wins != null && (
                         <span className="scoreboard-record">{game.away.wins}-{game.away.losses}</span>
                       )}
-                      {isFinal && <TopPerformer gamePk={game.gamePk} side="away" teamId={teamId} />}
+                      {isFinal && !isMobile && <TopPerformer gamePk={game.gamePk} side="away" teamId={teamId} />}
                       {(isLive || isFinal) && (
                         <ScoreDisplay value={game.away.score} />
                       )}
@@ -860,7 +862,7 @@ export default function Scoreboard() {
                       {!isFinal && game.home.wins != null && (
                         <span className="scoreboard-record">{game.home.wins}-{game.home.losses}</span>
                       )}
-                      {isFinal && <TopPerformer gamePk={game.gamePk} side="home" teamId={teamId} />}
+                      {isFinal && !isMobile && <TopPerformer gamePk={game.gamePk} side="home" teamId={teamId} />}
                       {(isLive || isFinal) && (
                         <ScoreDisplay value={game.home.score} />
                       )}
@@ -877,8 +879,8 @@ export default function Scoreboard() {
                   <LiveGameInfo gamePk={game.gamePk} teamId={teamId} isOurGame={isOurGame} />
                 )}
 
-                {/* Decisions for final games */}
-                {isFinal && game.decisions && (
+                {/* Decisions for final games (desktop only — hidden on mobile to slim the card) */}
+                {isFinal && !isMobile && game.decisions && (
                   <div className="sb-decisions">
                     {game.decisions.winner && (
                       <span className="sb-decision">
