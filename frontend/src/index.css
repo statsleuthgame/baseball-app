@@ -5109,7 +5109,6 @@ th.sb-ls-total {
   color: var(--text-bright);
   font-variant-numeric: tabular-nums;
   letter-spacing: 1px;
-  text-shadow: 0 0 14px currentColor, 0 0 3px rgba(255, 255, 255, 0.4);
   min-width: 36px;
   text-align: center;
   line-height: 1;
@@ -5386,14 +5385,14 @@ th.sb-ls-total {
   height: 100%;
 }
 
-/* === Due Up strip (slim compact row) === */
+/* === Due Up strip === */
 .lgp-due-strip {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 6px 12px;
-  background: rgba(255, 255, 255, 0.025);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  gap: 14px;
+  padding: 8px 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
   border-radius: 8px;
 }
 
@@ -5401,7 +5400,7 @@ th.sb-ls-total {
   font-family: "SF Mono", ui-monospace, Menlo, monospace;
   font-size: 9px;
   font-weight: 800;
-  letter-spacing: 1.2px;
+  letter-spacing: 1.3px;
   text-transform: uppercase;
   color: var(--text-muted);
   flex-shrink: 0;
@@ -5410,22 +5409,31 @@ th.sb-ls-total {
 .lgp-due-strip-list {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
   flex-wrap: wrap;
   flex: 1;
+  min-width: 0;
 }
 
 .lgp-due-strip-player {
   display: inline-flex;
-  align-items: baseline;
-  gap: 5px;
+  align-items: center;
+  gap: 8px;
   cursor: pointer;
+  min-width: 0;
+}
+
+.lgp-due-strip-photo {
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  flex-shrink: 0;
 }
 
 .lgp-due-strip-name {
   font-size: 12px;
   font-weight: 700;
   color: var(--text-bright);
+  white-space: nowrap;
 }
 
 .lgp-due-strip-stats {
@@ -5433,6 +5441,8 @@ th.sb-ls-total {
   font-family: "SF Mono", ui-monospace, Menlo, monospace;
   color: var(--text-muted);
   font-variant-numeric: tabular-nums;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
 }
 
 /* === Inning Timeline (tappable chips → jump to scoring) === */
@@ -5633,21 +5643,21 @@ th.sb-ls-total {
 .lgp-matchup-cards {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin-bottom: 10px;
+  gap: 6px;
+  margin-bottom: 8px;
 }
 
 .lgp-matchup-card {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 10px;
+  gap: 5px;
+  padding: 6px 8px 6px 10px;
   background:
     linear-gradient(135deg, color-mix(in srgb, var(--card-color, var(--team-secondary)) 10%, transparent) 0%, transparent 60%),
     var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: pointer;
   overflow: hidden;
   isolation: isolate;
@@ -5681,14 +5691,14 @@ th.sb-ls-total {
 .lgp-matchup-player {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   min-width: 0;
 }
 
 .lgp-matchup-photo {
   border-radius: 50%;
-  border: 2px solid var(--card-color, var(--team-secondary));
-  box-shadow: 0 0 10px color-mix(in srgb, var(--card-color, var(--team-secondary)) 45%, transparent);
+  border: 1.5px solid var(--card-color, var(--team-secondary));
+  box-shadow: 0 0 8px color-mix(in srgb, var(--card-color, var(--team-secondary)) 40%, transparent);
   flex-shrink: 0;
 }
 
@@ -5696,10 +5706,11 @@ th.sb-ls-total {
   display: flex;
   flex-direction: column;
   min-width: 0;
+  line-height: 1.2;
 }
 
 .lgp-matchup-name {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 800;
   color: var(--text-bright);
   letter-spacing: 0.3px;
@@ -6158,6 +6169,8 @@ th.sb-ls-total {
   font-size: 12px; font-weight: 600; color: var(--text); text-align: center;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   padding: 0 4px;
+  min-height: 1.2em;
+  line-height: 1.2;
 }
 .lgp-out-count {
   font-size: 11px; font-weight: 700; color: var(--text-muted);

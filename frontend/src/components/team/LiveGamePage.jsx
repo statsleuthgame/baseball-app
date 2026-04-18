@@ -503,13 +503,20 @@ export default function LiveGamePage() {
               );
             }
 
-            // Normal between-at-bat pause — empty zone with logo
+            // Normal between-at-bat pause — empty zone with logo (legend always rendered to prevent layout shift)
             return (
               <div className="lgp-feature lgp-feature-zone">
                 {frameHeader("At Bat")}
                 <div className="lgp-zone-centered lgp-zone-with-bg">
                   <img src={battingTeamLogo2} alt="" className="lgp-zone-bg-logo" />
+                  <span className="lgp-pitch-result">&nbsp;</span>
                   <StrikeZone pitches={[]} />
+                  <div className="lgp-pitch-legend">
+                    <span className="lgp-legend-item"><span className="lgp-legend-dot" style={{ background: "#22c55e" }} /> Ball</span>
+                    <span className="lgp-legend-item"><span className="lgp-legend-dot" style={{ background: "#ef4444" }} /> Strike</span>
+                    <span className="lgp-legend-item"><span className="lgp-legend-dot" style={{ background: "#888", border: "1.5px solid #ef4444" }} /> Foul</span>
+                    <span className="lgp-legend-item"><span className="lgp-legend-dot" style={{ background: "#3b82f6" }} /> In Play</span>
+                  </div>
                 </div>
               </div>
             );
@@ -518,11 +525,7 @@ export default function LiveGamePage() {
         </div>
       )}
 
-      {/* ===== WIN PROBABILITY SPARKLINE + DUE UP ===== */}
-      {wpData?.length > 1 && (
-        <WPSparkline wpData={wpData} gameInfo={gameInfo} />
-      )}
-
+      {/* ===== DUE UP (compact strip) ===== */}
       {!isFinal && (liveState?.onDeck || liveState?.inHole) && (
         <div className="lgp-due-strip">
           <span className="lgp-due-strip-label">Due Up</span>
@@ -534,6 +537,7 @@ export default function LiveGamePage() {
               if (p.rbi > 0) stats.push(`${p.rbi} RBI`);
               return (
                 <div key={p.id} className="lgp-due-strip-player sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
+                  <PlayerPhoto playerId={p.id} name={p.fullName} size={24} className="lgp-due-strip-photo" />
                   <span className="lgp-due-strip-name">{lastName(p.fullName)}</span>
                   {stats.length > 0 && <span className="lgp-due-strip-stats">{stats.join(" · ")}</span>}
                 </div>
@@ -543,7 +547,7 @@ export default function LiveGamePage() {
         </div>
       )}
 
-      {/* ===== INNING TIMELINE (tappable to jump to scoring) + LINESCORE ===== */}
+      {/* ===== LINESCORE ===== */}
       {liveState?.linescore && (() => {
         const innings = liveState.linescore?.innings || [];
         const maxInn = Math.max(9, innings.length);
@@ -551,72 +555,38 @@ export default function LiveGamePage() {
           const real = innings.find((inn) => inn.num === i + 1);
           return { num: i + 1, away: real?.away ?? "", home: real?.home ?? "" };
         });
-        const currentInning = liveState.inning;
-
-        const scrollToScoringInning = (n) => {
-          const el = document.querySelector(`[data-scoring-inning="${n}"]`);
-          if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
-        };
-
         return (
-          <>
-            <div className="lgp-inning-timeline">
-              {fullInnings.map((inn) => {
-                const isCurrent = !isFinal && inn.num === currentInning;
-                const awayScored = inn.away !== "" && inn.away > 0;
-                const homeScored = inn.home !== "" && inn.home > 0;
-                return (
-                  <button
-                    key={inn.num}
-                    className={`lgp-tl-chip ${isCurrent ? "current" : ""} ${inn.away === "" && inn.home === "" ? "future" : ""}`}
-                    onClick={() => scrollToScoringInning(inn.num)}
-                    aria-label={`Jump to inning ${inn.num} scoring`}
-                  >
-                    <span className="lgp-tl-num">{inn.num}</span>
-                    <span className={`lgp-tl-half ${awayScored ? "scored" : ""}`}>
-                      <span className="lgp-tl-half-label">T</span>
-                      <span className="lgp-tl-half-val">{inn.away === "" ? "—" : inn.away}</span>
-                    </span>
-                    <span className={`lgp-tl-half ${homeScored ? "scored" : ""}`}>
-                      <span className="lgp-tl-half-label">B</span>
-                      <span className="lgp-tl-half-val">{inn.home === "" ? "—" : inn.home}</span>
-                    </span>
-                  </button>
-                );
-              })}
+          <div className="lgp-section">
+            <div className="lgp-ls-scroll">
+              <table className="live-ls-table">
+                <thead>
+                  <tr>
+                    <th></th>
+                    {fullInnings.map((inn) => <th key={inn.num}>{inn.num}</th>)}
+                    <th className="live-ls-total">R</th>
+                    <th className="live-ls-total">H</th>
+                    <th className="live-ls-total">E</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="live-ls-team">{gameInfo.away.abbreviation}</td>
+                    {fullInnings.map((inn) => <td key={inn.num} className={inn.away === "" ? "live-ls-future" : ""}>{inn.away !== "" ? inn.away : "-"}</td>)}
+                    <td className="live-ls-total">{(liveState.linescore?.away || {}).runs}</td>
+                    <td className="live-ls-total">{(liveState.linescore?.away || {}).hits}</td>
+                    <td className="live-ls-total">{(liveState.linescore?.away || {}).errors}</td>
+                  </tr>
+                  <tr>
+                    <td className="live-ls-team">{gameInfo.home.abbreviation}</td>
+                    {fullInnings.map((inn) => <td key={inn.num} className={inn.home === "" ? "live-ls-future" : ""}>{inn.home !== "" ? inn.home : "-"}</td>)}
+                    <td className="live-ls-total">{(liveState.linescore?.home || {}).runs}</td>
+                    <td className="live-ls-total">{(liveState.linescore?.home || {}).hits}</td>
+                    <td className="live-ls-total">{(liveState.linescore?.home || {}).errors}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <div className="lgp-section">
-              <div className="lgp-ls-scroll">
-                <table className="live-ls-table">
-                  <thead>
-                    <tr>
-                      <th></th>
-                      {fullInnings.map((inn) => <th key={inn.num}>{inn.num}</th>)}
-                      <th className="live-ls-total">R</th>
-                      <th className="live-ls-total">H</th>
-                      <th className="live-ls-total">E</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="live-ls-team">{gameInfo.away.abbreviation}</td>
-                      {fullInnings.map((inn) => <td key={inn.num} className={inn.away === "" ? "live-ls-future" : ""}>{inn.away !== "" ? inn.away : "-"}</td>)}
-                      <td className="live-ls-total">{(liveState.linescore?.away || {}).runs}</td>
-                      <td className="live-ls-total">{(liveState.linescore?.away || {}).hits}</td>
-                      <td className="live-ls-total">{(liveState.linescore?.away || {}).errors}</td>
-                    </tr>
-                    <tr>
-                      <td className="live-ls-team">{gameInfo.home.abbreviation}</td>
-                      {fullInnings.map((inn) => <td key={inn.num} className={inn.home === "" ? "live-ls-future" : ""}>{inn.home !== "" ? inn.home : "-"}</td>)}
-                      <td className="live-ls-total">{(liveState.linescore?.home || {}).runs}</td>
-                      <td className="live-ls-total">{(liveState.linescore?.home || {}).hits}</td>
-                      <td className="live-ls-total">{(liveState.linescore?.home || {}).errors}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </>
+          </div>
         );
       })()}
 
@@ -649,15 +619,17 @@ export default function LiveGamePage() {
               const scoringTeamId = p.halfInning === "top" ? gameInfo.away.id : gameInfo.home.id;
               const teamColor = ALL_TEAMS[scoringTeamId]?.primary || "var(--team-secondary)";
               const hd = p.hitData;
+              const isHR = (p.event && p.event.toLowerCase().includes("home run")) || (hd?.event && hd.event.toLowerCase().includes("home run"));
               const metrics = [];
-              if (hd?.exitVelo) metrics.push(`${Math.round(hd.exitVelo * 10) / 10} MPH`);
-              if (hd?.distance) metrics.push(`${Math.round(hd.distance)} FT`);
-              if (hd?.launchAngle != null) metrics.push(`${Math.round(hd.launchAngle)}° LA`);
+              if (isHR) {
+                if (hd?.exitVelo) metrics.push(`${Math.round(hd.exitVelo * 10) / 10} MPH`);
+                if (hd?.distance) metrics.push(`${Math.round(hd.distance)} FT`);
+                if (hd?.launchAngle != null) metrics.push(`${Math.round(hd.launchAngle)}° LA`);
+              }
               return (
                 <div
                   key={`${p.inning}-${p.halfInning}-${p.awayScore}-${p.homeScore}`}
                   className="lgp-scoring-card"
-                  data-scoring-inning={p.inning}
                   style={{ "--card-color": teamColor }}
                 >
                   <div className="lgp-scoring-top">
@@ -670,7 +642,6 @@ export default function LiveGamePage() {
                       {metrics.map((m, i) => (
                         <span key={i} className="lgp-scoring-metric">{m}</span>
                       ))}
-                      {hd?.event && <span className="lgp-scoring-event">{hd.event}</span>}
                     </div>
                   )}
                   {hd && (
@@ -870,7 +841,7 @@ function BatterCard({ batter, teamColor, teamLogo, teamId, navigate }) {
         <span className="lgp-matchup-role-label">Batting</span>
       </div>
       <div className="lgp-matchup-player">
-        <PlayerPhoto playerId={b.id} name={b.fullName} size={48} className="lgp-matchup-photo" />
+        <PlayerPhoto playerId={b.id} name={b.fullName} size={36} className="lgp-matchup-photo" />
         <div className="lgp-matchup-name-wrap">
           <span className="lgp-matchup-name">{b.fullName}</span>
           <span className="lgp-matchup-season">Season Avg {b.avg || ".000"}</span>
@@ -893,14 +864,13 @@ function PitcherCard({ pitcher, teamColor, teamLogo, teamId, currentAtBat, navig
   const p = pitcher;
   const gs = p.gameStats || {};
   const pitches = gs.pitches ?? 0;
-  const fatigue = pitches >= 100 ? "red" : pitches >= 80 ? "amber" : "green";
-  const fatigueLabel = pitches >= 100 ? "HIGH" : pitches >= 80 ? "ELEVATED" : "FRESH";
 
   const today = [];
   if (gs.ip != null) today.push(`${gs.ip} IP`);
   if (gs.er != null) today.push(`${gs.er} ER`);
   if (gs.k != null) today.push(`${gs.k} K`);
   if (gs.h != null) today.push(`${gs.h} H`);
+  if (pitches > 0) today.push(`${pitches} pitches`);
 
   // Current-AB arsenal from pitchInfo strings
   const arsenal = (() => {
@@ -933,7 +903,7 @@ function PitcherCard({ pitcher, teamColor, teamLogo, teamId, currentAtBat, navig
         <span className="lgp-matchup-role-label">Pitching</span>
       </div>
       <div className="lgp-matchup-player">
-        <PlayerPhoto playerId={p.id} name={p.fullName} size={48} className="lgp-matchup-photo" />
+        <PlayerPhoto playerId={p.id} name={p.fullName} size={36} className="lgp-matchup-photo" />
         <div className="lgp-matchup-name-wrap">
           <span className="lgp-matchup-name">{p.fullName}</span>
           <span className="lgp-matchup-season">Season ERA {gs.era ?? "—"}</span>
@@ -943,10 +913,6 @@ function PitcherCard({ pitcher, teamColor, teamLogo, teamId, currentAtBat, navig
         {today.map((t, i) => (
           <span key={i} className="lgp-matchup-stat-chip">{t}</span>
         ))}
-        <span className={`lgp-fatigue-pill lgp-fatigue-${fatigue}`}>
-          <span className="lgp-fatigue-dot" />
-          {pitches} PIT · {fatigueLabel}
-        </span>
       </div>
       {arsenal.length > 0 && (
         <div className="lgp-arsenal">
