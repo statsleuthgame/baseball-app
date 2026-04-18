@@ -771,14 +771,8 @@ export default function Scoreboard() {
             const isFinal = game.status === "Final" || game.status === "Game Over";
             const isScheduled = !isLive && !isDelayed && !isFinal;
 
-            // For our scheduled games, figure out opposing pitcher
-            const weAreHome = game.home.id === teamId;
-            const opposingPitcher = isOurGame && isScheduled
-              ? (weAreHome ? game.away.probablePitcher : game.home.probablePitcher)
-              : null;
-
             const isExpanded = expandedGame === game.gamePk;
-            const canExpand = isLive || isFinal || isScheduled;
+            const canExpand = isLive || isFinal;
 
             const awayWon = isFinal && game.away.score > game.home.score;
             const homeWon = isFinal && game.home.score > game.away.score;
@@ -937,10 +931,10 @@ export default function Scoreboard() {
                   </a>
                 )}
 
-                {/* Expand indicator */}
+                {/* Expand indicator (live/final only — scheduled cards route to matchup on tap) */}
                 {canExpand && (
                   <div className="sb-expand-hint">
-                    <span className="sb-expand-label">{isExpanded ? "Hide" : (isScheduled ? "Lineups" : "Stats")}</span>
+                    <span className="sb-expand-label">{isExpanded ? "Hide" : "Stats"}</span>
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: isExpanded ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
                       <polyline points="6 9 12 15 18 9" />
                     </svg>
@@ -952,37 +946,6 @@ export default function Scoreboard() {
                   <div className="sb-game-detail" onClick={(e) => e.stopPropagation()}>
                     <Linescore linescore={game.linescore} away={game.away} home={game.home} />
                     <GameDetail gamePk={game.gamePk} awayAbbr={game.away.abbreviation} homeAbbr={game.home.abbreviation} awayId={game.away.id} homeId={game.home.id} teamId={teamId} />
-                  </div>
-                )}
-
-                {/* Expanded lineups for scheduled games */}
-                {isExpanded && isScheduled && (
-                  <div className="sb-game-detail" onClick={(e) => e.stopPropagation()}>
-                    {(game.venue || game.weather) && (
-                      <div className="sb-venue-weather">
-                        <div className="sb-venue-info">
-                          {game.venue && <span className="sb-venue-name">{game.venue}</span>}
-                          {game.venueLocation && <span className="sb-venue-location">{game.venueLocation}</span>}
-                          {game.weather && (
-                            <span className="sb-venue-weather-line">
-                              {weatherIcon(game.weather.condition)} {game.weather.temp}°F
-                              {game.weather.wind && <span className="sb-wind"> · {game.weather.wind}</span>}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    )}
-                    {isOurGame && opposingPitcher?.id && (
-                      <BvPPreview teamId={teamId} pitcherId={opposingPitcher.id} />
-                    )}
-                    <ScoreboardLineups
-                      gamePk={game.gamePk}
-                      awayId={game.away.id}
-                      homeId={game.home.id}
-                      awayAbbr={game.away.abbreviation}
-                      homeAbbr={game.home.abbreviation}
-                      teamId={teamId}
-                    />
                   </div>
                 )}
 
