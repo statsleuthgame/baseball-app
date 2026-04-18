@@ -7210,15 +7210,86 @@ th.sb-ls-total {
   letter-spacing: 0.3px;
 }
 
-.edge-placeholder {
+/* ---- Controls row: sort chips + filter ------------------------------- */
+.edge-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.edge-sort-chips {
+  display: inline-flex;
+  gap: 4px;
+  padding: 3px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.edge-sort-chip {
+  background: none;
+  border: none;
+  color: var(--text-muted, #9ca3af);
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  padding: 6px 12px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+
+.edge-sort-chip:hover {
+  color: var(--text-bright, #fff);
+}
+
+.edge-sort-chip.active {
+  background: rgba(34, 197, 94, 0.18);
+  color: #22c55e;
+}
+
+.edge-sort-chip:focus-visible {
+  outline: 2px solid #22c55e;
+  outline-offset: 2px;
+}
+
+.edge-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-muted, #9ca3af);
+  cursor: pointer;
+  user-select: none;
+}
+
+.edge-filter input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  accent-color: #22c55e;
+  cursor: pointer;
+}
+
+.edge-filter:hover {
+  color: var(--text-bright, #fff);
+}
+
+/* ---- Empty / placeholder states -------------------------------------- */
+.edge-empty {
   background: linear-gradient(180deg, rgba(34, 197, 94, 0.08), rgba(34, 197, 94, 0.02));
   border: 1px solid rgba(34, 197, 94, 0.25);
   border-radius: 14px;
   padding: 28px 20px;
   text-align: center;
+  color: var(--text, #d1d5db);
+  font-size: 14px;
 }
 
-.edge-placeholder-icon {
+.edge-empty-icon {
   font-family: "SF Mono", ui-monospace, Menlo, monospace;
   font-size: 40px;
   font-weight: 800;
@@ -7227,29 +7298,290 @@ th.sb-ls-total {
   margin-bottom: 8px;
 }
 
-.edge-placeholder-title {
-  margin: 0 0 8px;
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--text-bright, #fff);
+/* ---- Pick grid + card ------------------------------------------------ */
+.edge-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
 }
 
-.edge-placeholder-copy {
-  margin: 0 auto 20px;
-  max-width: 520px;
+.edge-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 3px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  animation: edge-card-in 220ms ease-out both;
+}
+
+.edge-card.edge-conf-high {
+  border-left-color: #22c55e;
+}
+
+.edge-card.edge-conf-medium {
+  border-left-color: #f59e0b;
+}
+
+.edge-card.edge-conf-low,
+.edge-card.edge-conf-sample {
+  border-left-color: #ef4444;
+}
+
+@keyframes edge-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .edge-card {
+    animation: none;
+  }
+}
+
+.edge-card-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.edge-card-photo {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+
+.edge-card-photo:focus-visible {
+  outline: 2px solid #22c55e;
+  outline-offset: 2px;
+}
+
+.edge-card-name-col {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.edge-card-name {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+}
+
+.edge-card-fullname {
   font-size: 14px;
-  line-height: 1.55;
+  font-weight: 700;
+  color: var(--text-bright, #fff);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.edge-card-pos {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted, #9ca3af);
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+
+.edge-card-matchup {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  font-size: 11px;
+  color: var(--text-muted, #9ca3af);
+  letter-spacing: 0.5px;
+}
+
+.edge-card-team-abbr {
+  color: var(--text, #d1d5db);
+  font-weight: 700;
+}
+
+.edge-card-vs {
+  color: var(--text-muted, #9ca3af);
+}
+
+.edge-card-pitcher {
   color: var(--text, #d1d5db);
 }
 
+/* ---- Confidence pill ------------------------------------------------- */
+.edge-conf-pill {
+  flex-shrink: 0;
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  padding: 3px 8px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+}
+
+.edge-conf-pill-high {
+  background: rgba(34, 197, 94, 0.18);
+  color: #22c55e;
+  border-color: rgba(34, 197, 94, 0.35);
+}
+
+.edge-conf-pill-medium {
+  background: rgba(245, 158, 11, 0.18);
+  color: #f59e0b;
+  border-color: rgba(245, 158, 11, 0.35);
+}
+
+.edge-conf-pill-low,
+.edge-conf-pill-sample {
+  background: rgba(239, 68, 68, 0.18);
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.35);
+}
+
+/* ---- Stat rows ------------------------------------------------------- */
+.edge-stat-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  color: var(--text, #d1d5db);
+  margin-top: 2px;
+}
+
+.edge-stat-label {
+  flex-shrink: 0;
+  width: 36px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--text-muted, #9ca3af);
+}
+
+.edge-stat-value {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.edge-no-history {
+  color: var(--text-muted, #9ca3af);
+  opacity: 0.7;
+}
+
+.edge-score-row {
+  justify-content: space-between;
+  margin-top: 6px;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.edge-score {
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--text-bright, #fff);
+}
+
+.edge-details-toggle {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text-muted, #9ca3af);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+
+.edge-details-toggle:hover {
+  color: var(--text-bright, #fff);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.edge-details-toggle:focus-visible {
+  outline: 2px solid #22c55e;
+  outline-offset: 2px;
+}
+
+/* ---- Lazy details panel --------------------------------------------- */
+.edge-details {
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 12px;
+  color: var(--text, #d1d5db);
+}
+
+.edge-details-loading {
+  font-style: italic;
+  color: var(--text-muted, #9ca3af);
+  padding: 6px 0;
+}
+
+.edge-details-line {
+  margin-bottom: 6px;
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.edge-details-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: 11px;
+}
+
+.edge-details-table th {
+  text-align: left;
+  padding: 4px 6px;
+  color: var(--text-muted, #9ca3af);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.edge-details-table td {
+  padding: 4px 6px;
+  color: var(--text, #d1d5db);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.edge-details-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* ---- Disclaimer ------------------------------------------------------ */
 .edge-disclaimer {
-  margin: 16px 0 0;
+  margin: 24px 0 0;
   font-size: 11px;
   letter-spacing: 0.3px;
   color: var(--text-muted, #9ca3af);
   opacity: 0.75;
+  text-align: center;
 }
 
+/* ---- Responsive ------------------------------------------------------ */
 @media (max-width: 640px) {
   .edge-page {
     padding: 12px 10px 40px;
@@ -7258,13 +7590,28 @@ th.sb-ls-total {
     font-size: 18px;
     letter-spacing: 1.5px;
   }
-  .edge-placeholder {
+  .edge-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .edge-controls {
+    gap: 8px;
+  }
+  .edge-sort-chip {
+    padding: 6px 10px;
+    font-size: 10px;
+    letter-spacing: 1px;
+  }
+  .edge-card-fullname {
+    font-size: 13px;
+  }
+  .edge-stat-row {
+    font-size: 11px;
+  }
+  .edge-empty {
     padding: 22px 14px;
   }
-  .edge-placeholder-icon {
+  .edge-empty-icon {
     font-size: 34px;
-  }
-  .edge-placeholder-title {
-    font-size: 16px;
   }
 }
