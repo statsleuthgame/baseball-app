@@ -695,13 +695,28 @@ export default function LiveGamePage() {
         teamId={teamId}
       />
 
-      {/* ===== ZONE H: VENUE + MATCHUP ===== */}
-      <div className="lgp-footer">
-        <span className="lgp-venue-text">{gameInfo.venue}{gameInfo.venueLocation ? ` · ${gameInfo.venueLocation}` : ""}</span>
-        <button className="lgp-matchup-btn" onClick={() => navigate(`/team/${teamId}/matchup/${gamePk}`)}>
-          View Full Matchup
-        </button>
-      </div>
+      {/* ===== ZONE H: VENUE + WEATHER + MATCHUP ===== */}
+      {(() => {
+        const ag = allGames?.find(g => String(g.gamePk) === String(gamePk));
+        const weather = ag?.weather;
+        return (
+          <div className="lgp-footer">
+            <div className="lgp-footer-info">
+              <span className="lgp-venue-text">{gameInfo.venue}{gameInfo.venueLocation ? ` · ${gameInfo.venueLocation}` : ""}</span>
+              {weather && (weather.condition || weather.temp) && (
+                <span className="lgp-weather-text">
+                  {weather.condition || ""}
+                  {weather.temp != null && ` · ${weather.temp}°F`}
+                  {weather.wind ? ` · ${weather.wind}` : ""}
+                </span>
+              )}
+            </div>
+            <button className="lgp-matchup-btn" onClick={() => navigate(`/team/${teamId}/matchup/${gamePk}`)}>
+              View Full Matchup
+            </button>
+          </div>
+        );
+      })()}
     </div>
   );
 }
@@ -750,6 +765,82 @@ function WPSparkline({ wpData, gameInfo }) {
           <polyline points={pts} fill="none" stroke="rgba(255,255,255,0.65)" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
           <circle cx={W} cy={(1 - last.homeProb) * H} r="3" fill="#fff" stroke={homePct >= 50 ? homeColor : awayColor} strokeWidth="1.5" />
         </svg>
+      </div>
+    </div>
+  );
+}
+
+function TopPerformersStrip({ teams, navigate, teamId }) {
+  const scoreBatter = (s) => (s.h || 0) * 2 + (s.hr || 0) * 4 + (s.rbi || 0) * 2 + (s.r || 0);
+  const ipToOuts = (ip) => {
+    if (ip == null) return 0;
+    const [inn = "0", part = "0"] = String(ip).split(".");
+    return (parseInt(inn) || 0) * 3 + (parseInt(part) || 0);
+  };
+  const scorePitcher = (s) => {
+    const outs = ipToOuts(s.ip);
+    if (outs < 3) return -Infinity;
+    return (s.k || 0) * 1.5 - (s.er || 0) * 3 - (s.bb || 0) + outs * 0.4;
+  };
+
+  const pickBatter = (list) => {
+    if (!list?.length) return null;
+    let best = null, bestScore = 0;
+    for (const b of list) {
+      const sc = scoreBatter(b.stats || {});
+      if (sc > bestScore) { bestScore = sc; best = b; }
+    }
+    return bestScore > 0 ? best : null;
+  };
+  const pickPitcher = (list) => {
+    if (!list?.length) return null;
+    let best = null, bestScore = -Infinity;
+    for (const p of list) {
+      const sc = scorePitcher(p.stats || {});
+      if (sc > bestScore) { bestScore = sc; best = p; }
+    }
+    return bestScore > -Infinity ? best : null;
+  };
+
+  const awayBatter = pickBatter(teams.away.batters);
+  const homeBatter = pickBatter(teams.home.batters);
+  const awayPitcher = pickPitcher(teams.away.pitchers);
+  const homePitcher = pickPitcher(teams.home.pitchers);
+
+  const items = [];
+  if (awayBatter) {
+    const s = awayBatter.stats;
+    items.push({ team: teams.away.abbr, logo: teams.away.logo, role: "Batting", player: awayBatter, line: `${s.h}-for-${s.ab}${s.hr ? `, ${s.hr} HR` : ""}${s.rbi ? `, ${s.rbi} RBI` : ""}` });
+  }
+  if (homeBatter) {
+    const s = homeBatter.stats;
+    items.push({ team: teams.home.abbr, logo: teams.home.logo, role: "Batting", player: homeBatter, line: `${s.h}-for-${s.ab}${s.hr ? `, ${s.hr} HR` : ""}${s.rbi ? `, ${s.rbi} RBI` : ""}` });
+  }
+  if (awayPitcher) {
+    const s = awayPitcher.stats;
+    items.push({ team: teams.away.abbr, logo: teams.away.logo, role: "Pitching", player: awayPitcher, line: `${s.ip} IP, ${s.er ?? 0} ER, ${s.k ?? 0} K` });
+  }
+  if (homePitcher) {
+    const s = homePitcher.stats;
+    items.push({ team: teams.home.abbr, logo: teams.home.logo, role: "Pitching", player: homePitcher, line: `${s.ip} IP, ${s.er ?? 0} ER, ${s.k ?? 0} K` });
+  }
+
+  if (!items.length) return null;
+
+  return (
+    <div className="lgp-top-performers">
+      <span className="lgp-section-label">Top Performers</span>
+      <div className="lgp-tp-grid">
+        {items.map((it, i) => (
+          <div key={i} className="lgp-tp-item sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${it.player.id}`)}>
+            <div className="lgp-tp-head">
+              <img src={it.logo} alt="" className="lgp-tp-logo" />
+              <span className="lgp-tp-role">{it.role}</span>
+            </div>
+            <span className="lgp-tp-name">{it.player.name}</span>
+            <span className="lgp-tp-line">{it.line}</span>
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -1024,6 +1115,8 @@ function BoxScoreSection({ boxOpen, setBoxOpen, boxData, gameInfo, teamId }) {
       </button>
       {boxOpen && boxData && (
         <div className="lgp-box-full">
+          <TopPerformersStrip teams={teams} navigate={navigate} teamId={teamId} />
+
           {/* Team selector tabs */}
           <div className="lgp-box-tabs">
             {["away", "home"].map((side) => (

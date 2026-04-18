@@ -5236,6 +5236,93 @@ th.sb-ls-total {
   .lgp-hud-abbr { font-size: 13px; }
 }
 
+/* === Top Performers strip (box score header) === */
+.lgp-top-performers {
+  margin-bottom: 10px;
+  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+}
+
+.lgp-top-performers .lgp-section-label {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.lgp-tp-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.lgp-tp-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 8px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  cursor: pointer;
+  min-width: 0;
+}
+
+.lgp-tp-head {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.lgp-tp-logo { width: 14px; height: 14px; flex-shrink: 0; }
+
+.lgp-tp-role {
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.lgp-tp-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-bright);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lgp-tp-line {
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  font-size: 10px;
+  color: var(--jumbo-led-amber);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.3px;
+}
+
+@media (max-width: 420px) {
+  .lgp-tp-grid { grid-template-columns: 1fr; }
+}
+
+/* === Footer weather line === */
+.lgp-footer-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.lgp-weather-text {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  letter-spacing: 0.3px;
+  text-transform: capitalize;
+}
+
 /* === Win Probability Sparkline === */
 .lgp-wp-section {
   background: var(--bg-card);
