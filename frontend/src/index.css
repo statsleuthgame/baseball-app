@@ -3602,6 +3602,22 @@ button.stat-cell {
 .sb-upcoming-grid .sb-pitcher-line { font-size: 9px; gap: 4px; padding: 3px 2px 0; }
 .sb-upcoming-grid .sb-pitcher-line-label { font-size: 8px; }
 
+/* Mobile: upcoming-grid hero stacks logo over record, no abbreviation */
+@media (max-width: 640px) {
+  .sb-upcoming-grid .sb-hero-team,
+  .sb-upcoming-grid .sb-hero-team.sb-hero-home {
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+  }
+  .sb-upcoming-grid .sb-hero-team-name { display: none; }
+  .sb-upcoming-grid .sb-hero-team-text,
+  .sb-upcoming-grid .sb-hero-team.sb-hero-home .sb-hero-team-text {
+    align-items: center;
+    text-align: center;
+  }
+}
+
 .scoreboard-card {
   position: relative;
   isolation: isolate;
