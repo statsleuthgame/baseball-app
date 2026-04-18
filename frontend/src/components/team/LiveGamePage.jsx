@@ -127,6 +127,11 @@ export default function LiveGamePage() {
   // Track current batter so we can collapse BIP as soon as a new batter steps up
   const lastBatterIdRef = useRef(null);
 
+  // Sticky at-bat cache — preserves the last non-empty pitch list for the current
+  // batter so the strike zone doesn't flicker/blank if the API momentarily returns
+  // an empty currentAtBat between polls (seen in the wild during AB transitions).
+  const [stickyAtBat, setStickyAtBat] = useState({ batterId: null, pitches: [] });
+
   // Track side changes (Top↔Bottom) to show "Coming Up" only during transitions
   const [sideJustChanged, setSideJustChanged] = useState(false);
   const prevHalfRef = useRef(null);
@@ -149,9 +154,22 @@ export default function LiveGamePage() {
     setBipRunners({ first: false, second: false, third: false });
     setBipRunnerNames({});
     setSideJustChanged(false);
+    setStickyAtBat({ batterId: null, pitches: [] });
     if (bipTimerRef.current) { clearTimeout(bipTimerRef.current); bipTimerRef.current = null; }
     if (sideTimerRef.current) { clearTimeout(sideTimerRef.current); sideTimerRef.current = null; }
   }, [gamePk]);
+
+  // Keep stickyAtBat in sync with liveState — only shrink it when the batter changes
+  useEffect(() => {
+    const bid = liveState?.batter?.id;
+    if (!bid) return;
+    const pitches = liveState?.currentAtBat || [];
+    setStickyAtBat((prev) => {
+      if (prev.batterId !== bid) return { batterId: bid, pitches };
+      if (pitches.length >= prev.pitches.length) return { batterId: bid, pitches };
+      return prev; // API blip returned fewer pitches — preserve
+    });
+  }, [liveState?.currentAtBat, liveState?.batter?.id]);
 
   // Collapse BIP immediately when a new batter steps up
   useEffect(() => {
@@ -304,12 +322,6 @@ export default function LiveGamePage() {
               LIVE
             </span>
           )}
-          {isLive && (
-            <button className="lgp-hud-watch" onClick={() => { window.location.href = `https://www.mlb.com/tv/g${gamePk}`; }} aria-label="Watch on MLB.tv">
-              <svg aria-hidden="true" width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3" /></svg>
-              Watch
-            </button>
-          )}
         </div>
         <div className="lgp-hud-scores">
           <div className="lgp-hud-team">
@@ -416,8 +428,13 @@ export default function LiveGamePage() {
             const currentHitKey = hitData ? `${hitData.x}-${hitData.y}` : null;
             const isNewHit = initializedRef.current && currentHitKey && currentHitKey !== lastHitRef.current;
             const showBip = hasCompletedHit && !bipCollapsed;
-            const bipJustEnded = bipCollapsed && hasCompletedHit && !isNewHit;
-            const showZone = liveState.currentAtBat?.length > 0 && !showBip && !bipJustEnded;
+            // Only treat "BIP just ended" as a strike-zone blocker if the hit belongs to the
+            // currently-displayed batter. Once a new batter steps up the old hit is stale
+            // and shouldn't hide the fresh strike zone.
+            const isBipForCurrentBatter = !!hitData?.batterName && !!liveState.batter?.fullName && hitData.batterName === liveState.batter.fullName;
+            const bipJustEnded = bipCollapsed && hasCompletedHit && !isNewHit && isBipForCurrentBatter;
+            const pitchesForZone = stickyAtBat.batterId === liveState.batter?.id ? stickyAtBat.pitches : (liveState.currentAtBat || []);
+            const showZone = pitchesForZone.length > 0 && !showBip && !bipJustEnded;
 
             const halfLabel = liveState.inningHalf === "Top" ? "TOP" : "BOT";
             const frameHeader = (label) => (
@@ -456,7 +473,8 @@ export default function LiveGamePage() {
                   <img src={battingTeamLogo2} alt="" className="lgp-zone-bg-logo" />
                   <span className="lgp-pitch-result">
                     {(() => {
-                      const p = liveState.currentAtBat[liveState.currentAtBat.length - 1];
+                      const p = pitchesForZone[pitchesForZone.length - 1];
+                      if (!p) return <>&nbsp;</>;
                       const balls = p.count ? parseInt(p.count.split("-")[0]) || 0 : null;
                       const strikes = p.count ? parseInt(p.count.split("-")[1]) || 0 : null;
                       const outs = liveState.outs;
@@ -478,7 +496,7 @@ export default function LiveGamePage() {
                       return `${p.pitchInfo || ""} — ${p.call}${countLabel}`;
                     })()}
                   </span>
-                  <StrikeZone pitches={liveState.currentAtBat} />
+                  <StrikeZone pitches={pitchesForZone} />
                   <div className="lgp-pitch-legend">
                     <span className="lgp-legend-item"><span className="lgp-legend-dot" style={{ background: "#22c55e" }} /> Ball</span>
                     <span className="lgp-legend-item"><span className="lgp-legend-dot" style={{ background: "#ef4444" }} /> Strike</span>
