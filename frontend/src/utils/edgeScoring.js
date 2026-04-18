@@ -28,6 +28,16 @@ export function bvpWeight(pa) {
   return (n - 5) / 15;
 }
 
+// Normalize K / PA rate into [0, 1]. 15% is quiet; 45%+ is huge fade signal.
+export function normKRate(strikeouts, pa) {
+  const p = Number(pa) || 0;
+  if (p <= 0) return 0;
+  const rate = (Number(strikeouts) || 0) / p;
+  const min = 0.15;
+  const max = 0.45;
+  return Math.max(0, Math.min(1, (rate - min) / (max - min)));
+}
+
 // The composite EdgeScore used as the default sort.
 // teamContext is sample-gated: below 10 AB vs the opposing team we fall back
 // to L7 OPS so picks aren't penalized for lack of history.
@@ -44,6 +54,31 @@ export function computeEdgeScore({
   const hasTeamSample = ab >= 10 && teamContextOPS != null;
   const teamContext = hasTeamSample ? normL7OPS(teamContextOPS) : l7;
   return 0.5 * l7 + 0.3 * bvpContrib + 0.2 * teamContext;
+}
+
+// Higher = stronger fade candidate (batter likely to underperform today).
+// Mirrors computeEdgeScore's weights but inverts every term:
+//   0.50 · cold L7  +  0.30 · bvpWeight(PA) · bvp-struggle blend
+//                   +  0.20 · career-vs-team struggle (sample-gated → cold L7)
+// The BvP signal is 60% low OPS + 40% high K-rate so strikeout-prone matchups
+// register hard even when the raw AVG/OPS isn't terrible.
+export function computeFadeScore({
+  l7OPS,
+  bvpOPS,
+  bvpPA,
+  bvpK,
+  teamContextOPS,
+  teamContextAB,
+}) {
+  const coldL7 = 1 - normL7OPS(l7OPS);
+  const fadeBvpOPS = 1 - normL7OPS(bvpOPS);
+  const kRate = normKRate(bvpK, bvpPA);
+  const bvpSignal = 0.6 * fadeBvpOPS + 0.4 * kRate;
+  const bvpContrib = bvpWeight(bvpPA) * bvpSignal;
+  const ab = Number(teamContextAB) || 0;
+  const hasTeamSample = ab >= 10 && teamContextOPS != null;
+  const teamFade = hasTeamSample ? 1 - normL7OPS(teamContextOPS) : coldL7;
+  return 0.5 * coldL7 + 0.3 * bvpContrib + 0.2 * teamFade;
 }
 
 // Tier the pill purely from the composite EdgeScore so the visible label

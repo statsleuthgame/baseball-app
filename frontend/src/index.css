@@ -7298,6 +7298,46 @@ th.sb-ls-total {
   margin-bottom: 8px;
 }
 
+/* ---- Section headers (Picks vs Fades) -------------------------------- */
+.edge-section {
+  margin-bottom: 20px;
+}
+
+.edge-section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px;
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-bright, #fff);
+}
+
+.edge-section-accent {
+  font-size: 10px;
+  line-height: 1;
+}
+
+.edge-section-picks .edge-section-accent {
+  color: #22c55e;
+}
+
+.edge-section-fades {
+  color: #ef4444;
+}
+
+.edge-section-fades .edge-section-accent {
+  color: #ef4444;
+}
+
+.edge-empty-inline {
+  padding: 16px 14px;
+  font-size: 13px;
+}
+
 /* ---- Pick grid + card ------------------------------------------------ */
 .edge-grid {
   display: grid;
@@ -7328,6 +7368,14 @@ th.sb-ls-total {
 .edge-card.edge-conf-low,
 .edge-card.edge-conf-sample {
   border-left-color: #ef4444;
+}
+
+/* Fade cards: left border always reads as "bet against" (red family)
+   regardless of tier, so direction (pick vs fade) and confidence (pill)
+   are encoded on two separate visual channels. */
+.edge-card-fade {
+  border-left-color: #ef4444 !important;
+  background: linear-gradient(180deg, rgba(239, 68, 68, 0.05), rgba(239, 68, 68, 0.01));
 }
 
 @keyframes edge-card-in {

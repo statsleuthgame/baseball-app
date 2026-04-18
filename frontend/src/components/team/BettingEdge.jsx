@@ -14,13 +14,16 @@ import PlayerPhoto from "../common/PlayerPhoto";
 import SkeletonLoader from "../common/SkeletonLoader";
 import {
   computeEdgeScore,
+  computeFadeScore,
   scoreBucket,
   rankPicks,
 } from "../../utils/edgeScoring";
 
 /**
- * Secret "Edge" tab — ranked daily batter picks. Accessed only via the green
- * $ icon in TopBar; intentionally not listed in TopTabs.
+ * Secret "Edge" tab — two ranked daily lists: PICKS (hot batters with
+ * favorable BvP / vs-team history) and FADES (cold batters with ugly BvP
+ * K-rates / ugly vs-team history). Accessed only via the green $ icon in
+ * TopBar; intentionally not listed in TopTabs.
  *
  * Data flow:
  *   fetchAllGamesToday()                             → today's slate
@@ -84,17 +87,32 @@ export default function BettingEdge() {
     })),
   });
 
-  // 3. Batter × Pitcher pairs (only from teams whose hot[] has resolved) ----
+  // 3. Batter × Pitcher pairs. Both HOT batters (→ picks) and COLD batters
+  //    (→ fades) are pushed into the same list with a `mode` tag so we only
+  //    run one set of BvP / vs-team fan-outs.
   const pairs = useMemo(() => {
     const out = [];
     teamsToFetch.forEach((tid, i) => {
       const data = hotColdQueries[i]?.data;
-      if (!data?.hot) return;
+      if (!data) return;
       const ctx = teamContextMap.get(tid);
       if (!ctx || !ctx.opp?.id) return;
-      for (const batter of data.hot) {
+      for (const batter of data.hot || []) {
         out.push({
-          key: `${tid}-${batter.id}`,
+          key: `pick-${tid}-${batter.id}`,
+          mode: "pick",
+          teamId: tid,
+          teamAbbr: getTeamAbbr(tid),
+          batter,
+          game: ctx.game,
+          opposingPitcher: ctx.opp,
+          opposingTeam: ctx.oppTeam,
+        });
+      }
+      for (const batter of data.cold || []) {
+        out.push({
+          key: `fade-${tid}-${batter.id}`,
+          mode: "fade",
           teamId: tid,
           teamAbbr: getTeamAbbr(tid),
           batter,
@@ -138,8 +156,10 @@ export default function BettingEdge() {
     })),
   });
 
-  // 5. Score + sort + rank --------------------------------------------------
-  const picks = useMemo(() => {
+  // 5. Score + rank. Splits into two lists: picks (hot bats, edge score) and
+  //    fades (cold bats, fade score). Each list is ranked independently by its
+  //    own score so HIGH-tier cards always sit above MEDIUM/LOW within a list.
+  const { picks, fades } = useMemo(() => {
     const emptyVs = {
       games: 0,
       ab: 0,
@@ -149,27 +169,39 @@ export default function BettingEdge() {
       ops: null,
       pa: 0,
     };
-    const scored = pairs.map((p, i) => {
+    const scoredPicks = [];
+    const scoredFades = [];
+    pairs.forEach((p, i) => {
       const bvp = bvpQueries[i]?.data || { pa: 0 };
       const seasonVsTeam = seasonVsTeamQueries[i]?.data || emptyVs;
       const careerVsTeam = careerVsTeamQueries[i]?.data || emptyVs;
-      // Career feeds the score (larger sample). computeEdgeScore sample-gates
-      // its own input (ab < 10 → falls back to L7).
-      const score = computeEdgeScore({
-        l7OPS: p.batter.ops,
-        bvpOPS: bvp.ops,
-        bvpPA: bvp.pa,
-        teamContextOPS: careerVsTeam.ops,
-        teamContextAB: careerVsTeam.ab,
-      });
-      // Pill is derived from the score itself — rank and label always agree.
+      // Career feeds both scoring functions (larger sample). Each function
+      // sample-gates its own team-context input (ab < 10 → falls back).
+      const score =
+        p.mode === "fade"
+          ? computeFadeScore({
+              l7OPS: p.batter.ops,
+              bvpOPS: bvp.ops,
+              bvpPA: bvp.pa,
+              bvpK: bvp.strikeouts,
+              teamContextOPS: careerVsTeam.ops,
+              teamContextAB: careerVsTeam.ab,
+            })
+          : computeEdgeScore({
+              l7OPS: p.batter.ops,
+              bvpOPS: bvp.ops,
+              bvpPA: bvp.pa,
+              teamContextOPS: careerVsTeam.ops,
+              teamContextAB: careerVsTeam.ab,
+            });
       const confidence = scoreBucket(score);
-      return { ...p, bvp, seasonVsTeam, careerVsTeam, score, confidence };
+      const scored = { ...p, bvp, seasonVsTeam, careerVsTeam, score, confidence };
+      (p.mode === "fade" ? scoredFades : scoredPicks).push(scored);
     });
-
-    // One canonical ranking — by the composite EdgeScore — so the SCORE on
-    // every card matches the order the picks show up in.
-    return rankPicks(scored, { maxTotal: 15, maxPerTeam: 3 });
+    return {
+      picks: rankPicks(scoredPicks, { maxTotal: 15, maxPerTeam: 3 }),
+      fades: rankPicks(scoredFades, { maxTotal: 10, maxPerTeam: 3 }),
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     pairs,
@@ -178,12 +210,23 @@ export default function BettingEdge() {
     careerVsTeamQueries.map((q) => q.data?.ab ?? "_").join("|"),
   ]);
 
-  const filteredPicks = useMemo(() => {
-    if (!myTeamsOnly || !team?.id) return picks;
-    return picks.filter(
+  const applyMyTeamsFilter = (list) => {
+    if (!myTeamsOnly || !team?.id) return list;
+    return list.filter(
       (p) => p.game.away.id === team.id || p.game.home.id === team.id
     );
-  }, [picks, myTeamsOnly, team]);
+  };
+
+  const filteredPicks = useMemo(
+    () => applyMyTeamsFilter(picks),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [picks, myTeamsOnly, team]
+  );
+  const filteredFades = useMemo(
+    () => applyMyTeamsFilter(fades),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [fades, myTeamsOnly, team]
+  );
 
   const isLoading =
     gamesQuery.isLoading ||
@@ -248,7 +291,7 @@ export default function BettingEdge() {
           </div>
           <p>No bettable games today. Check back once pitchers are announced.</p>
         </div>
-      ) : filteredPicks.length === 0 ? (
+      ) : filteredPicks.length === 0 && filteredFades.length === 0 ? (
         <div className="edge-empty">
           <p>
             {myTeamsOnly
@@ -257,17 +300,55 @@ export default function BettingEdge() {
           </p>
         </div>
       ) : (
-        <div className="edge-grid">
-          {filteredPicks.map((p) => (
-            <PickCard
-              key={p.key}
-              pick={p}
-              onSelectPlayer={() =>
-                navigate(`/team/${p.teamId}/player/${p.batter.id}`)
-              }
-            />
-          ))}
-        </div>
+        <>
+          <section className="edge-section">
+            <h2 className="edge-section-title edge-section-picks">
+              <span className="edge-section-accent" aria-hidden="true">▲</span>
+              Picks · bet on
+            </h2>
+            {filteredPicks.length === 0 ? (
+              <div className="edge-empty edge-empty-inline">
+                <p>No strong picks right now.</p>
+              </div>
+            ) : (
+              <div className="edge-grid">
+                {filteredPicks.map((p) => (
+                  <PickCard
+                    key={p.key}
+                    pick={p}
+                    onSelectPlayer={() =>
+                      navigate(`/team/${p.teamId}/player/${p.batter.id}`)
+                    }
+                  />
+                ))}
+              </div>
+            )}
+          </section>
+
+          <section className="edge-section">
+            <h2 className="edge-section-title edge-section-fades">
+              <span className="edge-section-accent" aria-hidden="true">▼</span>
+              Fades · bet against
+            </h2>
+            {filteredFades.length === 0 ? (
+              <div className="edge-empty edge-empty-inline">
+                <p>No strong fades right now.</p>
+              </div>
+            ) : (
+              <div className="edge-grid">
+                {filteredFades.map((p) => (
+                  <PickCard
+                    key={p.key}
+                    pick={p}
+                    onSelectPlayer={() =>
+                      navigate(`/team/${p.teamId}/player/${p.batter.id}`)
+                    }
+                  />
+                ))}
+              </div>
+            )}
+          </section>
+        </>
       )}
 
       <p className="edge-disclaimer">
@@ -280,6 +361,7 @@ export default function BettingEdge() {
 function PickCard({ pick, onSelectPlayer }) {
   const [open, setOpen] = useState(false);
   const {
+    mode,
     batter,
     bvp,
     seasonVsTeam,
@@ -290,6 +372,7 @@ function PickCard({ pick, onSelectPlayer }) {
     confidence,
     score,
   } = pick;
+  const isFade = mode === "fade";
   const bvpHasHistory = (bvp.pa || 0) > 0;
   const seasonVsHasHistory = (seasonVsTeam?.ab || 0) > 0;
   const careerVsHasHistory = (careerVsTeam?.ab || 0) > 0;
@@ -299,7 +382,11 @@ function PickCard({ pick, onSelectPlayer }) {
     "TBD";
 
   return (
-    <article className={`edge-card edge-conf-${confidence.tone}`}>
+    <article
+      className={`edge-card edge-conf-${confidence.tone}${
+        isFade ? " edge-card-fade" : ""
+      }`}
+    >
       <header className="edge-card-head">
         <button
           type="button"
@@ -342,10 +429,17 @@ function PickCard({ pick, onSelectPlayer }) {
         <span className="edge-stat-label">vs P</span>
         <span className="edge-stat-value">
           {bvpHasHistory ? (
-            <>
-              {bvp.hits}-for-{bvp.ab} ({formatAvg(bvp.avg)}) ·{" "}
-              {bvp.homeRuns || 0} HR · {bvp.pa} PA
-            </>
+            isFade ? (
+              <>
+                {bvp.hits}-for-{bvp.ab} ({formatAvg(bvp.avg)}) ·{" "}
+                {bvp.strikeouts || 0} K · {bvp.pa} PA
+              </>
+            ) : (
+              <>
+                {bvp.hits}-for-{bvp.ab} ({formatAvg(bvp.avg)}) ·{" "}
+                {bvp.homeRuns || 0} HR · {bvp.pa} PA
+              </>
+            )
           ) : (
             <span className="edge-no-history">No history</span>
           )}
