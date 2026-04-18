@@ -37,7 +37,6 @@ export default function BettingEdge() {
   const navigate = useNavigate();
   const { team } = useTeam();
 
-  const [sort, setSort] = useState("edge"); // "hot" | "edge" | "value"
   const [myTeamsOnly, setMyTeamsOnly] = useState(false);
 
   // 1. Today's games ---------------------------------------------------------
@@ -170,25 +169,12 @@ export default function BettingEdge() {
       return { ...p, bvp, seasonVsTeam, careerVsTeam, score, confidence };
     });
 
-    let sorted;
-    if (sort === "hot") {
-      sorted = [...scored].sort(
-        (a, b) => parseFloat(b.batter.ops || 0) - parseFloat(a.batter.ops || 0)
-      );
-    } else if (sort === "value") {
-      // Only keep picks with meaningful BvP sample; rank by BvP OPS.
-      sorted = scored
-        .filter((p) => (p.bvp.pa || 0) >= 5)
-        .sort((a, b) => (b.bvp.ops || 0) - (a.bvp.ops || 0));
-    } else {
-      sorted = scored;
-    }
-
-    return rankPicks(sorted, { maxTotal: 15, maxPerTeam: 3 });
+    // One canonical ranking — by the composite EdgeScore — so the SCORE on
+    // every card matches the order the picks show up in.
+    return rankPicks(scored, { maxTotal: 15, maxPerTeam: 3 });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     pairs,
-    sort,
     bvpQueries.map((q) => q.data?.pa ?? "_").join("|"),
     seasonVsTeamQueries.map((q) => q.data?.ab ?? "_").join("|"),
     careerVsTeamQueries.map((q) => q.data?.ab ?? "_").join("|"),
@@ -241,24 +227,6 @@ export default function BettingEdge() {
       </header>
 
       <div className="edge-controls">
-        <div
-          className="edge-sort-chips"
-          role="tablist"
-          aria-label="Sort picks"
-        >
-          {["hot", "edge", "value"].map((k) => (
-            <button
-              key={k}
-              type="button"
-              role="tab"
-              aria-selected={sort === k}
-              className={`edge-sort-chip ${sort === k ? "active" : ""}`}
-              onClick={() => setSort(k)}
-            >
-              {k.toUpperCase()}
-            </button>
-          ))}
-        </div>
         <label className="edge-filter">
           <input
             type="checkbox"
@@ -287,8 +255,6 @@ export default function BettingEdge() {
           <p>
             {myTeamsOnly
               ? "No picks match My Teams today — try turning off the filter."
-              : sort === "value"
-              ? "No BvP-history picks yet — try HOT or EDGE."
               : "Still warming up — picks will appear as data loads."}
           </p>
         </div>
