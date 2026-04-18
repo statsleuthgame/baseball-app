@@ -236,67 +236,92 @@ export default function LiveGamePage() {
         </div>
       )}
 
-      {/* ===== ZONE A: HERO SCOREBOARD ===== */}
-      <div className="lgp-hero">
-        <div className="lgp-hero-top">
-          <button className="lgp-back-btn" onClick={() => navigate(-1)} aria-label="Go back">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="15 18 9 12 15 6" /></svg>
-          </button>
-          <div className="lgp-hero-badges">
-            {isLive && <span className="lgp-badge live">LIVE <span key={dataUpdatedAt} className="lgp-live-dot" /></span>}
-            {isFinal && <span className="lgp-badge final">FINAL</span>}
-          </div>
-          {isLive && (
-            <button className="lgp-watch-btn" onClick={() => { window.location.href = `https://www.mlb.com/tv/g${gamePk}`; }}>
-              <svg aria-hidden="true" width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3" /></svg>
-              Watch
-            </button>
-          )}
-        </div>
+      {/* ===== STICKY TOP BAR ===== */}
+      <StickyGameBar
+        gameInfo={gameInfo}
+        liveState={liveState}
+        wpData={wpData}
+        isLive={isLive}
+        isFinal={isFinal}
+        gamePk={gamePk}
+        dataUpdatedAt={dataUpdatedAt}
+        navigate={navigate}
+      />
 
-        {/* Score — use liveState for real-time, fallback to gameInfo */}
-        <div className="lgp-score-row">
-          <div className="lgp-team-col">
-            <img src={gameInfo.away.logoUrl} alt={gameInfo.away.abbreviation} className="lgp-logo" />
-            <span className="lgp-team-abbr">{gameInfo.away.abbreviation}</span>
+      {/* ===== HERO HUD ===== */}
+      <div className="lgp-hero-hud">
+        <div className="lgp-hud-scores">
+          <div className="lgp-hud-team">
+            <img src={gameInfo.away.logoUrl} alt={gameInfo.away.abbreviation} className="lgp-hud-logo" />
+            <span className="lgp-hud-abbr">{gameInfo.away.abbreviation}</span>
           </div>
-          <div className="lgp-score-center">
-            <div className="lgp-scores">
-              <span className="lgp-score-num">{liveState?.linescore?.away?.runs ?? gameInfo.away.score ?? 0}</span>
-              <span className="lgp-score-dash">-</span>
-              <span className="lgp-score-num">{liveState?.linescore?.home?.runs ?? gameInfo.home.score ?? 0}</span>
-            </div>
-          </div>
-          <div className="lgp-team-col">
-            <img src={gameInfo.home.logoUrl} alt={gameInfo.home.abbreviation} className="lgp-logo" />
-            <span className="lgp-team-abbr">{gameInfo.home.abbreviation}</span>
+          <span className="lgp-hud-score">{liveState?.linescore?.away?.runs ?? gameInfo.away.score ?? 0}</span>
+          <span className="lgp-hud-dash">—</span>
+          <span className="lgp-hud-score">{liveState?.linescore?.home?.runs ?? gameInfo.home.score ?? 0}</span>
+          <div className="lgp-hud-team lgp-hud-team-right">
+            <span className="lgp-hud-abbr">{gameInfo.home.abbreviation}</span>
+            <img src={gameInfo.home.logoUrl} alt={gameInfo.home.abbreviation} className="lgp-hud-logo" />
           </div>
         </div>
 
-        {/* Situation line with inline diamond — hide when final */}
-        {liveState && !isFinal && (
-          <div className="lgp-situation">
-            <span className="lgp-inning">{liveState.inningHalf === "Top" ? "\u25B2" : "\u25BC"} {liveState.inning}</span>
-            <svg className="lgp-diamond-inline" width="36" height="32" viewBox="0 -4 36 32">
-              <rect x="12" y="0" width="10" height="10" rx="1.5" transform="rotate(45 17 5)" className={`lgp-base ${liveState.onSecond ? "on" : ""}`} />
-              <rect x="21" y="9" width="10" height="10" rx="1.5" transform="rotate(45 26 14)" className={`lgp-base ${liveState.onFirst ? "on" : ""}`} />
-              <rect x="3" y="9" width="10" height="10" rx="1.5" transform="rotate(45 8 14)" className={`lgp-base ${liveState.onThird ? "on" : ""}`} />
-            </svg>
-            <div className="lgp-outs">
-              {[0, 1, 2].map((i) => (
-                <span key={i} className={`lgp-out-pip ${i < liveState.outs ? "on" : ""}`} />
-              ))}
-              <span className="lgp-outs-text">{liveState.outs} out</span>
-            </div>
-            <span className="lgp-count">{liveState.balls}-{liveState.strikes}</span>
+        {isLive && liveState && (
+          <div className="lgp-hud-state">
+            <span className="lgp-hud-state-chunk">
+              <span className="lgp-hud-state-label">{liveState.inningHalf === "Top" ? "TOP" : "BOT"}</span>
+              <span className="lgp-hud-state-value">{liveState.inning}</span>
+            </span>
+            <span className="lgp-hud-state-sep">·</span>
+            <span className="lgp-hud-state-chunk">
+              <span className="lgp-hud-state-label">OUT</span>
+              <span className="lgp-hud-state-value">{liveState.outs}</span>
+            </span>
+            <span className="lgp-hud-state-sep">·</span>
+            <span className="lgp-hud-state-chunk">
+              <span className="lgp-hud-state-label">COUNT</span>
+              <span className="lgp-hud-state-value">{liveState.balls}-{liveState.strikes}</span>
+            </span>
           </div>
         )}
-        {!isFinal && liveState && (liveState.runnerFirst || liveState.runnerSecond || liveState.runnerThird) && (
-          <div className="lgp-runners-line">
-            {liveState.runnerThird && <span className="lgp-runner-tag">3B: {lastName(liveState.runnerThird.fullName)}</span>}
-            {liveState.runnerSecond && <span className="lgp-runner-tag">2B: {lastName(liveState.runnerSecond.fullName)}</span>}
-            {liveState.runnerFirst && <span className="lgp-runner-tag">1B: {lastName(liveState.runnerFirst.fullName)}</span>}
+
+        {isLive && liveState && (
+          <div className="lgp-hud-bases">
+            <svg className="lgp-hud-diamond" width="56" height="56" viewBox="0 0 56 56">
+              <rect x="18" y="2" width="12" height="12" rx="1.5" transform="rotate(45 24 8)" className={`lgp-hud-base ${liveState.onSecond ? "on" : ""}`} />
+              <rect x="32" y="16" width="12" height="12" rx="1.5" transform="rotate(45 38 22)" className={`lgp-hud-base ${liveState.onFirst ? "on" : ""}`} />
+              <rect x="4" y="16" width="12" height="12" rx="1.5" transform="rotate(45 10 22)" className={`lgp-hud-base ${liveState.onThird ? "on" : ""}`} />
+              <circle cx="22" cy="36" r="2.5" fill="var(--text-muted)" opacity="0.3" />
+            </svg>
+            <div className="lgp-hud-runners">
+              {(liveState.runnerThird || liveState.runnerSecond || liveState.runnerFirst) ? (
+                <>
+                  {liveState.runnerThird && (
+                    <span className="lgp-hud-runner-chip">
+                      <span className="lgp-hud-runner-base">3B</span>
+                      {lastName(liveState.runnerThird.fullName)}
+                    </span>
+                  )}
+                  {liveState.runnerSecond && (
+                    <span className="lgp-hud-runner-chip">
+                      <span className="lgp-hud-runner-base">2B</span>
+                      {lastName(liveState.runnerSecond.fullName)}
+                    </span>
+                  )}
+                  {liveState.runnerFirst && (
+                    <span className="lgp-hud-runner-chip">
+                      <span className="lgp-hud-runner-base">1B</span>
+                      {lastName(liveState.runnerFirst.fullName)}
+                    </span>
+                  )}
+                </>
+              ) : (
+                <span className="lgp-hud-bases-empty">Bases empty</span>
+              )}
+            </div>
           </div>
+        )}
+
+        {isFinal && (
+          <div className="lgp-hud-final-tag">FINAL{liveState?.linescore?.innings?.length > 9 ? ` / ${liveState.linescore.innings.length}` : ""}</div>
         )}
       </div>
 
@@ -602,6 +627,56 @@ export default function LiveGamePage() {
           View Full Matchup
         </button>
       </div>
+    </div>
+  );
+}
+
+function StickyGameBar({ gameInfo, liveState, wpData, isLive, isFinal, gamePk, dataUpdatedAt, navigate }) {
+  const awayScore = liveState?.linescore?.away?.runs ?? gameInfo.away.score ?? 0;
+  const homeScore = liveState?.linescore?.home?.runs ?? gameInfo.home.score ?? 0;
+
+  const lastWP = wpData?.length > 0 ? wpData[wpData.length - 1] : null;
+  const homePct = lastWP ? Math.max(0, Math.min(100, Math.round(lastWP.homeProb * 100))) : null;
+  const awayColor = ALL_TEAMS[gameInfo.away.id]?.primary || "#888";
+  const homeColor = ALL_TEAMS[gameInfo.home.id]?.primary || "#888";
+
+  return (
+    <div className="lgp-sticky-bar">
+      <div className="lgp-sticky-inner">
+        <button className="lgp-sticky-back" onClick={() => navigate(-1)} aria-label="Go back">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="15 18 9 12 15 6" /></svg>
+        </button>
+        {isLive && (
+          <span className="lgp-sticky-live">
+            <span key={dataUpdatedAt} className="lgp-sticky-dot" />
+            LIVE
+          </span>
+        )}
+        {isFinal && <span className="lgp-sticky-final">FINAL</span>}
+        <div className="lgp-sticky-score">
+          <span className="lgp-sticky-team-abbr">{gameInfo.away.abbreviation}</span>
+          <span className="lgp-sticky-num">{awayScore}</span>
+          <span className="lgp-sticky-sep">·</span>
+          <span className="lgp-sticky-team-abbr">{gameInfo.home.abbreviation}</span>
+          <span className="lgp-sticky-num">{homeScore}</span>
+        </div>
+        {isLive && liveState && (
+          <span className="lgp-sticky-state">
+            {liveState.inningHalf === "Top" ? "\u25B2" : "\u25BC"}{liveState.inning} · {liveState.outs} out · {liveState.balls}-{liveState.strikes}
+          </span>
+        )}
+        {isLive && (
+          <button className="lgp-sticky-watch" onClick={() => { window.location.href = `https://www.mlb.com/tv/g${gamePk}`; }} aria-label="Watch on MLB.tv">
+            <svg aria-hidden="true" width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3" /></svg>
+          </button>
+        )}
+      </div>
+      {homePct != null && (
+        <div className="lgp-sticky-wp" role="img" aria-label={`Win probability: ${gameInfo.home.abbreviation} ${homePct}%, ${gameInfo.away.abbreviation} ${100 - homePct}%`}>
+          <div className="lgp-sticky-wp-away" style={{ width: `${100 - homePct}%`, background: awayColor }} />
+          <div className="lgp-sticky-wp-home" style={{ width: `${homePct}%`, background: homeColor }} />
+        </div>
+      )}
     </div>
   );
 }
