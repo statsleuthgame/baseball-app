@@ -212,42 +212,55 @@ function Linescore({ linescore, away, home }) {
   );
 }
 
-function MatchupHero({ game, teamId, navigate }) {
-  const away = game.away.probablePitcher;
-  const home = game.home.probablePitcher;
-
+function MatchupHero({ game }) {
   return (
     <div className="sb-matchup-hero">
-      <HeroPitcher side="away" pitcher={away} teamId={teamId} navigate={navigate} />
+      <HeroTeam side="away" team={game.away} />
       <span className="sb-hero-vs" aria-hidden="true">VS</span>
-      <HeroPitcher side="home" pitcher={home} teamId={teamId} navigate={navigate} />
+      <HeroTeam side="home" team={game.home} />
     </div>
   );
 }
 
-function HeroPitcher({ side, pitcher, teamId, navigate }) {
-  const hasPitcher = !!pitcher?.id;
-  const handleClick = (e) => {
-    if (!hasPitcher) return;
-    e.stopPropagation();
-    navigate(`/team/${teamId}/player/${pitcher.id}`);
-  };
+function HeroTeam({ side, team }) {
   return (
-    <div
-      className={`sb-hero-pitcher sb-hero-${side} ${hasPitcher ? "sb-player-link" : ""}`}
-      onClick={handleClick}
-    >
-      {hasPitcher ? (
-        <PlayerPhoto playerId={pitcher.id} name={pitcher.fullName} size={56} className="sb-hero-pitcher-photo" />
-      ) : (
-        <div className="sb-hero-pitcher-photo" />
+    <div className={`sb-hero-team sb-hero-${side}`}>
+      <div className="sb-hero-team-logo-wrap">
+        <img src={team.logoUrl} alt={team.abbreviation} className="sb-hero-team-logo" />
+      </div>
+      <span className="sb-hero-team-name">{team.abbreviation}</span>
+      {team.wins != null && (
+        <span className="sb-hero-team-record">{team.wins}-{team.losses}</span>
       )}
-      <span className="sb-hero-pitcher-name">{pitcher?.fullName ? lastName(pitcher.fullName) : "TBD"}</span>
-      {hasPitcher && (
-        <span className="sb-hero-pitcher-stats">
-          <PitcherStats pitcherId={pitcher.id} />
+    </div>
+  );
+}
+
+function PitcherMatchupLine({ game, teamId, navigate }) {
+  const away = game.away.probablePitcher;
+  const home = game.home.probablePitcher;
+  if (!away?.id && !home?.id) return null;
+
+  const clickPitcher = (p) => (e) => {
+    if (!p?.id) return;
+    e.stopPropagation();
+    navigate(`/team/${teamId}/player/${p.id}`);
+  };
+
+  return (
+    <div className="sb-pitcher-line">
+      <span className="sb-pitcher-line-label">Pitching</span>
+      <span className="sb-pitcher-line-names">
+        <span className={away?.id ? "sb-pitcher-line-name sb-player-link" : "sb-pitcher-line-name"} onClick={clickPitcher(away)}>
+          {away?.fullName ? lastName(away.fullName) : "TBD"}
         </span>
-      )}
+        {away?.id && <PitcherStats pitcherId={away.id} />}
+        <span className="sb-pitcher-line-sep">·</span>
+        <span className={home?.id ? "sb-pitcher-line-name sb-player-link" : "sb-pitcher-line-name"} onClick={clickPitcher(home)}>
+          {home?.fullName ? lastName(home.fullName) : "TBD"}
+        </span>
+        {home?.id && <PitcherStats pitcherId={home.id} />}
+      </span>
     </div>
   );
 }
@@ -786,33 +799,38 @@ export default function Scoreboard() {
                 {isScheduled && <div className="scoreboard-status-badge sb-scheduled-time">{formatGameTime(game.gameDate)}</div>}
 
                 {isScheduled && (
-                  <MatchupHero game={game} teamId={teamId} navigate={navigate} />
+                  <>
+                    <MatchupHero game={game} />
+                    <PitcherMatchupLine game={game} teamId={teamId} navigate={navigate} />
+                  </>
                 )}
 
-                <div className="scoreboard-teams">
-                  <div className={`scoreboard-team-row ${isFinal ? (awayWon ? "sb-winner" : "sb-loser") : ""}`}>
-                    <img src={game.away.logoUrl} alt={game.away.abbreviation} className="scoreboard-logo" />
-                    <span className="scoreboard-abbr">{game.away.abbreviation}</span>
-                    {!isFinal && game.away.wins != null && (
-                      <span className="scoreboard-record">{game.away.wins}-{game.away.losses}</span>
-                    )}
-                    {isFinal && <TopPerformer gamePk={game.gamePk} side="away" teamId={teamId} />}
-                    {(isLive || isFinal) && (
-                      <ScoreDisplay value={game.away.score} />
-                    )}
+                {!isScheduled && (
+                  <div className="scoreboard-teams">
+                    <div className={`scoreboard-team-row ${isFinal ? (awayWon ? "sb-winner" : "sb-loser") : ""}`}>
+                      <img src={game.away.logoUrl} alt={game.away.abbreviation} className="scoreboard-logo" />
+                      <span className="scoreboard-abbr">{game.away.abbreviation}</span>
+                      {!isFinal && game.away.wins != null && (
+                        <span className="scoreboard-record">{game.away.wins}-{game.away.losses}</span>
+                      )}
+                      {isFinal && <TopPerformer gamePk={game.gamePk} side="away" teamId={teamId} />}
+                      {(isLive || isFinal) && (
+                        <ScoreDisplay value={game.away.score} />
+                      )}
+                    </div>
+                    <div className={`scoreboard-team-row ${isFinal ? (homeWon ? "sb-winner" : "sb-loser") : ""}`}>
+                      <img src={game.home.logoUrl} alt={game.home.abbreviation} className="scoreboard-logo" />
+                      <span className="scoreboard-abbr">{game.home.abbreviation}</span>
+                      {!isFinal && game.home.wins != null && (
+                        <span className="scoreboard-record">{game.home.wins}-{game.home.losses}</span>
+                      )}
+                      {isFinal && <TopPerformer gamePk={game.gamePk} side="home" teamId={teamId} />}
+                      {(isLive || isFinal) && (
+                        <ScoreDisplay value={game.home.score} />
+                      )}
+                    </div>
                   </div>
-                  <div className={`scoreboard-team-row ${isFinal ? (homeWon ? "sb-winner" : "sb-loser") : ""}`}>
-                    <img src={game.home.logoUrl} alt={game.home.abbreviation} className="scoreboard-logo" />
-                    <span className="scoreboard-abbr">{game.home.abbreviation}</span>
-                    {!isFinal && game.home.wins != null && (
-                      <span className="scoreboard-record">{game.home.wins}-{game.home.losses}</span>
-                    )}
-                    {isFinal && <TopPerformer gamePk={game.gamePk} side="home" teamId={teamId} />}
-                    {(isLive || isFinal) && (
-                      <ScoreDisplay value={game.home.score} />
-                    )}
-                  </div>
-                </div>
+                )}
                 {(isLive || isFinal) && (
                   <InningProgressBar
                     inning={isFinal ? (game.linescore?.innings?.length ?? 9) + 1 : game.inning}
