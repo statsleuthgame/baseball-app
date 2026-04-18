@@ -228,10 +228,12 @@ function HeroTeam({ side, team }) {
       <div className="sb-hero-team-logo-wrap">
         <img src={team.logoUrl} alt={team.abbreviation} className="sb-hero-team-logo" />
       </div>
-      <span className="sb-hero-team-name">{team.abbreviation}</span>
-      {team.wins != null && (
-        <span className="sb-hero-team-record">{team.wins}-{team.losses}</span>
-      )}
+      <div className="sb-hero-team-text">
+        <span className="sb-hero-team-name">{team.abbreviation}</span>
+        {team.wins != null && (
+          <span className="sb-hero-team-record">{team.wins}-{team.losses}</span>
+        )}
+      </div>
     </div>
   );
 }
