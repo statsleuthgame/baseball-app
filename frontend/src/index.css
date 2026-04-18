@@ -3524,6 +3524,48 @@ button.stat-cell {
 
 .scoreboard-list { display: flex; flex-direction: column; gap: 5px; }
 
+.sb-section-hdr {
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 10px 2px 2px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sb-section-hdr:first-child {
+  margin-top: 2px;
+}
+
+.sb-section-hdr::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.10), transparent);
+}
+
+.sb-section-hdr-live {
+  color: var(--jumbo-led-amber);
+}
+
+.sb-section-hdr-live::after {
+  background: linear-gradient(90deg, rgba(255, 224, 112, 0.25), transparent);
+}
+
+.sb-section-hdr-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--live);
+  box-shadow: 0 0 6px var(--live), 0 0 2px #fff;
+  animation: live-dot-flash 1.2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
 .scoreboard-card {
   position: relative;
   isolation: isolate;

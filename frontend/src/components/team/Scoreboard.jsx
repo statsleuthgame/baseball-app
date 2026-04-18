@@ -683,6 +683,19 @@ export default function Scoreboard() {
       })
     : [];
 
+  const isMyTeamGame = (g) =>
+    g.home.id === teamId ||
+    g.away.id === teamId ||
+    (partnerTeamId && (g.home.id === partnerTeamId || g.away.id === partnerTeamId));
+
+  const groups = { myTeams: [], live: [], upcoming: [], final: [] };
+  for (const g of sorted) {
+    if (isMyTeamGame(g)) groups.myTeams.push(g);
+    else if (g.status === "In Progress" || g.status === "Delayed" || g.status === "Delayed Start") groups.live.push(g);
+    else if (g.status === "Final" || g.status === "Game Over") groups.final.push(g);
+    else groups.upcoming.push(g);
+  }
+
   return (
     <div className="scoreboard-page">
       <div className="scoreboard-date-nav">
@@ -740,7 +753,8 @@ export default function Scoreboard() {
 
       {sorted.length > 0 && (
         <div className="scoreboard-list">
-          {sorted.map((game) => {
+          {(() => {
+          const renderCard = (game) => {
             const isOurGame = game.home.id === teamId || game.away.id === teamId;
             const isLive = game.status === "In Progress";
             const isDelayed = game.status === "Delayed Start" || game.status === "Delayed";
@@ -965,7 +979,38 @@ export default function Scoreboard() {
                 {isLive && <span className="sb-grass-strip" aria-hidden="true" />}
               </div>
             );
-          })}
+          };
+          return (
+            <>
+              {groups.myTeams.length > 0 && (
+                <>
+                  <h3 className="sb-section-hdr">My Teams</h3>
+                  {groups.myTeams.map(renderCard)}
+                </>
+              )}
+              {groups.live.length > 0 && (
+                <>
+                  <h3 className="sb-section-hdr sb-section-hdr-live">
+                    <span className="sb-section-hdr-dot" aria-hidden="true" />Live
+                  </h3>
+                  {groups.live.map(renderCard)}
+                </>
+              )}
+              {groups.upcoming.length > 0 && (
+                <>
+                  <h3 className="sb-section-hdr">Upcoming</h3>
+                  {groups.upcoming.map(renderCard)}
+                </>
+              )}
+              {groups.final.length > 0 && (
+                <>
+                  <h3 className="sb-section-hdr">Final</h3>
+                  {groups.final.map(renderCard)}
+                </>
+              )}
+            </>
+          );
+          })()}
         </div>
       )}
     </div>
