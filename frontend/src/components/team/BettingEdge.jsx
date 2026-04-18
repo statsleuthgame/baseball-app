@@ -14,7 +14,7 @@ import PlayerPhoto from "../common/PlayerPhoto";
 import SkeletonLoader from "../common/SkeletonLoader";
 import {
   computeEdgeScore,
-  confidenceBucket,
+  scoreBucket,
   rankPicks,
 } from "../../utils/edgeScoring";
 
@@ -162,10 +162,8 @@ export default function BettingEdge() {
         teamContextOPS: careerVsTeam.ops,
         teamContextAB: careerVsTeam.ab,
       });
-      const confidence = confidenceBucket({
-        l7OPS: p.batter.ops,
-        bvpPA: bvp.pa,
-      });
+      // Pill is derived from the score itself — rank and label always agree.
+      const confidence = scoreBucket(score);
       return { ...p, bvp, seasonVsTeam, careerVsTeam, score, confidence };
     });
 

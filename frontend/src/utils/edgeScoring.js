@@ -46,23 +46,23 @@ export function computeEdgeScore({
   return 0.5 * l7 + 0.3 * bvpContrib + 0.2 * teamContext;
 }
 
-// Human-readable confidence bucket driven by both L7 strength AND BvP sample size.
-// Returns { level, label, tone } where tone ∈ { "high", "medium", "low", "sample" }.
-export function confidenceBucket({ l7OPS, bvpPA }) {
-  const ops = parseFloat(l7OPS);
-  const w = bvpWeight(bvpPA);
-  const pa = Number(bvpPA) || 0;
-
-  if (pa < 5 && (!Number.isFinite(ops) || ops < 0.8)) {
-    return { level: "low", label: "SMALL SAMPLE", tone: "sample" };
-  }
-  if (w >= 0.8 && Number.isFinite(ops) && ops >= 0.9) {
-    return { level: "high", label: "HIGH", tone: "high" };
-  }
-  if (w >= 0.5 || (Number.isFinite(ops) && ops >= 0.85)) {
-    return { level: "medium", label: "MEDIUM", tone: "medium" };
-  }
+// Tier the pill purely from the composite EdgeScore so the visible label
+// (HIGH / MEDIUM / LOW) and the card's rank always agree. Thin-sample picks
+// naturally score lower — bvpWeight collapses below 5 PA, and team context
+// falls back to L7 below 10 AB — so a separate "small sample" pill isn't
+// needed and would only fight with the rank order.
+export function scoreBucket(score) {
+  const s = Number(score) || 0;
+  if (s >= 0.55) return { level: "high", label: "HIGH", tone: "high" };
+  if (s >= 0.4) return { level: "medium", label: "MEDIUM", tone: "medium" };
   return { level: "low", label: "LOW", tone: "low" };
+}
+
+// Back-compat alias — callers that still pass the old input shape get a
+// bucket based on a rough L7-only approximation. New callers should use
+// scoreBucket(score) directly.
+export function confidenceBucket({ l7OPS }) {
+  return scoreBucket(normL7OPS(l7OPS));
 }
 
 // Rank picks and cap the result so a single scorching lineup can't dominate.
