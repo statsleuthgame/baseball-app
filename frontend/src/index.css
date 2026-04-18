@@ -7538,6 +7538,12 @@ th.sb-ls-total {
   padding: 6px 0;
 }
 
+.edge-details-block + .edge-details-block {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.08);
+}
+
 .edge-details-label {
   font-size: 9px;
   font-weight: 800;

@@ -6,7 +6,8 @@ import {
   fetchAllGamesToday,
   fetchHotColdPlayers,
   fetchBvP,
-  fetchPlayerVsTeam,
+  fetchPlayerSeasonVsTeam,
+  fetchPlayerCareerVsTeam,
 } from "../../api/client";
 import { formatAvg, getTeamAbbr, lastName } from "../../utils/formatters";
 import PlayerPhoto from "../common/PlayerPhoto";
@@ -22,11 +23,13 @@ import {
  * $ icon in TopBar; intentionally not listed in TopTabs.
  *
  * Data flow:
- *   fetchAllGamesToday()                       → today's slate
- *   fetchHotColdPlayers(teamId)                → top-3 hot batters per team (L7 OPS)
- *   fetchBvP(batterId, pitcherId)              → batter-vs-pitcher career line
- *   fetchPlayerVsTeam(batterId, oppTeamId)     → aggregated vs-team career
- *                                                (feeds both score + expand panel)
+ *   fetchAllGamesToday()                             → today's slate
+ *   fetchHotColdPlayers(teamId)                      → top-3 hot batters per team (L7 OPS)
+ *   fetchBvP(batterId, pitcherId)                    → batter-vs-pitcher career line
+ *   fetchPlayerSeasonVsTeam(batterId, oppTeamId)     → current-season vs-team totals
+ *   fetchPlayerCareerVsTeam(batterId, oppTeamId)     → all-time vs-team totals
+ *                                                      (career feeds the score;
+ *                                                       both render in expand panel)
  *
  * Scoring lives in utils/edgeScoring.js.
  */
@@ -116,11 +119,21 @@ export default function BettingEdge() {
     })),
   });
 
-  // 4b. Aggregated vs-team history per pair (broader than last-10 game log) --
-  const vsTeamQueries = useQueries({
+  // 4b. Current-season vs-team totals per pair.
+  const seasonVsTeamQueries = useQueries({
     queries: pairs.map((p) => ({
-      queryKey: ["edge", "vsTeam", p.batter.id, p.opposingTeam?.id],
-      queryFn: () => fetchPlayerVsTeam(p.batter.id, p.opposingTeam?.id),
+      queryKey: ["edge", "seasonVsTeam", p.batter.id, p.opposingTeam?.id],
+      queryFn: () => fetchPlayerSeasonVsTeam(p.batter.id, p.opposingTeam?.id),
+      staleTime: 6 * 60 * 60 * 1000,
+      enabled: !!p.opposingTeam?.id,
+    })),
+  });
+
+  // 4c. Career (all-time) vs-team totals per pair — larger sample, feeds score.
+  const careerVsTeamQueries = useQueries({
+    queries: pairs.map((p) => ({
+      queryKey: ["edge", "careerVsTeam", p.batter.id, p.opposingTeam?.id],
+      queryFn: () => fetchPlayerCareerVsTeam(p.batter.id, p.opposingTeam?.id),
       staleTime: 24 * 60 * 60 * 1000,
       enabled: !!p.opposingTeam?.id,
     })),
@@ -128,29 +141,33 @@ export default function BettingEdge() {
 
   // 5. Score + sort + rank --------------------------------------------------
   const picks = useMemo(() => {
+    const emptyVs = {
+      games: 0,
+      ab: 0,
+      hits: 0,
+      hr: 0,
+      avg: null,
+      ops: null,
+      pa: 0,
+    };
     const scored = pairs.map((p, i) => {
       const bvp = bvpQueries[i]?.data || { pa: 0 };
-      const vsTeam = vsTeamQueries[i]?.data || {
-        games: 0,
-        ab: 0,
-        hits: 0,
-        hr: 0,
-        avg: null,
-        ops: null,
-        pa: 0,
-      };
+      const seasonVsTeam = seasonVsTeamQueries[i]?.data || emptyVs;
+      const careerVsTeam = careerVsTeamQueries[i]?.data || emptyVs;
+      // Career feeds the score (larger sample). computeEdgeScore sample-gates
+      // its own input (ab < 10 → falls back to L7).
       const score = computeEdgeScore({
         l7OPS: p.batter.ops,
         bvpOPS: bvp.ops,
         bvpPA: bvp.pa,
-        teamContextOPS: vsTeam.ops,
-        teamContextAB: vsTeam.ab,
+        teamContextOPS: careerVsTeam.ops,
+        teamContextAB: careerVsTeam.ab,
       });
       const confidence = confidenceBucket({
         l7OPS: p.batter.ops,
         bvpPA: bvp.pa,
       });
-      return { ...p, bvp, vsTeam, score, confidence };
+      return { ...p, bvp, seasonVsTeam, careerVsTeam, score, confidence };
     });
 
     let sorted;
@@ -173,7 +190,8 @@ export default function BettingEdge() {
     pairs,
     sort,
     bvpQueries.map((q) => q.data?.pa ?? "_").join("|"),
-    vsTeamQueries.map((q) => q.data?.ab ?? "_").join("|"),
+    seasonVsTeamQueries.map((q) => q.data?.ab ?? "_").join("|"),
+    careerVsTeamQueries.map((q) => q.data?.ab ?? "_").join("|"),
   ]);
 
   const filteredPicks = useMemo(() => {
@@ -300,7 +318,8 @@ function PickCard({ pick, onSelectPlayer }) {
   const {
     batter,
     bvp,
-    vsTeam,
+    seasonVsTeam,
+    careerVsTeam,
     opposingPitcher,
     opposingTeam,
     teamAbbr,
@@ -308,7 +327,8 @@ function PickCard({ pick, onSelectPlayer }) {
     score,
   } = pick;
   const bvpHasHistory = (bvp.pa || 0) > 0;
-  const vsTeamHasHistory = (vsTeam?.ab || 0) > 0;
+  const seasonVsHasHistory = (seasonVsTeam?.ab || 0) > 0;
+  const careerVsHasHistory = (careerVsTeam?.ab || 0) > 0;
 
   const pitcherDisplay =
     lastName(opposingPitcher?.fullName || opposingPitcher?.name || "") ||
@@ -382,38 +402,65 @@ function PickCard({ pick, onSelectPlayer }) {
 
       {open && (
         <div className="edge-details">
-          {vsTeamHasHistory ? (
-            <>
-              <div className="edge-details-label">
-                Career vs {opposingTeam?.abbreviation || "OPP"}
-              </div>
+          <div className="edge-details-block">
+            <div className="edge-details-label">
+              Season vs {opposingTeam?.abbreviation || "OPP"}
+            </div>
+            {seasonVsHasHistory ? (
               <div className="edge-details-line">
-                {vsTeam.hits}-for-{vsTeam.ab} ({formatAvg(vsTeam.avg)}) ·{" "}
-                {vsTeam.hr} HR
-                {vsTeam.ops != null && (
-                  <>
-                    {" "}
-                    · {formatAvg(vsTeam.ops)} OPS
-                  </>
+                {seasonVsTeam.hits}-for-{seasonVsTeam.ab} (
+                {formatAvg(seasonVsTeam.avg)}) · {seasonVsTeam.hr} HR
+                {seasonVsTeam.ops != null && (
+                  <> · {formatAvg(seasonVsTeam.ops)} OPS</>
                 )}
-                {vsTeam.games > 0 && (
+                {seasonVsTeam.games > 0 && (
                   <span className="edge-details-sample">
                     {" "}
-                    · {vsTeam.games} {vsTeam.games === 1 ? "game" : "games"}
+                    · {seasonVsTeam.games}{" "}
+                    {seasonVsTeam.games === 1 ? "game" : "games"}
                   </span>
                 )}
               </div>
-              {vsTeam.ab < 10 && (
-                <div className="edge-details-note">
-                  Small sample — team context not factored into score.
-                </div>
-              )}
-            </>
-          ) : (
-            <div className="edge-details-line edge-no-history">
-              No prior history vs {opposingTeam?.abbreviation || "this team"}.
+            ) : (
+              <div className="edge-details-line edge-no-history">
+                No matchups yet this season.
+              </div>
+            )}
+          </div>
+
+          <div className="edge-details-block">
+            <div className="edge-details-label">
+              Career vs {opposingTeam?.abbreviation || "OPP"}
             </div>
-          )}
+            {careerVsHasHistory ? (
+              <>
+                <div className="edge-details-line">
+                  {careerVsTeam.hits}-for-{careerVsTeam.ab} (
+                  {formatAvg(careerVsTeam.avg)}) · {careerVsTeam.hr} HR
+                  {careerVsTeam.ops != null && (
+                    <> · {formatAvg(careerVsTeam.ops)} OPS</>
+                  )}
+                  {careerVsTeam.games > 0 && (
+                    <span className="edge-details-sample">
+                      {" "}
+                      · {careerVsTeam.games}{" "}
+                      {careerVsTeam.games === 1 ? "game" : "games"}
+                    </span>
+                  )}
+                </div>
+                {careerVsTeam.ab < 10 && (
+                  <div className="edge-details-note">
+                    Small sample — team context not factored into score.
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="edge-details-line edge-no-history">
+                No prior history vs{" "}
+                {opposingTeam?.abbreviation || "this team"}.
+              </div>
+            )}
+          </div>
         </div>
       )}
     </article>

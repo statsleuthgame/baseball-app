@@ -1232,50 +1232,98 @@ export const fetchPlayerGameLog = async (playerId, group = "hitting") => {
   return [];
 };
 
-// Aggregated batter-vs-team stats (broader sample than last-10 game log).
-// Tries MLB's native vsTeam5Y / vsTeamTotal / vsTeam stat types in order,
-// aggregates across any per-season splits, and returns normalized numbers.
-// Returns the empty shape when no history exists.
-export const fetchPlayerVsTeam = async (playerId, opposingTeamId, group = "hitting") => {
-  const empty = { games: 0, ab: 0, hits: 0, hr: 0, avg: null, ops: null, pa: 0 };
-  if (!playerId || !opposingTeamId) return empty;
-  for (const statsType of ["vsTeam5Y", "vsTeamTotal", "vsTeam"]) {
+// Shared aggregator for vs-team splits returned by any MLB stats endpoint.
+// AB-weights OBP and SLG so OPS survives multi-season merges.
+function aggregateVsTeamSplits(splits) {
+  let ab = 0, hits = 0, hr = 0, pa = 0, games = 0;
+  let obpSum = 0, slgSum = 0;
+  for (const sp of splits || []) {
+    const s = sp.stat || {};
+    const abSp = s.atBats || 0;
+    if (abSp <= 0) continue;
+    ab += abSp;
+    hits += s.hits || 0;
+    hr += s.homeRuns || 0;
+    pa += s.plateAppearances || 0;
+    games += s.gamesPlayed || 0;
+    obpSum += (parseFloat(s.obp) || 0) * abSp;
+    slgSum += (parseFloat(s.slg) || 0) * abSp;
+  }
+  if (ab <= 0) return null;
+  return {
+    games,
+    ab,
+    hits,
+    hr,
+    avg: hits / ab,
+    ops: obpSum / ab + slgSum / ab,
+    pa,
+  };
+}
+
+const EMPTY_VS_TEAM = { games: 0, ab: 0, hits: 0, hr: 0, avg: null, ops: null, pa: 0 };
+
+// Current-season batter-vs-team totals.
+export const fetchPlayerSeasonVsTeam = async (playerId, opposingTeamId, group = "hitting") => {
+  if (!playerId || !opposingTeamId) return EMPTY_VS_TEAM;
+  const year = new Date().getFullYear();
+  try {
+    const resp = await mlbApi.get(`/people/${playerId}/stats`, {
+      params: { stats: "vsTeam", group, opposingTeamId, season: year, sportId: 1 },
+    });
+    const agg = aggregateVsTeamSplits(resp.data?.stats?.[0]?.splits);
+    if (agg) return agg;
+  } catch {}
+  return EMPTY_VS_TEAM;
+};
+
+// Career / all-time batter-vs-team totals. Tries native career stat types
+// first, then falls back to aggregating year-by-year vsTeam splits. Several
+// endpoints on MLB's public stats API silently return a single current-season
+// row for `vsTeam` without a season param, so we only trust it as a last
+// resort after asking for season-less data with explicit totals.
+export const fetchPlayerCareerVsTeam = async (playerId, opposingTeamId, group = "hitting") => {
+  if (!playerId || !opposingTeamId) return EMPTY_VS_TEAM;
+
+  // 1. Explicit career stat types that aggregate all years server-side.
+  for (const statsType of ["vsTeamTotal", "vsTeam5Y"]) {
     try {
       const resp = await mlbApi.get(`/people/${playerId}/stats`, {
-        params: { stats: statsType, group, opposingTeamId },
+        params: { stats: statsType, group, opposingTeamId, sportId: 1 },
       });
-      const splits = resp.data?.stats?.[0]?.splits || [];
-      let ab = 0, hits = 0, hr = 0, pa = 0, games = 0;
-      let obpSum = 0, slgSum = 0;
-      for (const sp of splits) {
-        const s = sp.stat || {};
-        const abSp = s.atBats || 0;
-        if (abSp <= 0) continue;
-        ab += abSp;
-        hits += s.hits || 0;
-        hr += s.homeRuns || 0;
-        pa += s.plateAppearances || 0;
-        games += s.gamesPlayed || 0;
-        obpSum += (parseFloat(s.obp) || 0) * abSp;
-        slgSum += (parseFloat(s.slg) || 0) * abSp;
-      }
-      if (ab > 0) {
-        return {
-          games,
-          ab,
-          hits,
-          hr,
-          avg: hits / ab,
-          ops: obpSum / ab + slgSum / ab,
-          pa,
-        };
-      }
-    } catch {
-      continue;
-    }
+      const agg = aggregateVsTeamSplits(resp.data?.stats?.[0]?.splits);
+      // vsTeamTotal must return career; accept if any AB.
+      // vsTeam5Y accepted as well (5-year is a close-enough career proxy for
+      // nearly every active MLB player).
+      if (agg) return agg;
+    } catch {}
   }
-  return empty;
+
+  // 2. Sum per-season splits via yearByYear with the opposing team filter.
+  try {
+    const resp = await mlbApi.get(`/people/${playerId}/stats`, {
+      params: { stats: "yearByYear", group, opposingTeamId, sportId: 1 },
+    });
+    const agg = aggregateVsTeamSplits(resp.data?.stats?.[0]?.splits);
+    if (agg) return agg;
+  } catch {}
+
+  // 3. Last resort: stats=vsTeam without a season param. On this API this
+  //    often returns just the current season, so we only use it if nothing
+  //    above worked.
+  try {
+    const resp = await mlbApi.get(`/people/${playerId}/stats`, {
+      params: { stats: "vsTeam", group, opposingTeamId, sportId: 1 },
+    });
+    const agg = aggregateVsTeamSplits(resp.data?.stats?.[0]?.splits);
+    if (agg) return agg;
+  } catch {}
+
+  return EMPTY_VS_TEAM;
 };
+
+// Back-compat alias — older callers expecting a single vs-team function.
+export const fetchPlayerVsTeam = fetchPlayerCareerVsTeam;
 
 // 5. Win probability for a game
 export const fetchWinProbability = async (gamePk) => {
