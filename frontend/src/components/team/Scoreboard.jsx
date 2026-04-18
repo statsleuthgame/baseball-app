@@ -238,7 +238,7 @@ function HeroTeam({ side, team }) {
   );
 }
 
-function PitcherMatchupLine({ game, teamId, navigate }) {
+function PitcherMatchupLine({ game, teamId, navigate, hero = false }) {
   const away = game.away.probablePitcher;
   const home = game.home.probablePitcher;
   if (!away?.id && !home?.id) return null;
@@ -249,28 +249,44 @@ function PitcherMatchupLine({ game, teamId, navigate }) {
     navigate(`/team/${teamId}/player/${p.id}`);
   };
 
+  const renderSlot = (p, side) => {
+    const has = !!p?.id;
+    const displayName = hero
+      ? (p?.fullName || "TBD")
+      : (p?.fullName ? lastName(p.fullName) : "TBD");
+
+    if (hero) {
+      return (
+        <div
+          className={`sb-pitcher-line-slot sb-pitcher-line-slot-${side} sb-pitcher-line-slot-hero ${has ? "sb-player-link" : ""}`}
+          onClick={clickPitcher(p)}
+        >
+          {has && <PlayerPhoto playerId={p.id} name={p.fullName} size={28} className="sb-pitcher-hero-photo" />}
+          <div className="sb-pitcher-hero-text">
+            <span className="sb-pitcher-line-name">{displayName}</span>
+            {has && <PitcherStats pitcherId={p.id} />}
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div
+        className={`sb-pitcher-line-slot sb-pitcher-line-slot-${side} ${has ? "sb-player-link" : ""}`}
+        onClick={clickPitcher(p)}
+      >
+        <span className="sb-pitcher-line-name">{displayName}</span>
+        {has && <PitcherStats pitcherId={p.id} />}
+      </div>
+    );
+  };
+
   return (
-    <div className="sb-pitcher-line">
+    <div className={`sb-pitcher-line ${hero ? "sb-pitcher-line-hero" : "sb-pitcher-line-compact"}`}>
       <span className="sb-pitcher-line-label">Pitching</span>
       <div className="sb-pitcher-line-row">
-        <div className="sb-pitcher-line-slot sb-pitcher-line-slot-away">
-          <span
-            className={away?.id ? "sb-pitcher-line-name sb-player-link" : "sb-pitcher-line-name"}
-            onClick={clickPitcher(away)}
-          >
-            {away?.fullName ? lastName(away.fullName) : "TBD"}
-          </span>
-          {away?.id && <PitcherStats pitcherId={away.id} />}
-        </div>
-        <div className="sb-pitcher-line-slot sb-pitcher-line-slot-home">
-          <span
-            className={home?.id ? "sb-pitcher-line-name sb-player-link" : "sb-pitcher-line-name"}
-            onClick={clickPitcher(home)}
-          >
-            {home?.fullName ? lastName(home.fullName) : "TBD"}
-          </span>
-          {home?.id && <PitcherStats pitcherId={home.id} />}
-        </div>
+        {renderSlot(away, "away")}
+        {renderSlot(home, "home")}
       </div>
     </div>
   );
@@ -821,7 +837,7 @@ export default function Scoreboard() {
                 {isScheduled && (
                   <>
                     <MatchupHero game={game} />
-                    <PitcherMatchupLine game={game} teamId={teamId} navigate={navigate} />
+                    <PitcherMatchupLine game={game} teamId={teamId} navigate={navigate} hero={isMyTeamGame(game)} />
                   </>
                 )}
 
