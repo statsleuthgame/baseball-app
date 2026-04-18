@@ -867,11 +867,8 @@ export default function Scoreboard() {
                     </div>
                   </div>
                 )}
-                {(isLive || isFinal) && (
-                  <InningProgressBar
-                    inning={isFinal ? (game.linescore?.innings?.length ?? 9) + 1 : game.inning}
-                    total={isFinal ? (game.linescore?.innings?.length ?? 9) : 9}
-                  />
+                {isLive && (
+                  <InningProgressBar inning={game.inning} total={9} />
                 )}
                 </div>
 
