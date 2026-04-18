@@ -264,9 +264,6 @@ export default function LiveGamePage() {
   const isLive = gameInfo ? ["In Progress", "Warmup", "Delayed Start", "Delayed"].includes(gameInfo.status) : false;
   const isFinal = gameInfo?.status === "Final";
 
-  // Auto-open box score for final games
-  useEffect(() => { if (isFinal) setBoxOpen(true); }, [isFinal]);
-
   if (isLoading) return <LoadingSpinner text="Loading game..." />;
   if (!gameInfo) return <div className="matchup-empty"><h2>Game not found</h2></div>;
 
@@ -629,6 +626,15 @@ export default function LiveGamePage() {
         </div>
       )}
 
+      {/* ===== BOX SCORE (collapsed by default, opens on tap) ===== */}
+      <BoxScoreSection
+        boxOpen={boxOpen}
+        setBoxOpen={setBoxOpen}
+        boxData={boxData}
+        gameInfo={gameInfo}
+        teamId={teamId}
+      />
+
       {/* ===== SCORING SUMMARY — rich cards with hit metrics chyron ===== */}
       {liveState?.scoringPlays?.length > 0 && (
         <div className="lgp-section">
@@ -675,15 +681,6 @@ export default function LiveGamePage() {
           </div>
         </div>
       )}
-
-      {/* ===== ZONE G: BOX SCORE ===== */}
-      <BoxScoreSection
-        boxOpen={boxOpen}
-        setBoxOpen={setBoxOpen}
-        boxData={boxData}
-        gameInfo={gameInfo}
-        teamId={teamId}
-      />
 
       {/* ===== ZONE H: VENUE + WEATHER + MATCHUP ===== */}
       {(() => {

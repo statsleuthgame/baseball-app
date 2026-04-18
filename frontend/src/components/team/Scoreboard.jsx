@@ -659,7 +659,6 @@ export default function Scoreboard() {
   const rawDate = searchParams.get("date");
   const paramDate = rawDate && /^\d{4}-\d{2}-\d{2}$/.test(rawDate) ? rawDate : null;
   const [selectedDate, setSelectedDateRaw] = useState(paramDate || fmt(new Date()));
-  const [expandedGame, setExpandedGame] = useState(null);
   const dateInputRef = useRef(null);
 
   const setSelectedDate = (d) => {
@@ -789,8 +788,8 @@ export default function Scoreboard() {
             const isFinal = game.status === "Final" || game.status === "Game Over";
             const isScheduled = !isLive && !isDelayed && !isFinal;
 
-            const isExpanded = expandedGame === game.gamePk;
-            const canExpand = isLive || isFinal;
+            const showStatsLink = isLive || isFinal;
+            const matchupRoute = `/team/${teamId}/${isLive || isFinal ? "live" : "matchup"}/${game.gamePk}`;
 
             const awayWon = isFinal && game.away.score > game.home.score;
             const homeWon = isFinal && game.home.score > game.away.score;
@@ -805,12 +804,12 @@ export default function Scoreboard() {
             return (
               <div
                 key={game.gamePk}
-                className={`scoreboard-card ${isOurGame ? "our-game" : ""} ${isLive ? "live" : ""} ${isCloseGame ? "sb-close-game" : ""} ${isBlowout ? "sb-blowout" : ""} ${weatherMod} ${canExpand ? "sb-tappable" : ""}`}
+                className={`scoreboard-card ${isOurGame ? "our-game" : ""} ${isLive ? "live" : ""} ${isCloseGame ? "sb-close-game" : ""} ${isBlowout ? "sb-blowout" : ""} ${weatherMod} sb-tappable`}
                 style={{ "--away-color": awayColor, "--home-color": homeColor }}
-                onClick={canExpand ? () => setExpandedGame(isExpanded ? null : game.gamePk) : undefined}
-                role={canExpand ? "button" : undefined}
-                tabIndex={canExpand ? 0 : undefined}
-                onKeyDown={canExpand ? (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setExpandedGame(isExpanded ? null : game.gamePk); } } : undefined}
+                onClick={() => navigate(matchupRoute)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); navigate(matchupRoute); } }}
               >
                 {isOurGame && (
                   <img
@@ -820,7 +819,7 @@ export default function Scoreboard() {
                     aria-hidden="true"
                   />
                 )}
-                <div className="sb-matchup-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/${isLive || isFinal ? "live" : "matchup"}/${game.gamePk}`); }}>
+                <div className="sb-matchup-link">
                 {isLive && (
                   <div className="scoreboard-live-badge">
                     {game.inningHalf === "Top" ? "Top" : "Bot"} {game.inning}
@@ -946,21 +945,13 @@ export default function Scoreboard() {
                   </a>
                 )}
 
-                {/* Expand indicator (live/final only — scheduled cards route to matchup on tap) */}
-                {canExpand && (
+                {/* Stats link → navigates to the matchup/live page (live & final only) */}
+                {showStatsLink && (
                   <div className="sb-expand-hint">
-                    <span className="sb-expand-label">{isExpanded ? "Hide" : "Stats"}</span>
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: isExpanded ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
-                      <polyline points="6 9 12 15 18 9" />
+                    <span className="sb-expand-label">Stats</span>
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="9 6 15 12 9 18" />
                     </svg>
-                  </div>
-                )}
-
-                {/* Expanded game detail */}
-                {isExpanded && !isScheduled && (
-                  <div className="sb-game-detail" onClick={(e) => e.stopPropagation()}>
-                    <Linescore linescore={game.linescore} away={game.away} home={game.home} />
-                    <GameDetail gamePk={game.gamePk} awayAbbr={game.away.abbreviation} homeAbbr={game.home.abbreviation} awayId={game.away.id} homeId={game.home.id} teamId={teamId} />
                   </div>
                 )}
 
