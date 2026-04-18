@@ -252,17 +252,26 @@ function PitcherMatchupLine({ game, teamId, navigate }) {
   return (
     <div className="sb-pitcher-line">
       <span className="sb-pitcher-line-label">Pitching</span>
-      <span className="sb-pitcher-line-names">
-        <span className={away?.id ? "sb-pitcher-line-name sb-player-link" : "sb-pitcher-line-name"} onClick={clickPitcher(away)}>
-          {away?.fullName ? lastName(away.fullName) : "TBD"}
-        </span>
-        {away?.id && <PitcherStats pitcherId={away.id} />}
-        <span className="sb-pitcher-line-sep">·</span>
-        <span className={home?.id ? "sb-pitcher-line-name sb-player-link" : "sb-pitcher-line-name"} onClick={clickPitcher(home)}>
-          {home?.fullName ? lastName(home.fullName) : "TBD"}
-        </span>
-        {home?.id && <PitcherStats pitcherId={home.id} />}
-      </span>
+      <div className="sb-pitcher-line-row">
+        <div className="sb-pitcher-line-slot sb-pitcher-line-slot-away">
+          <span
+            className={away?.id ? "sb-pitcher-line-name sb-player-link" : "sb-pitcher-line-name"}
+            onClick={clickPitcher(away)}
+          >
+            {away?.fullName ? lastName(away.fullName) : "TBD"}
+          </span>
+          {away?.id && <PitcherStats pitcherId={away.id} />}
+        </div>
+        <div className="sb-pitcher-line-slot sb-pitcher-line-slot-home">
+          <span
+            className={home?.id ? "sb-pitcher-line-name sb-player-link" : "sb-pitcher-line-name"}
+            onClick={clickPitcher(home)}
+          >
+            {home?.fullName ? lastName(home.fullName) : "TBD"}
+          </span>
+          {home?.id && <PitcherStats pitcherId={home.id} />}
+        </div>
+      </div>
     </div>
   );
 }
@@ -546,8 +555,9 @@ function LiveGameInfo({ gamePk, teamId, isOurGame }) {
         <span className="sb-live-count">{liveState.balls}-{liveState.strikes}</span>
       </div>
       {tickerText && (
-        <div className="sb-ticker" aria-live="polite">
-          <span className="sb-ticker-inner">• {tickerText} •</span>
+        <div className="sb-last-play" aria-live="polite">
+          <span className="sb-last-play-label">Last</span>
+          <span className="sb-last-play-text">{tickerText}</span>
         </div>
       )}
     </div>
