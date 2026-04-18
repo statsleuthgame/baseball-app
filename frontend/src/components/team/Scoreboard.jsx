@@ -545,11 +545,11 @@ function LiveGameInfo({ gamePk, teamId, isOurGame }) {
             </div>
           </div>
         )}
-        <svg className={`sb-live-diamond ${isOurGame ? "sb-our-diamond" : ""}`} width="52" height="52" viewBox="0 0 52 52">
+        <svg className={`sb-live-diamond ${isOurGame ? "sb-our-diamond" : ""}`} width="52" height="52" viewBox="-2 -2 56 56">
           <rect x="17" y="2" width="12" height="12" rx="1.5" transform="rotate(45 23 8)" className={`sb-live-base ${liveState.onSecond ? "occupied" : ""}`} />
           <rect x="30" y="15" width="12" height="12" rx="1.5" transform="rotate(45 36 21)" className={`sb-live-base ${liveState.onFirst ? "occupied" : ""}`} />
           <rect x="4" y="15" width="12" height="12" rx="1.5" transform="rotate(45 10 21)" className={`sb-live-base ${liveState.onThird ? "occupied" : ""}`} />
-          <circle cx="21" cy="34" r="2.5" fill="var(--text-muted)" opacity="0.3" />
+          <circle cx="23" cy="34" r="2.5" fill="var(--text-muted)" opacity="0.3" />
         </svg>
         {liveState.pitcher && (
           <div className="sb-live-player sb-player-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${liveState.pitcher.id}`); }}>
