@@ -5236,6 +5236,214 @@ th.sb-ls-total {
   .lgp-hud-abbr { font-size: 13px; }
 }
 
+/* === Matchup cards (batter | pitcher side-by-side) === */
+.lgp-matchup-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.lgp-matchup-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--card-color, var(--team-secondary)) 10%, transparent) 0%, transparent 60%),
+    var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.lgp-matchup-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--card-color, var(--team-secondary));
+  opacity: 0.7;
+}
+
+.lgp-matchup-role {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.lgp-matchup-team-logo { width: 14px; height: 14px; }
+
+.lgp-matchup-player {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.lgp-matchup-photo {
+  border-radius: 50%;
+  border: 2px solid var(--card-color, var(--team-secondary));
+  box-shadow: 0 0 10px color-mix(in srgb, var(--card-color, var(--team-secondary)) 45%, transparent);
+  flex-shrink: 0;
+}
+
+.lgp-matchup-name-wrap {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.lgp-matchup-name {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text-bright);
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lgp-matchup-season {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  letter-spacing: 0.3px;
+}
+
+.lgp-matchup-today {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.lgp-matchup-stat-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.4px;
+}
+
+.lgp-matchup-no-ab {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-style: italic;
+  opacity: 0.7;
+}
+
+.lgp-fatigue-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px;
+  font-size: 9px;
+  font-weight: 800;
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  border-radius: 3px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.lgp-fatigue-pill.lgp-fatigue-green {
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  color: #4ade80;
+}
+.lgp-fatigue-pill.lgp-fatigue-amber {
+  background: rgba(245, 158, 11, 0.14);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: #fbbf24;
+}
+.lgp-fatigue-pill.lgp-fatigue-red {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.45);
+  color: #f87171;
+  animation: live-pulse 1.8s ease-in-out infinite;
+}
+
+.lgp-fatigue-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 4px currentColor;
+}
+
+.lgp-arsenal {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.lgp-arsenal-label {
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  opacity: 0.7;
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+}
+
+.lgp-arsenal-chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 3px;
+  padding: 1px 6px;
+  font-size: 10px;
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 3px;
+}
+
+.lgp-arsenal-type {
+  font-weight: 800;
+  color: var(--text-bright);
+  letter-spacing: 0.3px;
+}
+
+.lgp-arsenal-count {
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.lgp-arsenal-velo {
+  color: var(--jumbo-led-amber);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  font-size: 9px;
+}
+
+@media (max-width: 520px) {
+  .lgp-matchup-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* === Feature frame (broadcast-style wrapper for at-bat / last play / coming up) === */
 .lgp-feature {
   background:

@@ -352,25 +352,19 @@ export default function LiveGamePage() {
       {/* ===== ZONE B+C: AT-BAT + VISUAL (combined) — hide when game is final ===== */}
       {!isFinal && liveState?.batter && liveState?.pitcher && (
         <div className="lgp-section">
-          {/* Batter — logo, name, game stats, season avg */}
+          {/* Matchup cards: Batter (batting team color) | Pitcher (pitching team color) */}
           {(() => {
-            const battingTeamLogo = liveState.inningHalf === "Top" ? gameInfo.away.logoUrl : gameInfo.home.logoUrl;
-            const b = liveState.batter;
-            const gameStats = [];
-            if (b.ab != null) gameStats.push(`${b.h || 0}-${b.ab}`);
-            if (b.hr > 0) gameStats.push(`${b.hr} HR`);
-            if (b.rbi > 0) gameStats.push(`${b.rbi} RBI`);
-            if (b.k > 0) gameStats.push(`${b.k} K`);
-            if (b.bb > 0) gameStats.push(`${b.bb} BB`);
-            if (b.hbp > 0) gameStats.push(`${b.hbp} HBP`);
+            const battingTeamId = liveState.inningHalf === "Top" ? gameInfo.away.id : gameInfo.home.id;
+            const pitchingTeamId = liveState.inningHalf === "Top" ? gameInfo.home.id : gameInfo.away.id;
+            const battingLogo = liveState.inningHalf === "Top" ? gameInfo.away.logoUrl : gameInfo.home.logoUrl;
+            const pitchingLogo = liveState.inningHalf === "Top" ? gameInfo.home.logoUrl : gameInfo.away.logoUrl;
+            const battingColor = ALL_TEAMS[battingTeamId]?.primary || "var(--team-secondary)";
+            const pitchingColor = ALL_TEAMS[pitchingTeamId]?.primary || "var(--team-secondary)";
+
             return (
-              <div className="lgp-batter-row sb-player-link" role="button" tabIndex={0} onClick={() => navigate(`/team/${teamId}/player/${b.id}`)} onKeyDown={(e) => e.key === "Enter" && navigate(`/team/${teamId}/player/${b.id}`)}>
-                <div className="lgp-batter-left">
-                  <img src={battingTeamLogo} alt="" className="lgp-batter-logo" />
-                  <span className="lgp-batter-name">{b.fullName}</span>
-                  {gameStats.length > 0 && <span className="lgp-batter-game">{gameStats.join(", ")}</span>}
-                </div>
-                <span className="lgp-batter-avg">Season Avg. {b.avg || ".000"}</span>
+              <div className="lgp-matchup-cards">
+                <BatterCard batter={liveState.batter} teamColor={battingColor} teamLogo={battingLogo} teamId={teamId} navigate={navigate} />
+                <PitcherCard pitcher={liveState.pitcher} teamColor={pitchingColor} teamLogo={pitchingLogo} teamId={teamId} currentAtBat={liveState.currentAtBat} navigate={navigate} />
               </div>
             );
           })()}
@@ -521,28 +515,6 @@ export default function LiveGamePage() {
             );
           })()}
 
-          {/* Pitcher — same layout as batter row */}
-          {(() => {
-            const pitchingTeamLogo = liveState.inningHalf === "Top" ? gameInfo.home.logoUrl : gameInfo.away.logoUrl;
-            const p = liveState.pitcher;
-            const gs = p.gameStats;
-            const gameStatParts = [];
-            if (gs) {
-              gameStatParts.push(`${gs.ip} IP`);
-              gameStatParts.push(`${gs.pitches} P`);
-              gameStatParts.push(`${gs.k} K`);
-            }
-            return (
-              <div className="lgp-batter-row sb-player-link" role="button" tabIndex={0} onClick={() => navigate(`/team/${teamId}/player/${p.id}`)} onKeyDown={(e) => e.key === "Enter" && navigate(`/team/${teamId}/player/${p.id}`)}>
-                <div className="lgp-batter-left">
-                  <img src={pitchingTeamLogo} alt="" className="lgp-batter-logo" />
-                  <span className="lgp-batter-name">{p.fullName}</span>
-                  {gameStatParts.length > 0 && <span className="lgp-batter-game">{gameStatParts.join(", ")}</span>}
-                </div>
-                <span className="lgp-batter-avg">Season ERA {gs?.era || "—"}</span>
-              </div>
-            );
-          })()}
         </div>
       )}
 
@@ -688,6 +660,124 @@ export default function LiveGamePage() {
           View Full Matchup
         </button>
       </div>
+    </div>
+  );
+}
+
+function BatterCard({ batter, teamColor, teamLogo, teamId, navigate }) {
+  const b = batter;
+  const today = [];
+  if (b.ab != null) today.push(`${b.h || 0}-for-${b.ab}`);
+  if (b.hr > 0) today.push(`${b.hr} HR`);
+  if (b.rbi > 0) today.push(`${b.rbi} RBI`);
+  if (b.k > 0) today.push(`${b.k} K`);
+  if (b.bb > 0) today.push(`${b.bb} BB`);
+  if (b.hbp > 0) today.push(`${b.hbp} HBP`);
+
+  return (
+    <div
+      className="lgp-matchup-card lgp-matchup-batter sb-player-link"
+      style={{ "--card-color": teamColor }}
+      role="button"
+      tabIndex={0}
+      onClick={() => navigate(`/team/${teamId}/player/${b.id}`)}
+      onKeyDown={(e) => e.key === "Enter" && navigate(`/team/${teamId}/player/${b.id}`)}
+    >
+      <div className="lgp-matchup-role">
+        <img src={teamLogo} alt="" className="lgp-matchup-team-logo" />
+        <span className="lgp-matchup-role-label">Batting</span>
+      </div>
+      <div className="lgp-matchup-player">
+        <PlayerPhoto playerId={b.id} name={b.fullName} size={48} className="lgp-matchup-photo" />
+        <div className="lgp-matchup-name-wrap">
+          <span className="lgp-matchup-name">{b.fullName}</span>
+          <span className="lgp-matchup-season">Season Avg {b.avg || ".000"}</span>
+        </div>
+      </div>
+      <div className="lgp-matchup-today">
+        {today.length > 0 ? (
+          today.map((t, i) => (
+            <span key={i} className="lgp-matchup-stat-chip">{t}</span>
+          ))
+        ) : (
+          <span className="lgp-matchup-no-ab">First AB</span>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function PitcherCard({ pitcher, teamColor, teamLogo, teamId, currentAtBat, navigate }) {
+  const p = pitcher;
+  const gs = p.gameStats || {};
+  const pitches = gs.pitches ?? 0;
+  const fatigue = pitches >= 100 ? "red" : pitches >= 80 ? "amber" : "green";
+  const fatigueLabel = pitches >= 100 ? "HIGH" : pitches >= 80 ? "ELEVATED" : "FRESH";
+
+  const today = [];
+  if (gs.ip != null) today.push(`${gs.ip} IP`);
+  if (gs.er != null) today.push(`${gs.er} ER`);
+  if (gs.k != null) today.push(`${gs.k} K`);
+  if (gs.h != null) today.push(`${gs.h} H`);
+
+  // Current-AB arsenal from pitchInfo strings
+  const arsenal = (() => {
+    if (!currentAtBat?.length) return [];
+    const g = {};
+    for (const pi of currentAtBat) {
+      const t = pitchTypeAbbr(pi.pitchInfo);
+      if (!t) continue;
+      if (!g[t]) g[t] = { type: t, count: 0, vs: 0, vc: 0 };
+      g[t].count++;
+      const v = pitchVelo(pi.pitchInfo);
+      if (v) { g[t].vs += v; g[t].vc++; }
+    }
+    return Object.values(g)
+      .map((x) => ({ type: x.type, count: x.count, avg: x.vc > 0 ? Math.round(x.vs / x.vc) : null }))
+      .sort((a, b) => b.count - a.count);
+  })();
+
+  return (
+    <div
+      className="lgp-matchup-card lgp-matchup-pitcher sb-player-link"
+      style={{ "--card-color": teamColor }}
+      role="button"
+      tabIndex={0}
+      onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}
+      onKeyDown={(e) => e.key === "Enter" && navigate(`/team/${teamId}/player/${p.id}`)}
+    >
+      <div className="lgp-matchup-role">
+        <img src={teamLogo} alt="" className="lgp-matchup-team-logo" />
+        <span className="lgp-matchup-role-label">Pitching</span>
+      </div>
+      <div className="lgp-matchup-player">
+        <PlayerPhoto playerId={p.id} name={p.fullName} size={48} className="lgp-matchup-photo" />
+        <div className="lgp-matchup-name-wrap">
+          <span className="lgp-matchup-name">{p.fullName}</span>
+          <span className="lgp-matchup-season">Season ERA {gs.era ?? "—"}</span>
+        </div>
+      </div>
+      <div className="lgp-matchup-today">
+        {today.map((t, i) => (
+          <span key={i} className="lgp-matchup-stat-chip">{t}</span>
+        ))}
+        <span className={`lgp-fatigue-pill lgp-fatigue-${fatigue}`}>
+          <span className="lgp-fatigue-dot" />
+          {pitches} PIT · {fatigueLabel}
+        </span>
+      </div>
+      {arsenal.length > 0 && (
+        <div className="lgp-arsenal">
+          <span className="lgp-arsenal-label">This AB</span>
+          {arsenal.map((a) => (
+            <span key={a.type} className="lgp-arsenal-chip">
+              <span className="lgp-arsenal-type">{a.type}</span>
+              <span className="lgp-arsenal-count">×{a.count}</span>
+              {a.avg != null && <span className="lgp-arsenal-velo">{a.avg}</span>}
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
