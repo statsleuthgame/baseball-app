@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useTeam } from "../../context/TeamContext";
 import { fetchLiveGameState, fetchGameDetail, fetchWinProbability, fetchAllGamesToday } from "../../api/client";
 import { lastName, teamDisplayName } from "../../utils/formatters";
+import { useIsMobile } from "../../utils/useIsMobile";
 import ALL_TEAMS from "../../data/teams";
 import { lazy, Suspense } from "react";
 const BallInPlay3D = lazy(() => import("../ballflight3d/BallInPlay3D"));
@@ -950,6 +951,8 @@ function StrikeZone({ pitches }) {
 
 function BoxScoreSection({ boxOpen, setBoxOpen, boxData, gameInfo, teamId }) {
   const [selectedTeam, setSelectedTeam] = useState("away");
+  const isMobile = useIsMobile();
+  const isFinal = gameInfo?.status === "Final";
   const [openBatter, setOpenBatter] = useState(null);
   const navigate = useNavigate();
 
@@ -969,7 +972,9 @@ function BoxScoreSection({ boxOpen, setBoxOpen, boxData, gameInfo, teamId }) {
       </button>
       {boxOpen && boxData && (
         <div className="lgp-box-full">
-          <TopPerformersStrip teams={teams} navigate={navigate} teamId={teamId} />
+          {(!isMobile || isFinal) && (
+            <TopPerformersStrip teams={teams} navigate={navigate} teamId={teamId} />
+          )}
 
           {/* Team selector tabs */}
           <div className="lgp-box-tabs">
