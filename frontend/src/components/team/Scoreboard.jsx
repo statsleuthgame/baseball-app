@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
 import { fetchAllGamesToday, fetchPitcherSeasonStats, fetchBvP, fetchRoster, fetchGameDetail, fetchGameLineup, fetchProjectedLineup, fetchLiveGameState } from "../../api/client";
-import { formatGameTime, getTeamAbbr, lastName, teamDisplayName, formatBatterGameLine } from "../../utils/formatters";
+import { formatGameTime, getTeamAbbr, lastName, teamDisplayName } from "../../utils/formatters";
 import SkeletonLoader from "../common/SkeletonLoader";
 import PlayerPhoto from "../common/PlayerPhoto";
 import ALL_TEAMS from "../../data/teams";
@@ -483,7 +483,7 @@ function GameDetail({ gamePk, awayAbbr, homeAbbr, awayId, homeId, teamId }) {
   );
 }
 
-function LiveGameInfo({ gamePk, teamId, isOurGame, inning, inningHalf }) {
+function LiveGameInfo({ gamePk, teamId, isOurGame }) {
   const navigate = useNavigate();
   const { data: liveState } = useQuery({
     queryKey: ["liveGameState", gamePk],
@@ -503,182 +503,53 @@ function LiveGameInfo({ gamePk, teamId, isOurGame, inning, inningHalf }) {
 
   if (!liveState) return null;
 
-  const halfLabel = inningHalf === "Top" ? "TOP" : "BOT";
-  const lastPlayText =
-    liveState.lastPlay ||
-    gameDetail?.scoringPlays?.[gameDetail.scoringPlays.length - 1]?.description ||
-    null;
+  const lastPlay = gameDetail?.scoringPlays?.[gameDetail.scoringPlays.length - 1];
+  const tickerText = lastPlay
+    ? `Top ${lastPlay.inning === undefined ? "" : lastPlay.inning} · ${lastPlay.description}`
+    : null;
 
   return (
     <div className="sb-live-info">
-      <AtBatPanel
-        state={liveState}
-        teamId={teamId}
-        isOurGame={isOurGame}
-        halfLabel={halfLabel}
-        inning={inning}
-        navigate={navigate}
-      />
-      {liveState.onDeck?.id && (
-        <OnDeckPanel batter={liveState.onDeck} teamId={teamId} navigate={navigate} />
-      )}
-      {lastPlayText && (
-        <LastPlayPanel text={lastPlayText} halfLabel={halfLabel} inning={inning} />
-      )}
-    </div>
-  );
-}
-
-function AtBatPanel({ state, teamId, isOurGame, halfLabel, inning, navigate }) {
-  const batter = state.batter;
-  const pitcher = state.pitcher;
-  const pitchCount = state.currentAtBat?.length || 0;
-
-  const batterLine = batter ? formatBatterGameLine(batter) : "";
-  const batterSub = batter && (batter.hr > 0 || batter.rbi > 0)
-    ? [batter.hr > 0 && `${batter.hr} HR`, batter.rbi > 0 && `${batter.rbi} RBI`].filter(Boolean).join(" · ")
-    : null;
-
-  const pg = pitcher?.gameStats;
-
-  return (
-    <div className="sb-atbat-panel">
-      <div className="sb-panel-header">
-        <span className="sb-panel-label">At Bat</span>
-        <span className="sb-panel-sep">·</span>
-        <span className="sb-panel-inning">{halfLabel} {inning ?? ""}</span>
-      </div>
-
-      <div className="sb-atbat-body">
-        <div className="sb-atbat-side sb-atbat-batter">
-          {batter && (
-            <div
-              className="sb-atbat-player sb-player-link"
-              onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${batter.id}`); }}
-            >
-              <PlayerPhoto playerId={batter.id} name={batter.fullName} size={40} />
-              <div className="sb-atbat-player-info">
-                <span className="sb-atbat-player-name">{lastName(batter.fullName)}</span>
-                <span className="sb-atbat-player-line">
-                  {batter.avg || ".000"} <span className="sb-atbat-dot-sep">·</span> {batterLine}
-                </span>
-                {batterSub && <span className="sb-atbat-player-sub">{batterSub}</span>}
-              </div>
+      <div className="sb-live-info-row">
+        {liveState.batter && (
+          <div className="sb-live-player sb-player-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${liveState.batter.id}`); }}>
+            <PlayerPhoto playerId={liveState.batter.id} name={liveState.batter.fullName} size={22} />
+            <div className="sb-live-player-info">
+              <span className="sb-live-player-name">{lastName(liveState.batter.fullName)}</span>
+              <span className="sb-live-player-sub">AB{liveState.batter.avg ? ` · ${liveState.batter.avg}` : ""}</span>
             </div>
-          )}
-        </div>
-
-        <div className="sb-atbat-diamond-col">
-          <svg className={`sb-live-diamond ${isOurGame ? "sb-our-diamond" : ""}`} width="72" height="72" viewBox="0 0 72 72">
-            <rect x="24" y="3" width="16" height="16" rx="2" transform="rotate(45 32 11)" className={`sb-live-base ${state.onSecond ? "occupied" : ""}`} />
-            <rect x="42" y="21" width="16" height="16" rx="2" transform="rotate(45 50 29)" className={`sb-live-base ${state.onFirst ? "occupied" : ""}`} />
-            <rect x="6" y="21" width="16" height="16" rx="2" transform="rotate(45 14 29)" className={`sb-live-base ${state.onThird ? "occupied" : ""}`} />
-            <circle cx="29" cy="47" r="3.5" fill="var(--text-muted)" opacity="0.3" />
-          </svg>
-          <RunnerChips state={state} teamId={teamId} navigate={navigate} />
-        </div>
-
-        <div className="sb-atbat-side sb-atbat-pitcher">
-          {pitcher && (
-            <div
-              className="sb-atbat-player sb-atbat-player-right sb-player-link"
-              onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${pitcher.id}`); }}
-            >
-              <div className="sb-atbat-player-info sb-atbat-player-info-right">
-                <span className="sb-atbat-player-name">{lastName(pitcher.fullName)}</span>
-                <span className="sb-atbat-player-line">{pg?.ip ?? "0.0"} IP</span>
-                <span className="sb-atbat-player-sub">{pg?.er ?? 0} ER <span className="sb-atbat-dot-sep">·</span> {pg?.k ?? 0} K</span>
-                <span className="sb-atbat-player-sub">{pg?.pitches ?? 0} pit</span>
-              </div>
-              <PlayerPhoto playerId={pitcher.id} name={pitcher.fullName} size={40} />
+          </div>
+        )}
+        <svg className={`sb-live-diamond ${isOurGame ? "sb-our-diamond" : ""}`} width="52" height="52" viewBox="0 0 52 52">
+          <rect x="17" y="2" width="12" height="12" rx="1.5" transform="rotate(45 23 8)" className={`sb-live-base ${liveState.onSecond ? "occupied" : ""}`} />
+          <rect x="30" y="15" width="12" height="12" rx="1.5" transform="rotate(45 36 21)" className={`sb-live-base ${liveState.onFirst ? "occupied" : ""}`} />
+          <rect x="4" y="15" width="12" height="12" rx="1.5" transform="rotate(45 10 21)" className={`sb-live-base ${liveState.onThird ? "occupied" : ""}`} />
+          <circle cx="21" cy="34" r="2.5" fill="var(--text-muted)" opacity="0.3" />
+        </svg>
+        {liveState.pitcher && (
+          <div className="sb-live-player sb-player-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${liveState.pitcher.id}`); }}>
+            <PlayerPhoto playerId={liveState.pitcher.id} name={liveState.pitcher.fullName} size={22} />
+            <div className="sb-live-player-info">
+              <span className="sb-live-player-name">{lastName(liveState.pitcher.fullName)}</span>
+              <span className="sb-live-player-sub">P{liveState.pitcher.gameStats ? ` · ${liveState.pitcher.gameStats.ip} IP` : ""}</span>
             </div>
-          )}
+          </div>
+        )}
+      </div>
+      <div className="sb-live-situation">
+        <div className="sb-live-outs">
+          {[0, 1, 2].map((i) => (
+            <span key={i} className={`sb-live-out-dot ${i < liveState.outs ? "filled" : ""}`} />
+          ))}
+          <span>{liveState.outs} out</span>
         </div>
+        <span className="sb-live-count">{liveState.balls}-{liveState.strikes}</span>
       </div>
-
-      <CountOutsStrip balls={state.balls} strikes={state.strikes} outs={state.outs} pitchCount={pitchCount} />
-    </div>
-  );
-}
-
-function RunnerChips({ state, teamId, navigate }) {
-  const chips = [];
-  if (state.runnerThird?.id) chips.push({ label: "3B", runner: state.runnerThird });
-  if (state.runnerSecond?.id) chips.push({ label: "2B", runner: state.runnerSecond });
-  if (state.runnerFirst?.id) chips.push({ label: "1B", runner: state.runnerFirst });
-  if (!chips.length) return <div className="sb-runner-chips sb-runner-chips-empty">Bases empty</div>;
-
-  return (
-    <div className="sb-runner-chips">
-      {chips.map((c, i) => (
-        <span key={c.label} className="sb-runner-chip-wrap">
-          <span
-            className="sb-runner-chip sb-player-link"
-            onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${c.runner.id}`); }}
-          >
-            <span className="sb-runner-chip-base">{c.label}</span> {lastName(c.runner.fullName)}
-          </span>
-          {i < chips.length - 1 && <span className="sb-runner-chip-sep">·</span>}
-        </span>
-      ))}
-    </div>
-  );
-}
-
-function CountOutsStrip({ balls, strikes, outs, pitchCount }) {
-  const renderDots = (count, total) =>
-    Array.from({ length: total }).map((_, i) => (
-      <span key={i} className={`sb-dot ${i < (count ?? 0) ? "sb-dot-filled" : ""}`} />
-    ));
-
-  return (
-    <div className="sb-atbat-status">
-      <span className="sb-status-group">
-        <span className="sb-status-label">BALL</span>
-        <span className="sb-dots">{renderDots(balls, 3)}</span>
-      </span>
-      <span className="sb-status-group">
-        <span className="sb-status-label">STRIKE</span>
-        <span className="sb-dots">{renderDots(strikes, 2)}</span>
-      </span>
-      <span className="sb-status-group">
-        <span className="sb-status-label">OUTS</span>
-        <span className="sb-dots">{renderDots(outs, 3)}</span>
-      </span>
-      {pitchCount > 0 && (
-        <span className="sb-status-pitch">Pitch {pitchCount}</span>
+      {tickerText && (
+        <div className="sb-ticker" aria-live="polite">
+          <span className="sb-ticker-inner">• {tickerText} •</span>
+        </div>
       )}
-    </div>
-  );
-}
-
-function OnDeckPanel({ batter, teamId, navigate }) {
-  const abLine = formatBatterGameLine(batter);
-  const avg = batter.avg;
-  return (
-    <div
-      className="sb-ondeck-panel sb-player-link"
-      onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${batter.id}`); }}
-    >
-      <span className="sb-panel-label">On Deck</span>
-      <PlayerPhoto playerId={batter.id} name={batter.fullName} size={26} />
-      <span className="sb-ondeck-name">{lastName(batter.fullName)}</span>
-      <span className="sb-ondeck-stats">
-        {avg ? `${avg}` : ""}{avg && abLine ? " · " : ""}{abLine} today
-      </span>
-    </div>
-  );
-}
-
-function LastPlayPanel({ text, halfLabel, inning }) {
-  return (
-    <div className="sb-lastplay-panel" aria-live="polite">
-      <div className="sb-panel-header">
-        <span className="sb-panel-label">Last Play</span>
-        <span className="sb-panel-sep">·</span>
-        <span className="sb-panel-inning">{halfLabel} {inning ?? ""}</span>
-      </div>
-      <p key={text} className="sb-lastplay-text">{text}</p>
     </div>
   );
 }
@@ -986,13 +857,7 @@ export default function Scoreboard() {
 
                 {/* Live game: batter, pitcher, diamond, outs, count */}
                 {isLive && game.gamePk && (
-                  <LiveGameInfo
-                    gamePk={game.gamePk}
-                    teamId={teamId}
-                    isOurGame={isOurGame}
-                    inning={game.inning}
-                    inningHalf={game.inningHalf}
-                  />
+                  <LiveGameInfo gamePk={game.gamePk} teamId={teamId} isOurGame={isOurGame} />
                 )}
 
                 {/* Decisions for final games */}

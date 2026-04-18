@@ -84,14 +84,6 @@ export const lastName = (fullName) => {
   return parts.slice(1).join(" ");
 };
 
-/** Format today's batting line like "2-for-3" given {ab, h}. */
-export const formatBatterGameLine = (stats) => {
-  if (!stats) return "0-for-0";
-  const ab = stats.ab ?? 0;
-  const h = stats.h ?? 0;
-  return `${h}-for-${ab}`;
-};
-
 /** Get game status label */
 export const getGameLabel = (game) => {
   if (!game || game.noGame) return "";
