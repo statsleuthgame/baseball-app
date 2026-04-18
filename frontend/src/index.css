@@ -3813,7 +3813,6 @@ button.stat-cell {
   min-width: 34px;
   text-align: right;
   letter-spacing: 1px;
-  text-shadow: 0 0 8px currentColor, 0 0 2px rgba(255, 255, 255, 0.4);
 }
 
 .scoreboard-card.our-game .scoreboard-score { font-size: 24px; }
@@ -5019,7 +5018,6 @@ th.sb-ls-total {
   font-weight: 800;
   color: var(--text-bright);
   font-variant-numeric: tabular-nums;
-  text-shadow: 0 0 6px currentColor;
 }
 
 .lgp-sticky-sep { opacity: 0.35; }
@@ -5077,6 +5075,75 @@ th.sb-ls-total {
   border: 1px solid var(--border);
   border-radius: 14px;
 }
+
+.lgp-hud-back {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: var(--text);
+  cursor: pointer;
+  z-index: 2;
+}
+.lgp-hud-back:active { opacity: 0.6; }
+
+.lgp-hud-top-right {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 2;
+}
+
+.lgp-hud-live-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  background: linear-gradient(180deg, #ff4444 0%, #c00000 100%);
+  color: #fff;
+  border-radius: 3px;
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.9px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), 0 0 8px rgba(255, 68, 68, 0.45);
+}
+
+.lgp-hud-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 5px #fff;
+  animation: live-dot-flash 1.2s ease-in-out infinite;
+}
+
+.lgp-hud-watch {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #ff6b6b;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.lgp-hud-watch:active { opacity: 0.7; }
 
 .lgp-hud-scores {
   display: flex;
@@ -5147,7 +5214,6 @@ th.sb-ls-total {
   font-weight: 800;
   color: var(--jumbo-led-amber);
   font-variant-numeric: tabular-nums;
-  text-shadow: 0 0 6px var(--jumbo-led-amber);
 }
 
 .lgp-hud-state-sep { opacity: 0.3; color: var(--text-muted); }
@@ -5368,7 +5434,6 @@ th.sb-ls-total {
   color: var(--text-bright);
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.5px;
-  text-shadow: 0 0 8px currentColor;
 }
 
 .lgp-wp-chart-wrap {
@@ -5385,12 +5450,13 @@ th.sb-ls-total {
   height: 100%;
 }
 
-/* === Due Up strip === */
+/* === Due Up (centered) === */
 .lgp-due-strip {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 14px;
-  padding: 8px 12px;
+  gap: 8px;
+  padding: 10px 12px 12px;
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -5400,19 +5466,18 @@ th.sb-ls-total {
   font-family: "SF Mono", ui-monospace, Menlo, monospace;
   font-size: 9px;
   font-weight: 800;
-  letter-spacing: 1.3px;
+  letter-spacing: 1.4px;
   text-transform: uppercase;
   color: var(--text-muted);
-  flex-shrink: 0;
 }
 
 .lgp-due-strip-list {
   display: flex;
   align-items: center;
-  gap: 14px;
+  justify-content: center;
+  gap: 18px;
   flex-wrap: wrap;
-  flex: 1;
-  min-width: 0;
+  width: 100%;
 }
 
 .lgp-due-strip-player {
@@ -5430,7 +5495,7 @@ th.sb-ls-total {
 }
 
 .lgp-due-strip-name {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   color: var(--text-bright);
   white-space: nowrap;
@@ -5443,6 +5508,11 @@ th.sb-ls-total {
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.3px;
   white-space: nowrap;
+}
+
+@media (max-width: 420px) {
+  .lgp-due-strip-list { gap: 10px; }
+  .lgp-due-strip-name { font-size: 12px; }
 }
 
 /* === Inning Timeline (tappable chips → jump to scoring) === */
@@ -5494,7 +5564,6 @@ th.sb-ls-total {
 
 .lgp-tl-chip.current .lgp-tl-num {
   color: var(--jumbo-led-amber);
-  text-shadow: 0 0 6px var(--jumbo-led-amber);
 }
 
 .lgp-tl-half {
@@ -6279,7 +6348,7 @@ th.sb-ls-total {
 }
 
 @keyframes score-flash {
-  0%   { transform: scale(1.4); text-shadow: 0 0 22px var(--jumbo-led-amber), 0 0 6px #fff; }
+  0%   { transform: scale(1.4); }
   100% { transform: scale(1); }
 }
 

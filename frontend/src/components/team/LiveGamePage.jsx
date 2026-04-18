@@ -260,20 +260,25 @@ export default function LiveGamePage() {
         </div>
       )}
 
-      {/* ===== STICKY TOP BAR ===== */}
-      <StickyGameBar
-        gameInfo={gameInfo}
-        liveState={liveState}
-        wpData={wpData}
-        isLive={isLive}
-        isFinal={isFinal}
-        gamePk={gamePk}
-        dataUpdatedAt={dataUpdatedAt}
-        navigate={navigate}
-      />
-
       {/* ===== HERO HUD ===== */}
       <div className="lgp-hero-hud">
+        <button className="lgp-hud-back" onClick={() => navigate(-1)} aria-label="Go back">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="15 18 9 12 15 6" /></svg>
+        </button>
+        <div className="lgp-hud-top-right">
+          {isLive && (
+            <span className="lgp-hud-live-pill">
+              <span key={dataUpdatedAt} className="lgp-hud-live-dot" />
+              LIVE
+            </span>
+          )}
+          {isLive && (
+            <button className="lgp-hud-watch" onClick={() => { window.location.href = `https://www.mlb.com/tv/g${gamePk}`; }} aria-label="Watch on MLB.tv">
+              <svg aria-hidden="true" width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3" /></svg>
+              Watch
+            </button>
+          )}
+        </div>
         <div className="lgp-hud-scores">
           <div className="lgp-hud-team">
             <img src={gameInfo.away.logoUrl} alt={gameInfo.away.abbreviation} className="lgp-hud-logo" />
@@ -364,7 +369,7 @@ export default function LiveGamePage() {
             return (
               <div className="lgp-matchup-cards">
                 <BatterCard batter={liveState.batter} teamColor={battingColor} teamLogo={battingLogo} teamId={teamId} navigate={navigate} />
-                <PitcherCard pitcher={liveState.pitcher} teamColor={pitchingColor} teamLogo={pitchingLogo} teamId={teamId} currentAtBat={liveState.currentAtBat} navigate={navigate} />
+                <PitcherCard pitcher={liveState.pitcher} teamColor={pitchingColor} teamLogo={pitchingLogo} teamId={teamId} navigate={navigate} />
               </div>
             );
           })()}
@@ -525,7 +530,7 @@ export default function LiveGamePage() {
         </div>
       )}
 
-      {/* ===== DUE UP (compact strip) ===== */}
+      {/* ===== DUE UP (centered) ===== */}
       {!isFinal && (liveState?.onDeck || liveState?.inHole) && (
         <div className="lgp-due-strip">
           <span className="lgp-due-strip-label">Due Up</span>
@@ -537,8 +542,8 @@ export default function LiveGamePage() {
               if (p.rbi > 0) stats.push(`${p.rbi} RBI`);
               return (
                 <div key={p.id} className="lgp-due-strip-player sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
-                  <PlayerPhoto playerId={p.id} name={p.fullName} size={24} className="lgp-due-strip-photo" />
-                  <span className="lgp-due-strip-name">{lastName(p.fullName)}</span>
+                  <PlayerPhoto playerId={p.id} name={p.fullName} size={26} className="lgp-due-strip-photo" />
+                  <span className="lgp-due-strip-name">{p.fullName}</span>
                   {stats.length > 0 && <span className="lgp-due-strip-stats">{stats.join(" · ")}</span>}
                 </div>
               );
@@ -692,55 +697,6 @@ export default function LiveGamePage() {
   );
 }
 
-function WPSparkline({ wpData, gameInfo }) {
-  const W = 600;
-  const H = 56;
-
-  const last = wpData[wpData.length - 1];
-  const homePct = Math.max(0, Math.min(100, Math.round(last.homeProb * 100)));
-  const awayPct = 100 - homePct;
-  const homeColor = ALL_TEAMS[gameInfo.home.id]?.primary || "#22c55e";
-  const awayColor = ALL_TEAMS[gameInfo.away.id]?.primary || "#ef4444";
-
-  const pts = wpData.map((d, i) => {
-    const x = (i / Math.max(1, wpData.length - 1)) * W;
-    const y = (1 - d.homeProb) * H;
-    return `${x},${y}`;
-  }).join(" ");
-
-  const awayArea = `0,0 ${pts} ${W},0`;
-  const homeArea = `0,${H} ${pts} ${W},${H}`;
-
-  return (
-    <div className="lgp-wp-section">
-      <div className="lgp-wp-header">
-        <span className="lgp-section-label">Win Probability</span>
-      </div>
-      <div className="lgp-wp-labels">
-        <span className="lgp-wp-team">
-          <img src={gameInfo.away.logoUrl} alt="" className="lgp-wp-logo" />
-          <span className="lgp-wp-abbr">{gameInfo.away.abbreviation}</span>
-          <span className="lgp-wp-pct">{awayPct}%</span>
-        </span>
-        <span className="lgp-wp-team lgp-wp-team-right">
-          <span className="lgp-wp-pct">{homePct}%</span>
-          <span className="lgp-wp-abbr">{gameInfo.home.abbreviation}</span>
-          <img src={gameInfo.home.logoUrl} alt="" className="lgp-wp-logo" />
-        </span>
-      </div>
-      <div className="lgp-wp-chart-wrap">
-        <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" className="lgp-wp-chart">
-          <line x1="0" y1={H / 2} x2={W} y2={H / 2} stroke="rgba(255,255,255,0.08)" strokeDasharray="4 4" />
-          <polygon points={awayArea} fill={awayColor} opacity="0.22" />
-          <polygon points={homeArea} fill={homeColor} opacity="0.22" />
-          <polyline points={pts} fill="none" stroke="rgba(255,255,255,0.65)" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
-          <circle cx={W} cy={(1 - last.homeProb) * H} r="3" fill="#fff" stroke={homePct >= 50 ? homeColor : awayColor} strokeWidth="1.5" />
-        </svg>
-      </div>
-    </div>
-  );
-}
-
 function TopPerformersStrip({ teams, navigate, teamId }) {
   const scoreBatter = (s) => (s.h || 0) * 2 + (s.hr || 0) * 4 + (s.rbi || 0) * 2 + (s.r || 0);
   const ipToOuts = (ip) => {
@@ -860,7 +816,7 @@ function BatterCard({ batter, teamColor, teamLogo, teamId, navigate }) {
   );
 }
 
-function PitcherCard({ pitcher, teamColor, teamLogo, teamId, currentAtBat, navigate }) {
+function PitcherCard({ pitcher, teamColor, teamLogo, teamId, navigate }) {
   const p = pitcher;
   const gs = p.gameStats || {};
   const pitches = gs.pitches ?? 0;
@@ -871,23 +827,6 @@ function PitcherCard({ pitcher, teamColor, teamLogo, teamId, currentAtBat, navig
   if (gs.k != null) today.push(`${gs.k} K`);
   if (gs.h != null) today.push(`${gs.h} H`);
   if (pitches > 0) today.push(`${pitches} pitches`);
-
-  // Current-AB arsenal from pitchInfo strings
-  const arsenal = (() => {
-    if (!currentAtBat?.length) return [];
-    const g = {};
-    for (const pi of currentAtBat) {
-      const t = pitchTypeAbbr(pi.pitchInfo);
-      if (!t) continue;
-      if (!g[t]) g[t] = { type: t, count: 0, vs: 0, vc: 0 };
-      g[t].count++;
-      const v = pitchVelo(pi.pitchInfo);
-      if (v) { g[t].vs += v; g[t].vc++; }
-    }
-    return Object.values(g)
-      .map((x) => ({ type: x.type, count: x.count, avg: x.vc > 0 ? Math.round(x.vs / x.vc) : null }))
-      .sort((a, b) => b.count - a.count);
-  })();
 
   return (
     <div
@@ -914,68 +853,6 @@ function PitcherCard({ pitcher, teamColor, teamLogo, teamId, currentAtBat, navig
           <span key={i} className="lgp-matchup-stat-chip">{t}</span>
         ))}
       </div>
-      {arsenal.length > 0 && (
-        <div className="lgp-arsenal">
-          <span className="lgp-arsenal-label">This AB</span>
-          {arsenal.map((a) => (
-            <span key={a.type} className="lgp-arsenal-chip">
-              <span className="lgp-arsenal-type">{a.type}</span>
-              <span className="lgp-arsenal-count">×{a.count}</span>
-              {a.avg != null && <span className="lgp-arsenal-velo">{a.avg}</span>}
-            </span>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
-function StickyGameBar({ gameInfo, liveState, wpData, isLive, isFinal, gamePk, dataUpdatedAt, navigate }) {
-  const awayScore = liveState?.linescore?.away?.runs ?? gameInfo.away.score ?? 0;
-  const homeScore = liveState?.linescore?.home?.runs ?? gameInfo.home.score ?? 0;
-
-  const lastWP = wpData?.length > 0 ? wpData[wpData.length - 1] : null;
-  const homePct = lastWP ? Math.max(0, Math.min(100, Math.round(lastWP.homeProb * 100))) : null;
-  const awayColor = ALL_TEAMS[gameInfo.away.id]?.primary || "#888";
-  const homeColor = ALL_TEAMS[gameInfo.home.id]?.primary || "#888";
-
-  return (
-    <div className="lgp-sticky-bar">
-      <div className="lgp-sticky-inner">
-        <button className="lgp-sticky-back" onClick={() => navigate(-1)} aria-label="Go back">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="15 18 9 12 15 6" /></svg>
-        </button>
-        {isLive && (
-          <span className="lgp-sticky-live">
-            <span key={dataUpdatedAt} className="lgp-sticky-dot" />
-            LIVE
-          </span>
-        )}
-        {isFinal && <span className="lgp-sticky-final">FINAL</span>}
-        <div className="lgp-sticky-score">
-          <span className="lgp-sticky-team-abbr">{gameInfo.away.abbreviation}</span>
-          <span className="lgp-sticky-num">{awayScore}</span>
-          <span className="lgp-sticky-sep">·</span>
-          <span className="lgp-sticky-team-abbr">{gameInfo.home.abbreviation}</span>
-          <span className="lgp-sticky-num">{homeScore}</span>
-        </div>
-        {isLive && liveState && (
-          <span className="lgp-sticky-state">
-            {liveState.inningHalf === "Top" ? "\u25B2" : "\u25BC"}{liveState.inning} · {liveState.outs} out · {liveState.balls}-{liveState.strikes}
-          </span>
-        )}
-        {isLive && (
-          <button className="lgp-sticky-watch" onClick={() => { window.location.href = `https://www.mlb.com/tv/g${gamePk}`; }} aria-label="Watch on MLB.tv">
-            <svg aria-hidden="true" width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3" /></svg>
-          </button>
-        )}
-      </div>
-      {homePct != null && (
-        <div className="lgp-sticky-wp" role="img" aria-label={`Win probability: ${gameInfo.home.abbreviation} ${homePct}%, ${gameInfo.away.abbreviation} ${100 - homePct}%`}>
-          <div className="lgp-sticky-wp-away" style={{ width: `${100 - homePct}%`, background: awayColor }} />
-          <div className="lgp-sticky-wp-home" style={{ width: `${homePct}%`, background: homeColor }} />
-        </div>
-      )}
     </div>
   );
 }
