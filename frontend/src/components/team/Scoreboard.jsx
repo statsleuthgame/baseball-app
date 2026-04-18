@@ -996,7 +996,9 @@ export default function Scoreboard() {
               {groups.final.length > 0 && (
                 <>
                   <h3 className="sb-section-hdr">Final</h3>
-                  {groups.final.map(renderCard)}
+                  <div className="sb-final-grid">
+                    {groups.final.map(renderCard)}
+                  </div>
                 </>
               )}
             </>
