@@ -5236,6 +5236,127 @@ th.sb-ls-total {
   .lgp-hud-abbr { font-size: 13px; }
 }
 
+/* === Feature frame (broadcast-style wrapper for at-bat / last play / coming up) === */
+.lgp-feature {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, transparent 100%),
+    var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.lgp-feature-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.lgp-feature-label {
+  color: var(--text);
+}
+
+.lgp-feature-bip .lgp-feature-label {
+  color: var(--jumbo-led-amber);
+  text-shadow: 0 0 6px var(--jumbo-led-amber);
+}
+
+.lgp-feature-sep { opacity: 0.4; }
+.lgp-feature-inning {
+  color: var(--text);
+  letter-spacing: 1.6px;
+}
+
+/* === Strike-zone legend === */
+.lgp-pitch-legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 6px;
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  font-size: 9px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+}
+
+.lgp-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.lgp-legend-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+/* === Enriched pitch-by-pitch list === */
+.lgp-pitch-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+  padding: 6px 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.lgp-pitch-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  font-size: 10px;
+}
+
+.lgp-pitch-dot-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 800;
+  box-sizing: border-box;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+}
+
+.lgp-pitch-meta {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 3px;
+  color: var(--text);
+}
+
+.lgp-pitch-type {
+  font-weight: 800;
+  color: var(--text-bright);
+  letter-spacing: 0.4px;
+}
+
+.lgp-pitch-velo {
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
 /* === Legacy .lgp-hero (kept for fallback only — new markup uses .lgp-hero-hud) === */
 .lgp-hero {
   background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);

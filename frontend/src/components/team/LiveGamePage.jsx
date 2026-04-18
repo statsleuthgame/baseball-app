@@ -10,6 +10,30 @@ const BallInPlay3D = lazy(() => import("../ballflight3d/BallInPlay3D"));
 import PlayerPhoto from "../common/PlayerPhoto";
 import LoadingSpinner from "../common/LoadingSpinner";
 
+// Extract a short pitch-type abbreviation (FB, SL, CB, etc.) from pitchInfo text.
+function pitchTypeAbbr(pitchInfo) {
+  if (!pitchInfo) return "";
+  const s = pitchInfo.toLowerCase();
+  if (s.includes("4-seam") || (s.includes("fastball") && !s.includes("cut") && !s.includes("split"))) return "FB";
+  if (s.includes("sinker") || s.includes("2-seam")) return "SI";
+  if (s.includes("cutter")) return "CT";
+  if (s.includes("sweeper") || s.includes("slurve")) return "SW";
+  if (s.includes("slider")) return "SL";
+  if (s.includes("curveball") || s.includes("curve")) return "CB";
+  if (s.includes("knuckle-curve") || s.includes("knuckle curve")) return "KC";
+  if (s.includes("knuckle")) return "KN";
+  if (s.includes("changeup") || s.includes("change-up") || s.includes("change up")) return "CH";
+  if (s.includes("split") || s.includes("forkball")) return "SP";
+  if (s.includes("eephus")) return "EP";
+  return "";
+}
+
+function pitchVelo(pitchInfo) {
+  if (!pitchInfo) return null;
+  const m = pitchInfo.match(/([\d.]+)\s*mph/i);
+  return m ? Math.round(parseFloat(m[1])) : null;
+}
+
 // Bold hit types and add HR distance in scoring descriptions
 function formatScoringDesc(desc, hrDistance) {
   if (!desc) return "";
@@ -351,76 +375,107 @@ export default function LiveGamePage() {
             );
           })()}
 
-          {/* Visual area: strike zone / ball-in-play / next up */}
+          {/* Visual area: strike zone / ball-in-play / next up (framed as a broadcast feature) */}
           {(() => {
             const battingTeamLogo2 = liveState.inningHalf === "Top" ? gameInfo.away.logoUrl : gameInfo.home.logoUrl;
-            // Use persisted hit data (survives half-inning API reset)
             const hitData = liveState.lastHitData || (!bipCollapsed ? persistedHitDataRef.current : null);
             const lastPitch = liveState.currentAtBat?.[liveState.currentAtBat.length - 1];
-            // Play is still in progress if the last pitch is in-play BUT the play hasn't completed yet
             const playStillInProgress = lastPitch?.isInPlay && !liveState.currentPlayComplete;
             const hasCompletedHit = hitData?.event && !playStillInProgress;
             const currentHitKey = hitData ? `${hitData.x}-${hitData.y}` : null;
-            // Only treat as new hit if we've been initialized (prevents first-render flash)
             const isNewHit = initializedRef.current && currentHitKey && currentHitKey !== lastHitRef.current;
             const showBip = hasCompletedHit && !bipCollapsed;
-            // After BIP collapses, don't show the old at-bat's pitches — show empty zone
             const bipJustEnded = bipCollapsed && hasCompletedHit && !isNewHit;
             const showZone = liveState.currentAtBat?.length > 0 && !showBip && !bipJustEnded;
 
-            if (showBip) return (
-              <div className="lgp-bip-section">
-                <Suspense fallback={<div style={{ height: 300, display: "flex", alignItems: "center", justifyContent: "center", color: "#888" }}>Loading 3D viewer...</div>}>
-                  <BallInPlay3D
-                    hitData={hitData}
-                    venueTeamId={gameInfo.home.id}
-                    runnersOn={bipRunners}
-                    runnerNames={bipRunnerNames}
-                    outs={liveState?.outs}
-                  />
-                </Suspense>
+            const halfLabel = liveState.inningHalf === "Top" ? "TOP" : "BOT";
+            const frameHeader = (label) => (
+              <div className="lgp-feature-header">
+                <span className="lgp-feature-label">{label}</span>
+                {liveState.inning != null && (
+                  <>
+                    <span className="lgp-feature-sep">·</span>
+                    <span className="lgp-feature-inning">{halfLabel} {liveState.inning}</span>
+                  </>
+                )}
               </div>
             );
 
+            if (showBip) return (
+              <div className="lgp-feature lgp-feature-bip">
+                {frameHeader("Last Play")}
+                <div className="lgp-bip-section">
+                  <Suspense fallback={<div style={{ height: 300, display: "flex", alignItems: "center", justifyContent: "center", color: "#888" }}>Loading 3D viewer...</div>}>
+                    <BallInPlay3D
+                      hitData={hitData}
+                      venueTeamId={gameInfo.home.id}
+                      runnersOn={bipRunners}
+                      runnerNames={bipRunnerNames}
+                      outs={liveState?.outs}
+                    />
+                  </Suspense>
+                </div>
+              </div>
+            );
 
             if (showZone) return (
-              <div className="lgp-zone-centered lgp-zone-with-bg">
-                <img src={battingTeamLogo2} alt="" className="lgp-zone-bg-logo" />
-                <span className="lgp-pitch-result">
-                  {(() => {
-                    const p = liveState.currentAtBat[liveState.currentAtBat.length - 1];
-                    const balls = p.count ? parseInt(p.count.split("-")[0]) || 0 : null;
-                    const strikes = p.count ? parseInt(p.count.split("-")[1]) || 0 : null;
-                    const outs = liveState.outs;
-                    let countLabel = "";
-                    if (p.isStrike && strikes === 3 && p.code !== "F") {
-                      const soType = p.code === "C" ? "Looking" : p.code === "S" ? "Swinging" : "Called";
-                      return <>{p.pitchInfo || ""} — Strikeout {soType} <span className={`lgp-out-count ${outs >= 3 ? "lgp-three-outs" : ""}`}>— {outs} Out{outs !== 1 ? "s" : ""}</span></>;
-                    }
-                    if (p.isBall && balls >= 4) {
-                      const batterName = liveState.batter?.fullName || "";
-                      return `${p.pitchInfo || ""} — Ball 4 — ${batterName} Walks`;
-                    }
-                    if (p.isInPlay) {
-                      return `${p.pitchInfo || ""} — In Play`;
-                    }
-                    if (p.isBall && balls != null) countLabel = ` (${balls})`;
-                    else if (p.isStrike && strikes != null && p.code !== "F") countLabel = ` (${strikes})`;
-                    else if (p.code === "F" && strikes != null) countLabel = strikes >= 2 ? "" : ` (${strikes})`;
-                    return `${p.pitchInfo || ""} — ${p.call}${countLabel}`;
-                  })()}
-                </span>
-                <StrikeZone pitches={liveState.currentAtBat} />
-                <div className="lgp-pitch-dots">
-                  {liveState.currentAtBat.map((p, i) => {
-                    const isFoul = p.code === "F";
-                    const countStrikes = p.count ? parseInt(p.count.split("-")[1]) || 0 : 0;
-                    const prevStrikes = i > 0 && liveState.currentAtBat[i - 1].count ? parseInt(liveState.currentAtBat[i - 1].count.split("-")[1]) || 0 : 0;
-                    const foulNoAdvance = isFoul && countStrikes === prevStrikes && countStrikes >= 2;
-                    const color = p.isBall ? "#22c55e" : foulNoAdvance ? "#888" : p.isInPlay ? "#3b82f6" : "#ef4444";
-                    const border = foulNoAdvance ? "2px solid #ef4444" : "none";
-                    return <span key={i} className="lgp-pitch-dot" style={{ background: color, border, boxSizing: "border-box" }} title={`${p.call} ${p.count || ""}`} />;
-                  })}
+              <div className="lgp-feature lgp-feature-zone">
+                {frameHeader("At Bat")}
+                <div className="lgp-zone-centered lgp-zone-with-bg">
+                  <img src={battingTeamLogo2} alt="" className="lgp-zone-bg-logo" />
+                  <span className="lgp-pitch-result">
+                    {(() => {
+                      const p = liveState.currentAtBat[liveState.currentAtBat.length - 1];
+                      const balls = p.count ? parseInt(p.count.split("-")[0]) || 0 : null;
+                      const strikes = p.count ? parseInt(p.count.split("-")[1]) || 0 : null;
+                      const outs = liveState.outs;
+                      let countLabel = "";
+                      if (p.isStrike && strikes === 3 && p.code !== "F") {
+                        const soType = p.code === "C" ? "Looking" : p.code === "S" ? "Swinging" : "Called";
+                        return <>{p.pitchInfo || ""} — Strikeout {soType} <span className={`lgp-out-count ${outs >= 3 ? "lgp-three-outs" : ""}`}>— {outs} Out{outs !== 1 ? "s" : ""}</span></>;
+                      }
+                      if (p.isBall && balls >= 4) {
+                        const batterName = liveState.batter?.fullName || "";
+                        return `${p.pitchInfo || ""} — Ball 4 — ${batterName} Walks`;
+                      }
+                      if (p.isInPlay) {
+                        return `${p.pitchInfo || ""} — In Play`;
+                      }
+                      if (p.isBall && balls != null) countLabel = ` (${balls})`;
+                      else if (p.isStrike && strikes != null && p.code !== "F") countLabel = ` (${strikes})`;
+                      else if (p.code === "F" && strikes != null) countLabel = strikes >= 2 ? "" : ` (${strikes})`;
+                      return `${p.pitchInfo || ""} — ${p.call}${countLabel}`;
+                    })()}
+                  </span>
+                  <StrikeZone pitches={liveState.currentAtBat} />
+                  <div className="lgp-pitch-legend">
+                    <span className="lgp-legend-item"><span className="lgp-legend-dot" style={{ background: "#22c55e" }} /> Ball</span>
+                    <span className="lgp-legend-item"><span className="lgp-legend-dot" style={{ background: "#ef4444" }} /> Strike</span>
+                    <span className="lgp-legend-item"><span className="lgp-legend-dot" style={{ background: "#888", border: "1.5px solid #ef4444" }} /> Foul</span>
+                    <span className="lgp-legend-item"><span className="lgp-legend-dot" style={{ background: "#3b82f6" }} /> In Play</span>
+                  </div>
+                  <div className="lgp-pitch-list">
+                    {liveState.currentAtBat.map((p, i) => {
+                      const isFoul = p.code === "F";
+                      const countStrikes = p.count ? parseInt(p.count.split("-")[1]) || 0 : 0;
+                      const prevStrikes = i > 0 && liveState.currentAtBat[i - 1].count ? parseInt(liveState.currentAtBat[i - 1].count.split("-")[1]) || 0 : 0;
+                      const foulNoAdvance = isFoul && countStrikes === prevStrikes && countStrikes >= 2;
+                      const color = p.isBall ? "#22c55e" : foulNoAdvance ? "#888" : p.isInPlay ? "#3b82f6" : "#ef4444";
+                      const ptype = pitchTypeAbbr(p.pitchInfo);
+                      const velo = pitchVelo(p.pitchInfo);
+                      return (
+                        <span key={i} className="lgp-pitch-item" title={p.pitchInfo ? `${p.pitchInfo} — ${p.call}` : p.call}>
+                          <span className="lgp-pitch-dot-chip" style={{ background: color, border: foulNoAdvance ? "1.5px solid #ef4444" : "none" }}>{i + 1}</span>
+                          {(ptype || velo) && (
+                            <span className="lgp-pitch-meta">
+                              {ptype && <span className="lgp-pitch-type">{ptype}</span>}
+                              {velo && <span className="lgp-pitch-velo">{velo}</span>}
+                            </span>
+                          )}
+                        </span>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             );
@@ -429,33 +484,39 @@ export default function LiveGamePage() {
             if (sideJustChanged) {
               const nextUp = [liveState.batter, liveState.onDeck, liveState.inHole].filter(Boolean);
               return (
-                <div className="lgp-next-up">
-                  <span className="lgp-section-label">Coming Up</span>
-                  <div className="lgp-next-up-list">
-                    {nextUp.map((p) => {
-                      const stats = [];
-                      if (p.ab != null) stats.push(`${p.h || 0}-${p.ab}`);
-                      if (p.hr > 0) stats.push(`${p.hr} HR`);
-                      if (p.rbi > 0) stats.push(`${p.rbi} RBI`);
-                      if (p.k > 0) stats.push(`${p.k} K`);
-                      if (p.bb > 0) stats.push(`${p.bb} BB`);
-                      if (p.hbp > 0) stats.push(`${p.hbp} HBP`);
-                      return (
-                        <div key={p.id} className="lgp-next-up-player sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
-                          <span className="lgp-next-up-name">{p.fullName}</span>
-                          {stats.length > 0 && <span className="lgp-next-up-stats">{stats.join(", ")}</span>}
-                        </div>
-                      );
-                    })}
+                <div className="lgp-feature lgp-feature-comingup">
+                  {frameHeader("Coming Up")}
+                  <div className="lgp-next-up">
+                    <div className="lgp-next-up-list">
+                      {nextUp.map((p) => {
+                        const stats = [];
+                        if (p.ab != null) stats.push(`${p.h || 0}-${p.ab}`);
+                        if (p.hr > 0) stats.push(`${p.hr} HR`);
+                        if (p.rbi > 0) stats.push(`${p.rbi} RBI`);
+                        if (p.k > 0) stats.push(`${p.k} K`);
+                        if (p.bb > 0) stats.push(`${p.bb} BB`);
+                        if (p.hbp > 0) stats.push(`${p.hbp} HBP`);
+                        return (
+                          <div key={p.id} className="lgp-next-up-player sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
+                            <span className="lgp-next-up-name">{p.fullName}</span>
+                            {stats.length > 0 && <span className="lgp-next-up-stats">{stats.join(", ")}</span>}
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
               );
             }
-            // Normal between-at-bat pause — show empty zone with logo
+
+            // Normal between-at-bat pause — empty zone with logo
             return (
-              <div className="lgp-zone-centered lgp-zone-with-bg">
-                <img src={battingTeamLogo2} alt="" className="lgp-zone-bg-logo" />
-                <StrikeZone pitches={[]} />
+              <div className="lgp-feature lgp-feature-zone">
+                {frameHeader("At Bat")}
+                <div className="lgp-zone-centered lgp-zone-with-bg">
+                  <img src={battingTeamLogo2} alt="" className="lgp-zone-bg-logo" />
+                  <StrikeZone pitches={[]} />
+                </div>
               </div>
             );
           })()}
