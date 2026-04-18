@@ -5242,7 +5242,6 @@ th.sb-ls-total {
   fill: var(--jumbo-led-amber);
   stroke: var(--jumbo-led-amber);
   opacity: 1;
-  filter: drop-shadow(0 0 4px var(--jumbo-led-amber));
 }
 
 .lgp-hud-runners {

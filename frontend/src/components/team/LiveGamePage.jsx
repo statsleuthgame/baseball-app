@@ -314,11 +314,11 @@ export default function LiveGamePage() {
 
         {isLive && liveState && (
           <div className="lgp-hud-bases">
-            <svg className="lgp-hud-diamond" width="56" height="56" viewBox="0 0 56 56">
+            <svg className="lgp-hud-diamond" width="56" height="56" viewBox="-2 -2 60 60">
               <rect x="18" y="2" width="12" height="12" rx="1.5" transform="rotate(45 24 8)" className={`lgp-hud-base ${liveState.onSecond ? "on" : ""}`} />
               <rect x="32" y="16" width="12" height="12" rx="1.5" transform="rotate(45 38 22)" className={`lgp-hud-base ${liveState.onFirst ? "on" : ""}`} />
               <rect x="4" y="16" width="12" height="12" rx="1.5" transform="rotate(45 10 22)" className={`lgp-hud-base ${liveState.onThird ? "on" : ""}`} />
-              <circle cx="22" cy="36" r="2.5" fill="var(--text-muted)" opacity="0.3" />
+              <circle cx="24" cy="36" r="2.5" fill="var(--text-muted)" opacity="0.3" />
             </svg>
             <div className="lgp-hud-runners">
               {(liveState.runnerThird || liveState.runnerSecond || liveState.runnerFirst) ? (
@@ -452,28 +452,6 @@ export default function LiveGamePage() {
                     <span className="lgp-legend-item"><span className="lgp-legend-dot" style={{ background: "#ef4444" }} /> Strike</span>
                     <span className="lgp-legend-item"><span className="lgp-legend-dot" style={{ background: "#888", border: "1.5px solid #ef4444" }} /> Foul</span>
                     <span className="lgp-legend-item"><span className="lgp-legend-dot" style={{ background: "#3b82f6" }} /> In Play</span>
-                  </div>
-                  <div className="lgp-pitch-list">
-                    {liveState.currentAtBat.map((p, i) => {
-                      const isFoul = p.code === "F";
-                      const countStrikes = p.count ? parseInt(p.count.split("-")[1]) || 0 : 0;
-                      const prevStrikes = i > 0 && liveState.currentAtBat[i - 1].count ? parseInt(liveState.currentAtBat[i - 1].count.split("-")[1]) || 0 : 0;
-                      const foulNoAdvance = isFoul && countStrikes === prevStrikes && countStrikes >= 2;
-                      const color = p.isBall ? "#22c55e" : foulNoAdvance ? "#888" : p.isInPlay ? "#3b82f6" : "#ef4444";
-                      const ptype = pitchTypeAbbr(p.pitchInfo);
-                      const velo = pitchVelo(p.pitchInfo);
-                      return (
-                        <span key={i} className="lgp-pitch-item" title={p.pitchInfo ? `${p.pitchInfo} — ${p.call}` : p.call}>
-                          <span className="lgp-pitch-dot-chip" style={{ background: color, border: foulNoAdvance ? "1.5px solid #ef4444" : "none" }}>{i + 1}</span>
-                          {(ptype || velo) && (
-                            <span className="lgp-pitch-meta">
-                              {ptype && <span className="lgp-pitch-type">{ptype}</span>}
-                              {velo && <span className="lgp-pitch-velo">{velo}</span>}
-                            </span>
-                          )}
-                        </span>
-                      );
-                    })}
                   </div>
                 </div>
               </div>
