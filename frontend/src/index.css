@@ -6209,20 +6209,14 @@ th.sb-ls-total {
 /* Strike zone — large centered with team logo background */
 .lgp-zone-centered {
   display: flex; flex-direction: column; align-items: center; gap: 10px;
-  padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.04);
+  padding: 10px 10px 0;
   position: relative; overflow: hidden;
 }
 .lgp-zone-with-bg {
-  background: url('/images/catchers-view.png') center center / cover no-repeat;
-  border-radius: 10px;
-}
-.lgp-zone-with-bg::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(10, 14, 23, 0.85);
-  z-index: 0;
-  border-radius: 10px;
+  background:
+    linear-gradient(180deg, rgba(10, 14, 23, 0.95) 0%, rgba(10, 14, 23, 0.86) 25%, rgba(10, 14, 23, 0.86) 100%),
+    url('/images/catchers-view.png') center center / cover no-repeat;
+  border-radius: 0;
 }
 .lgp-zone-bg-logo {
   position: absolute; top: 50%; left: 50%;

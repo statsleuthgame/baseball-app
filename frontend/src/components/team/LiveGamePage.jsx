@@ -112,7 +112,7 @@ export default function LiveGamePage() {
     enabled: boxOpen && !!gamePk, staleTime: 1000 * 60, refetchInterval: boxOpen ? 1000 * 30 : false,
   });
 
-  // Auto-collapse ball-in-play visual after 30 seconds
+  // Auto-collapse ball-in-play visual after 12 seconds
   // Start collapsed to prevent stale BIP flash on first render
   const [bipCollapsed, setBipCollapsed] = useState(true);
   const bipTimerRef = useRef(null);
@@ -124,6 +124,8 @@ export default function LiveGamePage() {
   const prevRunnerNamesRef = useRef({});
   const [bipRunners, setBipRunners] = useState({ first: false, second: false, third: false });
   const [bipRunnerNames, setBipRunnerNames] = useState({});
+  // Track current batter so we can collapse BIP as soon as a new batter steps up
+  const lastBatterIdRef = useRef(null);
 
   // Track side changes (Top↔Bottom) to show "Coming Up" only during transitions
   const [sideJustChanged, setSideJustChanged] = useState(false);
@@ -132,6 +134,36 @@ export default function LiveGamePage() {
 
   // On first mount, initialize lastHitRef so we don't replay stale BIPs
   const initializedRef = useRef(false);
+
+  // Reset all state when switching between games (same LiveGamePage route,
+  // different gamePk — refs otherwise persist across the nav)
+  useEffect(() => {
+    initializedRef.current = false;
+    lastHitRef.current = null;
+    persistedHitDataRef.current = null;
+    lastBatterIdRef.current = null;
+    prevRunnersRef.current = { first: false, second: false, third: false };
+    prevRunnerNamesRef.current = {};
+    prevHalfRef.current = null;
+    setBipCollapsed(true);
+    setBipRunners({ first: false, second: false, third: false });
+    setBipRunnerNames({});
+    setSideJustChanged(false);
+    if (bipTimerRef.current) { clearTimeout(bipTimerRef.current); bipTimerRef.current = null; }
+    if (sideTimerRef.current) { clearTimeout(sideTimerRef.current); sideTimerRef.current = null; }
+  }, [gamePk]);
+
+  // Collapse BIP immediately when a new batter steps up
+  useEffect(() => {
+    const id = liveState?.batter?.id;
+    if (!id) return;
+    if (lastBatterIdRef.current && id !== lastBatterIdRef.current && !bipCollapsed) {
+      setBipCollapsed(true);
+      if (bipTimerRef.current) { clearTimeout(bipTimerRef.current); bipTimerRef.current = null; }
+      persistedHitDataRef.current = null;
+    }
+    lastBatterIdRef.current = id;
+  }, [liveState?.batter?.id, bipCollapsed]);
 
   useEffect(() => {
     // Persist hit data — API resets allPlays on half-inning change so lastHitData goes null
@@ -159,7 +191,7 @@ export default function LiveGamePage() {
       persistedHitDataRef.current = null; // clear immediately so stale data doesn't block next batter
       bipTimerRef.current = setTimeout(() => {
         setBipCollapsed(true);
-      }, 30000);
+      }, 12000);
     }
     // Always update prevRunners to current state for next time
     prevRunnersRef.current = {
