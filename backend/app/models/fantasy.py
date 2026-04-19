@@ -57,6 +57,7 @@ class ProjectionRow(BaseModel):
     player_id: int
     name: str
     position: Optional[str] = None
+    bat_side: Optional[str] = None  # "L", "R", "S", or None (unknown)
     team_id: int
     team_abbr: str
     opp_team_id: Optional[int] = None

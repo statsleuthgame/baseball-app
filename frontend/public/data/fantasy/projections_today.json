@@ -10,7 +10,7 @@
     "n": 167
   },
   "game_count": 8,
-  "projection_count": 140,
+  "projection_count": 141,
   "projections": [
     {
       "player_id": 687221,
@@ -37,12 +37,13 @@
         "wind": "6 mph, Out To CF"
       },
       "pa_source": "lineup",
-      "efp": 20.55,
+      "efp": 20.35,
+      "bat_side": "L",
       "per_event": {
         "singles": 2.15,
         "doubles": 2.38,
         "triples": 0.0,
-        "home_runs": 10.67,
+        "home_runs": 10.48,
         "bb_hbp": 0.41,
         "r": 1.73,
         "rbi": 3.2,
@@ -51,13 +52,13 @@
       "multipliers": {
         "park_hr": 1.18,
         "park_runs": 1.16,
-        "weather_hr": 1.1
+        "weather_hr": 1.08
       },
       "rates": {
         "singles": 0.1933,
         "doubles": 0.1289,
         "triples": 0.0,
-        "home_runs": 0.2884,
+        "home_runs": 0.2832,
         "bb_hbp": 0.0556,
         "r_per_pa": 0.2335,
         "rbi_per_pa": 0.433
@@ -91,6 +92,7 @@
       },
       "pa_source": "lineup",
       "efp": 13.45,
+      "bat_side": "L",
       "per_event": {
         "singles": 1.3,
         "doubles": 1.77,
@@ -143,30 +145,31 @@
         "wind": "6 mph, Out To CF"
       },
       "pa_source": "lineup",
-      "efp": 13.45,
+      "efp": 13.16,
+      "bat_side": "R",
       "per_event": {
-        "singles": 3.68,
-        "doubles": 1.06,
+        "singles": 3.62,
+        "doubles": 1.05,
         "triples": 0.0,
-        "home_runs": 3.46,
-        "bb_hbp": 0.77,
-        "r": 1.59,
-        "rbi": 1.78,
+        "home_runs": 3.34,
+        "bb_hbp": 0.76,
+        "r": 1.56,
+        "rbi": 1.75,
         "sb": 1.09
       },
       "multipliers": {
         "park_hr": 1.18,
         "park_runs": 1.16,
-        "weather_hr": 1.1
+        "weather_hr": 1.08
       },
       "rates": {
-        "singles": 0.2855,
-        "doubles": 0.0495,
+        "singles": 0.2803,
+        "doubles": 0.0488,
         "triples": 0.0,
-        "home_runs": 0.0805,
-        "bb_hbp": 0.0901,
-        "r_per_pa": 0.1851,
-        "rbi_per_pa": 0.2072
+        "home_runs": 0.0777,
+        "bb_hbp": 0.0882,
+        "r_per_pa": 0.1817,
+        "rbi_per_pa": 0.2031
       },
       "pa": 4.3,
       "tier": "high"
@@ -196,12 +199,13 @@
         "wind": "6 mph, Out To CF"
       },
       "pa_source": "lineup",
-      "efp": 12.2,
+      "efp": 12.1,
+      "bat_side": "L",
       "per_event": {
         "singles": 1.47,
         "doubles": 1.25,
         "triples": 0.0,
-        "home_runs": 5.48,
+        "home_runs": 5.38,
         "bb_hbp": 0.57,
         "r": 1.13,
         "rbi": 1.77,
@@ -210,13 +214,13 @@
       "multipliers": {
         "park_hr": 1.18,
         "park_runs": 1.16,
-        "weather_hr": 1.1
+        "weather_hr": 1.08
       },
       "rates": {
         "singles": 0.1139,
         "doubles": 0.0582,
         "triples": 0.0,
-        "home_runs": 0.1274,
+        "home_runs": 0.1251,
         "bb_hbp": 0.0662,
         "r_per_pa": 0.1314,
         "rbi_per_pa": 0.2061
@@ -249,30 +253,31 @@
         "wind": "17 mph, Out To LF"
       },
       "pa_source": "lineup",
-      "efp": 12.15,
+      "efp": 11.83,
+      "bat_side": "L",
       "per_event": {
-        "singles": 1.85,
-        "doubles": 1.16,
+        "singles": 1.82,
+        "doubles": 1.14,
         "triples": 0.0,
-        "home_runs": 2.81,
-        "bb_hbp": 0.89,
-        "r": 1.35,
-        "rbi": 1.59,
+        "home_runs": 2.6,
+        "bb_hbp": 0.87,
+        "r": 1.33,
+        "rbi": 1.57,
         "sb": 2.5
       },
       "multipliers": {
         "park_hr": 0.92,
         "park_runs": 0.96,
-        "weather_hr": 1.1
+        "weather_hr": 1.03
       },
       "rates": {
-        "singles": 0.1432,
-        "doubles": 0.0537,
+        "singles": 0.1413,
+        "doubles": 0.0529,
         "triples": 0.0,
-        "home_runs": 0.0655,
-        "bb_hbp": 0.1033,
-        "r_per_pa": 0.1566,
-        "rbi_per_pa": 0.1853
+        "home_runs": 0.0604,
+        "bb_hbp": 0.1017,
+        "r_per_pa": 0.1543,
+        "rbi_per_pa": 0.1823
       },
       "pa": 4.3,
       "tier": "high"
@@ -303,6 +308,7 @@
       },
       "pa_source": "lineup",
       "efp": 11.38,
+      "bat_side": "S",
       "per_event": {
         "singles": 1.28,
         "doubles": 0.84,
@@ -356,6 +362,7 @@
       },
       "pa_source": "lineup",
       "efp": 11.22,
+      "bat_side": "R",
       "per_event": {
         "singles": 0.89,
         "doubles": 0.78,
@@ -409,6 +416,7 @@
       },
       "pa_source": "lineup",
       "efp": 11.17,
+      "bat_side": "R",
       "per_event": {
         "singles": 1.79,
         "doubles": 0.74,
@@ -461,87 +469,89 @@
         "wind": "13 mph, Out To RF"
       },
       "pa_source": "lineup",
-      "efp": 10.98,
+      "efp": 10.91,
+      "bat_side": "L",
       "per_event": {
-        "singles": 1.77,
-        "doubles": 1.3,
-        "triples": 0.65,
-        "home_runs": 2.94,
-        "bb_hbp": 1.06,
-        "r": 1.39,
-        "rbi": 1.63,
+        "singles": 1.74,
+        "doubles": 1.27,
+        "triples": 0.63,
+        "home_runs": 3.01,
+        "bb_hbp": 1.04,
+        "r": 1.36,
+        "rbi": 1.6,
         "sb": 0.25
       },
       "multipliers": {
         "park_hr": 1.12,
         "park_runs": 1.05,
-        "weather_hr": 1.1
+        "weather_hr": 1.15
       },
       "rates": {
-        "singles": 0.1373,
-        "doubles": 0.0603,
-        "triples": 0.0188,
-        "home_runs": 0.0684,
-        "bb_hbp": 0.1228,
-        "r_per_pa": 0.1613,
-        "rbi_per_pa": 0.19
+        "singles": 0.1347,
+        "doubles": 0.0593,
+        "triples": 0.0183,
+        "home_runs": 0.0701,
+        "bb_hbp": 0.1206,
+        "r_per_pa": 0.1585,
+        "rbi_per_pa": 0.186
       },
       "pa": 4.3,
       "tier": "medium"
     },
     {
-      "player_id": 664040,
-      "name": "Brandon Lowe",
-      "position": "2B",
-      "team_id": 134,
-      "team_abbr": "PIT",
-      "opp_abbr": "TB",
-      "opp_team_id": 139,
+      "player_id": 657656,
+      "name": "Ram\u00f3n Laureano",
+      "position": "RF",
+      "team_id": 135,
+      "team_abbr": "SD",
+      "opp_abbr": "LAA",
+      "opp_team_id": 108,
       "opp_pitcher": {
-        "id": 656876,
-        "fullName": "Drew Rasmussen"
+        "id": 579328,
+        "fullName": "Yusei Kikuchi"
       },
       "park": {
-        "id": 31,
-        "name": "PNC Park",
-        "runs": 96,
-        "hr": 92,
+        "id": 1,
+        "name": "Angel Stadium",
+        "runs": 97,
+        "hr": 96,
         "label": "Pitcher Friendly"
       },
       "weather": {
-        "condition": "Cloudy",
-        "temp": "81",
-        "wind": "17 mph, Out To LF"
+        "condition": "Partly Cloudy",
+        "temp": "77",
+        "wind": "8 mph, R To L"
       },
       "pa_source": "lineup",
-      "efp": 10.88,
+      "efp": 10.64,
+      "bat_side": "R",
       "per_event": {
-        "singles": 1.45,
-        "doubles": 1.04,
-        "triples": 0.0,
-        "home_runs": 3.99,
-        "bb_hbp": 1.14,
-        "r": 1.41,
-        "rbi": 1.85,
-        "sb": 0.0
+        "singles": 1.79,
+        "doubles": 1.17,
+        "triples": 0.58,
+        "home_runs": 2.31,
+        "bb_hbp": 0.93,
+        "r": 1.37,
+        "rbi": 1.65,
+        "sb": 0.83
       },
       "multipliers": {
-        "park_hr": 0.92,
-        "park_runs": 0.96,
-        "weather_hr": 1.1
+        "park_hr": 0.96,
+        "park_runs": 0.97,
+        "weather_hr": 1.0
       },
       "rates": {
-        "singles": 0.1123,
-        "doubles": 0.0485,
-        "triples": 0.0,
-        "home_runs": 0.0928,
-        "bb_hbp": 0.1323,
-        "r_per_pa": 0.1643,
-        "rbi_per_pa": 0.2148
+        "singles": 0.1391,
+        "doubles": 0.0542,
+        "triples": 0.0169,
+        "home_runs": 0.0537,
+        "bb_hbp": 0.1082,
+        "r_per_pa": 0.1599,
+        "rbi_per_pa": 0.1917
       },
       "pa": 4.3,
       "tier": "medium"
     }
   ],
-  "generated_at": "2026-04-19T00:13:38.178387+00:00"
+  "generated_at": "2026-04-19T00:23:05.138642+00:00"
 }

@@ -93,7 +93,7 @@ def test_season_only_batter_no_l7(weights, league):
 
 
 def test_l7_shrinks_toward_season(weights, league):
-    """With L7 ≥ l7_min_pa, effective rate = 0.7·season + 0.3·L7 (blend default)."""
+    """With L7 ≥ l7_min_pa, effective rate = (1-blend)·season + blend·L7."""
     season = _avg_rates()
     l7 = Rates(
         singles=0.200, doubles=0.060, triples=0.004, home_runs=0.060,
@@ -104,10 +104,11 @@ def test_l7_shrinks_toward_season(weights, league):
         park={"runs": 100, "hr": 100}, weather=None,
         projected_pa=4.0, weights=weights,
     )
-    expected_1b = 0.7 * season.singles + 0.3 * l7.singles
-    expected_hr = 0.7 * season.home_runs + 0.3 * l7.home_runs
-    assert result["rates"]["singles"] == pytest.approx(expected_1b, abs=1e-6)
-    assert result["rates"]["home_runs"] == pytest.approx(expected_hr, abs=1e-6)
+    b = weights["l7_blend"]
+    expected_1b = (1 - b) * season.singles + b * l7.singles
+    expected_hr = (1 - b) * season.home_runs + b * l7.home_runs
+    assert result["rates"]["singles"] == pytest.approx(expected_1b, abs=5e-4)
+    assert result["rates"]["home_runs"] == pytest.approx(expected_hr, abs=5e-4)
 
 
 def test_l7_with_low_pa_ignored(weights, league):
@@ -127,16 +128,16 @@ def test_l7_with_low_pa_ignored(weights, league):
 
 
 def test_bvp_boost_with_full_sample(weights, league):
-    """BvP with PA≥20 and elevated BA nudges contact rates upward."""
+    """BvP with PA≥20 and elevated BA nudges contact rates upward (when bvp_blend > 0)."""
+    if weights.get("bvp_blend", 0.0) <= 0.0:
+        pytest.skip("Calibrated weights have bvp_blend=0; no BvP effect to test.")
     season = _avg_rates()
-    # BvP line: 10-for-25 career vs this pitcher = .400 BA (league .244)
     bvp = {"pa": 30, "ab": 25, "hits": 10, "home_runs": 2}
     result = project_hitter_points(
         season_rates=season, l7_rates=None, bvp=bvp, league_rates=league,
         park={"runs": 100, "hr": 100}, weather=None,
         projected_pa=4.0, weights=weights,
     )
-    # Singles/doubles/triples should be higher than the no-bvp baseline
     baseline = project_hitter_points(
         season_rates=season, l7_rates=None, bvp=None, league_rates=league,
         park={"runs": 100, "hr": 100}, weather=None,
@@ -144,14 +145,15 @@ def test_bvp_boost_with_full_sample(weights, league):
     )
     assert result["rates"]["singles"] > baseline["rates"]["singles"]
     assert result["rates"]["home_runs"] >= baseline["rates"]["home_runs"]
-    # Cap should hold — should not exceed +25%
-    assert result["rates"]["singles"] <= baseline["rates"]["singles"] * 1.25 + 1e-6
+    cap = weights.get("bvp_multiplier_cap", 0.25)
+    assert result["rates"]["singles"] <= baseline["rates"]["singles"] * (1 + cap) + 1e-6
 
 
 def test_bvp_half_weight_ramp(weights, league):
-    """BvP at PA=10 gets roughly half-weight vs PA=20."""
+    """BvP at PA=10 gets roughly half-weight vs PA=20 (when bvp_blend > 0)."""
+    if weights.get("bvp_blend", 0.0) <= 0.0:
+        pytest.skip("Calibrated weights have bvp_blend=0; no BvP effect to test.")
     season = _avg_rates()
-    # Mid-sample BvP: 5 hits in 10 AB = .500, high relative to league .244
     bvp_mid = {"pa": 10, "ab": 10, "hits": 5, "home_runs": 0}
     bvp_full = {"pa": 20, "ab": 20, "hits": 10, "home_runs": 0}
     mid = project_hitter_points(
@@ -164,10 +166,8 @@ def test_bvp_half_weight_ramp(weights, league):
         park={"runs": 100, "hr": 100}, weather=None,
         projected_pa=4.0, weights=weights,
     )
-    # Full-sample BvP should move the singles rate more than mid-sample.
-    season_1b = season.singles
-    delta_mid = mid["rates"]["singles"] - season_1b
-    delta_full = full["rates"]["singles"] - season_1b
+    delta_mid = mid["rates"]["singles"] - season.singles
+    delta_full = full["rates"]["singles"] - season.singles
     assert delta_full > delta_mid > 0
 
 
@@ -184,8 +184,8 @@ def test_coors_multiplier(weights, league):
     assert result["rates"]["singles"] == pytest.approx(season.singles * 1.16, abs=5e-4)
 
 
-def test_weather_hot_and_wind_out(weights, league):
-    """90°F + wind out-to-CF stacks 1.05 · 1.10 on HR rate."""
+def test_weather_hot_and_wind_out_cf(weights, league):
+    """90°F + wind out-to-CF is neutral for handedness — 1.05 · 1.08 on HR rate."""
     season = _avg_rates()
     result = project_hitter_points(
         season_rates=season, l7_rates=None, bvp=None, league_rates=league,
@@ -193,10 +193,116 @@ def test_weather_hot_and_wind_out(weights, league):
         weather={"temp": 90, "condition": "Sunny", "wind": "12 mph, Out To CF"},
         projected_pa=4.0, weights=weights,
     )
-    expected_mult = 1.05 * 1.10
+    expected_mult = 1.05 * 1.08
     assert result["multipliers"]["weather_hr"] == pytest.approx(expected_mult, abs=1e-6)
-    # rates are rounded to 4 decimals on output — tolerance reflects that
     assert result["rates"]["home_runs"] == pytest.approx(season.home_runs * expected_mult, abs=5e-4)
+
+
+def test_wind_out_rf_helps_lhb_more_than_rhb(weights, league):
+    """Wind out to RF is a much bigger boost for a lefty's pull side."""
+    season = _avg_rates()
+    weather = {"temp": 72, "wind": "12 mph, Out To RF"}
+    lhb = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=weather,
+        projected_pa=4.0, weights=weights, bat_side="L",
+    )
+    rhb = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=weather,
+        projected_pa=4.0, weights=weights, bat_side="R",
+    )
+    assert lhb["multipliers"]["weather_hr"] == pytest.approx(1.15, abs=1e-6)
+    assert rhb["multipliers"]["weather_hr"] == pytest.approx(1.03, abs=1e-6)
+    # The lefty's EFP is strictly higher under the same matchup + park.
+    assert lhb["efp"] > rhb["efp"]
+
+
+def test_wind_out_lf_helps_rhb_more_than_lhb(weights, league):
+    """Symmetric — wind out to LF favors RHBs pulling there."""
+    season = _avg_rates()
+    weather = {"temp": 72, "wind": "12 mph, Out To LF"}
+    lhb = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=weather,
+        projected_pa=4.0, weights=weights, bat_side="L",
+    )
+    rhb = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=weather,
+        projected_pa=4.0, weights=weights, bat_side="R",
+    )
+    assert lhb["multipliers"]["weather_hr"] == pytest.approx(1.03, abs=1e-6)
+    assert rhb["multipliers"]["weather_hr"] == pytest.approx(1.15, abs=1e-6)
+
+
+def test_wind_in_from_rf_hurts_lhb_more(weights, league):
+    """Wind IN from RF crushes a lefty's pull side more than a righty's oppo."""
+    season = _avg_rates()
+    weather = {"temp": 72, "wind": "12 mph, In From RF"}
+    lhb = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=weather,
+        projected_pa=4.0, weights=weights, bat_side="L",
+    )
+    rhb = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=weather,
+        projected_pa=4.0, weights=weights, bat_side="R",
+    )
+    assert lhb["multipliers"]["weather_hr"] == pytest.approx(0.82, abs=1e-6)
+    assert rhb["multipliers"]["weather_hr"] == pytest.approx(0.95, abs=1e-6)
+
+
+def test_switch_hitter_averages_between_lhb_rhb(weights, league):
+    """Switch hitters use the averaged column (0.88 in from RF, 1.09 out to RF)."""
+    season = _avg_rates()
+    lh_out = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100},
+        weather={"temp": 72, "wind": "12 mph, Out To RF"},
+        projected_pa=4.0, weights=weights, bat_side="L",
+    )
+    switch_out = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100},
+        weather={"temp": 72, "wind": "12 mph, Out To RF"},
+        projected_pa=4.0, weights=weights, bat_side="S",
+    )
+    rh_out = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100},
+        weather={"temp": 72, "wind": "12 mph, Out To RF"},
+        projected_pa=4.0, weights=weights, bat_side="R",
+    )
+    assert lh_out["multipliers"]["weather_hr"] == pytest.approx(1.15)
+    assert switch_out["multipliers"]["weather_hr"] == pytest.approx(1.09)
+    assert rh_out["multipliers"]["weather_hr"] == pytest.approx(1.03)
+
+
+def test_unknown_handedness_falls_back_to_neutral(weights, league):
+    """If bat_side is None (API didn't return it), use the averaged-across-hands value."""
+    season = _avg_rates()
+    result = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100},
+        weather={"temp": 72, "wind": "12 mph, Out To RF"},
+        projected_pa=4.0, weights=weights,
+        # bat_side omitted
+    )
+    assert result["multipliers"]["weather_hr"] == pytest.approx(1.09)
+
+
+def test_crosswind_no_effect(weights, league):
+    """Wind L-to-R or R-to-L is a crosswind — no HR boost or drag."""
+    season = _avg_rates()
+    result = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100},
+        weather={"temp": 72, "wind": "8 mph, L To R"},
+        projected_pa=4.0, weights=weights, bat_side="L",
+    )
+    assert result["multipliers"]["weather_hr"] == pytest.approx(1.0)
 
 
 def test_weather_none_neutral(weights, league):
@@ -209,8 +315,8 @@ def test_weather_none_neutral(weights, league):
     assert result["multipliers"]["weather_hr"] == 1.0
 
 
-def test_cold_wind_in(weights, league):
-    """Cold + wind in from CF depresses HR rate."""
+def test_cold_wind_in_cf(weights, league):
+    """Cold + wind in from CF depresses HR rate — CF is neutral for handedness."""
     season = _avg_rates()
     result = project_hitter_points(
         season_rates=season, l7_rates=None, bvp=None, league_rates=league,
@@ -218,7 +324,7 @@ def test_cold_wind_in(weights, league):
         weather={"temp": 48, "wind": "10 mph, In From CF"},
         projected_pa=4.0, weights=weights,
     )
-    expected_mult = 0.90 * 0.88
+    expected_mult = 0.90 * 0.90
     assert result["multipliers"]["weather_hr"] == pytest.approx(expected_mult, abs=1e-6)
 
 
@@ -303,16 +409,13 @@ def test_derive_rates_from_stat_basic():
 
 def test_efp_scoring_sanity():
     """
-    Hand-compute EFP for a simple case to sanity-check the PrizePicks table
-    is being applied correctly.
+    Hand-compute EFP for a simple case to sanity-check the PrizePicks
+    scoring table is applied correctly. Uses whatever r_per_pa_coef /
+    rbi_per_pa_coef the current calibrated weights specify so this
+    test survives recalibration.
 
     Rates: .100 1B, 0 2B/3B/HR, 0 BB+HBP; PA=4; OBP .300; SLG .350; no SB.
-        per_PA term = 3·0.1 + 0 + 0 + 0 + 0
-                    + 2·(0.3·0.35)  (R/PA)
-                    + 2·(0.35·0.25) (RBI/PA)
-                    = 0.3 + 0.21 + 0.175 = 0.685
-        EFP = 4 · 0.685 = 2.74
-    (Matches the default r_coef=0.35, rbi_coef=0.25 from the json.)
+        per_PA term = 3·0.1 + 2·(OBP·r_coef) + 2·(SLG·rbi_coef)
     """
     from app.services.fantasy import Rates as R
     season = R(
@@ -326,13 +429,28 @@ def test_efp_scoring_sanity():
         park={"runs": 100, "hr": 100}, weather=None,
         projected_pa=4.0, weights=weights,
     )
-    expected = 4 * (3 * 0.1 + 2 * (0.300 * 0.35) + 2 * (0.350 * 0.25))
+    r_coef = weights["r_per_pa_coef"]
+    rbi_coef = weights["rbi_per_pa_coef"]
+    expected = 4 * (3 * 0.1 + 2 * (0.300 * r_coef) + 2 * (0.350 * rbi_coef))
     assert result["efp"] == pytest.approx(expected, abs=0.01)
 
 
 def test_weather_helper_various_wind_strings():
-    assert _weather_hr_multiplier({"temp": 72, "wind": "12 mph, Out To CF"}) == pytest.approx(1.10)
+    # No handedness → neutral (averaged) values: 1.08 out-CF, 0.88 in-RF, etc.
+    assert _weather_hr_multiplier({"temp": 72, "wind": "12 mph, Out To CF"}) == pytest.approx(1.08)
     assert _weather_hr_multiplier({"temp": 72, "wind": "10 mph, In From RF"}) == pytest.approx(0.88)
     assert _weather_hr_multiplier({"temp": 72, "wind": "5 mph, L To R"}) == pytest.approx(1.00)
     assert _weather_hr_multiplier(None) == 1.0
     assert _weather_hr_multiplier({}) == 1.0
+    # Handedness flips the result for pull-side / oppo-field winds
+    assert _weather_hr_multiplier(
+        {"temp": 72, "wind": "12 mph, Out To RF"}, bat_side="L"
+    ) == pytest.approx(1.15)
+    assert _weather_hr_multiplier(
+        {"temp": 72, "wind": "12 mph, Out To RF"}, bat_side="R"
+    ) == pytest.approx(1.03)
+    assert _weather_hr_multiplier(
+        {"temp": 72, "wind": "10 mph, In From LF"}, bat_side="R"
+    ) == pytest.approx(0.82)
+    # 0 mph wind → no wind effect
+    assert _weather_hr_multiplier({"temp": 72, "wind": "0 mph"}) == pytest.approx(1.0)

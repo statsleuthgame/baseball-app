@@ -85,6 +85,7 @@ function FantasyCard({ projection, onSelectPlayer }) {
     player_id,
     name,
     position,
+    bat_side,
     team_abbr,
     opp_abbr,
     opp_pitcher,
@@ -119,6 +120,20 @@ function FantasyCard({ projection, onSelectPlayer }) {
           <div className="edge-card-name">
             <span className="edge-card-fullname">{name}</span>
             {position && <span className="edge-card-pos">{position}</span>}
+            {bat_side && (
+              <span
+                className="edge-card-pos"
+                title={
+                  bat_side === "L"
+                    ? "Left-handed batter"
+                    : bat_side === "R"
+                    ? "Right-handed batter"
+                    : "Switch hitter"
+                }
+              >
+                · {bat_side}HB
+              </span>
+            )}
           </div>
           <div className="edge-card-matchup">
             <span className="edge-card-team-abbr">{team_abbr}</span>

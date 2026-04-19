@@ -33,6 +33,7 @@ from __future__ import annotations
 import asyncio
 import json
 import logging
+import re
 from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
@@ -66,8 +67,29 @@ WEATHER_TEMP_HOT_THRESHOLD_F = 85.0
 WEATHER_TEMP_COLD_THRESHOLD_F = 55.0
 WEATHER_HR_MULT_HOT = 1.05
 WEATHER_HR_MULT_COLD = 0.90
-WEATHER_HR_MULT_WIND_OUT = 1.10
-WEATHER_HR_MULT_WIND_IN = 0.88
+
+# Wind × batter-handedness table. MLB hitters pull the ball ~65% of the
+# time on air contact, so wind blowing out to the pull side matters much
+# more than wind to the opposite field. Values are HR-rate multipliers
+# applied on top of temp and park factors.
+#
+#                    LHB    RHB    Switch / unknown
+# Out To RF         1.15   1.03   1.09    (LHB pull side)
+# Out To CF         1.08   1.08   1.08    (neutral)
+# Out To LF         1.03   1.15   1.09    (RHB pull side)
+# In  From RF       0.82   0.95   0.88
+# In  From CF       0.90   0.90   0.90
+# In  From LF       0.95   0.82   0.88
+# Crosswind (L↔R)   1.00   1.00   1.00
+# No wind / dome    1.00   1.00   1.00
+WIND_HR_TABLE = {
+    ("out", "rf"): {"L": 1.15, "R": 1.03, "S": 1.09, None: 1.09},
+    ("out", "cf"): {"L": 1.08, "R": 1.08, "S": 1.08, None: 1.08},
+    ("out", "lf"): {"L": 1.03, "R": 1.15, "S": 1.09, None: 1.09},
+    ("in", "rf"):  {"L": 0.82, "R": 0.95, "S": 0.88, None: 0.88},
+    ("in", "cf"):  {"L": 0.90, "R": 0.90, "S": 0.90, None: 0.90},
+    ("in", "lf"):  {"L": 0.95, "R": 0.82, "S": 0.88, None: 0.88},
+}
 
 # ---------------------------------------------------------------------------
 # Config / weight loading
@@ -224,10 +246,50 @@ def _bvp_multiplier(
     return max(1.0 - cap, min(1.0 + cap, mult))
 
 
-def _weather_hr_multiplier(weather: dict | None) -> float:
+def _parse_wind_direction(wind_str: str) -> tuple[str, str] | None:
+    """
+    Parse MLB's wind descriptor into ('in'|'out', 'rf'|'cf'|'lf') or None.
+
+    Real examples seen from MLB Stats API:
+      '10 mph, Out To CF'  → ('out', 'cf')
+      '8 mph, In From LF'  → ('in',  'lf')
+      '5 mph, L To R'      → None  (crosswind)
+      'Wind 0 mph'         → None
+      '0 mph'              → None
+      ''                   → None
+    """
+    w = (wind_str or "").lower()
+    if not w:
+        return None
+    # Wind speed of 0 → no effect. Use a word-boundary match so "10 mph" doesn't trip it.
+    speed_match = re.search(r"(?<!\d)(\d+)\s*mph", w)
+    if speed_match and int(speed_match.group(1)) == 0:
+        return None
+    if "out" in w and "to" in w:
+        axis = "out"
+    elif "in" in w and "from" in w:
+        axis = "in"
+    else:
+        return None  # crosswind / unknown
+    for field in ("rf", "cf", "lf"):
+        if field in w:
+            return axis, field
+    # If we got "Out To" but no explicit field direction, treat as CF
+    # (neutral boost rather than guessing).
+    return axis, "cf"
+
+
+def _weather_hr_multiplier(weather: dict | None, bat_side: str | None = None) -> float:
+    """
+    HR-rate multiplier from temp and wind. Handedness-aware when bat_side
+    is known (L/R/S); otherwise uses the neutral "unknown" column which
+    averages across batting sides.
+    """
     if not weather:
         return 1.0
+
     mult = 1.0
+    # Temp
     temp = weather.get("temp")
     try:
         if temp is not None:
@@ -238,14 +300,14 @@ def _weather_hr_multiplier(weather: dict | None) -> float:
                 mult *= WEATHER_HR_MULT_COLD
     except (TypeError, ValueError):
         pass
-    wind = (weather.get("wind") or "").lower()
-    # Wind strings come from MLB Stats API as e.g. "10 mph, Out To CF",
-    # "8 mph, In From LF", "5 mph, L To R".
-    if "out" in wind:
-        mult *= WEATHER_HR_MULT_WIND_OUT
-    elif "in" in wind and "from" in wind:
-        # "In from CF/LF/RF" — wind blowing IN knocks fly balls down.
-        mult *= WEATHER_HR_MULT_WIND_IN
+
+    # Wind
+    parsed = _parse_wind_direction(weather.get("wind") or "")
+    if parsed is not None:
+        hand_key = bat_side if bat_side in ("L", "R", "S") else None
+        table = WIND_HR_TABLE.get(parsed)
+        if table is not None:
+            mult *= table.get(hand_key, table[None])
     return mult
 
 
@@ -273,6 +335,7 @@ def project_hitter_points(
     weather: dict | None,
     projected_pa: float,
     weights: dict,
+    bat_side: str | None = None,
 ) -> dict:
     """
     Pure projection function. Returns a dict:
@@ -327,8 +390,8 @@ def project_hitter_points(
     triples *= park_runs
     home_runs *= park_hr
 
-    # 4. Weather HR multiplier
-    weather_hr = _weather_hr_multiplier(weather)
+    # 4. Weather HR multiplier — handedness-aware when bat_side is known.
+    weather_hr = _weather_hr_multiplier(weather, bat_side=bat_side)
     home_runs *= weather_hr
 
     # 5. R and RBI projections — OBP / SLG proxies
@@ -362,6 +425,7 @@ def project_hitter_points(
 
     return {
         "efp": round(efp, 2),
+        "bat_side": bat_side,
         "per_event": {
             "singles": round(pa * PP_SCORING["single"] * singles, 2),
             "doubles": round(pa * PP_SCORING["double"] * doubles, 2),
@@ -420,6 +484,26 @@ async def _fetch_season_stats(player_id: int, season: int) -> dict | None:
     if stat:
         cache_set(cache_key, stat, _SEASON_STATS_TTL)
     return stat
+
+
+async def _fetch_bat_side(player_id: int) -> str | None:
+    """
+    Return the batter's primary batting hand: 'L', 'R', 'S', or None.
+    Cached for 24h since handedness basically never changes mid-season.
+    """
+    cache_key = f"fantasy:batSide:{player_id}"
+    cached = cache_get(cache_key)
+    if cached is not None:
+        return cached or None  # empty string means "known unknown"
+    data = await mlb_api.fetch(f"/people/{player_id}")
+    people = data.get("people") or []
+    if not people:
+        cache_set(cache_key, "", 60 * 60 * 24)
+        return None
+    side = (people[0].get("batSide") or {}).get("code")
+    value = side if side in ("L", "R", "S") else ""
+    cache_set(cache_key, value, 60 * 60 * 24)
+    return value or None
 
 
 async def _fetch_l7_stats(player_id: int, season: int) -> dict | None:
@@ -580,9 +664,10 @@ async def _project_batter(
     async with semaphore:
         try:
             pid = int(player.get("id"))
-            season_stat, l7_stat = await asyncio.gather(
+            season_stat, l7_stat, bat_side = await asyncio.gather(
                 _fetch_season_stats(pid, season),
                 _fetch_l7_stats(pid, season),
+                _fetch_bat_side(pid),
                 return_exceptions=False,
             )
         except Exception as e:
@@ -606,12 +691,14 @@ async def _project_batter(
         weather=weather,
         projected_pa=projected_pa,
         weights=weights,
+        bat_side=bat_side,
     )
 
     return {
         "player_id": pid,
         "name": player.get("fullName", ""),
         "position": (player.get("position") or {}).get("abbreviation", ""),
+        # bat_side comes through via **projection below
         "team_id": team_id,
         "team_abbr": team_abbr,
         "opp_abbr": opp_abbr,
