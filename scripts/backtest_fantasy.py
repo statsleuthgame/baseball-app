@@ -336,9 +336,12 @@ def _row_count(csv_path: Path) -> int:
 FIT_GRID = {
     "l7_blend":        [0.20, 0.30, 0.40, 0.50],
     "bvp_blend":       [0.00, 0.10, 0.20, 0.30],
-    # Widened upward after the 3-day run pinned both coefs at the upper bound.
-    "r_per_pa_coef":   [0.28, 0.30, 0.32, 0.34, 0.36, 0.38, 0.40, 0.42, 0.44, 0.46, 0.48, 0.50],
-    "rbi_per_pa_coef": [0.18, 0.20, 0.22, 0.24, 0.26, 0.28, 0.30, 0.32, 0.34, 0.36, 0.38, 0.40],
+    # Widened twice after both coefs pinned at the upper bound. Extending
+    # the ceiling helps us tell "model wants bigger coefs" from "grid is
+    # the ceiling". If these still pin, the model structure (linear r/rbi
+    # per OBP/SLG) has hit its R² ceiling and richer features are needed.
+    "r_per_pa_coef":   [0.30, 0.34, 0.38, 0.42, 0.46, 0.50, 0.54, 0.58, 0.62, 0.66, 0.70],
+    "rbi_per_pa_coef": [0.20, 0.24, 0.28, 0.32, 0.36, 0.40, 0.44, 0.48, 0.52, 0.56, 0.60],
 }
 
 

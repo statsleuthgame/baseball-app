@@ -7,18 +7,18 @@
   "bvp_min_pa": 20,
   "bvp_blend_ramp_floor": 5,
   "bvp_multiplier_cap": 0.25,
-  "r_per_pa_coef": 0.42,
-  "rbi_per_pa_coef": 0.32,
+  "r_per_pa_coef": 0.7,
+  "rbi_per_pa_coef": 0.6,
   "default_pa": 4.0,
   "lineup_pa_adj": 0.3,
   "pa_floor": 3.0,
   "pa_ceil": 5.2,
-  "tier_high": 11.0,
-  "tier_medium": 8.0,
+  "tier_high": 13.0,
+  "tier_medium": 11.4,
   "metrics": {
-    "r2": 0.0943,
-    "mae": 4.722,
-    "spearman": 0.416,
-    "n": 167
+    "r2": 0.1245,
+    "mae": 4.8428,
+    "spearman": 0.3539,
+    "n": 1721
   }
 }
