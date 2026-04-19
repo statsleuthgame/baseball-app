@@ -1792,6 +1792,21 @@ async def project_slate(date_iso: str | None = None, season: int | None = None) 
     # (pre-scratched / non-starter batters drop off, confirmed starters get a
     # checkmark) and still show ~10 usable cards.
     MAX_DISPLAY = 30
+
+    # Best-bets list — top 20 picks across the ENTIRE slate ranked by
+    # edge_z (confidence-adjusted edge). Picked separately from the
+    # top-30-by-EFP `projections` so high-edge picks on mid-projection
+    # players (e.g. a +1.2σ +EV bet on someone projected 7.0 with PP
+    # line 3.5) don't get missed when they fall outside the top-30
+    # raw-projection cap.
+    MAX_BEST_BETS = 20
+    best_bets = [
+        r for r in rows
+        if isinstance(r.get("edge_z"), (int, float)) and r["edge_z"] >= 0
+    ]
+    best_bets.sort(key=lambda r: r["edge_z"], reverse=True)
+    best_bets = best_bets[:MAX_BEST_BETS]
+
     payload = {
         "date": date_iso,
         "season": season,
@@ -1801,6 +1816,7 @@ async def project_slate(date_iso: str | None = None, season: int | None = None) 
         "game_count": len(games),
         "projection_count": len(rows),
         "projections": rows[:MAX_DISPLAY],
+        "best_bets": best_bets,
         # Full untrimmed slate for offline tooling (PP line logger,
         # backtest, analytics). NOT included in the static site JSON —
         # the generator strips this before writing to keep the payload

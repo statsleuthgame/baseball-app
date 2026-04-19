@@ -99,28 +99,32 @@ export default function FantasyProjections({ myTeamsOnly = false }) {
     [passedRows]
   );
 
-  // Section 2: biggest gap vs the house. Prefer edge_z (confidence-
-  // adjusted: # of stdevs our projection exceeds the PP line) over raw
-  // edge_fantasy when available. edge_z normalizes for variance — a 2σ
-  // overproject on a steady player beats a 3σ overproject on a wild one
-  // in terms of actual bet confidence.
+  // Section 2: biggest gap vs the house. Uses the backend's `best_bets`
+  // list — top 20 picks across the ENTIRE slate ranked by edge_z, not
+  // filtered through the top-30-by-EFP `projections` cap. This catches
+  // high-edge mid-projection picks (e.g. a +1.2σ +EV bet on a 7-point
+  // projection with a 3.5 PP line) that would otherwise disappear
+  // because they fell outside the top-30 raw-projection cut.
   const byEdge = useMemo(() => {
-    const withEdge = passedRows.filter(
-      (p) =>
-        typeof p.edge_z === "number" ||
-        typeof p.edge_fantasy === "number"
-    );
-    withEdge.sort((a, b) => {
-      // Prefer edge_z when both rows have it; else fall back to edge_fantasy.
-      const az = typeof a.edge_z === "number" ? a.edge_z : null;
-      const bz = typeof b.edge_z === "number" ? b.edge_z : null;
-      if (az !== null && bz !== null) return bz - az;
-      if (az !== null) return -1;
-      if (bz !== null) return 1;
-      return (b.edge_fantasy ?? 0) - (a.edge_fantasy ?? 0);
+    const rawBest = data?.best_bets || [];
+    // Apply the same lineup + My Teams filters the rest of the pipeline
+    // uses, for consistency.
+    const annotated = rawBest.map((p) => {
+      const lineup = lineupsByTeam[p.team_id];
+      if (!Array.isArray(lineup) || lineup.length === 0) {
+        return { ...p, _lineupStatus: "pending" };
+      }
+      const inLineup = lineup.includes(p.player_id);
+      return { ...p, _lineupStatus: inLineup ? "confirmed" : "excluded" };
     });
-    return withEdge.slice(0, TOP_N_DISPLAY);
-  }, [passedRows]);
+    let passed = annotated.filter((p) => p._lineupStatus !== "excluded");
+    if (myTeamsOnly && team?.id) {
+      passed = passed.filter(
+        (p) => p.team_id === team.id || p.opp_team_id === team.id
+      );
+    }
+    return passed.slice(0, TOP_N_DISPLAY);
+  }, [data, lineupsByTeam, myTeamsOnly, team]);
 
   // Count how many projections had lineup info — used in the footer so
   // the user can tell "no lineups posted yet" from "filter removed everyone".
