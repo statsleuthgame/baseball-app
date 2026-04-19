@@ -7386,6 +7386,51 @@ th.sb-ls-total {
   background: linear-gradient(180deg, rgba(239, 68, 68, 0.05), rgba(239, 68, 68, 0.01));
 }
 
+/* Live game in progress — thin red border all the way around so the card
+   reads as "action is happening right now." Stacks on top of tier / fade
+   direction already encoded on the left edge. */
+.edge-card-live {
+  border-color: rgba(239, 68, 68, 0.75);
+  box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.35) inset;
+}
+
+.edge-live-score {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  padding: 3px 8px;
+  border-radius: 10px;
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+.edge-live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ef4444;
+  box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.55);
+  animation: edge-live-pulse 1.5s ease-out infinite;
+}
+
+@keyframes edge-live-pulse {
+  0%   { box-shadow: 0 0 0 0    rgba(239, 68, 68, 0.55); }
+  70%  { box-shadow: 0 0 0 7px  rgba(239, 68, 68, 0);    }
+  100% { box-shadow: 0 0 0 0    rgba(239, 68, 68, 0);    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .edge-live-dot {
+    animation: none;
+  }
+}
+
 @keyframes edge-card-in {
   from {
     opacity: 0;

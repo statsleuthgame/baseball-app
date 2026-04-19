@@ -2,7 +2,11 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useTeam } from "../../context/TeamContext";
-import { fetchFantasyProjections, fetchTodayLineups } from "../../api/client";
+import {
+  fetchFantasyProjections,
+  fetchTodayLineups,
+  fetchLiveFantasyScores,
+} from "../../api/client";
 import { lastName } from "../../utils/formatters";
 import PlayerPhoto from "../common/PlayerPhoto";
 
@@ -32,6 +36,15 @@ export default function FantasyProjections({ myTeamsOnly = false }) {
     queryFn: () => fetchTodayLineups(),
     staleTime: 5 * 60 * 1000,
     refetchInterval: 5 * 60 * 1000,
+  });
+
+  // Live in-progress fantasy scores — refetched every 60s. Absent from the
+  // map means the batter's game hasn't started (or has ended Final).
+  const { data: liveScoresByPlayer = {} } = useQuery({
+    queryKey: ["fantasy", "liveScores"],
+    queryFn: () => fetchLiveFantasyScores(),
+    staleTime: 60 * 1000,
+    refetchInterval: 60 * 1000,
   });
 
   const projections = data?.projections || [];
@@ -96,6 +109,7 @@ export default function FantasyProjections({ myTeamsOnly = false }) {
             <FantasyCard
               key={`${p.team_id}-${p.player_id}`}
               projection={p}
+              live={liveScoresByPlayer[p.player_id] || null}
               onSelectPlayer={() =>
                 navigate(`/team/${p.team_id}/player/${p.player_id}`)
               }
@@ -121,7 +135,7 @@ export default function FantasyProjections({ myTeamsOnly = false }) {
   );
 }
 
-function FantasyCard({ projection, onSelectPlayer }) {
+function FantasyCard({ projection, live, onSelectPlayer }) {
   const [open, setOpen] = useState(false);
   const {
     player_id,
@@ -149,8 +163,13 @@ function FantasyCard({ projection, onSelectPlayer }) {
 
   const pitcherDisplay = opp_pitcher?.fullName ? lastName(opp_pitcher.fullName) : "TBD";
 
+  const isLive = !!live;
+  const liveEfp = isLive ? Number(live.efp).toFixed(1) : null;
+
   return (
-    <article className={`edge-card ${tierClass}`}>
+    <article
+      className={`edge-card ${tierClass}${isLive ? " edge-card-live" : ""}`}
+    >
       <header className="edge-card-head">
         <button
           type="button"
@@ -204,6 +223,15 @@ function FantasyCard({ projection, onSelectPlayer }) {
         <span className="edge-stat-value edge-fantasy-efp">
           {Number(efp).toFixed(1)} pts
         </span>
+        {isLive && (
+          <span
+            className="edge-live-score"
+            title="Live fantasy score · updating every ~60s"
+          >
+            <span className="edge-live-dot" aria-hidden="true" />
+            LIVE {liveEfp}
+          </span>
+        )}
       </div>
 
       <div className="edge-stat-row">

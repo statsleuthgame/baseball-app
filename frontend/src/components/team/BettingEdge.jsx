@@ -9,6 +9,7 @@ import {
   fetchPlayerSeasonVsTeam,
   fetchPlayerCareerVsTeam,
   fetchTodayLineups,
+  fetchLiveFantasyScores,
 } from "../../api/client";
 import { formatAvg, getTeamAbbr, lastName } from "../../utils/formatters";
 import PlayerPhoto from "../common/PlayerPhoto";
@@ -58,6 +59,14 @@ export default function BettingEdge() {
     queryFn: () => fetchTodayLineups(),
     staleTime: 5 * 60 * 1000,
     refetchInterval: 5 * 60 * 1000,
+  });
+
+  // Live in-progress fantasy scores (shared cache key with Fantasy section).
+  const { data: liveScoresByPlayer = {} } = useQuery({
+    queryKey: ["fantasy", "liveScores"],
+    queryFn: () => fetchLiveFantasyScores(),
+    staleTime: 60 * 1000,
+    refetchInterval: 60 * 1000,
   });
 
   // Only upcoming / live games with probable pitchers on BOTH sides are bettable.
@@ -345,6 +354,7 @@ export default function BettingEdge() {
                   <PickCard
                     key={p.key}
                     pick={p}
+                    live={liveScoresByPlayer[p.batter?.id] || null}
                     onSelectPlayer={() =>
                       navigate(`/team/${p.teamId}/player/${p.batter.id}`)
                     }
@@ -369,6 +379,7 @@ export default function BettingEdge() {
                   <PickCard
                     key={p.key}
                     pick={p}
+                    live={liveScoresByPlayer[p.batter?.id] || null}
                     onSelectPlayer={() =>
                       navigate(`/team/${p.teamId}/player/${p.batter.id}`)
                     }
@@ -389,7 +400,7 @@ export default function BettingEdge() {
   );
 }
 
-function PickCard({ pick, onSelectPlayer }) {
+function PickCard({ pick, live, onSelectPlayer }) {
   const [open, setOpen] = useState(false);
   const {
     mode,
@@ -416,7 +427,7 @@ function PickCard({ pick, onSelectPlayer }) {
     <article
       className={`edge-card edge-conf-${confidence.tone}${
         isFade ? " edge-card-fade" : ""
-      }`}
+      }${live ? " edge-card-live" : ""}`}
     >
       <header className="edge-card-head">
         <button
@@ -488,6 +499,15 @@ function PickCard({ pick, onSelectPlayer }) {
 
       <div className="edge-stat-row edge-score-row">
         <span className="edge-score">SCORE {score.toFixed(2)}</span>
+        {live && (
+          <span
+            className="edge-live-score"
+            title="Live fantasy score · updating every ~60s"
+          >
+            <span className="edge-live-dot" aria-hidden="true" />
+            LIVE {Number(live.efp).toFixed(1)}
+          </span>
+        )}
         <button
           type="button"
           className="edge-details-toggle"

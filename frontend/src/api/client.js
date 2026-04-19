@@ -660,6 +660,107 @@ export const fetchUmpireProfile = (umpireName) => {
   );
 };
 
+// PrizePicks hitter scoring table — kept in sync with the backend constant
+// in backend/app/services/fantasy.py. Used to compute LIVE fantasy scores
+// from in-progress boxscores directly in the browser (no backend needed).
+const PP_SCORING = {
+  single: 3,
+  double: 5,
+  triple: 8,
+  home_run: 10,
+  run: 2,
+  rbi: 2,
+  walk: 2,
+  hbp: 2,
+  sb: 5,
+};
+
+function _scoreFromBattingStat(s) {
+  if (!s) return 0;
+  const n = (v) => {
+    const x = typeof v === "number" ? v : parseInt(v || 0, 10);
+    return Number.isFinite(x) ? x : 0;
+  };
+  const hits = n(s.hits);
+  const doubles = n(s.doubles);
+  const triples = n(s.triples);
+  const hr = n(s.homeRuns);
+  const singles = Math.max(0, hits - doubles - triples - hr);
+  return (
+    PP_SCORING.single * singles +
+    PP_SCORING.double * doubles +
+    PP_SCORING.triple * triples +
+    PP_SCORING.home_run * hr +
+    PP_SCORING.run * n(s.runs) +
+    PP_SCORING.rbi * n(s.rbi) +
+    PP_SCORING.walk * n(s.baseOnBalls) +
+    PP_SCORING.hbp * n(s.hitByPitch) +
+    PP_SCORING.sb * n(s.stolenBases)
+  );
+}
+
+// Live-game fantasy scores for every batter currently in an in-progress game.
+// Returns { [playerId: number]: { efp: number, gamePk: number, status: string } }.
+// Batters in scheduled or already-Final games are absent. Used to stamp the
+// Edge cards with a "LIVE X.X" readout + red border while action is underway.
+export const fetchLiveFantasyScores = async () => {
+  try {
+    const d = new Date();
+    const dateStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+    const schedResp = await mlbApi.get("/schedule", {
+      params: { sportId: 1, date: dateStr, gameType: "R" },
+    });
+    const liveGames = [];
+    const LIVE_STATES = new Set([
+      "In Progress",
+      "Manager Challenge",
+      "Delayed",
+      "Delayed Start",
+      "Warmup",
+    ]);
+    for (const dateEntry of schedResp.data?.dates || []) {
+      for (const g of dateEntry.games || []) {
+        const status = g.status?.detailedState || "";
+        if (LIVE_STATES.has(status)) {
+          liveGames.push({ gamePk: g.gamePk, status });
+        }
+      }
+    }
+    if (liveGames.length === 0) return {};
+
+    const boxPerGame = await Promise.all(
+      liveGames.map(async (g) => {
+        try {
+          const r = await mlbApi.get(`/game/${g.gamePk}/boxscore`);
+          const rows = {};
+          for (const side of ["away", "home"]) {
+            const players = r.data?.teams?.[side]?.players || {};
+            for (const key of Object.keys(players)) {
+              if (!key.startsWith("ID")) continue;
+              const p = players[key];
+              const stat = p?.stats?.batting;
+              if (!stat || !stat.plateAppearances) continue;
+              const pid = p?.person?.id;
+              if (!pid) continue;
+              rows[pid] = {
+                efp: Number(_scoreFromBattingStat(stat).toFixed(2)),
+                gamePk: g.gamePk,
+                status: g.status,
+              };
+            }
+          }
+          return rows;
+        } catch {
+          return {};
+        }
+      })
+    );
+    return Object.assign({}, ...boxPerGame);
+  } catch {
+    return {};
+  }
+};
+
 // Today's confirmed lineups keyed by teamId. Returns a plain object
 //   { [teamId: number]: number[] }  -- array of starter player IDs per team.
 // Teams that haven't posted a lineup yet are absent from the result (so
