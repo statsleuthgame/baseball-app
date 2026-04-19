@@ -217,8 +217,13 @@ function FantasyCard({ projection, live, onSelectPlayer }) {
         : { label: "FADE", tone: "low" }
       : null;
 
+  // Tier drives VISUAL priority only (green = high-EFP pick, yellow =
+  // medium, gray = low) — the label shows the actual projected points
+  // so users don't mistake it for a confidence signal. The real
+  // confidence indicator is the HIGH/MED/LOW CONF badge, which only
+  // appears when a PrizePicks fantasy-score line is available.
   const tierClass = `edge-conf-${tier || "low"}`;
-  const tierLabel = tier?.toUpperCase() || "LOW";
+  const tierLabel = `${Number(efp).toFixed(1)} PTS`;
   const tierTone = tier || "low";
 
   const pitcherDisplay = opp_pitcher?.fullName ? lastName(opp_pitcher.fullName) : "TBD";
