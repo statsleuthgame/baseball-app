@@ -77,5 +77,7 @@
   "ondeck_r_exp": 1.0,
   "preceding_rbi_exp": 0.0,
   "calibration_scale": 0.876,
-  "rate_regression_prior_pa": 150
+  "rate_regression_prior_pa": 150,
+  "best_bets_min_line": 5.0,
+  "best_bets_min_games": 10
 }

@@ -132,22 +132,16 @@ def _maybe_write_daily_lock(payload: dict) -> None:
     if not game_date:
         return
 
-    # Find confidence picks (edge_z populated) from the UNTRIMMED slate
-    # so we get the real top-10 by edge-z, not just the top-30 UI slice.
-    slate = payload.get("_all_projections") or payload.get("projections") or []
-    confidence_picks = [
-        p for p in slate if isinstance(p.get("edge_z"), (int, float))
-    ]
-    if not confidence_picks:
-        logger.info("daily_picks_lock: no confidence picks yet — no lock written")
+    # Reuse the quality-filtered best_bets list from the payload. This
+    # guarantees the Tracker and the "Current Best Bets" section use
+    # IDENTICAL selection criteria (PP line floor, min logged games,
+    # positive edge, sorted by edge_z). No duplicated filter logic.
+    best_bets = payload.get("best_bets") or []
+    if not best_bets:
+        logger.info("daily_picks_lock: no quality best_bets yet — no lock written")
         return
 
-    # Sort by edge_z desc and take top N with positive edge (skip FADEs).
-    confidence_picks.sort(key=lambda p: p["edge_z"], reverse=True)
-    top_picks = [p for p in confidence_picks if p["edge_z"] >= 0][:TOP_LOCK_COUNT]
-    if not top_picks:
-        logger.info("daily_picks_lock: no positive-edge picks today — no lock written")
-        return
+    top_picks = best_bets[:TOP_LOCK_COUNT]
 
     lock_path = OUT_DIR / "todays_picks_lock.json"
     # Preserve the existing lock if it's for the same date.

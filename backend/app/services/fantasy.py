@@ -1794,15 +1794,38 @@ async def project_slate(date_iso: str | None = None, season: int | None = None) 
     MAX_DISPLAY = 30
 
     # Best-bets list — top 20 picks across the ENTIRE slate ranked by
-    # edge_z (confidence-adjusted edge). Picked separately from the
-    # top-30-by-EFP `projections` so high-edge picks on mid-projection
-    # players (e.g. a +1.2σ +EV bet on someone projected 7.0 with PP
-    # line 3.5) don't get missed when they fall outside the top-30
-    # raw-projection cap.
+    # edge_z (confidence-adjusted edge).
+    #
+    # QUALITY FILTERS — the edge_z metric rewards large
+    # (projection − line) / stdev gaps, which math-wise favors platoon /
+    # bench batters with tiny PP lines (e.g. a .250-hitter projected 7.0
+    # with a 3.0 line gets +1.2σ). But those low lines reflect PP's own
+    # adjustment for role uncertainty — the "edge" is often illusory
+    # because the player might get 2 PAs and bust.
+    #
+    # Filter picks to legit starter-quality bets:
+    #   1. PP fantasy line ≥ best_bets_min_line (default 5.0) — excludes
+    #      bench/platoon guys whose low line reflects playing-time risk
+    #   2. Player has ≥ best_bets_min_games of logged stats_games —
+    #      requires real 2026 variance history; excludes call-ups /
+    #      early-season unknowns with default slate stdev
     MAX_BEST_BETS = 20
+    min_line = float(weights.get("best_bets_min_line", 5.0))
+    min_games = int(weights.get("best_bets_min_games", 10))
+
+    def _passes_quality(r: dict) -> bool:
+        pp_line = ((r.get("prizepicks") or {}).get("fantasy"))
+        if pp_line is None or float(pp_line) < min_line:
+            return False
+        if int(r.get("stats_games") or 0) < min_games:
+            return False
+        return True
+
     best_bets = [
         r for r in rows
-        if isinstance(r.get("edge_z"), (int, float)) and r["edge_z"] >= 0
+        if isinstance(r.get("edge_z"), (int, float))
+        and r["edge_z"] >= 0
+        and _passes_quality(r)
     ]
     best_bets.sort(key=lambda r: r["edge_z"], reverse=True)
     best_bets = best_bets[:MAX_BEST_BETS]
