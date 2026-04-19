@@ -24,15 +24,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Download latest data from the data-refresh workflow artifact
-      - name: Download cached data
-        uses: dawidd6/action-download-artifact@v6
-        with:
-          name: baseball-data
-          path: frontend/public/data
-          workflow: refresh-data.yml
-          branch: main
-          if_no_artifact_found: warn
+      # NOTE: previously this step downloaded a data artifact from the
+      # last refresh-data.yml run and overwrote frontend/public/data/.
+      # That was the wrong model — it meant any commit with fresh data
+      # (projections_today.json, todays_picks_lock.json, etc.) got
+      # CLOBBERED by the stale artifact. We now commit data files
+      # directly to the repo, so deploy-frontend just uses the checked
+      # out versions. refresh-data.yml and refresh-fantasy.yml regen
+      # data and commit-push it; this workflow then picks that up and
+      # deploys via Pages on the next push.
 
       - uses: actions/setup-node@v4
         with:
