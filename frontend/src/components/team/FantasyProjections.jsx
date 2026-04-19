@@ -153,6 +153,8 @@ function FantasyCard({ projection, live, onSelectPlayer }) {
     tier,
     per_event,
     multipliers,
+    prizepicks: ppLines,
+    edge_fantasy: edgeFantasy,
     _lineupStatus,
   } = projection;
   const isConfirmed = _lineupStatus === "confirmed";
@@ -244,6 +246,31 @@ function FantasyCard({ projection, live, onSelectPlayer }) {
           </span>
         )}
       </div>
+
+      {ppLines?.fantasy != null && (
+        <div className="edge-stat-row edge-pp-row">
+          <span className="edge-stat-label">PP</span>
+          <span className="edge-stat-value edge-pp-value">
+            {Number(ppLines.fantasy).toFixed(1)}
+            {typeof edgeFantasy === "number" && (
+              <span
+                className={`edge-pp-edge ${
+                  edgeFantasy >= 3
+                    ? "edge-pp-edge-strong"
+                    : edgeFantasy >= 1
+                    ? "edge-pp-edge-lean"
+                    : edgeFantasy <= -1
+                    ? "edge-pp-edge-fade"
+                    : "edge-pp-edge-flat"
+                }`}
+                title="Our projected EFP minus PrizePicks fantasy-score line"
+              >
+                {edgeFantasy >= 0 ? `+${edgeFantasy.toFixed(1)}` : edgeFantasy.toFixed(1)}
+              </span>
+            )}
+          </span>
+        </div>
+      )}
 
       <div className="edge-stat-row edge-score-row">
         <span className="edge-score">SCORE {Number(efp).toFixed(2)}</span>

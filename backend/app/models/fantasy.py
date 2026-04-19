@@ -53,6 +53,22 @@ class Rates(BaseModel):
     rbi_per_pa: float
 
 
+class PrizePicksLines(BaseModel):
+    """Matched PrizePicks over/under lines by stat type."""
+    fantasy: Optional[float] = None      # Hitter Fantasy Score (direct EFP compare)
+    hits: Optional[float] = None
+    hrr: Optional[float] = None           # Hits + Runs + RBIs
+    total_bases: Optional[float] = None
+    home_runs: Optional[float] = None
+    rbis: Optional[float] = None
+    runs: Optional[float] = None
+    walks: Optional[float] = None
+    singles: Optional[float] = None
+    doubles: Optional[float] = None
+    stolen_bases: Optional[float] = None
+    strikeouts: Optional[float] = None
+
+
 class ProjectionRow(BaseModel):
     player_id: int
     name: str
@@ -72,6 +88,8 @@ class ProjectionRow(BaseModel):
     per_event: PerEvent
     multipliers: Multipliers
     rates: Rates
+    prizepicks: Optional[PrizePicksLines] = None
+    edge_fantasy: Optional[float] = None   # efp minus PP Hitter Fantasy Score line
 
 
 class Metrics(BaseModel):

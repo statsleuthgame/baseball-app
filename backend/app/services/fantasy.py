@@ -39,7 +39,7 @@ from datetime import date
 from pathlib import Path
 from typing import Any, Optional
 
-from app.services import mlb_api
+from app.services import mlb_api, prizepicks
 from app.services.cache import get as cache_get, set as cache_set
 from app.data.park_factors import get as get_park_factor
 
@@ -793,6 +793,27 @@ async def project_slate(date_iso: str | None = None, season: int | None = None) 
 
     rows: list[dict] = [r for r in await asyncio.gather(*tasks, return_exceptions=False) if r]
     rows.sort(key=lambda r: r["efp"], reverse=True)
+
+    # Enrich with PrizePicks lines (best effort — fails silently). Matched
+    # rows get a `prizepicks` field with {fantasy, hits, home_runs, ...}
+    # and an `edge` summary when a direct fantasy-score line exists.
+    try:
+        pp_lines = await prizepicks.fetch_lines()
+    except Exception as e:
+        logger.warning("prizepicks: slate-level fetch failed: %s", e)
+        pp_lines = {}
+    if pp_lines:
+        pp_match_count = 0
+        for r in rows:
+            match = prizepicks.lookup_for_batter(pp_lines, r.get("name"), r.get("team_abbr"))
+            if not match:
+                continue
+            pp_match_count += 1
+            r["prizepicks"] = match
+            fan_line = match.get("fantasy")
+            if fan_line is not None:
+                r["edge_fantasy"] = round(r["efp"] - float(fan_line), 2)
+        logger.info("prizepicks: matched %d / %d projections", pp_match_count, len(rows))
 
     # Cap displayed list; full slate can grow large but UI wants a focused top.
     # We serve 30 here so the frontend has room to filter by live lineup data

@@ -3,3 +3,6 @@ httpx>=0.27.0
 beautifulsoup4>=4.12.0
 pandas>=2.0.0
 pyarrow>=14.0.0
+# curl_cffi impersonates a real browser TLS fingerprint so we can
+# reach the Cloudflare-protected PrizePicks projections endpoint.
+curl_cffi>=0.5.10
