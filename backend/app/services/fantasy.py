@@ -406,10 +406,12 @@ def project_hitter_points(
     weather_hr = _weather_hr_multiplier(weather, bat_side=bat_side)
     home_runs *= weather_hr
 
-    # 4b. Opposing pitcher quality — shrinks / amplifies hit rates based on
-    # the pitcher's season H/BF and HR/BF vs league average. Unknown pitcher
-    # returns (1.0, 1.0) so the projection is unchanged.
-    pitcher_hits_mult, pitcher_hr_mult = _pitcher_multipliers(pitcher_rates, league_rates)
+    # 4b. Opposing pitcher quality — exponents are tunable via weights
+    # (fit by the backtest). exp=0 disables the feature; higher exp makes
+    # it more aggressive.
+    pitcher_hits_mult, pitcher_hr_mult = _pitcher_multipliers(
+        pitcher_rates, league_rates, weights=weights
+    )
     singles *= pitcher_hits_mult
     doubles *= pitcher_hits_mult
     triples *= pitcher_hits_mult
@@ -428,16 +430,19 @@ def project_hitter_points(
     rbi_per_pa = slg_base * rbi_coef
 
     # Lineup-slot adjustment. Cleanup / middle-of-order batters see more
-    # RBI opportunities; top-of-order batters score more runs. Leaves rate
-    # unchanged when slot is unknown. Weights live in fantasy_weights.json
-    # and can be recalibrated from the backtest in Phase E.
+    # RBI opportunities; top-of-order batters score more runs. slot_effect_scale
+    # is tunable by the backtest fit — 0 disables slot entirely, 1 uses
+    # the tables as-written, values in between are partial effect.
     slot_r_mult = 1.0
     slot_rbi_mult = 1.0
-    if lineup_slot is not None:
+    slot_scale = float(weights.get("slot_effect_scale", 1.0))
+    if lineup_slot is not None and slot_scale != 0:
         r_table = weights.get("lineup_slot_r_mult") or {}
         rbi_table = weights.get("lineup_slot_rbi_mult") or {}
-        slot_r_mult = float(r_table.get(str(int(lineup_slot)), 1.0))
-        slot_rbi_mult = float(rbi_table.get(str(int(lineup_slot)), 1.0))
+        r_raw = float(r_table.get(str(int(lineup_slot)), 1.0))
+        rbi_raw = float(rbi_table.get(str(int(lineup_slot)), 1.0))
+        slot_r_mult = 1.0 + slot_scale * (r_raw - 1.0)
+        slot_rbi_mult = 1.0 + slot_scale * (rbi_raw - 1.0)
     r_per_pa *= slot_r_mult
     rbi_per_pa *= slot_rbi_mult
 
@@ -622,10 +627,14 @@ _PITCHER_MIN_BF_FOR_TRUST = 60  # shrink toward 1.0 below this
 
 
 def _pitcher_multipliers(
-    pitcher_rates: dict | None, league_rates: dict
+    pitcher_rates: dict | None,
+    league_rates: dict,
+    weights: dict | None = None,
 ) -> tuple[float, float]:
     """
     Return (hit_rate_mult, hr_rate_mult) applied on top of park/weather.
+    Uses tunable exponents from fantasy_weights.json so the backtest fit
+    can turn the feature up or down (exp=0 disables it entirely).
     Degrades gracefully:
       - Unknown pitcher → (1.0, 1.0)
       - Small sample (< 60 BF) → shrink toward 1.0 by the sample-size ratio.
@@ -640,11 +649,13 @@ def _pitcher_multipliers(
     if p_h <= 0 or p_hr <= 0:
         return 1.0, 1.0
 
-    # Inverted ratio — a pitcher ALLOWING fewer hits suppresses batter hit
-    # rates. Exponent < 1 softens the effect (most of the variance in
-    # pitcher H/BF is noise; we don't want to fully trust the raw ratio).
-    raw_hits_mult = (p_h / lg_h) ** 0.6
-    raw_hr_mult = (p_hr / lg_hr) ** 0.7
+    # Exponents come from the calibrated weights; defaults match the
+    # original hand-picked values if weights are missing.
+    hits_exp = float((weights or {}).get("pitcher_hits_exp", 0.6))
+    hr_exp = float((weights or {}).get("pitcher_hr_exp", 0.7))
+
+    raw_hits_mult = (p_h / lg_h) ** hits_exp if hits_exp > 0 else 1.0
+    raw_hr_mult = (p_hr / lg_hr) ** hr_exp if hr_exp > 0 else 1.0
 
     # Sample-size shrink: below 60 BF, pull the multiplier toward 1.0.
     bf = pitcher_rates.get("bf") or 0

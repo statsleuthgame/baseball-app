@@ -493,15 +493,25 @@ def _row_count(csv_path: Path) -> int:
 # ---------------------------------------------------------------------------
 
 FIT_GRID = {
-    "l7_blend":        [0.20, 0.30, 0.40, 0.50],
-    "bvp_blend":       [0.00, 0.10, 0.20, 0.30],
-    # With Phase A (pitcher quality) and Phase C (lineup-slot R/RBI)
-    # features absorbing their own variance, the R/RBI coefs should settle
-    # closer to historical MLB norms (~0.30-0.45). Grid covers both the
-    # reduced range AND the previous ceiling so we can confirm the coefs
-    # actually moved down rather than just clipping again.
-    "r_per_pa_coef":   [0.28, 0.32, 0.36, 0.40, 0.44, 0.48, 0.52, 0.56, 0.60, 0.65, 0.70],
-    "rbi_per_pa_coef": [0.18, 0.22, 0.26, 0.30, 0.34, 0.38, 0.42, 0.46, 0.50, 0.55, 0.60],
+    # l7_blend and bvp_blend aren't applied in eval_weights (we don't
+    # store the per-row L7/BvP rates in the CSV), so keeping them in the
+    # grid wastes combinations. Dropped to a single identity value.
+    "l7_blend":        [0.20],
+    "bvp_blend":       [0.00],
+    "r_per_pa_coef":   [0.28, 0.34, 0.40, 0.46, 0.52, 0.58, 0.64, 0.70, 0.76, 0.82],
+    "rbi_per_pa_coef": [0.18, 0.24, 0.30, 0.36, 0.42, 0.48, 0.54, 0.60, 0.66, 0.72],
+    # Phase E-v2: tunable feature STRENGTHS so the grid can find the right
+    # amount of feature to apply rather than trusting hard-coded exponents.
+    #
+    #   pitcher_hits_exp / pitcher_hr_exp — exponent on the (pitcher_rate /
+    #     league_rate) ratio. Lower = conservative (multiplier closer to 1);
+    #     higher = aggressive. 0.0 disables pitcher-quality entirely.
+    #   slot_effect_scale — scales how much the lineup-slot tables deviate
+    #     from 1.0. 0.0 = slot has no effect; 1.0 = use the hard-coded
+    #     tables as-is; 0.5 = half-strength, etc.
+    "pitcher_hits_exp":   [0.0, 0.3, 0.6, 0.9],
+    "pitcher_hr_exp":     [0.0, 0.35, 0.7, 1.0],
+    "slot_effect_scale":  [0.0, 0.5, 1.0, 1.5],
 }
 
 
@@ -617,11 +627,23 @@ def fit_weights(csv_path: Path) -> dict:
     H_CAP = 0.30
     HR_CAP = 0.35
 
-    def pitcher_mults(h_per_bf: float, hr_per_bf: float, bf: int) -> tuple[float, float]:
+    def pitcher_mults(
+        h_per_bf: float,
+        hr_per_bf: float,
+        bf: int,
+        hits_exp: float,
+        hr_exp: float,
+    ) -> tuple[float, float]:
+        """
+        Pitcher hits and HR multipliers with TUNABLE exponents. At exp=0
+        the multiplier is identically 1.0 (feature disabled). Higher exp
+        = more aggressive. Sample-size shrink toward 1.0 below MIN_BF_TRUST
+        batters faced. Caps are fixed.
+        """
         if h_per_bf <= 0 or hr_per_bf <= 0 or bf <= 0:
             return 1.0, 1.0
-        raw_h = (h_per_bf / lg_h_per_bf) ** 0.6
-        raw_hr = (hr_per_bf / lg_hr_per_bf) ** 0.7
+        raw_h = (h_per_bf / lg_h_per_bf) ** hits_exp if hits_exp > 0 else 1.0
+        raw_hr = (hr_per_bf / lg_hr_per_bf) ** hr_exp if hr_exp > 0 else 1.0
         trust = min(1.0, bf / MIN_BF_TRUST)
         hm = 1.0 + trust * (raw_h - 1.0)
         hrm = 1.0 + trust * (raw_hr - 1.0)
@@ -629,15 +651,21 @@ def fit_weights(csv_path: Path) -> dict:
         hrm = max(1.0 - HR_CAP, min(1.0 + HR_CAP, hrm))
         return hm, hrm
 
-    def slot_mults(slot: int, w: dict) -> tuple[float, float]:
-        if not slot or slot < 1 or slot > 9:
+    def slot_mults(slot: int, w: dict, scale: float) -> tuple[float, float]:
+        """
+        Slot R/RBI multipliers with TUNABLE strength. scale=1.0 uses the
+        tables as-written; scale=0.0 zeros them out (everyone gets 1.0);
+        scale=0.5 halves their deviation from 1.0, etc.
+        """
+        if not slot or slot < 1 or slot > 9 or scale == 0:
             return 1.0, 1.0
         r_tbl = w.get("lineup_slot_r_mult") or {}
         rbi_tbl = w.get("lineup_slot_rbi_mult") or {}
-        return (
-            float(r_tbl.get(str(slot), 1.0)),
-            float(rbi_tbl.get(str(slot), 1.0)),
-        )
+        r_raw = float(r_tbl.get(str(slot), 1.0))
+        rbi_raw = float(rbi_tbl.get(str(slot), 1.0))
+        r_scaled = 1.0 + scale * (r_raw - 1.0)
+        rbi_scaled = 1.0 + scale * (rbi_raw - 1.0)
+        return r_scaled, rbi_scaled
 
     def eval_weights(w: dict, subset: list[dict]) -> tuple[float, float, float]:
         """
@@ -648,14 +676,19 @@ def fit_weights(csv_path: Path) -> dict:
         projected: list[float] = []
         actual: list[float] = []
         from app.services.fantasy import PP_SCORING
+        hits_exp = float(w.get("pitcher_hits_exp", 0.6))
+        hr_exp = float(w.get("pitcher_hr_exp", 0.7))
+        slot_scale = float(w.get("slot_effect_scale", 1.0))
+
         for r in subset:
             pa = r["pa"]
             park_hr_mult = r["park_hr"] / 100.0
             park_runs_mult = r["park_runs"] / 100.0
             p_h_mult, p_hr_mult = pitcher_mults(
-                r["pitcher_h_per_bf"], r["pitcher_hr_per_bf"], r["pitcher_bf"]
+                r["pitcher_h_per_bf"], r["pitcher_hr_per_bf"], r["pitcher_bf"],
+                hits_exp, hr_exp,
             )
-            slot_r_mult, slot_rbi_mult = slot_mults(r["lineup_slot"], w)
+            slot_r_mult, slot_rbi_mult = slot_mults(r["lineup_slot"], w, slot_scale)
 
             r_per_pa = r["obp"] * w["r_per_pa_coef"] * slot_r_mult
             rbi_per_pa = r["slg"] * w["rbi_per_pa_coef"] * slot_rbi_mult
@@ -678,16 +711,22 @@ def fit_weights(csv_path: Path) -> dict:
         FIT_GRID["bvp_blend"],
         FIT_GRID["r_per_pa_coef"],
         FIT_GRID["rbi_per_pa_coef"],
+        FIT_GRID["pitcher_hits_exp"],
+        FIT_GRID["pitcher_hr_exp"],
+        FIT_GRID["slot_effect_scale"],
     ))
     logger.info("Grid: %d combinations", len(combos))
 
-    for (l7b, bvpb, rc, rbic) in combos:
+    for (l7b, bvpb, rc, rbic, p_h_exp, p_hr_exp, slot_scale) in combos:
         w = dict(weights_seed)
         w.update({
             "l7_blend": l7b,
             "bvp_blend": bvpb,
             "r_per_pa_coef": rc,
             "rbi_per_pa_coef": rbic,
+            "pitcher_hits_exp": p_h_exp,
+            "pitcher_hr_exp": p_hr_exp,
+            "slot_effect_scale": slot_scale,
         })
         r2_train, mae_train, sp_train = eval_weights(w, train)
         if best is None or r2_train > best["r2_train"]:

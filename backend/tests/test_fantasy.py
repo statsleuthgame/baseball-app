@@ -516,17 +516,19 @@ def test_small_sample_pitcher_shrinks_toward_neutral(weights, league):
 
 
 def test_lineup_slot_cleanup_boosts_rbi(weights, league):
-    """Slot 4 (cleanup) boosts RBI production, slot 9 shrinks it."""
+    """Slot 4 (cleanup) boosts RBI production, slot 9 shrinks it.
+    Forces slot_effect_scale=1.0 regardless of current calibration."""
+    w = {**weights, "slot_effect_scale": 1.0}
     season = _avg_rates()
     cleanup = project_hitter_points(
         season_rates=season, l7_rates=None, bvp=None, league_rates=league,
         park={"runs": 100, "hr": 100}, weather=None,
-        projected_pa=4.0, weights=weights, lineup_slot=4,
+        projected_pa=4.0, weights=w, lineup_slot=4,
     )
     ninth = project_hitter_points(
         season_rates=season, l7_rates=None, bvp=None, league_rates=league,
         park={"runs": 100, "hr": 100}, weather=None,
-        projected_pa=4.0, weights=weights, lineup_slot=9,
+        projected_pa=4.0, weights=w, lineup_slot=9,
     )
     assert cleanup["multipliers"]["slot_rbi"] > 1.0
     assert ninth["multipliers"]["slot_rbi"] < 1.0
@@ -575,17 +577,18 @@ def test_sb_suppressed_vs_lhp(weights, league):
 
 
 def test_lineup_slot_top_of_order_more_runs(weights, league):
-    """Slot 1 boosts R production vs slot 9."""
+    """Slot 1 boosts R production vs slot 9. Forces slot_effect_scale=1."""
+    w = {**weights, "slot_effect_scale": 1.0}
     season = _avg_rates()
     leadoff = project_hitter_points(
         season_rates=season, l7_rates=None, bvp=None, league_rates=league,
         park={"runs": 100, "hr": 100}, weather=None,
-        projected_pa=4.0, weights=weights, lineup_slot=1,
+        projected_pa=4.0, weights=w, lineup_slot=1,
     )
     ninth = project_hitter_points(
         season_rates=season, l7_rates=None, bvp=None, league_rates=league,
         park={"runs": 100, "hr": 100}, weather=None,
-        projected_pa=4.0, weights=weights, lineup_slot=9,
+        projected_pa=4.0, weights=w, lineup_slot=9,
     )
     assert leadoff["multipliers"]["slot_r"] > ninth["multipliers"]["slot_r"]
     assert leadoff["per_event"]["r"] > ninth["per_event"]["r"]
