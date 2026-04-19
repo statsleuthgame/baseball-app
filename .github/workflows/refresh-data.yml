@@ -2,10 +2,18 @@ name: Refresh Data
 
 on:
   schedule:
-    # 6 AM ET  (10 UTC EDT / 11 UTC EST — use EDT; April–Oct covers MLB season)
-    - cron: '0 10 * * *'
-    # 3 PM ET — re-generate fantasy projections with west-coast lineups
-    - cron: '0 19 * * *'
+    # Schedule aligns to PrizePicks line-posting behavior during MLB season.
+    # PP typically posts lines for the day between ~7 AM and ~2 PM ET,
+    # then locks ~5 min before first pitch. Running 5x/day catches most
+    # line-posting waves and gives the user a site that updates through
+    # the day rather than only at fixed morning + afternoon checkpoints.
+    #
+    # All crons are UTC. EDT is UTC-4 (used Apr-Oct, covering MLB season).
+    - cron: '0 10 * * *'   #  6 AM ET — morning snapshot + full data regen
+    - cron: '0 13 * * *'   #  9 AM ET — early PP lines posting
+    - cron: '0 15 * * *'   # 11 AM ET — midday PP line wave
+    - cron: '0 17 * * *'   #  1 PM ET — afternoon PP additions
+    - cron: '0 19 * * *'   #  3 PM ET — final snapshot before west-coast lockup
   workflow_dispatch:
 
 permissions:

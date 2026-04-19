@@ -23,10 +23,18 @@ export default function FantasyProjections({ myTeamsOnly = false }) {
   const navigate = useNavigate();
   const { team } = useTeam();
 
+  // Projections refetch every 10 minutes — catches PP line updates that
+  // landed at the most-recent cron tick (now running hourly-ish
+  // throughout the morning/afternoon PP posting window). A user who
+  // opens the tab at 9 AM will see fresh lines appear without a manual
+  // reload as they come in through the day.
   const { data, isLoading, isError } = useQuery({
     queryKey: ["fantasy", "projections"],
     queryFn: () => fetchFantasyProjections(),
     staleTime: 5 * 60 * 1000,
+    refetchInterval: 10 * 60 * 1000,
+    refetchIntervalInBackground: false,
+    refetchOnWindowFocus: true,
   });
 
   // Live lineups — refetched every 5 minutes so scratches / late-posted
