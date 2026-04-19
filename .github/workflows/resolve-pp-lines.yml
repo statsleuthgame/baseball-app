@@ -1,0 +1,61 @@
+name: Resolve PP Lines (nightly)
+
+# Joins actuals to yesterday's PP-line log after all MLB games are final.
+# Produces `backend/app/data/pp_line_log/<YYYY-MM-DD>_resolved.jsonl`
+# with the result of every logged PP line (over / under / push) so we
+# can compute real hit-rate-per-tier metrics over time.
+
+on:
+  schedule:
+    # 4 AM ET daily — after late West-coast games finalize (~1 AM PT).
+    # 8 UTC during EDT months (Mar-Nov) covers the MLB season.
+    - cron: '0 8 * * *'
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "YYYY-MM-DD to resolve (defaults to yesterday)"
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pp-line-resolve
+  cancel-in-progress: false
+
+jobs:
+  resolve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: scripts/requirements.txt
+
+      - name: Install Python dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Resolve PP lines
+        run: |
+          if [ -n "${{ github.event.inputs.date }}" ]; then
+            python scripts/resolve_pp_lines.py "${{ github.event.inputs.date }}"
+          else
+            python scripts/resolve_pp_lines.py
+          fi
+
+      - name: Commit resolved log
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add backend/app/data/pp_line_log/*_resolved.jsonl 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No resolved-log changes to commit."
+          else
+            git commit -m "chore(pp-log): resolve $(date -u +%Y-%m-%d)"
+            git push
+          fi

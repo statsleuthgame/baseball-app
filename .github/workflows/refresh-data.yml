@@ -9,7 +9,9 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  # contents: write so we can commit the pp_line_log JSONL snapshots
+  # back to the repo (each run appends to the day's file).
+  contents: write
   pages: write
   id-token: write
 
@@ -53,8 +55,25 @@ jobs:
       - name: Generate fantasy projections
         # Uses the same pybaseball / httpx deps from scripts/requirements.txt,
         # plus backend/app/services code on sys.path. Writes
-        # frontend/public/data/fantasy/projections_today.json.
+        # frontend/public/data/fantasy/projections_today.json. Also
+        # appends a snapshot row per projection (with PP lines) to the
+        # dated JSONL log at backend/app/data/pp_line_log/YYYY-MM-DD.jsonl.
         run: python scripts/generate_fantasy_projections.py
+
+      - name: Commit PP line log snapshot
+        # Each cron run (6 AM + 3 PM ET) appends a fresh snapshot of
+        # today's PP lines + model projections. Commit so the history
+        # accumulates across runs and seasons.
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add backend/app/data/pp_line_log/*.jsonl 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No PP-line-log changes to commit."
+          else
+            git commit -m "chore(pp-log): snapshot $(date -u +%Y-%m-%dT%H:%MZ) from refresh-data"
+            git push
+          fi
 
       # Save data as artifact so deploy workflow can reuse it
       - name: Upload data artifact

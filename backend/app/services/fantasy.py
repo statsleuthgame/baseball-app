@@ -1753,6 +1753,11 @@ async def project_slate(date_iso: str | None = None, season: int | None = None) 
         "game_count": len(games),
         "projection_count": len(rows),
         "projections": rows[:MAX_DISPLAY],
+        # Full untrimmed slate for offline tooling (PP line logger,
+        # backtest, analytics). NOT included in the static site JSON —
+        # the generator strips this before writing to keep the payload
+        # small for the frontend.
+        "_all_projections": rows,
     }
     cache_set(cache_key, payload, _SLATE_TTL)
     return payload
