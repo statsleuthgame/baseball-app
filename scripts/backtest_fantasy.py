@@ -162,6 +162,47 @@ async def get_pitcher_rates_as_of(
     }
 
 
+async def get_team_runs_per_game_as_of(
+    client: httpx.AsyncClient,
+    team_id: int,
+    season: int,
+    end_date: str,
+) -> float | None:
+    """
+    Team's runs-per-game season-to-date (ending previous day). None when
+    sample is too small to mean anything.
+    """
+    end_dt = datetime.fromisoformat(end_date).date()
+    yesterday = (end_dt - timedelta(days=1)).isoformat()
+    season_start = f"{season}-03-01"
+    try:
+        resp = await client.get(
+            f"/teams/{team_id}/stats",
+            params={
+                "stats": "byDateRange",
+                "startDate": season_start,
+                "endDate": yesterday,
+                "group": "hitting",
+                "gameType": "R",
+            },
+        )
+        resp.raise_for_status()
+        splits = (resp.json().get("stats") or [{}])[0].get("splits") or []
+        stat = splits[0].get("stat") if splits else None
+    except Exception:
+        return None
+    if not stat:
+        return None
+    try:
+        runs = float(stat.get("runs") or 0)
+        games = int(float(stat.get("gamesPlayed") or 0))
+    except (TypeError, ValueError):
+        return None
+    if games < 5:
+        return None
+    return runs / games
+
+
 async def get_pitcher_hand(client: httpx.AsyncClient, player_id: int) -> str | None:
     try:
         resp = await client.get(f"/people/{player_id}")
@@ -319,6 +360,21 @@ async def process_game(
                 res = None
             pitcher_cache[side][kind] = res
 
+    # Team run-environment cache per side: each batter's team R/G
+    # season-to-date (as-of game_date - 1). One call per team per game.
+    team_rpg_by_side: dict[str, float | None] = {}
+    for side in ("away", "home"):
+        team_id = (boxscore.get("teams") or {}).get(side, {}).get("team", {}).get("id")
+        if not team_id:
+            team_rpg_by_side[side] = None
+            continue
+        try:
+            team_rpg_by_side[side] = await throttled(
+                get_team_runs_per_game_as_of(client, int(team_id), season, game_date)
+            )
+        except Exception:
+            team_rpg_by_side[side] = None
+
     # Fan out: every new batter's season + L7 stats in parallel.
     work_batters = [row for row in batter_rows
                     if (gamePk, row["player_id"]) not in processed_keys]
@@ -357,6 +413,7 @@ async def process_game(
         opp_pitcher_rates = opp_pitcher_info.get("rates")
         opp_pitcher_hand = opp_pitcher_info.get("hand")
         slot = slot_by_pid.get(int(pid))
+        team_rpg = team_rpg_by_side.get(side)
 
         projection = project_hitter_points(
             season_rates=season_rates,
@@ -372,6 +429,7 @@ async def process_game(
             # Platoon left None in backtest — using full-season split would
             # be leakage; accepting the fixed platoon_blend from weights.
             platoon_rates=None,
+            team_runs_per_game=team_rpg,
         )
 
         rows_out.append({
@@ -398,6 +456,7 @@ async def process_game(
             "pitcher_bf": (opp_pitcher_rates["bf"] if opp_pitcher_rates else ""),
             "pitcher_hand": opp_pitcher_hand or "",
             "lineup_slot": slot if slot else "",
+            "team_rpg": round(team_rpg, 4) if team_rpg else "",
         })
         processed_keys.add(key)
 
@@ -469,6 +528,8 @@ def _append_csv(csv_path: Path, new_rows: list[dict], existing_rows: list[dict])
         # Phase A/B/C feature columns
         "pitcher_h_per_bf", "pitcher_hr_per_bf", "pitcher_bf", "pitcher_hand",
         "lineup_slot",
+        # Option 1: team run environment
+        "team_rpg",
     ]
     write_header = not csv_path.exists()
     csv_path.parent.mkdir(parents=True, exist_ok=True)
@@ -498,20 +559,18 @@ FIT_GRID = {
     # grid wastes combinations. Dropped to a single identity value.
     "l7_blend":        [0.20],
     "bvp_blend":       [0.00],
-    "r_per_pa_coef":   [0.28, 0.34, 0.40, 0.46, 0.52, 0.58, 0.64, 0.70, 0.76, 0.82],
-    "rbi_per_pa_coef": [0.18, 0.24, 0.30, 0.36, 0.42, 0.48, 0.54, 0.60, 0.66, 0.72],
-    # Phase E-v2: tunable feature STRENGTHS so the grid can find the right
-    # amount of feature to apply rather than trusting hard-coded exponents.
-    #
-    #   pitcher_hits_exp / pitcher_hr_exp — exponent on the (pitcher_rate /
-    #     league_rate) ratio. Lower = conservative (multiplier closer to 1);
-    #     higher = aggressive. 0.0 disables pitcher-quality entirely.
-    #   slot_effect_scale — scales how much the lineup-slot tables deviate
-    #     from 1.0. 0.0 = slot has no effect; 1.0 = use the hard-coded
-    #     tables as-is; 0.5 = half-strength, etc.
+    # Trimmed to keep the 7-dim grid tractable (~17k combinations).
+    "r_per_pa_coef":   [0.30, 0.42, 0.54, 0.66, 0.78, 0.90],
+    "rbi_per_pa_coef": [0.24, 0.36, 0.48, 0.60, 0.72],
+    # Phase E-v2 tunable feature strengths (see prior commits for detail):
     "pitcher_hits_exp":   [0.0, 0.3, 0.6, 0.9],
     "pitcher_hr_exp":     [0.0, 0.35, 0.7, 1.0],
-    "slot_effect_scale":  [0.0, 0.5, 1.0, 1.5],
+    "slot_effect_scale":  [0.0, 0.5, 1.0],        # prior fit chose 0
+    # Option 1: team run environment exponent on (team_rpg / league_rpg).
+    # 0 disables; higher = more aggressive. Separate knobs for R and RBI
+    # so we can e.g. apply strong R effect but subtle RBI.
+    "team_run_env_exp":   [0.0, 0.5, 1.0, 1.5],
+    "team_rbi_env_exp":   [0.0, 0.5, 1.0],
 }
 
 
@@ -601,6 +660,10 @@ def fit_weights(csv_path: Path) -> dict:
                     "pitcher_hr_per_bf": _f("pitcher_hr_per_bf"),
                     "pitcher_bf": _i("pitcher_bf"),
                     "lineup_slot": _i("lineup_slot"),
+                    # Option 1: team run environment (may be blank for
+                    # rows generated before this column existed — eval
+                    # treats 0/None as "neutral")
+                    "team_rpg": _f("team_rpg"),
                 }
                 rows.append(row)
             except (KeyError, ValueError):
@@ -621,6 +684,7 @@ def fit_weights(csv_path: Path) -> dict:
     # multiplier. Load once from the backend JSON.
     lg_h_per_bf = float((league.get("pitcher_per_bf") or {}).get("hits_allowed", 0.222))
     lg_hr_per_bf = float((league.get("pitcher_per_bf") or {}).get("home_runs_allowed", 0.029))
+    lg_team_rpg = float(league.get("team_runs_per_game", 4.35)) or 4.35
 
     # Same cap/trust knobs as the production projector.
     MIN_BF_TRUST = 60
@@ -679,6 +743,8 @@ def fit_weights(csv_path: Path) -> dict:
         hits_exp = float(w.get("pitcher_hits_exp", 0.6))
         hr_exp = float(w.get("pitcher_hr_exp", 0.7))
         slot_scale = float(w.get("slot_effect_scale", 1.0))
+        team_r_exp = float(w.get("team_run_env_exp", 1.0))
+        team_rbi_exp = float(w.get("team_rbi_env_exp", 0.5))
 
         for r in subset:
             pa = r["pa"]
@@ -690,8 +756,20 @@ def fit_weights(csv_path: Path) -> dict:
             )
             slot_r_mult, slot_rbi_mult = slot_mults(r["lineup_slot"], w, slot_scale)
 
-            r_per_pa = r["obp"] * w["r_per_pa_coef"] * slot_r_mult
-            rbi_per_pa = r["slg"] * w["rbi_per_pa_coef"] * slot_rbi_mult
+            # Team run environment. Mirrors project_hitter_points logic;
+            # missing team_rpg (older rows before this column) → no effect.
+            team_r_mult = 1.0
+            team_rbi_mult = 1.0
+            rpg = r.get("team_rpg") or 0.0
+            if rpg > 0:
+                ratio = rpg / lg_team_rpg
+                if team_r_exp > 0:
+                    team_r_mult = max(0.75, min(1.25, ratio ** team_r_exp))
+                if team_rbi_exp > 0:
+                    team_rbi_mult = max(0.80, min(1.20, ratio ** team_rbi_exp))
+
+            r_per_pa = r["obp"] * w["r_per_pa_coef"] * slot_r_mult * team_r_mult
+            rbi_per_pa = r["slg"] * w["rbi_per_pa_coef"] * slot_rbi_mult * team_rbi_mult
             s_rate = r["singles"] * park_runs_mult * p_h_mult
             hr_rate = r["hr"] * park_hr_mult * p_hr_mult
 
@@ -714,10 +792,13 @@ def fit_weights(csv_path: Path) -> dict:
         FIT_GRID["pitcher_hits_exp"],
         FIT_GRID["pitcher_hr_exp"],
         FIT_GRID["slot_effect_scale"],
+        FIT_GRID["team_run_env_exp"],
+        FIT_GRID["team_rbi_env_exp"],
     ))
     logger.info("Grid: %d combinations", len(combos))
 
-    for (l7b, bvpb, rc, rbic, p_h_exp, p_hr_exp, slot_scale) in combos:
+    for (l7b, bvpb, rc, rbic, p_h_exp, p_hr_exp, slot_scale,
+         t_r_exp, t_rbi_exp) in combos:
         w = dict(weights_seed)
         w.update({
             "l7_blend": l7b,
@@ -727,6 +808,8 @@ def fit_weights(csv_path: Path) -> dict:
             "pitcher_hits_exp": p_h_exp,
             "pitcher_hr_exp": p_hr_exp,
             "slot_effect_scale": slot_scale,
+            "team_run_env_exp": t_r_exp,
+            "team_rbi_env_exp": t_rbi_exp,
         })
         r2_train, mae_train, sp_train = eval_weights(w, train)
         if best is None or r2_train > best["r2_train"]:

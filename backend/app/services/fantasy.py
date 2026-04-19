@@ -339,6 +339,7 @@ def project_hitter_points(
     pitcher_rates: dict | None = None,
     lineup_slot: int | None = None,
     platoon_rates: dict | None = None,
+    team_runs_per_game: float | None = None,
 ) -> dict:
     """
     Pure projection function. Returns a dict:
@@ -446,6 +447,28 @@ def project_hitter_points(
     r_per_pa *= slot_r_mult
     rbi_per_pa *= slot_rbi_mult
 
+    # Team run environment — a hitter's R and RBI opportunities scale with
+    # how often their lineup mates get on base and drive runs. Dodgers
+    # hitters score more than Rockies hitters controlling for personal
+    # skill. Exponents tunable via fantasy_weights.json; 0 disables.
+    team_env_r_mult = 1.0
+    team_env_rbi_mult = 1.0
+    if team_runs_per_game and team_runs_per_game > 0:
+        lg_rpg = float(league_rates.get("team_runs_per_game", 4.35)) or 4.35
+        ratio = team_runs_per_game / lg_rpg
+        r_exp = float(weights.get("team_run_env_exp", 1.0))
+        rbi_exp = float(weights.get("team_rbi_env_exp", 0.5))
+        if r_exp > 0:
+            team_env_r_mult = ratio ** r_exp
+        if rbi_exp > 0:
+            team_env_rbi_mult = ratio ** rbi_exp
+        # Cap ±25% so a Colorado-at-altitude team in a wild season can't
+        # sling an individual hitter's R off a cliff.
+        team_env_r_mult = max(0.75, min(1.25, team_env_r_mult))
+        team_env_rbi_mult = max(0.80, min(1.20, team_env_rbi_mult))
+    r_per_pa *= team_env_r_mult
+    rbi_per_pa *= team_env_rbi_mult
+
     # 6. PA and final EFP
     pa = _clamp_pa(projected_pa, weights)
 
@@ -509,6 +532,8 @@ def project_hitter_points(
             "pitcher_hr": round(pitcher_hr_mult, 3),
             "slot_r": round(slot_r_mult, 3),
             "slot_rbi": round(slot_rbi_mult, 3),
+            "team_env_r": round(team_env_r_mult, 3),
+            "team_env_rbi": round(team_env_rbi_mult, 3),
         },
         "rates": {
             "singles": round(singles, 4),
@@ -559,6 +584,43 @@ async def _fetch_season_stats(player_id: int, season: int) -> dict | None:
     if stat:
         cache_set(cache_key, stat, _SEASON_STATS_TTL)
     return stat
+
+
+async def _fetch_team_run_env(team_id: int, season: int) -> dict | None:
+    """
+    Return the team's season-to-date offensive environment as runs per
+    game. Used to scale an individual batter's R and RBI projections —
+    a hitter on a strong offense gets more R/RBI chances than the same
+    hitter on a weak one.
+
+    Shape: { "runs_per_game": float, "games": int }
+    """
+    if not team_id:
+        return None
+    cache_key = f"fantasy:teamRPG:{team_id}:{season}"
+    cached = cache_get(cache_key)
+    if cached is not None:
+        return cached or None
+    data = await mlb_api.fetch(
+        f"/teams/{team_id}/stats",
+        params={"stats": "season", "group": "hitting", "season": season},
+    )
+    splits = (data.get("stats") or [{}])[0].get("splits") or []
+    stat = splits[0].get("stat") if splits else None
+    if not stat:
+        cache_set(cache_key, {}, 60 * 60 * 6)
+        return None
+    try:
+        runs = float(stat.get("runs") or 0)
+        games = int(float(stat.get("gamesPlayed") or 0))
+    except (TypeError, ValueError):
+        return None
+    if games < 5:
+        cache_set(cache_key, {}, 60 * 60 * 6)
+        return None
+    result = {"runs_per_game": runs / games, "games": games}
+    cache_set(cache_key, result, 60 * 60 * 6)
+    return result
 
 
 async def _fetch_pitcher_rates(player_id: int, season: int) -> dict | None:
@@ -909,6 +971,7 @@ async def _project_batter(
     projected_pa: float,
     pa_source: str,
     lineup_slot: int | None,
+    team_runs_per_game: float | None,
     weights: dict,
     league_rates: dict,
     semaphore: asyncio.Semaphore,
@@ -965,6 +1028,7 @@ async def _project_batter(
         pitcher_rates=pitcher_rates_with_hand or opp_pitcher_rates,
         lineup_slot=lineup_slot,
         platoon_rates=platoon_rates,
+        team_runs_per_game=team_runs_per_game,
     )
 
     return {
@@ -1024,10 +1088,10 @@ async def project_slate(date_iso: str | None = None, season: int | None = None) 
         lineup_away = _extract_lineup_ids(g.get("lineups"), "away")
         lineup_home = _extract_lineup_ids(g.get("lineups"), "home")
 
-        # Fetch rosters + both probable pitchers' season rates + both
-        # pitchers' throwing hands in parallel. Each per-pitcher call is
-        # cached (rates 30 min, hand 24h) so repeats across batters in the
-        # same game are free.
+        # Fetch rosters + both probable pitchers (rates + hands) + both
+        # teams' season run environments in parallel. Per-pitcher calls are
+        # cached (rates 30 min, hand 24h); team run env is cached 6h so
+        # repeats across batters on the same team are free.
         home_sp_id = (g["home"]["probablePitcher"] or {}).get("id")
         away_sp_id = (g["away"]["probablePitcher"] or {}).get("id")
         try:
@@ -1035,6 +1099,7 @@ async def project_slate(date_iso: str | None = None, season: int | None = None) 
                 away_batters, home_batters,
                 home_sp_rates, away_sp_rates,
                 home_sp_hand, away_sp_hand,
+                away_team_env, home_team_env,
             ) = await asyncio.gather(
                 _fetch_roster(g["away"]["id"], season),
                 _fetch_roster(g["home"]["id"], season),
@@ -1042,10 +1107,15 @@ async def project_slate(date_iso: str | None = None, season: int | None = None) 
                 _fetch_pitcher_rates(away_sp_id, season) if away_sp_id else _noop_none(),
                 _fetch_pitcher_hand(home_sp_id) if home_sp_id else _noop_none(),
                 _fetch_pitcher_hand(away_sp_id) if away_sp_id else _noop_none(),
+                _fetch_team_run_env(g["away"]["id"], season),
+                _fetch_team_run_env(g["home"]["id"], season),
             )
         except Exception as e:
             logger.warning("fantasy: roster/pitcher fetch failed for game %s: %s", g.get("gamePk"), e)
             continue
+
+        away_rpg = (away_team_env or {}).get("runs_per_game")
+        home_rpg = (home_team_env or {}).get("runs_per_game")
 
         # If lineup exists, project only lineup hitters (the real 9). If
         # not, project the full roster and UI shows "default" badge.
@@ -1064,6 +1134,7 @@ async def project_slate(date_iso: str | None = None, season: int | None = None) 
                 park=park, weather=g.get("weather"),
                 projected_pa=proj_pa, pa_source=pa_source,
                 lineup_slot=slot,
+                team_runs_per_game=away_rpg,
                 weights=weights, league_rates=league_rates,
                 semaphore=semaphore,
             ))
@@ -1079,6 +1150,7 @@ async def project_slate(date_iso: str | None = None, season: int | None = None) 
                 park=park, weather=g.get("weather"),
                 projected_pa=proj_pa, pa_source=pa_source,
                 lineup_slot=slot,
+                team_runs_per_game=home_rpg,
                 weights=weights, league_rates=league_rates,
                 semaphore=semaphore,
             ))

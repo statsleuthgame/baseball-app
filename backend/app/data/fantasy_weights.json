@@ -59,5 +59,7 @@
   },
   "pitcher_hits_exp": 0.6,
   "pitcher_hr_exp": 1.0,
-  "slot_effect_scale": 0.0
+  "slot_effect_scale": 0.0,
+  "team_run_env_exp": 1.0,
+  "team_rbi_env_exp": 0.5
 }

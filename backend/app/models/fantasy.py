@@ -45,6 +45,8 @@ class Multipliers(BaseModel):
     pitcher_hr:   Optional[float] = 1.0   # opposing pitcher HR-suppression
     slot_r:       Optional[float] = 1.0   # lineup-slot R-opportunity adj
     slot_rbi:     Optional[float] = 1.0   # lineup-slot RBI-opportunity adj
+    team_env_r:   Optional[float] = 1.0   # batter's team offensive env (R)
+    team_env_rbi: Optional[float] = 1.0   # batter's team offensive env (RBI)
 
 
 class Rates(BaseModel):

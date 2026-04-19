@@ -645,6 +645,54 @@ def test_platoon_none_leaves_rates_untouched(weights, league):
     assert with_none["efp"] == pytest.approx(baseline["efp"], abs=1e-6)
 
 
+def test_team_run_env_boosts_strong_offense(weights, league):
+    """A hitter on a high-RPG team should project more R + RBI than the
+    same hitter on a low-RPG team."""
+    w = {**weights, "team_run_env_exp": 1.0, "team_rbi_env_exp": 0.5}
+    season = _avg_rates()
+    strong = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w,
+        team_runs_per_game=5.4,  # 2023 Braves-level offense
+    )
+    weak = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w,
+        team_runs_per_game=3.5,  # bottom-of-league offense
+    )
+    assert strong["multipliers"]["team_env_r"] > weak["multipliers"]["team_env_r"]
+    assert strong["per_event"]["r"] > weak["per_event"]["r"]
+    assert strong["per_event"]["rbi"] > weak["per_event"]["rbi"]
+
+
+def test_team_run_env_disabled_when_exp_zero(weights, league):
+    """exp=0 leaves projection untouched."""
+    w = {**weights, "team_run_env_exp": 0.0, "team_rbi_env_exp": 0.0}
+    season = _avg_rates()
+    result = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w,
+        team_runs_per_game=5.4,
+    )
+    assert result["multipliers"]["team_env_r"] == 1.0
+    assert result["multipliers"]["team_env_rbi"] == 1.0
+
+
+def test_team_run_env_none_is_neutral(weights, league):
+    """Unknown team RPG → multiplier 1.0."""
+    season = _avg_rates()
+    result = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=weights,
+    )
+    assert result["multipliers"]["team_env_r"] == 1.0
+    assert result["multipliers"]["team_env_rbi"] == 1.0
+
+
 def test_lineup_slot_none_is_neutral(weights, league):
     """When slot is unknown (no lineup posted yet) the multiplier is 1.0."""
     season = _avg_rates()

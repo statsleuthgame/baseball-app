@@ -19,5 +19,6 @@
     "home_runs_allowed": 0.029,
     "walks_allowed": 0.085,
     "strikeouts": 0.226
-  }
+  },
+  "team_runs_per_game": 4.35
 }
