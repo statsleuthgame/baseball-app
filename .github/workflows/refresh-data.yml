@@ -67,18 +67,26 @@ jobs:
         run: python scripts/generate_fantasy_projections.py
 
       - name: Commit PP line log snapshot
-        # Each cron run (6 AM + 3 PM ET) appends a fresh snapshot of
-        # today's PP lines + model projections. Commit so the history
-        # accumulates across runs and seasons.
+        # Each cron run (6 AM ET) appends a fresh snapshot of today's PP
+        # lines + model projections. Commit so the history accumulates
+        # across runs and seasons. Retry on push-race with rebase.
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add backend/app/data/pp_line_log/*.jsonl 2>/dev/null || true
+          git add frontend/public/data/fantasy/projections_today.json 2>/dev/null || true
+          git add frontend/public/data/fantasy/todays_picks_lock.json 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No PP-line-log changes to commit."
           else
             git commit -m "chore(pp-log): snapshot $(date -u +%Y-%m-%dT%H:%MZ) from refresh-data"
-            git push
+            for i in 1 2 3; do
+              if git push; then
+                break
+              fi
+              echo "Push rejected (attempt $i/3) — rebasing onto remote and retrying..."
+              git pull --rebase origin main
+            done
           fi
 
       # Save data as artifact so deploy workflow can reuse it

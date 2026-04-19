@@ -58,5 +58,11 @@ jobs:
             echo "No resolved-log changes to commit."
           else
             git commit -m "chore(pp-log): resolve $(date -u +%Y-%m-%d)"
-            git push
+            for i in 1 2 3; do
+              if git push; then
+                break
+              fi
+              echo "Push rejected (attempt $i/3) — rebasing onto remote and retrying..."
+              git pull --rebase origin main
+            done
           fi

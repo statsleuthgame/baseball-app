@@ -74,7 +74,17 @@ jobs:
             echo "Nothing changed."
           else
             git commit -m "chore(fantasy): refresh $(date -u +%Y-%m-%dT%H:%MZ)"
-            git push
+            # Retry on push-race with a rebase pull. If main moved while
+            # our Python + build steps were running (common when a
+            # human push lands mid-workflow), rebase our single commit
+            # on top and try again. Up to 3 attempts.
+            for i in 1 2 3; do
+              if git push; then
+                break
+              fi
+              echo "Push rejected (attempt $i/3) — rebasing onto remote and retrying..."
+              git pull --rebase origin main
+            done
           fi
 
       - uses: actions/setup-node@v4
