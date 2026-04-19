@@ -660,6 +660,51 @@ export const fetchUmpireProfile = (umpireName) => {
   );
 };
 
+// Today's confirmed lineups keyed by teamId. Returns a plain object
+//   { [teamId: number]: number[] }  -- array of starter player IDs per team.
+// Teams that haven't posted a lineup yet are absent from the result (so
+// the caller can tell "no lineup posted" from "empty lineup"). Hits MLB
+// directly — static files don't have live lineup info, and the daily
+// GH Action regenerates too infrequently to be useful here.
+export const fetchTodayLineups = async () => {
+  try {
+    const d = new Date();
+    const dateStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+    const resp = await mlbApi.get("/schedule", {
+      params: {
+        sportId: 1,
+        date: dateStr,
+        hydrate: "lineups,team",
+        gameType: "R",
+      },
+    });
+    const byTeam = {};
+    for (const dateEntry of resp.data?.dates || []) {
+      for (const g of dateEntry.games || []) {
+        const lineups = g.lineups || {};
+        const awayTeamId = g.teams?.away?.team?.id;
+        const homeTeamId = g.teams?.home?.team?.id;
+        const extract = (side, teamId) => {
+          if (!teamId) return;
+          const arr = lineups[`${side}Players`] || lineups[side] || [];
+          if (!Array.isArray(arr) || arr.length === 0) return;
+          const ids = [];
+          for (const p of arr) {
+            const pid = p?.id || p?.person?.id;
+            if (pid) ids.push(Number(pid));
+          }
+          if (ids.length > 0) byTeam[Number(teamId)] = ids;
+        };
+        extract("away", awayTeamId);
+        extract("home", homeTeamId);
+      }
+    }
+    return byTeam;
+  } catch {
+    return {};
+  }
+};
+
 // Fantasy Score projections.
 // Prod: a static JSON regenerated twice daily by the refresh-data workflow
 // (scripts/generate_fantasy_projections.py writes it into frontend/public/data/fantasy/).

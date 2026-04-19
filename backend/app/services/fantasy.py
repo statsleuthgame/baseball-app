@@ -795,8 +795,10 @@ async def project_slate(date_iso: str | None = None, season: int | None = None) 
     rows.sort(key=lambda r: r["efp"], reverse=True)
 
     # Cap displayed list; full slate can grow large but UI wants a focused top.
-    # Phase 1 keeps this hard-coded at 10 — no tier-floor filtering yet.
-    MAX_DISPLAY = 10
+    # We serve 30 here so the frontend has room to filter by live lineup data
+    # (pre-scratched / non-starter batters drop off, confirmed starters get a
+    # checkmark) and still show ~10 usable cards.
+    MAX_DISPLAY = 30
     payload = {
         "date": date_iso,
         "season": season,

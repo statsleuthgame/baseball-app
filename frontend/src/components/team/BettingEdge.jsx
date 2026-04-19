@@ -8,6 +8,7 @@ import {
   fetchBvP,
   fetchPlayerSeasonVsTeam,
   fetchPlayerCareerVsTeam,
+  fetchTodayLineups,
 } from "../../api/client";
 import { formatAvg, getTeamAbbr, lastName } from "../../utils/formatters";
 import PlayerPhoto from "../common/PlayerPhoto";
@@ -48,6 +49,15 @@ export default function BettingEdge() {
     queryKey: ["edge", "allGamesToday"],
     queryFn: () => fetchAllGamesToday(),
     staleTime: 10 * 60 * 1000,
+  });
+
+  // Live lineups — drop batters not in today's confirmed lineup, mark
+  // confirmed starters with a ✓. Shared cache key with FantasyProjections.
+  const { data: lineupsByTeam = {} } = useQuery({
+    queryKey: ["fantasy", "lineups"],
+    queryFn: () => fetchTodayLineups(),
+    staleTime: 5 * 60 * 1000,
+    refetchInterval: 5 * 60 * 1000,
   });
 
   // Only upcoming / live games with probable pitchers on BOTH sides are bettable.
@@ -211,22 +221,40 @@ export default function BettingEdge() {
     careerVsTeamQueries.map((q) => q.data?.ab ?? "_").join("|"),
   ]);
 
-  const applyMyTeamsFilter = (list) => {
-    if (!myTeamsOnly || !team?.id) return list;
-    return list.filter(
-      (p) => p.game.away.id === team.id || p.game.home.id === team.id
-    );
+  // Annotate every pick/fade with its lineup status based on today's live
+  // MLB lineups:
+  //   - confirmed: batter's team has posted a lineup AND the batter is in it
+  //   - excluded:  batter's team has posted a lineup AND the batter is NOT in it
+  //   - pending:   batter's team has not posted a lineup yet (show anyway)
+  const annotateLineup = (list) =>
+    list.map((p) => {
+      const lineup = lineupsByTeam[p.teamId];
+      if (!Array.isArray(lineup) || lineup.length === 0) {
+        return { ...p, _lineupStatus: "pending" };
+      }
+      const inLineup = lineup.includes(Number(p.batter?.id));
+      return { ...p, _lineupStatus: inLineup ? "confirmed" : "excluded" };
+    });
+
+  const applyFilters = (list) => {
+    let out = annotateLineup(list).filter((p) => p._lineupStatus !== "excluded");
+    if (myTeamsOnly && team?.id) {
+      out = out.filter(
+        (p) => p.game.away.id === team.id || p.game.home.id === team.id
+      );
+    }
+    return out;
   };
 
   const filteredPicks = useMemo(
-    () => applyMyTeamsFilter(picks),
+    () => applyFilters(picks),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [picks, myTeamsOnly, team]
+    [picks, myTeamsOnly, team, lineupsByTeam]
   );
   const filteredFades = useMemo(
-    () => applyMyTeamsFilter(fades),
+    () => applyFilters(fades),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [fades, myTeamsOnly, team]
+    [fades, myTeamsOnly, team, lineupsByTeam]
   );
 
   const isLoading =
@@ -406,6 +434,15 @@ function PickCard({ pick, onSelectPlayer }) {
         <div className="edge-card-name-col">
           <div className="edge-card-name">
             <span className="edge-card-fullname">{batter.fullName}</span>
+            {pick._lineupStatus === "confirmed" && (
+              <span
+                className="edge-lineup-check"
+                title="Confirmed in today's lineup"
+                aria-label="Confirmed starter"
+              >
+                ✓
+              </span>
+            )}
             <span className="edge-card-pos">{batter.position}</span>
           </div>
           <div className="edge-card-matchup">

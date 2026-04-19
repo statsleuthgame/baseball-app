@@ -2,9 +2,11 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useTeam } from "../../context/TeamContext";
-import { fetchFantasyProjections } from "../../api/client";
+import { fetchFantasyProjections, fetchTodayLineups } from "../../api/client";
 import { lastName } from "../../utils/formatters";
 import PlayerPhoto from "../common/PlayerPhoto";
+
+const TOP_N_DISPLAY = 10;
 
 /**
  * Fantasy Projections section — ranks every eligible hitter on today's slate
@@ -23,16 +25,51 @@ export default function FantasyProjections({ myTeamsOnly = false }) {
     staleTime: 5 * 60 * 1000,
   });
 
+  // Live lineups — refetched every 5 minutes so scratches / late-posted
+  // lineups flow through while the user is on the page.
+  const { data: lineupsByTeam = {}, isFetched: lineupsFetched } = useQuery({
+    queryKey: ["fantasy", "lineups"],
+    queryFn: () => fetchTodayLineups(),
+    staleTime: 5 * 60 * 1000,
+    refetchInterval: 5 * 60 * 1000,
+  });
+
   const projections = data?.projections || [];
   const metrics = data?.metrics || {};
   const calibrated = !!data?.calibrated;
 
   const filtered = useMemo(() => {
-    if (!myTeamsOnly || !team?.id) return projections;
-    return projections.filter(
-      (p) => p.team_id === team.id || p.opp_team_id === team.id
-    );
-  }, [projections, myTeamsOnly, team]);
+    // 1. Annotate each row with lineup status.
+    //    - confirmed: team has a posted lineup AND batter is in it
+    //    - excluded: team has a posted lineup AND batter is NOT in it
+    //    - pending:  team has not posted a lineup yet (treat as "show anyway")
+    const annotated = projections.map((p) => {
+      const lineup = lineupsByTeam[p.team_id];
+      if (!Array.isArray(lineup) || lineup.length === 0) {
+        return { ...p, _lineupStatus: "pending" };
+      }
+      const inLineup = lineup.includes(p.player_id);
+      return { ...p, _lineupStatus: inLineup ? "confirmed" : "excluded" };
+    });
+
+    // 2. Drop excluded players entirely.
+    let passed = annotated.filter((p) => p._lineupStatus !== "excluded");
+
+    // 3. My Teams filter on top.
+    if (myTeamsOnly && team?.id) {
+      passed = passed.filter(
+        (p) => p.team_id === team.id || p.opp_team_id === team.id
+      );
+    }
+
+    // 4. Cap at the display top-N (static JSON now serves 30 rows).
+    return passed.slice(0, TOP_N_DISPLAY);
+  }, [projections, lineupsByTeam, myTeamsOnly, team]);
+
+  // Count how many projections had lineup info — used in the footer so
+  // the user can tell "no lineups posted yet" from "filter removed everyone".
+  const confirmedCount = filtered.filter((p) => p._lineupStatus === "confirmed").length;
+  const anyLineupsPosted = Object.keys(lineupsByTeam).length > 0;
 
   return (
     <section className="edge-section">
@@ -73,6 +110,11 @@ export default function FantasyProjections({ myTeamsOnly = false }) {
           {calibrated && metrics?.r2 != null
             ? `  ·  model R²=${Number(metrics.r2).toFixed(2)} · n=${metrics.n || 0}`
             : "  ·  using baseline weights (pre-calibration)"}
+          {lineupsFetched && (
+            anyLineupsPosted
+              ? `  ·  ${confirmedCount}/${filtered.length} lineup-confirmed`
+              : "  ·  lineups not yet posted"
+          )}
         </p>
       )}
     </section>
@@ -97,7 +139,9 @@ function FantasyCard({ projection, onSelectPlayer }) {
     tier,
     per_event,
     multipliers,
+    _lineupStatus,
   } = projection;
+  const isConfirmed = _lineupStatus === "confirmed";
 
   const tierClass = `edge-conf-${tier || "low"}`;
   const tierLabel = tier?.toUpperCase() || "LOW";
@@ -119,6 +163,15 @@ function FantasyCard({ projection, onSelectPlayer }) {
         <div className="edge-card-name-col">
           <div className="edge-card-name">
             <span className="edge-card-fullname">{name}</span>
+            {isConfirmed && (
+              <span
+                className="edge-lineup-check"
+                title="Confirmed in today's lineup"
+                aria-label="Confirmed starter"
+              >
+                ✓
+              </span>
+            )}
             {position && <span className="edge-card-pos">{position}</span>}
             {bat_side && (
               <span

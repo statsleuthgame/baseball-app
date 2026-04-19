@@ -7455,6 +7455,24 @@ th.sb-ls-total {
   flex-shrink: 0;
 }
 
+/* Confirmed-in-lineup checkmark. Green circle with a white check,
+   sits between the batter name and the position / hand labels. */
+.edge-lineup-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #22c55e;
+  color: #0b1220;
+  font-size: 9px;
+  font-weight: 900;
+  line-height: 1;
+  margin-left: 2px;
+}
+
 .edge-card-matchup {
   display: flex;
   align-items: center;
