@@ -48,11 +48,12 @@ jobs:
             python scripts/resolve_pp_lines.py
           fi
 
-      - name: Commit resolved log
+      - name: Commit resolved log + refreshed stats cache
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add backend/app/data/pp_line_log/*_resolved.jsonl 2>/dev/null || true
+          git add backend/app/data/player_efp_stats_*.json 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No resolved-log changes to commit."
           else

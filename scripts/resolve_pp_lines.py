@@ -223,6 +223,17 @@ async def resolve(game_date: str) -> None:
             resolved_count += 1
     logger.info("Wrote %d resolved records → %s", resolved_count, out_path.name)
 
+    # Refresh the per-player EFP stats cache so tomorrow's projections
+    # see today's outcome. Idempotent; rewrites the entire JSON file.
+    try:
+        season = int(game_date.split("-")[0])
+        from subprocess import run
+        script = Path(__file__).parent / "update_player_stats_from_logs.py"
+        logger.info("Refreshing player_efp_stats cache for %d...", season)
+        run([sys.executable, str(script), str(season)], check=True)
+    except Exception as e:
+        logger.warning("player_efp_stats update failed: %s", e)
+
 
 def main():
     p = argparse.ArgumentParser()

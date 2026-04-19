@@ -76,5 +76,6 @@
   "bvpt_exp": 0.0,
   "ondeck_r_exp": 1.0,
   "preceding_rbi_exp": 0.0,
-  "calibration_scale": 0.876
+  "calibration_scale": 0.876,
+  "rate_regression_prior_pa": 150
 }

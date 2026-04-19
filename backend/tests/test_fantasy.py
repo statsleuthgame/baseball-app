@@ -428,6 +428,9 @@ def test_efp_scoring_sanity():
     )
     weights = load_weights()
     league = load_league_rates()
+    # Disable small-sample shrinkage for this unit test — we're testing
+    # the scoring-table arithmetic, not the regression mechanism.
+    weights = {**weights, "rate_regression_prior_pa": 0}
     result = project_hitter_points(
         season_rates=season, l7_rates=None, bvp=None, league_rates=league,
         park={"runs": 100, "hr": 100}, weather=None,
@@ -1263,6 +1266,67 @@ def test_tier3_bvpt_helper_matchup_math():
     # Empty inputs → None.
     assert bvpt_matchup_xwoba({}, mix) is None
     assert bvpt_matchup_xwoba(bat, {}) is None
+
+
+def test_small_sample_shrinkage_rushing_case(weights, league):
+    """The "Dalton Rushing April hot-start" case: 30 season PAs with a
+    HR rate of 0.20 (6× league) should get massively regressed toward
+    the league HR rate of 0.033."""
+    from app.services.fantasy import Rates as R
+    hot_small = R(
+        singles=0.05, doubles=0.05, triples=0.0, home_runs=0.20,
+        bb_hbp=0.10, obp=0.450, slg=0.700, sb_per_game=0.0, pa=30,
+    )
+    result = project_hitter_points(
+        season_rates=hot_small, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=weights,
+    )
+    # The projected HR rate should be much closer to league (0.033)
+    # than to the observed 0.20. With prior_pa=150 and season_pa=30,
+    # the observed weight is 30/180 = 0.167; league weight = 0.833.
+    # Effective HR rate ≈ 0.167×0.20 + 0.833×0.033 = 0.061.
+    projected_hr_rate = result["rates"]["home_runs"]
+    assert projected_hr_rate < 0.10  # well below the naive 0.20
+    assert projected_hr_rate > 0.04  # but above pure league
+
+
+def test_shrinkage_ignored_for_full_season_batter(weights, league):
+    """A batter with 600 season PAs should see minimal shrinkage — his
+    observed rates should dominate. prior_pa=150 vs pa=600 means
+    observed weight = 600/750 = 0.80."""
+    from app.services.fantasy import Rates as R
+    proven = R(
+        singles=0.15, doubles=0.05, triples=0.005, home_runs=0.06,
+        bb_hbp=0.12, obp=0.360, slg=0.520, sb_per_game=0.0, pa=600,
+    )
+    result = project_hitter_points(
+        season_rates=proven, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=weights,
+    )
+    # Observed HR 0.06, league 0.033 → effective ≈ 0.80×0.06 + 0.20×0.033 = 0.0546.
+    # Must still be well above league, but slightly pulled down.
+    hr_rate = result["rates"]["home_runs"]
+    assert 0.05 < hr_rate < 0.06
+
+
+def test_shrinkage_disabled_when_prior_zero(weights, league):
+    """rate_regression_prior_pa=0 → no shrinkage, rates pass through
+    unchanged (back to the pre-fix behavior)."""
+    w = {**weights, "rate_regression_prior_pa": 0}
+    from app.services.fantasy import Rates as R
+    hot_small = R(
+        singles=0.05, doubles=0.05, triples=0.0, home_runs=0.20,
+        bb_hbp=0.10, obp=0.450, slg=0.700, sb_per_game=0.0, pa=30,
+    )
+    result = project_hitter_points(
+        season_rates=hot_small, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w,
+    )
+    # With shrinkage off, HR rate passes through as 0.20.
+    assert result["rates"]["home_runs"] == pytest.approx(0.20, abs=0.001)
 
 
 def test_edge_z_basic_math():

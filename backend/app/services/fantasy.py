@@ -373,9 +373,44 @@ def project_hitter_points(
           "tier": "high"|"medium"|"low",
         }
     """
-    # 1. Base rate blend (L7 + season + platoon-vs-hand when known).
+    # 1. Base rate blend (League ← Season ← L7 ← Platoon).
+    #
+    # Small-sample Bayesian shrinkage: pull the batter's observed season
+    # rate toward the league rate when their season PA is small. Prevents
+    # April hot-start over-projection (e.g. a 30-PA player with 4 HRs has
+    # a "season" HR/PA of 0.133 = 4× league — would otherwise bake into
+    # the projection with no regression).
+    #
+    # Formula (per Tom Tango's "regression to the mean" stabilization):
+    #     effective = (pa × observed + prior_pa × league) / (pa + prior_pa)
+    #
+    # prior_pa ≈ the PA count where half the batter's rate comes from
+    # observed and half from league. Set conservatively (150 PA) so
+    # April hot starts get meaningfully regressed through early May.
+    prior_pa = float(weights.get("rate_regression_prior_pa", 150))
+    league_per_pa = (league_rates or {}).get("per_pa") or {}
+    league_per_pa_map = {
+        "singles": float(league_per_pa.get("singles", 0.144)),
+        "doubles": float(league_per_pa.get("doubles", 0.045)),
+        "triples": float(league_per_pa.get("triples", 0.004)),
+        "home_runs": float(league_per_pa.get("home_runs", 0.033)),
+        "bb_hbp": float(league_per_pa.get("bb_hbp", 0.096)),
+    }
+    season_pa_count = int(getattr(season_rates, "pa", 0) or 0)
+
+    def shrink_season(key: str) -> float:
+        """Pull the season rate toward league mean by prior_pa."""
+        observed = getattr(season_rates, key)
+        if prior_pa <= 0 or season_pa_count <= 0:
+            return observed
+        league_rate = league_per_pa_map.get(key, observed)
+        return (
+            (season_pa_count * observed + prior_pa * league_rate)
+            / (season_pa_count + prior_pa)
+        )
+
     def blend(key: str) -> float:
-        season_v = getattr(season_rates, key)
+        season_v = shrink_season(key)
         l7_v = getattr(l7_rates, key) if l7_rates else 0.0
         l7_pa = l7_rates.pa if l7_rates else 0
         base = _blend_l7(season_v, l7_v, l7_pa, weights)
@@ -516,10 +551,23 @@ def project_hitter_points(
     home_runs *= bvpt_mult
 
     # 5. R and RBI projections — OBP / SLG proxies
+    # Apply the same small-sample shrinkage to OBP/SLG so hot-start
+    # batters don't get inflated R/RBI projections off a 20-PA .450 OBP.
     r_coef = float(weights.get("r_per_pa_coef", 0.35))
     rbi_coef = float(weights.get("rbi_per_pa_coef", 0.25))
     obp_base = season_rates.obp or 0.0
     slg_base = season_rates.slg or 0.0
+    if prior_pa > 0 and season_pa_count > 0:
+        lg_obp = float((league_rates or {}).get("obp", 0.314))
+        lg_slg = float((league_rates or {}).get("slg", 0.399))
+        obp_base = (
+            (season_pa_count * obp_base + prior_pa * lg_obp)
+            / (season_pa_count + prior_pa)
+        )
+        slg_base = (
+            (season_pa_count * slg_base + prior_pa * lg_slg)
+            / (season_pa_count + prior_pa)
+        )
     if l7_rates and l7_rates.pa >= weights.get("l7_min_pa", 10):
         blend_r = float(weights.get("l7_blend", 0.30))
         obp_base = (1.0 - blend_r) * obp_base + blend_r * (l7_rates.obp or 0.0)
