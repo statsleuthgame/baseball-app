@@ -6,6 +6,7 @@ import {
   fetchFantasyProjections,
   fetchTodayLineups,
   fetchLiveFantasyScores,
+  fetchTodaysPicksLock,
 } from "../../api/client";
 import { lastName } from "../../utils/formatters";
 import PlayerPhoto from "../common/PlayerPhoto";
@@ -53,6 +54,19 @@ export default function FantasyProjections({ myTeamsOnly = false }) {
     queryFn: () => fetchLiveFantasyScores(),
     staleTime: 60 * 1000,
     refetchInterval: 60 * 1000,
+  });
+
+  // Today's locked picks — written by the first cron of each day that
+  // sees confidence badges. Picks don't change during the day even as
+  // the Best Bets section updates with fresh lines, so the user can
+  // track the SAME picks from morning → live → final without them
+  // shuffling or disappearing. Refetches every 10 min to pick up the
+  // lock file if it appears later in the day.
+  const { data: locked } = useQuery({
+    queryKey: ["fantasy", "picksLock"],
+    queryFn: () => fetchTodaysPicksLock(),
+    staleTime: 5 * 60 * 1000,
+    refetchInterval: 10 * 60 * 1000,
   });
 
   const projections = data?.projections || [];
@@ -113,6 +127,22 @@ export default function FantasyProjections({ myTeamsOnly = false }) {
   const confirmedCount = byEfp.filter((p) => p._lineupStatus === "confirmed").length;
   const anyLineupsPosted = Object.keys(lineupsByTeam).length > 0;
 
+  // Today's locked picks — stable pick set for the whole day. Filter to
+  // the same "My Teams" scope the user has active. Gracefully handle a
+  // stale lock (date != today) by showing nothing rather than yesterday's.
+  const todayIso = new Date().toISOString().slice(0, 10);
+  const lockedPicks = useMemo(() => {
+    if (!locked || !locked.picks) return [];
+    if (locked.game_date && locked.game_date !== todayIso) return [];
+    let picks = locked.picks;
+    if (myTeamsOnly && team?.id) {
+      picks = picks.filter(
+        (p) => p.team_id === team.id || p.opp_team_id === team.id
+      );
+    }
+    return picks;
+  }, [locked, myTeamsOnly, team, todayIso]);
+
   const renderCardGrid = (rows) => (
     <div className="edge-grid">
       {rows.map((p) => (
@@ -130,9 +160,31 @@ export default function FantasyProjections({ myTeamsOnly = false }) {
 
   return (
     <section className="edge-section">
+      {/* Locked picks for the day — stable set you can track live.
+          Renders ABOVE the live "Best Bets" section so the user's
+          morning picks stay visible even if later snapshots shuffle. */}
+      {lockedPicks.length > 0 && (
+        <div className="edge-subsection edge-tracker-subsection">
+          <h2 className="edge-section-title edge-section-fantasy">
+            <span className="edge-section-accent" aria-hidden="true">📌</span>
+            Today's picks · live tracker
+            <span className="edge-subsection-hint">
+              — locked at {locked?.locked_at
+                ? new Date(locked.locked_at).toLocaleTimeString("en-US",
+                    { hour: "numeric", minute: "2-digit", timeZoneName: "short" })
+                : "morning"}
+              ; scores update live through Final
+            </span>
+          </h2>
+          {renderCardGrid(lockedPicks)}
+        </div>
+      )}
+
       <h2 className="edge-section-title edge-section-fantasy">
         <span className="edge-section-accent" aria-hidden="true">Δ</span>
-        Best bets · biggest edge vs PrizePicks
+        {lockedPicks.length > 0
+          ? "Current best bets · live vs PrizePicks"
+          : "Best bets · biggest edge vs PrizePicks"}
       </h2>
 
       {isError || (!isLoading && projections.length === 0) ? (

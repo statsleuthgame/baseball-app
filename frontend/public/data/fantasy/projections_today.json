@@ -10,8 +10,99 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 338,
+  "projection_count": 322,
   "projections": [
+    {
+      "player_id": 670541,
+      "name": "Yordan Alvarez",
+      "position": "LF",
+      "team_id": 117,
+      "team_abbr": "HOU",
+      "opp_abbr": "STL",
+      "opp_team_id": 138,
+      "opp_pitcher": {
+        "id": 669461,
+        "fullName": "Matthew Liberatore"
+      },
+      "park": {
+        "id": 2392,
+        "name": "Minute Maid Park",
+        "runs": 103,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 8.35,
+      "mean_efp": 11.75,
+      "stats_games": 16,
+      "efp": 12.77,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.95,
+        "doubles": 1.58,
+        "triples": 0.06,
+        "home_runs": 4.48,
+        "bb_hbp": 1.03,
+        "r": 3.47,
+        "rbi": 1.85,
+        "sb": 0.16
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.03,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.114,
+        "pitcher_hr": 1.237,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.01,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.151,
+        "doubles": 0.0736,
+        "triples": 0.0018,
+        "home_runs": 0.1043,
+        "bb_hbp": 0.1195,
+        "r_per_pa": 0.403,
+        "rbi_per_pa": 0.2149
+      },
+      "pa": 4.3,
+      "tier": "medium",
+      "prizepicks": {
+        "fantasy": 7.5,
+        "hrr": 4.5,
+        "total_bases": 4.5,
+        "hits": 1.5,
+        "strikeouts": 0.5,
+        "rbis": 1.5,
+        "runs": 0.5,
+        "walks": 0.5,
+        "singles": 0.5,
+        "home_runs": 0.5,
+        "doubles": 0.5
+      },
+      "edge_fantasy": 5.27,
+      "edge_z": 0.631
+    },
     {
       "player_id": 687221,
       "name": "Dalton Rushing",
@@ -31,7 +122,11 @@
         "hr": 118,
         "label": "Hitter Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Sunny",
+        "temp": "67",
+        "wind": "5 mph, R To L"
+      },
       "pa_source": "default",
       "stdev_efp": 6.86,
       "mean_efp": 6.53,
@@ -100,47 +195,51 @@
       "edge_z": 0.45
     },
     {
-      "player_id": 670541,
-      "name": "Yordan Alvarez",
-      "position": "LF",
-      "team_id": 117,
-      "team_abbr": "HOU",
-      "opp_abbr": "STL",
-      "opp_team_id": 138,
+      "player_id": 666160,
+      "name": "Mickey Moniak",
+      "position": "RF",
+      "team_id": 115,
+      "team_abbr": "COL",
+      "opp_abbr": "LAD",
+      "opp_team_id": 119,
       "opp_pitcher": {
-        "id": 669461,
-        "fullName": "Matthew Liberatore"
+        "id": 808963,
+        "fullName": "Roki Sasaki"
       },
       "park": {
-        "id": 2392,
-        "name": "Minute Maid Park",
-        "runs": 103,
-        "hr": 107,
-        "label": "Slight Hitter"
+        "id": 19,
+        "name": "Coors Field",
+        "runs": 116,
+        "hr": 118,
+        "label": "Hitter Friendly"
       },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 8.35,
-      "mean_efp": 11.75,
-      "stats_games": 16,
-      "efp": 11.51,
+      "weather": {
+        "condition": "Sunny",
+        "temp": "67",
+        "wind": "5 mph, R To L"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 10.02,
+      "mean_efp": 8.09,
+      "stats_games": 11,
+      "efp": 11.37,
       "bat_side": "L",
       "per_event": {
-        "singles": 1.81,
-        "doubles": 1.47,
-        "triples": 0.06,
-        "home_runs": 4.17,
-        "bb_hbp": 0.96,
-        "r": 2.8,
-        "rbi": 1.72,
-        "sb": 0.15
+        "singles": 1.76,
+        "doubles": 1.55,
+        "triples": 0.08,
+        "home_runs": 4.29,
+        "bb_hbp": 0.86,
+        "r": 2.45,
+        "rbi": 1.55,
+        "sb": 0.45
       },
       "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.03,
+        "park_hr": 1.18,
+        "park_runs": 1.16,
         "weather_hr": 1.0,
-        "pitcher_hits": 1.114,
-        "pitcher_hr": 1.237,
+        "pitcher_hits": 1.001,
+        "pitcher_hr": 1.19,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -148,9 +247,9 @@
         "stx_xwoba": 1.0,
         "stx_barrel": 1.0,
         "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.01,
+        "pitcher_gb_hr": 1.09,
         "k_damper": 1.0,
-        "pitcher_bb": 0.75,
+        "pitcher_bb": 1.25,
         "park_hand_hr": 1.0,
         "sb_speed": 1.0,
         "speed_singles": 1.0,
@@ -160,31 +259,29 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.151,
-        "doubles": 0.0736,
-        "triples": 0.0018,
-        "home_runs": 0.1043,
-        "bb_hbp": 0.1195,
-        "r_per_pa": 0.3505,
-        "rbi_per_pa": 0.2149
+        "singles": 0.1364,
+        "doubles": 0.0721,
+        "triples": 0.0022,
+        "home_runs": 0.0998,
+        "bb_hbp": 0.0999,
+        "r_per_pa": 0.2849,
+        "rbi_per_pa": 0.1798
       },
-      "pa": 4.0,
-      "tier": "medium",
+      "pa": 4.3,
+      "tier": "low",
       "prizepicks": {
-        "fantasy": 7.5,
-        "hrr": 4.5,
         "total_bases": 4.5,
+        "hrr": 1.5,
         "hits": 1.5,
-        "strikeouts": 0.5,
         "rbis": 1.5,
-        "runs": 0.5,
-        "walks": 0.5,
-        "singles": 0.5,
+        "runs": 1.5,
+        "strikeouts": 1.5,
+        "doubles": 0.5,
         "home_runs": 0.5,
-        "doubles": 0.5
-      },
-      "edge_fantasy": 4.01,
-      "edge_z": 0.48
+        "singles": 0.5,
+        "stolen_bases": 0.5,
+        "walks": 0.5
+      }
     },
     {
       "player_id": 700250,
@@ -387,7 +484,11 @@
         "hr": 118,
         "label": "Hitter Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Sunny",
+        "temp": "67",
+        "wind": "5 mph, R To L"
+      },
       "pa_source": "default",
       "stdev_efp": 10.38,
       "mean_efp": 12.07,
@@ -455,6 +556,185 @@
       },
       "edge_fantasy": 3.61,
       "edge_z": 0.348
+    },
+    {
+      "player_id": 696100,
+      "name": "Hunter Goodman",
+      "position": "C",
+      "team_id": 115,
+      "team_abbr": "COL",
+      "opp_abbr": "LAD",
+      "opp_team_id": 119,
+      "opp_pitcher": {
+        "id": 808963,
+        "fullName": "Roki Sasaki"
+      },
+      "park": {
+        "id": 19,
+        "name": "Coors Field",
+        "runs": 116,
+        "hr": 118,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "67",
+        "wind": "5 mph, R To L"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 9.71,
+      "mean_efp": 7.73,
+      "stats_games": 15,
+      "efp": 10.84,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.93,
+        "doubles": 1.22,
+        "triples": 0.07,
+        "home_runs": 3.87,
+        "bb_hbp": 1.01,
+        "r": 2.52,
+        "rbi": 1.55,
+        "sb": 0.2
+      },
+      "multipliers": {
+        "park_hr": 1.18,
+        "park_runs": 1.16,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.001,
+        "pitcher_hr": 1.19,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.09,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1499,
+        "doubles": 0.0569,
+        "triples": 0.002,
+        "home_runs": 0.0901,
+        "bb_hbp": 0.1174,
+        "r_per_pa": 0.293,
+        "rbi_per_pa": 0.1802
+      },
+      "pa": 4.3,
+      "tier": "low",
+      "prizepicks": {
+        "total_bases": 4.5,
+        "hrr": 1.5,
+        "hits": 1.5,
+        "rbis": 1.5,
+        "runs": 1.5,
+        "strikeouts": 1.5,
+        "doubles": 0.5,
+        "home_runs": 0.5,
+        "singles": 0.5,
+        "walks": 0.5
+      }
+    },
+    {
+      "player_id": 676475,
+      "name": "Alec Burleson",
+      "position": "1B",
+      "team_id": 138,
+      "team_abbr": "STL",
+      "opp_abbr": "HOU",
+      "opp_team_id": 117,
+      "opp_pitcher": {
+        "id": 681347,
+        "fullName": "Mike Burrows"
+      },
+      "park": {
+        "id": 2392,
+        "name": "Minute Maid Park",
+        "runs": 103,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 6.68,
+      "mean_efp": 7.86,
+      "stats_games": 14,
+      "efp": 10.77,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.68,
+        "doubles": 1.75,
+        "triples": 0.07,
+        "home_runs": 1.93,
+        "bb_hbp": 0.94,
+        "r": 3.21,
+        "rbi": 1.51,
+        "sb": 0.2
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.03,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.246,
+        "pitcher_hr": 1.198,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.916,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.938,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.2078,
+        "doubles": 0.0815,
+        "triples": 0.0021,
+        "home_runs": 0.045,
+        "bb_hbp": 0.1094,
+        "r_per_pa": 0.3729,
+        "rbi_per_pa": 0.1752
+      },
+      "pa": 4.3,
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 5.5,
+        "hrr": 4.5,
+        "total_bases": 4.5,
+        "hits": 1.5,
+        "strikeouts": 0.5,
+        "rbis": 1.5,
+        "runs": 1.5,
+        "singles": 0.5,
+        "doubles": 0.5,
+        "home_runs": 0.5,
+        "walks": 0.5
+      },
+      "edge_fantasy": 5.27,
+      "edge_z": 0.789
     },
     {
       "player_id": 668930,
@@ -549,179 +829,6 @@
       "edge_z": 0.341
     },
     {
-      "player_id": 666160,
-      "name": "Mickey Moniak",
-      "position": "RF",
-      "team_id": 115,
-      "team_abbr": "COL",
-      "opp_abbr": "LAD",
-      "opp_team_id": 119,
-      "opp_pitcher": {
-        "id": 808963,
-        "fullName": "Roki Sasaki"
-      },
-      "park": {
-        "id": 19,
-        "name": "Coors Field",
-        "runs": 116,
-        "hr": 118,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 10.02,
-      "mean_efp": 8.09,
-      "stats_games": 11,
-      "efp": 10.57,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.64,
-        "doubles": 1.44,
-        "triples": 0.07,
-        "home_runs": 3.99,
-        "bb_hbp": 0.8,
-        "r": 2.28,
-        "rbi": 1.44,
-        "sb": 0.41
-      },
-      "multipliers": {
-        "park_hr": 1.18,
-        "park_runs": 1.16,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.001,
-        "pitcher_hr": 1.19,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.09,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1364,
-        "doubles": 0.0721,
-        "triples": 0.0022,
-        "home_runs": 0.0998,
-        "bb_hbp": 0.0999,
-        "r_per_pa": 0.2849,
-        "rbi_per_pa": 0.1798
-      },
-      "pa": 4.0,
-      "tier": "low",
-      "prizepicks": {
-        "total_bases": 4.5,
-        "hrr": 1.5,
-        "hits": 1.5,
-        "rbis": 1.5,
-        "runs": 1.5,
-        "strikeouts": 1.5,
-        "doubles": 0.5,
-        "home_runs": 0.5,
-        "singles": 0.5,
-        "stolen_bases": 0.5,
-        "walks": 0.5
-      }
-    },
-    {
-      "player_id": 691023,
-      "name": "Jordan Walker",
-      "position": "RF",
-      "team_id": 138,
-      "team_abbr": "STL",
-      "opp_abbr": "HOU",
-      "opp_team_id": 117,
-      "opp_pitcher": {
-        "id": 681347,
-        "fullName": "Mike Burrows"
-      },
-      "park": {
-        "id": 2392,
-        "name": "Minute Maid Park",
-        "runs": 103,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 6.23,
-      "mean_efp": 10.43,
-      "stats_games": 14,
-      "efp": 10.54,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.37,
-        "doubles": 0.89,
-        "triples": 0.07,
-        "home_runs": 3.1,
-        "bb_hbp": 0.71,
-        "r": 2.48,
-        "rbi": 1.52,
-        "sb": 0.89
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.246,
-        "pitcher_hr": 1.198,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.916,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.938,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1979,
-        "doubles": 0.0446,
-        "triples": 0.0021,
-        "home_runs": 0.0776,
-        "bb_hbp": 0.0892,
-        "r_per_pa": 0.3097,
-        "rbi_per_pa": 0.1895
-      },
-      "pa": 4.0,
-      "tier": "low",
-      "prizepicks": {
-        "fantasy": 5.5,
-        "hrr": 1.5,
-        "total_bases": 4.5,
-        "strikeouts": 2.5,
-        "hits": 1.5,
-        "rbis": 1.5,
-        "singles": 0.5,
-        "doubles": 0.5,
-        "home_runs": 0.5,
-        "runs": 0.5,
-        "stolen_bases": 0.5,
-        "walks": 0.5
-      },
-      "edge_fantasy": 5.04,
-      "edge_z": 0.809
-    },
-    {
       "player_id": 808975,
       "name": "Hyeseong Kim",
       "position": "2B",
@@ -740,7 +847,11 @@
         "hr": 118,
         "label": "Hitter Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Sunny",
+        "temp": "67",
+        "wind": "5 mph, R To L"
+      },
       "pa_source": "default",
       "stdev_efp": 6.79,
       "mean_efp": 7.17,
@@ -827,7 +938,11 @@
         "hr": 118,
         "label": "Hitter Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Sunny",
+        "temp": "67",
+        "wind": "5 mph, R To L"
+      },
       "pa_source": "default",
       "stdev_efp": 6.88,
       "mean_efp": 10.13,
@@ -1074,7 +1189,11 @@
         "hr": 118,
         "label": "Hitter Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Sunny",
+        "temp": "67",
+        "wind": "5 mph, R To L"
+      },
       "pa_source": "default",
       "stdev_efp": 6.86,
       "mean_efp": 6.53,
@@ -1126,6 +1245,98 @@
       },
       "pa": 4.0,
       "tier": "low"
+    },
+    {
+      "player_id": 691023,
+      "name": "Jordan Walker",
+      "position": "RF",
+      "team_id": 138,
+      "team_abbr": "STL",
+      "opp_abbr": "HOU",
+      "opp_team_id": 117,
+      "opp_pitcher": {
+        "id": 681347,
+        "fullName": "Mike Burrows"
+      },
+      "park": {
+        "id": 2392,
+        "name": "Minute Maid Park",
+        "runs": 103,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 6.23,
+      "mean_efp": 10.43,
+      "stats_games": 14,
+      "efp": 10.17,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.37,
+        "doubles": 0.89,
+        "triples": 0.07,
+        "home_runs": 3.1,
+        "bb_hbp": 0.71,
+        "r": 2.11,
+        "rbi": 1.52,
+        "sb": 0.84
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.03,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.246,
+        "pitcher_hr": 1.198,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.916,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.938,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.85,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1979,
+        "doubles": 0.0446,
+        "triples": 0.0021,
+        "home_runs": 0.0776,
+        "bb_hbp": 0.0892,
+        "r_per_pa": 0.2633,
+        "rbi_per_pa": 0.1895
+      },
+      "pa": 4.0,
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 5.5,
+        "hrr": 1.5,
+        "total_bases": 4.5,
+        "strikeouts": 2.5,
+        "hits": 1.5,
+        "rbis": 1.5,
+        "singles": 0.5,
+        "doubles": 0.5,
+        "home_runs": 0.5,
+        "runs": 0.5,
+        "stolen_bases": 0.5,
+        "walks": 0.5
+      },
+      "edge_fantasy": 4.67,
+      "edge_z": 0.75
     },
     {
       "player_id": 608070,
@@ -1218,90 +1429,6 @@
       },
       "edge_fantasy": 3.66,
       "edge_z": 0.372
-    },
-    {
-      "player_id": 696100,
-      "name": "Hunter Goodman",
-      "position": "C",
-      "team_id": 115,
-      "team_abbr": "COL",
-      "opp_abbr": "LAD",
-      "opp_team_id": 119,
-      "opp_pitcher": {
-        "id": 808963,
-        "fullName": "Roki Sasaki"
-      },
-      "park": {
-        "id": 19,
-        "name": "Coors Field",
-        "runs": 116,
-        "hr": 118,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 9.71,
-      "mean_efp": 7.73,
-      "stats_games": 15,
-      "efp": 10.1,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.8,
-        "doubles": 1.14,
-        "triples": 0.06,
-        "home_runs": 3.6,
-        "bb_hbp": 0.94,
-        "r": 2.34,
-        "rbi": 1.44,
-        "sb": 0.2
-      },
-      "multipliers": {
-        "park_hr": 1.18,
-        "park_runs": 1.16,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.001,
-        "pitcher_hr": 1.19,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.09,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1499,
-        "doubles": 0.0569,
-        "triples": 0.002,
-        "home_runs": 0.0901,
-        "bb_hbp": 0.1174,
-        "r_per_pa": 0.293,
-        "rbi_per_pa": 0.1802
-      },
-      "pa": 4.0,
-      "tier": "low",
-      "prizepicks": {
-        "total_bases": 4.5,
-        "hrr": 1.5,
-        "hits": 1.5,
-        "rbis": 1.5,
-        "runs": 1.5,
-        "strikeouts": 1.5,
-        "doubles": 0.5,
-        "home_runs": 0.5,
-        "singles": 0.5,
-        "walks": 0.5
-      }
     },
     {
       "player_id": 641355,
@@ -1413,7 +1540,11 @@
         "hr": 118,
         "label": "Hitter Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Sunny",
+        "temp": "67",
+        "wind": "5 mph, R To L"
+      },
       "pa_source": "default",
       "stdev_efp": 10.57,
       "mean_efp": 10.38,
@@ -1586,7 +1717,11 @@
         "hr": 118,
         "label": "Hitter Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Sunny",
+        "temp": "67",
+        "wind": "5 mph, R To L"
+      },
       "pa_source": "default",
       "stdev_efp": 4.92,
       "mean_efp": 6.07,
@@ -1653,93 +1788,6 @@
       },
       "edge_fantasy": 1.2,
       "edge_z": 0.244
-    },
-    {
-      "player_id": 676475,
-      "name": "Alec Burleson",
-      "position": "1B",
-      "team_id": 138,
-      "team_abbr": "STL",
-      "opp_abbr": "HOU",
-      "opp_team_id": 117,
-      "opp_pitcher": {
-        "id": 681347,
-        "fullName": "Mike Burrows"
-      },
-      "park": {
-        "id": 2392,
-        "name": "Minute Maid Park",
-        "runs": 103,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 6.68,
-      "mean_efp": 7.86,
-      "stats_games": 14,
-      "efp": 9.69,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.49,
-        "doubles": 1.63,
-        "triples": 0.07,
-        "home_runs": 1.8,
-        "bb_hbp": 0.87,
-        "r": 2.59,
-        "rbi": 1.4,
-        "sb": 0.2
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.246,
-        "pitcher_hr": 1.198,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.916,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.938,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.2078,
-        "doubles": 0.0815,
-        "triples": 0.0021,
-        "home_runs": 0.045,
-        "bb_hbp": 0.1094,
-        "r_per_pa": 0.3243,
-        "rbi_per_pa": 0.1752
-      },
-      "pa": 4.0,
-      "tier": "low",
-      "prizepicks": {
-        "fantasy": 5.5,
-        "hrr": 4.5,
-        "total_bases": 4.5,
-        "hits": 1.5,
-        "strikeouts": 0.5,
-        "rbis": 1.5,
-        "runs": 1.5,
-        "singles": 0.5,
-        "doubles": 0.5,
-        "home_runs": 0.5,
-        "walks": 0.5
-      },
-      "edge_fantasy": 4.19,
-      "edge_z": 0.627
     },
     {
       "player_id": 669003,
@@ -1852,7 +1900,11 @@
         "hr": 118,
         "label": "Hitter Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Sunny",
+        "temp": "67",
+        "wind": "5 mph, R To L"
+      },
       "pa_source": "default",
       "stdev_efp": 7.25,
       "mean_efp": 10.5,
@@ -1940,7 +1992,11 @@
         "hr": 118,
         "label": "Hitter Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Sunny",
+        "temp": "67",
+        "wind": "5 mph, R To L"
+      },
       "pa_source": "default",
       "stdev_efp": 7.58,
       "mean_efp": 9.47,
@@ -2096,6 +2152,98 @@
       },
       "edge_fantasy": 3.96,
       "edge_z": 0.409
+    },
+    {
+      "player_id": 802139,
+      "name": "JJ Wetherholt",
+      "position": "SS",
+      "team_id": 138,
+      "team_abbr": "STL",
+      "opp_abbr": "HOU",
+      "opp_team_id": 117,
+      "opp_pitcher": {
+        "id": 681347,
+        "fullName": "Mike Burrows"
+      },
+      "park": {
+        "id": 2392,
+        "name": "Minute Maid Park",
+        "runs": 103,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.57,
+      "mean_efp": 8.29,
+      "stats_games": 14,
+      "efp": 9.41,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.3,
+        "doubles": 0.66,
+        "triples": 0.07,
+        "home_runs": 1.74,
+        "bb_hbp": 1.33,
+        "r": 2.32,
+        "rbi": 1.28,
+        "sb": 1.06
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.03,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.246,
+        "pitcher_hr": 1.198,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.916,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.938,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.85,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1779,
+        "doubles": 0.0307,
+        "triples": 0.002,
+        "home_runs": 0.0404,
+        "bb_hbp": 0.1546,
+        "r_per_pa": 0.2696,
+        "rbi_per_pa": 0.1483
+      },
+      "pa": 4.3,
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 5.5,
+        "hrr": 1.5,
+        "total_bases": 3.5,
+        "hits": 1.5,
+        "rbis": 1.5,
+        "runs": 1.5,
+        "singles": 0.5,
+        "strikeouts": 1.5,
+        "doubles": 0.5,
+        "home_runs": 0.5,
+        "stolen_bases": 0.5,
+        "walks": 0.5
+      },
+      "edge_fantasy": 3.91,
+      "edge_z": 0.517
     },
     {
       "player_id": 663538,
@@ -2364,90 +2512,6 @@
       "edge_z": 0.511
     },
     {
-      "player_id": 543877,
-      "name": "Christian V\u00e1zquez",
-      "position": "C",
-      "team_id": 117,
-      "team_abbr": "HOU",
-      "opp_abbr": "STL",
-      "opp_team_id": 138,
-      "opp_pitcher": {
-        "id": 669461,
-        "fullName": "Matthew Liberatore"
-      },
-      "park": {
-        "id": 2392,
-        "name": "Minute Maid Park",
-        "runs": 103,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 5.87,
-      "mean_efp": 12.17,
-      "stats_games": 6,
-      "efp": 9.25,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.12,
-        "doubles": 1.71,
-        "triples": 0.09,
-        "home_runs": 1.97,
-        "bb_hbp": 0.6,
-        "r": 2.62,
-        "rbi": 1.44,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.114,
-        "pitcher_hr": 1.237,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.01,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1765,
-        "doubles": 0.0856,
-        "triples": 0.0029,
-        "home_runs": 0.0493,
-        "bb_hbp": 0.0751,
-        "r_per_pa": 0.3281,
-        "rbi_per_pa": 0.1803
-      },
-      "pa": 4.0,
-      "tier": "low",
-      "prizepicks": {
-        "hrr": 4.5,
-        "total_bases": 3.5,
-        "rbis": 2.5,
-        "hits": 1.5,
-        "strikeouts": 1.5,
-        "doubles": 0.5,
-        "home_runs": 0.5,
-        "runs": 0.5,
-        "singles": 0.5,
-        "walks": 0.5
-      }
-    },
-    {
       "player_id": 500743,
       "name": "Miguel Rojas",
       "position": "2B",
@@ -2466,7 +2530,11 @@
         "hr": 118,
         "label": "Hitter Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Sunny",
+        "temp": "67",
+        "wind": "5 mph, R To L"
+      },
       "pa_source": "default",
       "stdev_efp": 3.12,
       "mean_efp": 4.0,
@@ -2607,5 +2675,5 @@
       "edge_z": 0.433
     }
   ],
-  "generated_at": "2026-04-19T15:00:28.658999+00:00"
+  "generated_at": "2026-04-19T15:08:41.058175+00:00"
 }

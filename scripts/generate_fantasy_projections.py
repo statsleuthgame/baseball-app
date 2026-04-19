@@ -118,6 +118,84 @@ def _append_pp_line_log(payload: dict) -> None:
     logger.info("pp_line_log: appended %d records → %s", written, log_path.name)
 
 
+TOP_LOCK_COUNT = 10
+
+
+def _maybe_write_daily_lock(payload: dict) -> None:
+    """Write frontend/public/data/fantasy/todays_picks_lock.json with the
+    top-N confidence picks for today. Only overwrites when the date
+    changes (i.e. once per day, on the first cron run that sees
+    confidence badges). The frontend renders this as a locked "Today's
+    Picks Tracker" that persists through games and stays visible when
+    Final."""
+    game_date = payload.get("date")
+    if not game_date:
+        return
+
+    # Find confidence picks (edge_z populated) from the UNTRIMMED slate
+    # so we get the real top-10 by edge-z, not just the top-30 UI slice.
+    slate = payload.get("_all_projections") or payload.get("projections") or []
+    confidence_picks = [
+        p for p in slate if isinstance(p.get("edge_z"), (int, float))
+    ]
+    if not confidence_picks:
+        logger.info("daily_picks_lock: no confidence picks yet — no lock written")
+        return
+
+    # Sort by edge_z desc and take top N with positive edge (skip FADEs).
+    confidence_picks.sort(key=lambda p: p["edge_z"], reverse=True)
+    top_picks = [p for p in confidence_picks if p["edge_z"] >= 0][:TOP_LOCK_COUNT]
+    if not top_picks:
+        logger.info("daily_picks_lock: no positive-edge picks today — no lock written")
+        return
+
+    lock_path = OUT_DIR / "todays_picks_lock.json"
+    # Preserve the existing lock if it's for the same date.
+    if lock_path.exists():
+        try:
+            prior = json.loads(lock_path.read_text())
+            if prior.get("game_date") == game_date:
+                logger.info("daily_picks_lock: already locked for %s — preserving",
+                            game_date)
+                return
+        except Exception:
+            pass  # malformed → we'll overwrite it
+
+    # Strip fields the tracker UI doesn't need (multipliers, rates, etc.)
+    # Keep just what renders in the tracker card.
+    def trim(p: dict) -> dict:
+        return {
+            "player_id": p.get("player_id"),
+            "name": p.get("name"),
+            "position": p.get("position"),
+            "bat_side": p.get("bat_side"),
+            "team_id": p.get("team_id"),
+            "team_abbr": p.get("team_abbr"),
+            "opp_abbr": p.get("opp_abbr"),
+            "opp_pitcher": p.get("opp_pitcher"),
+            "pa": p.get("pa"),
+            "pa_source": p.get("pa_source"),
+            "efp": p.get("efp"),
+            "tier": p.get("tier"),
+            "stdev_efp": p.get("stdev_efp"),
+            "mean_efp": p.get("mean_efp"),
+            "stats_games": p.get("stats_games"),
+            "prizepicks": p.get("prizepicks"),
+            "edge_fantasy": p.get("edge_fantasy"),
+            "edge_z": p.get("edge_z"),
+        }
+
+    lock = {
+        "game_date": game_date,
+        "locked_at": payload.get("generated_at") or datetime.now(timezone.utc).isoformat(),
+        "weights_version": payload.get("weights_version"),
+        "count": len(top_picks),
+        "picks": [trim(p) for p in top_picks],
+    }
+    lock_path.write_text(json.dumps(lock, indent=2) + "\n")
+    logger.info("daily_picks_lock: wrote %d locked picks → %s", len(top_picks), lock_path.name)
+
+
 async def generate(date_iso: str | None) -> None:
     target = date_iso or date_cls.today().isoformat()
     logger.info("Building projections for %s", target)
@@ -150,6 +228,17 @@ async def generate(date_iso: str | None) -> None:
         _append_pp_line_log(payload)
     except Exception as e:
         logger.warning("pp_line_log: append failed (%s) — continuing", e)
+
+    # Lock today's confidence picks once we have any. This freezes the
+    # picks the user saw this morning so the UI can show their live
+    # in-game + final scores all day, even if subsequent crons shuffle
+    # the order. Only writes if:
+    #   1. We have ≥1 pick with a confidence badge (edge_z populated), AND
+    #   2. The existing lock file is for a different date (previous day).
+    try:
+        _maybe_write_daily_lock(payload)
+    except Exception as e:
+        logger.warning("daily_picks_lock: write failed (%s) — continuing", e)
 
     await mlb_api.close_client()
 

@@ -833,6 +833,19 @@ export const fetchFantasyProjections = async () => {
   }
 };
 
+// Today's locked confidence picks (written once per day by the first
+// cron run that sees edge-z badges). Persists through games + final so
+// the user can track their morning picks live all day without them
+// shuffling or disappearing as the feed updates. Returns null when no
+// lock exists yet (e.g. pre-PP-lines-posting morning).
+export const fetchTodaysPicksLock = async () => {
+  try {
+    return await staticFetch("fantasy/todays_picks_lock.json");
+  } catch {
+    return null;
+  }
+};
+
 // ---- Live data (MLB Stats API, called directly from browser) ----
 export const fetchTodayGame = async (teamId) => {
   const today = new Date();
