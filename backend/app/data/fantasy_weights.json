@@ -3,6 +3,8 @@
   "calibrated": true,
   "l7_blend": 0.2,
   "l7_min_pa": 10,
+  "platoon_blend": 0.20,
+  "platoon_min_pa": 30,
   "bvp_blend": 0.0,
   "bvp_min_pa": 20,
   "bvp_blend_ramp_floor": 5,
@@ -15,6 +17,16 @@
   "pa_ceil": 5.2,
   "tier_high": 13.0,
   "tier_medium": 11.4,
+  "lineup_slot_r_mult": {
+    "1": 1.15, "2": 1.10, "3": 1.05,
+    "4": 0.95, "5": 0.90, "6": 0.88,
+    "7": 0.85, "8": 0.82, "9": 0.80
+  },
+  "lineup_slot_rbi_mult": {
+    "1": 0.70, "2": 0.85, "3": 1.20,
+    "4": 1.25, "5": 1.15, "6": 1.00,
+    "7": 0.90, "8": 0.85, "9": 0.80
+  },
   "metrics": {
     "r2": 0.1245,
     "mae": 4.8428,

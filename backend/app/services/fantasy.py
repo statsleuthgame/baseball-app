@@ -336,6 +336,9 @@ def project_hitter_points(
     projected_pa: float,
     weights: dict,
     bat_side: str | None = None,
+    pitcher_rates: dict | None = None,
+    lineup_slot: int | None = None,
+    platoon_rates: dict | None = None,
 ) -> dict:
     """
     Pure projection function. Returns a dict:
@@ -348,12 +351,21 @@ def project_hitter_points(
           "tier": "high"|"medium"|"low",
         }
     """
-    # 1. Base rate blend (L7 + season)
+    # 1. Base rate blend (L7 + season + platoon-vs-hand when known).
     def blend(key: str) -> float:
         season_v = getattr(season_rates, key)
         l7_v = getattr(l7_rates, key) if l7_rates else 0.0
         l7_pa = l7_rates.pa if l7_rates else 0
-        return _blend_l7(season_v, l7_v, l7_pa, weights)
+        base = _blend_l7(season_v, l7_v, l7_pa, weights)
+        # Platoon blend — batter's rate vs the opposing pitcher's hand.
+        # Applied as an additional weighted blend on top of the season+L7
+        # output: new = (1 - pb) * base + pb * platoon_v, when sample is
+        # big enough (platoon_rates only populated when PA ≥ 30).
+        if platoon_rates and key in platoon_rates:
+            pb = float(weights.get("platoon_blend", 0.20))
+            platoon_v = float(platoon_rates.get(key) or 0.0)
+            base = (1.0 - pb) * base + pb * platoon_v
+        return base
 
     singles = blend("singles")
     doubles = blend("doubles")
@@ -394,6 +406,15 @@ def project_hitter_points(
     weather_hr = _weather_hr_multiplier(weather, bat_side=bat_side)
     home_runs *= weather_hr
 
+    # 4b. Opposing pitcher quality — shrinks / amplifies hit rates based on
+    # the pitcher's season H/BF and HR/BF vs league average. Unknown pitcher
+    # returns (1.0, 1.0) so the projection is unchanged.
+    pitcher_hits_mult, pitcher_hr_mult = _pitcher_multipliers(pitcher_rates, league_rates)
+    singles *= pitcher_hits_mult
+    doubles *= pitcher_hits_mult
+    triples *= pitcher_hits_mult
+    home_runs *= pitcher_hr_mult
+
     # 5. R and RBI projections — OBP / SLG proxies
     r_coef = float(weights.get("r_per_pa_coef", 0.35))
     rbi_coef = float(weights.get("rbi_per_pa_coef", 0.25))
@@ -405,6 +426,20 @@ def project_hitter_points(
         slg_base = (1.0 - blend_r) * slg_base + blend_r * (l7_rates.slg or 0.0)
     r_per_pa = obp_base * r_coef
     rbi_per_pa = slg_base * rbi_coef
+
+    # Lineup-slot adjustment. Cleanup / middle-of-order batters see more
+    # RBI opportunities; top-of-order batters score more runs. Leaves rate
+    # unchanged when slot is unknown. Weights live in fantasy_weights.json
+    # and can be recalibrated from the backtest in Phase E.
+    slot_r_mult = 1.0
+    slot_rbi_mult = 1.0
+    if lineup_slot is not None:
+        r_table = weights.get("lineup_slot_r_mult") or {}
+        rbi_table = weights.get("lineup_slot_rbi_mult") or {}
+        slot_r_mult = float(r_table.get(str(int(lineup_slot)), 1.0))
+        slot_rbi_mult = float(rbi_table.get(str(int(lineup_slot)), 1.0))
+    r_per_pa *= slot_r_mult
+    rbi_per_pa *= slot_rbi_mult
 
     # 6. PA and final EFP
     pa = _clamp_pa(projected_pa, weights)
@@ -440,6 +475,10 @@ def project_hitter_points(
             "park_hr": round(park_hr, 3),
             "park_runs": round(park_runs, 3),
             "weather_hr": round(weather_hr, 3),
+            "pitcher_hits": round(pitcher_hits_mult, 3),
+            "pitcher_hr": round(pitcher_hr_mult, 3),
+            "slot_r": round(slot_r_mult, 3),
+            "slot_rbi": round(slot_rbi_mult, 3),
         },
         "rates": {
             "singles": round(singles, 4),
@@ -470,6 +509,12 @@ def _today_iso() -> str:
     return date.today().isoformat()
 
 
+async def _noop_none():
+    """Returns None. Used as a no-op filler inside asyncio.gather when a
+    conditional awaitable would otherwise short the tuple unpacking."""
+    return None
+
+
 async def _fetch_season_stats(player_id: int, season: int) -> dict | None:
     cache_key = f"fantasy:seasonStats:{player_id}:{season}"
     cached = cache_get(cache_key)
@@ -484,6 +529,171 @@ async def _fetch_season_stats(player_id: int, season: int) -> dict | None:
     if stat:
         cache_set(cache_key, stat, _SEASON_STATS_TTL)
     return stat
+
+
+async def _fetch_pitcher_rates(player_id: int, season: int) -> dict | None:
+    """
+    Return the opposing pitcher's season per-BF rates, or None if unknown.
+    Used to adjust hitter base rates based on pitcher quality (Phase A of
+    the richer-features model).
+
+    Shape: { "h_per_bf": float, "hr_per_bf": float, "k_per_bf": float,
+             "bb_per_bf": float, "bf": int }
+    """
+    if not player_id:
+        return None
+    cache_key = f"fantasy:pitcherRates:{player_id}:{season}"
+    cached = cache_get(cache_key)
+    if cached is not None:
+        return cached or None  # sentinel empty dict means "known unknown"
+    data = await mlb_api.fetch(
+        f"/people/{player_id}/stats",
+        params={"stats": "season", "group": "pitching", "season": season},
+    )
+    splits = (data.get("stats") or [{}])[0].get("splits") or []
+    stat = splits[0].get("stat") if splits else None
+    if not stat:
+        cache_set(cache_key, {}, _SEASON_STATS_TTL)
+        return None
+
+    def f(key: str) -> float:
+        v = stat.get(key)
+        if v is None or v == "":
+            return 0.0
+        try:
+            return float(v)
+        except (TypeError, ValueError):
+            return 0.0
+
+    # Batters faced: MLB returns `battersFaced`; fall back to plate appearances
+    # and then to IP-derived estimate (IP × 4.3) as last resort.
+    bf = int(f("battersFaced") or f("plateAppearances") or 0)
+    if bf < 10:
+        ip = f("inningsPitched")
+        if ip > 0:
+            bf = int(round(ip * 4.3))
+    if bf < 10:
+        # Not enough data to project from — signal unknown.
+        cache_set(cache_key, {}, _SEASON_STATS_TTL)
+        return None
+
+    rates = {
+        "h_per_bf": f("hits") / bf if bf else 0.0,
+        "hr_per_bf": f("homeRuns") / bf if bf else 0.0,
+        "k_per_bf": f("strikeOuts") / bf if bf else 0.0,
+        "bb_per_bf": f("baseOnBalls") / bf if bf else 0.0,
+        "bf": bf,
+    }
+    cache_set(cache_key, rates, _SEASON_STATS_TTL)
+    return rates
+
+
+# Multiplier caps — clamp extreme pitcher matchups so no single batter's
+# projection is overwhelmed by the pitcher term. Values picked so a very
+# bad pitcher (2× league HR rate) caps at ~+35%.
+_PITCHER_HITS_MULT_CAP = 0.30
+_PITCHER_HR_MULT_CAP = 0.35
+_PITCHER_MIN_BF_FOR_TRUST = 60  # shrink toward 1.0 below this
+
+
+def _pitcher_multipliers(
+    pitcher_rates: dict | None, league_rates: dict
+) -> tuple[float, float]:
+    """
+    Return (hit_rate_mult, hr_rate_mult) applied on top of park/weather.
+    Degrades gracefully:
+      - Unknown pitcher → (1.0, 1.0)
+      - Small sample (< 60 BF) → shrink toward 1.0 by the sample-size ratio.
+    """
+    if not pitcher_rates:
+        return 1.0, 1.0
+    pp = league_rates.get("pitcher_per_bf", {})
+    lg_h = float(pp.get("hits_allowed", 0.222)) or 0.222
+    lg_hr = float(pp.get("home_runs_allowed", 0.029)) or 0.029
+    p_h = pitcher_rates.get("h_per_bf") or 0.0
+    p_hr = pitcher_rates.get("hr_per_bf") or 0.0
+    if p_h <= 0 or p_hr <= 0:
+        return 1.0, 1.0
+
+    # Inverted ratio — a pitcher ALLOWING fewer hits suppresses batter hit
+    # rates. Exponent < 1 softens the effect (most of the variance in
+    # pitcher H/BF is noise; we don't want to fully trust the raw ratio).
+    raw_hits_mult = (p_h / lg_h) ** 0.6
+    raw_hr_mult = (p_hr / lg_hr) ** 0.7
+
+    # Sample-size shrink: below 60 BF, pull the multiplier toward 1.0.
+    bf = pitcher_rates.get("bf") or 0
+    trust = min(1.0, bf / _PITCHER_MIN_BF_FOR_TRUST)
+    hits_mult = 1.0 + trust * (raw_hits_mult - 1.0)
+    hr_mult = 1.0 + trust * (raw_hr_mult - 1.0)
+
+    # Cap extremes.
+    hits_mult = max(1.0 - _PITCHER_HITS_MULT_CAP, min(1.0 + _PITCHER_HITS_MULT_CAP, hits_mult))
+    hr_mult = max(1.0 - _PITCHER_HR_MULT_CAP, min(1.0 + _PITCHER_HR_MULT_CAP, hr_mult))
+    return hits_mult, hr_mult
+
+
+async def _fetch_pitcher_hand(player_id: int) -> str | None:
+    """
+    Return pitcher's throwing hand ('L' or 'R'). Cached 24h.
+    Uses /people/{id}.pitchHand.code.
+    """
+    if not player_id:
+        return None
+    cache_key = f"fantasy:pitchHand:{player_id}"
+    cached = cache_get(cache_key)
+    if cached is not None:
+        return cached or None
+    data = await mlb_api.fetch(f"/people/{player_id}")
+    people = data.get("people") or []
+    if not people:
+        cache_set(cache_key, "", 60 * 60 * 24)
+        return None
+    hand = (people[0].get("pitchHand") or {}).get("code")
+    value = hand if hand in ("L", "R") else ""
+    cache_set(cache_key, value, 60 * 60 * 24)
+    return value or None
+
+
+async def _fetch_platoon_split(player_id: int, season: int, vs_hand: str) -> dict | None:
+    """
+    Return the batter's per-PA rates vs pitchers of the given hand ('L' or
+    'R') for the current season, or None if no usable sample.
+
+    Uses MLB's statSplits with sitCode=vl (vs lefty) or vr (vs righty).
+    """
+    if not player_id or vs_hand not in ("L", "R"):
+        return None
+    code = "vl" if vs_hand == "L" else "vr"
+    cache_key = f"fantasy:platoon:{player_id}:{season}:{code}"
+    cached = cache_get(cache_key)
+    if cached is not None:
+        return cached or None
+
+    data = await mlb_api.fetch(
+        f"/people/{player_id}/stats",
+        params={
+            "stats": "statSplits",
+            "sitCodes": code,
+            "group": "hitting",
+            "season": season,
+        },
+    )
+    splits = (data.get("stats") or [{}])[0].get("splits") or []
+    stat = splits[0].get("stat") if splits else None
+    if not stat:
+        cache_set(cache_key, {}, 60 * 60 * 12)
+        return None
+
+    rates_obj = derive_rates_from_stat(stat)
+    # Below 30 PA, splits are too noisy to meaningfully blend in.
+    if rates_obj.pa < 30:
+        cache_set(cache_key, {}, 60 * 60 * 12)
+        return None
+
+    platoon = rates_obj.as_dict()
+    cache_set(cache_key, platoon, 60 * 60 * 12)
+    return platoon
 
 
 async def _fetch_bat_side(player_id: int) -> str | None:
@@ -585,22 +795,25 @@ def _extract_lineup_ids(lineups: dict | None, side: str) -> list[int]:
     return []
 
 
-def _projected_pa(lineup_ids: list[int], batter_id: int, weights: dict) -> tuple[float, str]:
-    """Return (projected_pa, source). Source is 'lineup' or 'default'."""
+def _projected_pa(lineup_ids: list[int], batter_id: int, weights: dict) -> tuple[float, str, int | None]:
+    """
+    Return (projected_pa, source, slot). Source is 'lineup' or 'default';
+    slot is the 1-based batting order position when known, else None.
+    """
     default = float(weights.get("default_pa", 4.0))
     if not lineup_ids:
-        return default, "default"
+        return default, "default", None
     try:
         idx = lineup_ids.index(int(batter_id))  # 0-based
     except ValueError:
-        return default, "default"
+        return default, "default", None
     slot = idx + 1
     adj = float(weights.get("lineup_pa_adj", 0.30))
     if slot <= 3:
-        return default + adj, "lineup"
+        return default + adj, "lineup", slot
     if slot >= 7:
-        return default - adj, "lineup"
-    return default, "lineup"
+        return default - adj, "lineup", slot
+    return default, "lineup", slot
 
 
 async def _build_game_context(g: dict) -> dict:
@@ -653,10 +866,13 @@ async def _project_batter(
     opp_abbr: str,
     opp_team_id: int,
     opp_pitcher: dict | None,
+    opp_pitcher_rates: dict | None,
+    opp_pitcher_hand: str | None,
     park: dict,
     weather: dict | None,
     projected_pa: float,
     pa_source: str,
+    lineup_slot: int | None,
     weights: dict,
     league_rates: dict,
     semaphore: asyncio.Semaphore,
@@ -670,6 +886,15 @@ async def _project_batter(
                 _fetch_bat_side(pid),
                 return_exceptions=False,
             )
+            # Platoon split (vs pitcher hand) — only attempt if we know the
+            # opposing pitcher's throwing hand; cached per batter × season ×
+            # hand so this is one call max per batter per day.
+            platoon_rates = None
+            if opp_pitcher_hand in ("L", "R"):
+                try:
+                    platoon_rates = await _fetch_platoon_split(pid, season, opp_pitcher_hand)
+                except Exception:
+                    platoon_rates = None
         except Exception as e:
             logger.warning("fantasy: fetch failed for %s: %s", player.get("id"), e)
             return None
@@ -692,6 +917,9 @@ async def _project_batter(
         projected_pa=projected_pa,
         weights=weights,
         bat_side=bat_side,
+        pitcher_rates=opp_pitcher_rates,
+        lineup_slot=lineup_slot,
+        platoon_rates=platoon_rates,
     )
 
     return {
@@ -751,14 +979,27 @@ async def project_slate(date_iso: str | None = None, season: int | None = None) 
         lineup_away = _extract_lineup_ids(g.get("lineups"), "away")
         lineup_home = _extract_lineup_ids(g.get("lineups"), "home")
 
-        # Fetch rosters (so we have someone to project when no lineup yet).
+        # Fetch rosters + both probable pitchers' season rates + both
+        # pitchers' throwing hands in parallel. Each per-pitcher call is
+        # cached (rates 30 min, hand 24h) so repeats across batters in the
+        # same game are free.
+        home_sp_id = (g["home"]["probablePitcher"] or {}).get("id")
+        away_sp_id = (g["away"]["probablePitcher"] or {}).get("id")
         try:
-            away_batters, home_batters = await asyncio.gather(
+            (
+                away_batters, home_batters,
+                home_sp_rates, away_sp_rates,
+                home_sp_hand, away_sp_hand,
+            ) = await asyncio.gather(
                 _fetch_roster(g["away"]["id"], season),
                 _fetch_roster(g["home"]["id"], season),
+                _fetch_pitcher_rates(home_sp_id, season) if home_sp_id else _noop_none(),
+                _fetch_pitcher_rates(away_sp_id, season) if away_sp_id else _noop_none(),
+                _fetch_pitcher_hand(home_sp_id) if home_sp_id else _noop_none(),
+                _fetch_pitcher_hand(away_sp_id) if away_sp_id else _noop_none(),
             )
         except Exception as e:
-            logger.warning("fantasy: roster fetch failed for game %s: %s", g.get("gamePk"), e)
+            logger.warning("fantasy: roster/pitcher fetch failed for game %s: %s", g.get("gamePk"), e)
             continue
 
         # If lineup exists, project only lineup hitters (the real 9). If
@@ -767,26 +1008,32 @@ async def project_slate(date_iso: str | None = None, season: int | None = None) 
         home_pool = [p for p in home_batters if (not lineup_home) or int(p.get("id")) in lineup_home]
 
         for p in away_pool:
-            proj_pa, pa_source = _projected_pa(lineup_away, int(p.get("id")), weights)
+            proj_pa, pa_source, slot = _projected_pa(lineup_away, int(p.get("id")), weights)
             tasks.append(_project_batter(
                 player=p, season=season,
                 team_abbr=g["away"]["abbreviation"], team_id=g["away"]["id"],
                 opp_abbr=g["home"]["abbreviation"], opp_team_id=g["home"]["id"],
                 opp_pitcher=g["home"]["probablePitcher"],
+                opp_pitcher_rates=home_sp_rates,
+                opp_pitcher_hand=home_sp_hand,
                 park=park, weather=g.get("weather"),
                 projected_pa=proj_pa, pa_source=pa_source,
+                lineup_slot=slot,
                 weights=weights, league_rates=league_rates,
                 semaphore=semaphore,
             ))
         for p in home_pool:
-            proj_pa, pa_source = _projected_pa(lineup_home, int(p.get("id")), weights)
+            proj_pa, pa_source, slot = _projected_pa(lineup_home, int(p.get("id")), weights)
             tasks.append(_project_batter(
                 player=p, season=season,
                 team_abbr=g["home"]["abbreviation"], team_id=g["home"]["id"],
                 opp_abbr=g["away"]["abbreviation"], opp_team_id=g["away"]["id"],
                 opp_pitcher=g["away"]["probablePitcher"],
+                opp_pitcher_rates=away_sp_rates,
+                opp_pitcher_hand=away_sp_hand,
                 park=park, weather=g.get("weather"),
                 projected_pa=proj_pa, pa_source=pa_source,
+                lineup_slot=slot,
                 weights=weights, league_rates=league_rates,
                 semaphore=semaphore,
             ))

@@ -89,7 +89,11 @@ def test_season_only_batter_no_l7(weights, league):
     assert result["rates"]["singles"] == pytest.approx(season.singles, abs=1e-6)
     assert result["rates"]["home_runs"] == pytest.approx(season.home_runs, abs=1e-6)
     # All multipliers neutral
-    assert result["multipliers"] == {"park_hr": 1.0, "park_runs": 1.0, "weather_hr": 1.0}
+    assert result["multipliers"]["park_hr"] == 1.0
+    assert result["multipliers"]["park_runs"] == 1.0
+    assert result["multipliers"]["weather_hr"] == 1.0
+    assert result["multipliers"]["pitcher_hits"] == 1.0
+    assert result["multipliers"]["pitcher_hr"] == 1.0
 
 
 def test_l7_shrinks_toward_season(weights, league):
@@ -433,6 +437,180 @@ def test_efp_scoring_sanity():
     rbi_coef = weights["rbi_per_pa_coef"]
     expected = 4 * (3 * 0.1 + 2 * (0.300 * r_coef) + 2 * (0.350 * rbi_coef))
     assert result["efp"] == pytest.approx(expected, abs=0.01)
+
+
+def test_pitcher_quality_neutral_when_unknown(weights, league):
+    """No opposing pitcher rates → (1.0, 1.0), projection unchanged."""
+    season = _avg_rates()
+    with_pitcher = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=weights,
+        pitcher_rates=None,
+    )
+    assert with_pitcher["multipliers"]["pitcher_hits"] == pytest.approx(1.0)
+    assert with_pitcher["multipliers"]["pitcher_hr"] == pytest.approx(1.0)
+
+
+def test_tough_pitcher_suppresses_rates(weights, league):
+    """Pitcher allowing less than league average drags hit rates down."""
+    season = _avg_rates()
+    # League: h/bf ≈ 0.222, hr/bf ≈ 0.029. Ace allows .180 / .020 (stingy).
+    ace = {"h_per_bf": 0.180, "hr_per_bf": 0.020, "bf": 600}
+    result = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=weights,
+        pitcher_rates=ace,
+    )
+    assert result["multipliers"]["pitcher_hits"] < 1.0
+    assert result["multipliers"]["pitcher_hr"] < 1.0
+    # Cap should hold — no worse than -30% on hits, -35% on HR
+    assert result["multipliers"]["pitcher_hits"] >= 1.0 - 0.30
+    assert result["multipliers"]["pitcher_hr"] >= 1.0 - 0.35
+
+
+def test_bad_pitcher_amplifies_rates(weights, league):
+    """Pitcher allowing MORE than league average boosts hit rates."""
+    season = _avg_rates()
+    batter_practice = {"h_per_bf": 0.290, "hr_per_bf": 0.050, "bf": 400}
+    result = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=weights,
+        pitcher_rates=batter_practice,
+    )
+    assert result["multipliers"]["pitcher_hits"] > 1.0
+    assert result["multipliers"]["pitcher_hr"] > 1.0
+    assert result["multipliers"]["pitcher_hits"] <= 1.30 + 1e-6
+    assert result["multipliers"]["pitcher_hr"] <= 1.35 + 1e-6
+
+
+def test_small_sample_pitcher_shrinks_toward_neutral(weights, league):
+    """
+    A pitcher with very few batters faced has their multiplier pulled
+    toward 1.0 vs the same rates with a full sample. The extreme
+    small-sample rates shouldn't produce as big a swing as a large-sample
+    pitcher with the exact same ratios.
+    """
+    season = _avg_rates()
+    # Same per-BF rates, different BF counts.
+    small_sample = {"h_per_bf": 0.290, "hr_per_bf": 0.050, "bf": 20}
+    full_sample  = {"h_per_bf": 0.290, "hr_per_bf": 0.050, "bf": 600}
+
+    small = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=weights,
+        pitcher_rates=small_sample,
+    )
+    full = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=weights,
+        pitcher_rates=full_sample,
+    )
+    # Small-sample multipliers should be CLOSER to 1.0 than full-sample ones.
+    assert abs(small["multipliers"]["pitcher_hits"] - 1.0) < abs(full["multipliers"]["pitcher_hits"] - 1.0)
+    assert abs(small["multipliers"]["pitcher_hr"] - 1.0) < abs(full["multipliers"]["pitcher_hr"] - 1.0)
+
+
+def test_lineup_slot_cleanup_boosts_rbi(weights, league):
+    """Slot 4 (cleanup) boosts RBI production, slot 9 shrinks it."""
+    season = _avg_rates()
+    cleanup = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=weights, lineup_slot=4,
+    )
+    ninth = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=weights, lineup_slot=9,
+    )
+    assert cleanup["multipliers"]["slot_rbi"] > 1.0
+    assert ninth["multipliers"]["slot_rbi"] < 1.0
+    assert cleanup["per_event"]["rbi"] > ninth["per_event"]["rbi"]
+
+
+def test_lineup_slot_top_of_order_more_runs(weights, league):
+    """Slot 1 boosts R production vs slot 9."""
+    season = _avg_rates()
+    leadoff = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=weights, lineup_slot=1,
+    )
+    ninth = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=weights, lineup_slot=9,
+    )
+    assert leadoff["multipliers"]["slot_r"] > ninth["multipliers"]["slot_r"]
+    assert leadoff["per_event"]["r"] > ninth["per_event"]["r"]
+
+
+def test_platoon_rates_blend_into_base(weights, league):
+    """
+    When platoon_rates are provided (batter's actual vs-hand split), the
+    projection should move toward those rates by the platoon_blend weight.
+    """
+    season = _avg_rates()
+    # Batter with much better vs-R split than his season average
+    strong_vs_r = {
+        "singles": 0.180,     # way up from .144
+        "doubles": 0.060,     # up from .045
+        "triples": 0.004,
+        "home_runs": 0.060,   # up from .033
+        "bb_hbp": 0.110,      # up
+    }
+    with_platoon = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=weights,
+        platoon_rates=strong_vs_r,
+    )
+    without = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=weights,
+    )
+    # All the rates where the platoon is higher should tick up in projection
+    assert with_platoon["rates"]["singles"] > without["rates"]["singles"]
+    assert with_platoon["rates"]["home_runs"] > without["rates"]["home_runs"]
+    # Specific check: platoon_blend = 0.20, so new = 0.8 * season + 0.2 * platoon
+    pb = weights["platoon_blend"]
+    expected = (1 - pb) * season.singles + pb * 0.180
+    assert with_platoon["rates"]["singles"] == pytest.approx(expected, abs=5e-4)
+
+
+def test_platoon_none_leaves_rates_untouched(weights, league):
+    """platoon_rates=None → projection identical to baseline."""
+    season = _avg_rates()
+    with_none = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=weights,
+        platoon_rates=None,
+    )
+    baseline = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=weights,
+    )
+    assert with_none["efp"] == pytest.approx(baseline["efp"], abs=1e-6)
+
+
+def test_lineup_slot_none_is_neutral(weights, league):
+    """When slot is unknown (no lineup posted yet) the multiplier is 1.0."""
+    season = _avg_rates()
+    result = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=weights,
+    )
+    assert result["multipliers"]["slot_r"] == 1.0
+    assert result["multipliers"]["slot_rbi"] == 1.0
 
 
 def test_weather_helper_various_wind_strings():

@@ -13,5 +13,11 @@
   "obp": 0.314,
   "slg": 0.399,
   "ops": 0.713,
-  "sb_per_game": 0.155
+  "sb_per_game": 0.155,
+  "pitcher_per_bf": {
+    "hits_allowed": 0.222,
+    "home_runs_allowed": 0.029,
+    "walks_allowed": 0.085,
+    "strikeouts": 0.226
+  }
 }

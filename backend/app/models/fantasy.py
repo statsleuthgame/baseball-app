@@ -41,6 +41,10 @@ class Multipliers(BaseModel):
     park_hr: float
     park_runs: float
     weather_hr: float
+    pitcher_hits: Optional[float] = 1.0   # opposing pitcher hit-suppression
+    pitcher_hr:   Optional[float] = 1.0   # opposing pitcher HR-suppression
+    slot_r:       Optional[float] = 1.0   # lineup-slot R-opportunity adj
+    slot_rbi:     Optional[float] = 1.0   # lineup-slot RBI-opportunity adj
 
 
 class Rates(BaseModel):
