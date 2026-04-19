@@ -533,6 +533,47 @@ def test_lineup_slot_cleanup_boosts_rbi(weights, league):
     assert cleanup["per_event"]["rbi"] > ninth["per_event"]["rbi"]
 
 
+def test_sb_boost_top_of_order(weights, league):
+    """Leadoff's SB projection > slot 9's for the same speed baseline."""
+    speed = Rates(
+        singles=0.15, doubles=0.04, triples=0.01, home_runs=0.02,
+        bb_hbp=0.11, obp=0.350, slg=0.400, sb_per_game=0.25, pa=500,
+    )
+    leadoff = project_hitter_points(
+        season_rates=speed, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=weights, lineup_slot=1,
+    )
+    ninth = project_hitter_points(
+        season_rates=speed, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=weights, lineup_slot=9,
+    )
+    assert leadoff["per_event"]["sb"] > ninth["per_event"]["sb"]
+
+
+def test_sb_suppressed_vs_lhp(weights, league):
+    """LHP on the mound drops SB projection ~20%."""
+    speed = Rates(
+        singles=0.15, doubles=0.04, triples=0.01, home_runs=0.02,
+        bb_hbp=0.11, obp=0.350, slg=0.400, sb_per_game=0.25, pa=500,
+    )
+    vs_rhp = project_hitter_points(
+        season_rates=speed, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=weights,
+        pitcher_rates={"h_per_bf": 0.22, "hr_per_bf": 0.03, "bf": 500, "hand": "R"},
+    )
+    vs_lhp = project_hitter_points(
+        season_rates=speed, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=weights,
+        pitcher_rates={"h_per_bf": 0.22, "hr_per_bf": 0.03, "bf": 500, "hand": "L"},
+    )
+    # 20% hold
+    assert vs_lhp["per_event"]["sb"] == pytest.approx(vs_rhp["per_event"]["sb"] * 0.80, abs=1e-3)
+
+
 def test_lineup_slot_top_of_order_more_runs(weights, league):
     """Slot 1 boosts R production vs slot 9."""
     season = _avg_rates()

@@ -444,9 +444,34 @@ def project_hitter_points(
     # 6. PA and final EFP
     pa = _clamp_pa(projected_pa, weights)
 
-    sb_proj = (season_rates.sb_per_game or 0.0)
-    if l7_rates and l7_rates.sb_per_game:
-        sb_proj = (sb_proj + l7_rates.sb_per_game) / 2.0
+    # SB projection — weighted blend consistent with the other rates, plus
+    # two matchup multipliers:
+    #   - Opposing LHP suppresses SB rate ~20% (better pickoff + shorter lead)
+    #   - Lineup slots 1-2 boost SB rate (more baserunning opportunities); 7-9 shrink.
+    sb_season = season_rates.sb_per_game or 0.0
+    if l7_rates and l7_rates.pa >= weights.get("l7_min_pa", 10):
+        pb = float(weights.get("l7_blend", 0.30))
+        sb_proj = (1.0 - pb) * sb_season + pb * (l7_rates.sb_per_game or 0.0)
+    else:
+        sb_proj = sb_season
+
+    # Pitcher-hand SB hold: inferred from pitcher_rates (rates dict has
+    # no 'hand' field, so we pass it via weights-addressable sidecar).
+    # Simplest: let the orchestrator pass pitcher hand through. Use the
+    # platoon hand inference here via a new dedicated arg is cleaner —
+    # wiring that in a follow-up tweak. For now, apply slot + static pitcher.
+    sb_slot_mult = 1.0
+    if lineup_slot is not None:
+        sb_table = weights.get("lineup_slot_sb_mult") or {}
+        sb_slot_mult = float(sb_table.get(str(int(lineup_slot)), 1.0))
+    sb_proj *= sb_slot_mult
+
+    # LHP suppression — if the opposing pitcher's hand is exposed via
+    # pitcher_rates["hand"] (Phase B wiring sets this), apply it.
+    sb_pitcher_mult = 1.0
+    if pitcher_rates and pitcher_rates.get("hand") == "L":
+        sb_pitcher_mult = float(weights.get("sb_lhp_mult", 0.80))
+    sb_proj *= sb_pitcher_mult
 
     efp = pa * (
         PP_SCORING["single"] * singles
@@ -899,6 +924,15 @@ async def _project_batter(
             logger.warning("fantasy: fetch failed for %s: %s", player.get("id"), e)
             return None
 
+    # Attach pitcher hand to the rates dict so project_hitter_points
+    # can apply the LHP SB-suppression. Shallow-copy to avoid mutating
+    # the cached pitcher rates (which other batters share via cache).
+    pitcher_rates_with_hand = None
+    if opp_pitcher_rates is not None:
+        pitcher_rates_with_hand = {**opp_pitcher_rates}
+        if opp_pitcher_hand:
+            pitcher_rates_with_hand["hand"] = opp_pitcher_hand
+
     # Require at least 10 season PA to project at all — protects against
     # call-ups / rehabbers with zero context.
     if not season_stat or int(float(season_stat.get("plateAppearances") or 0)) < 10:
@@ -917,7 +951,7 @@ async def _project_batter(
         projected_pa=projected_pa,
         weights=weights,
         bat_side=bat_side,
-        pitcher_rates=opp_pitcher_rates,
+        pitcher_rates=pitcher_rates_with_hand or opp_pitcher_rates,
         lineup_slot=lineup_slot,
         platoon_rates=platoon_rates,
     )
