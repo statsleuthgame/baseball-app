@@ -39,21 +39,37 @@ export default function FantasyProjections({ myTeamsOnly = false }) {
   });
 
   // Live lineups — refetched every 5 minutes so scratches / late-posted
-  // lineups flow through while the user is on the page.
+  // lineups flow through while the user is on the page. Paused in
+  // background tabs to avoid stacking refetches on mobile.
   const { data: lineupsByTeam = {}, isFetched: lineupsFetched } = useQuery({
     queryKey: ["fantasy", "lineups"],
     queryFn: () => fetchTodayLineups(),
     staleTime: 5 * 60 * 1000,
     refetchInterval: 5 * 60 * 1000,
+    refetchIntervalInBackground: false,
   });
 
-  // Live in-progress fantasy scores — refetched every 60s. Absent from the
-  // map means the batter's game hasn't started (or has ended Final).
+  // Live in-progress fantasy scores. Previous version polled every 60s
+  // and fetched a full boxscore for EACH live/final game — on a full
+  // 15-game slate, that's ~15 MLB API hits per minute from the browser,
+  // ~1.5MB of JSON per minute per client. Mobile browsers choke.
+  //
+  // Mitigations:
+  //   1. Poll interval 60s → 120s (live games move slowly; 2 min is fine)
+  //   2. Pause in background tabs (refetchIntervalInBackground: false)
+  //   3. Time-gate: between 2 AM and 11 AM ET nothing's playing — no point
+  //      hitting MLB's API. Returns cached/empty without any network.
+  const hourET = new Date(
+    new Date().toLocaleString("en-US", { timeZone: "America/New_York" })
+  ).getHours();
+  const gameHoursActive = hourET >= 11 || hourET < 2; // 11 AM ET → 2 AM ET next day
   const { data: liveScoresByPlayer = {} } = useQuery({
     queryKey: ["fantasy", "liveScores"],
     queryFn: () => fetchLiveFantasyScores(),
-    staleTime: 60 * 1000,
-    refetchInterval: 60 * 1000,
+    staleTime: 120 * 1000,
+    refetchInterval: gameHoursActive ? 120 * 1000 : false,
+    refetchIntervalInBackground: false,
+    enabled: gameHoursActive,
   });
 
   // Today's locked picks — written by the first cron of each day that

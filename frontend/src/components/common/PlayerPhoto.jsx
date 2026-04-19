@@ -33,6 +33,8 @@ export default function PlayerPhoto({ playerId, name, size = 64, className = "" 
       src={url}
       alt={name || "Player"}
       className={`player-photo ${className}`}
+      loading="lazy"
+      decoding="async"
       style={{ width: size, height: size, borderRadius: "50%", objectFit: "cover" }}
       onError={() => setError(true)}
     />
