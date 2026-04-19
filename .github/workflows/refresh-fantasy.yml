@@ -1,0 +1,101 @@
+name: Refresh Fantasy (light, 4×/day)
+
+# Lightweight intraday workflow: re-runs generate_fantasy_projections.py
+# only (no generate_data.py Statcast pulls), commits any PP log /
+# projections / lock updates, rebuilds frontend, and deploys Pages.
+#
+# The heavy workflow (refresh-data.yml) still runs once at 6 AM ET and
+# handles the full Statcast cache refresh + data regen. This workflow
+# picks up PP line waves and code changes through the rest of the day
+# in ~3-5 min per run instead of ~30-40 min.
+
+on:
+  schedule:
+    - cron: '0 13 * * *'   #  9 AM ET — early PP lines posting
+    - cron: '0 15 * * *'   # 11 AM ET — midday PP line wave
+    - cron: '0 17 * * *'   #  1 PM ET — afternoon PP additions
+    - cron: '0 19 * * *'   #  3 PM ET — final snapshot before west-coast lockup
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: data-refresh   # share with refresh-data.yml so both don't trample
+  cancel-in-progress: false
+
+jobs:
+  generate-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: scripts/requirements.txt
+
+      - name: Install Python dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Restore Statcast cache (read-only)
+        # Needed by statcast_features.py for per-player parquet reads.
+        # Matches the cache key used by refresh-data.yml so both workflows
+        # share the same cache layer.
+        uses: actions/cache@v4
+        with:
+          path: .statcast_cache
+          key: statcast-cache-${{ hashFiles('scripts/generate_data.py') }}-${{ github.run_number }}
+          restore-keys: |
+            statcast-cache-${{ hashFiles('scripts/generate_data.py') }}-
+            statcast-cache-
+
+      - name: Regenerate fantasy projections
+        # Writes frontend/public/data/fantasy/projections_today.json +
+        # appends a snapshot row per projection to the dated JSONL log +
+        # writes/preserves todays_picks_lock.json.
+        run: python scripts/generate_fantasy_projections.py
+
+      - name: Commit PP line log + updated projections
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add backend/app/data/pp_line_log/*.jsonl 2>/dev/null || true
+          git add frontend/public/data/fantasy/projections_today.json 2>/dev/null || true
+          git add frontend/public/data/fantasy/todays_picks_lock.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "Nothing changed."
+          else
+            git commit -m "chore(fantasy): refresh $(date -u +%Y-%m-%dT%H:%MZ)"
+            git push
+          fi
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Build frontend
+        working-directory: frontend
+        run: npm run build
+
+      - name: Upload pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: frontend/dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
