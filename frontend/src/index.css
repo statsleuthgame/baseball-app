@@ -7832,6 +7832,48 @@ th.sb-ls-total {
   border-color: rgba(239, 68, 68, 0.3);
 }
 
+/* Confidence badge — derived from edge_z (# of stdevs projection exceeds
+   PP line). Primary signal for daily best bets. */
+.edge-conf-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+.edge-conf-badge .edge-conf-z {
+  font-size: 10px;
+  font-weight: 500;
+  opacity: 0.85;
+  letter-spacing: 0;
+}
+
+.edge-conf-badge.edge-conf-high {
+  background: rgba(34, 197, 94, 0.22);
+  color: #22c55e;
+  border-color: rgba(34, 197, 94, 0.45);
+}
+
+.edge-conf-badge.edge-conf-medium {
+  background: rgba(234, 179, 8, 0.18);
+  color: #eab308;
+  border-color: rgba(234, 179, 8, 0.35);
+}
+
+.edge-conf-badge.edge-conf-low {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-muted, #9ca3af);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
 /* Matchup-context rows inside the Breakdown panel — each piece stacks
    vertically so long weather / park strings wrap cleanly instead of
    pushing the card wider than its grid column. */

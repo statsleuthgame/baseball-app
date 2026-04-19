@@ -112,6 +112,10 @@ class ProjectionRow(BaseModel):
     rates: Rates
     prizepicks: Optional[PrizePicksLines] = None
     edge_fantasy: Optional[float] = None   # efp minus PP Hitter Fantasy Score line
+    edge_z: Optional[float] = None         # (efp - line) / stdev — # stdevs above line
+    stdev_efp: Optional[float] = None      # historical game-to-game stdev of EFP
+    mean_efp: Optional[float] = None       # historical mean EFP per game
+    stats_games: Optional[int] = 0         # backtest games used for stdev/mean
 
 
 class Metrics(BaseModel):

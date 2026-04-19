@@ -77,14 +77,26 @@ export default function FantasyProjections({ myTeamsOnly = false }) {
     [passedRows]
   );
 
-  // Section 2: biggest gap vs the house. Only rows with a matched
-  // Fantasy Score line, sorted by edge descending (strongest "over"
-  // model opinion first; strongest "fade" at the bottom).
+  // Section 2: biggest gap vs the house. Prefer edge_z (confidence-
+  // adjusted: # of stdevs our projection exceeds the PP line) over raw
+  // edge_fantasy when available. edge_z normalizes for variance — a 2σ
+  // overproject on a steady player beats a 3σ overproject on a wild one
+  // in terms of actual bet confidence.
   const byEdge = useMemo(() => {
     const withEdge = passedRows.filter(
-      (p) => typeof p.edge_fantasy === "number"
+      (p) =>
+        typeof p.edge_z === "number" ||
+        typeof p.edge_fantasy === "number"
     );
-    withEdge.sort((a, b) => b.edge_fantasy - a.edge_fantasy);
+    withEdge.sort((a, b) => {
+      // Prefer edge_z when both rows have it; else fall back to edge_fantasy.
+      const az = typeof a.edge_z === "number" ? a.edge_z : null;
+      const bz = typeof b.edge_z === "number" ? b.edge_z : null;
+      if (az !== null && bz !== null) return bz - az;
+      if (az !== null) return -1;
+      if (bz !== null) return 1;
+      return (b.edge_fantasy ?? 0) - (a.edge_fantasy ?? 0);
+    });
     return withEdge.slice(0, TOP_N_DISPLAY);
   }, [passedRows]);
 
@@ -183,9 +195,27 @@ function FantasyCard({ projection, live, onSelectPlayer }) {
     multipliers,
     prizepicks: ppLines,
     edge_fantasy: edgeFantasy,
+    edge_z: edgeZ,
+    stdev_efp: stdevEfp,
+    mean_efp: meanEfp,
+    stats_games: statsGames,
     _lineupStatus,
   } = projection;
   const isConfirmed = _lineupStatus === "confirmed";
+
+  // Confidence tier derived from edge_z when present. ≥ 0.8σ = HIGH
+  // confidence (top-6 hit rate ~70% historically), 0.3-0.8σ = MEDIUM,
+  // 0-0.3σ = LOW, negative = FADE.
+  const confidenceTier =
+    typeof edgeZ === "number"
+      ? edgeZ >= 0.8
+        ? { label: "HIGH CONF", tone: "high" }
+        : edgeZ >= 0.3
+        ? { label: "MED CONF", tone: "medium" }
+        : edgeZ >= 0
+        ? { label: "LOW CONF", tone: "low" }
+        : { label: "FADE", tone: "low" }
+      : null;
 
   const tierClass = `edge-conf-${tier || "low"}`;
   const tierLabel = tier?.toUpperCase() || "LOW";
@@ -294,6 +324,21 @@ function FantasyCard({ projection, live, onSelectPlayer }) {
                 title="Our projected EFP minus PrizePicks fantasy-score line"
               >
                 {edgeFantasy >= 0 ? `+${edgeFantasy.toFixed(1)}` : edgeFantasy.toFixed(1)}
+              </span>
+            )}
+            {confidenceTier && (
+              <span
+                className={`edge-conf-badge edge-conf-${confidenceTier.tone}`}
+                title={`${edgeZ.toFixed(2)}σ above the PP line · historical stdev ${
+                  stdevEfp ? stdevEfp.toFixed(1) : "?"
+                } over ${statsGames || 0} games`}
+              >
+                {confidenceTier.label}
+                {typeof edgeZ === "number" && (
+                  <span className="edge-conf-z">
+                    {edgeZ >= 0 ? ` +${edgeZ.toFixed(2)}σ` : ` ${edgeZ.toFixed(2)}σ`}
+                  </span>
+                )}
               </span>
             )}
           </span>

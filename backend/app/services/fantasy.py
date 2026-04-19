@@ -41,6 +41,7 @@ from typing import Any, Optional
 
 from app.services import mlb_api, prizepicks
 from app.services.cache import get as cache_get, set as cache_set
+from app.services.player_stats import compute_edge_z, get_player_stats
 from app.services.statcast_features import (
     LEAGUE_SPRINT_SPEED,
     bvpt_matchup_xwoba as _bvpt_matchup_xwoba,
@@ -625,6 +626,15 @@ def project_hitter_points(
         + PP_SCORING["run"] * r_per_pa
         + PP_SCORING["rbi"] * rbi_per_pa
     ) + PP_SCORING["sb"] * sb_proj
+
+    # Global calibration scale — fit on the 30-day backtest to align the
+    # model's average top-6 projection with actual top-6 production
+    # (model ran ~14% high on the displayed numbers, even while ranking
+    # correctly). This scale multiplies the entire projected EFP so the
+    # ranking is preserved but absolute numbers match reality.
+    cal = float(weights.get("calibration_scale", 1.0))
+    if cal > 0 and cal != 1.0:
+        efp *= cal
 
     return {
         "efp": round(efp, 2),
@@ -1560,7 +1570,11 @@ async def _project_batter(
         ondeck_xwoba=ondeck_xwoba,
     )
 
-    return {
+    # Per-player historical stdev for confidence scoring. Falls back to
+    # slate defaults when the player has no backtest history.
+    hist = get_player_stats(pid, season)
+
+    row = {
         "player_id": pid,
         "name": player.get("fullName", ""),
         "position": (player.get("position") or {}).get("abbreviation", ""),
@@ -1573,8 +1587,14 @@ async def _project_batter(
         "park": {"id": park.get("id"), "name": park.get("name"), "runs": park.get("runs"), "hr": park.get("hr"), "label": park.get("label")},
         "weather": weather,
         "pa_source": pa_source,
+        # Confidence fields — product-level metrics that match the
+        # "daily best bets" framing rather than raw R².
+        "stdev_efp": round(hist["stdev"], 2) if hist["stdev"] else None,
+        "mean_efp": round(hist["mean"], 2) if hist["mean"] else None,
+        "stats_games": hist["n"],
         **projection,
     }
+    return row
 
 
 async def project_slate(date_iso: str | None = None, season: int | None = None) -> dict:
@@ -1710,6 +1730,13 @@ async def project_slate(date_iso: str | None = None, season: int | None = None) 
             fan_line = match.get("fantasy")
             if fan_line is not None:
                 r["edge_fantasy"] = round(r["efp"] - float(fan_line), 2)
+                # Confidence-adjusted edge: # of stdevs our projection
+                # exceeds the PP line. > 0 = bet OVER, larger = more
+                # confident. This is the metric daily top-6 picks
+                # should sort by.
+                ez = compute_edge_z(r["efp"], float(fan_line), r.get("stdev_efp"))
+                if ez is not None:
+                    r["edge_z"] = round(ez, 3)
         logger.info("prizepicks: matched %d / %d projections", pp_match_count, len(rows))
 
     # Cap displayed list; full slate can grow large but UI wants a focused top.

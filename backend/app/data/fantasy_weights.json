@@ -10,7 +10,7 @@
   "bvp_blend_ramp_floor": 5,
   "bvp_multiplier_cap": 0.25,
   "r_per_pa_coef": 0.9,
-  "rbi_per_pa_coef": 0.25,
+  "rbi_per_pa_coef": 0.36,
   "default_pa": 4.0,
   "lineup_pa_adj": 0.3,
   "pa_floor": 3.0,
@@ -52,9 +52,9 @@
   },
   "sb_lhp_mult": 0.8,
   "metrics": {
-    "r2": 0.1184,
-    "mae": 4.9435,
-    "spearman": 0.3549,
+    "r2": 0.1246,
+    "mae": 4.8246,
+    "spearman": 0.3559,
     "n": 1721
   },
   "pitcher_hits_exp": 0.6,
@@ -66,14 +66,15 @@
   "batter_barrel_exp": 0.0,
   "batter_hardhit_exp": 0.0,
   "batter_k_exp": 0.0,
-  "pitcher_k_exp": 0.5,
-  "pitcher_gb_hr_exp": 1.0,
+  "pitcher_k_exp": 0.0,
+  "pitcher_gb_hr_exp": 0.5,
   "pitcher_bb_exp": 1.0,
   "park_hand_scale": 0.0,
   "sb_speed_exp": 0.0,
   "speed_singles_exp": 0.0,
   "speed_r_exp": 0.0,
   "bvpt_exp": 0.0,
-  "ondeck_r_exp": 0.0,
-  "preceding_rbi_exp": 0.0
+  "ondeck_r_exp": 1.0,
+  "preceding_rbi_exp": 0.0,
+  "calibration_scale": 0.876
 }

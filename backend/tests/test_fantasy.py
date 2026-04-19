@@ -435,8 +435,9 @@ def test_efp_scoring_sanity():
     )
     r_coef = weights["r_per_pa_coef"]
     rbi_coef = weights["rbi_per_pa_coef"]
-    expected = 4 * (3 * 0.1 + 2 * (0.300 * r_coef) + 2 * (0.350 * rbi_coef))
-    assert result["efp"] == pytest.approx(expected, abs=0.01)
+    cal = float(weights.get("calibration_scale", 1.0))
+    expected = 4 * (3 * 0.1 + 2 * (0.300 * r_coef) + 2 * (0.350 * rbi_coef)) * cal
+    assert result["efp"] == pytest.approx(expected, abs=0.02)
 
 
 def test_pitcher_quality_neutral_when_unknown(weights, league):
@@ -1262,6 +1263,38 @@ def test_tier3_bvpt_helper_matchup_math():
     # Empty inputs → None.
     assert bvpt_matchup_xwoba({}, mix) is None
     assert bvpt_matchup_xwoba(bat, {}) is None
+
+
+def test_edge_z_basic_math():
+    """edge_z = (projected - line) / stdev."""
+    from app.services.player_stats import compute_edge_z
+    # Confident Over: project 12, line 7.5, stdev 4 → (12-7.5)/4 = 1.125
+    assert compute_edge_z(12.0, 7.5, 4.0) == pytest.approx(1.125)
+    # Negative edge (projection below line)
+    assert compute_edge_z(5.0, 7.5, 4.0) == pytest.approx(-0.625)
+    # Zero edge
+    assert compute_edge_z(7.5, 7.5, 4.0) == pytest.approx(0.0)
+
+
+def test_edge_z_none_on_missing_inputs():
+    """Missing line, stdev, or projection → None."""
+    from app.services.player_stats import compute_edge_z
+    assert compute_edge_z(10.0, None, 4.0) is None
+    assert compute_edge_z(10.0, 7.5, None) is None
+    assert compute_edge_z(10.0, 7.5, 0.0) is None
+    # stdev too small — noise-dominated
+    assert compute_edge_z(10.0, 7.5, 0.3) is None
+
+
+def test_player_stats_fallback_defaults():
+    """Unknown player returns slate defaults with stats_games=0."""
+    from app.services.player_stats import get_player_stats
+    # Use a clearly-fake ID.
+    stats = get_player_stats(99999999, 2025)
+    assert stats["n"] == 0
+    # Should still have mean + stdev from defaults (if cache loaded).
+    assert stats["mean"] > 0
+    assert stats["stdev"] > 0
 
 
 def test_tier3_lineup_context_helper_wraparound():

@@ -4,13 +4,13 @@
   "weights_version": "2026-04-18",
   "calibrated": true,
   "metrics": {
-    "r2": 0.1184,
-    "mae": 4.9435,
-    "spearman": 0.3549,
+    "r2": 0.1246,
+    "mae": 4.8246,
+    "spearman": 0.3559,
     "n": 1721
   },
   "game_count": 0,
   "projection_count": 0,
   "projections": [],
-  "generated_at": "2026-04-19T05:28:03.108954+00:00"
+  "generated_at": "2026-04-19T05:48:22.086584+00:00"
 }
