@@ -75,7 +75,12 @@ from app.data.park_factors import get as get_park_factor  # noqa: E402
 MLB_API_BASE = "https://statsapi.mlb.com/api/v1"
 CSV_DIR = ROOT / "backend" / "app" / "data"
 WEIGHTS_PATH = CSV_DIR / "fantasy_weights.json"
-POLITE_THROTTLE_S = 0.25
+
+# Concurrency + throttle. MLB Stats API is unmetered in practice but we
+# keep a reasonable semaphore so we don't open hundreds of connections
+# during a per-game fan-out. Bumped from sequential w/250ms throttle to
+# 20 concurrent + no throttle — 5–10× faster, still polite.
+HTTP_CONCURRENCY = 20
 
 logging.basicConfig(
     level=logging.INFO,
@@ -102,6 +107,72 @@ async def get_schedule_dates(client: httpx.AsyncClient, start: str, end: str) ->
     resp.raise_for_status()
     data = resp.json()
     return data.get("dates", [])
+
+
+async def get_pitcher_rates_as_of(
+    client: httpx.AsyncClient,
+    player_id: int,
+    season: int,
+    end_date: str,
+) -> dict | None:
+    """
+    Return the pitcher's season-to-date (ending previous day) per-BF rates
+    or None if no sample. Used for the backtest's pitcher-quality feature.
+    """
+    end_dt = datetime.fromisoformat(end_date).date()
+    yesterday = (end_dt - timedelta(days=1)).isoformat()
+    season_start = f"{season}-03-01"
+    try:
+        resp = await client.get(
+            f"/people/{player_id}/stats",
+            params={
+                "stats": "byDateRange",
+                "startDate": season_start,
+                "endDate": yesterday,
+                "group": "pitching",
+                "gameType": "R",
+            },
+        )
+        resp.raise_for_status()
+        splits = (resp.json().get("stats") or [{}])[0].get("splits") or []
+        stat = splits[0].get("stat") if splits else None
+    except Exception:
+        return None
+    if not stat:
+        return None
+
+    def f(k):
+        v = stat.get(k)
+        try:
+            return float(v) if v not in (None, "") else 0.0
+        except (TypeError, ValueError):
+            return 0.0
+
+    bf = int(f("battersFaced") or f("plateAppearances") or 0)
+    if bf < 10:
+        ip = f("inningsPitched")
+        if ip > 0:
+            bf = int(round(ip * 4.3))
+    if bf < 10:
+        return None
+    return {
+        "h_per_bf": f("hits") / bf,
+        "hr_per_bf": f("homeRuns") / bf,
+        "bf": bf,
+    }
+
+
+async def get_pitcher_hand(client: httpx.AsyncClient, player_id: int) -> str | None:
+    try:
+        resp = await client.get(f"/people/{player_id}")
+        resp.raise_for_status()
+        people = resp.json().get("people") or []
+        if not people:
+            return None
+        hand = (people[0].get("pitchHand") or {}).get("code")
+        return hand if hand in ("L", "R") else None
+    except Exception:
+        return None
 
 
 async def get_player_stats_as_of(
@@ -163,7 +234,15 @@ async def process_game(
     league: dict,
     processed_keys: set[tuple[int, int]],
     rows_out: list[dict],
+    http_sem: asyncio.Semaphore,
 ):
+    """
+    Process a single game: fetch boxscore, identify starters + lineup
+    slots, then fan out ALL stat calls (pitcher rates, pitcher hand, and
+    every batter's season+L7) in parallel under the http_sem. Rewrote
+    from sequential-with-sleep to gather-based concurrency — ~5–10×
+    speedup on the full-slate backtest.
+    """
     gamePk = game.get("gamePk")
     if not gamePk:
         return
@@ -171,12 +250,15 @@ async def process_game(
     park_raw = get_park_factor(venue_id)
     park = {"id": venue_id, **park_raw}
 
+    async def throttled(coro):
+        async with http_sem:
+            return await coro
+
     try:
-        boxscore = await fetch_boxscore(client, gamePk)
+        boxscore = await throttled(fetch_boxscore(client, gamePk))
     except Exception as e:
         logger.warning("boxscore fetch failed for %s: %s", gamePk, e)
         return
-    await asyncio.sleep(POLITE_THROTTLE_S)
 
     batter_rows = extract_batter_lines(boxscore)
     if not batter_rows:
@@ -190,20 +272,70 @@ async def process_game(
     if not game_date:
         return
 
-    for row in batter_rows:
+    # Figure out each side's starting pitcher from the boxscore, plus per-
+    # batter batting-order slot. battingOrder is a 3-digit string ("100",
+    # "200"...); pinch hitters have non-hundreds suffixes we ignore.
+    side_starters: dict[str, int] = {}
+    slot_by_pid: dict[int, int] = {}
+    for side in ("away", "home"):
+        team = (boxscore.get("teams") or {}).get(side) or {}
+        pitchers = team.get("pitchers") or []
+        if pitchers:
+            try:
+                side_starters[side] = int(pitchers[0])
+            except (TypeError, ValueError):
+                pass
+        players = team.get("players") or {}
+        for key, p in players.items():
+            if not key.startswith("ID"):
+                continue
+            pid = (p.get("person") or {}).get("id")
+            bo = p.get("battingOrder")
+            if pid and bo:
+                try:
+                    raw = int(bo)
+                    if raw % 100 == 0:
+                        slot_by_pid[int(pid)] = raw // 100
+                except (TypeError, ValueError):
+                    pass
+
+    # Fan out: both pitchers' rates + hands in parallel.
+    pitcher_cache: dict[str, dict] = {"away": {}, "home": {}}
+    pitcher_calls = []
+    pitcher_sides: list[tuple[str, str]] = []  # (batter_side, kind)
+    for side in ("away", "home"):
+        opp_side = "home" if side == "away" else "away"
+        sp_id = side_starters.get(opp_side)
+        if not sp_id:
+            continue
+        pitcher_calls.append(throttled(get_pitcher_rates_as_of(client, sp_id, season, game_date)))
+        pitcher_sides.append((side, "rates"))
+        pitcher_calls.append(throttled(get_pitcher_hand(client, sp_id)))
+        pitcher_sides.append((side, "hand"))
+    if pitcher_calls:
+        results = await asyncio.gather(*pitcher_calls, return_exceptions=True)
+        for (side, kind), res in zip(pitcher_sides, results):
+            if isinstance(res, Exception):
+                res = None
+            pitcher_cache[side][kind] = res
+
+    # Fan out: every new batter's season + L7 stats in parallel.
+    work_batters = [row for row in batter_rows
+                    if (gamePk, row["player_id"]) not in processed_keys]
+    if not work_batters:
+        return
+
+    batter_calls = [throttled(get_player_stats_as_of(client, row["player_id"], season, game_date))
+                    for row in work_batters]
+    batter_results = await asyncio.gather(*batter_calls, return_exceptions=True)
+
+    for row, res in zip(work_batters, batter_results):
         pid = row["player_id"]
         key = (gamePk, pid)
-        if key in processed_keys:
+        if isinstance(res, Exception):
+            logger.warning("as-of-date fetch failed for %s in %s: %s", pid, gamePk, res)
             continue
-
-        try:
-            season_stat, l7_stat = await get_player_stats_as_of(
-                client, pid, season, game_date
-            )
-        except Exception as e:
-            logger.warning("as-of-date fetch failed for %s in %s: %s", pid, gamePk, e)
-            continue
-        await asyncio.sleep(POLITE_THROTTLE_S)
+        season_stat, l7_stat = res
 
         if not season_stat:
             continue
@@ -219,15 +351,27 @@ async def process_game(
         # predict PA, we're testing the per-event projection.
         actual_pa = max(1, row["pa"])
 
+        # Phase A/B/C features for this row
+        side = row["side"]
+        opp_pitcher_info = pitcher_cache.get(side) or {}
+        opp_pitcher_rates = opp_pitcher_info.get("rates")
+        opp_pitcher_hand = opp_pitcher_info.get("hand")
+        slot = slot_by_pid.get(int(pid))
+
         projection = project_hitter_points(
             season_rates=season_rates,
             l7_rates=l7_rates,
-            bvp=None,  # BvP skipped in Phase 1 backtest
+            bvp=None,  # BvP deferred
             league_rates=league,
             park=park,
-            weather=None,  # historical weather deferred — neutral
+            weather=None,  # historical weather deferred
             projected_pa=actual_pa,
             weights=weights,
+            pitcher_rates=opp_pitcher_rates,
+            lineup_slot=slot,
+            # Platoon left None in backtest — using full-season split would
+            # be leakage; accepting the fixed platoon_blend from weights.
+            platoon_rates=None,
         )
 
         rows_out.append({
@@ -237,7 +381,7 @@ async def process_game(
             "player_name": row["name"],
             "team_id": row["team_id"],
             "team_abbr": row["team_abbr"],
-            "side": row["side"],
+            "side": side,
             "venue_id": venue_id,
             "park_hr": park.get("hr"),
             "park_runs": park.get("runs"),
@@ -249,6 +393,11 @@ async def process_game(
             "rates_season_obp": round(season_rates.obp or 0, 5),
             "rates_season_slg": round(season_rates.slg or 0, 5),
             "l7_pa": (l7_rates.pa if l7_rates else 0),
+            "pitcher_h_per_bf": round(opp_pitcher_rates["h_per_bf"], 5) if opp_pitcher_rates else "",
+            "pitcher_hr_per_bf": round(opp_pitcher_rates["hr_per_bf"], 5) if opp_pitcher_rates else "",
+            "pitcher_bf": (opp_pitcher_rates["bf"] if opp_pitcher_rates else ""),
+            "pitcher_hand": opp_pitcher_hand or "",
+            "lineup_slot": slot if slot else "",
         })
         processed_keys.add(key)
 
@@ -277,7 +426,14 @@ async def generate_csv(start: str, end: str, season: int, csv_path: Path) -> Non
 
     rows_out: list[dict] = []
 
-    async with httpx.AsyncClient(base_url=MLB_API_BASE, timeout=30) as client:
+    http_sem = asyncio.Semaphore(HTTP_CONCURRENCY)
+
+    # Tune httpx connection pool to match the semaphore. Default is 5 which
+    # would serialize calls even if the semaphore allowed more concurrency.
+    limits = httpx.Limits(max_connections=HTTP_CONCURRENCY * 2,
+                          max_keepalive_connections=HTTP_CONCURRENCY)
+
+    async with httpx.AsyncClient(base_url=MLB_API_BASE, timeout=30, limits=limits) as client:
         dates = await get_schedule_dates(client, start, end)
         logger.info("Schedule: %d days fetched", len(dates))
         for d in dates:
@@ -286,7 +442,7 @@ async def generate_csv(start: str, end: str, season: int, csv_path: Path) -> Non
                 status = (g.get("status") or {}).get("detailedState")
                 if status not in ("Final", "Game Over"):
                     continue
-                await process_game(client, g, season, weights, league, processed, rows_out)
+                await process_game(client, g, season, weights, league, processed, rows_out, http_sem)
 
             # Flush periodically so partial runs aren't lost.
             if rows_out:
@@ -310,6 +466,9 @@ def _append_csv(csv_path: Path, new_rows: list[dict], existing_rows: list[dict])
         "rates_season_singles", "rates_season_hr",
         "rates_season_obp", "rates_season_slg",
         "l7_pa",
+        # Phase A/B/C feature columns
+        "pitcher_h_per_bf", "pitcher_hr_per_bf", "pitcher_bf", "pitcher_hand",
+        "lineup_slot",
     ]
     write_header = not csv_path.exists()
     csv_path.parent.mkdir(parents=True, exist_ok=True)
@@ -336,12 +495,13 @@ def _row_count(csv_path: Path) -> int:
 FIT_GRID = {
     "l7_blend":        [0.20, 0.30, 0.40, 0.50],
     "bvp_blend":       [0.00, 0.10, 0.20, 0.30],
-    # Widened twice after both coefs pinned at the upper bound. Extending
-    # the ceiling helps us tell "model wants bigger coefs" from "grid is
-    # the ceiling". If these still pin, the model structure (linear r/rbi
-    # per OBP/SLG) has hit its R² ceiling and richer features are needed.
-    "r_per_pa_coef":   [0.30, 0.34, 0.38, 0.42, 0.46, 0.50, 0.54, 0.58, 0.62, 0.66, 0.70],
-    "rbi_per_pa_coef": [0.20, 0.24, 0.28, 0.32, 0.36, 0.40, 0.44, 0.48, 0.52, 0.56, 0.60],
+    # With Phase A (pitcher quality) and Phase C (lineup-slot R/RBI)
+    # features absorbing their own variance, the R/RBI coefs should settle
+    # closer to historical MLB norms (~0.30-0.45). Grid covers both the
+    # reduced range AND the previous ceiling so we can confirm the coefs
+    # actually moved down rather than just clipping again.
+    "r_per_pa_coef":   [0.28, 0.32, 0.36, 0.40, 0.44, 0.48, 0.52, 0.56, 0.60, 0.65, 0.70],
+    "rbi_per_pa_coef": [0.18, 0.22, 0.26, 0.30, 0.34, 0.38, 0.42, 0.46, 0.50, 0.55, 0.60],
 }
 
 
@@ -403,15 +563,34 @@ def fit_weights(csv_path: Path) -> dict:
     with csv_path.open() as f:
         for r in csv.DictReader(f):
             try:
+                def _f(k, default=0.0):
+                    v = r.get(k)
+                    if v in (None, ""):
+                        return default
+                    return float(v)
+                def _i(k, default=0):
+                    v = r.get(k)
+                    if v in (None, ""):
+                        return default
+                    try:
+                        return int(float(v))
+                    except (TypeError, ValueError):
+                        return default
                 row = {
                     "pa": int(float(r["pa"])),
                     "actual_efp": float(r["actual_efp"]),
-                    "park_hr": float(r.get("park_hr") or 100),
-                    "park_runs": float(r.get("park_runs") or 100),
-                    "singles": float(r["rates_season_singles"]),
-                    "hr": float(r["rates_season_hr"]),
-                    "obp": float(r["rates_season_obp"]),
-                    "slg": float(r["rates_season_slg"]),
+                    "park_hr": _f("park_hr", 100),
+                    "park_runs": _f("park_runs", 100),
+                    "singles": _f("rates_season_singles"),
+                    "hr": _f("rates_season_hr"),
+                    "obp": _f("rates_season_obp"),
+                    "slg": _f("rates_season_slg"),
+                    # Phase A/B/C features — may be blank; pipeline treats
+                    # that as "neutral" (multiplier 1.0).
+                    "pitcher_h_per_bf": _f("pitcher_h_per_bf"),
+                    "pitcher_hr_per_bf": _f("pitcher_hr_per_bf"),
+                    "pitcher_bf": _i("pitcher_bf"),
+                    "lineup_slot": _i("lineup_slot"),
                 }
                 rows.append(row)
             except (KeyError, ValueError):
@@ -428,32 +607,61 @@ def fit_weights(csv_path: Path) -> dict:
     league = load_league_rates()
     weights_seed = load_weights()
 
+    # League pitcher baselines for the inverted ratio in the pitcher-quality
+    # multiplier. Load once from the backend JSON.
+    lg_h_per_bf = float((league.get("pitcher_per_bf") or {}).get("hits_allowed", 0.222))
+    lg_hr_per_bf = float((league.get("pitcher_per_bf") or {}).get("home_runs_allowed", 0.029))
+
+    # Same cap/trust knobs as the production projector.
+    MIN_BF_TRUST = 60
+    H_CAP = 0.30
+    HR_CAP = 0.35
+
+    def pitcher_mults(h_per_bf: float, hr_per_bf: float, bf: int) -> tuple[float, float]:
+        if h_per_bf <= 0 or hr_per_bf <= 0 or bf <= 0:
+            return 1.0, 1.0
+        raw_h = (h_per_bf / lg_h_per_bf) ** 0.6
+        raw_hr = (hr_per_bf / lg_hr_per_bf) ** 0.7
+        trust = min(1.0, bf / MIN_BF_TRUST)
+        hm = 1.0 + trust * (raw_h - 1.0)
+        hrm = 1.0 + trust * (raw_hr - 1.0)
+        hm = max(1.0 - H_CAP, min(1.0 + H_CAP, hm))
+        hrm = max(1.0 - HR_CAP, min(1.0 + HR_CAP, hrm))
+        return hm, hrm
+
+    def slot_mults(slot: int, w: dict) -> tuple[float, float]:
+        if not slot or slot < 1 or slot > 9:
+            return 1.0, 1.0
+        r_tbl = w.get("lineup_slot_r_mult") or {}
+        rbi_tbl = w.get("lineup_slot_rbi_mult") or {}
+        return (
+            float(r_tbl.get(str(slot), 1.0)),
+            float(rbi_tbl.get(str(slot), 1.0)),
+        )
+
     def eval_weights(w: dict, subset: list[dict]) -> tuple[float, float, float]:
-        """Return (R², MAE, Spearman). The inputs (singles/hr/obp/slg) are
-        fixed per row; we re-score with different weights."""
+        """
+        Re-project each row under the candidate weights + the full Phase
+        A/C feature stack (pitcher quality, lineup slot). Returns
+        (R², MAE, Spearman).
+        """
         projected: list[float] = []
         actual: list[float] = []
-        from app.services.fantasy import (
-            PP_SCORING,
-        )  # lazy import — already imported above but keeps local scope clean
+        from app.services.fantasy import PP_SCORING
         for r in subset:
             pa = r["pa"]
             park_hr_mult = r["park_hr"] / 100.0
             park_runs_mult = r["park_runs"] / 100.0
-            # For fit, we shortcut: R and RBI coefficients are what matter
-            # plus park multipliers. Fine-grained per-event rates are
-            # already baked into singles/hr; we don't change them here.
-            # (l7_blend and bvp_blend won't affect anything here without
-            # the raw L7/BvP data in the CSV — Phase 2 only fits the R
-            # and RBI coefficients meaningfully. l7_blend + bvp_blend
-            # stubs exist for Phase 3's deeper backtest.)
-            r_per_pa = r["obp"] * w["r_per_pa_coef"]
-            rbi_per_pa = r["slg"] * w["rbi_per_pa_coef"]
-            # Rebuild a minimal EFP with the stored season rates.
-            # 1B is already net of park-runs in the CSV only if we stored
-            # post-multiplier; we stored raw season rates, so apply here.
-            s_rate = r["singles"] * park_runs_mult
-            hr_rate = r["hr"] * park_hr_mult
+            p_h_mult, p_hr_mult = pitcher_mults(
+                r["pitcher_h_per_bf"], r["pitcher_hr_per_bf"], r["pitcher_bf"]
+            )
+            slot_r_mult, slot_rbi_mult = slot_mults(r["lineup_slot"], w)
+
+            r_per_pa = r["obp"] * w["r_per_pa_coef"] * slot_r_mult
+            rbi_per_pa = r["slg"] * w["rbi_per_pa_coef"] * slot_rbi_mult
+            s_rate = r["singles"] * park_runs_mult * p_h_mult
+            hr_rate = r["hr"] * park_hr_mult * p_hr_mult
+
             efp = pa * (
                 PP_SCORING["single"] * s_rate
                 + PP_SCORING["home_run"] * hr_rate
