@@ -51,11 +51,9 @@ export default function FantasyProjections({ myTeamsOnly = false }) {
   const metrics = data?.metrics || {};
   const calibrated = !!data?.calibrated;
 
-  const filtered = useMemo(() => {
-    // 1. Annotate each row with lineup status.
-    //    - confirmed: team has a posted lineup AND batter is in it
-    //    - excluded: team has a posted lineup AND batter is NOT in it
-    //    - pending:  team has not posted a lineup yet (treat as "show anyway")
+  // Shared annotate+filter pipeline — used by both the EFP-ranked and
+  // edge-ranked sections so they respect the same lineup + My Teams rules.
+  const passedRows = useMemo(() => {
     const annotated = projections.map((p) => {
       const lineup = lineupsByTeam[p.team_id];
       if (!Array.isArray(lineup) || lineup.length === 0) {
@@ -64,25 +62,51 @@ export default function FantasyProjections({ myTeamsOnly = false }) {
       const inLineup = lineup.includes(p.player_id);
       return { ...p, _lineupStatus: inLineup ? "confirmed" : "excluded" };
     });
-
-    // 2. Drop excluded players entirely.
     let passed = annotated.filter((p) => p._lineupStatus !== "excluded");
-
-    // 3. My Teams filter on top.
     if (myTeamsOnly && team?.id) {
       passed = passed.filter(
         (p) => p.team_id === team.id || p.opp_team_id === team.id
       );
     }
-
-    // 4. Cap at the display top-N (static JSON now serves 30 rows).
-    return passed.slice(0, TOP_N_DISPLAY);
+    return passed;
   }, [projections, lineupsByTeam, myTeamsOnly, team]);
+
+  // Section 1: top by raw projection.
+  const byEfp = useMemo(
+    () => passedRows.slice(0, TOP_N_DISPLAY),
+    [passedRows]
+  );
+
+  // Section 2: biggest gap vs the house. Only rows with a matched
+  // Fantasy Score line, sorted by edge descending (strongest "over"
+  // model opinion first; strongest "fade" at the bottom).
+  const byEdge = useMemo(() => {
+    const withEdge = passedRows.filter(
+      (p) => typeof p.edge_fantasy === "number"
+    );
+    withEdge.sort((a, b) => b.edge_fantasy - a.edge_fantasy);
+    return withEdge.slice(0, TOP_N_DISPLAY);
+  }, [passedRows]);
 
   // Count how many projections had lineup info — used in the footer so
   // the user can tell "no lineups posted yet" from "filter removed everyone".
-  const confirmedCount = filtered.filter((p) => p._lineupStatus === "confirmed").length;
+  const confirmedCount = byEfp.filter((p) => p._lineupStatus === "confirmed").length;
   const anyLineupsPosted = Object.keys(lineupsByTeam).length > 0;
+
+  const renderCardGrid = (rows) => (
+    <div className="edge-grid">
+      {rows.map((p) => (
+        <FantasyCard
+          key={`${p.team_id}-${p.player_id}`}
+          projection={p}
+          live={liveScoresByPlayer[p.player_id] || null}
+          onSelectPlayer={() =>
+            navigate(`/team/${p.team_id}/player/${p.player_id}`)
+          }
+        />
+      ))}
+    </div>
+  );
 
   return (
     <section className="edge-section">
@@ -99,23 +123,27 @@ export default function FantasyProjections({ myTeamsOnly = false }) {
         <div className="edge-empty edge-empty-inline">
           <p>Crunching projections across today's slate…</p>
         </div>
-      ) : filtered.length === 0 ? (
+      ) : byEfp.length === 0 ? (
         <div className="edge-empty edge-empty-inline">
           <p>No picks match My Teams today — try turning off the filter.</p>
         </div>
       ) : (
-        <div className="edge-grid">
-          {filtered.map((p) => (
-            <FantasyCard
-              key={`${p.team_id}-${p.player_id}`}
-              projection={p}
-              live={liveScoresByPlayer[p.player_id] || null}
-              onSelectPlayer={() =>
-                navigate(`/team/${p.team_id}/player/${p.player_id}`)
-              }
-            />
-          ))}
-        </div>
+        <>
+          {renderCardGrid(byEfp)}
+
+          {byEdge.length > 0 && (
+            <div className="edge-subsection">
+              <h3 className="edge-subsection-title edge-section-fantasy">
+                <span className="edge-section-accent" aria-hidden="true">Δ</span>
+                Biggest edge vs PrizePicks
+                <span className="edge-subsection-hint">
+                  — sorted by gap between our projection and the posted line
+                </span>
+              </h3>
+              {renderCardGrid(byEdge)}
+            </div>
+          )}
+        </>
       )}
 
       {!isLoading && projections.length > 0 && (
@@ -126,7 +154,7 @@ export default function FantasyProjections({ myTeamsOnly = false }) {
             : "  ·  using baseline weights (pre-calibration)"}
           {lineupsFetched && (
             anyLineupsPosted
-              ? `  ·  ${confirmedCount}/${filtered.length} lineup-confirmed`
+              ? `  ·  ${confirmedCount}/${byEfp.length} lineup-confirmed`
               : "  ·  lineups not yet posted"
           )}
         </p>
