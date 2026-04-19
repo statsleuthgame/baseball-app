@@ -39,9 +39,34 @@ logging.basicConfig(level=logging.INFO, format="%(message)s")
 logger = logging.getLogger("validate")
 
 
+def _estimate_season_pa(game_date: str) -> int:
+    """Estimate a full-time starter's season PA count as of game_date.
+    Regular MLB season starts roughly 3/28 (day 0). Assume ~3.6 PAs/day
+    averaged over all calendar days (accounts for off-days, rest days,
+    typical lineup depth). Used only when CSV lacks a persisted
+    season_pa column — for better precision, add that column to the
+    backtest writer."""
+    if not game_date:
+        return 300  # mid-season default — keep shrinkage modest
+    try:
+        from datetime import date
+        y = int(game_date[:4])
+        opening = date(y, 3, 28)
+        target = date(int(game_date[:4]), int(game_date[5:7]), int(game_date[8:10]))
+        days = max(0, (target - opening).days)
+        est = int(days * 3.6)
+        # Clamp: minimum 10 (below which shrinkage floor dominates),
+        # max 700 (late-season full-time starter).
+        return max(10, min(700, est))
+    except Exception:
+        return 300
+
+
 def reproject_row(r: dict, w: dict, lg: dict) -> float:
     """Recompute projected EFP for a row under current weights. Mirrors
-    eval_weights in backtest_fantasy.py but standalone."""
+    eval_weights in backtest_fantasy.py but standalone. Applies Bayesian
+    small-sample shrinkage (matching fantasy.py) when the weights have
+    `rate_regression_prior_pa` > 0."""
     PP = {"single": 3.0, "double": 5.0, "triple": 8.0, "home_run": 10.0,
           "walk": 2.0, "run": 2.0, "rbi": 2.0, "sb": 5.0}
 
@@ -66,6 +91,21 @@ def reproject_row(r: dict, w: dict, lg: dict) -> float:
     pa = i("pa", 0)
     park_hr = f("park_hr", 100) / 100.0
     park_runs = f("park_runs", 100) / 100.0
+
+    # Bayesian small-sample shrinkage toward league means. Pulled from
+    # fantasy.py; requires an estimate of season-to-date PA for the row.
+    prior_pa = float(w.get("rate_regression_prior_pa", 0.0))
+    season_pa_est = _estimate_season_pa(r.get("date", ""))
+    lg_per_pa = (lg or {}).get("per_pa") or {}
+    def shrink(observed: float, key_lg: str, lg_default: float) -> float:
+        league_rate = float(lg_per_pa.get(key_lg, lg_default))
+        if prior_pa <= 0 or season_pa_est <= 0:
+            return observed
+        return (season_pa_est * observed + prior_pa * league_rate) / (season_pa_est + prior_pa)
+    def shrink_scalar(observed: float, league_rate: float) -> float:
+        if prior_pa <= 0 or season_pa_est <= 0:
+            return observed
+        return (season_pa_est * observed + prior_pa * league_rate) / (season_pa_est + prior_pa)
 
     # Pitcher quality (H/BF, HR/BF with tunable exponents, capped + shrunk)
     lg_h_bf = float((lg.get("pitcher_per_bf") or {}).get("hits_allowed", 0.222))
@@ -147,13 +187,13 @@ def reproject_row(r: dict, w: dict, lg: dict) -> float:
         raw_adj = get_hr_hand_adj(i("venue_id"), (r.get("bat_side") or "").strip() or None)
         park_hand_mult = 1.0 + park_hand_scale * (raw_adj - 1.0)
 
-    # Final rates
-    singles = f("rates_season_singles")
-    hr = f("rates_season_hr")
-    obp = f("rates_season_obp")
-    slg = f("rates_season_slg")
-    bb_hbp = f("rates_season_bb_hbp")
-    sb_per_g = f("rates_season_sb_per_g")
+    # Final rates — apply shrinkage (matches fantasy.py production math)
+    singles = shrink(f("rates_season_singles"), "singles", 0.144)
+    hr = shrink(f("rates_season_hr"), "home_runs", 0.033)
+    bb_hbp = shrink(f("rates_season_bb_hbp"), "bb_hbp", 0.096)
+    obp = shrink_scalar(f("rates_season_obp"), float(lg.get("obp", 0.314)))
+    slg = shrink_scalar(f("rates_season_slg"), float(lg.get("slg", 0.399)))
+    sb_per_g = f("rates_season_sb_per_g")  # SB is per-game not per-PA; no shrinkage
 
     r_per_pa = obp * float(w.get("r_per_pa_coef", 0.9)) * ondeck_r_mult * k_damper
     rbi_per_pa = slg * float(w.get("rbi_per_pa_coef", 0.36)) * preceding_rbi_mult * k_damper
