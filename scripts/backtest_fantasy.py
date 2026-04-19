@@ -69,6 +69,11 @@ from app.services.actual_efp import (  # noqa: E402
     fetch_boxscore,
     score_from_stat,
 )
+from app.services.statcast_features import (  # noqa: E402
+    get_batter_features_as_of,
+    get_batter_l7_features_as_of,
+    get_pitcher_features_as_of,
+)
 from app.data.park_factors import get as get_park_factor  # noqa: E402
 
 
@@ -385,6 +390,20 @@ async def process_game(
                     for row in work_batters]
     batter_results = await asyncio.gather(*batter_calls, return_exceptions=True)
 
+    # Tier 1 — Statcast expected-stats features per opposing pitcher,
+    # shared across all batters that face them in this game.
+    pitcher_stx_by_side: dict[str, dict] = {}
+    for side in ("away", "home"):
+        opp_side = "home" if side == "away" else "away"
+        sp_id = side_starters.get(opp_side)
+        if sp_id:
+            try:
+                pitcher_stx_by_side[side] = await asyncio.to_thread(
+                    get_pitcher_features_as_of, int(sp_id), game_date, season
+                )
+            except Exception:
+                pitcher_stx_by_side[side] = {}
+
     for row, res in zip(work_batters, batter_results):
         pid = row["player_id"]
         key = (gamePk, pid)
@@ -415,6 +434,22 @@ async def process_game(
         slot = slot_by_pid.get(int(pid))
         team_rpg = team_rpg_by_side.get(side)
 
+        # Tier 1 — Statcast expected-stats features (season + L7 for the
+        # batter, season for the pitcher). Reads local parquet; no network.
+        try:
+            batter_stx = await asyncio.to_thread(
+                get_batter_features_as_of, int(pid), game_date, season
+            )
+        except Exception:
+            batter_stx = None
+        try:
+            batter_stx_l7 = await asyncio.to_thread(
+                get_batter_l7_features_as_of, int(pid), game_date, 7
+            )
+        except Exception:
+            batter_stx_l7 = None
+        pitcher_stx = pitcher_stx_by_side.get(side)
+
         projection = project_hitter_points(
             season_rates=season_rates,
             l7_rates=l7_rates,
@@ -430,7 +465,14 @@ async def process_game(
             # be leakage; accepting the fixed platoon_blend from weights.
             platoon_rates=None,
             team_runs_per_game=team_rpg,
+            batter_stx=batter_stx,
+            batter_stx_l7=batter_stx_l7,
+            pitcher_stx=pitcher_stx,
         )
+
+        def _r(v, d=5):
+            """Round-or-empty helper — emits '' for None so CSV parses as neutral."""
+            return round(v, d) if isinstance(v, (int, float)) else ""
 
         rows_out.append({
             "date": game_date,
@@ -457,6 +499,23 @@ async def process_game(
             "pitcher_hand": opp_pitcher_hand or "",
             "lineup_slot": slot if slot else "",
             "team_rpg": round(team_rpg, 4) if team_rpg else "",
+            # Tier 1 — Statcast batter features (season-to-date as-of game)
+            "batter_xwoba": _r((batter_stx or {}).get("xwoba")),
+            "batter_barrel_pct": _r((batter_stx or {}).get("barrel_pct")),
+            "batter_hard_hit_pct": _r((batter_stx or {}).get("hard_hit_pct")),
+            "batter_k_pct": _r((batter_stx or {}).get("k_pct")),
+            "batter_stx_pa": int((batter_stx or {}).get("pa") or 0),
+            "batter_stx_bip": int((batter_stx or {}).get("bip") or 0),
+            # Tier 1 — Statcast batter L7 features
+            "batter_l7_xwoba": _r((batter_stx_l7 or {}).get("xwoba")),
+            "batter_l7_barrel_pct": _r((batter_stx_l7 or {}).get("barrel_pct")),
+            "batter_l7_pa": int((batter_stx_l7 or {}).get("pa") or 0),
+            "batter_l7_bip": int((batter_stx_l7 or {}).get("bip") or 0),
+            # Tier 1 — Statcast pitcher features (season-to-date as-of game)
+            "pitcher_gb_pct": _r((pitcher_stx or {}).get("gb_pct")),
+            "pitcher_fb_pct": _r((pitcher_stx or {}).get("fb_pct")),
+            "pitcher_k_pct_stx": _r((pitcher_stx or {}).get("k_pct")),
+            "pitcher_stx_bf": int((pitcher_stx or {}).get("bf") or 0),
         })
         processed_keys.add(key)
 
@@ -530,6 +589,12 @@ def _append_csv(csv_path: Path, new_rows: list[dict], existing_rows: list[dict])
         "lineup_slot",
         # Option 1: team run environment
         "team_rpg",
+        # Tier 1: Statcast batter features (season + L7)
+        "batter_xwoba", "batter_barrel_pct", "batter_hard_hit_pct", "batter_k_pct",
+        "batter_stx_pa", "batter_stx_bip",
+        "batter_l7_xwoba", "batter_l7_barrel_pct", "batter_l7_pa", "batter_l7_bip",
+        # Tier 1: Statcast pitcher features
+        "pitcher_gb_pct", "pitcher_fb_pct", "pitcher_k_pct_stx", "pitcher_stx_bf",
     ]
     write_header = not csv_path.exists()
     csv_path.parent.mkdir(parents=True, exist_ok=True)
@@ -559,18 +624,26 @@ FIT_GRID = {
     # grid wastes combinations. Dropped to a single identity value.
     "l7_blend":        [0.20],
     "bvp_blend":       [0.00],
-    # Trimmed to keep the 7-dim grid tractable (~17k combinations).
-    "r_per_pa_coef":   [0.30, 0.42, 0.54, 0.66, 0.78, 0.90],
-    "rbi_per_pa_coef": [0.24, 0.36, 0.48, 0.60, 0.72],
-    # Phase E-v2 tunable feature strengths (see prior commits for detail):
-    "pitcher_hits_exp":   [0.0, 0.3, 0.6, 0.9],
+    # Extended upper bound to 1.20 to diagnose the r_per_pa pin. If the
+    # fit still picks 0.9, the ceiling is structural.
+    "r_per_pa_coef":   [0.66, 0.78, 0.90, 1.05, 1.20],
+    "rbi_per_pa_coef": [0.48, 0.60, 0.72],
+    # Phase E-v2 tunable feature strengths:
+    "pitcher_hits_exp":   [0.0, 0.3, 0.6],
     "pitcher_hr_exp":     [0.0, 0.35, 0.7, 1.0],
-    "slot_effect_scale":  [0.0, 0.5, 1.0],        # prior fit chose 0
-    # Option 1: team run environment exponent on (team_rpg / league_rpg).
-    # 0 disables; higher = more aggressive. Separate knobs for R and RBI
-    # so we can e.g. apply strong R effect but subtle RBI.
-    "team_run_env_exp":   [0.0, 0.5, 1.0, 1.5],
-    "team_rbi_env_exp":   [0.0, 0.5, 1.0],
+    # TRIMMED duds (prior fits zeroed these out).
+    "slot_effect_scale":  [0.0],
+    "team_run_env_exp":   [0.0],
+    "team_rbi_env_exp":   [0.0],
+    # Tier 1: Statcast expected-stats regression exponents.
+    "batter_xwoba_exp":   [0.0, 0.5, 1.0],
+    "batter_barrel_exp":  [0.0, 0.5, 1.0],
+    "batter_hardhit_exp": [0.0],              # single value — subsumed by xwOBA+barrel
+    # Tier 1: K-damper — batter + pitcher K% interact.
+    "batter_k_exp":       [0.0, 0.5],
+    "pitcher_k_exp":      [0.0, 0.5, 1.0],
+    # Tier 1: Pitcher GB% → HR suppression.
+    "pitcher_gb_hr_exp":  [0.0, 0.5],
 }
 
 
@@ -664,6 +737,23 @@ def fit_weights(csv_path: Path) -> dict:
                     # rows generated before this column existed — eval
                     # treats 0/None as "neutral")
                     "team_rpg": _f("team_rpg"),
+                    # Tier 1: Statcast batter features (season)
+                    "b_xwoba": _f("batter_xwoba"),
+                    "b_barrel": _f("batter_barrel_pct"),
+                    "b_hardhit": _f("batter_hard_hit_pct"),
+                    "b_k": _f("batter_k_pct"),
+                    "b_stx_pa": _i("batter_stx_pa"),
+                    "b_stx_bip": _i("batter_stx_bip"),
+                    # Tier 1: Statcast batter features (L7)
+                    "b_l7_xwoba": _f("batter_l7_xwoba"),
+                    "b_l7_barrel": _f("batter_l7_barrel_pct"),
+                    "b_l7_pa": _i("batter_l7_pa"),
+                    "b_l7_bip": _i("batter_l7_bip"),
+                    # Tier 1: Statcast pitcher features
+                    "p_gb": _f("pitcher_gb_pct"),
+                    "p_fb": _f("pitcher_fb_pct"),
+                    "p_k": _f("pitcher_k_pct_stx"),
+                    "p_stx_bf": _i("pitcher_stx_bf"),
                 }
                 rows.append(row)
             except (KeyError, ValueError):
@@ -686,10 +776,28 @@ def fit_weights(csv_path: Path) -> dict:
     lg_hr_per_bf = float((league.get("pitcher_per_bf") or {}).get("home_runs_allowed", 0.029))
     lg_team_rpg = float(league.get("team_runs_per_game", 4.35)) or 4.35
 
+    # Tier 1 — Statcast league baselines.
+    lg_stx = league.get("statcast") or {}
+    lg_xwoba = float(lg_stx.get("batter_xwoba", 0.318)) or 0.318
+    lg_barrel = float(lg_stx.get("batter_barrel_pct", 0.075)) or 0.075
+    lg_hardhit = float(lg_stx.get("batter_hard_hit_pct", 0.400)) or 0.400
+    lg_bk = float(lg_stx.get("batter_k_pct", 0.225)) or 0.225
+    lg_pk = float(lg_stx.get("pitcher_k_pct", 0.225)) or 0.225
+    lg_gb = float(lg_stx.get("pitcher_gb_pct", 0.430)) or 0.430
+
     # Same cap/trust knobs as the production projector.
     MIN_BF_TRUST = 60
     H_CAP = 0.30
     HR_CAP = 0.35
+    # Tier 1 caps (mirror fantasy.py)
+    STX_XWOBA_CAP = 0.20
+    STX_BARREL_CAP = 0.35
+    STX_HARDHIT_CAP = 0.15
+    STX_GB_HR_CAP = 0.25
+    STX_K_DAMPER_CAP = 0.15
+    STX_BATTER_PA_TRUST = 100
+    STX_BATTER_BIP_TRUST = 50
+    STX_PITCHER_BF_TRUST = 80
 
     def pitcher_mults(
         h_per_bf: float,
@@ -731,11 +839,28 @@ def fit_weights(csv_path: Path) -> dict:
         rbi_scaled = 1.0 + scale * (rbi_raw - 1.0)
         return r_scaled, rbi_scaled
 
+    def shrink(raw: float, trust: float, cap: float) -> float:
+        trust = max(0.0, min(1.0, trust))
+        adjusted = 1.0 + trust * (raw - 1.0)
+        return max(1.0 - cap, min(1.0 + cap, adjusted))
+
+    def blend_stx(
+        season_val: float, l7_val: float,
+        l7_pa: int, l7_min: int, l7_blend: float,
+    ) -> float:
+        """Blend season + L7 expected stat. 0 values treated as missing."""
+        if season_val <= 0 and l7_val <= 0:
+            return 0.0
+        if season_val <= 0:
+            return l7_val
+        if l7_val <= 0 or l7_pa < l7_min:
+            return season_val
+        return (1.0 - l7_blend) * season_val + l7_blend * l7_val
+
     def eval_weights(w: dict, subset: list[dict]) -> tuple[float, float, float]:
         """
         Re-project each row under the candidate weights + the full Phase
-        A/C feature stack (pitcher quality, lineup slot). Returns
-        (R², MAE, Spearman).
+        A/C + Tier 1 feature stack. Returns (R², MAE, Spearman).
         """
         projected: list[float] = []
         actual: list[float] = []
@@ -745,6 +870,15 @@ def fit_weights(csv_path: Path) -> dict:
         slot_scale = float(w.get("slot_effect_scale", 1.0))
         team_r_exp = float(w.get("team_run_env_exp", 1.0))
         team_rbi_exp = float(w.get("team_rbi_env_exp", 0.5))
+        # Tier 1 exponents
+        xwoba_exp = float(w.get("batter_xwoba_exp", 0.0))
+        barrel_exp = float(w.get("batter_barrel_exp", 0.0))
+        hardhit_exp = float(w.get("batter_hardhit_exp", 0.0))
+        b_k_exp = float(w.get("batter_k_exp", 0.0))
+        p_k_exp = float(w.get("pitcher_k_exp", 0.0))
+        gb_hr_exp = float(w.get("pitcher_gb_hr_exp", 0.0))
+        l7_min = int(w.get("l7_min_pa", 10))
+        l7_blend_val = float(w.get("l7_blend", 0.20))
 
         for r in subset:
             pa = r["pa"]
@@ -756,8 +890,7 @@ def fit_weights(csv_path: Path) -> dict:
             )
             slot_r_mult, slot_rbi_mult = slot_mults(r["lineup_slot"], w, slot_scale)
 
-            # Team run environment. Mirrors project_hitter_points logic;
-            # missing team_rpg (older rows before this column) → no effect.
+            # Team run environment (carried over; fit will zero it).
             team_r_mult = 1.0
             team_rbi_mult = 1.0
             rpg = r.get("team_rpg") or 0.0
@@ -768,10 +901,60 @@ def fit_weights(csv_path: Path) -> dict:
                 if team_rbi_exp > 0:
                     team_rbi_mult = max(0.80, min(1.20, ratio ** team_rbi_exp))
 
+            # Tier 1 — Statcast expected-stats multipliers.
+            xwoba_mult = barrel_mult = hardhit_mult = 1.0
+            b_stx_pa = r.get("b_stx_pa") or 0
+            b_stx_bip = r.get("b_stx_bip") or 0
+
+            xwoba_blend = blend_stx(
+                r.get("b_xwoba") or 0.0, r.get("b_l7_xwoba") or 0.0,
+                r.get("b_l7_pa") or 0, l7_min, l7_blend_val,
+            )
+            barrel_blend = blend_stx(
+                r.get("b_barrel") or 0.0, r.get("b_l7_barrel") or 0.0,
+                r.get("b_l7_bip") or 0, l7_min, l7_blend_val,
+            )
+            hardhit_blend = r.get("b_hardhit") or 0.0  # no L7 hardhit stored
+
+            if xwoba_exp > 0 and xwoba_blend > 0:
+                raw = (xwoba_blend / lg_xwoba) ** xwoba_exp
+                xwoba_mult = shrink(raw, b_stx_pa / STX_BATTER_PA_TRUST, STX_XWOBA_CAP)
+            if barrel_exp > 0 and barrel_blend > 0:
+                raw = (barrel_blend / lg_barrel) ** barrel_exp
+                barrel_mult = shrink(raw, b_stx_bip / STX_BATTER_BIP_TRUST, STX_BARREL_CAP)
+            if hardhit_exp > 0 and hardhit_blend > 0:
+                raw = (hardhit_blend / lg_hardhit) ** hardhit_exp
+                hardhit_mult = shrink(raw, b_stx_bip / STX_BATTER_BIP_TRUST, STX_HARDHIT_CAP)
+
+            # Tier 1 — Pitcher GB% HR suppression.
+            gb_hr_mult = 1.0
+            p_gb = r.get("p_gb") or 0.0
+            p_stx_bf = r.get("p_stx_bf") or 0
+            if gb_hr_exp > 0 and p_gb > 0:
+                raw = (lg_gb / p_gb) ** gb_hr_exp
+                gb_hr_mult = shrink(raw, p_stx_bf / STX_PITCHER_BF_TRUST, STX_GB_HR_CAP)
+
+            # Tier 1 — K-damper (both sides).
+            k_damper = 1.0
+            b_k = r.get("b_k") or 0.0
+            p_k = r.get("p_k") or 0.0
+            if (b_k_exp > 0 or p_k_exp > 0) and (b_k > 0 or p_k > 0):
+                br = (b_k / lg_bk) if b_k > 0 else 1.0
+                pr = (p_k / lg_pk) if p_k > 0 else 1.0
+                b_trust = min(1.0, b_stx_pa / STX_BATTER_PA_TRUST) if b_k > 0 else 0.0
+                p_trust = min(1.0, p_stx_bf / STX_PITCHER_BF_TRUST) if p_k > 0 else 0.0
+                dev = (br * pr) - 1.0
+                eff_exp = (b_k_exp * b_trust) + (p_k_exp * p_trust)
+                raw = 1.0 - eff_exp * dev * 0.15
+                k_damper = max(1.0 - STX_K_DAMPER_CAP, min(1.0 + STX_K_DAMPER_CAP, raw))
+
+            # Apply multipliers to final rates
             r_per_pa = r["obp"] * w["r_per_pa_coef"] * slot_r_mult * team_r_mult
             rbi_per_pa = r["slg"] * w["rbi_per_pa_coef"] * slot_rbi_mult * team_rbi_mult
-            s_rate = r["singles"] * park_runs_mult * p_h_mult
-            hr_rate = r["hr"] * park_hr_mult * p_hr_mult
+            s_rate = r["singles"] * park_runs_mult * p_h_mult * hardhit_mult * xwoba_mult * k_damper
+            hr_rate = r["hr"] * park_hr_mult * p_hr_mult * barrel_mult * gb_hr_mult * k_damper
+            r_per_pa *= k_damper
+            rbi_per_pa *= k_damper
 
             efp = pa * (
                 PP_SCORING["single"] * s_rate
@@ -794,11 +977,19 @@ def fit_weights(csv_path: Path) -> dict:
         FIT_GRID["slot_effect_scale"],
         FIT_GRID["team_run_env_exp"],
         FIT_GRID["team_rbi_env_exp"],
+        # Tier 1 dims
+        FIT_GRID["batter_xwoba_exp"],
+        FIT_GRID["batter_barrel_exp"],
+        FIT_GRID["batter_hardhit_exp"],
+        FIT_GRID["batter_k_exp"],
+        FIT_GRID["pitcher_k_exp"],
+        FIT_GRID["pitcher_gb_hr_exp"],
     ))
     logger.info("Grid: %d combinations", len(combos))
 
     for (l7b, bvpb, rc, rbic, p_h_exp, p_hr_exp, slot_scale,
-         t_r_exp, t_rbi_exp) in combos:
+         t_r_exp, t_rbi_exp,
+         xwoba_exp, barrel_exp, hardhit_exp, b_k_exp, p_k_exp, gb_hr_exp) in combos:
         w = dict(weights_seed)
         w.update({
             "l7_blend": l7b,
@@ -810,6 +1001,13 @@ def fit_weights(csv_path: Path) -> dict:
             "slot_effect_scale": slot_scale,
             "team_run_env_exp": t_r_exp,
             "team_rbi_env_exp": t_rbi_exp,
+            # Tier 1
+            "batter_xwoba_exp": xwoba_exp,
+            "batter_barrel_exp": barrel_exp,
+            "batter_hardhit_exp": hardhit_exp,
+            "batter_k_exp": b_k_exp,
+            "pitcher_k_exp": p_k_exp,
+            "pitcher_gb_hr_exp": gb_hr_exp,
         })
         r2_train, mae_train, sp_train = eval_weights(w, train)
         if best is None or r2_train > best["r2_train"]:

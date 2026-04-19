@@ -47,6 +47,12 @@ class Multipliers(BaseModel):
     slot_rbi:     Optional[float] = 1.0   # lineup-slot RBI-opportunity adj
     team_env_r:   Optional[float] = 1.0   # batter's team offensive env (R)
     team_env_rbi: Optional[float] = 1.0   # batter's team offensive env (RBI)
+    # Tier 1 — Statcast expected + K-damper
+    stx_xwoba:    Optional[float] = 1.0   # xwOBA regression on non-HR hits
+    stx_barrel:   Optional[float] = 1.0   # barrel% regression on HRs
+    stx_hardhit:  Optional[float] = 1.0   # hard-hit% regression on non-HR hits
+    pitcher_gb_hr: Optional[float] = 1.0  # pitcher GB% suppression on HR
+    k_damper:     Optional[float] = 1.0   # combined K-product damper on all rates
 
 
 class Rates(BaseModel):

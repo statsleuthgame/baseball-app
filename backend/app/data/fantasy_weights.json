@@ -9,7 +9,7 @@
   "bvp_min_pa": 20,
   "bvp_blend_ramp_floor": 5,
   "bvp_multiplier_cap": 0.25,
-  "r_per_pa_coef": 0.9,
+  "r_per_pa_coef": 1.05,
   "rbi_per_pa_coef": 0.48,
   "default_pa": 4.0,
   "lineup_pa_adj": 0.3,
@@ -52,14 +52,20 @@
   },
   "sb_lhp_mult": 0.8,
   "metrics": {
-    "r2": 0.1217,
-    "mae": 4.8791,
-    "spearman": 0.3475,
+    "r2": 0.1176,
+    "mae": 4.9537,
+    "spearman": 0.3536,
     "n": 1721
   },
   "pitcher_hits_exp": 0.6,
-  "pitcher_hr_exp": 1.0,
+  "pitcher_hr_exp": 0.35,
   "slot_effect_scale": 0.0,
   "team_run_env_exp": 0.0,
-  "team_rbi_env_exp": 0.0
+  "team_rbi_env_exp": 0.0,
+  "batter_xwoba_exp": 0.0,
+  "batter_barrel_exp": 0.0,
+  "batter_hardhit_exp": 0.0,
+  "batter_k_exp": 0.0,
+  "pitcher_k_exp": 0.5,
+  "pitcher_gb_hr_exp": 0.5
 }

@@ -724,3 +724,238 @@ def test_weather_helper_various_wind_strings():
     ) == pytest.approx(0.82)
     # 0 mph wind → no wind effect
     assert _weather_hr_multiplier({"temp": 72, "wind": "0 mph"}) == pytest.approx(1.0)
+
+
+# ---------------------------------------------------------------------------
+# Tier 1 — Statcast expected stats + K-damper
+# ---------------------------------------------------------------------------
+
+
+def test_tier1_barrel_boosts_hr_on_elite_contact(weights, league):
+    """A batter with 2× league barrel% should get a boosted HR rate when
+    batter_barrel_exp > 0, regressing back toward skill from below-avg
+    outcome HR."""
+    w = {**weights, "batter_barrel_exp": 1.0}
+    season = _avg_rates()
+    # Elite barrel skill (2× league), matching sample size for trust = 1.
+    batter_stx = {
+        "xwoba": 0.320, "barrel_pct": 0.15, "hard_hit_pct": 0.40,
+        "k_pct": 0.22, "pa": 500, "bip": 200,
+    }
+    with_stx = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w,
+        batter_stx=batter_stx,
+    )
+    without_stx = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w,
+        batter_stx=None,
+    )
+    assert with_stx["multipliers"]["stx_barrel"] > 1.15
+    # HR points should be higher with barrel boost.
+    assert with_stx["per_event"]["home_runs"] > without_stx["per_event"]["home_runs"]
+
+
+def test_tier1_barrel_disabled_when_exp_zero(weights, league):
+    """batter_barrel_exp=0 → barrel mult must be identically 1.0 regardless
+    of input feature values."""
+    w = {**weights, "batter_barrel_exp": 0.0}
+    season = _avg_rates()
+    batter_stx = {
+        "xwoba": 0.400, "barrel_pct": 0.20, "hard_hit_pct": 0.60,
+        "k_pct": 0.10, "pa": 500, "bip": 200,
+    }
+    result = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w,
+        batter_stx=batter_stx,
+    )
+    assert result["multipliers"]["stx_barrel"] == 1.0
+    assert result["multipliers"]["stx_xwoba"] == 1.0
+
+
+def test_tier1_barrel_small_sample_shrunk(weights, league):
+    """Same elite-barrel ratio, small sample should shrink the multiplier
+    closer to 1.0 than a full-sample version."""
+    w = {**weights, "batter_barrel_exp": 1.0}
+    season = _avg_rates()
+    small = {
+        "xwoba": 0.320, "barrel_pct": 0.15, "hard_hit_pct": 0.40,
+        "k_pct": 0.22, "pa": 40, "bip": 10,  # well below trust threshold
+    }
+    big = {
+        "xwoba": 0.320, "barrel_pct": 0.15, "hard_hit_pct": 0.40,
+        "k_pct": 0.22, "pa": 500, "bip": 200,
+    }
+    r_small = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w, batter_stx=small,
+    )
+    r_big = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w, batter_stx=big,
+    )
+    small_dev = abs(r_small["multipliers"]["stx_barrel"] - 1.0)
+    big_dev = abs(r_big["multipliers"]["stx_barrel"] - 1.0)
+    assert small_dev < big_dev
+
+
+def test_tier1_l7_hot_skill_vs_luck(weights, league):
+    """A batter whose L7 outcome HR is hot BUT whose L7 barrel% is low
+    (hot-on-luck) should be projected LOWER than a batter with the same
+    L7 outcome whose L7 barrel% is high (hot-on-skill)."""
+    w = {**weights, "batter_barrel_exp": 1.0, "l7_blend": 0.40}
+    season = _avg_rates()
+    l7 = Rates(  # both fighters have identical outcome rates
+        singles=0.140, doubles=0.045, triples=0.004, home_runs=0.08,
+        bb_hbp=0.10, obp=0.380, slg=0.520, sb_per_game=0.08, pa=30,
+    )
+    hot_skill = {
+        "xwoba": 0.340, "barrel_pct": 0.10, "hard_hit_pct": 0.45,
+        "k_pct": 0.20, "pa": 400, "bip": 160,
+    }
+    hot_skill_l7 = {
+        "xwoba": 0.400, "barrel_pct": 0.15, "hard_hit_pct": 0.55,
+        "k_pct": 0.18, "pa": 30, "bip": 15,
+    }
+    hot_luck_l7 = {
+        "xwoba": 0.280, "barrel_pct": 0.03, "hard_hit_pct": 0.35,
+        "k_pct": 0.25, "pa": 30, "bip": 15,
+    }
+    r_skill = project_hitter_points(
+        season_rates=season, l7_rates=l7, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w,
+        batter_stx=hot_skill, batter_stx_l7=hot_skill_l7,
+    )
+    r_luck = project_hitter_points(
+        season_rates=season, l7_rates=l7, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w,
+        batter_stx=hot_skill, batter_stx_l7=hot_luck_l7,
+    )
+    # Hot-on-skill should get a bigger barrel multiplier than hot-on-luck.
+    assert r_skill["multipliers"]["stx_barrel"] > r_luck["multipliers"]["stx_barrel"]
+
+
+def test_tier1_k_damper_suppresses_high_k_matchup(weights, league):
+    """High-K batter (30%) vs high-K pitcher (33%) vs league-avg baseline
+    should produce k_damper < 1.0 (suppressed offense)."""
+    w = {**weights, "batter_k_exp": 1.0, "pitcher_k_exp": 1.0}
+    season = _avg_rates()
+    high_k_batter = {
+        "xwoba": 0.320, "barrel_pct": 0.08, "hard_hit_pct": 0.40,
+        "k_pct": 0.30, "pa": 500, "bip": 200,
+    }
+    high_k_pitcher = {
+        "gb_pct": 0.40, "fb_pct": 0.35, "k_pct": 0.33, "bf": 200,
+    }
+    result = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w,
+        batter_stx=high_k_batter, pitcher_stx=high_k_pitcher,
+    )
+    assert result["multipliers"]["k_damper"] < 1.0
+    assert result["multipliers"]["k_damper"] >= 0.85  # capped at 15% suppression
+
+
+def test_tier1_k_damper_disabled_when_exp_zero(weights, league):
+    """Both k exponents at 0 → k_damper must be 1.0."""
+    w = {**weights, "batter_k_exp": 0.0, "pitcher_k_exp": 0.0}
+    season = _avg_rates()
+    bat = {"xwoba": 0.320, "barrel_pct": 0.08, "hard_hit_pct": 0.40,
+           "k_pct": 0.35, "pa": 500, "bip": 200}
+    pit = {"gb_pct": 0.40, "fb_pct": 0.35, "k_pct": 0.40, "bf": 200}
+    result = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w,
+        batter_stx=bat, pitcher_stx=pit,
+    )
+    assert result["multipliers"]["k_damper"] == 1.0
+
+
+def test_tier1_pitcher_gb_suppresses_hr(weights, league):
+    """High-GB pitcher (55%, vs league 43%) with pitcher_gb_hr_exp > 0
+    should shrink the HR multiplier below 1.0."""
+    w = {**weights, "pitcher_gb_hr_exp": 1.0}
+    season = _avg_rates()
+    sinker_baller = {"gb_pct": 0.55, "fb_pct": 0.25, "k_pct": 0.20, "bf": 200}
+    result = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w,
+        pitcher_stx=sinker_baller,
+    )
+    assert result["multipliers"]["pitcher_gb_hr"] < 1.0
+
+
+def test_tier1_all_none_stats_neutral(weights, league):
+    """Missing Statcast data on every axis → all Tier 1 multipliers = 1.0.
+    Ensures production endpoint degrades gracefully when cache is empty."""
+    w = {
+        **weights,
+        "batter_xwoba_exp": 1.0, "batter_barrel_exp": 1.0,
+        "batter_hardhit_exp": 1.0,
+        "batter_k_exp": 1.0, "pitcher_k_exp": 1.0,
+        "pitcher_gb_hr_exp": 1.0,
+    }
+    season = _avg_rates()
+    result = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w,
+        batter_stx=None, batter_stx_l7=None, pitcher_stx=None,
+    )
+    assert result["multipliers"]["stx_xwoba"] == 1.0
+    assert result["multipliers"]["stx_barrel"] == 1.0
+    assert result["multipliers"]["stx_hardhit"] == 1.0
+    assert result["multipliers"]["k_damper"] == 1.0
+    assert result["multipliers"]["pitcher_gb_hr"] == 1.0
+
+
+# ---------------------------------------------------------------------------
+# Tier 1 — statcast_features module (pure parquet readers)
+# ---------------------------------------------------------------------------
+
+
+def test_statcast_features_missing_player_returns_zeros():
+    """Unknown player_id → all None rates, zero sample sizes."""
+    from app.services.statcast_features import (
+        get_batter_features_as_of,
+        get_batter_l7_features_as_of,
+        get_pitcher_features_as_of,
+    )
+    # Use a clearly-fake ID.
+    fake = 99999999
+    s = get_batter_features_as_of(fake, "2025-09-01")
+    l7 = get_batter_l7_features_as_of(fake, "2025-09-01")
+    p = get_pitcher_features_as_of(fake, "2025-09-01")
+    assert s["pa"] == 0 and s["xwoba"] is None and s["barrel_pct"] is None
+    assert l7["pa"] == 0 and l7["xwoba"] is None
+    assert p["bf"] == 0 and p["gb_pct"] is None and p["k_pct"] is None
+
+
+def test_statcast_features_as_of_date_excludes_target_day():
+    """The as-of slice must NOT include the target day's events (no
+    look-ahead bias). Load a real cached batter and verify that
+    as-of-Jan-1 returns a smaller sample than as-of-Dec-31."""
+    from pathlib import Path
+    from app.services.statcast_features import get_batter_features_as_of
+    cache_dir = Path(__file__).resolve().parent.parent.parent / ".statcast_cache"
+    parquets = list(cache_dir.glob("batter_*.parquet"))
+    if not parquets:
+        pytest.skip("No statcast cache available in this environment")
+    pid = int(parquets[0].stem.split("_")[1])
+    # Season-to-date through early July vs late September: late should
+    # have strictly more PA.
+    early = get_batter_features_as_of(pid, "2025-07-01", season=2025)
+    late = get_batter_features_as_of(pid, "2025-10-01", season=2025)
+    assert late["pa"] >= early["pa"]

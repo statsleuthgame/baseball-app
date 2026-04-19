@@ -20,5 +20,18 @@
     "walks_allowed": 0.085,
     "strikeouts": 0.226
   },
-  "team_runs_per_game": 4.35
+  "team_runs_per_game": 4.35,
+  "statcast": {
+    "batter_xwoba": 0.318,
+    "batter_xba": 0.244,
+    "batter_xslg": 0.399,
+    "batter_barrel_pct": 0.075,
+    "batter_hard_hit_pct": 0.400,
+    "batter_k_pct": 0.225,
+    "pitcher_k_pct": 0.225,
+    "pitcher_gb_pct": 0.430,
+    "pitcher_fb_pct": 0.360,
+    "pitcher_barrel_pct_allowed": 0.075,
+    "pitcher_hard_hit_pct_allowed": 0.400
+  }
 }

@@ -41,6 +41,11 @@ from typing import Any, Optional
 
 from app.services import mlb_api, prizepicks
 from app.services.cache import get as cache_get, set as cache_set
+from app.services.statcast_features import (
+    get_batter_features_as_of,
+    get_batter_l7_features_as_of,
+    get_pitcher_features_as_of,
+)
 from app.data.park_factors import get as get_park_factor
 
 logger = logging.getLogger(__name__)
@@ -340,6 +345,9 @@ def project_hitter_points(
     lineup_slot: int | None = None,
     platoon_rates: dict | None = None,
     team_runs_per_game: float | None = None,
+    batter_stx: dict | None = None,
+    batter_stx_l7: dict | None = None,
+    pitcher_stx: dict | None = None,
 ) -> dict:
     """
     Pure projection function. Returns a dict:
@@ -417,6 +425,46 @@ def project_hitter_points(
     doubles *= pitcher_hits_mult
     triples *= pitcher_hits_mult
     home_runs *= pitcher_hr_mult
+
+    # 4c. Tier 1 — Statcast expected-stats regression.
+    # Adjusts outcome rates toward the batter's underlying skill signal
+    # (barrel%, xwOBA, hard-hit%). A batter whose outcome HR rate exceeds
+    # his barrel skill gets regressed DOWN; a batter whose barrel skill
+    # exceeds his outcome gets boosted. Exponents tunable via weights;
+    # 0 disables.
+    (
+        xwoba_mult, barrel_mult, hardhit_mult,
+    ) = _statcast_expected_multipliers(
+        batter_stx, batter_stx_l7, league_rates, weights
+    )
+    # HR rate gated by barrel skill (barrel% is the best single predictor
+    # of HR regression).
+    home_runs *= barrel_mult
+    # Non-HR hit rates gated by hard-hit% (contact quality → BA on balls
+    # in play) and xwOBA-on-contact (captures what the batter "deserved").
+    singles *= hardhit_mult * xwoba_mult
+    doubles *= hardhit_mult * xwoba_mult
+    triples *= hardhit_mult * xwoba_mult
+
+    # 4d. Tier 1 — pitcher GB%/FB% gating on HR probability. High-GB
+    # pitchers (sinker-ballers) suppress HRs beyond what raw HR/BF shows
+    # because their batted-ball profile prevents the fly balls needed for
+    # HR outcomes.
+    pitcher_gb_hr_mult = _pitcher_gb_hr_multiplier(pitcher_stx, league_rates, weights)
+    home_runs *= pitcher_gb_hr_mult
+
+    # 4e. Tier 1 — K-damper. Both pitcher K% and batter K% feed into the
+    # likelihood of any given PA ending in a 0-point strikeout. This damps
+    # the ENTIRE projection proportionally since K outcomes replace
+    # whatever hit / walk would have happened.
+    k_damper = _k_damper(batter_stx, pitcher_stx, league_rates, weights)
+    singles *= k_damper
+    doubles *= k_damper
+    triples *= k_damper
+    home_runs *= k_damper
+    # bb_hbp is also damped by the K-product (a strikeout PA can't become
+    # a walk PA).
+    bb_hbp *= k_damper
 
     # 5. R and RBI projections — OBP / SLG proxies
     r_coef = float(weights.get("r_per_pa_coef", 0.35))
@@ -534,6 +582,12 @@ def project_hitter_points(
             "slot_rbi": round(slot_rbi_mult, 3),
             "team_env_r": round(team_env_r_mult, 3),
             "team_env_rbi": round(team_env_rbi_mult, 3),
+            # Tier 1 — Statcast expected + K-damper
+            "stx_xwoba": round(xwoba_mult, 3),
+            "stx_barrel": round(barrel_mult, 3),
+            "stx_hardhit": round(hardhit_mult, 3),
+            "pitcher_gb_hr": round(pitcher_gb_hr_mult, 3),
+            "k_damper": round(k_damper, 3),
         },
         "rates": {
             "singles": round(singles, 4),
@@ -729,6 +783,198 @@ def _pitcher_multipliers(
     hits_mult = max(1.0 - _PITCHER_HITS_MULT_CAP, min(1.0 + _PITCHER_HITS_MULT_CAP, hits_mult))
     hr_mult = max(1.0 - _PITCHER_HR_MULT_CAP, min(1.0 + _PITCHER_HR_MULT_CAP, hr_mult))
     return hits_mult, hr_mult
+
+
+# ---------------------------------------------------------------------------
+# Tier 1 — Statcast expected-stats + K-damper helpers
+# ---------------------------------------------------------------------------
+
+# Caps on Tier 1 multipliers. Batter-expected regression is capped tighter
+# than pitcher-quality because expected stats stabilize faster and we
+# trust them to move the needle more cleanly — but still cap to avoid
+# blow-outs for early-season small samples.
+_STX_XWOBA_CAP = 0.20    # ±20% on non-HR hit rates
+_STX_BARREL_CAP = 0.35   # ±35% on HR rate
+_STX_HARDHIT_CAP = 0.15  # ±15% on non-HR hit rates
+_STX_GB_HR_CAP = 0.25    # ±25% on HR rate from pitcher GB mix
+_STX_K_DAMPER_CAP = 0.15 # ±15% on overall rates from K-product
+
+# Sample-size shrink thresholds. Below these, we pull the multiplier
+# toward 1.0 proportionally. Barrel%/xwOBA stabilize fastest (Savant
+# research), K% needs more PAs to stabilize.
+_STX_BATTER_PA_TRUST = 100     # xwOBA stabilizes ~50-80 PA, K% ~60 PA
+_STX_BATTER_BIP_TRUST = 50     # barrel%, hard-hit% stabilize ~30-50 BIP
+_STX_PITCHER_BF_TRUST = 80     # pitcher K% and GB% stabilize ~70 BF
+
+
+def _shrink(raw_mult: float, trust: float, cap: float) -> float:
+    """Sample-size shrink + cap. `trust` is 0..1; 0 means no data, 1 means
+    full confidence. Caps symmetric around 1.0."""
+    trust = max(0.0, min(1.0, trust))
+    adjusted = 1.0 + trust * (raw_mult - 1.0)
+    return max(1.0 - cap, min(1.0 + cap, adjusted))
+
+
+def _blend_stx(
+    season_val: float | None,
+    l7_val: float | None,
+    season_pa: int,
+    l7_pa: int,
+    l7_min: int,
+    l7_blend: float,
+) -> float | None:
+    """Blend season and L7 expected stats using the same philosophy as
+    outcome rates (trust L7 when sample ≥ min, else season only).
+    Returns None if both are unavailable."""
+    if season_val is None and l7_val is None:
+        return None
+    if season_val is None:
+        return l7_val
+    if l7_val is None or l7_pa < l7_min:
+        return season_val
+    return (1.0 - l7_blend) * season_val + l7_blend * l7_val
+
+
+def _statcast_expected_multipliers(
+    batter_stx: dict | None,
+    batter_stx_l7: dict | None,
+    league_rates: dict,
+    weights: dict,
+) -> tuple[float, float, float]:
+    """Return (xwoba_mult, barrel_mult, hardhit_mult) applied on top of
+    park / weather / pitcher multipliers. These regress outcome rates
+    toward the batter's underlying skill signal.
+
+    Degrades gracefully: missing stats → multiplier 1.0 (no effect)."""
+    if not batter_stx:
+        return 1.0, 1.0, 1.0
+
+    lg = (league_rates or {}).get("statcast") or {}
+    lg_xwoba = float(lg.get("batter_xwoba", 0.318)) or 0.318
+    lg_barrel = float(lg.get("batter_barrel_pct", 0.075)) or 0.075
+    lg_hardhit = float(lg.get("batter_hard_hit_pct", 0.400)) or 0.400
+
+    xwoba_exp = float(weights.get("batter_xwoba_exp", 0.0))
+    barrel_exp = float(weights.get("batter_barrel_exp", 0.0))
+    hardhit_exp = float(weights.get("batter_hardhit_exp", 0.0))
+
+    # Blend season + L7 for each feature using the usual l7_blend.
+    l7_min = int(weights.get("l7_min_pa", 10))
+    l7b = float(weights.get("l7_blend", 0.20))
+    season_pa = int(batter_stx.get("pa") or 0)
+    season_bip = int(batter_stx.get("bip") or 0)
+    l7_pa = int((batter_stx_l7 or {}).get("pa") or 0)
+    l7_bip = int((batter_stx_l7 or {}).get("bip") or 0)
+
+    xwoba_blended = _blend_stx(
+        batter_stx.get("xwoba"),
+        (batter_stx_l7 or {}).get("xwoba"),
+        season_pa, l7_pa, l7_min, l7b,
+    )
+    barrel_blended = _blend_stx(
+        batter_stx.get("barrel_pct"),
+        (batter_stx_l7 or {}).get("barrel_pct"),
+        season_bip, l7_bip, l7_min, l7b,
+    )
+    hardhit_blended = _blend_stx(
+        batter_stx.get("hard_hit_pct"),
+        (batter_stx_l7 or {}).get("hard_hit_pct"),
+        season_bip, l7_bip, l7_min, l7b,
+    )
+
+    xwoba_mult = 1.0
+    barrel_mult = 1.0
+    hardhit_mult = 1.0
+
+    if xwoba_exp > 0 and xwoba_blended and xwoba_blended > 0:
+        raw = (xwoba_blended / lg_xwoba) ** xwoba_exp
+        trust = min(1.0, season_pa / _STX_BATTER_PA_TRUST)
+        xwoba_mult = _shrink(raw, trust, _STX_XWOBA_CAP)
+
+    if barrel_exp > 0 and barrel_blended and barrel_blended > 0:
+        raw = (barrel_blended / lg_barrel) ** barrel_exp
+        trust = min(1.0, season_bip / _STX_BATTER_BIP_TRUST)
+        barrel_mult = _shrink(raw, trust, _STX_BARREL_CAP)
+
+    if hardhit_exp > 0 and hardhit_blended and hardhit_blended > 0:
+        raw = (hardhit_blended / lg_hardhit) ** hardhit_exp
+        trust = min(1.0, season_bip / _STX_BATTER_BIP_TRUST)
+        hardhit_mult = _shrink(raw, trust, _STX_HARDHIT_CAP)
+
+    return xwoba_mult, barrel_mult, hardhit_mult
+
+
+def _pitcher_gb_hr_multiplier(
+    pitcher_stx: dict | None,
+    league_rates: dict,
+    weights: dict,
+) -> float:
+    """High-GB pitchers suppress HRs beyond raw HR/BF. Multiplier applies
+    to HR rate only. Tunable exponent `pitcher_gb_hr_exp` (0 disables)."""
+    if not pitcher_stx:
+        return 1.0
+    exp = float(weights.get("pitcher_gb_hr_exp", 0.0))
+    if exp <= 0:
+        return 1.0
+    gb = pitcher_stx.get("gb_pct")
+    if not gb or gb <= 0:
+        return 1.0
+    lg = (league_rates or {}).get("statcast") or {}
+    lg_gb = float(lg.get("pitcher_gb_pct", 0.430)) or 0.430
+    # Inverse relationship: high GB% → lower HR rate. Ratio > 1 means
+    # MORE ground balls than average, so HR multiplier < 1.
+    raw = (lg_gb / gb) ** exp
+    bf = int(pitcher_stx.get("bf") or 0)
+    trust = min(1.0, bf / _STX_PITCHER_BF_TRUST)
+    return _shrink(raw, trust, _STX_GB_HR_CAP)
+
+
+def _k_damper(
+    batter_stx: dict | None,
+    pitcher_stx: dict | None,
+    league_rates: dict,
+    weights: dict,
+) -> float:
+    """Return a 0.85..1.15 multiplier that damps or boosts all offensive
+    rates based on the K-product (batter K% × pitcher K%). A high-K
+    batter vs high-K pitcher has more PAs ending in 0-point strikeouts,
+    so every other rate must come down proportionally."""
+    if not batter_stx and not pitcher_stx:
+        return 1.0
+    batter_exp = float(weights.get("batter_k_exp", 0.0))
+    pitcher_exp = float(weights.get("pitcher_k_exp", 0.0))
+    if batter_exp <= 0 and pitcher_exp <= 0:
+        return 1.0
+
+    lg = (league_rates or {}).get("statcast") or {}
+    lg_bk = float(lg.get("batter_k_pct", 0.225)) or 0.225
+    lg_pk = float(lg.get("pitcher_k_pct", 0.225)) or 0.225
+
+    batter_k = (batter_stx or {}).get("k_pct")
+    pitcher_k = (pitcher_stx or {}).get("k_pct")
+
+    # If both sides are missing the signal isn't usable.
+    if not batter_k and not pitcher_k:
+        return 1.0
+
+    # Build the combined K "excess" over league. If we only have one side,
+    # use league-average for the other (neutral).
+    batter_ratio = (batter_k / lg_bk) if batter_k and batter_k > 0 else 1.0
+    pitcher_ratio = (pitcher_k / lg_pk) if pitcher_k and pitcher_k > 0 else 1.0
+
+    # Weight by how much we trust each side given sample size.
+    batter_pa = int((batter_stx or {}).get("pa") or 0)
+    pitcher_bf = int((pitcher_stx or {}).get("bf") or 0)
+    batter_trust = min(1.0, batter_pa / _STX_BATTER_PA_TRUST) if batter_k else 0.0
+    pitcher_trust = min(1.0, pitcher_bf / _STX_PITCHER_BF_TRUST) if pitcher_k else 0.0
+
+    # Deviation from neutral. Product - 1 measures how much EXTRA K-risk
+    # vs a league-avg matchup. Scale by the exponents and trust.
+    dev = (batter_ratio * pitcher_ratio) - 1.0
+    effective_exp = (batter_exp * batter_trust) + (pitcher_exp * pitcher_trust)
+    # Negative sign: high-K matchup suppresses offense.
+    raw = 1.0 - effective_exp * dev * 0.15
+    return max(1.0 - _STX_K_DAMPER_CAP, min(1.0 + _STX_K_DAMPER_CAP, raw))
 
 
 async def _fetch_pitcher_hand(player_id: int) -> str | None:
@@ -1015,6 +1261,25 @@ async def _project_batter(
     season_rates = derive_rates_from_stat(season_stat)
     l7_rates = derive_rates_from_stat(l7_stat) if l7_stat else None
 
+    # Tier 1 — Statcast expected-stats features (season + L7). Reads the
+    # local parquet cache; no network. Missing cache → all fields None
+    # (treated as neutral multiplier inside project_hitter_points).
+    today = _today_iso()
+    try:
+        batter_stx = await asyncio.to_thread(get_batter_features_as_of, pid, today, season)
+        batter_stx_l7 = await asyncio.to_thread(get_batter_l7_features_as_of, pid, today, 7)
+    except Exception:
+        batter_stx = batter_stx_l7 = None
+    pitcher_stx = None
+    opp_sp_id = (opp_pitcher or {}).get("id") if opp_pitcher else None
+    if opp_sp_id:
+        try:
+            pitcher_stx = await asyncio.to_thread(
+                get_pitcher_features_as_of, int(opp_sp_id), today, season
+            )
+        except Exception:
+            pitcher_stx = None
+
     projection = project_hitter_points(
         season_rates=season_rates,
         l7_rates=l7_rates,
@@ -1029,6 +1294,9 @@ async def _project_batter(
         lineup_slot=lineup_slot,
         platoon_rates=platoon_rates,
         team_runs_per_game=team_runs_per_game,
+        batter_stx=batter_stx,
+        batter_stx_l7=batter_stx_l7,
+        pitcher_stx=pitcher_stx,
     )
 
     return {
