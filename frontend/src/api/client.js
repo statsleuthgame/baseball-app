@@ -699,10 +699,13 @@ function _scoreFromBattingStat(s) {
   );
 }
 
-// Live-game fantasy scores for every batter currently in an in-progress game.
-// Returns { [playerId: number]: { efp: number, gamePk: number, status: string } }.
-// Batters in scheduled or already-Final games are absent. Used to stamp the
-// Edge cards with a "LIVE X.X" readout + red border while action is underway.
+// Live + Final fantasy scores for every batter in an in-progress or already-
+// finished game today. Returns
+//   { [playerId: number]: { efp: number, gamePk: number, status: string,
+//                            state: "live" | "final" } }
+// Scheduled games (not yet started) are absent. Live games drive the red
+// border + "● LIVE X.X" chip; Final games drive the neutral "FINAL X.X" chip
+// so users can see how their pick ended up.
 export const fetchLiveFantasyScores = async () => {
   try {
     const d = new Date();
@@ -710,7 +713,6 @@ export const fetchLiveFantasyScores = async () => {
     const schedResp = await mlbApi.get("/schedule", {
       params: { sportId: 1, date: dateStr, gameType: "R" },
     });
-    const liveGames = [];
     const LIVE_STATES = new Set([
       "In Progress",
       "Manager Challenge",
@@ -718,18 +720,22 @@ export const fetchLiveFantasyScores = async () => {
       "Delayed Start",
       "Warmup",
     ]);
+    const FINAL_STATES = new Set(["Final", "Game Over", "Completed Early"]);
+    const games = [];
     for (const dateEntry of schedResp.data?.dates || []) {
       for (const g of dateEntry.games || []) {
         const status = g.status?.detailedState || "";
         if (LIVE_STATES.has(status)) {
-          liveGames.push({ gamePk: g.gamePk, status });
+          games.push({ gamePk: g.gamePk, status, state: "live" });
+        } else if (FINAL_STATES.has(status)) {
+          games.push({ gamePk: g.gamePk, status, state: "final" });
         }
       }
     }
-    if (liveGames.length === 0) return {};
+    if (games.length === 0) return {};
 
     const boxPerGame = await Promise.all(
-      liveGames.map(async (g) => {
+      games.map(async (g) => {
         try {
           const r = await mlbApi.get(`/game/${g.gamePk}/boxscore`);
           const rows = {};
@@ -746,6 +752,7 @@ export const fetchLiveFantasyScores = async () => {
                 efp: Number(_scoreFromBattingStat(stat).toFixed(2)),
                 gamePk: g.gamePk,
                 status: g.status,
+                state: g.state,
               };
             }
           }

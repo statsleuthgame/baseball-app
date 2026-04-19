@@ -427,7 +427,9 @@ function PickCard({ pick, live, onSelectPlayer }) {
     <article
       className={`edge-card edge-conf-${confidence.tone}${
         isFade ? " edge-card-fade" : ""
-      }${live ? " edge-card-live" : ""}`}
+      }${live?.state === "live" ? " edge-card-live" : ""}${
+        live?.state === "final" ? " edge-card-final" : ""
+      }`}
     >
       <header className="edge-card-head">
         <button
@@ -499,13 +501,21 @@ function PickCard({ pick, live, onSelectPlayer }) {
 
       <div className="edge-stat-row edge-score-row">
         <span className="edge-score">SCORE {score.toFixed(2)}</span>
-        {live && (
+        {live?.state === "live" && (
           <span
             className="edge-live-score"
             title="Live fantasy score · updating every ~60s"
           >
             <span className="edge-live-dot" aria-hidden="true" />
             LIVE {Number(live.efp).toFixed(1)}
+          </span>
+        )}
+        {live?.state === "final" && (
+          <span
+            className="edge-final-score"
+            title="Final fantasy score for this game"
+          >
+            FINAL {Number(live.efp).toFixed(1)}
           </span>
         )}
         <button

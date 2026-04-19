@@ -7410,6 +7410,32 @@ th.sb-ls-total {
   border: 1px solid rgba(239, 68, 68, 0.35);
 }
 
+/* FINAL chip — game is over, this is the batter's actual PrizePicks
+   fantasy score for the day. Neutral/muted styling (no pulsing dot,
+   no red) so it reads as "static result" rather than "live action." */
+.edge-final-score {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  padding: 3px 8px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-bright, #fff);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Final-game cards: fade slightly so in-play picks stand out more,
+   keeping the FINAL chip legible without stealing attention from live
+   action. */
+.edge-card-final {
+  opacity: 0.78;
+}
+
 .edge-live-dot {
   width: 7px;
   height: 7px;

@@ -163,12 +163,15 @@ function FantasyCard({ projection, live, onSelectPlayer }) {
 
   const pitcherDisplay = opp_pitcher?.fullName ? lastName(opp_pitcher.fullName) : "TBD";
 
-  const isLive = !!live;
-  const liveEfp = isLive ? Number(live.efp).toFixed(1) : null;
+  const isLive = live?.state === "live";
+  const isFinal = live?.state === "final";
+  const actualEfp = live ? Number(live.efp).toFixed(1) : null;
 
   return (
     <article
-      className={`edge-card ${tierClass}${isLive ? " edge-card-live" : ""}`}
+      className={`edge-card ${tierClass}${isLive ? " edge-card-live" : ""}${
+        isFinal ? " edge-card-final" : ""
+      }`}
     >
       <header className="edge-card-head">
         <button
@@ -229,7 +232,15 @@ function FantasyCard({ projection, live, onSelectPlayer }) {
             title="Live fantasy score · updating every ~60s"
           >
             <span className="edge-live-dot" aria-hidden="true" />
-            LIVE {liveEfp}
+            LIVE {actualEfp}
+          </span>
+        )}
+        {isFinal && (
+          <span
+            className="edge-final-score"
+            title="Final fantasy score for this game"
+          >
+            FINAL {actualEfp}
           </span>
         )}
       </div>
