@@ -70,9 +70,13 @@ from app.services.actual_efp import (  # noqa: E402
     score_from_stat,
 )
 from app.services.statcast_features import (  # noqa: E402
+    bvpt_matchup_xwoba,
+    get_batter_bvpt_xwoba_as_of,
     get_batter_features_as_of,
     get_batter_l7_features_as_of,
+    get_batter_obp_xwoba_as_of,
     get_pitcher_features_as_of,
+    get_pitcher_pitch_mix_as_of,
     get_sprint_speed,
 )
 from app.data.park_factors import get as get_park_factor, get_hr_hand_adj  # noqa: E402
@@ -417,6 +421,41 @@ async def process_game(
             return None
         return str(counts.idxmax())  # "L" or "R"
 
+    # Tier 3 — pitcher pitch mix per side (shared across all batters).
+    pitcher_mix_by_side: dict[str, dict[str, float]] = {}
+    for side in ("away", "home"):
+        opp_side = "home" if side == "away" else "away"
+        sp_id = side_starters.get(opp_side)
+        if sp_id:
+            try:
+                pitcher_mix_by_side[side] = await asyncio.to_thread(
+                    get_pitcher_pitch_mix_as_of, int(sp_id), game_date, season
+                )
+            except Exception:
+                pitcher_mix_by_side[side] = {}
+
+    # Tier 3 — lineup order per side. Derived from battingOrder codes in
+    # the boxscore (3-digit strings like "100", "200" for slots 1, 2).
+    lineup_by_side: dict[str, list[int]] = {"away": [], "home": []}
+    for side in ("away", "home"):
+        team = (boxscore.get("teams") or {}).get(side) or {}
+        players = team.get("players") or {}
+        slot_pids: list[tuple[int, int]] = []
+        for key, pdata in players.items():
+            if not key.startswith("ID"):
+                continue
+            pid_p = (pdata.get("person") or {}).get("id")
+            bo = pdata.get("battingOrder")
+            if pid_p and bo:
+                try:
+                    raw = int(bo)
+                    if raw % 100 == 0:
+                        slot_pids.append((raw // 100, int(pid_p)))
+                except (TypeError, ValueError):
+                    pass
+        slot_pids.sort()
+        lineup_by_side[side] = [pid_ for _, pid_ in slot_pids]
+
     for row, res in zip(work_batters, batter_results):
         pid = row["player_id"]
         key = (gamePk, pid)
@@ -474,6 +513,46 @@ async def process_game(
         except Exception:
             bat_side_parquet = None
 
+        # Tier 3 — BvPT (pitcher mix × batter per-pitch-type xwOBA) and
+        # lineup context (on-deck xwOBA + preceding OBP).
+        matchup_xwoba = None
+        batter_season_xwoba = (batter_stx or {}).get("xwoba")
+        pit_mix = pitcher_mix_by_side.get(side) or {}
+        if pit_mix:
+            try:
+                bat_fam = await asyncio.to_thread(
+                    get_batter_bvpt_xwoba_as_of, int(pid), game_date, season
+                )
+                matchup_xwoba = bvpt_matchup_xwoba(bat_fam, pit_mix)
+            except Exception:
+                matchup_xwoba = None
+
+        preceding_obp = None
+        ondeck_xwoba = None
+        lineup_ids_side = lineup_by_side.get(side) or []
+        if int(pid) in lineup_ids_side:
+            idx_in_lineup = lineup_ids_side.index(int(pid))
+            n_l = len(lineup_ids_side)
+            prev_ids = [
+                lineup_ids_side[(idx_in_lineup - 1) % n_l],
+                lineup_ids_side[(idx_in_lineup - 2) % n_l],
+            ]
+            next_id = lineup_ids_side[(idx_in_lineup + 1) % n_l]
+            try:
+                obps = []
+                for prev_pid in prev_ids:
+                    obp, _ = await asyncio.to_thread(
+                        get_batter_obp_xwoba_as_of, int(prev_pid), game_date, season
+                    )
+                    if obp is not None:
+                        obps.append(obp)
+                preceding_obp = sum(obps) / len(obps) if obps else None
+                _, ondeck_xwoba = await asyncio.to_thread(
+                    get_batter_obp_xwoba_as_of, int(next_id), game_date, season
+                )
+            except Exception:
+                pass
+
         projection = project_hitter_points(
             season_rates=season_rates,
             l7_rates=l7_rates,
@@ -495,6 +574,10 @@ async def process_game(
             pitcher_stx=pitcher_stx,
             sprint_speed=sprint_speed,
             venue_id=venue_id,
+            bvpt_matchup_xwoba=matchup_xwoba,
+            batter_season_xwoba=batter_season_xwoba,
+            preceding_obp=preceding_obp,
+            ondeck_xwoba=ondeck_xwoba,
         )
 
         def _r(v, d=5):
@@ -549,8 +632,10 @@ async def process_game(
             # Tier 2 — sprint speed + handedness + venue
             "sprint_speed": _r(sprint_speed, 2) if sprint_speed else "",
             "bat_side": bat_side_parquet or "",
-            # venue_id already persisted above; get_hr_hand_adj re-applied
-            # during fit using venue_id + bat_side columns.
+            # Tier 3 — BvPT + lineup context
+            "bvpt_matchup_xwoba": _r(matchup_xwoba, 4),
+            "preceding_obp": _r(preceding_obp, 4),
+            "ondeck_xwoba": _r(ondeck_xwoba, 4),
         })
         processed_keys.add(key)
 
@@ -633,6 +718,8 @@ def _append_csv(csv_path: Path, new_rows: list[dict], existing_rows: list[dict])
         "pitcher_bb_pct_stx", "pitcher_stx_bf",
         # Tier 2: sprint speed + handedness
         "sprint_speed", "bat_side",
+        # Tier 3: BvPT + lineup context
+        "bvpt_matchup_xwoba", "preceding_obp", "ondeck_xwoba",
     ]
     write_header = not csv_path.exists()
     csv_path.parent.mkdir(parents=True, exist_ok=True)
@@ -662,12 +749,12 @@ FIT_GRID = {
     # grid wastes combinations. Dropped to a single identity value.
     "l7_blend":        [0.20],
     "bvp_blend":       [0.00],
-    # Widened downward because the Tier 2 eval formula now INCLUDES BB + SB
-    # points (adds ~1.5 pts/game of mean projected EFP). The grid needs
-    # room to pull coefs down to compensate, or else the bias blows up
-    # test R². Values span 0.45 → 1.20.
-    "r_per_pa_coef":   [0.45, 0.60, 0.75, 0.90, 1.05, 1.20],
-    "rbi_per_pa_coef": [0.25, 0.36, 0.48, 0.60],
+    # Tier 2 winner: r=0.9, rbi=0.25 (rbi pinned at bottom). Extended
+    # rbi DOWN to 0.15 to resolve the pin, narrowed r around 0.9. Tier 3
+    # adds more multiplicative mass (BvPT × ondeck × preceding) so coefs
+    # may drift further.
+    "r_per_pa_coef":   [0.60, 0.75, 0.90, 1.05],
+    "rbi_per_pa_coef": [0.15, 0.25, 0.36],
     # Phase E-v2 tunable feature strengths — winners: 0.6 / 0.35.
     "pitcher_hits_exp":   [0.0, 0.6],
     "pitcher_hr_exp":     [0.0, 0.35, 0.7],
@@ -684,19 +771,23 @@ FIT_GRID = {
     "batter_k_exp":       [0.0],
     # Tier 1: Pitcher K% and GB%.
     "pitcher_k_exp":      [0.0, 0.5],
-    "pitcher_gb_hr_exp":  [0.0, 0.5, 1.0],
+    "pitcher_gb_hr_exp":  [0.5, 1.0],
     # Tier 2: Pitcher BB% boost on batter walks.
-    "pitcher_bb_exp":     [0.0, 0.5, 1.0],
-    # Tier 2: Park handedness strength scalar (0 off, 1 full strength).
-    "park_hand_scale":    [0.0, 1.0],
-    # Tier 2: Sprint-speed exponents — SB takes the big swing, singles
-    # and R/PA get subtler effects.
-    "sb_speed_exp":       [0.0, 1.0, 2.0],
-    "speed_singles_exp":  [0.0, 0.5],
-    "speed_r_exp":        [0.0, 0.5],
+    "pitcher_bb_exp":     [0.5, 1.0],
+    # Tier 2: Park handedness — dead in Tier 2, collapsed.
+    "park_hand_scale":    [0.0],
+    # Tier 2: Sprint-speed — all three dead in Tier 2, collapsed.
+    "sb_speed_exp":       [0.0],
+    "speed_singles_exp":  [0.0],
+    "speed_r_exp":        [0.0],
+    # Tier 3: BvPT matchup.
+    "bvpt_exp":           [0.0, 0.5, 1.0],
+    # Tier 3: Real lineup context.
+    "ondeck_r_exp":       [0.0, 0.5, 1.0],
+    "preceding_rbi_exp":  [0.0, 0.5, 1.0],
 }
 
-# Grid size: 6×4×2×3 × 2×3×3 × 2×3×2×2 = ~41.5k combos. Fit ~15 min.
+# Grid size: 4×4×2×3 × 2×2×2 × 3×3×3 = ~20.7k combos. Fit ~6-7 min.
 
 
 def _compute_r2(projected: list[float], actual: list[float]) -> float:
@@ -813,6 +904,10 @@ def fit_weights(csv_path: Path) -> dict:
                     "sprint_speed": _f("sprint_speed"),
                     "bat_side": (r.get("bat_side") or "").strip() or None,
                     "venue_id": _i("venue_id"),
+                    # Tier 3: BvPT + lineup context
+                    "bvpt_matchup_xwoba": _f("bvpt_matchup_xwoba"),
+                    "preceding_obp": _f("preceding_obp"),
+                    "ondeck_xwoba": _f("ondeck_xwoba"),
                 }
                 rows.append(row)
             except (KeyError, ValueError):
@@ -865,6 +960,11 @@ def fit_weights(csv_path: Path) -> dict:
     SPEED_SB_CAP = 0.60
     SPEED_SINGLES_CAP = 0.12
     SPEED_R_CAP = 0.10
+    # Tier 3 caps (mirror fantasy.py)
+    BVPT_CAP = 0.20
+    ONDECK_R_CAP = 0.15
+    PRECEDING_RBI_CAP = 0.15
+    lg_obp = float(league.get("obp", 0.314)) or 0.314
 
     def pitcher_mults(
         h_per_bf: float,
@@ -952,6 +1052,10 @@ def fit_weights(csv_path: Path) -> dict:
         sb_speed_exp = float(w.get("sb_speed_exp", 0.0))
         speed_sg_exp = float(w.get("speed_singles_exp", 0.0))
         speed_r_exp_ = float(w.get("speed_r_exp", 0.0))
+        # Tier 3 exponents
+        bvpt_exp = float(w.get("bvpt_exp", 0.0))
+        ondeck_r_exp = float(w.get("ondeck_r_exp", 0.0))
+        preceding_rbi_exp = float(w.get("preceding_rbi_exp", 0.0))
 
         for r in subset:
             pa = r["pa"]
@@ -1056,11 +1160,33 @@ def fit_weights(csv_path: Path) -> dict:
                     raw = ratio ** speed_r_exp_
                     speed_r_mult = max(1.0 - SPEED_R_CAP, min(1.0 + SPEED_R_CAP, raw))
 
+            # Tier 3 — BvPT matchup multiplier.
+            bvpt_mult = 1.0
+            m_xwoba = r.get("bvpt_matchup_xwoba") or 0.0
+            b_xwoba = r.get("b_xwoba") or 0.0
+            if bvpt_exp > 0 and m_xwoba > 0 and b_xwoba > 0:
+                raw = (m_xwoba / b_xwoba) ** bvpt_exp
+                bvpt_mult = max(1.0 - BVPT_CAP, min(1.0 + BVPT_CAP, raw))
+
+            # Tier 3 — Lineup-context multipliers.
+            ondeck_r_mult = 1.0
+            preceding_rbi_mult = 1.0
+            on_xwoba = r.get("ondeck_xwoba") or 0.0
+            pre_obp = r.get("preceding_obp") or 0.0
+            if ondeck_r_exp > 0 and on_xwoba > 0:
+                raw = (on_xwoba / lg_xwoba) ** ondeck_r_exp
+                ondeck_r_mult = max(1.0 - ONDECK_R_CAP, min(1.0 + ONDECK_R_CAP, raw))
+            if preceding_rbi_exp > 0 and pre_obp > 0:
+                raw = (pre_obp / lg_obp) ** preceding_rbi_exp
+                preceding_rbi_mult = max(
+                    1.0 - PRECEDING_RBI_CAP, min(1.0 + PRECEDING_RBI_CAP, raw)
+                )
+
             # Apply multipliers to final rates
-            r_per_pa = r["obp"] * w["r_per_pa_coef"] * slot_r_mult * team_r_mult * speed_r_mult
-            rbi_per_pa = r["slg"] * w["rbi_per_pa_coef"] * slot_rbi_mult * team_rbi_mult
-            s_rate = r["singles"] * park_runs_mult * p_h_mult * hardhit_mult * xwoba_mult * k_damper * speed_singles_mult
-            hr_rate = r["hr"] * park_hr_mult * p_hr_mult * barrel_mult * gb_hr_mult * k_damper * park_hand_mult
+            r_per_pa = r["obp"] * w["r_per_pa_coef"] * slot_r_mult * team_r_mult * speed_r_mult * ondeck_r_mult
+            rbi_per_pa = r["slg"] * w["rbi_per_pa_coef"] * slot_rbi_mult * team_rbi_mult * preceding_rbi_mult
+            s_rate = r["singles"] * park_runs_mult * p_h_mult * hardhit_mult * xwoba_mult * k_damper * speed_singles_mult * bvpt_mult
+            hr_rate = r["hr"] * park_hr_mult * p_hr_mult * barrel_mult * gb_hr_mult * k_damper * park_hand_mult * bvpt_mult
             r_per_pa *= k_damper
             rbi_per_pa *= k_damper
             # Tier 2: BB+HBP rate gets pitcher BB% boost + K-damper.
@@ -1104,13 +1230,18 @@ def fit_weights(csv_path: Path) -> dict:
         FIT_GRID["sb_speed_exp"],
         FIT_GRID["speed_singles_exp"],
         FIT_GRID["speed_r_exp"],
+        # Tier 3 dims
+        FIT_GRID["bvpt_exp"],
+        FIT_GRID["ondeck_r_exp"],
+        FIT_GRID["preceding_rbi_exp"],
     ))
     logger.info("Grid: %d combinations", len(combos))
 
     for (l7b, bvpb, rc, rbic, p_h_exp, p_hr_exp, slot_scale,
          t_r_exp, t_rbi_exp,
          xwoba_exp, barrel_exp, hardhit_exp, b_k_exp, p_k_exp, gb_hr_exp,
-         p_bb_exp, park_hand, sb_se, sp_sg, sp_r) in combos:
+         p_bb_exp, park_hand, sb_se, sp_sg, sp_r,
+         bvpt_e, ondeck_e, preceding_e) in combos:
         w = dict(weights_seed)
         w.update({
             "l7_blend": l7b,
@@ -1135,6 +1266,10 @@ def fit_weights(csv_path: Path) -> dict:
             "sb_speed_exp": sb_se,
             "speed_singles_exp": sp_sg,
             "speed_r_exp": sp_r,
+            # Tier 3
+            "bvpt_exp": bvpt_e,
+            "ondeck_r_exp": ondeck_e,
+            "preceding_rbi_exp": preceding_e,
         })
         r2_train, mae_train, sp_train = eval_weights(w, train)
         if best is None or r2_train > best["r2_train"]:

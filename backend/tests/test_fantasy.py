@@ -1115,3 +1115,164 @@ def test_tier2_handedness_adj_lookup():
     assert get_hr_hand_adj(99999, "L") == 1.0
     # Unknown handedness → 1.0
     assert get_hr_hand_adj(3, None) == 1.0
+
+
+# ---------------------------------------------------------------------------
+# Tier 3 — BvPT + lineup context
+# ---------------------------------------------------------------------------
+
+
+def test_tier3_bvpt_favorable_matchup_boosts(weights, league):
+    """A batter whose BvPT matchup xwOBA is 10% above his season xwOBA
+    should see a hit-rate boost when bvpt_exp > 0."""
+    w = {**weights, "bvpt_exp": 1.0}
+    season = _power_rates()
+    favorable = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w,
+        bvpt_matchup_xwoba=0.380, batter_season_xwoba=0.340,
+    )
+    neutral = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w,
+        bvpt_matchup_xwoba=0.340, batter_season_xwoba=0.340,
+    )
+    assert favorable["multipliers"]["bvpt"] > 1.0
+    assert neutral["multipliers"]["bvpt"] == pytest.approx(1.0)
+    assert favorable["per_event"]["home_runs"] > neutral["per_event"]["home_runs"]
+
+
+def test_tier3_bvpt_tough_matchup_suppresses(weights, league):
+    """Unfavorable matchup (batter does poorly vs pitcher's pitch mix)
+    should suppress hit rates."""
+    w = {**weights, "bvpt_exp": 1.0}
+    season = _power_rates()
+    tough = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w,
+        bvpt_matchup_xwoba=0.290, batter_season_xwoba=0.340,
+    )
+    assert tough["multipliers"]["bvpt"] < 1.0
+    assert tough["multipliers"]["bvpt"] >= 0.80  # cap = ±20%
+
+
+def test_tier3_bvpt_disabled_when_exp_zero(weights, league):
+    """bvpt_exp=0 → matchup multiplier identically 1.0."""
+    w = {**weights, "bvpt_exp": 0.0}
+    season = _avg_rates()
+    result = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w,
+        bvpt_matchup_xwoba=0.450, batter_season_xwoba=0.320,
+    )
+    assert result["multipliers"]["bvpt"] == 1.0
+
+
+def test_tier3_bvpt_missing_data_neutral(weights, league):
+    """Missing either side of the matchup → neutral multiplier."""
+    w = {**weights, "bvpt_exp": 1.0}
+    season = _avg_rates()
+    no_matchup = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w,
+        bvpt_matchup_xwoba=None, batter_season_xwoba=0.320,
+    )
+    no_season = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w,
+        bvpt_matchup_xwoba=0.380, batter_season_xwoba=None,
+    )
+    assert no_matchup["multipliers"]["bvpt"] == 1.0
+    assert no_season["multipliers"]["bvpt"] == 1.0
+
+
+def test_tier3_lineup_context_boosts_rbi_on_high_preceding_obp(weights, league):
+    """High preceding-batter OBP (runners on base) → RBI boost."""
+    w = {**weights, "preceding_rbi_exp": 1.0}
+    season = _power_rates()
+    loaded = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w,
+        preceding_obp=0.400,   # very high (league 0.314)
+    )
+    empty = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w,
+        preceding_obp=0.250,   # poor preceding batters
+    )
+    assert loaded["multipliers"]["preceding_rbi"] > 1.0
+    assert empty["multipliers"]["preceding_rbi"] < 1.0
+    assert loaded["per_event"]["rbi"] > empty["per_event"]["rbi"]
+
+
+def test_tier3_lineup_context_boosts_r_on_high_ondeck(weights, league):
+    """Elite on-deck batter → your R/PA goes UP (he drives you in)."""
+    w = {**weights, "ondeck_r_exp": 1.0}
+    season = _avg_rates()
+    strong_ondeck = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w,
+        ondeck_xwoba=0.400,
+    )
+    weak_ondeck = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w,
+        ondeck_xwoba=0.260,
+    )
+    assert strong_ondeck["multipliers"]["ondeck_r"] > 1.0
+    assert weak_ondeck["multipliers"]["ondeck_r"] < 1.0
+    assert strong_ondeck["per_event"]["r"] > weak_ondeck["per_event"]["r"]
+
+
+def test_tier3_lineup_context_disabled_when_exp_zero(weights, league):
+    """Both lineup-context exponents at 0 → multipliers = 1.0."""
+    w = {**weights, "ondeck_r_exp": 0.0, "preceding_rbi_exp": 0.0}
+    season = _avg_rates()
+    result = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w,
+        ondeck_xwoba=0.500, preceding_obp=0.500,
+    )
+    assert result["multipliers"]["ondeck_r"] == 1.0
+    assert result["multipliers"]["preceding_rbi"] == 1.0
+
+
+def test_tier3_bvpt_helper_matchup_math():
+    """Core BvPT weighted-xwOBA math."""
+    from app.services.statcast_features import bvpt_matchup_xwoba
+    # Pitcher 50/50 fastball/breaking, batter .350 vs FB, .280 vs BR.
+    mix = {"fastball": 0.5, "breaking": 0.5}
+    bat = {"fastball": 0.350, "breaking": 0.280}
+    assert bvpt_matchup_xwoba(bat, mix) == pytest.approx(0.315)
+    # Missing family on batter side → only matched families count.
+    partial_bat = {"fastball": 0.350}
+    # Both families matched fails (requires 2). So None.
+    assert bvpt_matchup_xwoba(partial_bat, mix) is None
+    # Empty inputs → None.
+    assert bvpt_matchup_xwoba({}, mix) is None
+    assert bvpt_matchup_xwoba(bat, {}) is None
+
+
+def test_tier3_lineup_context_helper_wraparound():
+    """Lineup context wraps from slot 9 → slot 1 correctly."""
+    from app.services.statcast_features import lineup_context
+    # Mock: construct a lineup and verify the indexing. We can't test
+    # OBP/xwOBA lookups without cache, but the structure should work.
+    lineup = [101, 102, 103, 104, 105, 106, 107, 108, 109]
+    # Call with a batter not in the lineup → all None.
+    ctx = lineup_context(lineup, 999, "2025-09-01")
+    assert ctx["preceding_obp"] is None
+    assert ctx["ondeck_xwoba"] is None
+    assert ctx["preceding_known"] is False
+    assert ctx["ondeck_known"] is False

@@ -371,3 +371,218 @@ def get_sprint_speed(player_id: int, season: int) -> float | None:
     table = _load_sprint_speed_table(season)
     val = table.get(int(player_id))
     return float(val) if val is not None else None
+
+
+# ---------------------------------------------------------------------------
+# Tier 3 — Batter vs Pitch-Type (BvPT) matchup
+# ---------------------------------------------------------------------------
+
+# Pitch types to track. We group similar pitches because sample sizes per
+# exotic type (SV, ST, KN, etc.) are too thin per batter to be stable.
+_PITCH_FAMILIES: dict[str, str] = {
+    # Fastballs
+    "FF": "fastball", "FA": "fastball",
+    # Sinkers
+    "SI": "sinker",
+    # Cutters
+    "FC": "cutter",
+    # Sliders / Sweepers / Slurves
+    "SL": "breaking", "ST": "breaking", "SV": "breaking",
+    # Curveballs
+    "CU": "breaking", "KC": "breaking", "CS": "breaking",
+    # Changeups / Splits
+    "CH": "offspeed", "FS": "offspeed",
+    # Others collapsed to fastball (rare, keep default)
+}
+
+
+def _pitch_family(pitch_type: str | None) -> str | None:
+    if not pitch_type or not isinstance(pitch_type, str):
+        return None
+    return _PITCH_FAMILIES.get(pitch_type.upper())
+
+
+def _batter_xwoba_by_family(df: pd.DataFrame) -> dict[str, float]:
+    """Return {family: xwoba} for batter PA outcomes, grouped by the
+    pitch type that ENDED the PA. Missing families returned with no
+    entry — caller treats as league-average."""
+    if df is None or df.empty:
+        return {}
+    # Filter to PA-ending events. Group by pitch type of the final pitch.
+    events = df[df["events"].notna() & df["estimated_woba_using_speedangle"].notna()]
+    if events.empty or "pitch_type" not in events.columns:
+        return {}
+    out: dict[str, list[float]] = {}
+    for _, row in events.iterrows():
+        fam = _pitch_family(row.get("pitch_type"))
+        if fam is None:
+            continue
+        v = row.get("estimated_woba_using_speedangle")
+        try:
+            fv = float(v)
+            if math.isnan(fv):
+                continue
+        except (TypeError, ValueError):
+            continue
+        out.setdefault(fam, []).append(fv)
+    # Require ≥ 10 PAs vs the family for stability; sparse → drop.
+    return {f: sum(vals) / len(vals) for f, vals in out.items() if len(vals) >= 10}
+
+
+def get_batter_bvpt_xwoba_as_of(
+    player_id: int,
+    end_date: str | date,
+    season: int | None = None,
+    lookback_seasons: int = 3,
+) -> dict[str, float]:
+    """Return {pitch_family: xwOBA} for the batter over the last
+    `lookback_seasons` seasons ending before `end_date`. 3-year window
+    stabilizes per-pitch-type samples.
+
+    No look-ahead: hard filter on game_date < end_date."""
+    df = _load_batter_parquet(player_id)
+    if df is None:
+        return {}
+    end_dt = pd.to_datetime(end_date)
+    # 3-year rolling window, exclusive of target day.
+    start = pd.Timestamp(year=end_dt.year - lookback_seasons + 1, month=3, day=1)
+    end_exclusive = end_dt - pd.Timedelta(days=1)
+    slice_df = df[(df["game_date"] >= start) & (df["game_date"] <= end_exclusive)]
+    return _batter_xwoba_by_family(slice_df)
+
+
+def _pitcher_pitch_mix(df: pd.DataFrame) -> dict[str, float]:
+    """Return {family: usage_share} for a pitcher's pitch mix."""
+    if df is None or df.empty or "pitch_type" not in df.columns:
+        return {}
+    pitches = df[df["pitch_type"].notna()]
+    total = int(len(pitches))
+    if total == 0:
+        return {}
+    out: dict[str, int] = {}
+    for pt, cnt in pitches["pitch_type"].value_counts().items():
+        fam = _pitch_family(pt)
+        if fam is None:
+            continue
+        out[fam] = out.get(fam, 0) + int(cnt)
+    return {f: c / total for f, c in out.items()}
+
+
+def get_pitcher_pitch_mix_as_of(
+    player_id: int,
+    end_date: str | date,
+    season: int | None = None,
+) -> dict[str, float]:
+    """Return {pitch_family: usage_fraction} for the pitcher's mix
+    through the day before `end_date`. Current-season only (pitch arsenals
+    change meaningfully year-to-year)."""
+    df = _load_pitcher_parquet(player_id)
+    if df is None:
+        return {}
+    start, end = _season_window(end_date, season)
+    slice_df = df[(df["game_date"] >= start) & (df["game_date"] <= end)]
+    return _pitcher_pitch_mix(slice_df)
+
+
+def bvpt_matchup_xwoba(
+    batter_family_xwoba: dict[str, float],
+    pitcher_pitch_mix: dict[str, float],
+) -> float | None:
+    """Weight the batter's per-pitch-type xwOBA by the pitcher's pitch
+    mix to get a matchup-specific expected xwOBA. Returns None if either
+    side lacks data in at least two shared families."""
+    if not batter_family_xwoba or not pitcher_pitch_mix:
+        return None
+    total_weight = 0.0
+    weighted_sum = 0.0
+    matched_families = 0
+    for fam, usage in pitcher_pitch_mix.items():
+        bat_xwoba = batter_family_xwoba.get(fam)
+        if bat_xwoba is None:
+            continue
+        weighted_sum += usage * bat_xwoba
+        total_weight += usage
+        matched_families += 1
+    if matched_families < 2 or total_weight <= 0:
+        return None
+    return weighted_sum / total_weight
+
+
+# ---------------------------------------------------------------------------
+# Tier 3 — Lineup context: surrounding batters' OBP / xwOBA
+# ---------------------------------------------------------------------------
+
+
+def get_batter_obp_xwoba_as_of(
+    player_id: int,
+    end_date: str | date,
+    season: int | None = None,
+) -> tuple[float | None, float | None]:
+    """Return (obp, xwoba) for a batter as-of `end_date`. Used for
+    on-deck / preceding-batter lookups in lineup-context feature."""
+    feat = get_batter_features_as_of(player_id, end_date, season=season)
+    xwoba = feat.get("xwoba")
+    # OBP ≈ (hits + BB + HBP) / PA. Compute from parquet events for
+    # consistency with xwOBA (same filter window).
+    df = _load_batter_parquet(player_id)
+    if df is None:
+        return None, xwoba
+    start, end = _season_window(end_date, season)
+    slice_df = df[(df["game_date"] >= start) & (df["game_date"] <= end)]
+    events = slice_df[slice_df["events"].notna()] if "events" in slice_df.columns else slice_df.iloc[0:0]
+    if events.empty:
+        return None, xwoba
+    pa = int(len(events))
+    if pa < 20:  # too small to be meaningful for lineup context
+        return None, xwoba
+    on_base_events = events[events["events"].isin(
+        ["single", "double", "triple", "home_run", "walk", "hit_by_pitch"]
+    )]
+    obp = len(on_base_events) / pa if pa else None
+    return _nan_to_none(obp), xwoba
+
+
+def lineup_context(
+    lineup_ids: list[int],
+    batter_id: int,
+    end_date: str | date,
+    season: int | None = None,
+) -> dict:
+    """Return lineup-context summary for `batter_id`:
+        {
+          "preceding_obp": float,   # OBP of batter 2 slots and 1 slot before (avg)
+          "ondeck_xwoba":  float,   # xwOBA of next batter in order
+          "preceding_known": bool,
+          "ondeck_known": bool,
+        }
+
+    The lineup wraps (9 → 1). Returns neutrals (None) when batter isn't
+    in the lineup or data is sparse."""
+    empty = {
+        "preceding_obp": None, "ondeck_xwoba": None,
+        "preceding_known": False, "ondeck_known": False,
+    }
+    if not lineup_ids or batter_id not in lineup_ids:
+        return empty
+    idx = lineup_ids.index(batter_id)
+    n = len(lineup_ids)
+    # Preceding two (wrap)
+    prev_ids = [lineup_ids[(idx - 1) % n], lineup_ids[(idx - 2) % n]]
+    # On-deck
+    next_id = lineup_ids[(idx + 1) % n]
+
+    obps: list[float] = []
+    for pid in prev_ids:
+        obp, _ = get_batter_obp_xwoba_as_of(pid, end_date, season=season)
+        if obp is not None:
+            obps.append(obp)
+    preceding_obp = sum(obps) / len(obps) if obps else None
+
+    _, ondeck_xwoba = get_batter_obp_xwoba_as_of(next_id, end_date, season=season)
+
+    return {
+        "preceding_obp": preceding_obp,
+        "ondeck_xwoba": ondeck_xwoba,
+        "preceding_known": preceding_obp is not None,
+        "ondeck_known": ondeck_xwoba is not None,
+    }

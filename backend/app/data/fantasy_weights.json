@@ -72,5 +72,8 @@
   "park_hand_scale": 0.0,
   "sb_speed_exp": 0.0,
   "speed_singles_exp": 0.0,
-  "speed_r_exp": 0.0
+  "speed_r_exp": 0.0,
+  "bvpt_exp": 0.0,
+  "ondeck_r_exp": 0.0,
+  "preceding_rbi_exp": 0.0
 }

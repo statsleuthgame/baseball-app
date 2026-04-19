@@ -43,10 +43,14 @@ from app.services import mlb_api, prizepicks
 from app.services.cache import get as cache_get, set as cache_set
 from app.services.statcast_features import (
     LEAGUE_SPRINT_SPEED,
+    bvpt_matchup_xwoba as _bvpt_matchup_xwoba,
+    get_batter_bvpt_xwoba_as_of,
     get_batter_features_as_of,
     get_batter_l7_features_as_of,
     get_pitcher_features_as_of,
+    get_pitcher_pitch_mix_as_of,
     get_sprint_speed,
+    lineup_context,
 )
 from app.data.park_factors import get as get_park_factor, get_hr_hand_adj
 
@@ -352,6 +356,10 @@ def project_hitter_points(
     pitcher_stx: dict | None = None,
     sprint_speed: float | None = None,
     venue_id: int | None = None,
+    bvpt_matchup_xwoba: float | None = None,
+    batter_season_xwoba: float | None = None,
+    preceding_obp: float | None = None,
+    ondeck_xwoba: float | None = None,
 ) -> dict:
     """
     Pure projection function. Returns a dict:
@@ -494,6 +502,18 @@ def project_hitter_points(
     )
     singles *= speed_singles_mult
 
+    # 4i. Tier 3 — BvPT (Batter vs Pitch-Type) matchup multiplier.
+    # Weighted xwOBA of this batter against THIS pitcher's mix vs the
+    # batter's overall xwOBA. Ratio > 1 = favorable matchup, < 1 = tough.
+    # Applied to hit rates (singles/doubles/triples/HR together).
+    bvpt_mult = _bvpt_multiplier(
+        bvpt_matchup_xwoba, batter_season_xwoba, weights
+    )
+    singles *= bvpt_mult
+    doubles *= bvpt_mult
+    triples *= bvpt_mult
+    home_runs *= bvpt_mult
+
     # 5. R and RBI projections — OBP / SLG proxies
     r_coef = float(weights.get("r_per_pa_coef", 0.35))
     rbi_coef = float(weights.get("rbi_per_pa_coef", 0.25))
@@ -548,6 +568,16 @@ def project_hitter_points(
     # Tier 2 — Sprint speed also nudges R/PA (fast batters take more
     # extra bases once on base). Applied AFTER slot + team env.
     r_per_pa *= speed_r_mult
+
+    # Tier 3 — Real lineup context.
+    # A batter's R/PA scales with the ON-DECK batter's wOBA (he drives
+    # you in); RBI/PA scales with the PRECEDING batters' OBP (they're
+    # on base when you bat).
+    ondeck_r_mult, preceding_rbi_mult = _lineup_context_multipliers(
+        ondeck_xwoba, preceding_obp, league_rates, weights
+    )
+    r_per_pa *= ondeck_r_mult
+    rbi_per_pa *= preceding_rbi_mult
 
     # 6. PA and final EFP
     pa = _clamp_pa(projected_pa, weights)
@@ -631,6 +661,10 @@ def project_hitter_points(
             "sb_speed": round(sb_speed_mult, 3),
             "speed_singles": round(speed_singles_mult, 3),
             "speed_r": round(speed_r_mult, 3),
+            # Tier 3 — BvPT + lineup context
+            "bvpt": round(bvpt_mult, 3),
+            "ondeck_r": round(ondeck_r_mult, 3),
+            "preceding_rbi": round(preceding_rbi_mult, 3),
         },
         "rates": {
             "singles": round(singles, 4),
@@ -1102,6 +1136,64 @@ def _sprint_speed_multipliers(
     return sb_mult, singles_mult, r_mult
 
 
+# ---------------------------------------------------------------------------
+# Tier 3 — BvPT + lineup context
+# ---------------------------------------------------------------------------
+
+_BVPT_CAP = 0.20               # ±20% on hit rates from pitch-type matchup
+_ONDECK_R_CAP = 0.15           # ±15% on R/PA from on-deck batter's wOBA
+_PRECEDING_RBI_CAP = 0.15      # ±15% on RBI/PA from preceding batters' OBP
+
+
+def _bvpt_multiplier(
+    matchup_xwoba: float | None,
+    batter_season_xwoba: float | None,
+    weights: dict,
+) -> float:
+    """BvPT multiplier based on the ratio of matchup xwOBA (batter's
+    per-pitch-type xwOBA weighted by pitcher's pitch mix) to the batter's
+    overall season xwOBA. Ratio > 1 = favorable matchup."""
+    exp = float(weights.get("bvpt_exp", 0.0))
+    if exp <= 0:
+        return 1.0
+    if not matchup_xwoba or not batter_season_xwoba or batter_season_xwoba <= 0:
+        return 1.0
+    raw = (matchup_xwoba / batter_season_xwoba) ** exp
+    return max(1.0 - _BVPT_CAP, min(1.0 + _BVPT_CAP, raw))
+
+
+def _lineup_context_multipliers(
+    ondeck_xwoba: float | None,
+    preceding_obp: float | None,
+    league_rates: dict,
+    weights: dict,
+) -> tuple[float, float]:
+    """Return (ondeck_r_mult, preceding_rbi_mult). On-deck xwOBA drives
+    R scoring (the batter ahead drives you in); preceding OBP drives
+    RBI (runners on base when you come up)."""
+    ondeck_exp = float(weights.get("ondeck_r_exp", 0.0))
+    preceding_exp = float(weights.get("preceding_rbi_exp", 0.0))
+
+    ondeck_mult = 1.0
+    preceding_mult = 1.0
+
+    if ondeck_exp > 0 and ondeck_xwoba and ondeck_xwoba > 0:
+        lg_xwoba = float(
+            ((league_rates or {}).get("statcast") or {}).get("batter_xwoba", 0.318)
+        ) or 0.318
+        raw = (ondeck_xwoba / lg_xwoba) ** ondeck_exp
+        ondeck_mult = max(1.0 - _ONDECK_R_CAP, min(1.0 + _ONDECK_R_CAP, raw))
+
+    if preceding_exp > 0 and preceding_obp and preceding_obp > 0:
+        lg_obp = float((league_rates or {}).get("obp", 0.314)) or 0.314
+        raw = (preceding_obp / lg_obp) ** preceding_exp
+        preceding_mult = max(
+            1.0 - _PRECEDING_RBI_CAP, min(1.0 + _PRECEDING_RBI_CAP, raw)
+        )
+
+    return ondeck_mult, preceding_mult
+
+
 async def _fetch_pitcher_hand(player_id: int) -> str | None:
     """
     Return pitcher's throwing hand ('L' or 'R'). Cached 24h.
@@ -1342,6 +1434,7 @@ async def _project_batter(
     projected_pa: float,
     pa_source: str,
     lineup_slot: int | None,
+    lineup_ids: list[int] | None,
     team_runs_per_game: float | None,
     weights: dict,
     league_rates: dict,
@@ -1412,6 +1505,36 @@ async def _project_batter(
     except Exception:
         sprint_speed = None
 
+    # Tier 3 — BvPT: batter per-pitch-type xwOBA (3-year window) × pitcher
+    # current-season pitch mix → matchup xwOBA. Both local parquet.
+    matchup_xwoba = None
+    batter_season_xwoba = (batter_stx or {}).get("xwoba")
+    if opp_sp_id:
+        try:
+            bat_fam = await asyncio.to_thread(
+                get_batter_bvpt_xwoba_as_of, pid, today, season
+            )
+            pit_mix = await asyncio.to_thread(
+                get_pitcher_pitch_mix_as_of, int(opp_sp_id), today, season
+            )
+            matchup_xwoba = _bvpt_matchup_xwoba(bat_fam, pit_mix)
+        except Exception:
+            matchup_xwoba = None
+
+    # Tier 3 — Lineup context: surrounding batters' OBP/xwOBA. Only
+    # meaningful when we have a confirmed lineup (lineup_ids).
+    preceding_obp = None
+    ondeck_xwoba = None
+    if lineup_ids and pid in lineup_ids:
+        try:
+            ctx = await asyncio.to_thread(
+                lineup_context, lineup_ids, pid, today, season
+            )
+            preceding_obp = ctx.get("preceding_obp")
+            ondeck_xwoba = ctx.get("ondeck_xwoba")
+        except Exception:
+            pass
+
     projection = project_hitter_points(
         season_rates=season_rates,
         l7_rates=l7_rates,
@@ -1431,6 +1554,10 @@ async def _project_batter(
         pitcher_stx=pitcher_stx,
         sprint_speed=sprint_speed,
         venue_id=park.get("id"),
+        bvpt_matchup_xwoba=matchup_xwoba,
+        batter_season_xwoba=batter_season_xwoba,
+        preceding_obp=preceding_obp,
+        ondeck_xwoba=ondeck_xwoba,
     )
 
     return {
@@ -1536,7 +1663,10 @@ async def project_slate(date_iso: str | None = None, season: int | None = None) 
                 park=park, weather=g.get("weather"),
                 projected_pa=proj_pa, pa_source=pa_source,
                 lineup_slot=slot,
+                lineup_ids=lineup_away or None,
                 team_runs_per_game=away_rpg,
+                # away batters are in `lineup_away`, so context uses that;
+                # the second call site gets patched to home below.
                 weights=weights, league_rates=league_rates,
                 semaphore=semaphore,
             ))
@@ -1552,6 +1682,7 @@ async def project_slate(date_iso: str | None = None, season: int | None = None) 
                 park=park, weather=g.get("weather"),
                 projected_pa=proj_pa, pa_source=pa_source,
                 lineup_slot=slot,
+                lineup_ids=lineup_home or None,
                 team_runs_per_game=home_rpg,
                 weights=weights, league_rates=league_rates,
                 semaphore=semaphore,

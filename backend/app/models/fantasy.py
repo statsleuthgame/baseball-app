@@ -59,6 +59,10 @@ class Multipliers(BaseModel):
     sb_speed:     Optional[float] = 1.0   # sprint-speed SB multiplier
     speed_singles: Optional[float] = 1.0  # sprint-speed singles multiplier
     speed_r:      Optional[float] = 1.0   # sprint-speed runs multiplier
+    # Tier 3 — BvPT + real lineup context
+    bvpt:         Optional[float] = 1.0   # batter vs pitch-type matchup on hits
+    ondeck_r:     Optional[float] = 1.0   # on-deck xwOBA boost on R/PA
+    preceding_rbi: Optional[float] = 1.0  # preceding-batters OBP boost on RBI/PA
 
 
 class Rates(BaseModel):
