@@ -660,16 +660,23 @@ export const fetchUmpireProfile = (umpireName) => {
   );
 };
 
-// Fantasy Score projections (backend FastAPI endpoint).
+// Fantasy Score projections.
+// Prod: a static JSON regenerated twice daily by the refresh-data workflow
+// (scripts/generate_fantasy_projections.py writes it into frontend/public/data/fantasy/).
+// Dev fallback: hit the local FastAPI endpoint if the static file isn't present.
 // Returns { date, season, weights_version, calibrated, metrics, game_count,
-//           projection_count, projections: [...] } or an empty shape on error.
-export const fetchFantasyProjections = async (dateStr) => {
+//           projection_count, projections: [...], generated_at } or an empty
+// shape on total failure.
+export const fetchFantasyProjections = async () => {
   try {
-    const params = dateStr ? { date: dateStr } : undefined;
-    const resp = await axios.get("/api/fantasy/projections", { params, timeout: 60000 });
-    return resp.data || { projections: [] };
+    return await staticFetch("fantasy/projections_today.json");
   } catch {
-    return { projections: [], projection_count: 0, game_count: 0 };
+    try {
+      const resp = await axios.get("/api/fantasy/projections", { timeout: 60000 });
+      return resp.data || { projections: [] };
+    } catch {
+      return { projections: [], projection_count: 0, game_count: 0 };
+    }
   }
 };
 

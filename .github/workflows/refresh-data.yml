@@ -2,8 +2,10 @@ name: Refresh Data
 
 on:
   schedule:
-    # Daily at 6 AM ET (10 AM UTC)
+    # 6 AM ET  (10 UTC EDT / 11 UTC EST — use EDT; April–Oct covers MLB season)
     - cron: '0 10 * * *'
+    # 3 PM ET — re-generate fantasy projections with west-coast lineups
+    - cron: '0 19 * * *'
   workflow_dispatch:
 
 permissions:
@@ -47,6 +49,12 @@ jobs:
 
       - name: Generate static data
         run: python scripts/generate_data.py
+
+      - name: Generate fantasy projections
+        # Uses the same pybaseball / httpx deps from scripts/requirements.txt,
+        # plus backend/app/services code on sys.path. Writes
+        # frontend/public/data/fantasy/projections_today.json.
+        run: python scripts/generate_fantasy_projections.py
 
       # Save data as artifact so deploy workflow can reuse it
       - name: Upload data artifact

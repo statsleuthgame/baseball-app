@@ -336,8 +336,9 @@ def _row_count(csv_path: Path) -> int:
 FIT_GRID = {
     "l7_blend":        [0.20, 0.30, 0.40, 0.50],
     "bvp_blend":       [0.00, 0.10, 0.20, 0.30],
-    "r_per_pa_coef":   [0.28, 0.30, 0.32, 0.34, 0.36, 0.38, 0.40, 0.42],
-    "rbi_per_pa_coef": [0.18, 0.20, 0.22, 0.24, 0.26, 0.28, 0.30, 0.32],
+    # Widened upward after the 3-day run pinned both coefs at the upper bound.
+    "r_per_pa_coef":   [0.28, 0.30, 0.32, 0.34, 0.36, 0.38, 0.40, 0.42, 0.44, 0.46, 0.48, 0.50],
+    "rbi_per_pa_coef": [0.18, 0.20, 0.22, 0.24, 0.26, 0.28, 0.30, 0.32, 0.34, 0.36, 0.38, 0.40],
 }
 
 
