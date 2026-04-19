@@ -53,6 +53,12 @@ class Multipliers(BaseModel):
     stx_hardhit:  Optional[float] = 1.0   # hard-hit% regression on non-HR hits
     pitcher_gb_hr: Optional[float] = 1.0  # pitcher GB% suppression on HR
     k_damper:     Optional[float] = 1.0   # combined K-product damper on all rates
+    # Tier 2 — Sprint speed + pitcher BB% + park handedness
+    pitcher_bb:   Optional[float] = 1.0   # pitcher BB% boost on batter walks
+    park_hand_hr: Optional[float] = 1.0   # handedness-split park HR adjustment
+    sb_speed:     Optional[float] = 1.0   # sprint-speed SB multiplier
+    speed_singles: Optional[float] = 1.0  # sprint-speed singles multiplier
+    speed_r:      Optional[float] = 1.0   # sprint-speed runs multiplier
 
 
 class Rates(BaseModel):

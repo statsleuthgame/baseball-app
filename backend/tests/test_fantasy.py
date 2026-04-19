@@ -959,3 +959,159 @@ def test_statcast_features_as_of_date_excludes_target_day():
     early = get_batter_features_as_of(pid, "2025-07-01", season=2025)
     late = get_batter_features_as_of(pid, "2025-10-01", season=2025)
     assert late["pa"] >= early["pa"]
+
+
+# ---------------------------------------------------------------------------
+# Tier 2 — Sprint speed + pitcher BB% + park handedness
+# ---------------------------------------------------------------------------
+
+
+def test_tier2_pitcher_bb_boosts_walks(weights, league):
+    """Pitcher with 2× league BB% should boost batter bb_hbp when
+    pitcher_bb_exp > 0."""
+    w = {**weights, "pitcher_bb_exp": 1.0}
+    season = _avg_rates()
+    wild_pitcher = {
+        "gb_pct": 0.40, "fb_pct": 0.35, "k_pct": 0.20,
+        "bb_pct": 0.17, "bf": 200,  # ~2× league BB% of ~0.085
+    }
+    boosted = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w,
+        pitcher_stx=wild_pitcher,
+    )
+    neutral = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w,
+        pitcher_stx=None,
+    )
+    assert boosted["multipliers"]["pitcher_bb"] > 1.15
+    assert boosted["per_event"]["bb_hbp"] > neutral["per_event"]["bb_hbp"]
+
+
+def test_tier2_pitcher_bb_disabled_when_exp_zero(weights, league):
+    """pitcher_bb_exp=0 → multiplier identically 1.0."""
+    w = {**weights, "pitcher_bb_exp": 0.0}
+    season = _avg_rates()
+    wild = {"gb_pct": 0.40, "fb_pct": 0.35, "k_pct": 0.20,
+            "bb_pct": 0.20, "bf": 200}
+    result = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w, pitcher_stx=wild,
+    )
+    assert result["multipliers"]["pitcher_bb"] == 1.0
+
+
+def test_tier2_yankee_stadium_lhb_boost(weights, league):
+    """Yankee Stadium (venue 3313) short RF porch should boost LHB HR
+    when park_hand_scale > 0."""
+    w = {**weights, "park_hand_scale": 1.0}
+    season = _power_rates()
+    lhb = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 107, "hr": 115}, weather=None,
+        projected_pa=4.0, weights=w, bat_side="L", venue_id=3313,
+    )
+    rhb = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 107, "hr": 115}, weather=None,
+        projected_pa=4.0, weights=w, bat_side="R", venue_id=3313,
+    )
+    # LHB should get boost (>1.0), RHB slight penalty (<1.0).
+    assert lhb["multipliers"]["park_hand_hr"] > 1.0
+    assert rhb["multipliers"]["park_hand_hr"] < 1.0
+    # LHB should score MORE HR points than RHB at Yankee Stadium
+    assert lhb["per_event"]["home_runs"] > rhb["per_event"]["home_runs"]
+
+
+def test_tier2_park_hand_unknown_venue_neutral(weights, league):
+    """Venue not in PARK_HR_HAND_ADJ → multiplier is 1.0 even when
+    park_hand_scale > 0."""
+    w = {**weights, "park_hand_scale": 1.0}
+    season = _power_rates()
+    result = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w, bat_side="L", venue_id=99999,
+    )
+    assert result["multipliers"]["park_hand_hr"] == 1.0
+
+
+def test_tier2_sprint_speed_boosts_sb(weights, league):
+    """Elite sprinter (30 ft/s vs 27 league) should get SB boost."""
+    w = {**weights, "sb_speed_exp": 2.0}
+    season = _avg_rates()
+    fast = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w, sprint_speed=30.0,
+    )
+    slow = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w, sprint_speed=24.0,
+    )
+    assert fast["multipliers"]["sb_speed"] > 1.0
+    assert slow["multipliers"]["sb_speed"] < 1.0
+    assert fast["per_event"]["sb"] > slow["per_event"]["sb"]
+
+
+def test_tier2_sprint_speed_singles_and_r(weights, league):
+    """When speed_singles_exp and speed_r_exp > 0, fast batter also gets
+    boosted singles rate and R/PA."""
+    w = {**weights, "speed_singles_exp": 0.5, "speed_r_exp": 0.5}
+    season = _avg_rates()
+    fast = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w, sprint_speed=30.0,
+    )
+    assert fast["multipliers"]["speed_singles"] > 1.0
+    assert fast["multipliers"]["speed_r"] > 1.0
+
+
+def test_tier2_sprint_speed_none_neutral(weights, league):
+    """Missing sprint_speed → all three speed multipliers = 1.0."""
+    w = {**weights, "sb_speed_exp": 2.0,
+         "speed_singles_exp": 0.5, "speed_r_exp": 0.5}
+    season = _avg_rates()
+    result = project_hitter_points(
+        season_rates=season, l7_rates=None, bvp=None, league_rates=league,
+        park={"runs": 100, "hr": 100}, weather=None,
+        projected_pa=4.0, weights=w, sprint_speed=None,
+    )
+    assert result["multipliers"]["sb_speed"] == 1.0
+    assert result["multipliers"]["speed_singles"] == 1.0
+    assert result["multipliers"]["speed_r"] == 1.0
+
+
+def test_tier2_sprint_speed_capped():
+    """Sprint speed multipliers respect their caps even for extreme
+    values."""
+    from app.services.fantasy import _sprint_speed_multipliers
+    # Extreme fast with high exponents — should hit cap.
+    w = {"sb_speed_exp": 4.0, "speed_singles_exp": 2.0, "speed_r_exp": 2.0}
+    sb, sg, rr = _sprint_speed_multipliers(32.0, w)
+    assert sb <= 1.60  # SB cap = 0.60
+    assert sg <= 1.12  # singles cap = 0.12
+    assert rr <= 1.10  # R cap = 0.10
+
+
+def test_tier2_handedness_adj_lookup():
+    """Handedness adjustment table returns expected values for known parks."""
+    from app.data.park_factors import get_hr_hand_adj
+    # Fenway (3): LHB suppressed, RHB boosted
+    assert get_hr_hand_adj(3, "L") == 0.88
+    assert get_hr_hand_adj(3, "R") == 1.10
+    # Yankee Stadium (3313): LHB boosted, RHB slight penalty
+    assert get_hr_hand_adj(3313, "L") == 1.15
+    assert get_hr_hand_adj(3313, "R") == 0.98
+    # Switch hitter at Fenway gets average
+    assert get_hr_hand_adj(3, "S") == pytest.approx(0.99)
+    # Unknown venue → 1.0
+    assert get_hr_hand_adj(99999, "L") == 1.0
+    # Unknown handedness → 1.0
+    assert get_hr_hand_adj(3, None) == 1.0

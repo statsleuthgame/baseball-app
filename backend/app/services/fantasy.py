@@ -42,11 +42,13 @@ from typing import Any, Optional
 from app.services import mlb_api, prizepicks
 from app.services.cache import get as cache_get, set as cache_set
 from app.services.statcast_features import (
+    LEAGUE_SPRINT_SPEED,
     get_batter_features_as_of,
     get_batter_l7_features_as_of,
     get_pitcher_features_as_of,
+    get_sprint_speed,
 )
-from app.data.park_factors import get as get_park_factor
+from app.data.park_factors import get as get_park_factor, get_hr_hand_adj
 
 logger = logging.getLogger(__name__)
 
@@ -348,6 +350,8 @@ def project_hitter_points(
     batter_stx: dict | None = None,
     batter_stx_l7: dict | None = None,
     pitcher_stx: dict | None = None,
+    sprint_speed: float | None = None,
+    venue_id: int | None = None,
 ) -> dict:
     """
     Pure projection function. Returns a dict:
@@ -466,6 +470,30 @@ def project_hitter_points(
     # a walk PA).
     bb_hbp *= k_damper
 
+    # 4f. Tier 2 — Pitcher BB% boost on batter walks. A pitcher with
+    # elevated BB% feeds the batter more free bases. Applied directly to
+    # bb_hbp rate; tunable exponent.
+    pitcher_bb_mult = _pitcher_bb_multiplier(pitcher_stx, league_rates, weights)
+    bb_hbp *= pitcher_bb_mult
+
+    # 4g. Tier 2 — Handedness-split park factor for HR. An extra
+    # multiplicative adjustment on top of the overall park_hr, tuned per
+    # park × batter handedness (Fenway LHB gets suppressed, YS LHB gets
+    # boosted, Oracle LHB really gets crushed, etc.).
+    park_hand_mult = _park_hand_multiplier(venue_id, bat_side, weights)
+    home_runs *= park_hand_mult
+
+    # 4h. Tier 2 — Sprint speed effects. Fast batters get:
+    #   - Boosted SB rate (big effect)
+    #   - Small boost to singles (infield hits)
+    #   - Small boost to R/PA (extra-base taking from 1B)
+    # Applied via exponents tunable in weights; missing sprint speed =
+    # neutral. League avg ~27.0 ft/sec; elite is 29.5+, slow is 25.0.
+    sb_speed_mult, speed_singles_mult, speed_r_mult = _sprint_speed_multipliers(
+        sprint_speed, weights
+    )
+    singles *= speed_singles_mult
+
     # 5. R and RBI projections — OBP / SLG proxies
     r_coef = float(weights.get("r_per_pa_coef", 0.35))
     rbi_coef = float(weights.get("rbi_per_pa_coef", 0.25))
@@ -517,6 +545,10 @@ def project_hitter_points(
     r_per_pa *= team_env_r_mult
     rbi_per_pa *= team_env_rbi_mult
 
+    # Tier 2 — Sprint speed also nudges R/PA (fast batters take more
+    # extra bases once on base). Applied AFTER slot + team env.
+    r_per_pa *= speed_r_mult
+
     # 6. PA and final EFP
     pa = _clamp_pa(projected_pa, weights)
 
@@ -548,6 +580,11 @@ def project_hitter_points(
     if pitcher_rates and pitcher_rates.get("hand") == "L":
         sb_pitcher_mult = float(weights.get("sb_lhp_mult", 0.80))
     sb_proj *= sb_pitcher_mult
+
+    # Tier 2 — Sprint speed SB boost (the biggest effect of the speed
+    # trio). Already-fast guys with low sb_per_game in season stats get
+    # projected higher SB attempts vs a weak matchup.
+    sb_proj *= sb_speed_mult
 
     efp = pa * (
         PP_SCORING["single"] * singles
@@ -588,6 +625,12 @@ def project_hitter_points(
             "stx_hardhit": round(hardhit_mult, 3),
             "pitcher_gb_hr": round(pitcher_gb_hr_mult, 3),
             "k_damper": round(k_damper, 3),
+            # Tier 2 — Sprint speed + pitcher BB% + park handedness
+            "pitcher_bb": round(pitcher_bb_mult, 3),
+            "park_hand_hr": round(park_hand_mult, 3),
+            "sb_speed": round(sb_speed_mult, 3),
+            "speed_singles": round(speed_singles_mult, 3),
+            "speed_r": round(speed_r_mult, 3),
         },
         "rates": {
             "singles": round(singles, 4),
@@ -977,6 +1020,88 @@ def _k_damper(
     return max(1.0 - _STX_K_DAMPER_CAP, min(1.0 + _STX_K_DAMPER_CAP, raw))
 
 
+# ---------------------------------------------------------------------------
+# Tier 2 — Sprint speed + pitcher BB% + handedness-split park factors
+# ---------------------------------------------------------------------------
+
+_STX_PITCHER_BB_CAP = 0.25    # ±25% on batter bb_hbp rate from pitcher BB%
+_SPEED_SB_CAP = 0.60          # SB can swing ±60% because signal is massive
+_SPEED_SINGLES_CAP = 0.12     # ±12% on singles rate (infield hits)
+_SPEED_R_CAP = 0.10           # ±10% on R/PA
+
+
+def _pitcher_bb_multiplier(
+    pitcher_stx: dict | None,
+    league_rates: dict,
+    weights: dict,
+) -> float:
+    """Boost batter BB+HBP rate when facing a high-BB pitcher. Tunable
+    exponent `pitcher_bb_exp`. 0 disables."""
+    if not pitcher_stx:
+        return 1.0
+    exp = float(weights.get("pitcher_bb_exp", 0.0))
+    if exp <= 0:
+        return 1.0
+    bb = pitcher_stx.get("bb_pct")
+    if not bb or bb <= 0:
+        return 1.0
+    lg = (league_rates or {}).get("statcast") or {}
+    # Reuse pitcher_per_bf league baseline for BB.
+    lg_bb = float(
+        (league_rates or {}).get("pitcher_per_bf", {}).get("walks_allowed", 0.085)
+    ) or 0.085
+    raw = (bb / lg_bb) ** exp
+    bf = int(pitcher_stx.get("bf") or 0)
+    trust = min(1.0, bf / _STX_PITCHER_BF_TRUST)
+    return _shrink(raw, trust, _STX_PITCHER_BB_CAP)
+
+
+def _park_hand_multiplier(
+    venue_id: int | None,
+    bat_side: str | None,
+    weights: dict,
+) -> float:
+    """Handedness-aware HR park adjustment. Strength tunable via
+    `park_hand_scale` ∈ [0, 1]. 0 disables (back to overall-only park);
+    1 uses the full hand-authored deviation."""
+    scale = float(weights.get("park_hand_scale", 0.0))
+    if scale <= 0:
+        return 1.0
+    raw = get_hr_hand_adj(venue_id, bat_side)
+    # Interpolate between 1.0 and the raw adjustment based on scale.
+    return 1.0 + scale * (raw - 1.0)
+
+
+def _sprint_speed_multipliers(
+    sprint_speed: float | None,
+    weights: dict,
+) -> tuple[float, float, float]:
+    """Return (sb_mult, singles_mult, r_mult) based on sprint speed.
+    Missing sprint speed → all 1.0 (neutral). Exponents 0 → feature off."""
+    if not sprint_speed or sprint_speed <= 0:
+        return 1.0, 1.0, 1.0
+    sb_exp = float(weights.get("sb_speed_exp", 0.0))
+    singles_exp = float(weights.get("speed_singles_exp", 0.0))
+    r_exp = float(weights.get("speed_r_exp", 0.0))
+
+    ratio = sprint_speed / LEAGUE_SPRINT_SPEED
+    sb_mult = 1.0
+    singles_mult = 1.0
+    r_mult = 1.0
+    if sb_exp > 0:
+        raw = ratio ** sb_exp
+        sb_mult = max(1.0 - _SPEED_SB_CAP, min(1.0 + _SPEED_SB_CAP, raw))
+    if singles_exp > 0:
+        raw = ratio ** singles_exp
+        singles_mult = max(
+            1.0 - _SPEED_SINGLES_CAP, min(1.0 + _SPEED_SINGLES_CAP, raw)
+        )
+    if r_exp > 0:
+        raw = ratio ** r_exp
+        r_mult = max(1.0 - _SPEED_R_CAP, min(1.0 + _SPEED_R_CAP, raw))
+    return sb_mult, singles_mult, r_mult
+
+
 async def _fetch_pitcher_hand(player_id: int) -> str | None:
     """
     Return pitcher's throwing hand ('L' or 'R'). Cached 24h.
@@ -1280,6 +1405,13 @@ async def _project_batter(
         except Exception:
             pitcher_stx = None
 
+    # Tier 2 — sprint speed (season leaderboard, JSON-cached). Missing
+    # player → None → speed multipliers all 1.0.
+    try:
+        sprint_speed = await asyncio.to_thread(get_sprint_speed, pid, season)
+    except Exception:
+        sprint_speed = None
+
     projection = project_hitter_points(
         season_rates=season_rates,
         l7_rates=l7_rates,
@@ -1297,6 +1429,8 @@ async def _project_batter(
         batter_stx=batter_stx,
         batter_stx_l7=batter_stx_l7,
         pitcher_stx=pitcher_stx,
+        sprint_speed=sprint_speed,
+        venue_id=park.get("id"),
     )
 
     return {

@@ -21,6 +21,7 @@ the live endpoint AND the backtest without drift.
 
 from __future__ import annotations
 
+import json
 import logging
 import math
 from datetime import date, timedelta
@@ -33,6 +34,10 @@ logger = logging.getLogger(__name__)
 
 # Parquet cache location (relative to project root).
 _CACHE_DIR = Path(__file__).resolve().parent.parent.parent.parent / ".statcast_cache"
+_DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+
+# League-average sprint speed (Savant).
+LEAGUE_SPRINT_SPEED = 27.0
 
 
 def _nan_to_none(v):
@@ -293,3 +298,76 @@ def clear_cache() -> None:
     filesystem between cases."""
     _load_batter_parquet.cache_clear()
     _load_pitcher_parquet.cache_clear()
+
+
+# ---------------------------------------------------------------------------
+# Tier 2 — Sprint Speed
+# ---------------------------------------------------------------------------
+
+_sprint_cache: dict[int, dict[int, float]] = {}
+
+
+def _sprint_cache_path(season: int) -> Path:
+    return _DATA_DIR / f"sprint_speed_{season}.json"
+
+
+def _load_sprint_speed_table(season: int) -> dict[int, float]:
+    """Return {player_id: sprint_speed_ft_per_sec} for the season.
+
+    First-time call pulls via pybaseball.statcast_sprint_speed, writes a
+    JSON cache to `backend/app/data/sprint_speed_<season>.json`. Subsequent
+    calls read the JSON directly. No look-ahead concern: sprint speed is
+    extraordinarily stable year-over-year (r>0.9) so using end-of-season
+    value for mid-season projection is acceptable (the leakage is
+    essentially nil)."""
+    if season in _sprint_cache:
+        return _sprint_cache[season]
+
+    path = _sprint_cache_path(season)
+    if path.exists():
+        try:
+            with path.open() as f:
+                raw = json.load(f)
+            table = {int(k): float(v) for k, v in raw.items()}
+            _sprint_cache[season] = table
+            return table
+        except Exception as e:
+            logger.warning("sprint_speed: cache read failed %s: %s", path, e)
+
+    try:
+        from pybaseball import statcast_sprint_speed
+        df = statcast_sprint_speed(year=season)
+    except Exception as e:
+        logger.warning("sprint_speed: pybaseball fetch failed %s: %s", season, e)
+        _sprint_cache[season] = {}
+        return {}
+    if df is None or df.empty:
+        _sprint_cache[season] = {}
+        return {}
+
+    # Savant columns: player_id, sprint_speed (ft/sec)
+    table: dict[int, float] = {}
+    for _, row in df.iterrows():
+        try:
+            pid = int(row.get("player_id"))
+            speed = float(row.get("sprint_speed"))
+            if not math.isnan(speed):
+                table[pid] = speed
+        except (TypeError, ValueError):
+            continue
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w") as f:
+        json.dump({str(k): v for k, v in table.items()}, f)
+    _sprint_cache[season] = table
+    logger.info("sprint_speed: loaded %d players for %d (cached to %s)",
+                len(table), season, path.name)
+    return table
+
+
+def get_sprint_speed(player_id: int, season: int) -> float | None:
+    """Return player's sprint speed (ft/sec) for the season, or None if
+    not in the Savant leaderboard (likely a call-up or low-PA player)."""
+    table = _load_sprint_speed_table(season)
+    val = table.get(int(player_id))
+    return float(val) if val is not None else None

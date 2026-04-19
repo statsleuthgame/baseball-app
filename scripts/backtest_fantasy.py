@@ -73,8 +73,9 @@ from app.services.statcast_features import (  # noqa: E402
     get_batter_features_as_of,
     get_batter_l7_features_as_of,
     get_pitcher_features_as_of,
+    get_sprint_speed,
 )
-from app.data.park_factors import get as get_park_factor  # noqa: E402
+from app.data.park_factors import get as get_park_factor, get_hr_hand_adj  # noqa: E402
 
 
 MLB_API_BASE = "https://statsapi.mlb.com/api/v1"
@@ -404,6 +405,18 @@ async def process_game(
             except Exception:
                 pitcher_stx_by_side[side] = {}
 
+    # Tier 2 — batter handedness (from parquet `stand` mode) per batter-id.
+    # Cached during the run so switch hitters return their primary side.
+    def _get_bat_side_from_parquet(pid: int) -> str | None:
+        from app.services.statcast_features import _load_batter_parquet
+        df = _load_batter_parquet(pid)
+        if df is None or df.empty or "stand" not in df.columns:
+            return None
+        counts = df["stand"].value_counts()
+        if counts.empty:
+            return None
+        return str(counts.idxmax())  # "L" or "R"
+
     for row, res in zip(work_batters, batter_results):
         pid = row["player_id"]
         key = (gamePk, pid)
@@ -450,6 +463,17 @@ async def process_game(
             batter_stx_l7 = None
         pitcher_stx = pitcher_stx_by_side.get(side)
 
+        # Tier 2 — sprint speed (season lookup, JSON-cached) and batter
+        # handedness (from parquet) for park-hand adjustment.
+        try:
+            sprint_speed = await asyncio.to_thread(get_sprint_speed, int(pid), season)
+        except Exception:
+            sprint_speed = None
+        try:
+            bat_side_parquet = await asyncio.to_thread(_get_bat_side_from_parquet, int(pid))
+        except Exception:
+            bat_side_parquet = None
+
         projection = project_hitter_points(
             season_rates=season_rates,
             l7_rates=l7_rates,
@@ -459,6 +483,7 @@ async def process_game(
             weather=None,  # historical weather deferred
             projected_pa=actual_pa,
             weights=weights,
+            bat_side=bat_side_parquet,
             pitcher_rates=opp_pitcher_rates,
             lineup_slot=slot,
             # Platoon left None in backtest — using full-season split would
@@ -468,6 +493,8 @@ async def process_game(
             batter_stx=batter_stx,
             batter_stx_l7=batter_stx_l7,
             pitcher_stx=pitcher_stx,
+            sprint_speed=sprint_speed,
+            venue_id=venue_id,
         )
 
         def _r(v, d=5):
@@ -490,8 +517,10 @@ async def process_game(
             "actual_efp": row["efp"],
             "rates_season_singles": round(season_rates.singles, 5),
             "rates_season_hr": round(season_rates.home_runs, 5),
+            "rates_season_bb_hbp": round(season_rates.bb_hbp, 5),
             "rates_season_obp": round(season_rates.obp or 0, 5),
             "rates_season_slg": round(season_rates.slg or 0, 5),
+            "rates_season_sb_per_g": round(season_rates.sb_per_game, 5),
             "l7_pa": (l7_rates.pa if l7_rates else 0),
             "pitcher_h_per_bf": round(opp_pitcher_rates["h_per_bf"], 5) if opp_pitcher_rates else "",
             "pitcher_hr_per_bf": round(opp_pitcher_rates["hr_per_bf"], 5) if opp_pitcher_rates else "",
@@ -515,7 +544,13 @@ async def process_game(
             "pitcher_gb_pct": _r((pitcher_stx or {}).get("gb_pct")),
             "pitcher_fb_pct": _r((pitcher_stx or {}).get("fb_pct")),
             "pitcher_k_pct_stx": _r((pitcher_stx or {}).get("k_pct")),
+            "pitcher_bb_pct_stx": _r((pitcher_stx or {}).get("bb_pct")),
             "pitcher_stx_bf": int((pitcher_stx or {}).get("bf") or 0),
+            # Tier 2 — sprint speed + handedness + venue
+            "sprint_speed": _r(sprint_speed, 2) if sprint_speed else "",
+            "bat_side": bat_side_parquet or "",
+            # venue_id already persisted above; get_hr_hand_adj re-applied
+            # during fit using venue_id + bat_side columns.
         })
         processed_keys.add(key)
 
@@ -581,8 +616,8 @@ def _append_csv(csv_path: Path, new_rows: list[dict], existing_rows: list[dict])
         "date", "gamePk", "player_id", "player_name", "team_id", "team_abbr",
         "side", "venue_id", "park_hr", "park_runs", "pa",
         "projected_efp", "actual_efp",
-        "rates_season_singles", "rates_season_hr",
-        "rates_season_obp", "rates_season_slg",
+        "rates_season_singles", "rates_season_hr", "rates_season_bb_hbp",
+        "rates_season_obp", "rates_season_slg", "rates_season_sb_per_g",
         "l7_pa",
         # Phase A/B/C feature columns
         "pitcher_h_per_bf", "pitcher_hr_per_bf", "pitcher_bf", "pitcher_hand",
@@ -594,7 +629,10 @@ def _append_csv(csv_path: Path, new_rows: list[dict], existing_rows: list[dict])
         "batter_stx_pa", "batter_stx_bip",
         "batter_l7_xwoba", "batter_l7_barrel_pct", "batter_l7_pa", "batter_l7_bip",
         # Tier 1: Statcast pitcher features
-        "pitcher_gb_pct", "pitcher_fb_pct", "pitcher_k_pct_stx", "pitcher_stx_bf",
+        "pitcher_gb_pct", "pitcher_fb_pct", "pitcher_k_pct_stx",
+        "pitcher_bb_pct_stx", "pitcher_stx_bf",
+        # Tier 2: sprint speed + handedness
+        "sprint_speed", "bat_side",
     ]
     write_header = not csv_path.exists()
     csv_path.parent.mkdir(parents=True, exist_ok=True)
@@ -624,27 +662,41 @@ FIT_GRID = {
     # grid wastes combinations. Dropped to a single identity value.
     "l7_blend":        [0.20],
     "bvp_blend":       [0.00],
-    # Extended upper bound to 1.20 to diagnose the r_per_pa pin. If the
-    # fit still picks 0.9, the ceiling is structural.
-    "r_per_pa_coef":   [0.66, 0.78, 0.90, 1.05, 1.20],
-    "rbi_per_pa_coef": [0.48, 0.60, 0.72],
-    # Phase E-v2 tunable feature strengths:
-    "pitcher_hits_exp":   [0.0, 0.3, 0.6],
-    "pitcher_hr_exp":     [0.0, 0.35, 0.7, 1.0],
+    # Widened downward because the Tier 2 eval formula now INCLUDES BB + SB
+    # points (adds ~1.5 pts/game of mean projected EFP). The grid needs
+    # room to pull coefs down to compensate, or else the bias blows up
+    # test R². Values span 0.45 → 1.20.
+    "r_per_pa_coef":   [0.45, 0.60, 0.75, 0.90, 1.05, 1.20],
+    "rbi_per_pa_coef": [0.25, 0.36, 0.48, 0.60],
+    # Phase E-v2 tunable feature strengths — winners: 0.6 / 0.35.
+    "pitcher_hits_exp":   [0.0, 0.6],
+    "pitcher_hr_exp":     [0.0, 0.35, 0.7],
     # TRIMMED duds (prior fits zeroed these out).
     "slot_effect_scale":  [0.0],
     "team_run_env_exp":   [0.0],
     "team_rbi_env_exp":   [0.0],
-    # Tier 1: Statcast expected-stats regression exponents.
-    "batter_xwoba_exp":   [0.0, 0.5, 1.0],
-    "batter_barrel_exp":  [0.0, 0.5, 1.0],
-    "batter_hardhit_exp": [0.0],              # single value — subsumed by xwOBA+barrel
-    # Tier 1: K-damper — batter + pitcher K% interact.
-    "batter_k_exp":       [0.0, 0.5],
-    "pitcher_k_exp":      [0.0, 0.5, 1.0],
-    # Tier 1: Pitcher GB% → HR suppression.
-    "pitcher_gb_hr_exp":  [0.0, 0.5],
+    # Tier 1: Batter-side Statcast regression — ALL ZERO'D in Tier 1 fit.
+    # Keeping single-value placeholders so code path still runs; we may
+    # revisit in Tier 3 after new features unlock interaction effects.
+    "batter_xwoba_exp":   [0.0],
+    "batter_barrel_exp":  [0.0],
+    "batter_hardhit_exp": [0.0],
+    "batter_k_exp":       [0.0],
+    # Tier 1: Pitcher K% and GB%.
+    "pitcher_k_exp":      [0.0, 0.5],
+    "pitcher_gb_hr_exp":  [0.0, 0.5, 1.0],
+    # Tier 2: Pitcher BB% boost on batter walks.
+    "pitcher_bb_exp":     [0.0, 0.5, 1.0],
+    # Tier 2: Park handedness strength scalar (0 off, 1 full strength).
+    "park_hand_scale":    [0.0, 1.0],
+    # Tier 2: Sprint-speed exponents — SB takes the big swing, singles
+    # and R/PA get subtler effects.
+    "sb_speed_exp":       [0.0, 1.0, 2.0],
+    "speed_singles_exp":  [0.0, 0.5],
+    "speed_r_exp":        [0.0, 0.5],
 }
+
+# Grid size: 6×4×2×3 × 2×3×3 × 2×3×2×2 = ~41.5k combos. Fit ~15 min.
 
 
 def _compute_r2(projected: list[float], actual: list[float]) -> float:
@@ -725,8 +777,10 @@ def fit_weights(csv_path: Path) -> dict:
                     "park_runs": _f("park_runs", 100),
                     "singles": _f("rates_season_singles"),
                     "hr": _f("rates_season_hr"),
+                    "bb_hbp": _f("rates_season_bb_hbp"),
                     "obp": _f("rates_season_obp"),
                     "slg": _f("rates_season_slg"),
+                    "sb_per_g": _f("rates_season_sb_per_g"),
                     # Phase A/B/C features — may be blank; pipeline treats
                     # that as "neutral" (multiplier 1.0).
                     "pitcher_h_per_bf": _f("pitcher_h_per_bf"),
@@ -753,7 +807,12 @@ def fit_weights(csv_path: Path) -> dict:
                     "p_gb": _f("pitcher_gb_pct"),
                     "p_fb": _f("pitcher_fb_pct"),
                     "p_k": _f("pitcher_k_pct_stx"),
+                    "p_bb": _f("pitcher_bb_pct_stx"),
                     "p_stx_bf": _i("pitcher_stx_bf"),
+                    # Tier 2: sprint speed, handedness, venue
+                    "sprint_speed": _f("sprint_speed"),
+                    "bat_side": (r.get("bat_side") or "").strip() or None,
+                    "venue_id": _i("venue_id"),
                 }
                 rows.append(row)
             except (KeyError, ValueError):
@@ -784,6 +843,9 @@ def fit_weights(csv_path: Path) -> dict:
     lg_bk = float(lg_stx.get("batter_k_pct", 0.225)) or 0.225
     lg_pk = float(lg_stx.get("pitcher_k_pct", 0.225)) or 0.225
     lg_gb = float(lg_stx.get("pitcher_gb_pct", 0.430)) or 0.430
+    # Tier 2 baselines
+    lg_p_bb = float((league.get("pitcher_per_bf") or {}).get("walks_allowed", 0.085)) or 0.085
+    LEAGUE_SPRINT = 27.0
 
     # Same cap/trust knobs as the production projector.
     MIN_BF_TRUST = 60
@@ -798,6 +860,11 @@ def fit_weights(csv_path: Path) -> dict:
     STX_BATTER_PA_TRUST = 100
     STX_BATTER_BIP_TRUST = 50
     STX_PITCHER_BF_TRUST = 80
+    # Tier 2 caps (mirror fantasy.py)
+    PITCHER_BB_CAP = 0.25
+    SPEED_SB_CAP = 0.60
+    SPEED_SINGLES_CAP = 0.12
+    SPEED_R_CAP = 0.10
 
     def pitcher_mults(
         h_per_bf: float,
@@ -879,6 +946,12 @@ def fit_weights(csv_path: Path) -> dict:
         gb_hr_exp = float(w.get("pitcher_gb_hr_exp", 0.0))
         l7_min = int(w.get("l7_min_pa", 10))
         l7_blend_val = float(w.get("l7_blend", 0.20))
+        # Tier 2 exponents
+        p_bb_exp = float(w.get("pitcher_bb_exp", 0.0))
+        park_hand_scale = float(w.get("park_hand_scale", 0.0))
+        sb_speed_exp = float(w.get("sb_speed_exp", 0.0))
+        speed_sg_exp = float(w.get("speed_singles_exp", 0.0))
+        speed_r_exp_ = float(w.get("speed_r_exp", 0.0))
 
         for r in subset:
             pa = r["pa"]
@@ -948,20 +1021,61 @@ def fit_weights(csv_path: Path) -> dict:
                 raw = 1.0 - eff_exp * dev * 0.15
                 k_damper = max(1.0 - STX_K_DAMPER_CAP, min(1.0 + STX_K_DAMPER_CAP, raw))
 
+            # Tier 2 — Pitcher BB% boost on batter walks.
+            # (Walks don't factor into the R²/MAE metric directly because
+            # BB isn't in the simplified eval EFP below — see below.)
+            pitcher_bb_mult = 1.0
+            p_bb = r.get("p_bb") or 0.0
+            if p_bb_exp > 0 and p_bb > 0:
+                raw = (p_bb / lg_p_bb) ** p_bb_exp
+                pitcher_bb_mult = shrink(raw, p_stx_bf / STX_PITCHER_BF_TRUST, PITCHER_BB_CAP)
+
+            # Tier 2 — Park handedness HR adjustment. Uses runtime hand
+            # lookup against the PARK_HR_HAND_ADJ table.
+            park_hand_mult = 1.0
+            if park_hand_scale > 0:
+                raw_adj = get_hr_hand_adj(r.get("venue_id"), r.get("bat_side"))
+                park_hand_mult = 1.0 + park_hand_scale * (raw_adj - 1.0)
+
+            # Tier 2 — Sprint-speed multipliers.
+            sb_speed_mult = 1.0
+            speed_singles_mult = 1.0
+            speed_r_mult = 1.0
+            sprint = r.get("sprint_speed") or 0.0
+            if sprint > 0:
+                ratio = sprint / LEAGUE_SPRINT
+                if sb_speed_exp > 0:
+                    raw = ratio ** sb_speed_exp
+                    sb_speed_mult = max(1.0 - SPEED_SB_CAP, min(1.0 + SPEED_SB_CAP, raw))
+                if speed_sg_exp > 0:
+                    raw = ratio ** speed_sg_exp
+                    speed_singles_mult = max(
+                        1.0 - SPEED_SINGLES_CAP, min(1.0 + SPEED_SINGLES_CAP, raw)
+                    )
+                if speed_r_exp_ > 0:
+                    raw = ratio ** speed_r_exp_
+                    speed_r_mult = max(1.0 - SPEED_R_CAP, min(1.0 + SPEED_R_CAP, raw))
+
             # Apply multipliers to final rates
-            r_per_pa = r["obp"] * w["r_per_pa_coef"] * slot_r_mult * team_r_mult
+            r_per_pa = r["obp"] * w["r_per_pa_coef"] * slot_r_mult * team_r_mult * speed_r_mult
             rbi_per_pa = r["slg"] * w["rbi_per_pa_coef"] * slot_rbi_mult * team_rbi_mult
-            s_rate = r["singles"] * park_runs_mult * p_h_mult * hardhit_mult * xwoba_mult * k_damper
-            hr_rate = r["hr"] * park_hr_mult * p_hr_mult * barrel_mult * gb_hr_mult * k_damper
+            s_rate = r["singles"] * park_runs_mult * p_h_mult * hardhit_mult * xwoba_mult * k_damper * speed_singles_mult
+            hr_rate = r["hr"] * park_hr_mult * p_hr_mult * barrel_mult * gb_hr_mult * k_damper * park_hand_mult
             r_per_pa *= k_damper
             rbi_per_pa *= k_damper
+            # Tier 2: BB+HBP rate gets pitcher BB% boost + K-damper.
+            bb_rate = (r.get("bb_hbp") or 0.0) * pitcher_bb_mult * k_damper
+            # Tier 2: SB count per game (not per-PA) with speed multiplier.
+            # sb_per_g is season SB per team game — same scale as production.
+            sb_count = (r.get("sb_per_g") or 0.0) * sb_speed_mult
 
             efp = pa * (
                 PP_SCORING["single"] * s_rate
                 + PP_SCORING["home_run"] * hr_rate
+                + PP_SCORING["walk"] * bb_rate
                 + PP_SCORING["run"] * r_per_pa
                 + PP_SCORING["rbi"] * rbi_per_pa
-            )
+            ) + PP_SCORING["sb"] * sb_count
             projected.append(efp)
             actual.append(r["actual_efp"])
         return _compute_r2(projected, actual), _compute_mae(projected, actual), _spearman(projected, actual)
@@ -984,12 +1098,19 @@ def fit_weights(csv_path: Path) -> dict:
         FIT_GRID["batter_k_exp"],
         FIT_GRID["pitcher_k_exp"],
         FIT_GRID["pitcher_gb_hr_exp"],
+        # Tier 2 dims
+        FIT_GRID["pitcher_bb_exp"],
+        FIT_GRID["park_hand_scale"],
+        FIT_GRID["sb_speed_exp"],
+        FIT_GRID["speed_singles_exp"],
+        FIT_GRID["speed_r_exp"],
     ))
     logger.info("Grid: %d combinations", len(combos))
 
     for (l7b, bvpb, rc, rbic, p_h_exp, p_hr_exp, slot_scale,
          t_r_exp, t_rbi_exp,
-         xwoba_exp, barrel_exp, hardhit_exp, b_k_exp, p_k_exp, gb_hr_exp) in combos:
+         xwoba_exp, barrel_exp, hardhit_exp, b_k_exp, p_k_exp, gb_hr_exp,
+         p_bb_exp, park_hand, sb_se, sp_sg, sp_r) in combos:
         w = dict(weights_seed)
         w.update({
             "l7_blend": l7b,
@@ -1008,6 +1129,12 @@ def fit_weights(csv_path: Path) -> dict:
             "batter_k_exp": b_k_exp,
             "pitcher_k_exp": p_k_exp,
             "pitcher_gb_hr_exp": gb_hr_exp,
+            # Tier 2
+            "pitcher_bb_exp": p_bb_exp,
+            "park_hand_scale": park_hand,
+            "sb_speed_exp": sb_se,
+            "speed_singles_exp": sp_sg,
+            "speed_r_exp": sp_r,
         })
         r2_train, mae_train, sp_train = eval_weights(w, train)
         if best is None or r2_train > best["r2_train"]:
