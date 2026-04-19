@@ -131,8 +131,8 @@ export default function FantasyProjections({ myTeamsOnly = false }) {
   return (
     <section className="edge-section">
       <h2 className="edge-section-title edge-section-fantasy">
-        <span className="edge-section-accent" aria-hidden="true">★</span>
-        Fantasy · projected PrizePicks score
+        <span className="edge-section-accent" aria-hidden="true">Δ</span>
+        Best bets · biggest edge vs PrizePicks
       </h2>
 
       {isError || (!isLoading && projections.length === 0) ? (
@@ -149,20 +149,36 @@ export default function FantasyProjections({ myTeamsOnly = false }) {
         </div>
       ) : (
         <>
-          {renderCardGrid(byEfp)}
-
-          {byEdge.length > 0 && (
-            <div className="edge-subsection">
-              <h3 className="edge-subsection-title edge-section-fantasy">
-                <span className="edge-section-accent" aria-hidden="true">Δ</span>
-                Biggest edge vs PrizePicks
-                <span className="edge-subsection-hint">
-                  — sorted by gap between our projection and the posted line
-                </span>
-              </h3>
-              {renderCardGrid(byEdge)}
+          {byEdge.length > 0 ? (
+            // Primary view: confidence-ranked picks with edge-z badges.
+            // Each card shows HIGH/MED/LOW CONF + σ value alongside the
+            // PP line, so users can pick the 5-6 highest-confidence bets.
+            renderCardGrid(byEdge)
+          ) : (
+            // Fallback when PrizePicks hasn't posted fantasy-score lines
+            // yet (typical before ~9-10 AM ET, and on days PP doesn't
+            // offer this stat type). Show a friendly explainer, then
+            // the projection leaderboard below as context.
+            <div className="edge-empty edge-empty-inline">
+              <p>
+                <strong>PrizePicks fantasy-score lines not posted yet.</strong>{" "}
+                Confidence-ranked picks will appear here once lines drop —
+                typically between 9 AM and 3 PM ET. Today's top projections
+                are below as a preview.
+              </p>
             </div>
           )}
+
+          <div className="edge-subsection">
+            <h3 className="edge-subsection-title edge-section-fantasy">
+              <span className="edge-section-accent" aria-hidden="true">★</span>
+              Top projections · raw score leaderboard
+              <span className="edge-subsection-hint">
+                — before any PP-line comparison
+              </span>
+            </h3>
+            {renderCardGrid(byEfp)}
+          </div>
         </>
       )}
 
