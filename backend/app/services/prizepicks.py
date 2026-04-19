@@ -154,7 +154,19 @@ async def fetch_lines() -> dict[str, dict[str, float]]:
             "position": attrs.get("position") or "",
         }
 
-    out: dict[str, dict[str, float]] = {}
+    # PrizePicks publishes each stat_type THREE times per player with
+    # odds_type in {standard, demon, goblin}. The "standard" line is the
+    # default shown in their app and the one our EFP model should be
+    # compared against. Demon lines are inflated (hardest-to-clear
+    # over-bar for higher payouts) and goblin lines are deflated. Always
+    # prefer standard; fall back only if PP hasn't posted a standard for
+    # that player/stat.
+    _PREFERENCE = {"standard": 0, "demon": 1, "goblin": 2}
+
+    # First pass: group rows by (player, stat_key) so we can pick the
+    # best odds_type among competing rows.
+    by_key: dict[tuple[str, str], list[tuple[int, float]]] = {}
+    name_team: dict[str, tuple[str, str]] = {}
     for row in data:
         attrs = row.get("attributes") or {}
         stat_type = attrs.get("stat_type")
@@ -176,11 +188,18 @@ async def fetch_lines() -> dict[str, dict[str, float]]:
         norm = _normalize_name(p["name"])
         if not norm:
             continue
-        bucket = out.setdefault(norm, {"_name": p["name"], "_team": p["team"]})
-        # Only keep the first line per stat type (PP sometimes lists combo
-        # variants with the same stat_type; first is usually the standard).
-        if key not in bucket:
-            bucket[key] = line
+        odds_type = (attrs.get("odds_type") or "").lower()
+        priority = _PREFERENCE.get(odds_type, 99)
+        by_key.setdefault((norm, key), []).append((priority, line))
+        name_team.setdefault(norm, (p["name"], p["team"]))
+
+    out: dict[str, dict[str, float]] = {}
+    for (norm, key), variants in by_key.items():
+        variants.sort(key=lambda x: x[0])  # standard first (priority 0)
+        _, best_line = variants[0]
+        full_name, team = name_team.get(norm, ("", ""))
+        bucket = out.setdefault(norm, {"_name": full_name, "_team": team})
+        bucket[key] = best_line
 
     cache_set("prizepicks:mlb:lines", out, _CACHE_TTL)
     logger.info("prizepicks: cached %d hitters with lines", len(out))

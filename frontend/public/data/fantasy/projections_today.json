@@ -357,7 +357,7 @@
       },
       "weather": {
         "condition": "Partly Cloudy",
-        "temp": "77",
+        "temp": "75",
         "wind": "8 mph, R To L"
       },
       "pa_source": "lineup",
@@ -390,8 +390,8 @@
       "pa": 4.3,
       "tier": "high",
       "prizepicks": {
-        "fantasy": 10.5,
-        "total_bases": 5.5,
+        "fantasy": 7.5,
+        "total_bases": 1.5,
         "hrr": 4.5,
         "hits": 1.5,
         "strikeouts": 1.5,
@@ -403,7 +403,7 @@
         "singles": 0.5,
         "stolen_bases": 0.5
       },
-      "edge_fantasy": 3.34
+      "edge_fantasy": 6.34
     },
     {
       "player_id": 670042,
@@ -534,7 +534,7 @@
       },
       "weather": {
         "condition": "Partly Cloudy",
-        "temp": "77",
+        "temp": "75",
         "wind": "8 mph, R To L"
       },
       "pa_source": "lineup",
@@ -567,20 +567,20 @@
       "pa": 4.3,
       "tier": "medium",
       "prizepicks": {
-        "fantasy": 9.5,
+        "fantasy": 6.0,
         "total_bases": 4.5,
         "hrr": 4.5,
         "strikeouts": 2.5,
         "hits": 1.5,
         "rbis": 1.5,
-        "runs": 1.5,
-        "singles": 1.5,
+        "runs": 0.5,
+        "singles": 0.5,
         "doubles": 0.5,
         "home_runs": 0.5,
         "stolen_bases": 0.5,
         "walks": 0.5
       },
-      "edge_fantasy": 3.5
+      "edge_fantasy": 7.0
     },
     {
       "player_id": 547180,
@@ -657,7 +657,7 @@
       },
       "weather": {
         "condition": "Partly Cloudy",
-        "temp": "77",
+        "temp": "75",
         "wind": "8 mph, R To L"
       },
       "pa_source": "lineup",
@@ -690,7 +690,7 @@
       "pa": 4.0,
       "tier": "medium",
       "prizepicks": {
-        "fantasy": 9.5,
+        "fantasy": 4.5,
         "hrr": 4.5,
         "total_bases": 3.5,
         "hits": 1.5,
@@ -703,7 +703,7 @@
         "stolen_bases": 0.5,
         "walks": 0.5
       },
-      "edge_fantasy": 3.39
+      "edge_fantasy": 8.39
     },
     {
       "player_id": 621566,
@@ -868,60 +868,6 @@
       "tier": "medium"
     },
     {
-      "player_id": 543877,
-      "name": "Christian V\u00e1zquez",
-      "position": "C",
-      "team_id": 117,
-      "team_abbr": "HOU",
-      "opp_abbr": "STL",
-      "opp_team_id": 138,
-      "opp_pitcher": {
-        "id": 669467,
-        "fullName": "Andre Pallante"
-      },
-      "park": {
-        "id": 2392,
-        "name": "Minute Maid Park",
-        "runs": 103,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": {
-        "condition": "Roof Closed",
-        "temp": "73",
-        "wind": "0 mph, None"
-      },
-      "pa_source": "lineup",
-      "efp": 12.43,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.99,
-        "doubles": 2.31,
-        "triples": 0.0,
-        "home_runs": 2.1,
-        "bb_hbp": 0.62,
-        "r": 2.29,
-        "rbi": 3.13,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.03,
-        "weather_hr": 1.0
-      },
-      "rates": {
-        "singles": 0.1794,
-        "doubles": 0.1247,
-        "triples": 0.0,
-        "home_runs": 0.0568,
-        "bb_hbp": 0.0834,
-        "r_per_pa": 0.3091,
-        "rbi_per_pa": 0.4224
-      },
-      "pa": 3.7,
-      "tier": "medium"
-    },
-    {
       "player_id": 664702,
       "name": "Myles Straw",
       "position": "CF",
@@ -976,6 +922,60 @@
       "tier": "medium"
     },
     {
+      "player_id": 543877,
+      "name": "Christian V\u00e1zquez",
+      "position": "C",
+      "team_id": 117,
+      "team_abbr": "HOU",
+      "opp_abbr": "STL",
+      "opp_team_id": 138,
+      "opp_pitcher": {
+        "id": 669467,
+        "fullName": "Andre Pallante"
+      },
+      "park": {
+        "id": 2392,
+        "name": "Minute Maid Park",
+        "runs": 103,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "73",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "efp": 12.15,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.95,
+        "doubles": 2.26,
+        "triples": 0.0,
+        "home_runs": 2.05,
+        "bb_hbp": 0.6,
+        "r": 2.24,
+        "rbi": 3.05,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.03,
+        "weather_hr": 1.0
+      },
+      "rates": {
+        "singles": 0.1755,
+        "doubles": 0.1221,
+        "triples": 0.0,
+        "home_runs": 0.0555,
+        "bb_hbp": 0.0815,
+        "r_per_pa": 0.3024,
+        "rbi_per_pa": 0.4118
+      },
+      "pa": 3.7,
+      "tier": "medium"
+    },
+    {
       "player_id": 660271,
       "name": "Shohei Ohtani",
       "position": "TWP",
@@ -1000,16 +1000,16 @@
         "wind": "6 mph, Out To CF"
       },
       "pa_source": "lineup",
-      "efp": 12.12,
+      "efp": 11.93,
       "bat_side": "L",
       "per_event": {
-        "singles": 1.78,
-        "doubles": 0.61,
+        "singles": 1.75,
+        "doubles": 0.6,
         "triples": 0.0,
-        "home_runs": 3.19,
-        "bb_hbp": 1.6,
-        "r": 2.33,
-        "rbi": 2.6,
+        "home_runs": 3.14,
+        "bb_hbp": 1.58,
+        "r": 2.3,
+        "rbi": 2.55,
         "sb": 0.0
       },
       "multipliers": {
@@ -1018,13 +1018,13 @@
         "weather_hr": 1.08
       },
       "rates": {
-        "singles": 0.1379,
-        "doubles": 0.0286,
+        "singles": 0.1359,
+        "doubles": 0.0281,
         "triples": 0.0,
-        "home_runs": 0.0743,
-        "bb_hbp": 0.1861,
-        "r_per_pa": 0.2715,
-        "rbi_per_pa": 0.3024
+        "home_runs": 0.0731,
+        "bb_hbp": 0.1834,
+        "r_per_pa": 0.2675,
+        "rbi_per_pa": 0.2966
       },
       "pa": 4.3,
       "tier": "medium"
@@ -1246,114 +1246,6 @@
       "tier": "low"
     },
     {
-      "player_id": 663656,
-      "name": "Kyle Tucker",
-      "position": "RF",
-      "team_id": 119,
-      "team_abbr": "LAD",
-      "opp_abbr": "COL",
-      "opp_team_id": 115,
-      "opp_pitcher": {
-        "id": 663372,
-        "fullName": "Ryan Feltner"
-      },
-      "park": {
-        "id": 19,
-        "name": "Coors Field",
-        "runs": 116,
-        "hr": 118,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "59",
-        "wind": "6 mph, Out To CF"
-      },
-      "pa_source": "lineup",
-      "efp": 11.29,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.24,
-        "doubles": 0.63,
-        "triples": 0.0,
-        "home_runs": 2.27,
-        "bb_hbp": 1.13,
-        "r": 2.09,
-        "rbi": 2.19,
-        "sb": 0.75
-      },
-      "multipliers": {
-        "park_hr": 1.18,
-        "park_runs": 1.16,
-        "weather_hr": 1.08
-      },
-      "rates": {
-        "singles": 0.1733,
-        "doubles": 0.0293,
-        "triples": 0.0,
-        "home_runs": 0.0527,
-        "bb_hbp": 0.131,
-        "r_per_pa": 0.2428,
-        "rbi_per_pa": 0.2544
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 680728,
-      "name": "Adrian Del Castillo",
-      "position": "C",
-      "team_id": 109,
-      "team_abbr": "AZ",
-      "opp_abbr": "TOR",
-      "opp_team_id": 141,
-      "opp_pitcher": {
-        "id": 453286,
-        "fullName": "Max Scherzer"
-      },
-      "park": {
-        "id": 15,
-        "name": "Chase Field",
-        "runs": 106,
-        "hr": 110,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "89",
-        "wind": "1 mph, Varies"
-      },
-      "pa_source": "lineup",
-      "efp": 11.29,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.87,
-        "doubles": 0.8,
-        "triples": 1.28,
-        "home_runs": 1.74,
-        "bb_hbp": 0.0,
-        "r": 1.9,
-        "rbi": 2.71,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 1.1,
-        "park_runs": 1.06,
-        "weather_hr": 1.05
-      },
-      "rates": {
-        "singles": 0.2393,
-        "doubles": 0.0399,
-        "triples": 0.0399,
-        "home_runs": 0.0435,
-        "bb_hbp": 0.0,
-        "r_per_pa": 0.2369,
-        "rbi_per_pa": 0.3389
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 606192,
       "name": "Teoscar Hern\u00e1ndez",
       "position": "RF",
@@ -1570,57 +1462,57 @@
       "tier": "low"
     },
     {
-      "player_id": 545121,
-      "name": "Ildemaro Vargas",
-      "position": "2B",
-      "team_id": 109,
-      "team_abbr": "AZ",
-      "opp_abbr": "TOR",
-      "opp_team_id": 141,
+      "player_id": 663656,
+      "name": "Kyle Tucker",
+      "position": "RF",
+      "team_id": 119,
+      "team_abbr": "LAD",
+      "opp_abbr": "COL",
+      "opp_team_id": 115,
       "opp_pitcher": {
-        "id": 453286,
-        "fullName": "Max Scherzer"
+        "id": 663372,
+        "fullName": "Ryan Feltner"
       },
       "park": {
-        "id": 15,
-        "name": "Chase Field",
-        "runs": 106,
-        "hr": 110,
+        "id": 19,
+        "name": "Coors Field",
+        "runs": 116,
+        "hr": 118,
         "label": "Hitter Friendly"
       },
       "weather": {
         "condition": "Partly Cloudy",
-        "temp": "89",
-        "wind": "1 mph, Varies"
+        "temp": "59",
+        "wind": "6 mph, Out To CF"
       },
       "pa_source": "lineup",
-      "efp": 11.02,
-      "bat_side": "S",
+      "efp": 11.11,
+      "bat_side": "L",
       "per_event": {
-        "singles": 2.25,
-        "doubles": 1.87,
-        "triples": 0.46,
-        "home_runs": 1.57,
-        "bb_hbp": 0.22,
-        "r": 1.95,
-        "rbi": 2.69,
-        "sb": 0.0
+        "singles": 2.2,
+        "doubles": 0.62,
+        "triples": 0.0,
+        "home_runs": 2.23,
+        "bb_hbp": 1.11,
+        "r": 2.06,
+        "rbi": 2.15,
+        "sb": 0.75
       },
       "multipliers": {
-        "park_hr": 1.1,
-        "park_runs": 1.06,
-        "weather_hr": 1.05
+        "park_hr": 1.18,
+        "park_runs": 1.16,
+        "weather_hr": 1.08
       },
       "rates": {
-        "singles": 0.203,
-        "doubles": 0.1012,
-        "triples": 0.0157,
-        "home_runs": 0.0425,
-        "bb_hbp": 0.0296,
-        "r_per_pa": 0.2632,
-        "rbi_per_pa": 0.3632
+        "singles": 0.1708,
+        "doubles": 0.0288,
+        "triples": 0.0,
+        "home_runs": 0.0517,
+        "bb_hbp": 0.1291,
+        "r_per_pa": 0.2391,
+        "rbi_per_pa": 0.2497
       },
-      "pa": 3.7,
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1676,7 +1568,130 @@
       },
       "pa": 4.0,
       "tier": "low"
+    },
+    {
+      "player_id": 680728,
+      "name": "Adrian Del Castillo",
+      "position": "C",
+      "team_id": 109,
+      "team_abbr": "AZ",
+      "opp_abbr": "TOR",
+      "opp_team_id": 141,
+      "opp_pitcher": {
+        "id": 453286,
+        "fullName": "Max Scherzer"
+      },
+      "park": {
+        "id": 15,
+        "name": "Chase Field",
+        "runs": 106,
+        "hr": 110,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "89",
+        "wind": "1 mph, Varies"
+      },
+      "pa_source": "lineup",
+      "efp": 10.97,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.79,
+        "doubles": 0.78,
+        "triples": 1.24,
+        "home_runs": 1.69,
+        "bb_hbp": 0.0,
+        "r": 1.84,
+        "rbi": 2.63,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 1.1,
+        "park_runs": 1.06,
+        "weather_hr": 1.05
+      },
+      "rates": {
+        "singles": 0.2326,
+        "doubles": 0.0388,
+        "triples": 0.0388,
+        "home_runs": 0.0422,
+        "bb_hbp": 0.0,
+        "r_per_pa": 0.2302,
+        "rbi_per_pa": 0.3293
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 701538,
+      "name": "Jackson Merrill",
+      "position": "CF",
+      "team_id": 135,
+      "team_abbr": "SD",
+      "opp_abbr": "LAA",
+      "opp_team_id": 108,
+      "opp_pitcher": {
+        "id": 579328,
+        "fullName": "Yusei Kikuchi"
+      },
+      "park": {
+        "id": 1,
+        "name": "Angel Stadium",
+        "runs": 97,
+        "hr": 96,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "75",
+        "wind": "8 mph, R To L"
+      },
+      "pa_source": "lineup",
+      "efp": 10.93,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.61,
+        "doubles": 1.75,
+        "triples": 0.0,
+        "home_runs": 1.45,
+        "bb_hbp": 0.55,
+        "r": 1.91,
+        "rbi": 2.45,
+        "sb": 1.21
+      },
+      "multipliers": {
+        "park_hr": 0.96,
+        "park_runs": 0.97,
+        "weather_hr": 1.0
+      },
+      "rates": {
+        "singles": 0.1247,
+        "doubles": 0.0813,
+        "triples": 0.0,
+        "home_runs": 0.0338,
+        "bb_hbp": 0.0638,
+        "r_per_pa": 0.2216,
+        "rbi_per_pa": 0.285
+      },
+      "pa": 4.3,
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 5.5,
+        "hrr": 4.5,
+        "total_bases": 4.5,
+        "hits": 1.5,
+        "strikeouts": 1.5,
+        "rbis": 1.5,
+        "runs": 1.5,
+        "singles": 1.5,
+        "doubles": 0.5,
+        "home_runs": 0.5,
+        "stolen_bases": 0.5,
+        "walks": 0.5
+      },
+      "edge_fantasy": 5.43
     }
   ],
-  "generated_at": "2026-04-19T01:16:50.303430+00:00"
+  "generated_at": "2026-04-19T01:32:46.084650+00:00"
 }
