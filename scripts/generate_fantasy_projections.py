@@ -204,6 +204,34 @@ async def generate(date_iso: str | None) -> None:
     # for the logger downstream; shipping 400 rows to every browser
     # would bloat the payload for zero UI benefit).
     site_payload = {k: v for k, v in payload.items() if k != "_all_projections"}
+
+    # Resilience guard: if PrizePicks returned an empty feed this run
+    # (network flake, block, maintenance window, Cloudflare reject) but
+    # the existing JSON on disk has PP matches for the same date,
+    # preserve the existing file rather than overwriting with a
+    # line-less version. This prevents the live site from going "empty
+    # best bets" when PP just happens to be down at cron time.
+    def _pp_match_count(doc: dict) -> int:
+        return sum(
+            1 for p in (doc.get("projections") or [])
+            if p.get("prizepicks")
+        )
+    new_pp_count = _pp_match_count(site_payload)
+    if new_pp_count == 0 and out_path.exists():
+        try:
+            prior = json.loads(out_path.read_text())
+            prior_pp_count = _pp_match_count(prior)
+            if prior.get("date") == site_payload.get("date") and prior_pp_count > 0:
+                logger.warning(
+                    "projections_today: new run has 0 PP matches but existing "
+                    "file has %d — preserving existing file (PP likely down).",
+                    prior_pp_count,
+                )
+                await mlb_api.close_client()
+                return
+        except Exception:
+            pass  # malformed existing → overwrite is fine
+
     out_path.write_text(json.dumps(site_payload, indent=2) + "\n")
 
     logger.info(
