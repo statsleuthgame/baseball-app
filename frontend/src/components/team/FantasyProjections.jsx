@@ -234,29 +234,6 @@ function FantasyCard({ projection, live, onSelectPlayer }) {
         )}
       </div>
 
-      <div className="edge-stat-row">
-        <span className="edge-stat-label">Ctx</span>
-        <span className="edge-stat-value">
-          {park?.label || "Park"}
-          {park?.hr ? ` (HR ${park.hr})` : ""}
-          {weather?.temp ? ` · ${weather.temp}°F` : ""}
-          {weather?.wind ? ` · ${weather.wind}` : ""}
-          {multipliers?.weather_hr && multipliers.weather_hr !== 1
-            ? ` · wx×${multipliers.weather_hr.toFixed(2)}`
-            : ""}
-        </span>
-      </div>
-
-      <div className="edge-stat-row">
-        <span className="edge-stat-label">PA</span>
-        <span className="edge-stat-value">
-          {Number(pa).toFixed(1)}
-          {pa_source === "default" && (
-            <span className="edge-fantasy-pa-default"> · lineup TBD</span>
-          )}
-        </span>
-      </div>
-
       <div className="edge-stat-row edge-score-row">
         <span className="edge-score">SCORE {Number(efp).toFixed(2)}</span>
         <button
@@ -269,28 +246,65 @@ function FantasyCard({ projection, live, onSelectPlayer }) {
         </button>
       </div>
 
-      {open && per_event && (
+      {open && (
         <div className="edge-details">
           <div className="edge-details-block">
-            <div className="edge-details-label">Per-event projected pts</div>
-            <table className="edge-details-table edge-fantasy-breakdown">
-              <tbody>
-                <tr><td>1B</td><td>{per_event.singles.toFixed(2)}</td></tr>
-                <tr><td>2B</td><td>{per_event.doubles.toFixed(2)}</td></tr>
-                <tr><td>3B</td><td>{per_event.triples.toFixed(2)}</td></tr>
-                <tr><td>HR</td><td>{per_event.home_runs.toFixed(2)}</td></tr>
-                <tr><td>BB+HBP</td><td>{per_event.bb_hbp.toFixed(2)}</td></tr>
-                <tr><td>R</td><td>{per_event.r.toFixed(2)}</td></tr>
-                <tr><td>RBI</td><td>{per_event.rbi.toFixed(2)}</td></tr>
-                <tr><td>SB</td><td>{per_event.sb.toFixed(2)}</td></tr>
-              </tbody>
-            </table>
-            {multipliers && (
-              <div className="edge-details-note">
-                Multipliers — park HR ×{multipliers.park_hr.toFixed(2)} · park runs ×{multipliers.park_runs.toFixed(2)} · weather HR ×{multipliers.weather_hr.toFixed(2)}
+            <div className="edge-details-label">Matchup context</div>
+            <div className="edge-fantasy-ctx-rows">
+              <div className="edge-fantasy-ctx-row">
+                <span className="edge-fantasy-ctx-key">Park</span>
+                <span className="edge-fantasy-ctx-val">
+                  {park?.label || "—"}
+                  {park?.hr ? ` · HR ${park.hr}` : ""}
+                  {park?.runs ? ` · R ${park.runs}` : ""}
+                </span>
               </div>
-            )}
+              {(weather?.temp || weather?.wind) && (
+                <div className="edge-fantasy-ctx-row">
+                  <span className="edge-fantasy-ctx-key">Weather</span>
+                  <span className="edge-fantasy-ctx-val">
+                    {weather?.temp ? `${weather.temp}°F` : ""}
+                    {weather?.wind ? `${weather?.temp ? " · " : ""}${weather.wind}` : ""}
+                    {multipliers?.weather_hr && multipliers.weather_hr !== 1
+                      ? ` · wx×${multipliers.weather_hr.toFixed(2)}`
+                      : ""}
+                  </span>
+                </div>
+              )}
+              <div className="edge-fantasy-ctx-row">
+                <span className="edge-fantasy-ctx-key">PA</span>
+                <span className="edge-fantasy-ctx-val">
+                  {Number(pa).toFixed(1)}
+                  {pa_source === "default" && (
+                    <span className="edge-fantasy-pa-default"> · lineup TBD</span>
+                  )}
+                </span>
+              </div>
+            </div>
           </div>
+
+          {per_event && (
+            <div className="edge-details-block">
+              <div className="edge-details-label">Per-event projected pts</div>
+              <table className="edge-details-table edge-fantasy-breakdown">
+                <tbody>
+                  <tr><td>1B</td><td>{per_event.singles.toFixed(2)}</td></tr>
+                  <tr><td>2B</td><td>{per_event.doubles.toFixed(2)}</td></tr>
+                  <tr><td>3B</td><td>{per_event.triples.toFixed(2)}</td></tr>
+                  <tr><td>HR</td><td>{per_event.home_runs.toFixed(2)}</td></tr>
+                  <tr><td>BB+HBP</td><td>{per_event.bb_hbp.toFixed(2)}</td></tr>
+                  <tr><td>R</td><td>{per_event.r.toFixed(2)}</td></tr>
+                  <tr><td>RBI</td><td>{per_event.rbi.toFixed(2)}</td></tr>
+                  <tr><td>SB</td><td>{per_event.sb.toFixed(2)}</td></tr>
+                </tbody>
+              </table>
+              {multipliers && (
+                <div className="edge-details-note">
+                  Multipliers — park HR ×{multipliers.park_hr.toFixed(2)} · park runs ×{multipliers.park_runs.toFixed(2)} · weather HR ×{multipliers.weather_hr.toFixed(2)}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )}
     </article>

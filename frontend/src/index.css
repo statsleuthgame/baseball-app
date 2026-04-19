@@ -7733,6 +7733,44 @@ th.sb-ls-total {
   margin-left: 4px;
 }
 
+/* Matchup-context rows inside the Breakdown panel — each piece stacks
+   vertically so long weather / park strings wrap cleanly instead of
+   pushing the card wider than its grid column. */
+.edge-fantasy-ctx-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.edge-fantasy-ctx-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  color: var(--text, #d1d5db);
+}
+
+.edge-fantasy-ctx-key {
+  flex-shrink: 0;
+  width: 56px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted, #9ca3af);
+}
+
+.edge-fantasy-ctx-val {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  white-space: normal;
+}
+
 .edge-fantasy-breakdown {
   width: 100%;
   margin-top: 4px;
