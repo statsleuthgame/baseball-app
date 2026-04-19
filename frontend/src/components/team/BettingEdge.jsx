@@ -339,6 +339,11 @@ export default function BettingEdge() {
         </div>
       ) : (
         <>
+          {/* Fantasy projections lead: this is the "5-6 daily best bets"
+              product surface and should be seen first. Picks/Fades follow
+              as secondary hot/cold-hand context. */}
+          <FantasyProjections myTeamsOnly={myTeamsOnly} />
+
           <section className="edge-section">
             <h2 className="edge-section-title edge-section-picks">
               <span className="edge-section-accent" aria-hidden="true">▲</span>
@@ -388,8 +393,6 @@ export default function BettingEdge() {
               </div>
             )}
           </section>
-
-          <FantasyProjections myTeamsOnly={myTeamsOnly} />
         </>
       )}
 
