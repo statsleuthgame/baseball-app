@@ -846,6 +846,28 @@ export const fetchTodaysPicksLock = async () => {
   }
 };
 
+// Yesterday's graded recap: how many HIGH/MED/LOW/FADE picks, how many
+// hit the PP line, standout hits + misses. Written by the nightly
+// resolve-pp-lines workflow. Returns null when no recap exists yet
+// (first day of the season, pipeline just starting, etc.).
+export const fetchYesterdayRecap = async () => {
+  try {
+    return await staticFetch("fantasy/yesterday_recap.json");
+  } catch {
+    return null;
+  }
+};
+
+// Running season totals across all resolved days. Same shape as daily
+// recap's `totals` block plus per-day timeline.
+export const fetchSeasonRecap = async () => {
+  try {
+    return await staticFetch("fantasy/season_recap.json");
+  } catch {
+    return null;
+  }
+};
+
 // ---- Live data (MLB Stats API, called directly from browser) ----
 export const fetchTodayGame = async (teamId) => {
   const today = new Date();

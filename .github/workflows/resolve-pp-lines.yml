@@ -48,12 +48,25 @@ jobs:
             python scripts/resolve_pp_lines.py
           fi
 
-      - name: Commit resolved log + refreshed stats cache
+      - name: Build daily recap + season rollup
+        # Summarize yesterday's picks by tier + build running season
+        # totals. Outputs to frontend/public/data/fantasy/yesterday_recap.json
+        # and season_recap.json for the UI to read.
+        run: |
+          if [ -n "${{ github.event.inputs.date }}" ]; then
+            python scripts/build_daily_recap.py "${{ github.event.inputs.date }}"
+          else
+            python scripts/build_daily_recap.py
+          fi
+
+      - name: Commit resolved log + refreshed stats cache + recap
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add backend/app/data/pp_line_log/*_resolved.jsonl 2>/dev/null || true
           git add backend/app/data/player_efp_stats_*.json 2>/dev/null || true
+          git add frontend/public/data/fantasy/yesterday_recap.json 2>/dev/null || true
+          git add frontend/public/data/fantasy/season_recap.json 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No resolved-log changes to commit."
           else

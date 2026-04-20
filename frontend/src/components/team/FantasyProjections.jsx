@@ -7,6 +7,8 @@ import {
   fetchTodayLineups,
   fetchLiveFantasyScores,
   fetchTodaysPicksLock,
+  fetchYesterdayRecap,
+  fetchSeasonRecap,
 } from "../../api/client";
 import { lastName } from "../../utils/formatters";
 import PlayerPhoto from "../common/PlayerPhoto";
@@ -83,6 +85,20 @@ export default function FantasyProjections({ myTeamsOnly = false }) {
     queryFn: () => fetchTodaysPicksLock(),
     staleTime: 5 * 60 * 1000,
     refetchInterval: 10 * 60 * 1000,
+  });
+
+  // Yesterday's graded recap + running season totals. Written by the
+  // nightly resolve-pp-lines workflow at ~4 AM ET. Once a day cadence;
+  // no polling needed beyond the initial fetch.
+  const { data: yesterdayRecap } = useQuery({
+    queryKey: ["fantasy", "yesterdayRecap"],
+    queryFn: () => fetchYesterdayRecap(),
+    staleTime: 30 * 60 * 1000,
+  });
+  const { data: seasonRecap } = useQuery({
+    queryKey: ["fantasy", "seasonRecap"],
+    queryFn: () => fetchSeasonRecap(),
+    staleTime: 30 * 60 * 1000,
   });
 
   const projections = data?.projections || [];
@@ -180,6 +196,14 @@ export default function FantasyProjections({ myTeamsOnly = false }) {
 
   return (
     <section className="edge-section">
+      {/* Yesterday's graded recap + running season totals. Renders first
+          so the user sees "how we did" before "what to bet today". Only
+          shows when the nightly resolve has produced a recap (starting
+          ~day 2 of live logging). */}
+      {yesterdayRecap && yesterdayRecap.totals?.overall?.n > 0 && (
+        <YesterdayRecapBlock recap={yesterdayRecap} season={seasonRecap} />
+      )}
+
       {/* Locked picks for the day — stable set you can track live.
           Renders ABOVE the live "Best Bets" section so the user's
           morning picks stay visible even if later snapshots shuffle. */}
@@ -520,5 +544,90 @@ function FantasyCard({ projection, live, onSelectPlayer }) {
         </div>
       )}
     </article>
+  );
+}
+
+
+function YesterdayRecapBlock({ recap, season }) {
+  const totals = recap.totals || {};
+  const overall = totals.overall || {};
+  const high = totals.high_conf || {};
+  const med = totals.med_conf || {};
+  const topHit = recap.top_hit;
+  const biggestMiss = recap.biggest_miss;
+
+  const fmtPct = (v) =>
+    typeof v === "number" ? `${Math.round(v * 100)}%` : "—";
+  const fmtRec = (t) =>
+    t && t.n > 0 ? `${t.wins}/${t.n} · ${fmtPct(t.hit_rate)}` : "—";
+
+  const seasonOverall = season?.totals?.overall;
+  const seasonHigh = season?.totals?.high_conf;
+
+  return (
+    <div className="edge-subsection edge-recap-subsection">
+      <h2 className="edge-section-title edge-section-fantasy">
+        <span className="edge-section-accent" aria-hidden="true">📊</span>
+        Yesterday's record
+        <span className="edge-subsection-hint">
+          — {recap.recap_date} · how our picks did against PrizePicks
+        </span>
+      </h2>
+      <div className="edge-recap-grid">
+        <div className="edge-recap-cell edge-recap-overall">
+          <div className="edge-recap-label">Overall</div>
+          <div className="edge-recap-value">{fmtRec(overall)}</div>
+        </div>
+        <div className="edge-recap-cell edge-recap-high">
+          <div className="edge-recap-label">HIGH CONF</div>
+          <div className="edge-recap-value">{fmtRec(high)}</div>
+        </div>
+        <div className="edge-recap-cell edge-recap-med">
+          <div className="edge-recap-label">MED CONF</div>
+          <div className="edge-recap-value">{fmtRec(med)}</div>
+        </div>
+      </div>
+
+      {(topHit || biggestMiss) && (
+        <div className="edge-recap-highlights">
+          {topHit && (
+            <div className="edge-recap-highlight edge-recap-hit">
+              <span className="edge-recap-highlight-label">Biggest hit</span>
+              <span className="edge-recap-highlight-body">
+                {topHit.name} {topHit.team}
+                {" · "}
+                projected {Number(topHit.projected).toFixed(1)}{", "}
+                line {topHit.line}, went{" "}
+                <strong>{topHit.actual}</strong> ({topHit.tier} CONF)
+              </span>
+            </div>
+          )}
+          {biggestMiss && (
+            <div className="edge-recap-highlight edge-recap-miss">
+              <span className="edge-recap-highlight-label">Biggest miss</span>
+              <span className="edge-recap-highlight-body">
+                {biggestMiss.name} {biggestMiss.team}
+                {" · "}
+                projected {Number(biggestMiss.projected).toFixed(1)}{", "}
+                line {biggestMiss.line}, went{" "}
+                <strong>{biggestMiss.actual}</strong> ({biggestMiss.tier} CONF)
+              </span>
+            </div>
+          )}
+        </div>
+      )}
+
+      {seasonOverall && seasonOverall.n > 0 && (
+        <div className="edge-recap-season">
+          Season so far: <strong>{fmtRec(seasonOverall)}</strong>
+          {seasonHigh && seasonHigh.n > 0 && (
+            <> · HIGH CONF <strong>{fmtRec(seasonHigh)}</strong></>
+          )}
+          {season.days_resolved ? (
+            <> · {season.days_resolved} day{season.days_resolved === 1 ? "" : "s"} logged</>
+          ) : null}
+        </div>
+      )}
+    </div>
   );
 }
