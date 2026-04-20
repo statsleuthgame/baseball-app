@@ -164,43 +164,39 @@ export const fetchStandings = async () => {
 
 
 export const fetchPlayerStats = async (playerId) => {
-  // Try static pre-generated data first (our roster players — most comprehensive)
-  try {
-    const data = await staticFetch(`players/${playerId}/info.json`);
-    if (data?.detail?.id) return { ...data, hasFullData: true };
-  } catch { /* expected fallback */ }
-
-  // Fallback: MLB API for any player (opponents, etc.)
+  // Strategy: static JSON is daily-regenerated and covers bio / roster /
+  // historical stats well, but its CURRENT-SEASON stats are typically
+  // stale (up to 24h behind). For accurate season stats we always
+  // overlay a fresh MLB API fetch on top.
   const season = new Date().getFullYear();
+
+  // 1. Start with static file if we have it (fast + complete bio).
+  let staticData = null;
+  try {
+    staticData = await staticFetch(`players/${playerId}/info.json`);
+  } catch { /* expected fallback for non-roster / opponent players */ }
+
+  // 2. In parallel with #3 below, get the MLB detail record if we don't
+  //    already have static. (Opponents and non-roster guys need this.)
+  const detailPromise = staticData?.detail?.id
+    ? Promise.resolve({ data: null })  // already have it from static
+    : mlbApi.get(`/people/${playerId}`, { params: { hydrate: "currentTeam" } });
+
+  // 3. ALWAYS fetch current-season stats live. Static version is up to
+  //    24h stale after each nightly regen; MLB updates immediately
+  //    after each game.
   const [detailResp, hittingResp, pitchingResp] = await Promise.all([
-    mlbApi.get(`/people/${playerId}`, { params: { hydrate: "currentTeam" } }),
+    detailPromise,
     mlbApi.get(`/people/${playerId}/stats`, { params: { stats: "season", season, group: "hitting" } }).catch(() => ({})),
     mlbApi.get(`/people/${playerId}/stats`, { params: { stats: "season", season, group: "pitching" } }).catch(() => ({})),
   ]);
 
-  const p = detailResp.data?.people?.[0];
-  if (!p) throw new Error("Player not found");
-
-  const isPitcher = p.primaryPosition?.abbreviation === "P";
-  const group = isPitcher ? "pitching" : "hitting";
-  const statsResp = isPitcher ? pitchingResp : hittingResp;
-  const splits = statsResp.data?.stats?.[0]?.splits || [];
-  const currentStats = splits[0]?.stat || {};
-
-  // Try previous season if no current stats
-  let prevStats = {};
-  if (!Object.keys(currentStats).length) {
-    try {
-      const prev = await mlbApi.get(`/people/${playerId}/stats`, {
-        params: { stats: "season", season: season - 1, group },
-      });
-      const prevSplits = prev.data?.stats?.[0]?.splits || [];
-      prevStats = prevSplits[0]?.stat || {};
-    } catch { /* expected fallback */ }
-  }
-
-  return {
-    detail: {
+  // Assemble detail: prefer static (more complete) but fill gaps from API.
+  let detail = staticData?.detail;
+  if (!detail || !detail.id) {
+    const p = detailResp.data?.people?.[0];
+    if (!p) throw new Error("Player not found");
+    detail = {
       id: p.id,
       fullName: p.fullName || "",
       firstName: p.firstName || "",
@@ -217,14 +213,53 @@ export const fetchPlayerStats = async (playerId) => {
       currentTeam: p.currentTeam?.name || "",
       currentTeamId: p.currentTeam?.id || null,
       photoUrl: `https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/${p.id}/headshot/67/current`,
-    },
+    };
+  }
+
+  // Determine hitter vs pitcher using detail, then pick the corresponding
+  // LIVE stats response.
+  const isPitcher = detail.primaryPosition === "P";
+  const group = isPitcher ? "pitching" : "hitting";
+  const statsResp = isPitcher ? pitchingResp : hittingResp;
+  const splits = statsResp.data?.stats?.[0]?.splits || [];
+  const currentStats = splits[0]?.stat || {};
+
+  // If MLB returns nothing for current season (rare — off-season / retired),
+  // fall back to static's stored stats or previous season.
+  let finalStats = currentStats;
+  let prevStats = {};
+  let prevSeason = season - 1;
+  if (!Object.keys(currentStats).length) {
+    // Prefer static's cached stats if they exist.
+    const staticStats = staticData?.stats?.stats || {};
+    if (Object.keys(staticStats).length) {
+      finalStats = staticStats;
+      prevStats = staticData?.stats?.prevStats || {};
+      prevSeason = staticData?.stats?.prevSeason || season - 1;
+    } else {
+      // Last resort: fetch previous season from MLB API.
+      try {
+        const prev = await mlbApi.get(`/people/${playerId}/stats`, {
+          params: { stats: "season", season: season - 1, group },
+        });
+        const prevSplits = prev.data?.stats?.[0]?.splits || [];
+        prevStats = prevSplits[0]?.stat || {};
+      } catch { /* expected fallback */ }
+    }
+  }
+
+  // Return merged: static's rich detail + live current-season stats.
+  return {
+    ...(staticData || {}),
+    detail,
     stats: {
       season,
       group,
-      stats: currentStats,
-      prevSeason: season - 1,
+      stats: finalStats,
+      prevSeason,
       prevStats,
     },
+    hasFullData: !!staticData?.detail?.id,
   };
 };
 

@@ -66,20 +66,33 @@ jobs:
         # dated JSONL log at backend/app/data/pp_line_log/YYYY-MM-DD.jsonl.
         run: python scripts/generate_fantasy_projections.py
 
-      - name: Commit PP line log snapshot
-        # Each cron run (6 AM ET) appends a fresh snapshot of today's PP
-        # lines + model projections. Commit so the history accumulates
-        # across runs and seasons. Retry on push-race with rebase.
+      - name: Commit generated data + PP line log
+        # Commits everything produced by generate_data.py AND
+        # generate_fantasy_projections.py back to main:
+        #   - frontend/public/data/standings.json
+        #   - frontend/public/data/teams/**/*.json  (schedule, roster, etc.)
+        #   - frontend/public/data/players/**/*.json  (per-player stats)
+        #   - frontend/public/data/fantasy/projections_today.json
+        #   - frontend/public/data/fantasy/todays_picks_lock.json
+        #   - backend/app/data/pp_line_log/*.jsonl
+        #
+        # This is required because deploy-frontend.yml no longer
+        # downloads the baseball-data artifact (it was clobbering freshly
+        # committed fantasy data). The site now serves whatever's
+        # committed — so refresh-data.yml must commit its output.
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add backend/app/data/pp_line_log/*.jsonl 2>/dev/null || true
+          git add frontend/public/data/standings.json 2>/dev/null || true
+          git add frontend/public/data/teams 2>/dev/null || true
+          git add frontend/public/data/players 2>/dev/null || true
           git add frontend/public/data/fantasy/projections_today.json 2>/dev/null || true
           git add frontend/public/data/fantasy/todays_picks_lock.json 2>/dev/null || true
+          git add backend/app/data/pp_line_log/*.jsonl 2>/dev/null || true
           if git diff --cached --quiet; then
-            echo "No PP-line-log changes to commit."
+            echo "No data changes to commit."
           else
-            git commit -m "chore(pp-log): snapshot $(date -u +%Y-%m-%dT%H:%MZ) from refresh-data"
+            git commit -m "chore(data): daily refresh $(date -u +%Y-%m-%dT%H:%MZ)"
             for i in 1 2 3; do
               if git push; then
                 break
