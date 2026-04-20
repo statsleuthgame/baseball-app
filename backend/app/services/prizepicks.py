@@ -116,23 +116,50 @@ async def fetch_lines() -> dict[str, dict[str, float]]:
         cache_set("prizepicks:mlb:lines", {}, 60 * 2)
         return {}
 
+    # Cloudflare frequently 403's GitHub Actions runner IPs on the first
+    # attempt. Retry with:
+    #   1. Multiple TLS fingerprints (Cloudflare's bot detector may have
+    #      flagged safari17_0 for this IP; rotating impersonation often
+    #      clears the block within 2-3 tries)
+    #   2. Exponential backoff (1s, 3s, 9s) so we don't hammer on block
+    _IMPERSONATE_ROTATION = ("safari17_0", "chrome120", "chrome110", "safari15_5")
+
     def _blocking_fetch() -> dict:
-        # curl_cffi impersonates Safari's TLS fingerprint, which Cloudflare
-        # accepts for this endpoint whereas httpx / requests get a 403.
-        resp = cffi_requests.get(
-            f"{_PP_BASE}/projections",
-            params={"league_id": _MLB_LEAGUE_ID, "per_page": 500},
-            headers=_HEADERS,
-            impersonate="safari17_0",
-            timeout=15,
-        )
-        resp.raise_for_status()
-        return resp.json()
+        import time
+        last_err: Exception | None = None
+        for attempt, impersonate in enumerate(_IMPERSONATE_ROTATION):
+            try:
+                resp = cffi_requests.get(
+                    f"{_PP_BASE}/projections",
+                    params={"league_id": _MLB_LEAGUE_ID, "per_page": 500},
+                    headers=_HEADERS,
+                    impersonate=impersonate,
+                    timeout=15,
+                )
+                resp.raise_for_status()
+                if attempt > 0:
+                    logger.info("prizepicks: recovered on attempt %d with %s",
+                                attempt + 1, impersonate)
+                return resp.json()
+            except Exception as e:
+                last_err = e
+                status = getattr(getattr(e, "response", None), "status_code", None)
+                # 403 = Cloudflare block — retry with different fingerprint.
+                # Other errors (timeouts, DNS) also worth retrying once or twice.
+                if attempt < len(_IMPERSONATE_ROTATION) - 1:
+                    backoff = 1 * (3 ** attempt)
+                    logger.warning(
+                        "prizepicks: attempt %d with %s failed (%s) — retrying in %ds with rotation",
+                        attempt + 1, impersonate, status or type(e).__name__, backoff,
+                    )
+                    time.sleep(backoff)
+        # All attempts failed.
+        raise last_err if last_err else RuntimeError("prizepicks: all fetch attempts failed")
 
     try:
         payload = await asyncio.to_thread(_blocking_fetch)
     except Exception as e:
-        logger.warning("prizepicks fetch failed: %s", e)
+        logger.warning("prizepicks fetch failed after all retries: %s", e)
         cache_set("prizepicks:mlb:lines", {}, 60 * 2)  # short TTL on failure
         return {}
 
