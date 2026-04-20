@@ -66,34 +66,87 @@ export const fetchRoster = async (teamId) => {
   });
 };
 
-export const fetchSchedule = (teamId) => staticFetch(`teams/${getTeamAbbr(teamId)}/schedule.json`);
-
-// Fetch recent + upcoming schedule from live MLB API to supplement static data
-export const fetchLiveSchedule = async (teamId) => {
+// Full season schedule straight from the MLB Stats API. Previously we
+// served a static per-team schedule.json generated once daily + merged
+// in a last-7-days live scores call — which meant non-recently-updated
+// static files showed stale records for games older than a week.
+// Going live-only means every game's status + score is always current
+// and we don't need to regenerate static per-team files.
+//
+// Returns an array matching the legacy static shape so existing
+// consumers (ScheduleView, etc.) need no changes.
+export const fetchSchedule = async (teamId) => {
   try {
-    const now = new Date();
-    const start = new Date(now);
-    start.setDate(start.getDate() - 7); // last 7 days
-    const end = new Date(now);
-    end.setDate(end.getDate() + 1);
-    const fmt = (d) => d.toISOString().split("T")[0];
+    const season = new Date().getFullYear();
     const resp = await mlbApi.get("/schedule", {
-      params: { sportId: 1, teamId, startDate: fmt(start), endDate: fmt(end), hydrate: "team,linescore", gameType: "R" },
+      params: {
+        sportId: 1,
+        teamId,
+        season,
+        gameType: "R",
+        hydrate: "team,linescore,venue,probablePitcher",
+      },
     });
     const games = [];
     for (const date of resp.data?.dates || []) {
       for (const g of date.games || []) {
+        const away = g.teams?.away || {};
+        const home = g.teams?.home || {};
+        const at = away.team || {};
+        const ht = home.team || {};
+        const status = normalizeStatus(g.status?.detailedState);
+        const isFinal = status === "Final";
+        const awayScore = away.score ?? null;
+        const homeScore = home.score ?? null;
         games.push({
           gamePk: g.gamePk,
-          status: normalizeStatus(g.status?.detailedState),
-          awayScore: g.teams?.away?.score ?? null,
-          homeScore: g.teams?.home?.score ?? null,
+          gameDate: g.gameDate,
+          status,
+          venue: {
+            id: g.venue?.id,
+            name: g.venue?.name || "",
+          },
+          away: {
+            id: at.id,
+            name: at.name || "",
+            abbreviation: at.abbreviation || "",
+            score: awayScore,
+            isWinner: isFinal && awayScore != null && homeScore != null
+              ? awayScore > homeScore
+              : false,
+            probablePitcher: away.probablePitcher
+              ? { id: away.probablePitcher.id, fullName: away.probablePitcher.fullName }
+              : null,
+            logoUrl: at.id ? `https://www.mlbstatic.com/team-logos/team-cap-on-dark/${at.id}.svg` : "",
+          },
+          home: {
+            id: ht.id,
+            name: ht.name || "",
+            abbreviation: ht.abbreviation || "",
+            score: homeScore,
+            isWinner: isFinal && awayScore != null && homeScore != null
+              ? homeScore > awayScore
+              : false,
+            probablePitcher: home.probablePitcher
+              ? { id: home.probablePitcher.id, fullName: home.probablePitcher.fullName }
+              : null,
+            logoUrl: ht.id ? `https://www.mlbstatic.com/team-logos/team-cap-on-dark/${ht.id}.svg` : "",
+          },
         });
       }
     }
     return games;
-  } catch { return []; }
+  } catch {
+    // Fallback to static JSON if API call fails (offline, rate-limited, etc.)
+    try { return await staticFetch(`teams/${getTeamAbbr(teamId)}/schedule.json`); }
+    catch { return []; }
+  }
 };
+
+// Kept as a no-op stub so any remaining import references don't break.
+// ScheduleView no longer needs the "merge last 7 days over static" flow
+// now that fetchSchedule returns live-fresh data for the whole season.
+export const fetchLiveSchedule = async () => [];
 
 export const fetchStandings = async () => {
   // Fetch live from MLB API for freshest standings

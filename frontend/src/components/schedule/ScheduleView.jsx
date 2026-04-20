@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
-import { fetchSchedule, fetchLiveSchedule } from "../../api/client";
+import { fetchSchedule } from "../../api/client";
 import { formatGameDate, formatGameTime } from "../../utils/formatters";
 import LoadingSpinner from "../common/LoadingSpinner";
 import ErrorMessage from "../common/ErrorMessage";
@@ -14,35 +14,19 @@ export default function ScheduleView() {
   const navigate = useNavigate();
   const [selectedMonth, setSelectedMonth] = useState(() => new Date().getMonth());
 
-  const { data: staticGames, isLoading, error, refetch } = useQuery({
+  // fetchSchedule now goes live to MLB Stats API for the full season
+  // (previously we merged a stale per-team static JSON with a last-7-days
+  // live call, which left older games frozen at generation time). A
+  // single live call keeps every game's status + score + running record
+  // current across all 30 teams.
+  const { data: games, isLoading, error, refetch } = useQuery({
     queryKey: ["schedule", teamId],
     queryFn: () => fetchSchedule(teamId),
     enabled: !!teamId,
-    staleTime: 1000 * 60 * 30,
+    staleTime: 1000 * 60 * 5,          // 5 min — scores update during games
+    refetchInterval: 1000 * 60 * 5,
+    refetchIntervalInBackground: false, // pause when tab hidden
   });
-
-  // Supplement static data with live scores from MLB API
-  const { data: liveScores } = useQuery({
-    queryKey: ["liveSchedule", teamId],
-    queryFn: () => fetchLiveSchedule(teamId),
-    enabled: !!teamId,
-    staleTime: 1000 * 60 * 10,
-  });
-
-  // Merge live scores into static schedule
-  const games = useMemo(() => {
-    if (!staticGames) return null;
-    if (!liveScores) return staticGames;
-    const liveByPk = {};
-    for (const g of liveScores) liveByPk[g.gamePk] = g;
-    return staticGames.map((g) => {
-      const live = liveByPk[g.gamePk];
-      if (live && (live.status === "Final" || live.status === "Game Over")) {
-        return { ...g, status: live.status, away: { ...g.away, score: live.awayScore, isWinner: live.awayScore > live.homeScore }, home: { ...g.home, score: live.homeScore, isWinner: live.homeScore > live.awayScore } };
-      }
-      return g;
-    });
-  }, [staticGames, liveScores]);
 
   // Compute rolling record for each game (cumulative W-L up to that point)
   const gamesWithRecord = useMemo(() => {
