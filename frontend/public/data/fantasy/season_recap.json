@@ -1,0 +1,53 @@
+{
+  "generated_at": "2026-04-20T10:03:59.948935+00:00",
+  "days_resolved": 1,
+  "first_date": "2026-04-19",
+  "last_date": "2026-04-19",
+  "totals": {
+    "high_conf": {
+      "n": 3,
+      "wins": 2,
+      "hit_rate": 0.667
+    },
+    "med_conf": {
+      "n": 108,
+      "wins": 51,
+      "hit_rate": 0.472
+    },
+    "low_conf": {
+      "n": 64,
+      "wins": 25,
+      "hit_rate": 0.391
+    },
+    "fade": {
+      "n": 38,
+      "wins": 26,
+      "hit_rate": 0.684
+    },
+    "overall": {
+      "n": 213,
+      "wins": 104,
+      "hit_rate": 0.488
+    }
+  },
+  "days": [
+    {
+      "date": "2026-04-19",
+      "overall": {
+        "n": 213,
+        "wins": 104,
+        "hit_rate": 0.488
+      },
+      "high_conf": {
+        "n": 3,
+        "wins": 2,
+        "hit_rate": 0.667
+      },
+      "med_conf": {
+        "n": 108,
+        "wins": 51,
+        "hit_rate": 0.472
+      }
+    }
+  ]
+}
