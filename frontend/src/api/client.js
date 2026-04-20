@@ -968,6 +968,18 @@ export const fetchTodaysPicksLock = async () => {
   }
 };
 
+// Today's pre-built parlay ideas (two 2-mans, a 3-man, a 4-man). Same
+// lifecycle as todays_picks_lock.json — written by the morning lock run
+// off the locked pick set so the "Parlay Ideas" button has stable
+// content to show. Returns null when no parlay file exists yet.
+export const fetchTodaysParlays = async () => {
+  try {
+    return await staticFetch("fantasy/todays_parlays.json");
+  } catch {
+    return null;
+  }
+};
+
 // Yesterday's graded recap: how many HIGH/MED/LOW/FADE picks, how many
 // hit the PP line, standout hits + misses. Written by the nightly
 // resolve-pp-lines workflow. Returns null when no recap exists yet

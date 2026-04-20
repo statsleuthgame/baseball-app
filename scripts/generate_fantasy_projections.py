@@ -31,7 +31,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "backend"))
 
-from app.services import fantasy, mlb_api  # noqa: E402
+from app.services import fantasy, mlb_api, parlays as parlay_service  # noqa: E402
 
 
 OUT_DIR = ROOT / "frontend" / "public" / "data" / "fantasy"
@@ -179,15 +179,49 @@ def _maybe_write_daily_lock(payload: dict) -> None:
             "edge_z": p.get("edge_z"),
         }
 
+    trimmed_picks = [trim(p) for p in top_picks]
     lock = {
         "game_date": game_date,
         "locked_at": payload.get("generated_at") or datetime.now(timezone.utc).isoformat(),
         "weights_version": payload.get("weights_version"),
         "count": len(top_picks),
-        "picks": [trim(p) for p in top_picks],
+        "picks": trimmed_picks,
     }
     lock_path.write_text(json.dumps(lock, indent=2) + "\n")
     logger.info("daily_picks_lock: wrote %d locked picks → %s", len(top_picks), lock_path.name)
+
+    # Generate the 4 parlay ideas off the SAME locked set so the Edge
+    # page's "Parlay Ideas" button has something to show for the day.
+    # Runs inside the lock branch so it only fires when we actually
+    # wrote a new lock — same cadence as the picks themselves.
+    _write_parlays(game_date, trimmed_picks, payload)
+
+
+def _write_parlays(game_date: str, picks: list[dict], payload: dict) -> None:
+    """Compute EV-optimized parlays from today's locked picks and write
+    frontend/public/data/fantasy/todays_parlays.json. Pure math (no LLM,
+    no extra API calls) — see backend/app/services/parlays.py.
+
+    Silent on failure: parlays are a nice-to-have; if math blows up we
+    don't want to fail the whole projections run. The UI falls back to
+    'no parlay ideas yet' on an empty/missing file.
+    """
+    try:
+        ideas = parlay_service.build_parlays(picks)
+    except Exception as e:
+        logger.warning("parlays: build failed (%s) — skipping", e)
+        return
+
+    parlay_path = OUT_DIR / "todays_parlays.json"
+    out = {
+        "game_date": game_date,
+        "generated_at": payload.get("generated_at") or datetime.now(timezone.utc).isoformat(),
+        "weights_version": payload.get("weights_version"),
+        "source_pick_count": len(picks),
+        "parlays": ideas,
+    }
+    parlay_path.write_text(json.dumps(out, indent=2) + "\n")
+    logger.info("parlays: wrote %d parlay ideas → %s", len(ideas), parlay_path.name)
 
 
 async def generate(date_iso: str | None) -> None:

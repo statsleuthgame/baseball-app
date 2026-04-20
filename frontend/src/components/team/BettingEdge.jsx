@@ -15,6 +15,7 @@ import { formatAvg, getTeamAbbr, lastName } from "../../utils/formatters";
 import PlayerPhoto from "../common/PlayerPhoto";
 import SkeletonLoader from "../common/SkeletonLoader";
 import FantasyProjections from "./FantasyProjections";
+import ParlayIdeas from "./ParlayIdeas";
 import {
   computeEdgeScore,
   computeFadeScore,
@@ -304,6 +305,8 @@ export default function BettingEdge() {
           {bettableGames.length === 1 ? "game" : "games"} on slate
         </p>
       </header>
+
+      <ParlayIdeas />
 
       <div className="edge-controls">
         <label className="edge-filter">

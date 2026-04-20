@@ -7217,6 +7217,200 @@ th.sb-ls-total {
   letter-spacing: 0.3px;
 }
 
+/* ---- Parlay Ideas — button + expandable panel at top of Edge page ---- */
+.parlay-ideas { margin-bottom: 14px; }
+
+.parlay-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(16, 185, 129, 0.04));
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  border-radius: 12px;
+  color: var(--text, #e5e7eb);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 150ms ease, border-color 150ms ease;
+}
+.parlay-toggle:hover {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.18), rgba(16, 185, 129, 0.06));
+  border-color: rgba(16, 185, 129, 0.55);
+}
+.parlay-toggle.open {
+  border-radius: 12px 12px 0 0;
+  border-bottom-color: transparent;
+}
+.parlay-toggle-icon { font-size: 18px; }
+.parlay-toggle-label { flex: 1; text-align: left; }
+.parlay-toggle-count {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(16, 185, 129, 0.25);
+  color: #10b981;
+  font-size: 12px;
+  font-weight: 700;
+}
+.parlay-toggle-caret { color: var(--text-muted, #9ca3af); font-size: 12px; }
+
+.parlay-panel {
+  padding: 16px;
+  background: rgba(17, 24, 39, 0.6);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  border-top: none;
+  border-radius: 0 0 12px 12px;
+}
+.parlay-sub {
+  margin: 0 0 12px;
+  font-size: 12px;
+  color: var(--text-muted, #9ca3af);
+  letter-spacing: 0.2px;
+}
+.parlay-empty {
+  margin: 0;
+  padding: 20px 0;
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-muted, #9ca3af);
+}
+.parlay-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+@media (min-width: 768px) {
+  .parlay-list { grid-template-columns: repeat(2, 1fr); }
+}
+
+.parlay-card {
+  padding: 12px;
+  background: rgba(31, 41, 55, 0.55);
+  border: 1px solid rgba(75, 85, 99, 0.5);
+  border-radius: 10px;
+}
+.parlay-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.parlay-card-title {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.parlay-size {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text, #e5e7eb);
+}
+.parlay-payout {
+  font-size: 12px;
+  color: var(--text-muted, #9ca3af);
+}
+.parlay-card-metrics {
+  display: flex;
+  gap: 10px;
+}
+.parlay-metric {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+  font-size: 11px;
+  color: var(--text-muted, #9ca3af);
+}
+.parlay-metric-label {
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.parlay-metric-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text, #e5e7eb);
+}
+.parlay-ev.positive .parlay-metric-value { color: #10b981; }
+.parlay-ev.negative .parlay-metric-value { color: #ef4444; }
+
+.parlay-legs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.parlay-leg {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 10px;
+  background: rgba(17, 24, 39, 0.5);
+  border-radius: 8px;
+}
+.parlay-leg-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+  color: var(--text, #e5e7eb);
+}
+.parlay-leg-name > span:nth-child(2) {
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.parlay-leg-side {
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(16, 185, 129, 0.18);
+  color: #10b981;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.parlay-leg-team {
+  font-size: 11px;
+  color: var(--text-muted, #9ca3af);
+}
+.parlay-leg-line {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+  text-align: right;
+  flex-shrink: 0;
+}
+.parlay-leg-stat {
+  font-size: 10px;
+  color: var(--text-muted, #9ca3af);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.parlay-leg-number {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text, #e5e7eb);
+}
+.parlay-leg-proj {
+  font-size: 11px;
+  color: var(--text-muted, #9ca3af);
+}
+.parlay-footnote {
+  margin: 12px 0 0;
+  font-size: 11px;
+  color: var(--text-muted, #9ca3af);
+  line-height: 1.5;
+  font-style: italic;
+}
+
 /* ---- Controls row: sort chips + filter ------------------------------- */
 .edge-controls {
   display: flex;

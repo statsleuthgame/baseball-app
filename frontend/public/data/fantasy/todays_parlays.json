@@ -1,0 +1,172 @@
+{
+  "game_date": "2026-04-20",
+  "generated_at": "2026-04-20T19:54:28.830337+00:00",
+  "weights_version": "2026-04-18",
+  "source_pick_count": 10,
+  "parlays": [
+    {
+      "size": 2,
+      "payout": 3.0,
+      "combined_prob": 0.5464,
+      "ev_pct": 63.9,
+      "legs": [
+        {
+          "player_id": 690993,
+          "name": "Colt Keith",
+          "team_abbr": "DET",
+          "opp_abbr": "BOS",
+          "opp_pitcher": "Sonny Gray",
+          "line": 5.5,
+          "side": "over",
+          "efp": 7.79,
+          "edge_z": 0.776,
+          "hit_prob": 0.781
+        },
+        {
+          "player_id": 664023,
+          "name": "Ian Happ",
+          "team_abbr": "CHC",
+          "opp_abbr": "PHI",
+          "opp_pitcher": "Aaron Nola",
+          "line": 5.5,
+          "side": "over",
+          "efp": 9.08,
+          "edge_z": 0.523,
+          "hit_prob": 0.7
+        }
+      ]
+    },
+    {
+      "size": 2,
+      "payout": 3.0,
+      "combined_prob": 0.4798,
+      "ev_pct": 43.9,
+      "legs": [
+        {
+          "player_id": 694208,
+          "name": "Mois\u00e9s Ballesteros",
+          "team_abbr": "CHC",
+          "opp_abbr": "PHI",
+          "opp_pitcher": "Aaron Nola",
+          "line": 6.5,
+          "side": "over",
+          "efp": 10.63,
+          "edge_z": 0.506,
+          "hit_prob": 0.694
+        },
+        {
+          "player_id": 650402,
+          "name": "Gleyber Torres",
+          "team_abbr": "DET",
+          "opp_abbr": "BOS",
+          "opp_pitcher": "Sonny Gray",
+          "line": 5.5,
+          "side": "over",
+          "efp": 8.07,
+          "edge_z": 0.501,
+          "hit_prob": 0.692
+        }
+      ]
+    },
+    {
+      "size": 3,
+      "payout": 5.0,
+      "combined_prob": 0.3728,
+      "ev_pct": 86.4,
+      "legs": [
+        {
+          "player_id": 690993,
+          "name": "Colt Keith",
+          "team_abbr": "DET",
+          "opp_abbr": "BOS",
+          "opp_pitcher": "Sonny Gray",
+          "line": 5.5,
+          "side": "over",
+          "efp": 7.79,
+          "edge_z": 0.776,
+          "hit_prob": 0.781
+        },
+        {
+          "player_id": 664023,
+          "name": "Ian Happ",
+          "team_abbr": "CHC",
+          "opp_abbr": "PHI",
+          "opp_pitcher": "Aaron Nola",
+          "line": 5.5,
+          "side": "over",
+          "efp": 9.08,
+          "edge_z": 0.523,
+          "hit_prob": 0.7
+        },
+        {
+          "player_id": 691023,
+          "name": "Jordan Walker",
+          "team_abbr": "STL",
+          "opp_abbr": "MIA",
+          "opp_pitcher": "Max Meyer",
+          "line": 5.5,
+          "side": "over",
+          "efp": 8.45,
+          "edge_z": 0.474,
+          "hit_prob": 0.682
+        }
+      ]
+    },
+    {
+      "size": 4,
+      "payout": 10.0,
+      "combined_prob": 0.2535,
+      "ev_pct": 153.5,
+      "legs": [
+        {
+          "player_id": 690993,
+          "name": "Colt Keith",
+          "team_abbr": "DET",
+          "opp_abbr": "BOS",
+          "opp_pitcher": "Sonny Gray",
+          "line": 5.5,
+          "side": "over",
+          "efp": 7.79,
+          "edge_z": 0.776,
+          "hit_prob": 0.781
+        },
+        {
+          "player_id": 664023,
+          "name": "Ian Happ",
+          "team_abbr": "CHC",
+          "opp_abbr": "PHI",
+          "opp_pitcher": "Aaron Nola",
+          "line": 5.5,
+          "side": "over",
+          "efp": 9.08,
+          "edge_z": 0.523,
+          "hit_prob": 0.7
+        },
+        {
+          "player_id": 691023,
+          "name": "Jordan Walker",
+          "team_abbr": "STL",
+          "opp_abbr": "MIA",
+          "opp_pitcher": "Max Meyer",
+          "line": 5.5,
+          "side": "over",
+          "efp": 8.45,
+          "edge_z": 0.474,
+          "hit_prob": 0.682
+        },
+        {
+          "player_id": 695506,
+          "name": "Jac Caglianone",
+          "team_abbr": "KC",
+          "opp_abbr": "BAL",
+          "opp_pitcher": "Kyle Bradish",
+          "line": 5.0,
+          "side": "over",
+          "efp": 7.5,
+          "edge_z": 0.468,
+          "hit_prob": 0.68
+        }
+      ]
+    }
+  ]
+}
