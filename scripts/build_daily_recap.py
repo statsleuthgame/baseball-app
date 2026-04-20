@@ -39,9 +39,42 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 LOG_DIR = ROOT / "backend" / "app" / "data" / "pp_line_log"
 OUT_DIR = ROOT / "frontend" / "public" / "data" / "fantasy"
+WEIGHTS_PATH = ROOT / "backend" / "app" / "data" / "fantasy_weights.json"
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
 logger = logging.getLogger("recap")
+
+
+def _load_quality_filter() -> tuple[float, int]:
+    """Return (min_line, min_games) from fantasy_weights.json — identical
+    filter to what project_slate() uses when building the best_bets list
+    on the live site. Ensures the recap grades the SAME picks the user
+    actually saw on the Tracker + Best Bets sections, not raw-math
+    HIGH-edge picks that were filtered out for role-uncertainty reasons."""
+    try:
+        with WEIGHTS_PATH.open() as f:
+            w = json.load(f)
+        return (
+            float(w.get("best_bets_min_line", 5.0)),
+            int(w.get("best_bets_min_games", 10)),
+        )
+    except Exception as e:
+        logger.warning("Couldn't load quality filter from weights: %s", e)
+        return 5.0, 10
+
+
+def _passes_quality(r: dict, min_line: float, min_games: int) -> bool:
+    """Matches fantasy.py _passes_quality exactly: PP fantasy line must
+    be ≥ min_line AND the batter must have ≥ min_games of 2026 log
+    data. Picks failing either check were filtered OUT of the Tracker
+    and Best Bets sections — so the recap must not grade them either."""
+    pp_line = ((r.get("pp_lines") or {}).get("fantasy")
+               or ((r.get("prizepicks") or {}).get("fantasy")))
+    if pp_line is None or float(pp_line) < min_line:
+        return False
+    if int(r.get("stats_games") or 0) < min_games:
+        return False
+    return True
 
 
 def _tier(z: float | None) -> str | None:
@@ -72,11 +105,21 @@ def _read_resolved(path: Path) -> list[dict]:
 
 def _summarize_day(records: list[dict], game_date: str) -> dict:
     """Bucket resolved records by confidence tier, grade each against the
-    fantasy-score line, return totals + standout picks."""
+    fantasy-score line, return totals + standout picks.
+
+    Applies the SAME quality filter (line ≥ 5.0, games ≥ 10) that the
+    live Tracker and Best Bets sections use — so the recap only grades
+    picks the user actually saw on the site. Previously, the raw log
+    contained every edge-z pick including platoon / bench players with
+    3.0-line PP offers that were filtered out of the UI; grading those
+    would claim credit for picks the user never saw.
+    """
+    min_line, min_games = _load_quality_filter()
     buckets: dict[str, dict] = defaultdict(lambda: {"n": 0, "wins": 0, "picks": []})
     overall = {"n": 0, "wins": 0}
     # For standout picks we need rows that HAVE a fantasy result graded.
     graded: list[dict] = []
+    filtered_out = 0
 
     for r in records:
         if not r.get("played"):
@@ -88,6 +131,16 @@ def _summarize_day(records: list[dict], game_date: str) -> dict:
         tier = _tier(r.get("edge_z"))
         if tier is None:
             continue  # no edge_z — not surfaced as a confidence pick
+
+        # Apply UI's quality filter: picks below min_line / min_games
+        # were hidden from the Tracker + Best Bets sections and should
+        # not be graded here. FADE picks (negative edge_z) are kept
+        # regardless because they represent UNDER-bets that pass through
+        # the same logic downstream, and the site surfaces them as LOW /
+        # FADE tier badges without the quality filter.
+        if tier in ("HIGH", "MED", "LOW") and not _passes_quality(r, min_line, min_games):
+            filtered_out += 1
+            continue
         # We score "wins" as: OVER bet won for positive-tier picks, UNDER
         # bet won for FADE picks. So the model's actual directional call hit.
         grade = fan_result.get("grade")
