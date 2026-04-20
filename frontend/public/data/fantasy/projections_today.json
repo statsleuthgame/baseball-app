@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 10,
-  "projection_count": 244,
+  "projection_count": 240,
   "projections": [
     {
       "player_id": 687221,
@@ -442,6 +442,82 @@
         "rbi_per_pa": 0.156
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 805808,
+      "name": "Kevin McGonigle",
+      "position": "SS",
+      "team_id": 116,
+      "team_abbr": "DET",
+      "opp_abbr": "BOS",
+      "opp_team_id": 111,
+      "opp_pitcher": {
+        "id": 543243,
+        "fullName": "Sonny Gray"
+      },
+      "park": {
+        "id": 3,
+        "name": "Fenway Park",
+        "runs": 108,
+        "hr": 99,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "49",
+        "wind": "6 mph, Out To RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.7,
+      "mean_efp": 8.47,
+      "stats_games": 15,
+      "efp": 9.55,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.34,
+        "doubles": 1.4,
+        "triples": 0.71,
+        "home_runs": 0.97,
+        "bb_hbp": 0.87,
+        "r": 2.96,
+        "rbi": 1.44,
+        "sb": 0.21
+      },
+      "multipliers": {
+        "park_hr": 0.99,
+        "park_runs": 1.08,
+        "weather_hr": 1.035,
+        "pitcher_hits": 1.074,
+        "pitcher_hr": 1.058,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.874,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.014,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1818,
+        "doubles": 0.065,
+        "triples": 0.0206,
+        "home_runs": 0.0226,
+        "bb_hbp": 0.1013,
+        "r_per_pa": 0.3443,
+        "rbi_per_pa": 0.167
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1093,82 +1169,6 @@
       "tier": "low"
     },
     {
-      "player_id": 805808,
-      "name": "Kevin McGonigle",
-      "position": "SS",
-      "team_id": 116,
-      "team_abbr": "DET",
-      "opp_abbr": "BOS",
-      "opp_team_id": 111,
-      "opp_pitcher": {
-        "id": 543243,
-        "fullName": "Sonny Gray"
-      },
-      "park": {
-        "id": 3,
-        "name": "Fenway Park",
-        "runs": 108,
-        "hr": 99,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Sunny",
-        "temp": "48",
-        "wind": "9 mph, Out To RF"
-      },
-      "pa_source": "default",
-      "stdev_efp": 5.7,
-      "mean_efp": 8.47,
-      "stats_games": 15,
-      "efp": 8.84,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.18,
-        "doubles": 1.3,
-        "triples": 0.66,
-        "home_runs": 0.9,
-        "bb_hbp": 0.81,
-        "r": 2.72,
-        "rbi": 1.34,
-        "sb": 0.19
-      },
-      "multipliers": {
-        "park_hr": 0.99,
-        "park_runs": 1.08,
-        "weather_hr": 1.035,
-        "pitcher_hits": 1.074,
-        "pitcher_hr": 1.058,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.874,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1818,
-        "doubles": 0.065,
-        "triples": 0.0206,
-        "home_runs": 0.0226,
-        "bb_hbp": 0.1013,
-        "r_per_pa": 0.3394,
-        "rbi_per_pa": 0.167
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 575929,
       "name": "Willson Contreras",
       "position": "1B",
@@ -1189,8 +1189,8 @@
       },
       "weather": {
         "condition": "Sunny",
-        "temp": "48",
-        "wind": "9 mph, Out To RF"
+        "temp": "49",
+        "wind": "6 mph, Out To RF"
       },
       "pa_source": "lineup",
       "stdev_efp": 8.68,
@@ -2106,51 +2106,47 @@
       "tier": "low"
     },
     {
-      "player_id": 693307,
-      "name": "Dillon Dingler",
-      "position": "C",
-      "team_id": 116,
-      "team_abbr": "DET",
-      "opp_abbr": "BOS",
-      "opp_team_id": 111,
+      "player_id": 691023,
+      "name": "Jordan Walker",
+      "position": "RF",
+      "team_id": 138,
+      "team_abbr": "STL",
+      "opp_abbr": "MIA",
+      "opp_team_id": 146,
       "opp_pitcher": {
-        "id": 543243,
-        "fullName": "Sonny Gray"
+        "id": 676974,
+        "fullName": "Max Meyer"
       },
       "park": {
-        "id": 3,
-        "name": "Fenway Park",
-        "runs": 108,
-        "hr": 99,
-        "label": "Hitter Friendly"
+        "id": 4169,
+        "name": "LoanDepot Park",
+        "runs": 95,
+        "hr": 91,
+        "label": "Pitcher Friendly"
       },
-      "weather": {
-        "condition": "Sunny",
-        "temp": "48",
-        "wind": "9 mph, Out To RF"
-      },
+      "weather": null,
       "pa_source": "default",
-      "stdev_efp": 7.03,
-      "mean_efp": 7.38,
-      "stats_games": 13,
-      "efp": 8.62,
+      "stdev_efp": 6.23,
+      "mean_efp": 10.43,
+      "stats_games": 14,
+      "efp": 8.6,
       "bat_side": "R",
       "per_event": {
-        "singles": 1.87,
-        "doubles": 1.29,
-        "triples": 0.06,
-        "home_runs": 2.06,
-        "bb_hbp": 0.56,
-        "r": 2.47,
-        "rbi": 1.54,
-        "sb": 0.0
+        "singles": 1.57,
+        "doubles": 0.77,
+        "triples": 0.04,
+        "home_runs": 1.97,
+        "bb_hbp": 0.75,
+        "r": 2.4,
+        "rbi": 1.45,
+        "sb": 0.86
       },
       "multipliers": {
-        "park_hr": 0.99,
-        "park_runs": 1.08,
-        "weather_hr": 0.927,
-        "pitcher_hits": 1.074,
-        "pitcher_hr": 1.058,
+        "park_hr": 0.91,
+        "park_runs": 0.95,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.92,
+        "pitcher_hr": 0.918,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -2158,9 +2154,9 @@
         "stx_xwoba": 1.0,
         "stx_barrel": 1.0,
         "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.874,
+        "pitcher_gb_hr": 0.994,
         "k_damper": 1.0,
-        "pitcher_bb": 0.75,
+        "pitcher_bb": 1.079,
         "park_hand_hr": 1.0,
         "sb_speed": 1.0,
         "speed_singles": 1.0,
@@ -2170,18 +2166,18 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1557,
-        "doubles": 0.0644,
-        "triples": 0.002,
-        "home_runs": 0.0516,
-        "bb_hbp": 0.0695,
-        "r_per_pa": 0.3082,
-        "rbi_per_pa": 0.1923
+        "singles": 0.1305,
+        "doubles": 0.0387,
+        "triples": 0.0014,
+        "home_runs": 0.0492,
+        "bb_hbp": 0.0943,
+        "r_per_pa": 0.3003,
+        "rbi_per_pa": 0.181
       },
       "pa": 4.0,
       "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-04-20T12:10:34.517169+00:00"
+  "generated_at": "2026-04-20T13:49:35.706062+00:00"
 }
