@@ -7352,20 +7352,26 @@ th.sb-ls-total {
   background: rgba(17, 24, 39, 0.5);
   border-radius: 8px;
 }
-.parlay-leg-name {
+.parlay-leg-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+.parlay-leg-name-row {
   display: flex;
   align-items: center;
   gap: 8px;
-  flex: 1;
-  min-width: 0;
-  font-size: 13px;
-  color: var(--text, #e5e7eb);
 }
-.parlay-leg-name > span:nth-child(2) {
+.parlay-leg-name {
+  font-size: 13px;
   font-weight: 600;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  color: var(--text, #e5e7eb);
+  /* Allow the name to wrap rather than ellipsize — readability wins
+     over a tidy single-line card on narrow phones where full names
+     like "Moisés Ballesteros" would otherwise get cut off. */
+  word-break: break-word;
 }
 .parlay-leg-side {
   padding: 2px 6px;
@@ -7375,6 +7381,7 @@ th.sb-ls-total {
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.5px;
+  flex-shrink: 0;
 }
 .parlay-leg-team {
   font-size: 11px;

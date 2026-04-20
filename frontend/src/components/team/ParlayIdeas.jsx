@@ -113,9 +113,11 @@ function ParlayCard({ parlay, index }) {
       <ul className="parlay-legs">
         {legs.map((leg) => (
           <li key={leg.player_id} className="parlay-leg">
-            <div className="parlay-leg-name">
-              <span className="parlay-leg-side">OVER</span>
-              <span>{leg.name}</span>
+            <div className="parlay-leg-main">
+              <div className="parlay-leg-name-row">
+                <span className="parlay-leg-side">OVER</span>
+                <span className="parlay-leg-name">{leg.name}</span>
+              </div>
               <span className="parlay-leg-team">
                 {leg.team_abbr} vs {leg.opp_abbr}
               </span>
