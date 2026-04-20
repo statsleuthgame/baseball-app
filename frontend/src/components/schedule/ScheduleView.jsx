@@ -81,9 +81,16 @@ export default function ScheduleView() {
           const isFinal = game.status === "Final";
           const won = isFinal && us.isWinner;
           const lost = isFinal && !us.isWinner;
+          // Non-Final states that mean "no game today" — we show a status
+          // badge instead of a time so users don't think the game is still
+          // upcoming. "Postponed" is the common one; MLB also emits these.
+          const offStates = ["Postponed", "Cancelled", "Suspended", "Delayed", "Delayed Start"];
+          const offState = !isFinal && offStates.includes(game.detailedState)
+            ? game.detailedState
+            : null;
 
           return (
-            <div key={game.gamePk} className={`schedule-row ${won ? "win" : lost ? "loss" : ""}`} onClick={() => navigate(`/team/${teamId}/${isFinal ? "live" : "matchup"}/${game.gamePk}`)} style={{ cursor: "pointer" }}>
+            <div key={game.gamePk} className={`schedule-row ${won ? "win" : lost ? "loss" : ""} ${offState ? "off" : ""}`} onClick={() => navigate(`/team/${teamId}/${isFinal ? "live" : "matchup"}/${game.gamePk}`)} style={{ cursor: "pointer" }}>
               <div className="schedule-date">{formatGameDate(game.gameDate)}</div>
               <div className="schedule-opponent">
                 <img src={opponent.logoUrl} alt={opponent.abbreviation} className="schedule-logo" />
@@ -94,6 +101,8 @@ export default function ScheduleView() {
                   <span className={`schedule-score ${won ? "win-text" : "loss-text"}`}>
                     {won ? "W" : "L"} {us.score}-{opponent.score}
                   </span>
+                ) : offState ? (
+                  <span className="schedule-status">{offState.toUpperCase()}</span>
                 ) : (
                   <span className="schedule-time">{formatGameTime(game.gameDate)}</span>
                 )}

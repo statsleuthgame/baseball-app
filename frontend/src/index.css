@@ -2284,6 +2284,13 @@ button.stat-cell {
 .win-text { color: var(--win); }
 .loss-text { color: var(--loss); }
 .schedule-time { color: var(--text-muted); font-size: 13px; }
+.schedule-status {
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.schedule-row.off { opacity: 0.65; }
 
 /* Matchup */
 .matchup-empty {

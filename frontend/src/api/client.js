@@ -87,54 +87,88 @@ export const fetchSchedule = async (teamId) => {
         hydrate: "team,linescore,venue,probablePitcher",
       },
     });
-    const games = [];
+    // MLB returns postponed games TWICE — once on the original date with
+    // detailedState="Postponed" and a rescheduleDate, and again on the
+    // replay date with detailedState="Final" and rescheduledFrom set.
+    // Dedupe by gamePk, keeping the row that best represents truth:
+    //   Final > In Progress > Postponed/Cancelled/Suspended > Scheduled
+    // That way, replayed games collapse onto their actual played date, and
+    // still-postponed games (no replay yet) keep their Postponed row with
+    // the rescheduleDate the UI can surface.
+    const STATUS_PRIORITY = {
+      "Final": 0,
+      "Game Over": 0,
+      "In Progress": 1,
+      "Suspended": 2,
+      "Postponed": 3,
+      "Cancelled": 3,
+      "Delayed": 4,
+      "Delayed Start": 4,
+      "Warmup": 5,
+      "Pre-Game": 5,
+      "Scheduled": 6,
+    };
+    const byPk = new Map();
     for (const date of resp.data?.dates || []) {
       for (const g of date.games || []) {
-        const away = g.teams?.away || {};
-        const home = g.teams?.home || {};
-        const at = away.team || {};
-        const ht = home.team || {};
-        const status = normalizeStatus(g.status?.detailedState);
-        const isFinal = status === "Final";
-        const awayScore = away.score ?? null;
-        const homeScore = home.score ?? null;
-        games.push({
-          gamePk: g.gamePk,
-          gameDate: g.gameDate,
-          status,
-          venue: {
-            id: g.venue?.id,
-            name: g.venue?.name || "",
-          },
-          away: {
-            id: at.id,
-            name: at.name || "",
-            abbreviation: at.abbreviation || "",
-            score: awayScore,
-            isWinner: isFinal && awayScore != null && homeScore != null
-              ? awayScore > homeScore
-              : false,
-            probablePitcher: away.probablePitcher
-              ? { id: away.probablePitcher.id, fullName: away.probablePitcher.fullName }
-              : null,
-            logoUrl: at.id ? `https://www.mlbstatic.com/team-logos/team-cap-on-dark/${at.id}.svg` : "",
-          },
-          home: {
-            id: ht.id,
-            name: ht.name || "",
-            abbreviation: ht.abbreviation || "",
-            score: homeScore,
-            isWinner: isFinal && awayScore != null && homeScore != null
-              ? homeScore > awayScore
-              : false,
-            probablePitcher: home.probablePitcher
-              ? { id: home.probablePitcher.id, fullName: home.probablePitcher.fullName }
-              : null,
-            logoUrl: ht.id ? `https://www.mlbstatic.com/team-logos/team-cap-on-dark/${ht.id}.svg` : "",
-          },
-        });
+        const prev = byPk.get(g.gamePk);
+        const prevPrio = prev ? (STATUS_PRIORITY[prev.status?.detailedState] ?? 99) : 99;
+        const thisPrio = STATUS_PRIORITY[g.status?.detailedState] ?? 99;
+        if (!prev || thisPrio < prevPrio) byPk.set(g.gamePk, g);
       }
     }
+    const games = [];
+    for (const g of byPk.values()) {
+      const away = g.teams?.away || {};
+      const home = g.teams?.home || {};
+      const at = away.team || {};
+      const ht = home.team || {};
+      const detailedState = g.status?.detailedState || "";
+      const status = normalizeStatus(detailedState);
+      const isFinal = status === "Final";
+      const awayScore = away.score ?? null;
+      const homeScore = home.score ?? null;
+      games.push({
+        gamePk: g.gamePk,
+        gameDate: g.gameDate,
+        status,
+        detailedState,                            // raw MLB state for UI badges
+        rescheduleDate: g.rescheduleDate || null, // set when still postponed
+        rescheduledFrom: g.rescheduledFrom || null, // set on the replay row
+        venue: {
+          id: g.venue?.id,
+          name: g.venue?.name || "",
+        },
+        away: {
+          id: at.id,
+          name: at.name || "",
+          abbreviation: at.abbreviation || "",
+          score: awayScore,
+          isWinner: isFinal && awayScore != null && homeScore != null
+            ? awayScore > homeScore
+            : false,
+          probablePitcher: away.probablePitcher
+            ? { id: away.probablePitcher.id, fullName: away.probablePitcher.fullName }
+            : null,
+          logoUrl: at.id ? `https://www.mlbstatic.com/team-logos/team-cap-on-dark/${at.id}.svg` : "",
+        },
+        home: {
+          id: ht.id,
+          name: ht.name || "",
+          abbreviation: ht.abbreviation || "",
+          score: homeScore,
+          isWinner: isFinal && awayScore != null && homeScore != null
+            ? homeScore > awayScore
+            : false,
+          probablePitcher: home.probablePitcher
+            ? { id: home.probablePitcher.id, fullName: home.probablePitcher.fullName }
+            : null,
+          logoUrl: ht.id ? `https://www.mlbstatic.com/team-logos/team-cap-on-dark/${ht.id}.svg` : "",
+        },
+      });
+    }
+    // Re-sort by gameDate since dedupe may have picked later-dated rows.
+    games.sort((a, b) => new Date(a.gameDate) - new Date(b.gameDate));
     return games;
   } catch {
     // Fallback to static JSON if API call fails (offline, rate-limited, etc.)
