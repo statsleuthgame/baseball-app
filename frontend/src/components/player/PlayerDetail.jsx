@@ -72,14 +72,19 @@ export default function PlayerDetail() {
         <div className="player-header-info">
           <h2 className="player-name">{player.fullName || "Unknown"}</h2>
           {playerTeam && (
-            <div className="player-team-row">
+            <button
+              type="button"
+              className="player-team-row player-team-row-link"
+              onClick={() => navigate(`/team/${playerTeamId}`)}
+              aria-label={`Go to ${playerTeam.name} team page`}
+            >
               <img
                 src={`https://www.mlbstatic.com/team-logos/team-cap-on-dark/${playerTeamId}.svg`}
                 alt={playerTeam.abbreviation}
                 className="player-team-logo"
               />
               <span className="player-team-name">{playerTeam.name}</span>
-            </div>
+            </button>
           )}
           <p className="player-meta">
             #{player.primaryNumber || "—"} · {player.primaryPosition || "—"} ·{" "}

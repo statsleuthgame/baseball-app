@@ -1719,6 +1719,47 @@ body {
   margin: 2px 0 4px;
 }
 
+/* Button variants for team rows — override default button chrome so they
+   look identical to the non-link div versions. */
+.player-team-row-link,
+.matchup-team-link,
+.today-game-side-link,
+.series-opp-link,
+.scoreboard-team-link {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  text-align: inherit;
+}
+.scoreboard-team-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.player-team-row-link {
+  margin: 2px 0 4px;
+}
+.player-team-row-link:hover,
+.matchup-team-link:hover,
+.today-game-side-link:hover,
+.series-opp-link:hover,
+.scoreboard-team-link:hover {
+  opacity: 0.8;
+}
+.player-team-row-link:focus-visible,
+.matchup-team-link:focus-visible,
+.today-game-side-link:focus-visible,
+.series-opp-link:focus-visible,
+.scoreboard-team-link:focus-visible {
+  outline: 2px solid var(--accent, #4a90ff);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
 .player-team-logo {
   width: 18px;
   height: 18px;
