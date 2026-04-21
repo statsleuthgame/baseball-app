@@ -16,6 +16,7 @@ import PlayerPhoto from "../common/PlayerPhoto";
 import SkeletonLoader from "../common/SkeletonLoader";
 import FantasyProjections from "./FantasyProjections";
 import ParlayIdeas from "./ParlayIdeas";
+import BestParlays from "./BestParlays";
 import {
   computeEdgeScore,
   computeFadeScore,
@@ -306,6 +307,13 @@ export default function BettingEdge() {
         </p>
       </header>
 
+      {/* Primary: the curated 6-parlay slate combining fantasy edge +
+          Edge-repo Model 1 picks. Always open — this is the "5-6 picks
+          a day" takeaway the user wanted front-and-center. */}
+      <BestParlays />
+
+      {/* Secondary: the legacy 4-parlay EV-optimized collapse. Kept as
+          a simpler sanity-check view — single-source (fantasy only). */}
       <ParlayIdeas />
 
       <div className="edge-controls">

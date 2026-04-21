@@ -31,7 +31,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "backend"))
 
-from app.services import fantasy, mlb_api, parlays as parlay_service, prizepicks  # noqa: E402
+from app.services import (  # noqa: E402
+    fantasy, mlb_api, parlays as parlay_service, prizepicks,
+    edge_model_picks,
+)
 
 
 OUT_DIR = ROOT / "frontend" / "public" / "data" / "fantasy"
@@ -255,6 +258,72 @@ def _write_parlays(game_date: str, picks: list[dict], payload: dict) -> None:
     }
     parlay_path.write_text(json.dumps(out, indent=2) + "\n")
     logger.info("parlays: wrote %d parlay ideas → %s", len(ideas), parlay_path.name)
+
+    # Best-parlays slate: merges fantasy-edge picks with Edge-repo
+    # Model 1 picks (if the daily_picks.json file is present). Produces
+    # the 6-card curated view the new BestParlays UI renders.
+    _write_best_parlays(game_date, picks, payload)
+
+
+def _write_best_parlays(game_date: str, fantasy_picks: list[dict],
+                        payload: dict) -> None:
+    """Combine fantasy picks + Edge-repo Model 1 picks into the curated
+    5-6 parlay slate (mix of 2/3/4-man). Writes
+    frontend/public/data/fantasy/todays_best_parlays.json.
+
+    Silent on any failure — the classic 4-parlay file above is still
+    written, so the Edge page always has something to show.
+    """
+    try:
+        # 1) Fantasy legs — tag source so the UI can badge them.
+        fantasy_legs = edge_model_picks.tag_fantasy_legs(fantasy_picks)
+
+        # 2) Model legs — build the player-id→context map from the fantasy
+        #    picks themselves (they already carry team_abbr / opp_abbr /
+        #    opp_pitcher / game_key from the projections pipeline).
+        player_ctx: dict[int, dict] = {}
+        for p in fantasy_picks:
+            pid = p.get("player_id")
+            if pid is None:
+                continue
+            a = (p.get("team_abbr") or "").upper()
+            b = (p.get("opp_abbr") or "").upper()
+            game_key = "-".join(sorted([a, b])) if a and b else None
+            player_ctx[int(pid)] = {
+                "team_abbr":   a,
+                "opp_abbr":    b,
+                "opp_pitcher": (p.get("opp_pitcher") or {}).get("fullName")
+                                 if isinstance(p.get("opp_pitcher"), dict)
+                                 else p.get("opp_pitcher"),
+                "game_key":    game_key,
+            }
+        model_legs = edge_model_picks.load_model_legs(
+            target_date=game_date, player_context=player_ctx,
+        )
+        logger.info("best_parlays: %d fantasy legs + %d model legs",
+                    len(fantasy_legs), len(model_legs))
+
+        # 3) Build 6 parlays (2×2-man, 2×3-man, 2×4-man).
+        combined = fantasy_legs + model_legs
+        best = parlay_service.build_best_parlays(combined)
+    except Exception as e:
+        logger.warning("best_parlays: build failed (%s) — skipping", e)
+        return
+
+    out_path = OUT_DIR / "todays_best_parlays.json"
+    out = {
+        "game_date": game_date,
+        "generated_at": payload.get("generated_at") or datetime.now(timezone.utc).isoformat(),
+        "weights_version": payload.get("weights_version"),
+        "leg_counts": {
+            "fantasy_edge": sum(1 for l in fantasy_legs),
+            "model":        sum(1 for l in model_legs),
+        },
+        "parlays": best,
+    }
+    out_path.write_text(json.dumps(out, indent=2) + "\n")
+    logger.info("best_parlays: wrote %d curated parlays → %s",
+                len(best), out_path.name)
 
 
 async def generate(date_iso: str | None) -> None:

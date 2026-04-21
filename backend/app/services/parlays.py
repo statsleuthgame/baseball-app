@@ -203,3 +203,202 @@ def build_parlays(picks: list[dict]) -> list[dict]:
         parlays.append(p4)
 
     return parlays
+
+
+# ---------------------------------------------------------------------------
+# NEW — combined "Best Parlays" builder
+#
+# The existing build_parlays() is single-source (fantasy-score edge_z only).
+# build_best_parlays() accepts legs from any source — fantasy edge, Edge-repo
+# Model 1 (Hits / TB / HR), reboot overlay — as long as each leg already
+# carries a normalized hit_prob.
+#
+# Each leg must include:
+#   player_id, name, team_abbr, opp_abbr, market, line, side, hit_prob,
+#   source ("fantasy_edge" | "model_hits" | "model_tb" | "model_hr" | "reboot")
+# Optional: projection fields (efp/proj), notes, payout overrides for demons.
+#
+# Guards (stricter than build_parlays):
+#   - No two legs share a game (same correlation concern as before).
+#   - No two legs share a PLAYER — a player's hits Over and fantasy Over
+#     are deeply correlated; treating them as independent would cook the
+#     book.
+#   - At most one "home_runs" market leg per parlay — they're binary lottery
+#     picks with low individual hit rate, stacking them blows the combined
+#     prob to nothing.
+# ---------------------------------------------------------------------------
+
+# Default shape of the 6-card output: two 2-mans (diversified), two 3-mans,
+# two 4-mans. Caller can override via size_plan.
+DEFAULT_SIZE_PLAN: tuple[int, ...] = (2, 2, 3, 3, 4, 4)
+
+
+def _ensure_hit_prob(pick: dict) -> dict:
+    """Legs from the Edge-repo model already ship with `p_win`; fantasy
+    legs ship with `edge_z` and we derive `hit_prob` from Φ(z). Normalize
+    both flavors into a uniform `hit_prob`, `game_key`, `source` shape."""
+    if pick.get("hit_prob") is not None:
+        return {**pick, "game_key": pick.get("game_key") or _game_key(pick)}
+    # Prefer p_win (Edge Model 1 output)
+    if pick.get("p_win") is not None:
+        return {
+            **pick,
+            "hit_prob": float(pick["p_win"]),
+            "game_key": pick.get("game_key") or _game_key(pick),
+        }
+    # Fall back to fantasy edge_z → Φ(z)
+    return _enriched(pick)
+
+
+def _legs_same_player(combo: Iterable[dict]) -> bool:
+    seen: set[Any] = set()
+    for p in combo:
+        pid = p.get("player_id")
+        if pid in seen:
+            return True
+        seen.add(pid)
+    return False
+
+
+def _legs_too_many_hrs(combo: Iterable[dict], max_hr: int = 1) -> bool:
+    hr = sum(1 for p in combo if (p.get("market") or "").lower() == "home_runs")
+    return hr > max_hr
+
+
+def _valid_combo(combo: Iterable[dict]) -> bool:
+    c = list(combo)
+    return (
+        _legs_disjoint_by_game(c)
+        and not _legs_same_player(c)
+        and not _legs_too_many_hrs(c)
+    )
+
+
+def _format_leg_rich(p: dict) -> dict:
+    """Like _format_leg but preserves source / market / side so the UI
+    can tag each leg. Supports both fantasy-style (efp, edge_z) and
+    model-style (p_win, edge, reboot_rate) payloads."""
+    pp = p.get("prizepicks") or {}
+    leg = {
+        "player_id":  p.get("player_id") or p.get("mlbam_id"),
+        "name":       p.get("name") or p.get("player"),
+        "team_abbr":  p.get("team_abbr") or p.get("team"),
+        "opp_abbr":   p.get("opp_abbr"),
+        "opp_pitcher": (p.get("opp_pitcher") or {}).get("fullName")
+                         if isinstance(p.get("opp_pitcher"), dict)
+                         else p.get("opp_pitcher"),
+        "market":     p.get("market") or "fantasy_score",
+        "line":       p.get("line") if p.get("line") is not None else pp.get("fantasy"),
+        "side":       (p.get("side") or "over").lower(),
+        "hit_prob":   round(float(p["hit_prob"]), 3),
+        "source":     p.get("source") or "fantasy_edge",
+    }
+    # Source-specific extras
+    if p.get("efp") is not None:
+        leg["efp"] = round(float(p["efp"]), 2)
+    if p.get("edge_z") is not None:
+        leg["edge_z"] = round(float(p["edge_z"]), 3)
+    if p.get("edge") is not None:
+        leg["edge"] = round(float(p["edge"]), 3)
+    if p.get("reboot_rate") is not None:
+        leg["reboot_rate"] = round(float(p["reboot_rate"]), 3)
+    return leg
+
+
+def _best_combo_rich(
+    candidates: list[dict],
+    size: int,
+    exclude_ids: set[Any] | None = None,
+    payout_override: float | None = None,
+) -> dict | None:
+    """size-N combo that maximizes EV, using the rich-leg formatter +
+    full guard set (no same game, no same player, ≤1 HR market leg)."""
+    exclude = exclude_ids or set()
+    payout = payout_override or _POWER_PAYOUT.get(size)
+    if not payout:
+        return None
+
+    pool = [p for p in candidates if (p.get("player_id") or p.get("mlbam_id")) not in exclude]
+    if len(pool) < size:
+        return None
+
+    best: tuple[float, tuple[dict, ...]] | None = None
+    for combo in itertools.combinations(pool, size):
+        if not _valid_combo(combo):
+            continue
+        prob = 1.0
+        for p in combo:
+            prob *= p["hit_prob"]
+        ev = prob * payout - 1.0
+        if best is None or ev > best[0]:
+            best = (ev, combo)
+    if best is None:
+        return None
+    ev, combo = best
+    prob = 1.0
+    for p in combo:
+        prob *= p["hit_prob"]
+    return {
+        "size":          size,
+        "payout":        payout,
+        "combined_prob": round(prob, 4),
+        "ev_pct":        round(ev * 100, 1),
+        "legs":          [_format_leg_rich(p) for p in combo],
+    }
+
+
+def build_best_parlays(
+    picks: list[dict],
+    *,
+    size_plan: tuple[int, ...] = DEFAULT_SIZE_PLAN,
+    max_candidates: int = 30,
+) -> list[dict]:
+    """Curated daily parlay slate.
+
+    `picks` is any mix of legs — fantasy-edge picks (with edge_z), Edge
+    Model 1 picks (with p_win + reboot_rate), or hand-tagged Overs. Each
+    must identify its player + opponent and hit_prob can be derived from
+    either `p_win` or `edge_z`. Internally we normalize to `hit_prob`
+    and run an EV search per desired size in `size_plan`.
+
+    Diversity policy:
+      - For REPEATED sizes in the plan (e.g. two 2-mans), each extra one
+        must exclude at least one player from the previous same-size
+        parlay. This guarantees visually distinct ideas — not near-
+        duplicates with a single substitution.
+
+    Returns a list of up to len(size_plan) parlays, in plan order.
+    """
+    if not picks:
+        return []
+
+    # 1) Normalize hit_prob, drop unusable, cap the candidate pool for
+    #    perf (top-N by hit_prob keeps combinations() tractable for 4-man).
+    enriched = [_ensure_hit_prob(p) for p in picks]
+    enriched = [p for p in enriched if p.get("hit_prob") is not None]
+    enriched.sort(key=lambda p: -p["hit_prob"])
+    enriched = enriched[:max_candidates]
+    if len(enriched) < 2:
+        return []
+
+    parlays: list[dict] = []
+    # Track previous-size parlays for the diversity guard.
+    prev_by_size: dict[int, list[dict]] = {}
+    for size in size_plan:
+        exclude_ids: set[Any] = set()
+        prev = prev_by_size.get(size) or []
+        if prev:
+            # Exclude every leg from the most recent same-size parlay so
+            # the next one is forced to substitute at least one.
+            exclude_ids = {leg["player_id"] for leg in prev[-1]["legs"]}
+        parlay = _best_combo_rich(enriched, size, exclude_ids=exclude_ids)
+        # If no valid combo exists after exclusion, relax to the full
+        # pool so we always fill the slot.
+        if parlay is None:
+            parlay = _best_combo_rich(enriched, size)
+        if parlay is None:
+            continue
+        parlays.append(parlay)
+        prev_by_size.setdefault(size, []).append(parlay)
+
+    return parlays

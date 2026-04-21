@@ -980,6 +980,17 @@ export const fetchTodaysParlays = async () => {
   }
 };
 
+// New — curated 5-6 parlay slate combining fantasy-edge picks with the
+// Edge repo's Model 1 Hits/TB/HR picks. Written by the same morning
+// lock as todays_parlays.json (see generate_fantasy_projections.py).
+export const fetchTodaysBestParlays = async () => {
+  try {
+    return await staticFetch("fantasy/todays_best_parlays.json");
+  } catch {
+    return null;
+  }
+};
+
 // Yesterday's graded recap: how many HIGH/MED/LOW/FADE picks, how many
 // hit the PP line, standout hits + misses. Written by the nightly
 // resolve-pp-lines workflow. Returns null when no recap exists yet

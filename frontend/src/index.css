@@ -8651,3 +8651,193 @@ th.sb-ls-total {
     min-width: 28px;
   }
 }
+
+/* ---------------------------------------------------------------------
+   Best Parlays — primary card on the Edge page.
+   Always-open 6-card grid, source-badged legs.
+   --------------------------------------------------------------------- */
+.best-parlays {
+  margin: 16px 0 20px;
+  padding: 16px 18px;
+  background: linear-gradient(180deg, rgba(98,160,255,0.05), rgba(98,160,255,0.00));
+  border: 1px solid rgba(98,160,255,0.25);
+  border-radius: 12px;
+}
+.best-parlays-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+.best-parlays-title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #e8ecf4;
+}
+.best-parlays-meta {
+  font-size: 11px;
+  color: #8b94a8;
+  font-variant-numeric: tabular-nums;
+}
+.best-parlays-sub {
+  margin: 4px 0 14px;
+  font-size: 12px;
+  color: #8b94a8;
+  line-height: 1.45;
+}
+.best-parlays-footnote {
+  margin: 12px 0 0;
+  font-size: 11px;
+  color: #5a6274;
+  line-height: 1.5;
+}
+.best-parlays-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 10px;
+}
+
+.best-parlay-card {
+  background: rgba(18, 23, 34, 0.75);
+  border: 1px solid #232a39;
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.best-parlay-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.best-parlay-size-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(98,160,255,0.15);
+  color: #8fbfff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.best-parlay-metrics { display: flex; gap: 10px; }
+.best-parlay-metric {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+  font-variant-numeric: tabular-nums;
+}
+.best-parlay-metric-label {
+  font-size: 9px;
+  color: #5a6274;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.best-parlay-metric-value {
+  font-size: 13px;
+  font-weight: 700;
+  color: #e8ecf4;
+}
+.best-parlay-metric.ev.pos .best-parlay-metric-value { color: #4ad295; }
+.best-parlay-metric.ev.neg .best-parlay-metric-value { color: #ff6d6d; }
+
+.best-parlay-legs {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.best-parlay-leg {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px 12px;
+  align-items: center;
+  padding: 7px 10px;
+  background: rgba(26, 32, 48, 0.6);
+  border-radius: 8px;
+  min-width: 0;
+}
+.best-parlay-leg-main { min-width: 0; }
+.best-parlay-leg-top {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.best-parlay-leg-side {
+  font-size: 9px;
+  font-weight: 700;
+  color: #4ad295;
+  letter-spacing: 0.06em;
+}
+.best-parlay-leg-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #e8ecf4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.best-parlay-leg-meta {
+  margin-top: 2px;
+  font-size: 10px;
+  color: #5a6274;
+  font-variant-numeric: tabular-nums;
+}
+.best-parlay-leg-line {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+  font-variant-numeric: tabular-nums;
+}
+.best-parlay-leg-market {
+  font-size: 9px;
+  color: #5a6274;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.best-parlay-leg-number {
+  font-size: 13px;
+  font-weight: 700;
+  color: #8fbfff;
+}
+.best-parlay-leg-prob {
+  font-size: 10px;
+  color: #8b94a8;
+}
+
+/* Source badges — small, color-coded, instantly scannable. */
+.best-parlay-src {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 4px;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+.best-parlay-src.src-fantasy  { background: rgba(98,160,255,0.18);  color: #8fbfff; }
+.best-parlay-src.src-hits     { background: rgba(74,210,149,0.18);  color: #4ad295; }
+.best-parlay-src.src-tb       { background: rgba(255,159,67,0.18);  color: #ff9f43; }
+.best-parlay-src.src-hr       { background: rgba(255,109,109,0.18); color: #ff6d6d; }
+.best-parlay-src.src-reboot   { background: rgba(198,140,255,0.2);  color: #c68cff; }
+.best-parlay-src.src-generic  { background: rgba(139,148,168,0.2);  color: #8b94a8; }
+
+.parlay-empty {
+  font-size: 13px;
+  color: #8b94a8;
+  margin: 8px 0 0;
+}
+
