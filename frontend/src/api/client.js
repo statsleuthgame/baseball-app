@@ -1017,6 +1017,72 @@ export const fetchRefreshStatus = async () => {
   }
 };
 
+// -----------------------------------------------------------------------
+// Remote refresh via GitHub Actions workflow_dispatch.
+//
+// Works from anywhere the user can reach api.github.com — phone, another
+// laptop, the deployed GitHub Pages site. Requires a fine-scoped GitHub
+// PAT stored in localStorage (user enters it once). See RefreshButton.
+//
+// Why we can get away with a client-side PAT:
+//   - Repo is public but "Actions: write" scope is the only thing
+//     the token needs. No read access to secrets, no code write.
+//   - Stored in localStorage, not sent to any third party. It goes
+//     directly to api.github.com from the browser.
+//   - If the user loses the device, they can revoke the token in 5s
+//     at github.com/settings/tokens.
+// -----------------------------------------------------------------------
+
+// Hardcoded repo + workflow identity — matches the existing
+// refresh-fantasy.yml workflow that already runs on cron.
+const GH_REPO_OWNER = "statsleuthgame";
+const GH_REPO_NAME  = "baseball-app";
+const GH_WORKFLOW   = "refresh-fantasy.yml";
+const GH_BRANCH     = "main";
+
+const GH_TOKEN_KEY  = "edge_gh_pat_v1";
+
+export const getStoredGhToken = () => {
+  try { return localStorage.getItem(GH_TOKEN_KEY) || null; } catch { return null; }
+};
+export const setStoredGhToken = (token) => {
+  try {
+    if (token) localStorage.setItem(GH_TOKEN_KEY, token);
+    else       localStorage.removeItem(GH_TOKEN_KEY);
+  } catch {
+    /* private-mode Safari etc — fall through */
+  }
+};
+
+/** Fire-and-forget workflow_dispatch. Returns { ok, workflowRunUrl }. */
+export const triggerRemoteRefresh = async () => {
+  const token = getStoredGhToken();
+  if (!token) throw new Error("NO_TOKEN");
+  const url = `https://api.github.com/repos/${GH_REPO_OWNER}/${GH_REPO_NAME}`
+            + `/actions/workflows/${GH_WORKFLOW}/dispatches`;
+  const resp = await axios.post(url, { ref: GH_BRANCH }, {
+    headers: {
+      Accept: "application/vnd.github+json",
+      Authorization: `Bearer ${token}`,
+      "X-GitHub-Api-Version": "2022-11-28",
+    },
+    timeout: 20_000,
+  });
+  // 204 = accepted (no body). Anything else is unexpected.
+  if (resp.status !== 204) {
+    throw new Error(`Unexpected GitHub API status ${resp.status}`);
+  }
+  return {
+    ok: true,
+    workflowRunUrl: `https://github.com/${GH_REPO_OWNER}/${GH_REPO_NAME}/actions/workflows/${GH_WORKFLOW}`,
+  };
+};
+
+/** URL the user can open in a new tab to trigger the workflow manually
+    (the zero-setup path — no PAT needed, just a GitHub login). */
+export const remoteRefreshFallbackUrl = () =>
+  `https://github.com/${GH_REPO_OWNER}/${GH_REPO_NAME}/actions/workflows/${GH_WORKFLOW}`;
+
 // Yesterday's graded recap: how many HIGH/MED/LOW/FADE picks, how many
 // hit the PP line, standout hits + misses. Written by the nightly
 // resolve-pp-lines workflow. Returns null when no recap exists yet

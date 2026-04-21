@@ -8753,6 +8753,223 @@ th.sb-ls-total {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
 }
+
+/* Split-button + dropdown for refresh modes.
+   Keeps the one-click primary action while exposing explicit local /
+   remote / open-in-GitHub options under a disclosure triangle. */
+.best-parlays-refresh-wrap {
+  position: relative;
+  display: inline-block;
+}
+.best-parlays-refresh-split {
+  display: inline-flex;
+  border-radius: 6px;
+  overflow: hidden;
+  /* Let each child keep its own border (they share a vertical divider) */
+  background: rgba(98,160,255,0.12);
+}
+.best-parlays-refresh-split .best-parlays-refresh {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: none;
+}
+.best-parlays-refresh-disclosure {
+  background: rgba(98,160,255,0.12);
+  color: #8fbfff;
+  border: 1px solid rgba(98,160,255,0.35);
+  border-left: 1px solid rgba(98,160,255,0.25);
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  padding: 4px 8px;
+  font-family: inherit;
+  font-size: 11px;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+.best-parlays-refresh-disclosure:hover:not(:disabled) {
+  background: rgba(98,160,255,0.22);
+}
+.best-parlays-refresh-disclosure:disabled {
+  cursor: progress;
+  opacity: 0.6;
+}
+.best-parlays-refresh-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  background: #121722;
+  border: 1px solid #232a39;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  padding: 6px;
+  min-width: 340px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.best-parlays-refresh-menu button {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: transparent;
+  border: none;
+  color: #e8ecf4;
+  text-align: left;
+  font-family: inherit;
+  font-size: 12px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 120ms ease;
+}
+.best-parlays-refresh-menu button:hover:not(:disabled) {
+  background: rgba(98,160,255,0.12);
+}
+.best-parlays-refresh-menu button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.best-parlays-refresh-menu button b {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+}
+.best-parlays-refresh-menu button small {
+  display: block;
+  color: #8b94a8;
+  font-size: 11px;
+  margin-top: 1px;
+  line-height: 1.4;
+}
+.best-parlays-refresh-menu .menu-icon {
+  color: #8fbfff;
+  font-size: 15px;
+  line-height: 1;
+  padding-top: 1px;
+  min-width: 16px;
+}
+.best-parlays-refresh-menu-divider {
+  height: 1px;
+  background: #232a39;
+  margin: 4px 2px;
+}
+
+/* Success-tone variant of the tooltip (used after remote_dispatched) */
+.best-parlays-refresh-tooltip.success {
+  color: #4ad295;
+  border-color: rgba(74, 210, 149, 0.4);
+}
+
+/* -----------------------------------------------------------------
+   Settings modal for the GitHub PAT
+   ----------------------------------------------------------------- */
+.bp-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 300;
+}
+.bp-modal {
+  background: #0c1017;
+  border: 1px solid #232a39;
+  border-radius: 12px;
+  padding: 22px 24px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+  color: #e8ecf4;
+}
+.bp-modal-title {
+  margin: 0 0 10px;
+  font-size: 16px;
+  font-weight: 700;
+}
+.bp-modal-lead {
+  margin: 0 0 12px;
+  font-size: 12px;
+  color: #8b94a8;
+  line-height: 1.5;
+}
+.bp-modal-lead code {
+  font-size: 11px;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+.bp-modal-steps {
+  margin: 0 0 14px;
+  padding-left: 20px;
+  font-size: 12px;
+  color: #8b94a8;
+  line-height: 1.7;
+}
+.bp-modal-steps code {
+  font-size: 11px;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+.bp-modal-steps a { color: #8fbfff; }
+.bp-modal-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #5a6274;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+.bp-modal-input {
+  width: 100%;
+  background: #0c1017;
+  border: 1px solid #232a39;
+  color: #e8ecf4;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  font-size: 12px;
+}
+.bp-modal-input:focus {
+  border-color: #62a0ff;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(98, 160, 255, 0.18);
+}
+.bp-modal-hint {
+  font-size: 11px;
+  color: #5a6274;
+  margin: 8px 0 16px;
+}
+.bp-modal-hint a { color: #8fbfff; }
+.bp-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.bp-modal-btn {
+  background: transparent;
+  border: 1px solid #232a39;
+  color: #e8ecf4;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+.bp-modal-btn.ghost:hover { background: rgba(255,255,255,0.04); }
+.bp-modal-btn.primary {
+  background: rgba(98,160,255,0.18);
+  border-color: rgba(98,160,255,0.5);
+  color: #8fbfff;
+}
+.bp-modal-btn.primary:hover:not(:disabled) { background: rgba(98,160,255,0.3); }
+.bp-modal-btn.primary:disabled { opacity: 0.45; cursor: not-allowed; }
 .best-parlays-title {
   margin: 0;
   font-size: 17px;

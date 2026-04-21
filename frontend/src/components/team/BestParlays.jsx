@@ -4,6 +4,10 @@ import {
   fetchTodaysBestParlays,
   fetchRefreshStatus,
   triggerRefresh,
+  triggerRemoteRefresh,
+  remoteRefreshFallbackUrl,
+  getStoredGhToken,
+  setStoredGhToken,
 } from "../../api/client";
 
 /**
@@ -84,41 +88,97 @@ export default function BestParlays() {
     };
   }, [refreshState]);
 
-  const onRefresh = async () => {
+  // Track which "mode" we fall through to. We try local first (fastest,
+  // most powerful), then remote GitHub Actions dispatch if the local
+  // backend isn't reachable. The user can also explicitly kick a remote
+  // refresh via the dropdown even when local is up.
+  const [tokenSet, setTokenSet] = useState(() => Boolean(getStoredGhToken()));
+
+  const onRefresh = async ({ remote = false } = {}) => {
     setRefreshState("running");
-    setRefreshStep("starting");
+    setRefreshStep(remote ? "remote_dispatch" : "starting");
     setRefreshErr(null);
     try {
+      if (remote) {
+        await triggerRemoteRefresh();
+        setRefreshState("success");
+        setRefreshStep("remote_dispatched");
+        // The workflow takes ~5-7 min. We can't watch it from the
+        // browser without polling the GH API for run status — good
+        // enough to queue a cache-bust 6 min later so the page
+        // re-reads the committed JSONs when they land.
+        setTimeout(() => {
+          queryClient.invalidateQueries({ queryKey: ["fantasy"] });
+          queryClient.invalidateQueries({ queryKey: ["edge"] });
+        }, 6 * 60 * 1000);
+        setTimeout(() => setRefreshState("idle"), 6000);
+        return;
+      }
       await triggerRefresh({ includeModel: true });
       setRefreshState("success");
       queryClient.invalidateQueries({ queryKey: ["fantasy"] });
       queryClient.invalidateQueries({ queryKey: ["edge"] });
       setTimeout(() => setRefreshState("idle"), 2500);
     } catch (e) {
+      // If the local backend is unreachable AND the user has a token
+      // set, fall through to a remote dispatch automatically.
+      const localUnreachable = !remote && !e?.response
+        && (e?.code === "ERR_NETWORK" || /network/i.test(e?.message || ""));
+      if (localUnreachable && getStoredGhToken()) {
+        try {
+          await triggerRemoteRefresh();
+          setRefreshState("success");
+          setRefreshStep("remote_dispatched");
+          setTimeout(() => {
+            queryClient.invalidateQueries({ queryKey: ["fantasy"] });
+            queryClient.invalidateQueries({ queryKey: ["edge"] });
+          }, 6 * 60 * 1000);
+          setTimeout(() => setRefreshState("idle"), 6000);
+          return;
+        } catch (e2) {
+          // fall through to the shared error branch below
+          e = e2;
+        }
+      }
       setRefreshState("error");
-      const msg = summarizeRefreshError(e);
+      const msg = e?.message === "NO_TOKEN"
+        ? "No GitHub token set. Click Settings on the refresh button to configure remote refresh."
+        : summarizeRefreshError(e);
       setRefreshErr(msg);
-      // Always log the full error to the console so the user can open
-      // DevTools and see the real traceback / stderr tail.
       // eslint-disable-next-line no-console
       console.error("[BestParlays refresh failed]", {
-        message: msg,
-        response: e?.response?.data,
-        status: e?.response?.status,
-        axios:   e?.toJSON?.() || e,
+        message: msg, response: e?.response?.data, status: e?.response?.status,
+        axios: e?.toJSON?.() || e,
       });
       setTimeout(() => setRefreshState("idle"), 12000);
     }
   };
+
+  const openFallbackWorkflowPage = () => {
+    window.open(remoteRefreshFallbackUrl(), "_blank", "noopener,noreferrer");
+  };
+
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   const refreshButton = (
     <RefreshButton
       state={refreshState}
       step={refreshStep}
       error={refreshErr}
-      onClick={onRefresh}
+      tokenSet={tokenSet}
+      onClick={() => onRefresh({ remote: false })}
+      onRemoteClick={() => onRefresh({ remote: true })}
+      onOpenWorkflowPage={openFallbackWorkflowPage}
+      onOpenSettings={() => setSettingsOpen(true)}
     />
   );
+
+  const settingsModal = settingsOpen ? (
+    <TokenSettingsModal
+      onClose={() => setSettingsOpen(false)}
+      onSaved={() => { setTokenSet(Boolean(getStoredGhToken())); setSettingsOpen(false); }}
+    />
+  ) : null;
 
   if (isLoading) {
     return (
@@ -128,6 +188,7 @@ export default function BestParlays() {
           {refreshButton}
         </div>
         <p className="parlay-empty">Loading curated parlays…</p>
+        {settingsModal}
       </section>
     );
   }
@@ -143,6 +204,7 @@ export default function BestParlays() {
           Curated parlays generate with the morning lock. Click <b>Refresh</b>{" "}
           to pull the latest PrizePicks lines + rebuild everything now.
         </p>
+        {settingsModal}
       </section>
     );
   }
@@ -173,6 +235,7 @@ export default function BestParlays() {
         outcomes. PrizePicks lines shift intraday — always verify before
         playing.
       </p>
+      {settingsModal}
     </section>
   );
 }
@@ -304,11 +367,25 @@ function summarizeRefreshError(e) {
   return `${status}: ${e.message || "unknown error"}`;
 }
 
-function RefreshButton({ state, step, error, onClick }) {
+function RefreshButton({
+  state, step, error, tokenSet,
+  onClick, onRemoteClick, onOpenWorkflowPage, onOpenSettings,
+}) {
   const running = state === "running";
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef(null);
+
+  // Click-outside to close the dropdown
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onDoc = (e) => { if (!menuRef.current?.contains(e.target)) setMenuOpen(false); };
+    document.addEventListener("mousedown", onDoc);
+    return () => document.removeEventListener("mousedown", onDoc);
+  }, [menuOpen]);
+
   const label = running
     ? (STEP_LABELS[step] || "Refreshing") + "…"
-    : state === "success" ? "Refreshed"
+    : state === "success" ? (step === "remote_dispatched" ? "Dispatched" : "Refreshed")
     : state === "error"   ? "Failed"
     : "Refresh lines + parlays";
 
@@ -320,23 +397,174 @@ function RefreshButton({ state, step, error, onClick }) {
   ].filter(Boolean).join(" ");
 
   return (
-    <button
-      type="button"
-      className={cls}
-      onClick={onClick}
-      disabled={running}
-      aria-busy={running}
-      title={running
-        ? "Refresh in progress — ~60-120s"
-        : "Pull the latest PrizePicks lines + rebuild all parlays"}
-    >
-      <span className="best-parlays-refresh-icon" aria-hidden="true">
-        {running ? "⟳" : state === "success" ? "✓" : state === "error" ? "⚠" : "↻"}
-      </span>
-      <span className="best-parlays-refresh-label">{label}</span>
+    <div className="best-parlays-refresh-wrap" ref={menuRef}>
+      <div className="best-parlays-refresh-split">
+        {/* Primary action: tries local backend first, auto-falls-back
+            to remote dispatch if a PAT is stored. */}
+        <button
+          type="button"
+          className={cls}
+          onClick={onClick}
+          disabled={running}
+          aria-busy={running}
+          title={running
+            ? "Refresh in progress — ~60-120s"
+            : "Pull the latest PrizePicks lines + rebuild all parlays"}
+        >
+          <span className="best-parlays-refresh-icon" aria-hidden="true">
+            {running ? "⟳" : state === "success" ? "✓" : state === "error" ? "⚠" : "↻"}
+          </span>
+          <span className="best-parlays-refresh-label">{label}</span>
+        </button>
+
+        {/* Disclosure triangle opens the menu of explicit modes. */}
+        <button
+          type="button"
+          className={`best-parlays-refresh-disclosure ${running ? "running" : ""}`}
+          onClick={() => setMenuOpen((v) => !v)}
+          aria-label="More refresh options"
+          disabled={running}
+        >▾</button>
+      </div>
+
+      {menuOpen && (
+        <div className="best-parlays-refresh-menu" role="menu">
+          <button
+            type="button"
+            role="menuitem"
+            onClick={() => { setMenuOpen(false); onClick(); }}
+          >
+            <span className="menu-icon">⚡</span>
+            <span>
+              <b>Refresh locally</b>
+              <small>Uses your laptop's backend (~60-120s, full pipeline incl. Edge Model 1)</small>
+            </span>
+          </button>
+          <button
+            type="button"
+            role="menuitem"
+            onClick={() => { setMenuOpen(false); onRemoteClick(); }}
+            disabled={!tokenSet}
+            title={tokenSet ? "" : "Configure a GitHub token in Settings first"}
+          >
+            <span className="menu-icon">☁</span>
+            <span>
+              <b>Refresh remotely (GitHub Actions)</b>
+              <small>
+                {tokenSet
+                  ? "Dispatches refresh-fantasy.yml — commits new JSONs in ~5-7 min"
+                  : "Needs GitHub token — click Settings below to add one"}
+              </small>
+            </span>
+          </button>
+          <button
+            type="button"
+            role="menuitem"
+            onClick={() => { setMenuOpen(false); onOpenWorkflowPage(); }}
+          >
+            <span className="menu-icon">↗</span>
+            <span>
+              <b>Open workflow page (no token)</b>
+              <small>New tab → GitHub Actions → click "Run workflow"</small>
+            </span>
+          </button>
+          <div className="best-parlays-refresh-menu-divider" />
+          <button
+            type="button"
+            role="menuitem"
+            onClick={() => { setMenuOpen(false); onOpenSettings(); }}
+          >
+            <span className="menu-icon">⚙</span>
+            <span>
+              <b>Settings — GitHub token</b>
+              <small>{tokenSet ? "Token saved · click to change or clear" : "Set up one-click remote refresh"}</small>
+            </span>
+          </button>
+        </div>
+      )}
+
       {state === "error" && error && (
         <span className="best-parlays-refresh-tooltip">{error}</span>
       )}
-    </button>
+      {state === "success" && step === "remote_dispatched" && (
+        <span className="best-parlays-refresh-tooltip success">
+          Workflow dispatched. GitHub Actions takes ~5-7 minutes — the page
+          will auto-refresh when the new JSONs land.
+        </span>
+      )}
+    </div>
+  );
+}
+
+// -----------------------------------------------------------------------
+// GitHub PAT settings modal
+// -----------------------------------------------------------------------
+function TokenSettingsModal({ onClose, onSaved }) {
+  const existing = getStoredGhToken() || "";
+  const [value, setValue] = useState(existing);
+  const [saved, setSaved] = useState(false);
+
+  const save = () => {
+    setStoredGhToken(value.trim() || null);
+    setSaved(true);
+    setTimeout(onSaved, 400);
+  };
+  const clear = () => {
+    setValue("");
+    setStoredGhToken(null);
+    setSaved(true);
+    setTimeout(onSaved, 400);
+  };
+
+  return (
+    <div className="bp-modal-backdrop" role="dialog" aria-modal="true"
+         onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+      <div className="bp-modal">
+        <h3 className="bp-modal-title">Remote Refresh — GitHub Token</h3>
+        <p className="bp-modal-lead">
+          One-click remote refresh uses the GitHub API to dispatch the{" "}
+          <code>refresh-fantasy.yml</code> workflow. Paste a fine-grained
+          personal access token below — it's stored in this browser's{" "}
+          <code>localStorage</code> only and sent directly to{" "}
+          <code>api.github.com</code>.
+        </p>
+        <ol className="bp-modal-steps">
+          <li>
+            Open{" "}
+            <a href="https://github.com/settings/personal-access-tokens/new"
+               target="_blank" rel="noopener noreferrer">
+              github.com/settings/personal-access-tokens/new
+            </a>
+          </li>
+          <li>Resource owner: <b>statsleuthgame</b></li>
+          <li>Repository access: <b>Only selected → <code>statsleuthgame/baseball-app</code></b></li>
+          <li>Repository permissions: <b>Actions → Read and write</b></li>
+          <li>Copy the token and paste below</li>
+        </ol>
+        <label className="bp-modal-label">
+          GitHub PAT
+          <input
+            type="password"
+            className="bp-modal-input"
+            placeholder="github_pat_…"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            autoComplete="off"
+          />
+        </label>
+        <p className="bp-modal-hint">
+          Tip: if you lose the device, revoke this token at{" "}
+          <a href="https://github.com/settings/tokens" target="_blank"
+             rel="noopener noreferrer">github.com/settings/tokens</a>.
+        </p>
+        <div className="bp-modal-actions">
+          <button className="bp-modal-btn ghost" onClick={clear}>Clear</button>
+          <button className="bp-modal-btn ghost" onClick={onClose}>Cancel</button>
+          <button className="bp-modal-btn primary" onClick={save} disabled={!value.trim()}>
+            {saved ? "Saved ✓" : "Save token"}
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }

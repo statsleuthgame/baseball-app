@@ -80,6 +80,11 @@ jobs:
           git add backend/app/data/pp_line_log/*.jsonl 2>/dev/null || true
           git add frontend/public/data/fantasy/projections_today.json 2>/dev/null || true
           git add frontend/public/data/fantasy/todays_picks_lock.json 2>/dev/null || true
+          # Also commit the parlay JSONs the morning lock writes — missed
+          # these when they were added, so remote refreshes weren't
+          # picking up updated parlay ideas.
+          git add frontend/public/data/fantasy/todays_parlays.json 2>/dev/null || true
+          git add frontend/public/data/fantasy/todays_best_parlays.json 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "Nothing changed."
           else
