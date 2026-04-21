@@ -1179,10 +1179,220 @@
     "mean": 2.5,
     "stdev": 1.979
   },
+  "805808": {
+    "n": 15,
+    "mean": 8.467,
+    "stdev": 5.702,
+    "source": "backtest"
+  },
+  "665750": {
+    "n": 11,
+    "mean": 7.545,
+    "stdev": 4.5,
+    "source": "backtest"
+  },
+  "681481": {
+    "n": 12,
+    "mean": 7.0,
+    "stdev": 7.506,
+    "source": "backtest"
+  },
+  "670042": {
+    "n": 16,
+    "mean": 7.375,
+    "stdev": 8.746,
+    "source": "backtest"
+  },
+  "606192": {
+    "n": 13,
+    "mean": 10.385,
+    "stdev": 10.572,
+    "source": "backtest"
+  },
+  "686668": {
+    "n": 14,
+    "mean": 5.571,
+    "stdev": 6.378,
+    "source": "backtest"
+  },
+  "807799": {
+    "n": 8,
+    "mean": 7.75,
+    "stdev": 6.815,
+    "source": "backtest"
+  },
+  "500743": {
+    "n": 8,
+    "mean": 4.0,
+    "stdev": 3.122,
+    "source": "backtest"
+  },
+  "677588": {
+    "n": 11,
+    "mean": 4.818,
+    "stdev": 4.174,
+    "source": "backtest"
+  },
+  "665804": {
+    "n": 9,
+    "mean": 4.111,
+    "stdev": 2.807,
+    "source": "backtest"
+  },
+  "690993": {
+    "n": 13,
+    "mean": 4.538,
+    "stdev": 2.951,
+    "source": "backtest"
+  },
+  "662139": {
+    "n": 13,
+    "mean": 8.462,
+    "stdev": 6.332,
+    "source": "backtest"
+  },
+  "695506": {
+    "n": 15,
+    "mean": 5.467,
+    "stdev": 5.34,
+    "source": "backtest"
+  },
+  "687597": {
+    "n": 10,
+    "mean": 3.1,
+    "stdev": 6.395,
+    "source": "backtest"
+  },
+  "663743": {
+    "n": 12,
+    "mean": 4.833,
+    "stdev": 3.362,
+    "source": "backtest"
+  },
+  "800050": {
+    "n": 14,
+    "mean": 6.5,
+    "stdev": 6.15,
+    "source": "backtest"
+  },
+  "686527": {
+    "n": 13,
+    "mean": 5.231,
+    "stdev": 5.989,
+    "source": "backtest"
+  },
+  "695600": {
+    "n": 15,
+    "mean": 7.533,
+    "stdev": 7.762,
+    "source": "backtest"
+  },
+  "664728": {
+    "n": 15,
+    "mean": 4.933,
+    "stdev": 8.218,
+    "source": "backtest"
+  },
+  "678662": {
+    "n": 15,
+    "mean": 4.533,
+    "stdev": 3.222,
+    "source": "backtest"
+  },
   "671732": {
     "n": 16,
     "mean": 6.812,
     "stdev": 8.079,
+    "source": "backtest"
+  },
+  "695734": {
+    "n": 16,
+    "mean": 6.312,
+    "stdev": 4.946,
+    "source": "backtest"
+  },
+  "641584": {
+    "n": 12,
+    "mean": 5.0,
+    "stdev": 5.148,
+    "source": "backtest"
+  },
+  "687637": {
+    "n": 12,
+    "mean": 4.5,
+    "stdev": 3.926,
+    "source": "backtest"
+  },
+  "672820": {
+    "n": 12,
+    "mean": 4.333,
+    "stdev": 2.134,
+    "source": "backtest"
+  },
+  "694212": {
+    "n": 12,
+    "mean": 5.417,
+    "stdev": 7.675,
+    "source": "backtest"
+  },
+  "700932": {
+    "n": 13,
+    "mean": 4.0,
+    "stdev": 4.076,
+    "source": "backtest"
+  },
+  "666126": {
+    "n": 10,
+    "mean": 4.4,
+    "stdev": 5.731,
+    "source": "backtest"
+  },
+  "676914": {
+    "n": 9,
+    "mean": 4.333,
+    "stdev": 5.578,
+    "source": "backtest"
+  },
+  "602104": {
+    "n": 9,
+    "mean": 6.0,
+    "stdev": 8.313,
+    "source": "backtest"
+  },
+  "666310": {
+    "n": 11,
+    "mean": 3.727,
+    "stdev": 4.158,
+    "source": "backtest"
+  },
+  "680776": {
+    "n": 12,
+    "mean": 7.25,
+    "stdev": 5.494,
+    "source": "backtest"
+  },
+  "647304": {
+    "n": 15,
+    "mean": 5.4,
+    "stdev": 8.389,
+    "source": "backtest"
+  },
+  "686452": {
+    "n": 9,
+    "mean": 3.111,
+    "stdev": 4.04,
+    "source": "backtest"
+  },
+  "623168": {
+    "n": 7,
+    "mean": 2.143,
+    "stdev": 2.1,
+    "source": "backtest"
+  },
+  "681297": {
+    "n": 13,
+    "mean": 2.538,
+    "stdev": 3.079,
     "source": "backtest"
   },
   "667670": {
@@ -1195,18 +1405,6 @@
     "n": 10,
     "mean": 1.1,
     "stdev": 2.119,
-    "source": "backtest"
-  },
-  "694212": {
-    "n": 12,
-    "mean": 5.417,
-    "stdev": 7.675,
-    "source": "backtest"
-  },
-  "681297": {
-    "n": 13,
-    "mean": 2.538,
-    "stdev": 3.079,
     "source": "backtest"
   },
   "687462": {
@@ -1233,34 +1431,10 @@
     "stdev": 3.252,
     "source": "backtest"
   },
-  "695734": {
-    "n": 16,
-    "mean": 6.312,
-    "stdev": 4.946,
-    "source": "backtest"
-  },
   "592663": {
     "n": 11,
     "mean": 6.727,
     "stdev": 6.369,
-    "source": "backtest"
-  },
-  "687597": {
-    "n": 10,
-    "mean": 3.1,
-    "stdev": 6.395,
-    "source": "backtest"
-  },
-  "686668": {
-    "n": 14,
-    "mean": 5.571,
-    "stdev": 6.378,
-    "source": "backtest"
-  },
-  "678662": {
-    "n": 15,
-    "mean": 4.533,
-    "stdev": 3.222,
     "source": "backtest"
   },
   "543807": {
@@ -1273,12 +1447,6 @@
     "n": 15,
     "mean": 7.133,
     "stdev": 6.26,
-    "source": "backtest"
-  },
-  "672820": {
-    "n": 12,
-    "mean": 4.333,
-    "stdev": 2.134,
     "source": "backtest"
   },
   "671976": {
@@ -1303,18 +1471,6 @@
     "n": 10,
     "mean": 3.6,
     "stdev": 4.477,
-    "source": "backtest"
-  },
-  "641584": {
-    "n": 12,
-    "mean": 5.0,
-    "stdev": 5.148,
-    "source": "backtest"
-  },
-  "663743": {
-    "n": 12,
-    "mean": 4.833,
-    "stdev": 3.362,
     "source": "backtest"
   },
   "810938": {
@@ -1347,18 +1503,6 @@
     "stdev": 3.972,
     "source": "backtest"
   },
-  "680776": {
-    "n": 12,
-    "mean": 7.25,
-    "stdev": 5.494,
-    "source": "backtest"
-  },
-  "807799": {
-    "n": 8,
-    "mean": 7.75,
-    "stdev": 6.815,
-    "source": "backtest"
-  },
   "676694": {
     "n": 6,
     "mean": 6.667,
@@ -1377,28 +1521,10 @@
     "stdev": 6.063,
     "source": "backtest"
   },
-  "805808": {
-    "n": 15,
-    "mean": 8.467,
-    "stdev": 5.702,
-    "source": "backtest"
-  },
-  "681481": {
-    "n": 12,
-    "mean": 7.0,
-    "stdev": 7.506,
-    "source": "backtest"
-  },
   "678009": {
     "n": 7,
     "mean": 3.714,
     "stdev": 4.199,
-    "source": "backtest"
-  },
-  "690993": {
-    "n": 13,
-    "mean": 4.538,
-    "stdev": 2.951,
     "source": "backtest"
   },
   "672695": {
@@ -1443,28 +1569,10 @@
     "stdev": 4.807,
     "source": "backtest"
   },
-  "647304": {
-    "n": 15,
-    "mean": 5.4,
-    "stdev": 8.389,
-    "source": "backtest"
-  },
-  "686527": {
-    "n": 13,
-    "mean": 5.231,
-    "stdev": 5.989,
-    "source": "backtest"
-  },
   "680977": {
     "n": 12,
     "mean": 5.583,
     "stdev": 5.78,
-    "source": "backtest"
-  },
-  "670042": {
-    "n": 16,
-    "mean": 7.375,
-    "stdev": 8.746,
     "source": "backtest"
   },
   "680777": {
@@ -1485,28 +1593,10 @@
     "stdev": 5.034,
     "source": "backtest"
   },
-  "695600": {
-    "n": 15,
-    "mean": 7.533,
-    "stdev": 7.762,
-    "source": "backtest"
-  },
   "663697": {
     "n": 13,
     "mean": 6.538,
     "stdev": 7.802,
-    "source": "backtest"
-  },
-  "664728": {
-    "n": 15,
-    "mean": 4.933,
-    "stdev": 8.218,
-    "source": "backtest"
-  },
-  "695506": {
-    "n": 15,
-    "mean": 5.467,
-    "stdev": 5.34,
     "source": "backtest"
   },
   "672356": {
@@ -1515,28 +1605,10 @@
     "stdev": 5.865,
     "source": "backtest"
   },
-  "666310": {
-    "n": 11,
-    "mean": 3.727,
-    "stdev": 4.158,
-    "source": "backtest"
-  },
-  "700932": {
-    "n": 13,
-    "mean": 4.0,
-    "stdev": 4.076,
-    "source": "backtest"
-  },
   "518692": {
     "n": 15,
     "mean": 10.133,
     "stdev": 6.879,
-    "source": "backtest"
-  },
-  "606192": {
-    "n": 13,
-    "mean": 10.385,
-    "stdev": 10.572,
     "source": "backtest"
   },
   "668885": {
@@ -1563,28 +1635,10 @@
     "stdev": 5.884,
     "source": "backtest"
   },
-  "662139": {
-    "n": 13,
-    "mean": 8.462,
-    "stdev": 6.332,
-    "source": "backtest"
-  },
   "682622": {
     "n": 7,
     "mean": 2.714,
     "stdev": 2.814,
-    "source": "backtest"
-  },
-  "800050": {
-    "n": 14,
-    "mean": 6.5,
-    "stdev": 6.15,
-    "source": "backtest"
-  },
-  "687637": {
-    "n": 12,
-    "mean": 4.5,
-    "stdev": 3.926,
     "source": "backtest"
   },
   "668939": {
@@ -1615,24 +1669,6 @@
     "n": 7,
     "mean": 3.429,
     "stdev": 3.849,
-    "source": "backtest"
-  },
-  "500743": {
-    "n": 8,
-    "mean": 4.0,
-    "stdev": 3.122,
-    "source": "backtest"
-  },
-  "686452": {
-    "n": 9,
-    "mean": 3.111,
-    "stdev": 4.04,
-    "source": "backtest"
-  },
-  "677588": {
-    "n": 11,
-    "mean": 4.818,
-    "stdev": 4.174,
     "source": "backtest"
   },
   "543877": {
@@ -1671,18 +1707,6 @@
     "stdev": 3.436,
     "source": "backtest"
   },
-  "665804": {
-    "n": 9,
-    "mean": 4.111,
-    "stdev": 2.807,
-    "source": "backtest"
-  },
-  "665750": {
-    "n": 11,
-    "mean": 7.545,
-    "stdev": 4.5,
-    "source": "backtest"
-  },
   "596103": {
     "n": 6,
     "mean": 4.167,
@@ -1713,24 +1737,6 @@
     "stdev": 5.421,
     "source": "backtest"
   },
-  "602104": {
-    "n": 9,
-    "mean": 6.0,
-    "stdev": 8.313,
-    "source": "backtest"
-  },
-  "676914": {
-    "n": 9,
-    "mean": 4.333,
-    "stdev": 5.578,
-    "source": "backtest"
-  },
-  "623168": {
-    "n": 7,
-    "mean": 2.143,
-    "stdev": 2.1,
-    "source": "backtest"
-  },
   "656716": {
     "n": 8,
     "mean": 3.875,
@@ -1747,12 +1753,6 @@
     "n": 5,
     "mean": 4.8,
     "stdev": 3.544,
-    "source": "backtest"
-  },
-  "666126": {
-    "n": 10,
-    "mean": 4.4,
-    "stdev": 5.731,
     "source": "backtest"
   },
   "543309": {
@@ -1804,8 +1804,8 @@
     "source": "backtest"
   },
   "_defaults": {
-    "mean": 6.303,
-    "stdev": 6.242,
+    "mean": 6.743,
+    "stdev": 6.606,
     "source": "log"
   }
 }

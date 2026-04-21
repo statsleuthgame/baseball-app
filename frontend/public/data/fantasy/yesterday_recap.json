@@ -1,6 +1,6 @@
 {
-  "recap_date": "2026-04-19",
-  "generated_at": "2026-04-20T13:45:53.026800+00:00",
+  "recap_date": "2026-04-20",
+  "generated_at": "2026-04-21T09:45:22.178628+00:00",
   "totals": {
     "high_conf": {
       "n": 0,
@@ -8,71 +8,95 @@
       "hit_rate": null
     },
     "med_conf": {
-      "n": 57,
-      "wins": 26,
-      "hit_rate": 0.456
+      "n": 33,
+      "wins": 23,
+      "hit_rate": 0.697
     },
     "low_conf": {
-      "n": 51,
-      "wins": 22,
-      "hit_rate": 0.431
+      "n": 52,
+      "wins": 27,
+      "hit_rate": 0.519
     },
     "fade": {
-      "n": 38,
-      "wins": 26,
-      "hit_rate": 0.684
+      "n": 33,
+      "wins": 22,
+      "hit_rate": 0.667
     },
     "overall": {
-      "n": 146,
-      "wins": 74,
-      "hit_rate": 0.507
+      "n": 118,
+      "wins": 72,
+      "hit_rate": 0.61
     }
   },
   "top_hit": {
-    "name": "Dillon Dingler",
-    "team": "DET",
-    "opp": "BOS",
-    "projected": 7.84,
+    "name": "Isaac Paredes",
+    "team": "HOU",
+    "opp": "CLE",
+    "projected": 5.87,
     "line": 5.0,
     "actual": 31.0,
-    "edge_z": 0.404,
-    "tier": "MED",
+    "edge_z": 0.274,
+    "tier": "LOW",
     "won": true,
     "grade": "over"
   },
   "biggest_miss": {
-    "name": "Maikel Garcia",
-    "team": "KC",
-    "opp": "NYY",
-    "projected": 7.99,
+    "name": "Luke Raley",
+    "team": "SEA",
+    "opp": "ATH",
+    "projected": 8.46,
     "line": 7.5,
     "actual": 0.0,
-    "edge_z": 0.078,
+    "edge_z": 0.11,
     "tier": "LOW",
     "won": false,
     "grade": "under"
   },
   "sample_picks": [
     {
-      "name": "Alec Burleson",
-      "team": "STL",
-      "opp": "HOU",
-      "projected": 10.77,
+      "name": "Colt Keith",
+      "team": "DET",
+      "opp": "BOS",
+      "projected": 7.79,
       "line": 5.5,
       "actual": 0.0,
-      "edge_z": 0.789,
+      "edge_z": 0.776,
       "tier": "MED",
       "won": false,
       "grade": "under"
     },
     {
-      "name": "Ben Rice",
-      "team": "NYY",
-      "opp": "KC",
-      "projected": 11.2,
-      "line": 5.0,
-      "actual": 20.0,
-      "edge_z": 0.75,
+      "name": "Ian Happ",
+      "team": "CHC",
+      "opp": "PHI",
+      "projected": 9.08,
+      "line": 5.5,
+      "actual": 7.0,
+      "edge_z": 0.523,
+      "tier": "MED",
+      "won": true,
+      "grade": "over"
+    },
+    {
+      "name": "Mois\u00e9s Ballesteros",
+      "team": "CHC",
+      "opp": "PHI",
+      "projected": 10.63,
+      "line": 6.5,
+      "actual": 7.0,
+      "edge_z": 0.506,
+      "tier": "MED",
+      "won": true,
+      "grade": "over"
+    },
+    {
+      "name": "Gleyber Torres",
+      "team": "DET",
+      "opp": "BOS",
+      "projected": 8.07,
+      "line": 5.5,
+      "actual": 9.0,
+      "edge_z": 0.501,
       "tier": "MED",
       "won": true,
       "grade": "over"
@@ -80,11 +104,47 @@
     {
       "name": "Jordan Walker",
       "team": "STL",
-      "opp": "HOU",
-      "projected": 10.17,
+      "opp": "MIA",
+      "projected": 8.45,
       "line": 5.5,
-      "actual": 7.0,
-      "edge_z": 0.75,
+      "actual": 14.0,
+      "edge_z": 0.474,
+      "tier": "MED",
+      "won": true,
+      "grade": "over"
+    },
+    {
+      "name": "Jac Caglianone",
+      "team": "KC",
+      "opp": "BAL",
+      "projected": 7.5,
+      "line": 5.0,
+      "actual": 16.0,
+      "edge_z": 0.468,
+      "tier": "MED",
+      "won": true,
+      "grade": "over"
+    },
+    {
+      "name": "Kerry Carpenter",
+      "team": "DET",
+      "opp": "BOS",
+      "projected": 8.46,
+      "line": 5.0,
+      "actual": 2.0,
+      "edge_z": 0.461,
+      "tier": "MED",
+      "won": false,
+      "grade": "under"
+    },
+    {
+      "name": "Kevin McGonigle",
+      "team": "DET",
+      "opp": "BOS",
+      "projected": 9.58,
+      "line": 7.0,
+      "actual": 10.0,
+      "edge_z": 0.453,
       "tier": "MED",
       "won": true,
       "grade": "over"
@@ -92,86 +152,26 @@
     {
       "name": "Masyn Winn",
       "team": "STL",
-      "opp": "HOU",
-      "projected": 8.16,
+      "opp": "MIA",
+      "projected": 7.21,
       "line": 5.0,
-      "actual": 19.0,
-      "edge_z": 0.648,
+      "actual": 20.0,
+      "edge_z": 0.453,
       "tier": "MED",
       "won": true,
       "grade": "over"
     },
     {
-      "name": "Yordan Alvarez",
-      "team": "HOU",
-      "opp": "STL",
-      "projected": 12.77,
-      "line": 7.5,
-      "actual": 14.0,
-      "edge_z": 0.631,
-      "tier": "MED",
-      "won": true,
-      "grade": "over"
-    },
-    {
-      "name": "CJ Abrams",
-      "team": "WSH",
-      "opp": "SF",
-      "projected": 9.78,
-      "line": 5.0,
-      "actual": 0.0,
-      "edge_z": 0.591,
+      "name": "Yandy D\u00edaz",
+      "team": "TB",
+      "opp": "CIN",
+      "projected": 7.52,
+      "line": 5.5,
+      "actual": 4.0,
+      "edge_z": 0.434,
       "tier": "MED",
       "won": false,
       "grade": "under"
-    },
-    {
-      "name": "Garrett Mitchell",
-      "team": "MIL",
-      "opp": "MIA",
-      "projected": 9.77,
-      "line": 5.5,
-      "actual": 6.0,
-      "edge_z": 0.571,
-      "tier": "MED",
-      "won": true,
-      "grade": "over"
-    },
-    {
-      "name": "Iv\u00e1n Herrera",
-      "team": "STL",
-      "opp": "HOU",
-      "projected": 8.99,
-      "line": 5.5,
-      "actual": 7.0,
-      "edge_z": 0.562,
-      "tier": "MED",
-      "won": true,
-      "grade": "over"
-    },
-    {
-      "name": "Cody Bellinger",
-      "team": "NYY",
-      "opp": "KC",
-      "projected": 9.95,
-      "line": 5.0,
-      "actual": 13.0,
-      "edge_z": 0.539,
-      "tier": "MED",
-      "won": true,
-      "grade": "over"
-    },
-    {
-      "name": "Josh Bell",
-      "team": "MIN",
-      "opp": "CIN",
-      "projected": 9.03,
-      "line": 5.0,
-      "actual": 5.0,
-      "edge_z": 0.527,
-      "tier": "MED",
-      "won": false,
-      "grade": "push"
     }
   ]
 }
