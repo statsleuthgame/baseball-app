@@ -33,6 +33,12 @@ export default function TopBar() {
     if (team?.id) navigate(`/team/${team.id}/edge`);
   };
 
+  // Edge *Dashboard* (the public Stats Lab at statsleuthgame.github.io/Edge/)
+  // — always opens in a new tab so it doesn't eat our SPA navigation stack.
+  const openEdgeDashboard = () => {
+    window.open("https://statsleuthgame.github.io/Edge/", "_blank", "noopener,noreferrer");
+  };
+
   const openSearch = () => {
     setSearchOpen(true);
     setQuery("");
@@ -170,6 +176,19 @@ export default function TopBar() {
               <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="12" y1="2" x2="12" y2="22" />
                 <path d="M17 6H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" />
+              </svg>
+            </button>
+            <button
+              className="top-bar-stats"
+              onClick={openEdgeDashboard}
+              aria-label="Open Edge Stats Lab dashboard (opens in new tab)"
+              title="Open Edge Stats Lab — 155 years of baseball data"
+            >
+              {/* Bar-chart icon: three rising columns for the historical/stats vibe. */}
+              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="4"  y1="21" x2="4"  y2="13" />
+                <line x1="12" y1="21" x2="12" y2="7"  />
+                <line x1="20" y1="21" x2="20" y2="3"  />
               </svg>
             </button>
             <button className="top-bar-switch" onClick={handleSwitchTeam} aria-label="Switch team">
