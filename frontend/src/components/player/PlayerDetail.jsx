@@ -14,6 +14,7 @@ import AdvancedPitcherStats from "./AdvancedPitcherStats";
 import PitchArsenal from "./PitchArsenal";
 import DominanceProfile from "./DominanceProfile";
 import PlayerGameLog from "./PlayerGameLog";
+import ContractCard from "./ContractCard";
 import MissedCallsPanel from "../strikezone/MissedCallsPanel";
 
 const currentYear = new Date().getFullYear();
@@ -121,6 +122,8 @@ export default function PlayerDetail() {
       ) : (
         <BatterStats stats={displayStats} season={displaySeason} selectedSeason={selectedSeason} onSeasonChange={setSelectedSeason} seasons={SEASON_OPTIONS} />
       )}
+
+      <ContractCard playerName={player.fullName} teamAbbr={playerTeam?.abbreviation} />
 
       <PlayerGameLog playerId={playerId} isPitcher={isPitcher} />
 

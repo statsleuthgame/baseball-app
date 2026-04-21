@@ -1719,6 +1719,99 @@ body {
   margin: 2px 0 4px;
 }
 
+/* ContractCard */
+.contract-card {
+  background: var(--bg-card, #1a1d24);
+  border: 1px solid var(--border, #2a2f3a);
+  border-radius: 12px;
+  padding: 16px;
+  margin: 12px 0;
+}
+.contract-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 10px;
+  gap: 12px;
+}
+.contract-card-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--text, #e8eaed);
+}
+.contract-headline {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--accent, #4a90ff);
+}
+.contract-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 20px;
+  padding: 6px 0 12px;
+  border-bottom: 1px solid var(--border, #2a2f3a);
+  margin-bottom: 12px;
+}
+.contract-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.contract-meta-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-muted, #8b919c);
+}
+.contract-meta-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text, #e8eaed);
+}
+.contract-yearly-wrap {
+  max-height: 320px;
+  overflow-y: auto;
+}
+.contract-yearly {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.contract-yearly th {
+  text-align: left;
+  padding: 6px 8px;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted, #8b919c);
+  font-weight: 600;
+  border-bottom: 1px solid var(--border, #2a2f3a);
+}
+.contract-yearly td {
+  padding: 6px 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.contract-yearly th:last-child,
+.contract-yearly td:last-child {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.contract-year-future td {
+  color: var(--text, #e8eaed);
+  font-weight: 500;
+}
+.contract-year-past td {
+  color: var(--text-muted, #8b919c);
+}
+.contract-card-footer {
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--text-muted, #8b919c);
+  text-align: right;
+}
+
 /* Button variants for team rows — override default button chrome so they
    look identical to the non-link div versions. */
 .player-team-row-link,
