@@ -8671,6 +8671,76 @@ th.sb-ls-total {
   flex-wrap: wrap;
   margin-bottom: 4px;
 }
+.best-parlays-header-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* Refresh button — colored pill, spins icon while running. */
+.best-parlays-refresh {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(98,160,255,0.12);
+  color: #8fbfff;
+  border: 1px solid rgba(98,160,255,0.35);
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease, opacity 120ms ease;
+  position: relative;
+}
+.best-parlays-refresh:hover:not(:disabled) {
+  background: rgba(98,160,255,0.22);
+  border-color: rgba(98,160,255,0.6);
+}
+.best-parlays-refresh:disabled { cursor: progress; opacity: 0.9; }
+.best-parlays-refresh.running {
+  background: rgba(255,159,67,0.15);
+  color: #ff9f43;
+  border-color: rgba(255,159,67,0.45);
+}
+.best-parlays-refresh.running .best-parlays-refresh-icon {
+  display: inline-block;
+  animation: bp-spin 900ms linear infinite;
+}
+.best-parlays-refresh.success {
+  background: rgba(74,210,149,0.2);
+  color: #4ad295;
+  border-color: rgba(74,210,149,0.5);
+}
+.best-parlays-refresh.error {
+  background: rgba(255,109,109,0.2);
+  color: #ff6d6d;
+  border-color: rgba(255,109,109,0.5);
+}
+.best-parlays-refresh-icon { font-size: 13px; line-height: 1; }
+.best-parlays-refresh-tooltip {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  background: #0c1017;
+  color: #ff6d6d;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,109,109,0.35);
+  white-space: nowrap;
+  max-width: 320px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  z-index: 2;
+}
+@keyframes bp-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
 .best-parlays-title {
   margin: 0;
   font-size: 17px;

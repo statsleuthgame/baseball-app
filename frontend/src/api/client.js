@@ -991,6 +991,32 @@ export const fetchTodaysBestParlays = async () => {
   }
 };
 
+// Manual refresh — kick the morning-lock pipeline + Edge-repo Model 1
+// generator so today's PP lines / projections / parlays / best-parlays
+// all rebuild off the latest data. Only works against a local backend
+// (the button in BestParlays degrades gracefully if the POST fails).
+export const triggerRefresh = async ({ includeModel = true } = {}) => {
+  const { data } = await axios.post("/api/fantasy/refresh", null, {
+    params: { include_model: includeModel },
+    // Pipeline takes ~60-120s end-to-end; give it plenty of headroom
+    // before axios bails. 4 min is generous but avoids false failures
+    // on a slow day (PP throttled, big slate).
+    timeout: 240_000,
+  });
+  return data;
+};
+
+export const fetchRefreshStatus = async () => {
+  try {
+    const { data } = await axios.get("/api/fantasy/refresh/status", {
+      timeout: 5000,
+    });
+    return data;
+  } catch {
+    return { state: "unavailable" };
+  }
+};
+
 // Yesterday's graded recap: how many HIGH/MED/LOW/FADE picks, how many
 // hit the PP line, standout hits + misses. Written by the nightly
 // resolve-pp-lines workflow. Returns null when no recap exists yet

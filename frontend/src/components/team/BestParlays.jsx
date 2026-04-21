@@ -1,6 +1,10 @@
-import { useMemo } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { fetchTodaysBestParlays } from "../../api/client";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  fetchTodaysBestParlays,
+  fetchRefreshStatus,
+  triggerRefresh,
+} from "../../api/client";
 
 /**
  * "Best Parlays" — the primary card on the Edge page.
@@ -41,6 +45,8 @@ const MARKET_SHORT = {
 };
 
 export default function BestParlays() {
+  const queryClient = useQueryClient();
+
   const { data, isLoading } = useQuery({
     queryKey: ["fantasy", "bestParlays"],
     queryFn: fetchTodaysBestParlays,
@@ -52,12 +58,71 @@ export default function BestParlays() {
   const parlays = data?.parlays || [];
   const counts  = data?.leg_counts || {};
   const hasParlays = parlays.length > 0;
+  const generatedAt = data?.generated_at || null;
+
+  // ---- Refresh button state (only meaningful when the local backend is
+  //      reachable; static-site deploys show the button but it'll fall
+  //      back to an error toast on click).
+  const [refreshState, setRefreshState] = useState("idle"); // idle|running|success|error
+  const [refreshStep,  setRefreshStep]  = useState(null);
+  const [refreshErr,   setRefreshErr]   = useState(null);
+  const pollRef = useRef(null);
+
+  // Poll the status file every 3s while a refresh is in flight so the
+  // button can narrate progress ("Running Edge model...", etc.).
+  useEffect(() => {
+    if (refreshState !== "running") {
+      if (pollRef.current) { clearInterval(pollRef.current); pollRef.current = null; }
+      return;
+    }
+    pollRef.current = setInterval(async () => {
+      const s = await fetchRefreshStatus();
+      if (s?.step) setRefreshStep(s.step);
+    }, 3000);
+    return () => {
+      if (pollRef.current) { clearInterval(pollRef.current); pollRef.current = null; }
+    };
+  }, [refreshState]);
+
+  const onRefresh = async () => {
+    setRefreshState("running");
+    setRefreshStep("starting");
+    setRefreshErr(null);
+    try {
+      await triggerRefresh({ includeModel: true });
+      setRefreshState("success");
+      // Bust every cache the Edge page reads so the new JSON loads.
+      queryClient.invalidateQueries({ queryKey: ["fantasy"] });
+      queryClient.invalidateQueries({ queryKey: ["edge"] });
+      // Soft-reset to idle after a couple seconds so the success pill
+      // doesn't linger forever.
+      setTimeout(() => setRefreshState("idle"), 2500);
+    } catch (e) {
+      setRefreshState("error");
+      // axios errors come back nested — surface the backend detail if we have one
+      const detail = e?.response?.data?.detail;
+      const msg = (detail && typeof detail === "object" ? detail.message : detail)
+                || e?.message || "refresh failed";
+      setRefreshErr(msg);
+      setTimeout(() => setRefreshState("idle"), 6000);
+    }
+  };
+
+  const refreshButton = (
+    <RefreshButton
+      state={refreshState}
+      step={refreshStep}
+      error={refreshErr}
+      onClick={onRefresh}
+    />
+  );
 
   if (isLoading) {
     return (
       <section className="best-parlays">
         <div className="best-parlays-header">
           <h2 className="best-parlays-title">Today's Best Parlays</h2>
+          {refreshButton}
         </div>
         <p className="parlay-empty">Loading curated parlays…</p>
       </section>
@@ -69,10 +134,11 @@ export default function BestParlays() {
       <section className="best-parlays">
         <div className="best-parlays-header">
           <h2 className="best-parlays-title">Today's Best Parlays</h2>
+          {refreshButton}
         </div>
         <p className="parlay-empty">
-          Curated parlays generate with the morning lock. Check back once
-          PrizePicks lines post + the Edge-repo model finishes its run.
+          Curated parlays generate with the morning lock. Click <b>Refresh</b>{" "}
+          to pull the latest PrizePicks lines + rebuild everything now.
         </p>
       </section>
     );
@@ -82,9 +148,13 @@ export default function BestParlays() {
     <section className="best-parlays">
       <div className="best-parlays-header">
         <h2 className="best-parlays-title">Today's Best Parlays</h2>
-        <span className="best-parlays-meta">
-          {counts.fantasy_edge ?? 0} fantasy · {counts.model ?? 0} model legs
-        </span>
+        <div className="best-parlays-header-right">
+          <span className="best-parlays-meta">
+            {counts.fantasy_edge ?? 0} fantasy · {counts.model ?? 0} model legs
+            {generatedAt && <> · as of {new Date(generatedAt).toLocaleTimeString([], {hour:"numeric", minute:"2-digit"})}</>}
+          </span>
+          {refreshButton}
+        </div>
       </div>
       <p className="best-parlays-sub">
         {parlays.length} curated combos — each leg tagged by source.
@@ -180,5 +250,51 @@ function BestParlayLeg({ leg }) {
         </span>
       </div>
     </li>
+  );
+}
+
+// -----------------------------------------------------------------------
+// Refresh button — kicks the backend refresh pipeline.
+// -----------------------------------------------------------------------
+const STEP_LABELS = {
+  starting:            "Starting",
+  edge_model:          "Running Model 1 (PP + reboot)",
+  fantasy_projections: "Refreshing fantasy projections + parlays",
+};
+
+function RefreshButton({ state, step, error, onClick }) {
+  const running = state === "running";
+  const label = running
+    ? (STEP_LABELS[step] || "Refreshing") + "…"
+    : state === "success" ? "Refreshed"
+    : state === "error"   ? "Failed"
+    : "Refresh lines + parlays";
+
+  const cls = [
+    "best-parlays-refresh",
+    running ? "running" : "",
+    state === "success" ? "success" : "",
+    state === "error"   ? "error"   : "",
+  ].filter(Boolean).join(" ");
+
+  return (
+    <button
+      type="button"
+      className={cls}
+      onClick={onClick}
+      disabled={running}
+      aria-busy={running}
+      title={running
+        ? "Refresh in progress — ~60-120s"
+        : "Pull the latest PrizePicks lines + rebuild all parlays"}
+    >
+      <span className="best-parlays-refresh-icon" aria-hidden="true">
+        {running ? "⟳" : state === "success" ? "✓" : state === "error" ? "⚠" : "↻"}
+      </span>
+      <span className="best-parlays-refresh-label">{label}</span>
+      {state === "error" && error && (
+        <span className="best-parlays-refresh-tooltip">{error}</span>
+      )}
+    </button>
   );
 }
