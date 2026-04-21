@@ -1,0 +1,311 @@
+{
+  "game_date": "2026-04-21",
+  "generated_at": "2026-04-21T16:20:16.231825+00:00",
+  "weights_version": "2026-04-18",
+  "leg_counts": {
+    "fantasy_edge": 10,
+    "model": 0
+  },
+  "parlays": [
+    {
+      "size": 2,
+      "payout": 3.0,
+      "combined_prob": 0.5396,
+      "ev_pct": 61.9,
+      "legs": [
+        {
+          "player_id": 677587,
+          "name": "Brayan Rocchio",
+          "team_abbr": "CLE",
+          "opp_abbr": "HOU",
+          "opp_pitcher": "Ryan Weiss",
+          "market": "fantasy_score",
+          "line": 5.5,
+          "side": "over",
+          "hit_prob": 0.742,
+          "source": "fantasy_edge",
+          "efp": 9.78,
+          "edge_z": 0.65
+        },
+        {
+          "player_id": 691023,
+          "name": "Jordan Walker",
+          "team_abbr": "STL",
+          "opp_abbr": "MIA",
+          "opp_pitcher": "Chris Paddack",
+          "market": "fantasy_score",
+          "line": 5.5,
+          "side": "over",
+          "hit_prob": 0.727,
+          "source": "fantasy_edge",
+          "efp": 9.26,
+          "edge_z": 0.604
+        }
+      ]
+    },
+    {
+      "size": 2,
+      "payout": 3.0,
+      "combined_prob": 0.5096,
+      "ev_pct": 52.9,
+      "legs": [
+        {
+          "player_id": 701807,
+          "name": "Carson Benge",
+          "team_abbr": "NYM",
+          "opp_abbr": "MIN",
+          "opp_pitcher": "Simeon Woods Richardson",
+          "market": "fantasy_score",
+          "line": 5.0,
+          "side": "over",
+          "hit_prob": 0.722,
+          "source": "fantasy_edge",
+          "efp": 7.03,
+          "edge_z": 0.588
+        },
+        {
+          "player_id": 805808,
+          "name": "Kevin McGonigle",
+          "team_abbr": "DET",
+          "opp_abbr": "MIL",
+          "opp_pitcher": "Kyle Harrison",
+          "market": "fantasy_score",
+          "line": 5.0,
+          "side": "over",
+          "hit_prob": 0.706,
+          "source": "fantasy_edge",
+          "efp": 8.09,
+          "edge_z": 0.542
+        }
+      ]
+    },
+    {
+      "size": 3,
+      "payout": 5.0,
+      "combined_prob": 0.3895,
+      "ev_pct": 94.7,
+      "legs": [
+        {
+          "player_id": 677587,
+          "name": "Brayan Rocchio",
+          "team_abbr": "CLE",
+          "opp_abbr": "HOU",
+          "opp_pitcher": "Ryan Weiss",
+          "market": "fantasy_score",
+          "line": 5.5,
+          "side": "over",
+          "hit_prob": 0.742,
+          "source": "fantasy_edge",
+          "efp": 9.78,
+          "edge_z": 0.65
+        },
+        {
+          "player_id": 691023,
+          "name": "Jordan Walker",
+          "team_abbr": "STL",
+          "opp_abbr": "MIA",
+          "opp_pitcher": "Chris Paddack",
+          "market": "fantasy_score",
+          "line": 5.5,
+          "side": "over",
+          "hit_prob": 0.727,
+          "source": "fantasy_edge",
+          "efp": 9.26,
+          "edge_z": 0.604
+        },
+        {
+          "player_id": 701807,
+          "name": "Carson Benge",
+          "team_abbr": "NYM",
+          "opp_abbr": "MIN",
+          "opp_pitcher": "Simeon Woods Richardson",
+          "market": "fantasy_score",
+          "line": 5.0,
+          "side": "over",
+          "hit_prob": 0.722,
+          "source": "fantasy_edge",
+          "efp": 7.03,
+          "edge_z": 0.588
+        }
+      ]
+    },
+    {
+      "size": 3,
+      "payout": 5.0,
+      "combined_prob": 0.3443,
+      "ev_pct": 72.1,
+      "legs": [
+        {
+          "player_id": 805808,
+          "name": "Kevin McGonigle",
+          "team_abbr": "DET",
+          "opp_abbr": "MIL",
+          "opp_pitcher": "Kyle Harrison",
+          "market": "fantasy_score",
+          "line": 5.0,
+          "side": "over",
+          "hit_prob": 0.706,
+          "source": "fantasy_edge",
+          "efp": 8.09,
+          "edge_z": 0.542
+        },
+        {
+          "player_id": 672640,
+          "name": "Otto Lopez",
+          "team_abbr": "MIA",
+          "opp_abbr": "STL",
+          "opp_pitcher": "Dustin May",
+          "market": "fantasy_score",
+          "line": 5.0,
+          "side": "over",
+          "hit_prob": 0.702,
+          "source": "fantasy_edge",
+          "efp": 9.47,
+          "edge_z": 0.53
+        },
+        {
+          "player_id": 664023,
+          "name": "Ian Happ",
+          "team_abbr": "CHC",
+          "opp_abbr": "PHI",
+          "opp_pitcher": "Jes\u00fas Luzardo",
+          "market": "fantasy_score",
+          "line": 5.0,
+          "side": "over",
+          "hit_prob": 0.695,
+          "source": "fantasy_edge",
+          "efp": 8.49,
+          "edge_z": 0.509
+        }
+      ]
+    },
+    {
+      "size": 4,
+      "payout": 10.0,
+      "combined_prob": 0.275,
+      "ev_pct": 175.0,
+      "legs": [
+        {
+          "player_id": 677587,
+          "name": "Brayan Rocchio",
+          "team_abbr": "CLE",
+          "opp_abbr": "HOU",
+          "opp_pitcher": "Ryan Weiss",
+          "market": "fantasy_score",
+          "line": 5.5,
+          "side": "over",
+          "hit_prob": 0.742,
+          "source": "fantasy_edge",
+          "efp": 9.78,
+          "edge_z": 0.65
+        },
+        {
+          "player_id": 691023,
+          "name": "Jordan Walker",
+          "team_abbr": "STL",
+          "opp_abbr": "MIA",
+          "opp_pitcher": "Chris Paddack",
+          "market": "fantasy_score",
+          "line": 5.5,
+          "side": "over",
+          "hit_prob": 0.727,
+          "source": "fantasy_edge",
+          "efp": 9.26,
+          "edge_z": 0.604
+        },
+        {
+          "player_id": 701807,
+          "name": "Carson Benge",
+          "team_abbr": "NYM",
+          "opp_abbr": "MIN",
+          "opp_pitcher": "Simeon Woods Richardson",
+          "market": "fantasy_score",
+          "line": 5.0,
+          "side": "over",
+          "hit_prob": 0.722,
+          "source": "fantasy_edge",
+          "efp": 7.03,
+          "edge_z": 0.588
+        },
+        {
+          "player_id": 805808,
+          "name": "Kevin McGonigle",
+          "team_abbr": "DET",
+          "opp_abbr": "MIL",
+          "opp_pitcher": "Kyle Harrison",
+          "market": "fantasy_score",
+          "line": 5.0,
+          "side": "over",
+          "hit_prob": 0.706,
+          "source": "fantasy_edge",
+          "efp": 8.09,
+          "edge_z": 0.542
+        }
+      ]
+    },
+    {
+      "size": 4,
+      "payout": 10.0,
+      "combined_prob": 0.2312,
+      "ev_pct": 131.2,
+      "legs": [
+        {
+          "player_id": 672640,
+          "name": "Otto Lopez",
+          "team_abbr": "MIA",
+          "opp_abbr": "STL",
+          "opp_pitcher": "Dustin May",
+          "market": "fantasy_score",
+          "line": 5.0,
+          "side": "over",
+          "hit_prob": 0.702,
+          "source": "fantasy_edge",
+          "efp": 9.47,
+          "edge_z": 0.53
+        },
+        {
+          "player_id": 664023,
+          "name": "Ian Happ",
+          "team_abbr": "CHC",
+          "opp_abbr": "PHI",
+          "opp_pitcher": "Jes\u00fas Luzardo",
+          "market": "fantasy_score",
+          "line": 5.0,
+          "side": "over",
+          "hit_prob": 0.695,
+          "source": "fantasy_edge",
+          "efp": 8.49,
+          "edge_z": 0.509
+        },
+        {
+          "player_id": 661388,
+          "name": "William Contreras",
+          "team_abbr": "MIL",
+          "opp_abbr": "DET",
+          "opp_pitcher": "Keider Montero",
+          "market": "fantasy_score",
+          "line": 5.5,
+          "side": "over",
+          "hit_prob": 0.695,
+          "source": "fantasy_edge",
+          "efp": 7.52,
+          "edge_z": 0.509
+        },
+        {
+          "player_id": 808959,
+          "name": "Munetaka Murakami",
+          "team_abbr": "CWS",
+          "opp_abbr": "AZ",
+          "opp_pitcher": "Merrill Kelly",
+          "market": "fantasy_score",
+          "line": 5.5,
+          "side": "over",
+          "hit_prob": 0.683,
+          "source": "fantasy_edge",
+          "efp": 9.6,
+          "edge_z": 0.475
+        }
+      ]
+    }
+  ]
+}
