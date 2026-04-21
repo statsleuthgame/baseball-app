@@ -1,47 +1,51 @@
-"""Pull the full Lahman database (1871-present season-level stats).
+"""Pull the full Lahman database (1871-2019 season-level stats).
 
-Downloads the Lahman zip once via pybaseball's helper, then reads every
-table it exposes and writes Parquet. This avoids per-table network
-round-trips.
+Pybaseball's bundled Lahman URL is dead. We pull the baseballdatabank
+zip directly from cdalzell/Lahman's source-data mirror on GitHub (the
+most reliable public mirror of the canonical CSVs) and dump each CSV
+to Parquet.
+
+Lahman only tracks through ~2019 — modern-era season stats are derived
+from Statcast/MLB API in the app's pipeline, so this is purely
+historical.
 """
 
 from __future__ import annotations
 
-import inspect
+import io
+import zipfile
 
+import httpx
 import pandas as pd
-from pybaseball import lahman
 
 from .paths import raw
 
-SKIP = {"download_lahman"}
+LAHMAN_ZIP_URL = (
+    "https://raw.githubusercontent.com/cdalzell/Lahman/master/"
+    "source-data/baseballdatabank-master.zip"
+)
 
 
 def pull_all() -> None:
-    # Warm pybaseball's local Lahman cache in one shot.
-    if hasattr(lahman, "download_lahman"):
-        try:
-            lahman.download_lahman()
-        except Exception as exc:
-            print(f"lahman download warning: {exc}")
-
     out = raw("lahman")
-    for name, fn in inspect.getmembers(lahman, inspect.isfunction):
-        if name in SKIP or name.startswith("_"):
-            continue
-        sig = inspect.signature(fn)
-        required = [p for p in sig.parameters.values() if p.default is inspect.Parameter.empty]
-        if required:
-            continue
-        try:
-            df = fn()
-        except Exception as exc:
-            print(f"lahman {name}: skipped ({exc})")
-            continue
-        if not isinstance(df, pd.DataFrame) or df.empty:
-            continue
-        df.to_parquet(out / f"{name}.parquet", index=False)
-        print(f"lahman {name}: {len(df):,} rows")
+    print("lahman: downloading zip...")
+    resp = httpx.get(LAHMAN_ZIP_URL, timeout=60, follow_redirects=True)
+    resp.raise_for_status()
+
+    count = 0
+    with zipfile.ZipFile(io.BytesIO(resp.content)) as zf:
+        for name in zf.namelist():
+            if not name.lower().endswith(".csv") or "/core/" not in name:
+                continue
+            table = name.rsplit("/", 1)[-1].removesuffix(".csv")
+            with zf.open(name) as f:
+                df = pd.read_csv(f, low_memory=False)
+            if df.empty:
+                continue
+            df.to_parquet(out / f"{table}.parquet", index=False)
+            count += 1
+            print(f"lahman {table}: {len(df):,} rows")
+    print(f"lahman: {count} tables written")
 
 
 if __name__ == "__main__":

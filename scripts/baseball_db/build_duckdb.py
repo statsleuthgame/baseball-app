@@ -22,16 +22,27 @@ VIEWS: list[tuple[str, str]] = [
     ("chadwick", "chadwick/people.parquet"),
     ("retrosheet_events", "retrosheet/events/year=*.parquet"),
     ("retrosheet_gamelogs", "retrosheet/gamelogs/all.parquet"),
+    ("mlb_boxscores", "mlb_api/boxscores/year=*.parquet"),
+    ("mlb_plays", "mlb_api/plays/year=*.parquet"),
 ]
 
 
 def _lahman_views(con: duckdb.DuckDBPyConnection) -> None:
     lahman_dir = raw("lahman")
     for f in lahman_dir.glob("*.parquet"):
-        name = f"lahman_{f.stem}"
-        con.execute(
-            f"CREATE OR REPLACE VIEW {name} AS SELECT * FROM read_parquet('{f.as_posix()}')"
-        )
+        # Skip macOS AppleDouble junk files (._Foo.parquet).
+        if f.name.startswith("._"):
+            continue
+        # Lowercase + quoted so mixed-case filenames (e.g. BattingPost.parquet)
+        # don't get parsed as `schema.table` identifiers.
+        name = f"lahman_{f.stem.lower()}"
+        try:
+            con.execute(
+                f'CREATE OR REPLACE VIEW "{name}" AS '
+                f"SELECT * FROM read_parquet('{f.as_posix()}')"
+            )
+        except duckdb.Error as exc:
+            print(f"skip view {name}: {exc}")
 
 
 def build() -> Path:
