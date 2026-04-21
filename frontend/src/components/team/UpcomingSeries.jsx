@@ -34,10 +34,15 @@ export default function UpcomingSeries() {
                 <span className="series-md">{new Date(g.gameDate).toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span>
                 <span className="series-time">{formatGameTime(g.gameDate)}</span>
               </div>
-              <div className="series-opp">
+              <button
+                type="button"
+                className="series-opp series-opp-link"
+                onClick={() => navigate(`/team/${opp.id}`)}
+                aria-label={`Go to ${opp.abbreviation} team page`}
+              >
                 <img src={opp.logoUrl} alt={opp.abbreviation} className="series-logo" />
                 <span>{isHome ? "vs" : "@"} {opp.abbreviation}</span>
-              </div>
+              </button>
               <div className="series-pitchers">
                 {us.probablePitcher && (
                   <span className="series-pitcher-name sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${us.probablePitcher.id}`)}>

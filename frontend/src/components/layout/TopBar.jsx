@@ -70,14 +70,48 @@ export default function TopBar() {
         params: { names: searchQuery, sportId: 1 },
         timeout: 10000,
       });
-      const people = (resp.data?.people || []).slice(0, 25).map((p) => ({
-        id: p.id,
-        fullName: p.fullName || "",
-        position: p.primaryPosition?.abbreviation || "",
-        teamId: p.currentTeam?.id,
-        teamName: p.currentTeam?.name || "Free Agent",
-        photoUrl: `https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/${p.id}/headshot/67/current`,
-      }));
+      const rawPeople = (resp.data?.people || []).slice(0, 25);
+
+      // /people/search doesn't include currentTeam for most results — everyone
+      // comes back as "Free Agent". Hydrate with a second batch call so the
+      // user can actually click the results.
+      const ids = rawPeople.map((p) => p.id).join(",");
+      let hydrated = {};
+      if (ids) {
+        try {
+          const h = await axios.get("https://statsapi.mlb.com/api/v1/people", {
+            params: { personIds: ids, hydrate: "currentTeam" },
+            timeout: 10000,
+          });
+          for (const p of h.data?.people || []) {
+            hydrated[p.id] = p;
+          }
+        } catch {
+          // If the hydrate call fails, fall through with the original data —
+          // most results will still show Free Agent but the search itself works.
+        }
+      }
+
+      const people = rawPeople.map((p) => {
+        const full = hydrated[p.id] || p;
+        const team = full.currentTeam;
+        const active = full.active !== false;
+        return {
+          id: p.id,
+          fullName: p.fullName || "",
+          position: full.primaryPosition?.abbreviation || p.primaryPosition?.abbreviation || "",
+          teamId: team?.id,
+          teamName: team?.name || (active ? "No Team" : "Retired"),
+          photoUrl: `https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/${p.id}/headshot/67/current`,
+        };
+      });
+
+      // Put players-with-teams first, then stable sort within each group
+      people.sort((a, b) => {
+        if (!!a.teamId === !!b.teamId) return 0;
+        return a.teamId ? -1 : 1;
+      });
+
       setResults(people);
       setSearched(true);
     } catch {

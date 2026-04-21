@@ -118,11 +118,16 @@ export default function MatchupView() {
 
       {/* Game header — always away on left, home on right */}
       <div className={`matchup-header ${isLive ? "sb-player-link" : ""}`} onClick={isLive ? () => navigate(`/team/${teamId}/live/${game.gamePk}`) : undefined}>
-        <div className="matchup-team">
+        <button
+          type="button"
+          className="matchup-team matchup-team-link"
+          onClick={(e) => { e.stopPropagation(); navigate(`/team/${game.away.id}`); }}
+          aria-label={`Go to ${game.away.abbreviation} team page`}
+        >
           <img src={game.away.logoUrl} alt={game.away.abbreviation} className="matchup-logo" />
           <span>{game.away.abbreviation}</span>
           {game.away.wins != null && <span className="matchup-record">{game.away.wins}-{game.away.losses}</span>}
-        </div>
+        </button>
         <div className="matchup-header-center">
           {(isLive || isFinal) && game.away.score != null ? (
             <>
@@ -145,11 +150,16 @@ export default function MatchupView() {
             <span className="matchup-venue">{game.venue.name}{game.venueLocation ? ` · ${game.venueLocation}` : ""}</span>
           )}
         </div>
-        <div className="matchup-team">
+        <button
+          type="button"
+          className="matchup-team matchup-team-link"
+          onClick={(e) => { e.stopPropagation(); navigate(`/team/${game.home.id}`); }}
+          aria-label={`Go to ${game.home.abbreviation} team page`}
+        >
           <img src={game.home.logoUrl} alt={game.home.abbreviation} className="matchup-logo" />
           <span>{game.home.abbreviation}</span>
           {game.home.wins != null && <span className="matchup-record">{game.home.wins}-{game.home.losses}</span>}
-        </div>
+        </button>
       </div>
 
       {/* Win probability chart (shows during/after live games) */}

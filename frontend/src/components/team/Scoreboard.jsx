@@ -845,8 +845,15 @@ export default function Scoreboard() {
                 {!isScheduled && (
                   <div className="scoreboard-teams">
                     <div className={`scoreboard-team-row ${isFinal ? (awayWon ? "sb-winner" : "sb-loser") : ""}`}>
-                      <img src={game.away.logoUrl} alt={game.away.abbreviation} className="scoreboard-logo" />
-                      <span className="scoreboard-abbr">{game.away.abbreviation}</span>
+                      <button
+                        type="button"
+                        className="scoreboard-team-link"
+                        onClick={(e) => { e.stopPropagation(); navigate(`/team/${game.away.id}`); }}
+                        aria-label={`Go to ${game.away.abbreviation} team page`}
+                      >
+                        <img src={game.away.logoUrl} alt={game.away.abbreviation} className="scoreboard-logo" />
+                        <span className="scoreboard-abbr">{game.away.abbreviation}</span>
+                      </button>
                       {!isFinal && game.away.wins != null && (
                         <span className="scoreboard-record">{game.away.wins}-{game.away.losses}</span>
                       )}
@@ -856,8 +863,15 @@ export default function Scoreboard() {
                       )}
                     </div>
                     <div className={`scoreboard-team-row ${isFinal ? (homeWon ? "sb-winner" : "sb-loser") : ""}`}>
-                      <img src={game.home.logoUrl} alt={game.home.abbreviation} className="scoreboard-logo" />
-                      <span className="scoreboard-abbr">{game.home.abbreviation}</span>
+                      <button
+                        type="button"
+                        className="scoreboard-team-link"
+                        onClick={(e) => { e.stopPropagation(); navigate(`/team/${game.home.id}`); }}
+                        aria-label={`Go to ${game.home.abbreviation} team page`}
+                      >
+                        <img src={game.home.logoUrl} alt={game.home.abbreviation} className="scoreboard-logo" />
+                        <span className="scoreboard-abbr">{game.home.abbreviation}</span>
+                      </button>
                       {!isFinal && game.home.wins != null && (
                         <span className="scoreboard-record">{game.home.wins}-{game.home.losses}</span>
                       )}
