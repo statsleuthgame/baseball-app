@@ -1,16 +1,20 @@
-"""Orchestrator: run every pull in the recommended order, then build DuckDB.
+"""Orchestrator: run independent sources in parallel processes.
 
-Each source is independent and idempotent. Failures in one source are
-logged but do not abort the rest.
+Savant, FanGraphs, MLB StatsAPI, and retrosheet.org are distinct servers
+with independent rate limits, so running their pullers in separate
+processes is the biggest end-to-end speedup. Lahman + Chadwick are tiny
+and run sequentially first so the rest can use the local cache.
 
 Usage:
-    python -m scripts.baseball_db.pull_all               # run everything
-    python -m scripts.baseball_db.pull_all --only statcast lahman
+    python -m scripts.baseball_db.pull_all
+    python -m scripts.baseball_db.pull_all --only statcast mlb_api
+    python -m scripts.baseball_db.pull_all --serial   # debug mode
 """
 
 from __future__ import annotations
 
 import argparse
+import multiprocessing as mp
 import traceback
 from datetime import datetime
 
@@ -25,53 +29,73 @@ from . import (
 )
 from .paths import logs
 
-SOURCES = {
+# Sources that should run sequentially BEFORE the parallel wave.
+SETUP_SOURCES = {
     "chadwick": pull_chadwick.pull_all,
     "lahman": pull_lahman.pull_all,
+}
+
+# Long-running sources; each talks to a different server.
+PARALLEL_SOURCES = {
     "statcast": pull_statcast.pull_all,
     "fangraphs": pull_fangraphs.pull_all,
-    "retrosheet": lambda: (pull_retrosheet.pull_events(), pull_retrosheet.pull_gamelogs()),
     "mlb_api": pull_mlb_api.pull_all,
+    "retrosheet": lambda: (pull_retrosheet.pull_events(), pull_retrosheet.pull_gamelogs()),
 }
+
+ALL_SOURCES = {**SETUP_SOURCES, **PARALLEL_SOURCES}
+
+
+def _run_one(name: str, fn) -> None:
+    try:
+        fn()
+    except Exception:
+        print(f"[{name}] FAILED:\n{traceback.format_exc()}")
 
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument(
-        "--only",
-        nargs="+",
-        choices=list(SOURCES.keys()),
-        help="Run only the named sources",
-    )
+    ap.add_argument("--only", nargs="+", choices=list(ALL_SOURCES.keys()))
     ap.add_argument("--skip-duckdb", action="store_true")
+    ap.add_argument("--serial", action="store_true", help="Run everything sequentially")
     args = ap.parse_args()
 
-    targets = args.only or list(SOURCES.keys())
+    targets = args.only or list(ALL_SOURCES.keys())
     log_file = logs() / f"pull_all_{datetime.now():%Y%m%d_%H%M%S}.log"
+    print(f"Log: {log_file}")
 
-    with log_file.open("w") as log:
-        for name in targets:
-            log.write(f"\n=== {name} @ {datetime.now().isoformat()} ===\n")
-            log.flush()
-            print(f"\n=== {name} ===")
-            try:
-                SOURCES[name]()
-            except Exception:
-                tb = traceback.format_exc()
-                log.write(tb)
-                print(tb)
+    setup = [n for n in targets if n in SETUP_SOURCES]
+    parallel = [n for n in targets if n in PARALLEL_SOURCES]
 
-        if not args.skip_duckdb:
-            log.write(f"\n=== duckdb @ {datetime.now().isoformat()} ===\n")
-            try:
-                path = build_duckdb.build()
-                log.write(f"built {path}\n")
-                print(f"DuckDB: {path}")
-            except Exception:
-                log.write(traceback.format_exc())
-                print(traceback.format_exc())
+    # Setup wave: tiny pulls, sequential so Lahman cache is warm first.
+    for name in setup:
+        print(f"\n=== {name} ===")
+        _run_one(name, ALL_SOURCES[name])
 
-    print(f"\nLog: {log_file}")
+    # Parallel wave: separate processes, one per source.
+    if args.serial:
+        for name in parallel:
+            print(f"\n=== {name} (serial) ===")
+            _run_one(name, ALL_SOURCES[name])
+    elif parallel:
+        print(f"\n=== parallel: {', '.join(parallel)} ===")
+        ctx = mp.get_context("spawn")
+        procs = [
+            ctx.Process(target=_run_one, args=(name, ALL_SOURCES[name]), name=name)
+            for name in parallel
+        ]
+        for p in procs:
+            p.start()
+        for p in procs:
+            p.join()
+
+    if not args.skip_duckdb:
+        print("\n=== build_duckdb ===")
+        try:
+            path = build_duckdb.build()
+            print(f"DuckDB: {path}")
+        except Exception:
+            print(traceback.format_exc())
 
 
 if __name__ == "__main__":
