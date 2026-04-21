@@ -8728,14 +8728,26 @@ th.sb-ls-total {
   color: #ff6d6d;
   font-size: 11px;
   font-weight: 500;
-  padding: 6px 10px;
+  padding: 8px 12px;
   border-radius: 6px;
   border: 1px solid rgba(255,109,109,0.35);
-  white-space: nowrap;
-  max-width: 320px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  /* Wrap long errors (stderr tails can be 100+ chars) instead of ellipsing.
+     The user needs to actually see what broke to fix it. */
+  white-space: normal;
+  word-wrap: break-word;
+  max-width: 420px;
+  width: max-content;
+  line-height: 1.4;
   z-index: 2;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+.best-parlays-refresh-tooltip::before {
+  content: "See DevTools console for full traceback.";
+  display: block;
+  color: #5a6274;
+  font-weight: 400;
+  font-size: 10px;
+  margin-bottom: 4px;
 }
 @keyframes bp-spin {
   from { transform: rotate(0deg); }

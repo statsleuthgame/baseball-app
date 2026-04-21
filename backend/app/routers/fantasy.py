@@ -137,7 +137,14 @@ async def _refresh_pipeline(target_date: str | None, include_model: bool) -> dic
             cmd = [sys.executable, "-m", "scripts.tools.generate_daily_picks"]
             if target_date:
                 cmd += ["--date", target_date]
-            rc, out, err = await _run_subprocess(cmd, cwd=edge_repo, label="edge_model")
+            # Explicitly set PYTHONPATH so `-m scripts.tools…` resolves.
+            # Most Python versions pick it up from cwd anyway, but making
+            # it explicit avoids "No module named scripts" surprises when
+            # the backend's Python is invoked from a different cwd.
+            rc, out, err = await _run_subprocess(
+                cmd, cwd=edge_repo, label="edge_model",
+                env_extra={"PYTHONPATH": str(edge_repo)},
+            )
             steps.append({
                 "name": "edge_model",
                 "status": "ok" if rc == 0 else "failed",

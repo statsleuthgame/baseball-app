@@ -91,20 +91,23 @@ export default function BestParlays() {
     try {
       await triggerRefresh({ includeModel: true });
       setRefreshState("success");
-      // Bust every cache the Edge page reads so the new JSON loads.
       queryClient.invalidateQueries({ queryKey: ["fantasy"] });
       queryClient.invalidateQueries({ queryKey: ["edge"] });
-      // Soft-reset to idle after a couple seconds so the success pill
-      // doesn't linger forever.
       setTimeout(() => setRefreshState("idle"), 2500);
     } catch (e) {
       setRefreshState("error");
-      // axios errors come back nested — surface the backend detail if we have one
-      const detail = e?.response?.data?.detail;
-      const msg = (detail && typeof detail === "object" ? detail.message : detail)
-                || e?.message || "refresh failed";
+      const msg = summarizeRefreshError(e);
       setRefreshErr(msg);
-      setTimeout(() => setRefreshState("idle"), 6000);
+      // Always log the full error to the console so the user can open
+      // DevTools and see the real traceback / stderr tail.
+      // eslint-disable-next-line no-console
+      console.error("[BestParlays refresh failed]", {
+        message: msg,
+        response: e?.response?.data,
+        status: e?.response?.status,
+        axios:   e?.toJSON?.() || e,
+      });
+      setTimeout(() => setRefreshState("idle"), 12000);
     }
   };
 
@@ -261,6 +264,45 @@ const STEP_LABELS = {
   edge_model:          "Running Model 1 (PP + reboot)",
   fantasy_projections: "Refreshing fantasy projections + parlays",
 };
+
+/**
+ * Produce the most useful single-line error message we can from an axios
+ * failure. Tries, in order:
+ *   - ECONNREFUSED / no backend running     → "Backend not reachable at …"
+ *   - timeout                                → "Timed out after …"
+ *   - 502 with `detail.steps`                → "{step} failed: {stderr tail}"
+ *   - other HTTP error                       → status + detail
+ *   - anything else                          → axios message
+ */
+function summarizeRefreshError(e) {
+  // No response = network layer blew up (most common: backend not running)
+  if (!e?.response) {
+    const code = e?.code || "";
+    if (code === "ECONNABORTED") {
+      return "Refresh timed out (>4 min). Check the backend log — the script may still be running.";
+    }
+    if (code === "ERR_NETWORK" || /network/i.test(e?.message || "")) {
+      return "Backend unreachable at /api/fantasy/refresh. Is the local FastAPI server running on port 10000?";
+    }
+    return e?.message || "Refresh failed with no response (is the backend running?)";
+  }
+  const status = e.response.status;
+  const detail = e.response.data?.detail;
+  // 409 = already running; 502 = pipeline failed; anything else is server-side.
+  if (status === 409) {
+    return `A refresh is already in progress (started ${detail?.since || "earlier"}).`;
+  }
+  if (status === 502 && detail && typeof detail === "object") {
+    const failed = (detail.steps || []).find((s) => s.status === "failed");
+    const tail = (failed?.stderr_tail || failed?.stdout_tail || "").trim();
+    const lastLine = tail ? tail.split("\n").filter(Boolean).pop() : "";
+    const head = `${detail.failed_step || "pipeline"} failed (rc=${failed?.rc ?? "?"}).`;
+    return lastLine ? `${head} ${lastLine}` : head;
+  }
+  if (typeof detail === "string") return `${status}: ${detail}`;
+  if (detail?.message) return `${status}: ${detail.message}`;
+  return `${status}: ${e.message || "unknown error"}`;
+}
 
 function RefreshButton({ state, step, error, onClick }) {
   const running = state === "running";
