@@ -1000,6 +1000,7 @@ function BoxScoreSection({ boxOpen, setBoxOpen, boxData, gameInfo, teamId }) {
             <span className="lgp-box-col-stat">RBI</span>
             <span className="lgp-box-col-stat">BB</span>
             <span className="lgp-box-col-stat">K</span>
+            <span className="lgp-box-col-stat">SB</span>
             <span className="lgp-box-col-chev" />
           </div>
 
@@ -1027,6 +1028,7 @@ function BoxScoreSection({ boxOpen, setBoxOpen, boxData, gameInfo, teamId }) {
                   <span className="lgp-box-col-stat">{s.rbi ?? "—"}</span>
                   <span className="lgp-box-col-stat">{s.bb ?? "—"}</span>
                   <span className="lgp-box-col-stat">{s.k ?? "—"}</span>
+                  <span className="lgp-box-col-stat">{s.sb ?? "—"}</span>
                   <span className="lgp-box-col-chev">
                     {hasABs && (
                       <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: isOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>

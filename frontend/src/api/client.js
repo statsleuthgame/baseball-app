@@ -591,7 +591,7 @@ export const fetchLiveGameState = async (gamePk) => {
         const p = box[side]?.players?.[`ID${playerId}`];
         if (p) {
           const s = p.stats?.batting || {};
-          return { ab: s.atBats || 0, h: s.hits || 0, hr: s.homeRuns || 0, rbi: s.rbi || 0, k: s.strikeOuts || 0, bb: s.baseOnBalls || 0, hbp: s.hitByPitch || 0 };
+          return { ab: s.atBats || 0, h: s.hits || 0, hr: s.homeRuns || 0, rbi: s.rbi || 0, k: s.strikeOuts || 0, bb: s.baseOnBalls || 0, hbp: s.hitByPitch || 0, sb: s.stolenBases || 0 };
         }
       }
       return {};
@@ -1452,7 +1452,7 @@ export const fetchGameDetail = async (gamePk) => {
           stats: {
             ab: s.atBats ?? 0, r: s.runs ?? 0, h: s.hits ?? 0,
             rbi: s.rbi ?? 0, bb: s.baseOnBalls ?? 0, k: s.strikeOuts ?? 0,
-            hr: s.homeRuns ?? 0, avg: s.avg || "",
+            hr: s.homeRuns ?? 0, sb: s.stolenBases ?? 0, avg: s.avg || "",
           },
           atBats: atBatsByBatter[id] || [],
         };

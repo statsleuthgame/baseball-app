@@ -92,25 +92,23 @@ export default function TopBar() {
         }
       }
 
-      const people = rawPeople.map((p) => {
-        const full = hydrated[p.id] || p;
-        const team = full.currentTeam;
-        const active = full.active !== false;
-        return {
-          id: p.id,
-          fullName: p.fullName || "",
-          position: full.primaryPosition?.abbreviation || p.primaryPosition?.abbreviation || "",
-          teamId: team?.id,
-          teamName: team?.name || (active ? "No Team" : "Retired"),
-          photoUrl: `https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/${p.id}/headshot/67/current`,
-        };
-      });
-
-      // Put players-with-teams first, then stable sort within each group
-      people.sort((a, b) => {
-        if (!!a.teamId === !!b.teamId) return 0;
-        return a.teamId ? -1 : 1;
-      });
+      const people = rawPeople
+        .map((p) => {
+          const full = hydrated[p.id] || p;
+          const team = full.currentTeam;
+          return {
+            id: p.id,
+            fullName: p.fullName || "",
+            position: full.primaryPosition?.abbreviation || p.primaryPosition?.abbreviation || "",
+            teamId: team?.id,
+            teamName: team?.name || "",
+            active: full.active === true,
+            photoUrl: `https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/${p.id}/headshot/67/current`,
+          };
+        })
+        // Active roster only — drop retired, minor-league-only, and true FAs.
+        // Hydrated currentTeam + active=true = on an MLB roster right now.
+        .filter((p) => p.active && p.teamId);
 
       setResults(people);
       setSearched(true);
