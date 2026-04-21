@@ -1,4 +1,4 @@
-name: Refresh Fantasy (light, 4×/day)
+name: Refresh Fantasy (light, 9×/day)
 
 # Lightweight intraday workflow: re-runs generate_fantasy_projections.py
 # only (no generate_data.py Statcast pulls), commits any PP log /
@@ -8,13 +8,23 @@ name: Refresh Fantasy (light, 4×/day)
 # handles the full Statcast cache refresh + data regen. This workflow
 # picks up PP line waves and code changes through the rest of the day
 # in ~3-5 min per run instead of ~30-40 min.
+#
+# Frequency was bumped from 4×/day to 9×/day on 2026-04-20 to support
+# reboot-strategy research — we want enough snapshots to track intra-day
+# PP line movement (especially around lineup-release at ~2-3 hrs pre-first
+# pitch) and to capture demon/goblin lines as they're posted/pulled.
 
 on:
   schedule:
+    - cron: '0 11 * * *'   #  7 AM ET — overnight PP line drop
     - cron: '0 13 * * *'   #  9 AM ET — early PP lines posting
-    - cron: '0 15 * * *'   # 11 AM ET — midday PP line wave
-    - cron: '0 17 * * *'   #  1 PM ET — afternoon PP additions
-    - cron: '0 19 * * *'   #  3 PM ET — final snapshot before west-coast lockup
+    - cron: '0 15 * * *'   # 11 AM ET — midday line wave
+    - cron: '30 16 * * *'  # 12:30 PM ET — afternoon-first-pitch pre-game
+    - cron: '0 17 * * *'   #  1 PM ET — afternoon line wave
+    - cron: '30 18 * * *'  #  2:30 PM ET — lineup release zone
+    - cron: '0 19 * * *'   #  3 PM ET — final pre-east-coast-lock
+    - cron: '0 22 * * *'   #  6 PM ET — west-coast pre-game lines
+    - cron: '30 23 * * *'  #  7:30 PM ET — late posted lines (west-coast)
   workflow_dispatch:
 
 permissions:

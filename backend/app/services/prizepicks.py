@@ -233,6 +233,124 @@ async def fetch_lines() -> dict[str, dict[str, float]]:
     return out
 
 
+async def fetch_all_variants() -> dict[str, dict[str, list[dict]]]:
+    """Return PrizePicks lines preserving ALL variants (standard, demon,
+    goblin) per (player, stat_key). Structure:
+
+        {
+          "mike trout": {
+            "_name": "Mike Trout",
+            "_team": "LAA",
+            "hits": [
+              {"odds_type": "standard", "line": 1.5},
+              {"odds_type": "demon", "line": 2.5},
+              {"odds_type": "goblin", "line": 0.5},
+            ],
+            ...
+          },
+          ...
+        }
+
+    Used by the line-logging pipeline to preserve demon/goblin history for
+    later edge analysis. The main app uses fetch_lines() which returns
+    only the standard variant for display.
+    """
+    cached = cache_get("prizepicks:mlb:lines:all_variants")
+    if cached is not None:
+        return cached
+
+    if not _HAS_CURL_CFFI:
+        cache_set("prizepicks:mlb:lines:all_variants", {}, 60 * 2)
+        return {}
+
+    # Reuse the same fetch pipeline as fetch_lines — cheaper than two HTTP
+    # calls if both run in the same cycle.
+    _IMPERSONATE_ROTATION = ("safari17_0", "chrome120", "chrome110", "safari15_5")
+
+    def _blocking_fetch() -> dict:
+        import time
+        last_err: Exception | None = None
+        for attempt, impersonate in enumerate(_IMPERSONATE_ROTATION):
+            try:
+                resp = cffi_requests.get(
+                    f"{_PP_BASE}/projections",
+                    params={"league_id": _MLB_LEAGUE_ID, "per_page": 500},
+                    headers=_HEADERS,
+                    impersonate=impersonate,
+                    timeout=15,
+                )
+                resp.raise_for_status()
+                return resp.json()
+            except Exception as e:
+                last_err = e
+                if attempt < len(_IMPERSONATE_ROTATION) - 1:
+                    time.sleep(1 * (3 ** attempt))
+        raise last_err if last_err else RuntimeError("prizepicks: fetch failed")
+
+    try:
+        payload = await asyncio.to_thread(_blocking_fetch)
+    except Exception as e:
+        logger.warning("prizepicks all-variants fetch failed: %s", e)
+        cache_set("prizepicks:mlb:lines:all_variants", {}, 60 * 2)
+        return {}
+
+    data = payload.get("data") or []
+    included = payload.get("included") or []
+
+    players = {}
+    for r in included:
+        if r.get("type") != "new_player":
+            continue
+        pid = r.get("id")
+        attrs = r.get("attributes") or {}
+        if not pid or not attrs.get("display_name"):
+            continue
+        players[pid] = {
+            "name": attrs.get("display_name") or attrs.get("name") or "",
+            "team": attrs.get("team") or "",
+        }
+
+    out: dict[str, dict[str, Any]] = {}
+    for row in data:
+        attrs = row.get("attributes") or {}
+        stat_type = attrs.get("stat_type")
+        key = _HITTER_STAT_MAP.get(stat_type)
+        if not key:
+            continue
+        line = attrs.get("line_score")
+        if line is None:
+            continue
+        try:
+            line = float(line)
+        except (TypeError, ValueError):
+            continue
+        rel = (row.get("relationships") or {}).get("new_player") or {}
+        pid = (rel.get("data") or {}).get("id")
+        p = players.get(pid)
+        if not p:
+            continue
+        norm = _normalize_name(p["name"])
+        if not norm:
+            continue
+        odds_type = (attrs.get("odds_type") or "standard").lower()
+        # Also capture any projection metadata that helps reboot analysis
+        # (projection status: active/pre_game/etc; flash_sale_line_score
+        #  for Demon/Goblin payout multipliers).
+        variant = {
+            "odds_type": odds_type,
+            "line": line,
+            "status": attrs.get("status"),
+            "projection_ref": attrs.get("flash_sale_line_score"),
+            "start_time": attrs.get("start_time"),
+        }
+        bucket = out.setdefault(norm, {"_name": p["name"], "_team": p["team"]})
+        bucket.setdefault(key, []).append(variant)
+
+    cache_set("prizepicks:mlb:lines:all_variants", out, _CACHE_TTL)
+    logger.info("prizepicks all-variants: cached %d hitters", len(out))
+    return out
+
+
 def lookup_for_batter(
     lines: dict[str, dict], full_name: str, team_abbr: str | None = None
 ) -> dict | None:

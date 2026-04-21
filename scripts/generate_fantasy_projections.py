@@ -31,7 +31,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "backend"))
 
-from app.services import fantasy, mlb_api, parlays as parlay_service  # noqa: E402
+from app.services import fantasy, mlb_api, parlays as parlay_service, prizepicks  # noqa: E402
 
 
 OUT_DIR = ROOT / "frontend" / "public" / "data" / "fantasy"
@@ -61,12 +61,23 @@ def _append_pp_line_log(payload: dict) -> None:
     """Append one JSONL record per projection with PP line to the day's
     log file. Captures raw PP lines + our model state at this moment so
     we can later join against actual game outcomes and compute real
-    hit rates per tier/stat/line. Called once per snapshot (site regen
-    runs 2x/day; each call adds a new dated row per player)."""
+    hit rates per tier/stat/line.
+
+    Now also captures demon/goblin variants (via fetch_all_variants)
+    alongside the standard line. Demon/goblin fields unlock analysis
+    of PP's promo-line structure for the reboot-strategy work."""
     captured_at = datetime.now(timezone.utc).isoformat()
     game_date = payload.get("date")
     if not game_date:
         return
+
+    # Fetch all-variants snapshot once per call. Cached for 10min so if
+    # generate runs multiple times within an hour we don't re-hit PP.
+    try:
+        all_variants = asyncio.run(prizepicks.fetch_all_variants())
+    except Exception as e:
+        logger.warning("fetch_all_variants failed (%s) — logging standard only", e)
+        all_variants = {}
 
     LOG_DIR.mkdir(parents=True, exist_ok=True)
     log_path = LOG_DIR / f"{game_date}.jsonl"
@@ -81,6 +92,16 @@ def _append_pp_line_log(payload: dict) -> None:
             # Skip rows with no PP lines — nothing to log against.
             if not pp or all(v is None for v in pp.values()):
                 continue
+            # Cross-reference to variant record by normalized player name.
+            # prizepicks._normalize_name is the same function used to key
+            # fetch_all_variants output.
+            norm_name = prizepicks._normalize_name(proj.get("name") or "")
+            variants_bucket = all_variants.get(norm_name) or {}
+            # Only the stat-key entries (not the _name/_team meta keys).
+            pp_lines_all = {
+                k: v for k, v in variants_bucket.items()
+                if k not in ("_name", "_team") and isinstance(v, list)
+            }
             record = {
                 "captured_at": captured_at,
                 "game_date": game_date,
@@ -105,6 +126,9 @@ def _append_pp_line_log(payload: dict) -> None:
                 # today, having the historical time series lets us back-
                 # test calibration per-stat later.
                 "pp_lines": {k: v for k, v in pp.items() if v is not None},
+                # All variants (standard + demon + goblin) per stat —
+                # enables reboot-strategy analysis and Demon-line studies.
+                "pp_lines_all": pp_lines_all,
                 # Model internals snapshotted so we can retroactively
                 # verify what the model said this day (handy if we fit
                 # new weights and want to know "what would V1.5 have
