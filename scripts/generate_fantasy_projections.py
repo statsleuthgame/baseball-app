@@ -157,27 +157,57 @@ def _append_pp_line_log(payload: dict) -> None:
 TOP_LOCK_COUNT = 10
 
 
-def _maybe_write_daily_lock(payload: dict) -> None:
+def _trim_lock_pick(p: dict) -> dict:
+    """Strip fields the tracker UI doesn't need (multipliers, rates, etc.)
+    Keep just what renders in the tracker card + everything the parlay
+    builder needs (team_abbr / opp_abbr drive the game-key guard)."""
+    return {
+        "player_id": p.get("player_id"),
+        "name": p.get("name"),
+        "position": p.get("position"),
+        "bat_side": p.get("bat_side"),
+        "team_id": p.get("team_id"),
+        "team_abbr": p.get("team_abbr"),
+        "opp_abbr": p.get("opp_abbr"),
+        "opp_pitcher": p.get("opp_pitcher"),
+        "pa": p.get("pa"),
+        "pa_source": p.get("pa_source"),
+        "efp": p.get("efp"),
+        "tier": p.get("tier"),
+        "stdev_efp": p.get("stdev_efp"),
+        "mean_efp": p.get("mean_efp"),
+        "stats_games": p.get("stats_games"),
+        "prizepicks": p.get("prizepicks"),
+        "edge_fantasy": p.get("edge_fantasy"),
+        "edge_z": p.get("edge_z"),
+    }
+
+
+def _maybe_write_daily_lock(payload: dict) -> list[dict]:
     """Write frontend/public/data/fantasy/todays_picks_lock.json with the
     top-N confidence picks for today. Only overwrites when the date
     changes (i.e. once per day, on the first cron run that sees
     confidence badges). The frontend renders this as a locked "Today's
     Picks Tracker" that persists through games and stays visible when
-    Final."""
+    Final.
+
+    Returns the *effective* trimmed pick set for today — either the
+    freshly locked picks OR, if a lock for today already exists, the
+    picks we preserved. Callers (specifically: parlay writers) should
+    use this return value rather than the raw payload, because the
+    locked set is what the Tracker UI is actually showing and what
+    every downstream artifact should be consistent with."""
     game_date = payload.get("date")
     if not game_date:
-        return
+        return []
 
     # Reuse the quality-filtered best_bets list from the payload. This
     # guarantees the Tracker and the "Current Best Bets" section use
     # IDENTICAL selection criteria (PP line floor, min logged games,
     # positive edge, sorted by edge_z). No duplicated filter logic.
     best_bets = payload.get("best_bets") or []
-    if not best_bets:
-        logger.info("daily_picks_lock: no quality best_bets yet — no lock written")
-        return
-
     top_picks = best_bets[:TOP_LOCK_COUNT]
+    trimmed_picks = [_trim_lock_pick(p) for p in top_picks]
 
     lock_path = OUT_DIR / "todays_picks_lock.json"
     # Preserve the existing lock if it's for the same date.
@@ -187,35 +217,14 @@ def _maybe_write_daily_lock(payload: dict) -> None:
             if prior.get("game_date") == game_date:
                 logger.info("daily_picks_lock: already locked for %s — preserving",
                             game_date)
-                return
+                return prior.get("picks") or trimmed_picks
         except Exception:
             pass  # malformed → we'll overwrite it
 
-    # Strip fields the tracker UI doesn't need (multipliers, rates, etc.)
-    # Keep just what renders in the tracker card.
-    def trim(p: dict) -> dict:
-        return {
-            "player_id": p.get("player_id"),
-            "name": p.get("name"),
-            "position": p.get("position"),
-            "bat_side": p.get("bat_side"),
-            "team_id": p.get("team_id"),
-            "team_abbr": p.get("team_abbr"),
-            "opp_abbr": p.get("opp_abbr"),
-            "opp_pitcher": p.get("opp_pitcher"),
-            "pa": p.get("pa"),
-            "pa_source": p.get("pa_source"),
-            "efp": p.get("efp"),
-            "tier": p.get("tier"),
-            "stdev_efp": p.get("stdev_efp"),
-            "mean_efp": p.get("mean_efp"),
-            "stats_games": p.get("stats_games"),
-            "prizepicks": p.get("prizepicks"),
-            "edge_fantasy": p.get("edge_fantasy"),
-            "edge_z": p.get("edge_z"),
-        }
+    if not top_picks:
+        logger.info("daily_picks_lock: no quality best_bets yet — no lock written")
+        return []
 
-    trimmed_picks = [trim(p) for p in top_picks]
     lock = {
         "game_date": game_date,
         "locked_at": payload.get("generated_at") or datetime.now(timezone.utc).isoformat(),
@@ -225,12 +234,7 @@ def _maybe_write_daily_lock(payload: dict) -> None:
     }
     lock_path.write_text(json.dumps(lock, indent=2) + "\n")
     logger.info("daily_picks_lock: wrote %d locked picks → %s", len(top_picks), lock_path.name)
-
-    # Generate the 4 parlay ideas off the SAME locked set so the Edge
-    # page's "Parlay Ideas" button has something to show for the day.
-    # Runs inside the lock branch so it only fires when we actually
-    # wrote a new lock — same cadence as the picks themselves.
-    _write_parlays(game_date, trimmed_picks, payload)
+    return trimmed_picks
 
 
 def _write_parlays(game_date: str, picks: list[dict], payload: dict) -> None:
@@ -260,9 +264,11 @@ def _write_parlays(game_date: str, picks: list[dict], payload: dict) -> None:
     logger.info("parlays: wrote %d parlay ideas → %s", len(ideas), parlay_path.name)
 
     # Best-parlays slate: merges fantasy-edge picks with Edge-repo
-    # Model 1 picks (if the daily_picks.json file is present). Produces
-    # the 6-card curated view the new BestParlays UI renders.
-    _write_best_parlays(game_date, picks, payload)
+    # _write_best_parlays is intentionally NOT called here. The new
+    # generate() flow calls both writers in parallel (see bottom of
+    # generate()) so that both JSONs regenerate on every run regardless
+    # of whether this specific invocation wrote a fresh lock or
+    # preserved one. Keeping the call here would double-write the file.
 
 
 def _write_best_parlays(game_date: str, fantasy_picks: list[dict],
@@ -360,9 +366,23 @@ async def generate(date_iso: str | None) -> None:
             if prior.get("date") == site_payload.get("date") and prior_pp_count > 0:
                 logger.warning(
                     "projections_today: new run has 0 PP matches but existing "
-                    "file has %d — preserving existing file (PP likely down).",
+                    "file has %d — preserving existing file (PP likely down). "
+                    "Regenerating lock/parlays from preserved payload so the "
+                    "downstream JSONs still reflect today's set.",
                     prior_pp_count,
                 )
+                # Rebuild lock (preserved if same date) + parlays from the
+                # PREVIOUSLY-written projections. This bootstraps any
+                # missing parlay file on first run after a feature ships
+                # even when PP has blocked the runner.
+                try:
+                    trimmed = _maybe_write_daily_lock(prior)
+                    if trimmed:
+                        game_date = prior.get("date")
+                        _write_parlays(game_date, trimmed, prior)
+                        _write_best_parlays(game_date, trimmed, prior)
+                except Exception as e:
+                    logger.warning("preserve branch: parlay rebuild failed (%s)", e)
                 await mlb_api.close_client()
                 return
         except Exception:
@@ -390,13 +410,30 @@ async def generate(date_iso: str | None) -> None:
     # Lock today's confidence picks once we have any. This freezes the
     # picks the user saw this morning so the UI can show their live
     # in-game + final scores all day, even if subsequent crons shuffle
-    # the order. Only writes if:
-    #   1. We have ≥1 pick with a confidence badge (edge_z populated), AND
-    #   2. The existing lock file is for a different date (previous day).
+    # the order. Writes only if we have ≥1 pick with a confidence badge
+    # AND no existing same-date lock. Either way it returns the effective
+    # pick set (fresh or preserved) for parlay regeneration.
     try:
-        _maybe_write_daily_lock(payload)
+        trimmed = _maybe_write_daily_lock(payload)
     except Exception as e:
         logger.warning("daily_picks_lock: write failed (%s) — continuing", e)
+        trimmed = []
+
+    # Parlays regenerate EVERY RUN, even when the lock was preserved.
+    # They're cheap pure-math + the PP lines can shift intraday, so the
+    # user should see the most recent-possible EV math. Previously these
+    # only fired on first-of-day lock creation, which left the best-
+    # parlays file missing after any subsequent cron.
+    if trimmed:
+        game_date = payload.get("date")
+        try:
+            _write_parlays(game_date, trimmed, payload)
+        except Exception as e:
+            logger.warning("parlays: write failed (%s) — continuing", e)
+        try:
+            _write_best_parlays(game_date, trimmed, payload)
+        except Exception as e:
+            logger.warning("best_parlays: write failed (%s) — continuing", e)
 
     await mlb_api.close_client()
 
