@@ -35,12 +35,17 @@ SETUP_SOURCES = {
     "lahman": pull_lahman.pull_all,
 }
 
+def _pull_retrosheet_all() -> None:
+    pull_retrosheet.pull_events()
+    pull_retrosheet.pull_gamelogs()
+
+
 # Long-running sources; each talks to a different server.
 PARALLEL_SOURCES = {
     "statcast": pull_statcast.pull_all,
     "fangraphs": pull_fangraphs.pull_all,
     "mlb_api": pull_mlb_api.pull_all,
-    "retrosheet": lambda: (pull_retrosheet.pull_events(), pull_retrosheet.pull_gamelogs()),
+    "retrosheet": _pull_retrosheet_all,
 }
 
 ALL_SOURCES = {**SETUP_SOURCES, **PARALLEL_SOURCES}
