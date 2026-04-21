@@ -73,8 +73,17 @@ def _append_pp_line_log(payload: dict) -> None:
 
     # Fetch all-variants snapshot once per call. Cached for 10min so if
     # generate runs multiple times within an hour we don't re-hit PP.
+    #
+    # Note: project_slate already runs inside an asyncio loop, so calling
+    # asyncio.run() directly here fails with "asyncio.run() cannot be
+    # called from a running event loop". Run in a dedicated thread with
+    # its own loop to avoid the conflict.
     try:
-        all_variants = asyncio.run(prizepicks.fetch_all_variants())
+        import concurrent.futures
+        def _runner():
+            return asyncio.run(prizepicks.fetch_all_variants())
+        with concurrent.futures.ThreadPoolExecutor(max_workers=1) as ex:
+            all_variants = ex.submit(_runner).result(timeout=60)
     except Exception as e:
         logger.warning("fetch_all_variants failed (%s) — logging standard only", e)
         all_variants = {}

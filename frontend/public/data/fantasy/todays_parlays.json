@@ -1,171 +1,170 @@
 {
-  "game_date": "2026-04-20",
-  "generated_at": "2026-04-20T20:00:44.501129+00:00",
+  "game_date": "2026-04-21",
+  "generated_at": "2026-04-21T16:20:16.231825+00:00",
   "weights_version": "2026-04-18",
-  "source_pick_count": 6,
-  "note": "Detroit game already passed \u2014 DET picks removed from today's parlays",
+  "source_pick_count": 10,
   "parlays": [
     {
       "size": 2,
       "payout": 3.0,
-      "combined_prob": 0.4772,
-      "ev_pct": 43.2,
+      "combined_prob": 0.5396,
+      "ev_pct": 61.9,
       "legs": [
         {
-          "player_id": 664023,
-          "name": "Ian Happ",
-          "team_abbr": "CHC",
-          "opp_abbr": "PHI",
-          "opp_pitcher": "Aaron Nola",
+          "player_id": 677587,
+          "name": "Brayan Rocchio",
+          "team_abbr": "CLE",
+          "opp_abbr": "HOU",
+          "opp_pitcher": "Ryan Weiss",
           "line": 5.5,
           "side": "over",
-          "efp": 9.08,
-          "edge_z": 0.523,
-          "hit_prob": 0.7
+          "efp": 9.78,
+          "edge_z": 0.65,
+          "hit_prob": 0.742
         },
         {
           "player_id": 691023,
           "name": "Jordan Walker",
           "team_abbr": "STL",
           "opp_abbr": "MIA",
-          "opp_pitcher": "Max Meyer",
+          "opp_pitcher": "Chris Paddack",
           "line": 5.5,
           "side": "over",
-          "efp": 8.45,
-          "edge_z": 0.474,
-          "hit_prob": 0.682
+          "efp": 9.26,
+          "edge_z": 0.604,
+          "hit_prob": 0.727
         }
       ]
     },
     {
       "size": 2,
       "payout": 3.0,
-      "combined_prob": 0.4717,
-      "ev_pct": 41.5,
+      "combined_prob": 0.5096,
+      "ev_pct": 52.9,
       "legs": [
         {
-          "player_id": 694208,
-          "name": "Mois\u00e9s Ballesteros",
-          "team_abbr": "CHC",
-          "opp_abbr": "PHI",
-          "opp_pitcher": "Aaron Nola",
-          "line": 6.5,
-          "side": "over",
-          "efp": 10.63,
-          "edge_z": 0.506,
-          "hit_prob": 0.694
-        },
-        {
-          "player_id": 695506,
-          "name": "Jac Caglianone",
-          "team_abbr": "KC",
-          "opp_abbr": "BAL",
-          "opp_pitcher": "Kyle Bradish",
+          "player_id": 701807,
+          "name": "Carson Benge",
+          "team_abbr": "NYM",
+          "opp_abbr": "MIN",
+          "opp_pitcher": "Simeon Woods Richardson",
           "line": 5.0,
           "side": "over",
-          "efp": 7.5,
-          "edge_z": 0.468,
-          "hit_prob": 0.68
+          "efp": 7.03,
+          "edge_z": 0.588,
+          "hit_prob": 0.722
+        },
+        {
+          "player_id": 805808,
+          "name": "Kevin McGonigle",
+          "team_abbr": "DET",
+          "opp_abbr": "MIL",
+          "opp_pitcher": "Kyle Harrison",
+          "line": 5.0,
+          "side": "over",
+          "efp": 8.09,
+          "edge_z": 0.542,
+          "hit_prob": 0.706
         }
       ]
     },
     {
       "size": 3,
       "payout": 5.0,
-      "combined_prob": 0.3246,
-      "ev_pct": 62.3,
+      "combined_prob": 0.3895,
+      "ev_pct": 94.7,
       "legs": [
         {
-          "player_id": 664023,
-          "name": "Ian Happ",
-          "team_abbr": "CHC",
-          "opp_abbr": "PHI",
-          "opp_pitcher": "Aaron Nola",
+          "player_id": 677587,
+          "name": "Brayan Rocchio",
+          "team_abbr": "CLE",
+          "opp_abbr": "HOU",
+          "opp_pitcher": "Ryan Weiss",
           "line": 5.5,
           "side": "over",
-          "efp": 9.08,
-          "edge_z": 0.523,
-          "hit_prob": 0.7
+          "efp": 9.78,
+          "edge_z": 0.65,
+          "hit_prob": 0.742
         },
         {
           "player_id": 691023,
           "name": "Jordan Walker",
           "team_abbr": "STL",
           "opp_abbr": "MIA",
-          "opp_pitcher": "Max Meyer",
+          "opp_pitcher": "Chris Paddack",
           "line": 5.5,
           "side": "over",
-          "efp": 8.45,
-          "edge_z": 0.474,
-          "hit_prob": 0.682
+          "efp": 9.26,
+          "edge_z": 0.604,
+          "hit_prob": 0.727
         },
         {
-          "player_id": 695506,
-          "name": "Jac Caglianone",
-          "team_abbr": "KC",
-          "opp_abbr": "BAL",
-          "opp_pitcher": "Kyle Bradish",
+          "player_id": 701807,
+          "name": "Carson Benge",
+          "team_abbr": "NYM",
+          "opp_abbr": "MIN",
+          "opp_pitcher": "Simeon Woods Richardson",
           "line": 5.0,
           "side": "over",
-          "efp": 7.5,
-          "edge_z": 0.468,
-          "hit_prob": 0.68
+          "efp": 7.03,
+          "edge_z": 0.588,
+          "hit_prob": 0.722
         }
       ]
     },
     {
       "size": 4,
       "payout": 10.0,
-      "combined_prob": 0.2168,
-      "ev_pct": 116.8,
+      "combined_prob": 0.275,
+      "ev_pct": 175.0,
       "legs": [
         {
-          "player_id": 664023,
-          "name": "Ian Happ",
-          "team_abbr": "CHC",
-          "opp_abbr": "PHI",
-          "opp_pitcher": "Aaron Nola",
+          "player_id": 677587,
+          "name": "Brayan Rocchio",
+          "team_abbr": "CLE",
+          "opp_abbr": "HOU",
+          "opp_pitcher": "Ryan Weiss",
           "line": 5.5,
           "side": "over",
-          "efp": 9.08,
-          "edge_z": 0.523,
-          "hit_prob": 0.7
+          "efp": 9.78,
+          "edge_z": 0.65,
+          "hit_prob": 0.742
         },
         {
           "player_id": 691023,
           "name": "Jordan Walker",
           "team_abbr": "STL",
           "opp_abbr": "MIA",
-          "opp_pitcher": "Max Meyer",
+          "opp_pitcher": "Chris Paddack",
           "line": 5.5,
           "side": "over",
-          "efp": 8.45,
-          "edge_z": 0.474,
-          "hit_prob": 0.682
+          "efp": 9.26,
+          "edge_z": 0.604,
+          "hit_prob": 0.727
         },
         {
-          "player_id": 695506,
-          "name": "Jac Caglianone",
-          "team_abbr": "KC",
-          "opp_abbr": "BAL",
-          "opp_pitcher": "Kyle Bradish",
+          "player_id": 701807,
+          "name": "Carson Benge",
+          "team_abbr": "NYM",
+          "opp_abbr": "MIN",
+          "opp_pitcher": "Simeon Woods Richardson",
           "line": 5.0,
           "side": "over",
-          "efp": 7.5,
-          "edge_z": 0.468,
-          "hit_prob": 0.68
+          "efp": 7.03,
+          "edge_z": 0.588,
+          "hit_prob": 0.722
         },
         {
-          "player_id": 650490,
-          "name": "Yandy D\u00edaz",
-          "team_abbr": "TB",
-          "opp_abbr": "CIN",
-          "opp_pitcher": "Rhett Lowder",
-          "line": 5.5,
+          "player_id": 805808,
+          "name": "Kevin McGonigle",
+          "team_abbr": "DET",
+          "opp_abbr": "MIL",
+          "opp_pitcher": "Kyle Harrison",
+          "line": 5.0,
           "side": "over",
-          "efp": 7.52,
-          "edge_z": 0.434,
-          "hit_prob": 0.668
+          "efp": 8.09,
+          "edge_z": 0.542,
+          "hit_prob": 0.706
         }
       ]
     }
