@@ -26,6 +26,14 @@ VIEWS: list[tuple[str, str]] = [
     ("mlb_plays", "mlb_api/plays/year=*.parquet"),
 ]
 
+DERIVED_VIEWS: list[tuple[str, str]] = [
+    ("adv_batting_per_game", "advanced/batting_per_game/year=*.parquet"),
+    ("adv_pitching_per_game", "advanced/pitching_per_game/year=*.parquet"),
+    ("adv_batting_pitchtype", "advanced/batting_pitchtype_per_game/year=*.parquet"),
+    ("adv_pitching_pitchtype", "advanced/pitching_pitchtype_per_game/year=*.parquet"),
+    ("adv_league_rates", "advanced/league_rates/all.parquet"),
+]
+
 
 def _lahman_views(con: duckdb.DuckDBPyConnection) -> None:
     lahman_dir = raw("lahman")
@@ -52,8 +60,17 @@ def build() -> Path:
 
     for name, glob in VIEWS:
         pattern = (raw_root / glob).as_posix()
-        # read_parquet handles globs; wrap in try-except views are conditional
-        # on files existing for Statcast/FG etc.
+        try:
+            con.execute(
+                f"CREATE OR REPLACE VIEW {name} AS "
+                f"SELECT * FROM read_parquet('{pattern}', union_by_name=true, hive_partitioning=1)"
+            )
+        except duckdb.Error as exc:
+            print(f"skip view {name}: {exc}")
+
+    derived_root = db_root() / "derived"
+    for name, glob in DERIVED_VIEWS:
+        pattern = (derived_root / glob).as_posix()
         try:
             con.execute(
                 f"CREATE OR REPLACE VIEW {name} AS "
