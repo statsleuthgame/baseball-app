@@ -284,11 +284,19 @@ def _write_best_parlays(game_date: str, fantasy_picks: list[dict],
         # 1) Fantasy legs — tag source so the UI can badge them.
         fantasy_legs = edge_model_picks.tag_fantasy_legs(fantasy_picks)
 
-        # 2) Model legs — build the player-id→context map from the fantasy
-        #    picks themselves (they already carry team_abbr / opp_abbr /
-        #    opp_pitcher / game_key from the projections pipeline).
+        # 2) Model legs — build the player-id→context map from ALL of
+        #    today's scored projections (not just the trimmed best-bets),
+        #    so Edge Model 1 picks for players outside the fantasy top-N
+        #    still get their team/opp/game_key and make it into the pool.
+        #    Without this, only the ~10 locked players' model legs would
+        #    survive the load_model_legs game_key requirement.
+        full_projections = (
+            payload.get("_all_projections")
+            or payload.get("projections")
+            or fantasy_picks
+        )
         player_ctx: dict[int, dict] = {}
-        for p in fantasy_picks:
+        for p in full_projections:
             pid = p.get("player_id")
             if pid is None:
                 continue
@@ -306,8 +314,8 @@ def _write_best_parlays(game_date: str, fantasy_picks: list[dict],
         model_legs = edge_model_picks.load_model_legs(
             target_date=game_date, player_context=player_ctx,
         )
-        logger.info("best_parlays: %d fantasy legs + %d model legs",
-                    len(fantasy_legs), len(model_legs))
+        logger.info("best_parlays: %d fantasy legs + %d model legs (ctx from %d projections)",
+                    len(fantasy_legs), len(model_legs), len(player_ctx))
 
         # 3) Build 6 parlays (2×2-man, 2×3-man, 2×4-man).
         combined = fantasy_legs + model_legs
