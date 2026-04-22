@@ -66,6 +66,21 @@ def load_raw(target_date: str | None = None) -> dict | None:
     return raw
 
 
+def _platoon_advantage(bat_side: str | None, p_throws: str | None) -> str:
+    """Label the matchup for UI display.
+       '✓ platoon'   — batter has handedness advantage (incl. switch)
+       '✗ same-side' — pitcher has handedness advantage
+       '? unknown'   — missing info
+    """
+    b = (bat_side or '').upper()
+    t = (p_throws or '').upper()
+    if b == 'S':
+        return '✓ platoon'
+    if b in ('L', 'R') and t in ('L', 'R'):
+        return '✓ platoon' if b != t else '✗ same-side'
+    return '? unknown'
+
+
 def load_model_legs(
     target_date: str | None = None,
     *,
@@ -75,10 +90,13 @@ def load_model_legs(
 
     `player_context[mlbam_id]` supplies the game context the picks file
     does not carry on its own:
-        {team_abbr, opp_abbr, opp_pitcher, game_key, team_id}
+        {team_abbr, opp_abbr, opp_pitcher, game_key, team_id,
+         bat_side (opt), opp_p_throws (opt)}
 
     If the context map is empty or a pick's player isn't in it we drop
     that leg — we can't run the no-same-game guard without a game_key.
+    When bat_side + opp_p_throws are present, each leg gets a
+    `platoon` label for UI badges.
     """
     raw = load_raw(target_date)
     if not raw:
@@ -108,6 +126,8 @@ def load_model_legs(
         if (p.get("reboot_rate") or 0) >= REBOOT_FLAG_THRESHOLD \
            and (p.get("side") or "over").lower() == "over":
             source = f"{source}+reboot"
+        bat_side = ctx.get("bat_side")
+        p_throws = ctx.get("opp_p_throws")
         legs.append({
             "player_id":   int(pid),
             "name":        p.get("player"),
@@ -123,9 +143,83 @@ def load_model_legs(
             "reboot_rate": p.get("reboot_rate"),
             "source":      source,
             "game_key":    ctx.get("game_key"),
+            # Platoon info — optional; upstream may not populate these.
+            "bat_side":    bat_side,
+            "opp_p_throws": p_throws,
+            "platoon":     _platoon_advantage(bat_side, p_throws),
         })
     log.info("edge_model_picks: %d model legs loaded (%s)", len(legs), picks_path())
     return legs
+
+
+def build_reboot_watchlist(
+    target_date: str | None = None,
+    *,
+    player_context: dict[int, dict] | None = None,
+    min_reboot: float = REBOOT_FLAG_THRESHOLD,
+) -> list[dict]:
+    """Return every Model 1 pick whose `reboot_rate` clears the threshold,
+    regardless of whether it makes a parlay. Each entry is annotated with
+    platoon-advantage label and a "play hint" suggesting whether the
+    reboot signal + matchup aligns on the OVER or UNDER."""
+    raw = load_raw(target_date)
+    if not raw:
+        return []
+    picks = raw.get("picks") or []
+    if not picks or not player_context:
+        return []
+
+    import math
+    out: list[dict] = []
+    for p in picks:
+        rb = p.get("reboot_rate")
+        # Drop None and NaN — pandas emits NaN when a player has fewer
+        # than 10 games in the lookback window, which json silently
+        # stringifies. `NaN < 0.15` is False under IEEE-754 so the
+        # comparison alone wouldn't filter them.
+        if rb is None or (isinstance(rb, float) and math.isnan(rb)):
+            continue
+        if rb < min_reboot:
+            continue
+        pid = p.get("mlbam_id")
+        if pid is None:
+            continue
+        ctx = player_context.get(int(pid)) or {}
+        bat_side = ctx.get("bat_side")
+        p_throws = ctx.get("opp_p_throws")
+        platoon  = _platoon_advantage(bat_side, p_throws)
+        side = (p.get("side") or "over").lower()
+        # Alignment hint:
+        #   Over  + platoon advantage  → reboot + tailwind (both favor batter)
+        #   Under + same-side          → reboot + pitcher edge (both suppress)
+        hint = None
+        if side == "over"  and platoon.startswith("✓"):
+            hint = "aligned_over"
+        elif side == "under" and platoon.startswith("✗"):
+            hint = "aligned_under"
+        elif platoon.startswith("✓") or platoon.startswith("✗"):
+            hint = "split"   # matchup says one thing, model says another
+        out.append({
+            "mlbam_id":     int(pid),
+            "player":       p.get("player"),
+            "team":         ctx.get("team_abbr") or (p.get("team") or "").upper(),
+            "opp":          ctx.get("opp_abbr"),
+            "opp_pitcher":  ctx.get("opp_pitcher"),
+            "market":       (p.get("market") or "").lower(),
+            "line":         p.get("line"),
+            "side":         side,
+            "p_win":        p.get("p_win"),
+            "reboot_rate":  rb,
+            "reboot_games": p.get("reboot_games"),
+            "bat_side":     bat_side,
+            "opp_p_throws": p_throws,
+            "platoon":      platoon,
+            "hint":         hint,
+        })
+    # Sort: aligned picks first, then by p_win desc
+    priority = {"aligned_over": 0, "aligned_under": 1, "split": 2, None: 3}
+    out.sort(key=lambda r: (priority.get(r["hint"], 9), -(r["p_win"] or 0)))
+    return out
 
 
 def tag_fantasy_legs(picks: list[dict]) -> list[dict]:

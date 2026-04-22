@@ -288,13 +288,17 @@ def _write_best_parlays(game_date: str, fantasy_picks: list[dict],
         #    today's scored projections (not just the trimmed best-bets),
         #    so Edge Model 1 picks for players outside the fantasy top-N
         #    still get their team/opp/game_key and make it into the pool.
-        #    Without this, only the ~10 locked players' model legs would
-        #    survive the load_model_legs game_key requirement.
         full_projections = (
             payload.get("_all_projections")
             or payload.get("projections")
             or fantasy_picks
         )
+
+        # Also fetch today's probable-SP map → throwing hand for every
+        # team, so picks can be tagged with platoon matchup (batter
+        # handedness vs opposing pitcher's throws).
+        opp_throws_by_team = _fetch_opp_sp_throws(game_date)
+
         player_ctx: dict[int, dict] = {}
         for p in full_projections:
             pid = p.get("player_id")
@@ -303,19 +307,34 @@ def _write_best_parlays(game_date: str, fantasy_picks: list[dict],
             a = (p.get("team_abbr") or "").upper()
             b = (p.get("opp_abbr") or "").upper()
             game_key = "-".join(sorted([a, b])) if a and b else None
+            opp_pitcher_obj = p.get("opp_pitcher")
+            opp_pitcher_name = (opp_pitcher_obj or {}).get("fullName") \
+                if isinstance(opp_pitcher_obj, dict) else opp_pitcher_obj
             player_ctx[int(pid)] = {
-                "team_abbr":   a,
-                "opp_abbr":    b,
-                "opp_pitcher": (p.get("opp_pitcher") or {}).get("fullName")
-                                 if isinstance(p.get("opp_pitcher"), dict)
-                                 else p.get("opp_pitcher"),
-                "game_key":    game_key,
+                "team_abbr":    a,
+                "opp_abbr":     b,
+                "opp_pitcher":  opp_pitcher_name,
+                "game_key":     game_key,
+                "bat_side":     p.get("bat_side"),
+                "opp_p_throws": opp_throws_by_team.get(a),
             }
         model_legs = edge_model_picks.load_model_legs(
             target_date=game_date, player_context=player_ctx,
         )
-        logger.info("best_parlays: %d fantasy legs + %d model legs (ctx from %d projections)",
-                    len(fantasy_legs), len(model_legs), len(player_ctx))
+        # Reboot watchlist — every reboot-flagged pick, regardless of
+        # whether it makes a parlay combo. Shown as its own card on the
+        # Edge page so the user can always see the reboot × platoon
+        # intersection even when Model 1's pick doesn't cascade into an
+        # EV-optimal combo.
+        reboot_watch = edge_model_picks.build_reboot_watchlist(
+            target_date=game_date, player_context=player_ctx,
+        )
+        logger.info(
+            "best_parlays: %d fantasy legs + %d model legs (ctx from %d "
+            "projections) · %d reboot watch",
+            len(fantasy_legs), len(model_legs), len(player_ctx),
+            len(reboot_watch),
+        )
 
         # 3) Build 6 parlays (2×2-man, 2×3-man, 2×4-man).
         combined = fantasy_legs + model_legs
@@ -338,6 +357,72 @@ def _write_best_parlays(game_date: str, fantasy_picks: list[dict],
     out_path.write_text(json.dumps(out, indent=2) + "\n")
     logger.info("best_parlays: wrote %d curated parlays → %s",
                 len(best), out_path.name)
+
+    # Separate file for the reboot watchlist so the UI can read it
+    # independently — don't couple the "what parlays exist today" signal
+    # with the "which reboot picks align with platoon today" signal.
+    watch_path = OUT_DIR / "todays_reboot_watch.json"
+    watch_out = {
+        "game_date": game_date,
+        "generated_at": payload.get("generated_at") or datetime.now(timezone.utc).isoformat(),
+        "min_reboot": 0.15,
+        "picks": reboot_watch,
+    }
+    watch_path.write_text(json.dumps(watch_out, indent=2) + "\n")
+    logger.info("reboot_watch: wrote %d entries → %s",
+                len(reboot_watch), watch_path.name)
+
+
+def _fetch_opp_sp_throws(game_date: str) -> dict[str, str]:
+    """Return {team_abbr: throw_hand} for each team's OPPOSING SP today.
+
+    Used to tag every player with the handedness of the pitcher they'll
+    face, so the UI can render platoon (bat vs thr) badges. One-shot
+    network call; failures fall back to an empty map (leg keeps going,
+    just without the platoon badge)."""
+    TEAM = {
+        108:"LAA",109:"AZ",110:"BAL",111:"BOS",112:"CHC",113:"CIN",114:"CLE",
+        115:"COL",116:"DET",117:"HOU",118:"KC",119:"LAD",120:"WSH",121:"NYM",
+        133:"ATH",134:"PIT",135:"SD",136:"SEA",137:"SF",138:"STL",139:"TB",
+        140:"TEX",141:"TOR",142:"MIN",143:"PHI",144:"ATL",145:"CWS",146:"MIA",
+        147:"NYY",158:"MIL",
+    }
+    import urllib.request
+    try:
+        sched = json.loads(urllib.request.urlopen(
+            "https://statsapi.mlb.com/api/v1/schedule"
+            f"?sportId=1&date={game_date}&hydrate=probablePitcher",
+            timeout=10).read())
+    except Exception as e:
+        logger.warning("opp_sp_throws: schedule fetch failed (%s)", e)
+        return {}
+
+    # team_abbr → opposing pitcher id
+    opp_pp_by_team: dict[str, int] = {}
+    for d in sched.get("dates", []):
+        for g in d.get("games", []):
+            for me, them in (("away", "home"), ("home", "away")):
+                me_tid  = g["teams"][me]["team"]["id"]
+                them_pp = (g["teams"][them].get("probablePitcher") or {}).get("id")
+                abbr = TEAM.get(me_tid)
+                if abbr and them_pp:
+                    opp_pp_by_team[abbr] = them_pp
+
+    # Batch fetch throw hands
+    pp_ids = set(opp_pp_by_team.values())
+    throws_by_pid: dict[int, str] = {}
+    if pp_ids:
+        try:
+            data = json.loads(urllib.request.urlopen(
+                "https://statsapi.mlb.com/api/v1/people"
+                f"?personIds={','.join(map(str, pp_ids))}",
+                timeout=10).read())
+            for p in data.get("people", []):
+                throws_by_pid[p["id"]] = (p.get("pitchHand") or {}).get("code") or "?"
+        except Exception as e:
+            logger.warning("opp_sp_throws: people fetch failed (%s)", e)
+
+    return {abbr: throws_by_pid.get(pid, "?") for abbr, pid in opp_pp_by_team.items()}
 
 
 async def generate(date_iso: str | None) -> None:

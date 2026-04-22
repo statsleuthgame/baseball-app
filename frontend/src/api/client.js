@@ -991,6 +991,18 @@ export const fetchTodaysBestParlays = async () => {
   }
 };
 
+// Reboot watchlist — every Model 1 pick with reboot_rate ≥ 15%, enriched
+// with bat/throw platoon matchup + an alignment "hint" (aligned_over,
+// aligned_under, split, or unknown). Independent of whether the pick
+// made it into a parlay combo — this is the raw reboot × matchup view.
+export const fetchTodaysRebootWatch = async () => {
+  try {
+    return await staticFetch("fantasy/todays_reboot_watch.json");
+  } catch {
+    return null;
+  }
+};
+
 // Manual refresh — kick the morning-lock pipeline + Edge-repo Model 1
 // generator so today's PP lines / projections / parlays / best-parlays
 // all rebuild off the latest data. Only works against a local backend

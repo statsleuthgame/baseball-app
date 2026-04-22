@@ -252,7 +252,7 @@
       "tier": "low",
       "prizepicks": {
         "fantasy": 7.5,
-        "hrr": 1.5,
+        "hrr": 4.5,
         "total_bases": 4.5,
         "hits": 1.5,
         "rbis": 1.5,
@@ -4378,5 +4378,5 @@
       "edge_z": 0.411
     }
   ],
-  "generated_at": "2026-04-22T14:29:01.360369+00:00"
+  "generated_at": "2026-04-22T15:04:21.375509+00:00"
 }

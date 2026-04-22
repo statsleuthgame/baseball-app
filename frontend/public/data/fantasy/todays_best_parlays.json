@@ -1,6 +1,6 @@
 {
   "game_date": "2026-04-22",
-  "generated_at": "2026-04-22T14:29:01.360369+00:00",
+  "generated_at": "2026-04-22T15:04:21.375509+00:00",
   "weights_version": "2026-04-18",
   "leg_counts": {
     "fantasy_edge": 10,
@@ -25,7 +25,8 @@
           "hit_prob": 0.792,
           "source": "fantasy_edge",
           "efp": 8.81,
-          "edge_z": 0.812
+          "edge_z": 0.812,
+          "bat_side": "L"
         },
         {
           "player_id": 609280,
@@ -39,7 +40,10 @@
           "hit_prob": 0.745,
           "source": "model_tb",
           "edge": 0.168,
-          "reboot_rate": 0.133
+          "reboot_rate": 0.133,
+          "bat_side": "R",
+          "opp_p_throws": "R",
+          "platoon": "\u2717 same-side"
         }
       ]
     },
@@ -61,7 +65,8 @@
           "hit_prob": 0.741,
           "source": "fantasy_edge",
           "efp": 8.82,
-          "edge_z": 0.645
+          "edge_z": 0.645,
+          "bat_side": "R"
         },
         {
           "player_id": 661388,
@@ -75,7 +80,8 @@
           "hit_prob": 0.737,
           "source": "fantasy_edge",
           "efp": 7.52,
-          "edge_z": 0.635
+          "edge_z": 0.635,
+          "bat_side": "R"
         }
       ]
     },
@@ -97,7 +103,8 @@
           "hit_prob": 0.792,
           "source": "fantasy_edge",
           "efp": 8.81,
-          "edge_z": 0.812
+          "edge_z": 0.812,
+          "bat_side": "L"
         },
         {
           "player_id": 609280,
@@ -111,7 +118,10 @@
           "hit_prob": 0.745,
           "source": "model_tb",
           "edge": 0.168,
-          "reboot_rate": 0.133
+          "reboot_rate": 0.133,
+          "bat_side": "R",
+          "opp_p_throws": "R",
+          "platoon": "\u2717 same-side"
         },
         {
           "player_id": 669127,
@@ -125,7 +135,8 @@
           "hit_prob": 0.741,
           "source": "fantasy_edge",
           "efp": 8.82,
-          "edge_z": 0.645
+          "edge_z": 0.645,
+          "bat_side": "R"
         }
       ]
     },
@@ -147,7 +158,8 @@
           "hit_prob": 0.737,
           "source": "fantasy_edge",
           "efp": 7.52,
-          "edge_z": 0.635
+          "edge_z": 0.635,
+          "bat_side": "R"
         },
         {
           "player_id": 643446,
@@ -161,7 +173,8 @@
           "hit_prob": 0.732,
           "source": "fantasy_edge",
           "efp": 7.51,
-          "edge_z": 0.618
+          "edge_z": 0.618,
+          "bat_side": "L"
         },
         {
           "player_id": 686948,
@@ -175,7 +188,8 @@
           "hit_prob": 0.725,
           "source": "fantasy_edge",
           "efp": 9.32,
-          "edge_z": 0.598
+          "edge_z": 0.598,
+          "bat_side": "L"
         }
       ]
     },
@@ -197,7 +211,8 @@
           "hit_prob": 0.792,
           "source": "fantasy_edge",
           "efp": 8.81,
-          "edge_z": 0.812
+          "edge_z": 0.812,
+          "bat_side": "L"
         },
         {
           "player_id": 609280,
@@ -211,7 +226,10 @@
           "hit_prob": 0.745,
           "source": "model_tb",
           "edge": 0.168,
-          "reboot_rate": 0.133
+          "reboot_rate": 0.133,
+          "bat_side": "R",
+          "opp_p_throws": "R",
+          "platoon": "\u2717 same-side"
         },
         {
           "player_id": 669127,
@@ -225,7 +243,8 @@
           "hit_prob": 0.741,
           "source": "fantasy_edge",
           "efp": 8.82,
-          "edge_z": 0.645
+          "edge_z": 0.645,
+          "bat_side": "R"
         },
         {
           "player_id": 661388,
@@ -239,7 +258,8 @@
           "hit_prob": 0.737,
           "source": "fantasy_edge",
           "efp": 7.52,
-          "edge_z": 0.635
+          "edge_z": 0.635,
+          "bat_side": "R"
         }
       ]
     },
@@ -261,7 +281,8 @@
           "hit_prob": 0.732,
           "source": "fantasy_edge",
           "efp": 7.51,
-          "edge_z": 0.618
+          "edge_z": 0.618,
+          "bat_side": "L"
         },
         {
           "player_id": 686948,
@@ -275,7 +296,8 @@
           "hit_prob": 0.725,
           "source": "fantasy_edge",
           "efp": 9.32,
-          "edge_z": 0.598
+          "edge_z": 0.598,
+          "bat_side": "L"
         },
         {
           "player_id": 669364,
@@ -289,7 +311,8 @@
           "hit_prob": 0.722,
           "source": "fantasy_edge",
           "efp": 9.51,
-          "edge_z": 0.59
+          "edge_z": 0.59,
+          "bat_side": "S"
         },
         {
           "player_id": 657757,
@@ -303,7 +326,10 @@
           "hit_prob": 0.715,
           "source": "model_tb",
           "edge": 0.138,
-          "reboot_rate": 0.15
+          "reboot_rate": 0.15,
+          "bat_side": "L",
+          "opp_p_throws": "R",
+          "platoon": "\u2713 platoon"
         }
       ]
     }

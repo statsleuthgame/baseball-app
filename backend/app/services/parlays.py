@@ -302,6 +302,11 @@ def _format_leg_rich(p: dict) -> dict:
         leg["edge"] = round(float(p["edge"]), 3)
     if p.get("reboot_rate") is not None:
         leg["reboot_rate"] = round(float(p["reboot_rate"]), 3)
+    # Platoon fields (optional — set by edge_model_picks / generator).
+    # Carry them through so the UI can render handedness badges.
+    for k in ("bat_side", "opp_p_throws", "platoon"):
+        if p.get(k) is not None:
+            leg[k] = p[k]
     return leg
 
 

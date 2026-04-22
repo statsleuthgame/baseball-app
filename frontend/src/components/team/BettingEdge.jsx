@@ -17,6 +17,7 @@ import SkeletonLoader from "../common/SkeletonLoader";
 import FantasyProjections from "./FantasyProjections";
 import ParlayIdeas from "./ParlayIdeas";
 import BestParlays from "./BestParlays";
+import RebootWatchlist from "./RebootWatchlist";
 import {
   computeEdgeScore,
   computeFadeScore,
@@ -311,6 +312,12 @@ export default function BettingEdge() {
           Edge-repo Model 1 picks. Always open — this is the "5-6 picks
           a day" takeaway the user wanted front-and-center. */}
       <BestParlays />
+
+      {/* Reboot × platoon watchlist — every Model 1 pick with reboot
+          rate ≥ 15%, regardless of whether it made the EV parlay cut.
+          Silent if the JSON is empty; otherwise renders a compact list
+          of reboot picks annotated with their bat-vs-throws matchup. */}
+      <RebootWatchlist />
 
       {/* Secondary: the legacy 4-parlay EV-optimized collapse. Kept as
           a simpler sanity-check view — single-source (fantasy only). */}

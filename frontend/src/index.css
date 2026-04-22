@@ -9140,3 +9140,158 @@ th.sb-ls-total {
   margin: 8px 0 0;
 }
 
+/* ---------------------------------------------------------------------
+   Reboot Watchlist — compact card of Model 1 reboot picks × platoon.
+   Sits between BestParlays and ParlayIdeas so users can always see the
+   reboot × matchup intersection even when a pick doesn't make a combo.
+   --------------------------------------------------------------------- */
+.reboot-watchlist {
+  margin: 0 0 20px;
+  padding: 14px 18px 12px;
+  background: rgba(198,140,255,0.06);
+  border: 1px solid rgba(198,140,255,0.25);
+  border-radius: 12px;
+}
+.reboot-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.reboot-title {
+  margin: 0;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #c68cff;
+}
+.reboot-count {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  background: rgba(198,140,255,0.22);
+  color: #c68cff;
+  border-radius: 10px;
+  letter-spacing: 0.04em;
+}
+.reboot-sub { font-size: 11px; color: #8b94a8; }
+.reboot-sub b { color: #c68cff; }
+.reboot-footnote {
+  margin: 10px 0 0;
+  font-size: 11px;
+  color: #5a6274;
+  line-height: 1.5;
+}
+
+.reboot-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.reboot-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px 14px;
+  align-items: center;
+  padding: 8px 12px;
+  background: rgba(18,23,34,0.75);
+  border: 1px solid rgba(198,140,255,0.14);
+  border-radius: 8px;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+.reboot-row.reboot-aligned  { border-color: rgba(74,210,149,0.35); }
+.reboot-row.reboot-aligned.over  { background: rgba(74,210,149,0.06); }
+.reboot-row.reboot-aligned.under { background: rgba(74,210,149,0.05); }
+.reboot-row.reboot-split    { border-color: rgba(255,159,67,0.3); background: rgba(255,159,67,0.05); }
+.reboot-row.reboot-unknown  { border-style: dashed; }
+
+.reboot-row-main { min-width: 0; }
+.reboot-row-top {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.reboot-row-side {
+  font-size: 10px;
+  font-weight: 700;
+  color: #ff9f43;
+  letter-spacing: 0.06em;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: rgba(255,159,67,0.15);
+}
+.reboot-row-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #e8ecf4;
+}
+.reboot-row-meta {
+  margin-top: 3px;
+  font-size: 11px;
+  color: #8b94a8;
+}
+.reboot-row-meta b { color: #e8ecf4; font-weight: 600; }
+
+/* Platoon chip */
+.platoon {
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.06em;
+}
+.platoon-good    { color: #4ad295; background: rgba(74,210,149,0.15); }
+.platoon-bad     { color: #ff9f43; background: rgba(255,159,67,0.15); }
+.platoon-unknown { color: #8b94a8; background: rgba(139,148,168,0.15); }
+
+.reboot-row-metrics {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+}
+.reboot-metric {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+  font-variant-numeric: tabular-nums;
+}
+.reboot-metric-label {
+  font-size: 9px;
+  color: #5a6274;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.reboot-metric-value {
+  font-size: 13px;
+  font-weight: 700;
+  color: #e8ecf4;
+}
+.reboot-metric-value.reboot-strong { color: #c68cff; }
+
+.reboot-hint {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.reboot-hint.reboot-aligned  { background: rgba(74,210,149,0.2);  color: #4ad295; }
+.reboot-hint.reboot-split    { background: rgba(255,159,67,0.2);  color: #ff9f43; }
+.reboot-hint.reboot-unknown  { background: rgba(139,148,168,0.2); color: #8b94a8; }
+
+/* Mobile: stack metrics under the player name instead of right-aligning. */
+@media (max-width: 540px) {
+  .reboot-row { grid-template-columns: 1fr; }
+  .reboot-row-metrics { justify-content: flex-start; }
+}
+
