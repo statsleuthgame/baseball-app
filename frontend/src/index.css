@@ -570,6 +570,28 @@ body {
   gap: 16px;
 }
 
+/* Column wrappers — flex columns on mobile (stack naturally inside the parent
+   flex column); become side-by-side grid cells on wide desktop via rules below. */
+.dashboard-col-left,
+.dashboard-col-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+/* Wide desktop: split dashboard into 2 columns.
+   Left: Today + Upcoming + Hot/Cold + Transactions.
+   Right: Standings + League Leaders. */
+@media (min-width: 1024px) {
+  .app-content--wide .dashboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+}
+
 /* Today Game Wrapper */
 .today-game-wrapper {
   display: flex;
