@@ -5470,13 +5470,36 @@ th.sb-ls-total {
 }
 
 @media (min-width: 1024px) {
-  /* --- Wide desktop: stretch the hero HUD --- */
-  .app-content--wide .lgp-hero-hud { padding: 24px 24px 22px; gap: 14px; }
-  .app-content--wide .lgp-hud-logo { width: 56px; height: 56px; }
-  .app-content--wide .lgp-hud-abbr { font-size: 20px; letter-spacing: 1px; }
-  .app-content--wide .lgp-hud-score { font-size: 64px; min-width: 56px; }
-  .app-content--wide .lgp-hud-dash { font-size: 32px; }
-  .app-content--wide .lgp-hud-scores { gap: 20px; }
+  /* --- Wide desktop: stretch the hero HUD ---
+     Team logos pull out to the far left/right edges of the hero, get much
+     larger, and stack with the abbreviation underneath. Scores, state, and
+     bases center between them. */
+  .app-content--wide .lgp-hero-hud {
+    padding: 28px 200px;
+    gap: 14px;
+    min-height: 240px;
+  }
+  .app-content--wide .lgp-hud-logo { width: 140px; height: 140px; }
+  .app-content--wide .lgp-hud-abbr {
+    font-size: 28px;
+    letter-spacing: 1.2px;
+  }
+  .app-content--wide .lgp-hud-team {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .app-content--wide .lgp-hud-team:not(.lgp-hud-team-right) { left: 32px; }
+  .app-content--wide .lgp-hud-team-right {
+    right: 32px;
+    flex-direction: column; /* override row-reverse from base */
+  }
+  .app-content--wide .lgp-hud-score { font-size: 72px; min-width: 64px; }
+  .app-content--wide .lgp-hud-dash { font-size: 36px; }
+  .app-content--wide .lgp-hud-scores { gap: 24px; }
   .app-content--wide .lgp-hud-state { gap: 18px; }
   .app-content--wide .lgp-hud-state-label { font-size: 11px; }
   .app-content--wide .lgp-hud-state-value { font-size: 22px; }
