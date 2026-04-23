@@ -457,6 +457,17 @@ body {
   border-radius: 1px;
 }
 
+/* Desktop: significantly larger header + tabs, since there's plenty of room.
+   Applies at all routes (not gated by .app-content--wide) so the shell feels
+   consistent even on narrow-route pages. */
+@media (min-width: 1024px) {
+  .top-bar { padding: 14px 24px; gap: 16px; }
+  .top-bar-logo { width: 42px; height: 42px; }
+  .top-bar-title { font-size: 24px; letter-spacing: -0.4px; }
+  .top-tab { font-size: 17px; padding: 14px 0; }
+  .top-tab-active::after { width: 48px; height: 3px; }
+}
+
 
 
 /* Team Selector */
