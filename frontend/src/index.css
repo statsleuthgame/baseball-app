@@ -5509,6 +5509,10 @@ th.sb-ls-total {
   .app-content--wide .lgp-hud-runners { font-size: 13px; gap: 10px; }
   .app-content--wide .lgp-hud-runner-chip { padding: 4px 10px; font-size: 12px; }
   .app-content--wide .lgp-hud-final-tag { font-size: 20px; padding: 6px 20px; }
+  /* Final games on desktop: FINAL tag sits above the scores; score numbers
+     get an extra bump since FINAL is the big visual. */
+  .app-content--wide .lgp-hero-hud--final .lgp-hud-score { font-size: 96px; min-width: 80px; }
+  .app-content--wide .lgp-hero-hud--final .lgp-hud-dash { font-size: 48px; }
 
   /* --- Wide desktop: 2-column split for everything below the HUD ---
      DOM order (mobile-first): matchup/feature → due up → linescore → box → scoring → footer.
