@@ -308,7 +308,7 @@ export default function LiveGamePage() {
       )}
 
       {/* ===== HERO HUD ===== */}
-      <div className="lgp-hero-hud">
+      <div className={`lgp-hero-hud${isFinal ? " lgp-hero-hud--final" : ""}`}>
         <button className="lgp-hud-back" onClick={() => navigate(-1)} aria-label="Go back">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="15 18 9 12 15 6" /></svg>
         </button>
@@ -320,6 +320,9 @@ export default function LiveGamePage() {
             </span>
           )}
         </div>
+        {isFinal && (
+          <div className="lgp-hud-final-tag">FINAL{liveState?.linescore?.innings?.length > 9 ? ` / ${liveState.linescore.innings.length}` : ""}</div>
+        )}
         <div className="lgp-hud-scores">
           <div className="lgp-hud-team">
             <img src={gameInfo.away.logoUrl} alt={gameInfo.away.abbreviation} className="lgp-hud-logo" />
@@ -390,9 +393,6 @@ export default function LiveGamePage() {
           </div>
         )}
 
-        {isFinal && (
-          <div className="lgp-hud-final-tag">FINAL{liveState?.linescore?.innings?.length > 9 ? ` / ${liveState.linescore.innings.length}` : ""}</div>
-        )}
       </div>
 
       {isFinal && isWide ? (
