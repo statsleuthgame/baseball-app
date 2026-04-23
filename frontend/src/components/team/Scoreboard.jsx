@@ -778,8 +778,12 @@ export default function Scoreboard() {
         </div>
       )}
 
-      {sorted.length > 0 && (
-        <div className={`scoreboard-list${groups.live.length === 0 ? " scoreboard-list--single" : ""}`}>
+      {(() => {
+        const leftHasContent = groups.myTeams.length > 0 || groups.upcoming.length > 0 || groups.final.length > 0;
+        const rightHasContent = groups.live.length > 0;
+        const isSingle = !leftHasContent || !rightHasContent;
+        return sorted.length > 0 && (
+        <div className={`scoreboard-list${isSingle ? " scoreboard-list--single" : ""}`}>
           {(() => {
           const renderCard = (game) => {
             const isOurGame = game.home.id === teamId || game.away.id === teamId;
@@ -1013,7 +1017,8 @@ export default function Scoreboard() {
           );
           })()}
         </div>
-      )}
+        );
+      })()}
     </div>
   );
 }
