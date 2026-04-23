@@ -104,7 +104,7 @@ export default function LiveGamePage() {
       return innB - innA;
     });
 
-  const [boxOpen, setBoxOpen] = useState(false);
+  const [boxOpen, setBoxOpen] = useState(true);
   const [replayData, setReplayData] = useState(null); // scoring play hit data for replay
   const [replayKey, setReplayKey] = useState(0);
   const { data: boxData } = useQuery({
@@ -264,6 +264,8 @@ export default function LiveGamePage() {
 
   const isLive = gameInfo ? ["In Progress", "Warmup", "Delayed Start", "Delayed"].includes(gameInfo.status) : false;
   const isFinal = gameInfo?.status === "Final";
+  // Wide desktop layout kicks in at ≥1024px (matches .app-content--wide in CSS).
+  const isWide = useIsMobile("(min-width: 1024px)");
 
   if (isLoading) return <LoadingSpinner text="Loading game..." />;
   if (!gameInfo) return <div className="matchup-empty"><h2>Game not found</h2></div>;
@@ -393,9 +395,171 @@ export default function LiveGamePage() {
         )}
       </div>
 
+      {isFinal && isWide ? (
+        <div className="lgp-body lgp-body--final">
+          {/* Full-width linescore directly under the HUD */}
+          {liveState?.linescore && (() => {
+            const innings = liveState.linescore?.innings || [];
+            const maxInn = Math.max(9, innings.length);
+            const fullInnings = Array.from({ length: maxInn }, (_, i) => {
+              const real = innings.find((inn) => inn.num === i + 1);
+              return { num: i + 1, away: real?.away ?? "", home: real?.home ?? "" };
+            });
+            return (
+              <div className="lgp-section lgp-final-linescore">
+                <div className="lgp-ls-scroll">
+                  <table className="live-ls-table">
+                    <thead>
+                      <tr>
+                        <th></th>
+                        {fullInnings.map((inn) => <th key={inn.num}>{inn.num}</th>)}
+                        <th className="live-ls-total">R</th>
+                        <th className="live-ls-total">H</th>
+                        <th className="live-ls-total">E</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td className="live-ls-team">{gameInfo.away.abbreviation}</td>
+                        {fullInnings.map((inn) => <td key={inn.num} className={inn.away === "" ? "live-ls-future" : ""}>{inn.away !== "" ? inn.away : "-"}</td>)}
+                        <td className="live-ls-total">{(liveState.linescore?.away || {}).runs}</td>
+                        <td className="live-ls-total">{(liveState.linescore?.away || {}).hits}</td>
+                        <td className="live-ls-total">{(liveState.linescore?.away || {}).errors}</td>
+                      </tr>
+                      <tr>
+                        <td className="live-ls-team">{gameInfo.home.abbreviation}</td>
+                        {fullInnings.map((inn) => <td key={inn.num} className={inn.home === "" ? "live-ls-future" : ""}>{inn.home !== "" ? inn.home : "-"}</td>)}
+                        <td className="live-ls-total">{(liveState.linescore?.home || {}).runs}</td>
+                        <td className="live-ls-total">{(liveState.linescore?.home || {}).hits}</td>
+                        <td className="live-ls-total">{(liveState.linescore?.home || {}).errors}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* Split box scores — away on left, home on right */}
+          {boxData && (
+            <>
+              <FinalTeamBox
+                className="lgp-final-box-away"
+                teamInfo={gameInfo.away}
+                score={liveState?.linescore?.away?.runs ?? gameInfo.away.score}
+                batters={boxData.away}
+                pitchers={boxData.awayPitchers}
+                teamId={teamId}
+                navigate={navigate}
+              />
+              <FinalTeamBox
+                className="lgp-final-box-home"
+                teamInfo={gameInfo.home}
+                score={liveState?.linescore?.home?.runs ?? gameInfo.home.score}
+                batters={boxData.home}
+                pitchers={boxData.homePitchers}
+                teamId={teamId}
+                navigate={navigate}
+              />
+            </>
+          )}
+
+          {/* Full-width scoring summary */}
+          {liveState?.scoringPlays?.length > 0 && (
+            <div className="lgp-section lgp-final-scoring">
+              <span className="lgp-section-label">Scoring</span>
+              <div className="live-scoring-list">
+                {liveState.scoringPlays.map((p) => {
+                  const scoringTeamId = p.halfInning === "top" ? gameInfo.away.id : gameInfo.home.id;
+                  const teamColor = ALL_TEAMS[scoringTeamId]?.primary || "var(--team-secondary)";
+                  const hd = p.hitData;
+                  const isHR = (p.event && p.event.toLowerCase().includes("home run")) || (hd?.event && hd.event.toLowerCase().includes("home run"));
+                  const metrics = [];
+                  if (isHR) {
+                    if (hd?.exitVelo) metrics.push(`${Math.round(hd.exitVelo * 10) / 10} MPH`);
+                    if (hd?.distance) metrics.push(`${Math.round(hd.distance)} FT`);
+                    if (hd?.launchAngle != null) metrics.push(`${Math.round(hd.launchAngle)}° LA`);
+                  }
+                  return (
+                    <div
+                      key={`${p.inning}-${p.halfInning}-${p.awayScore}-${p.homeScore}`}
+                      className="lgp-scoring-card"
+                      style={{ "--card-color": teamColor }}
+                    >
+                      <div className="lgp-scoring-top">
+                        <span className="lgp-scoring-inning-chip">{p.halfInning === "top" ? "T" : "B"}{p.inning}</span>
+                        <span className="lgp-scoring-desc" dangerouslySetInnerHTML={{ __html: formatScoringDesc(p.description, p.hrDistance) }} />
+                        <span className="lgp-scoring-score-box">{p.awayScore}<span>–</span>{p.homeScore}</span>
+                      </div>
+                      {metrics.length > 0 && (
+                        <div className="lgp-scoring-metrics">
+                          {metrics.map((m, i) => (
+                            <span key={i} className="lgp-scoring-metric">{m}</span>
+                          ))}
+                        </div>
+                      )}
+                      {hd && (
+                        <button className="lgp-scoring-replay" onClick={() => { setReplayData(p); setReplayKey(k => k + 1); }}>
+                          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21" /></svg>
+                          Replay
+                        </button>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Full-width footer (venue + weather + matchup link) */}
+          {(() => {
+            const ag = allGames?.find(g => String(g.gamePk) === String(gamePk));
+            const weather = ag?.weather;
+            return (
+              <div className="lgp-footer lgp-final-footer">
+                <div className="lgp-footer-info">
+                  <span className="lgp-venue-text">{gameInfo.venue}{gameInfo.venueLocation ? ` · ${gameInfo.venueLocation}` : ""}</span>
+                  {weather && (weather.condition || weather.temp) && (
+                    <span className="lgp-weather-text">
+                      {weather.condition || ""}
+                      {weather.temp != null && ` · ${weather.temp}°F`}
+                      {weather.wind ? ` · ${weather.wind}` : ""}
+                    </span>
+                  )}
+                </div>
+                <button className="lgp-matchup-btn" onClick={() => navigate(`/team/${teamId}/matchup/${gamePk}`)}>
+                  View Full Matchup
+                </button>
+              </div>
+            );
+          })()}
+
+          {/* Replay overlay (fixed-positioned; DOM location doesn't matter) */}
+          {replayData && (
+            <div className="lgp-replay-overlay">
+              <div className="lgp-replay-header">
+                <span className="lgp-replay-label">REPLAY</span>
+                <button className="lgp-replay-close" onClick={() => setReplayData(null)}>✕</button>
+              </div>
+              <Suspense fallback={<div style={{ height: 300, display: "flex", alignItems: "center", justifyContent: "center", color: "#888" }}>Loading...</div>}>
+                <BallInPlay3D
+                  key={replayKey}
+                  hitData={replayData.hitData}
+                  venueTeamId={gameInfo.home.id}
+                  runnersOn={replayData.runnersOn || {}}
+                  runnerNames={{ ...(replayData.runnerNames || {}), batter: replayData.hitData?.batterName || "" }}
+                />
+              </Suspense>
+            </div>
+          )}
+        </div>
+      ) : (
+      <div className="lgp-body lgp-body--split">
+      <div className="lgp-body-left">
+
       {/* ===== ZONE B+C: AT-BAT + VISUAL (combined) — hide when game is final ===== */}
       {!isFinal && liveState?.batter && liveState?.pitcher && (
-        <div className="lgp-section">
+        <div className="lgp-section lgp-area-matchup">
           {/* Matchup cards: Batter (batting team color) | Pitcher (pitching team color) */}
           {(() => {
             const battingTeamId = liveState.inningHalf === "Top" ? gameInfo.away.id : gameInfo.home.id;
@@ -544,7 +708,7 @@ export default function LiveGamePage() {
 
       {/* ===== DUE UP (centered) ===== */}
       {!isFinal && (liveState?.onDeck || liveState?.inHole) && (
-        <div className="lgp-due-strip">
+        <div className="lgp-due-strip lgp-area-dueup">
           <span className="lgp-due-strip-label">Due Up</span>
           <div className="lgp-due-strip-list">
             {[liveState.onDeck, liveState.inHole].filter(Boolean).map((p) => {
@@ -564,6 +728,9 @@ export default function LiveGamePage() {
         </div>
       )}
 
+      </div>
+      <div className="lgp-body-right">
+
       {/* ===== LINESCORE ===== */}
       {liveState?.linescore && (() => {
         const innings = liveState.linescore?.innings || [];
@@ -573,7 +740,7 @@ export default function LiveGamePage() {
           return { num: i + 1, away: real?.away ?? "", home: real?.home ?? "" };
         });
         return (
-          <div className="lgp-section">
+          <div className="lgp-section lgp-area-linescore">
             <div className="lgp-ls-scroll">
               <table className="live-ls-table">
                 <thead>
@@ -628,17 +795,19 @@ export default function LiveGamePage() {
       )}
 
       {/* ===== BOX SCORE (collapsed by default, opens on tap) ===== */}
-      <BoxScoreSection
-        boxOpen={boxOpen}
-        setBoxOpen={setBoxOpen}
-        boxData={boxData}
-        gameInfo={gameInfo}
-        teamId={teamId}
-      />
+      <div className="lgp-area-box">
+        <BoxScoreSection
+          boxOpen={boxOpen}
+          setBoxOpen={setBoxOpen}
+          boxData={boxData}
+          gameInfo={gameInfo}
+          teamId={teamId}
+        />
+      </div>
 
       {/* ===== SCORING SUMMARY — rich cards with hit metrics chyron ===== */}
       {liveState?.scoringPlays?.length > 0 && (
-        <div className="lgp-section">
+        <div className="lgp-section lgp-area-scoring">
           <span className="lgp-section-label">Scoring</span>
           <div className="live-scoring-list">
             {liveState.scoringPlays.map((p) => {
@@ -688,7 +857,7 @@ export default function LiveGamePage() {
         const ag = allGames?.find(g => String(g.gamePk) === String(gamePk));
         const weather = ag?.weather;
         return (
-          <div className="lgp-footer">
+          <div className="lgp-footer lgp-area-footer">
             <div className="lgp-footer-info">
               <span className="lgp-venue-text">{gameInfo.venue}{gameInfo.venueLocation ? ` · ${gameInfo.venueLocation}` : ""}</span>
               {weather && (weather.condition || weather.temp) && (
@@ -705,6 +874,9 @@ export default function LiveGamePage() {
           </div>
         );
       })()}
+      </div>
+      </div>
+      )}
     </div>
   );
 }
@@ -1089,6 +1261,118 @@ function BoxScoreSection({ boxOpen, setBoxOpen, boxData, gameInfo, teamId }) {
             </>
           )}
         </div>
+      )}
+    </div>
+  );
+}
+
+// === Final-desktop-only: full single-team box (batters + pitchers) ===
+// Used in the 2-column split below the HUD when game is Final + wide viewport.
+// No tabs, always open, includes team header.
+function FinalTeamBox({ className, teamInfo, score, batters, pitchers, teamId, navigate }) {
+  const [openBatter, setOpenBatter] = useState(null);
+  return (
+    <div className={`lgp-section lgp-final-team-box ${className || ""}`}>
+      <div className="lgp-final-team-head">
+        <img src={teamInfo.logoUrl} alt="" className="lgp-final-team-logo" />
+        <span className="lgp-final-team-abbr">{teamInfo.abbreviation}</span>
+        <span className="lgp-final-team-score">{score ?? 0}</span>
+      </div>
+
+      <div className="lgp-box-table-hdr">
+        <span className="lgp-box-col-name">Batter</span>
+        <span className="lgp-box-col-stat">AB</span>
+        <span className="lgp-box-col-stat">H</span>
+        <span className="lgp-box-col-stat">HR</span>
+        <span className="lgp-box-col-stat">R</span>
+        <span className="lgp-box-col-stat">RBI</span>
+        <span className="lgp-box-col-stat">BB</span>
+        <span className="lgp-box-col-stat">K</span>
+        <span className="lgp-box-col-stat">SB</span>
+        <span className="lgp-box-col-chev" />
+      </div>
+
+      {batters?.map((b) => {
+        const isOpen = openBatter === b.id;
+        const hasABs = b.atBats?.length > 0;
+        const s = b.stats || {};
+        return (
+          <div key={b.id} className="lgp-box-batter">
+            <div
+              className={`lgp-box-row-full ${hasABs ? "sb-tappable" : ""}`}
+              onClick={hasABs ? () => setOpenBatter(isOpen ? null : b.id) : undefined}
+            >
+              <span className="lgp-box-col-name">
+                <span className="lgp-box-pos">{b.position}</span>
+                <span className="lgp-box-name-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${b.id}`); }}>
+                  {b.name}
+                </span>
+              </span>
+              <span className="lgp-box-col-stat">{s.ab ?? "—"}</span>
+              <span className="lgp-box-col-stat">{s.h ?? "—"}</span>
+              <span className="lgp-box-col-stat">{s.hr ?? "—"}</span>
+              <span className="lgp-box-col-stat">{s.r ?? "—"}</span>
+              <span className="lgp-box-col-stat">{s.rbi ?? "—"}</span>
+              <span className="lgp-box-col-stat">{s.bb ?? "—"}</span>
+              <span className="lgp-box-col-stat">{s.k ?? "—"}</span>
+              <span className="lgp-box-col-stat">{s.sb ?? "—"}</span>
+              <span className="lgp-box-col-chev">
+                {hasABs && (
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: isOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                )}
+              </span>
+            </div>
+            {isOpen && (
+              <div className="lgp-box-abs">
+                {b.atBats.map((ab, i) => {
+                  const ord = ab.inning === 1 ? "1st" : ab.inning === 2 ? "2nd" : ab.inning === 3 ? "3rd" : `${ab.inning}th`;
+                  return (
+                    <div key={i} className={`lgp-box-ab ${ab.isScoring ? "lgp-box-ab-scoring" : ""}`}>
+                      <span className="lgp-box-ab-inn">{ord}</span>
+                      <span className="lgp-box-ab-event" dangerouslySetInnerHTML={{ __html: formatScoringDesc(ab.description || ab.shortDesc || ab.event, ab.hrDistance) }} />
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        );
+      })}
+
+      {pitchers?.length > 0 && (
+        <>
+          <div className="lgp-box-table-hdr lgp-box-pitch-hdr">
+            <span className="lgp-box-col-name">Pitcher</span>
+            <span className="lgp-box-col-stat">IP</span>
+            <span className="lgp-box-col-stat">H</span>
+            <span className="lgp-box-col-stat">R</span>
+            <span className="lgp-box-col-stat">ER</span>
+            <span className="lgp-box-col-stat">BB</span>
+            <span className="lgp-box-col-stat">K</span>
+            <span className="lgp-box-col-chev" />
+          </div>
+          {pitchers.map((p) => {
+            const s = p.stats || {};
+            return (
+              <div key={p.id} className="lgp-box-row-full">
+                <span className="lgp-box-col-name">
+                  <span className="lgp-box-name-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
+                    {p.name}
+                  </span>
+                </span>
+                <span className="lgp-box-col-stat">{s.ip ?? "—"}</span>
+                <span className="lgp-box-col-stat">{s.h ?? "—"}</span>
+                <span className="lgp-box-col-stat">{s.r ?? "—"}</span>
+                <span className="lgp-box-col-stat">{s.er ?? "—"}</span>
+                <span className="lgp-box-col-stat">{s.bb ?? "—"}</span>
+                <span className="lgp-box-col-stat">{s.k ?? "—"}</span>
+                <span className="lgp-box-col-chev" />
+              </div>
+            );
+          })}
+        </>
       )}
     </div>
   );

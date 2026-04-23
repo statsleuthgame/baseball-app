@@ -779,7 +779,7 @@ export default function Scoreboard() {
       )}
 
       {sorted.length > 0 && (
-        <div className="scoreboard-list">
+        <div className={`scoreboard-list${groups.live.length === 0 ? " scoreboard-list--single" : ""}`}>
           {(() => {
           const renderCard = (game) => {
             const isOurGame = game.home.id === teamId || game.away.id === teamId;
@@ -975,35 +975,39 @@ export default function Scoreboard() {
           };
           return (
             <>
-              {groups.myTeams.length > 0 && (
-                <>
-                  <h3 className="sb-section-hdr">My Teams</h3>
-                  {groups.myTeams.map(renderCard)}
-                </>
-              )}
+              {/* Left column on desktop: My Teams + Upcoming + Final. Right column: Live.
+                  On mobile both columns flow as one stacked list (flex column parent). */}
+              <div className="sb-col-left">
+                {groups.myTeams.length > 0 && (
+                  <>
+                    <h3 className="sb-section-hdr">My Teams</h3>
+                    {groups.myTeams.map(renderCard)}
+                  </>
+                )}
+                {groups.upcoming.length > 0 && (
+                  <>
+                    <h3 className="sb-section-hdr">Upcoming</h3>
+                    <div className="sb-upcoming-grid">
+                      {groups.upcoming.map(renderCard)}
+                    </div>
+                  </>
+                )}
+                {groups.final.length > 0 && (
+                  <>
+                    <h3 className="sb-section-hdr">Final</h3>
+                    <div className="sb-final-grid">
+                      {groups.final.map(renderCard)}
+                    </div>
+                  </>
+                )}
+              </div>
               {groups.live.length > 0 && (
-                <>
+                <div className="sb-col-right">
                   <h3 className="sb-section-hdr sb-section-hdr-live">
                     <span className="sb-section-hdr-dot" aria-hidden="true" />Live
                   </h3>
                   {groups.live.map(renderCard)}
-                </>
-              )}
-              {groups.upcoming.length > 0 && (
-                <>
-                  <h3 className="sb-section-hdr">Upcoming</h3>
-                  <div className="sb-upcoming-grid">
-                    {groups.upcoming.map(renderCard)}
-                  </div>
-                </>
-              )}
-              {groups.final.length > 0 && (
-                <>
-                  <h3 className="sb-section-hdr">Final</h3>
-                  <div className="sb-final-grid">
-                    {groups.final.map(renderCard)}
-                  </div>
-                </>
+                </div>
               )}
             </>
           );

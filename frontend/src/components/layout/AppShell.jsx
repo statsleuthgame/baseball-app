@@ -42,6 +42,13 @@ export default function AppShell() {
     document.title = `${pageTitle} - ${team?.name || "Baseball Stats"}`;
   }, [location.pathname, team?.name]);
 
+  // Pages that opt out of the narrow centered-column cap on desktop.
+  // Match the first route segment after /team/:teamId/ so we don't have to
+  // enumerate every gamePk.
+  const firstSegment = location.pathname.split("/").slice(3)[0] || "";
+  const WIDE_ROUTES = new Set(["live", "scores"]);
+  const isWideRoute = WIDE_ROUTES.has(firstSegment);
+
   useEffect(() => {
     const el = contentRef.current;
     if (!el) return;
@@ -101,7 +108,7 @@ export default function AppShell() {
         </div>
       )}
       <main
-        className="app-content"
+        className={`app-content${isWideRoute ? " app-content--wide" : ""}`}
         ref={contentRef}
         tabIndex={-1}
         onTouchStart={handleTouchStart}
