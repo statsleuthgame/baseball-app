@@ -104,13 +104,20 @@ export default function LiveGamePage() {
       return innB - innA;
     });
 
-  const [boxOpen, setBoxOpen] = useState(true);
+  const [boxOpen, setBoxOpen] = useState(false);
   const [replayData, setReplayData] = useState(null); // scoring play hit data for replay
   const [replayKey, setReplayKey] = useState(0);
+  // Fetch box data when the user opens the toggle, OR when the wide-desktop
+  // Final layout forces both team boxes visible (FinalTeamBox needs boxData
+  // unconditionally). Keep refetch tied to boxOpen so we don't poll when the
+  // user isn't actively looking at it.
+  const isFinalStatus = gameInfo?.status === "Final";
   const { data: boxData } = useQuery({
     queryKey: ["gameDetail", gamePk],
     queryFn: () => fetchGameDetail(gamePk),
-    enabled: boxOpen && !!gamePk, staleTime: 1000 * 60, refetchInterval: boxOpen ? 1000 * 30 : false,
+    enabled: (boxOpen || isFinalStatus) && !!gamePk,
+    staleTime: 1000 * 60,
+    refetchInterval: boxOpen ? 1000 * 30 : false,
   });
 
   // === BIP state model ===
