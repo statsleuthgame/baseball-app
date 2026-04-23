@@ -109,11 +109,11 @@ export default function MatchupView() {
 
   return (
     <div className="matchup-view">
-      {/* Left column on desktop wide: header, lineups, park factors, bet edge,
+      {/* Game preview header spans full width above the 2-col split.
+          Left column on desktop wide: lineups, park factors, bet edge,
           hot/cold, park history, prior matchups.
           Right column: pitcher arsenals, batter vs pitcher, injuries, bullpen.
-          Mobile: both columns stack naturally (parent is flex column). */}
-      <div className="matchup-col-left">
+          Mobile: everything stacks naturally (parent is flex column). */}
       <div className="matchup-top-row">
         {isLive && <div className="matchup-preview-title" style={{ color: "var(--live)" }}>LIVE</div>}
         {isPreview && <div className="matchup-preview-title">Game Preview</div>}
@@ -166,6 +166,8 @@ export default function MatchupView() {
           {game.home.wins != null && <span className="matchup-record">{game.home.wins}-{game.home.losses}</span>}
         </button>
       </div>
+
+      <div className="matchup-col-left">
 
       {/* Win probability chart (shows during/after live games) */}
       {game.gamePk && (game.status === "In Progress" || game.status === "Final") && (
