@@ -1515,6 +1515,90 @@
     "stdev": 5.034,
     "source": "backtest"
   },
+  "664040": {
+    "n": 14,
+    "mean": 10.0,
+    "stdev": 11.187,
+    "source": "backtest"
+  },
+  "677649": {
+    "n": 11,
+    "mean": 6.636,
+    "stdev": 6.54,
+    "source": "backtest"
+  },
+  "518692": {
+    "n": 15,
+    "mean": 10.133,
+    "stdev": 6.879,
+    "source": "backtest"
+  },
+  "687462": {
+    "n": 15,
+    "mean": 6.2,
+    "stdev": 5.576,
+    "source": "backtest"
+  },
+  "668723": {
+    "n": 6,
+    "mean": 4.833,
+    "stdev": 6.817,
+    "source": "backtest"
+  },
+  "543877": {
+    "n": 6,
+    "mean": 12.167,
+    "stdev": 5.871,
+    "source": "backtest"
+  },
+  "543309": {
+    "n": 5,
+    "mean": 7.0,
+    "stdev": 6.87,
+    "source": "backtest"
+  },
+  "810938": {
+    "n": 14,
+    "mean": 5.786,
+    "stdev": 7.022,
+    "source": "backtest"
+  },
+  "678391": {
+    "n": 14,
+    "mean": 4.857,
+    "stdev": 3.248,
+    "source": "backtest"
+  },
+  "681715": {
+    "n": 13,
+    "mean": 5.077,
+    "stdev": 4.827,
+    "source": "backtest"
+  },
+  "663993": {
+    "n": 6,
+    "mean": 4.5,
+    "stdev": 4.153,
+    "source": "backtest"
+  },
+  "666181": {
+    "n": 12,
+    "mean": 2.417,
+    "stdev": 3.252,
+    "source": "backtest"
+  },
+  "657136": {
+    "n": 5,
+    "mean": 4.8,
+    "stdev": 3.544,
+    "source": "backtest"
+  },
+  "695336": {
+    "n": 9,
+    "mean": 4.556,
+    "stdev": 4.323,
+    "source": "backtest"
+  },
   "667670": {
     "n": 7,
     "mean": 9.143,
@@ -1527,22 +1611,10 @@
     "stdev": 2.119,
     "source": "backtest"
   },
-  "687462": {
-    "n": 15,
-    "mean": 6.2,
-    "stdev": 5.576,
-    "source": "backtest"
-  },
   "682829": {
     "n": 16,
     "mean": 11.062,
     "stdev": 7.284,
-    "source": "backtest"
-  },
-  "666181": {
-    "n": 12,
-    "mean": 2.417,
-    "stdev": 3.252,
     "source": "backtest"
   },
   "543807": {
@@ -1563,22 +1635,10 @@
     "stdev": 2.564,
     "source": "backtest"
   },
-  "681715": {
-    "n": 13,
-    "mean": 5.077,
-    "stdev": 4.827,
-    "source": "backtest"
-  },
   "593871": {
     "n": 10,
     "mean": 3.6,
     "stdev": 4.477,
-    "source": "backtest"
-  },
-  "810938": {
-    "n": 14,
-    "mean": 5.786,
-    "stdev": 7.022,
     "source": "backtest"
   },
   "592885": {
@@ -1641,22 +1701,10 @@
     "stdev": 5.865,
     "source": "backtest"
   },
-  "518692": {
-    "n": 15,
-    "mean": 10.133,
-    "stdev": 6.879,
-    "source": "backtest"
-  },
   "668885": {
     "n": 13,
     "mean": 7.077,
     "stdev": 5.47,
-    "source": "backtest"
-  },
-  "678391": {
-    "n": 14,
-    "mean": 4.857,
-    "stdev": 3.248,
     "source": "backtest"
   },
   "665052": {
@@ -1677,12 +1725,6 @@
     "stdev": 3.868,
     "source": "backtest"
   },
-  "664040": {
-    "n": 14,
-    "mean": 10.0,
-    "stdev": 11.187,
-    "source": "backtest"
-  },
   "665161": {
     "n": 7,
     "mean": 6.286,
@@ -1693,12 +1735,6 @@
     "n": 7,
     "mean": 3.429,
     "stdev": 3.849,
-    "source": "backtest"
-  },
-  "543877": {
-    "n": 6,
-    "mean": 12.167,
-    "stdev": 5.871,
     "source": "backtest"
   },
   "641933": {
@@ -1719,22 +1755,10 @@
     "stdev": 4.913,
     "source": "backtest"
   },
-  "677649": {
-    "n": 11,
-    "mean": 6.636,
-    "stdev": 6.54,
-    "source": "backtest"
-  },
   "694374": {
     "n": 9,
     "mean": 2.444,
     "stdev": 2.91,
-    "source": "backtest"
-  },
-  "695336": {
-    "n": 9,
-    "mean": 4.556,
-    "stdev": 4.323,
     "source": "backtest"
   },
   "624424": {
@@ -1755,40 +1779,16 @@
     "stdev": 1.47,
     "source": "backtest"
   },
-  "657136": {
-    "n": 5,
-    "mean": 4.8,
-    "stdev": 3.544,
-    "source": "backtest"
-  },
-  "543309": {
-    "n": 5,
-    "mean": 7.0,
-    "stdev": 6.87,
-    "source": "backtest"
-  },
   "664954": {
     "n": 7,
     "mean": 3.429,
     "stdev": 3.417,
     "source": "backtest"
   },
-  "663993": {
-    "n": 6,
-    "mean": 4.5,
-    "stdev": 4.153,
-    "source": "backtest"
-  },
   "680728": {
     "n": 5,
     "mean": 10.2,
     "stdev": 10.496,
-    "source": "backtest"
-  },
-  "668723": {
-    "n": 6,
-    "mean": 4.833,
-    "stdev": 6.817,
     "source": "backtest"
   },
   "669397": {
@@ -1804,8 +1804,8 @@
     "source": "backtest"
   },
   "_defaults": {
-    "mean": 6.776,
-    "stdev": 6.612,
+    "mean": 6.835,
+    "stdev": 6.802,
     "source": "log"
   }
 }
