@@ -109,6 +109,11 @@ export default function MatchupView() {
 
   return (
     <div className="matchup-view">
+      {/* Left column on desktop wide: header, lineups, park factors, bet edge,
+          hot/cold, park history, prior matchups.
+          Right column: pitcher arsenals, batter vs pitcher, injuries, bullpen.
+          Mobile: both columns stack naturally (parent is flex column). */}
+      <div className="matchup-col-left">
       <div className="matchup-top-row">
         {isLive && <div className="matchup-preview-title" style={{ color: "var(--live)" }}>LIVE</div>}
         {isPreview && <div className="matchup-preview-title">Game Preview</div>}
@@ -203,6 +208,24 @@ export default function MatchupView() {
       {/* Hot & Cold Players */}
       <HotColdSection awayId={awayId} homeId={homeId} awayAbbr={game.away.abbreviation} homeAbbr={game.home.abbreviation} />
 
+      {/* Park history */}
+      <ParkHistory
+        teamId={teamId}
+        venueId={game.venue.id}
+        venueName={game.venue.name}
+      />
+
+      {/* Prior matchups this season */}
+      <PriorMatchups
+        team1Id={awayId}
+        team2Id={homeId}
+        team1Abbr={game.away.abbreviation}
+        team2Abbr={game.home.abbreviation}
+      />
+
+      </div>
+      <div className="matchup-col-right">
+
       {/* Side-by-side pitcher arsenals */}
       {(game.away.probablePitcher || game.home.probablePitcher) && (
         <CollapsibleSection title="Pitcher Arsenals">
@@ -264,20 +287,7 @@ export default function MatchupView() {
         homeStarterId={game.home.probablePitcher?.id}
       />
 
-      {/* Park history */}
-      <ParkHistory
-        teamId={teamId}
-        venueId={game.venue.id}
-        venueName={game.venue.name}
-      />
-
-      {/* Prior matchups this season */}
-      <PriorMatchups
-        team1Id={awayId}
-        team2Id={homeId}
-        team1Abbr={game.away.abbreviation}
-        team2Abbr={game.home.abbreviation}
-      />
+      </div>
     </div>
   );
 }

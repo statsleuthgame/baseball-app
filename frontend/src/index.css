@@ -2612,6 +2612,28 @@ button.stat-cell {
   gap: 16px;
 }
 
+/* Column wrappers — flex columns on mobile (stack naturally inside the parent
+   flex column); become side-by-side grid cells on wide desktop via rules below. */
+.matchup-col-left,
+.matchup-col-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+/* Wide desktop: split matchup into 2 columns.
+   Left: header, lineups, park factors, bet edge, hot/cold, park history, prior matchups.
+   Right: pitcher arsenals, batter vs pitcher, injuries, bullpen. */
+@media (min-width: 1024px) {
+  .app-content--wide .matchup-view {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+}
+
 .matchup-top-row {
   display: flex;
   align-items: center;
