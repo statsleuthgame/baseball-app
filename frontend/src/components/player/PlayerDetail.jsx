@@ -117,27 +117,37 @@ export default function PlayerDetail() {
         </div>
       )}
 
-      {isPitcher ? (
-        <PitcherStats stats={displayStats} season={displaySeason} selectedSeason={selectedSeason} onSeasonChange={setSelectedSeason} seasons={SEASON_OPTIONS} />
-      ) : (
-        <BatterStats stats={displayStats} season={displaySeason} selectedSeason={selectedSeason} onSeasonChange={setSelectedSeason} seasons={SEASON_OPTIONS} />
-      )}
+      {/* Left column on desktop wide: standard stats, game log, arsenal/dominance
+          for pitchers, missed calls. Right column: advanced (statcast) metrics
+          and contract. Mobile stacks everything naturally. */}
+      <div className="player-col-left">
+        {isPitcher ? (
+          <PitcherStats stats={displayStats} season={displaySeason} selectedSeason={selectedSeason} onSeasonChange={setSelectedSeason} seasons={SEASON_OPTIONS} />
+        ) : (
+          <BatterStats stats={displayStats} season={displaySeason} selectedSeason={selectedSeason} onSeasonChange={setSelectedSeason} seasons={SEASON_OPTIONS} />
+        )}
 
-      <ContractCard playerName={player.fullName} teamAbbr={playerTeam?.abbreviation} />
+        <PlayerGameLog playerId={playerId} isPitcher={isPitcher} />
 
-      <PlayerGameLog playerId={playerId} isPitcher={isPitcher} />
+        {isPitcher && (
+          <>
+            <PitchArsenal playerId={playerId} />
+            <DominanceProfile playerId={playerId} />
+          </>
+        )}
 
-      {isPitcher ? (
-        <>
+        <MissedCallsPanel playerId={playerId} />
+      </div>
+
+      <div className="player-col-right">
+        {isPitcher ? (
           <AdvancedPitcherStats playerId={playerId} />
-          <PitchArsenal playerId={playerId} />
-          <DominanceProfile playerId={playerId} />
-        </>
-      ) : (
-        <AdvancedBatterStats playerId={playerId} />
-      )}
+        ) : (
+          <AdvancedBatterStats playerId={playerId} />
+        )}
 
-      <MissedCallsPanel playerId={playerId} />
+        <ContractCard playerName={player.fullName} teamAbbr={playerTeam?.abbreviation} />
+      </div>
     </div>
   );
 }
