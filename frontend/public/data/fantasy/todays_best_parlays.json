@@ -4,7 +4,7 @@
   "weights_version": "2026-04-18",
   "leg_counts": {
     "fantasy_edge": 10,
-    "model": 5
+    "model": 0
   },
   "parlays": [
     {
@@ -260,8 +260,8 @@
     {
       "size": 4,
       "payout": 10.0,
-      "combined_prob": 0.291,
-      "ev_pct": 191.0,
+      "combined_prob": 0.2857,
+      "ev_pct": 185.7,
       "legs": [
         {
           "player_id": 672695,
@@ -294,23 +294,6 @@
           "bat_side": "L"
         },
         {
-          "player_id": 592518,
-          "name": "Manny Machado",
-          "team_abbr": "SD",
-          "opp_abbr": "COL",
-          "opp_pitcher": "Ryan Feltner",
-          "market": "total_bases",
-          "line": 1.5,
-          "side": "under",
-          "hit_prob": 0.714,
-          "source": "model_tb",
-          "edge": 0.137,
-          "reboot_rate": 0.0,
-          "bat_side": "R",
-          "opp_p_throws": "R",
-          "platoon": "\u2717 same-side"
-        },
-        {
           "player_id": 681082,
           "name": "Bryson Stott",
           "team_abbr": "PHI",
@@ -323,6 +306,21 @@
           "source": "fantasy_edge",
           "efp": 7.54,
           "edge_z": 0.558,
+          "bat_side": "L"
+        },
+        {
+          "player_id": 656811,
+          "name": "Ryan O'Hearn",
+          "team_abbr": "PIT",
+          "opp_abbr": "TEX",
+          "opp_pitcher": "Jacob deGrom",
+          "market": "fantasy_score",
+          "line": 5.0,
+          "side": "over",
+          "hit_prob": 0.701,
+          "source": "fantasy_edge",
+          "efp": 8.92,
+          "edge_z": 0.528,
           "bat_side": "L"
         }
       ]
