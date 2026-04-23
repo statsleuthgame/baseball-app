@@ -3757,6 +3757,37 @@ button.stat-cell {
 
 .scoreboard-list { display: flex; flex-direction: column; gap: 5px; }
 
+/* Column wrappers — flex columns on mobile (stack naturally inside the parent
+   flex column); become side-by-side grid cells on wide desktop via rules below. */
+.sb-col-left,
+.sb-col-right {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+/* Wide desktop: side-by-side columns.
+   Left: My Teams + Upcoming + Final. Right: Live.
+   When there are no live games, the .scoreboard-list--single modifier
+   collapses back to a centered single column at a comfortable reading width. */
+@media (min-width: 1024px) {
+  .app-content--wide .scoreboard-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+  .app-content--wide .scoreboard-list.scoreboard-list--single {
+    display: flex;
+    flex-direction: column;
+    /* Override align-items: start from the grid rule above — in flex column
+       that prevents children from stretching cross-axis to fill parent width. */
+    align-items: stretch;
+    gap: 5px;
+  }
+}
+
 .sb-section-hdr {
   font-family: "SF Mono", ui-monospace, Menlo, monospace;
   font-size: 10px;
@@ -5246,6 +5277,149 @@ th.sb-ls-total {
 /* ===== REDESIGNED LIVE GAME PAGE ===== */
 .lgp { display: flex; flex-direction: column; gap: 10px; }
 
+/* Body wrapper — single column on mobile, 2-col grid on wide desktop.
+   The --split modifier is only applied when the left column has content
+   (i.e. not a final game and we have live batter/pitcher or due-up runners). */
+.lgp-body { display: flex; flex-direction: column; gap: 10px; }
+.lgp-body-left,
+.lgp-body-right {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0; /* let grid children shrink instead of forcing overflow */
+}
+
+@media (min-width: 1024px) {
+  /* --- Wide desktop: stretch the hero HUD --- */
+  .app-content--wide .lgp-hero-hud { padding: 24px 24px 22px; gap: 14px; }
+  .app-content--wide .lgp-hud-logo { width: 56px; height: 56px; }
+  .app-content--wide .lgp-hud-abbr { font-size: 20px; letter-spacing: 1px; }
+  .app-content--wide .lgp-hud-score { font-size: 64px; min-width: 56px; }
+  .app-content--wide .lgp-hud-dash { font-size: 32px; }
+  .app-content--wide .lgp-hud-scores { gap: 20px; }
+  .app-content--wide .lgp-hud-state { gap: 18px; }
+  .app-content--wide .lgp-hud-state-label { font-size: 11px; }
+  .app-content--wide .lgp-hud-state-value { font-size: 22px; }
+  .app-content--wide .lgp-hud-bases { padding: 8px 16px; min-height: 60px; }
+  .app-content--wide .lgp-hud-diamond { width: 64px; height: 64px; }
+  .app-content--wide .lgp-hud-runners { font-size: 13px; gap: 10px; }
+  .app-content--wide .lgp-hud-runner-chip { padding: 4px 10px; font-size: 12px; }
+  .app-content--wide .lgp-hud-final-tag { font-size: 20px; padding: 6px 20px; }
+
+  /* --- Wide desktop: 2-column split for everything below the HUD ---
+     DOM order (mobile-first): matchup/feature → due up → linescore → box → scoring → footer.
+     On desktop we flatten the body-left/body-right wrappers via display:contents
+     and use grid-template-areas so dueup visually relocates to the right column
+     without changing DOM order (which preserves mobile flow). The footer spans
+     both columns as the bottom row. */
+  .app-content--wide .lgp-body.lgp-body--split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "matchup  linescore"
+      "matchup  box"
+      "dueup    box"
+      "scoring  box"
+      "footer   footer";
+    gap: 20px;
+    align-items: start;
+  }
+  .app-content--wide .lgp-body.lgp-body--split .lgp-body-left,
+  .app-content--wide .lgp-body.lgp-body--split .lgp-body-right {
+    display: contents;
+  }
+  .app-content--wide .lgp-area-matchup   { grid-area: matchup; }
+  .app-content--wide .lgp-area-linescore { grid-area: linescore; }
+  .app-content--wide .lgp-area-box       { grid-area: box; }
+  .app-content--wide .lgp-area-dueup     { grid-area: dueup; }
+  .app-content--wide .lgp-area-scoring   { grid-area: scoring; }
+  .app-content--wide .lgp-area-footer    { grid-area: footer; }
+
+  /* --- Wide desktop FINAL-only: linescore spans top, box scores split,
+        scoring spans below, footer spans bottom --- */
+  .app-content--wide .lgp-body.lgp-body--final {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "linescore linescore"
+      "box-away  box-home"
+      "scoring   scoring"
+      "footer    footer";
+    gap: 20px;
+    align-items: start;
+  }
+  .app-content--wide .lgp-final-linescore { grid-area: linescore; }
+  .app-content--wide .lgp-final-box-away  { grid-area: box-away; }
+  .app-content--wide .lgp-final-box-home  { grid-area: box-home; }
+  .app-content--wide .lgp-final-scoring   { grid-area: scoring; }
+  .app-content--wide .lgp-final-footer    { grid-area: footer; }
+
+  /* --- Wide desktop: larger type in data-dense sections --- */
+  /* Linescore (inning box) */
+  .app-content--wide .live-ls-table { font-size: 14px; }
+  .app-content--wide .live-ls-table th,
+  .app-content--wide .live-ls-table td { padding: 6px 10px; min-width: 22px; }
+  .app-content--wide .lgp .live-ls-table th,
+  .app-content--wide .lgp .live-ls-table td { padding: 6px 10px; }
+
+  /* Box score */
+  .app-content--wide .lgp-box-table-hdr { font-size: 11px; padding: 6px 0; }
+  .app-content--wide .lgp-box-col-stat { width: 34px; }
+  .app-content--wide .lgp-box-row-full .lgp-box-col-stat { font-size: 14px; }
+  .app-content--wide .lgp-box-name-link { font-size: 14px; }
+  .app-content--wide .lgp-box-pos { width: 24px; font-size: 11px; }
+  .app-content--wide .lgp-box-ab { font-size: 13px; padding: 4px 0; }
+  .app-content--wide .lgp-box-ab-inn { min-width: 32px; }
+
+  /* Scoring plays */
+  .app-content--wide .lgp-scoring-card { padding: 10px 12px 10px 16px; }
+  .app-content--wide .lgp-scoring-inning-chip { font-size: 11px; padding: 3px 8px; }
+  .app-content--wide .lgp-scoring-desc { font-size: 14px; }
+  .app-content--wide .lgp-scoring-score-box { font-size: 15px; padding: 3px 10px; }
+  .app-content--wide .lgp-scoring-metric { font-size: 11.5px; padding: 3px 9px; }
+  .app-content--wide .lgp-scoring-event { font-size: 11.5px; padding: 3px 9px; }
+  .app-content--wide .lgp-scoring-replay { font-size: 12px; padding: 4px 12px; }
+
+  /* Top live-score pills — larger, more breathing, on desktop */
+  .app-content--wide .lgp-game-strip { gap: 10px; padding: 4px 0 12px; }
+  .app-content--wide .lgp-game-pill {
+    height: 44px;
+    padding: 8px 18px;
+    font-size: 14px;
+    gap: 6px;
+    border-radius: 22px;
+  }
+  .app-content--wide .lgp-pill-teams { font-size: 14px; }
+  .app-content--wide .lgp-pill-inning { font-size: 12px; margin-left: 4px; }
+}
+
+/* Final-desktop team-box header — applies at all widths for consistency
+   (the mobile/tablet final layout doesn't render FinalTeamBox today, but
+   if it ever does the header will style correctly). */
+.lgp-final-team-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 2px 10px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 8px;
+}
+.lgp-final-team-logo { width: 28px; height: 28px; flex-shrink: 0; }
+.lgp-final-team-abbr {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  color: var(--text-bright);
+}
+.lgp-final-team-score {
+  margin-left: auto;
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-bright);
+  font-variant-numeric: tabular-nums;
+}
+
 /* === Sticky Top Bar === */
 .lgp-sticky-bar {
   position: sticky;
@@ -6389,6 +6563,9 @@ th.sb-ls-total {
 .lgp-game-strip {
   display: flex; gap: 6px; overflow-x: auto; padding: 2px 0 8px;
   scrollbar-width: none; -ms-overflow-style: none;
+  /* Center when pills fit; fall back to flex-start on overflow so the
+     leading pills don't get clipped and become unreachable via scroll. */
+  justify-content: safe center;
 }
 .lgp-game-strip::-webkit-scrollbar { display: none; }
 .lgp-game-pill {
@@ -6709,6 +6886,13 @@ th.sb-ls-total {
 
 @media (min-width: 1024px) {
   .app-content { max-width: 800px; }
+  /* Wide routes (e.g. Live Game) opt out of the narrow-column cap on desktop
+     to make room for multi-column layouts. Mobile + tablet still see the
+     standard narrow column. */
+  .app-content.app-content--wide {
+    max-width: 1400px;
+    padding: 24px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
