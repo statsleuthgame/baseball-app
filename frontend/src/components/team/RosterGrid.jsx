@@ -25,34 +25,40 @@ export default function RosterGrid() {
 
   return (
     <div className="roster-section">
-      <h3 className="roster-group-title">Position Players</h3>
-      <div className="roster-list">
-        {positionPlayers.map((player) => (
-          <button
-            key={player.id}
-            className="roster-row"
-            onClick={() => navigate(`/team/${teamId}/player/${player.id}`)}
-            aria-label={`View ${player.fullName}, ${player.position.abbreviation}`}
-          >
-            <span className="roster-row-name">{player.fullName}</span>
-            <span className="roster-row-meta">{player.position.abbreviation} · #{player.jerseyNumber}</span>
-          </button>
-        ))}
+      {/* Left column on desktop wide: Position Players.
+          Right column: Pitchers. Mobile: stacks naturally. */}
+      <div className="roster-col-left">
+        <h3 className="roster-group-title">Position Players</h3>
+        <div className="roster-list">
+          {positionPlayers.map((player) => (
+            <button
+              key={player.id}
+              className="roster-row"
+              onClick={() => navigate(`/team/${teamId}/player/${player.id}`)}
+              aria-label={`View ${player.fullName}, ${player.position.abbreviation}`}
+            >
+              <span className="roster-row-name">{player.fullName}</span>
+              <span className="roster-row-meta">{player.position.abbreviation} · #{player.jerseyNumber}</span>
+            </button>
+          ))}
+        </div>
       </div>
 
-      <h3 className="roster-group-title">Pitchers</h3>
-      <div className="roster-list">
-        {pitchers.map((player) => (
-          <button
-            key={player.id}
-            className="roster-row"
-            onClick={() => navigate(`/team/${teamId}/player/${player.id}`)}
-            aria-label={`View ${player.fullName}, ${player.position.abbreviation}`}
-          >
-            <span className="roster-row-name">{player.fullName}</span>
-            <span className="roster-row-meta">{player.position.abbreviation} · #{player.jerseyNumber}</span>
-          </button>
-        ))}
+      <div className="roster-col-right">
+        <h3 className="roster-group-title">Pitchers</h3>
+        <div className="roster-list">
+          {pitchers.map((player) => (
+            <button
+              key={player.id}
+              className="roster-row"
+              onClick={() => navigate(`/team/${teamId}/player/${player.id}`)}
+              aria-label={`View ${player.fullName}, ${player.position.abbreviation}`}
+            >
+              <span className="roster-row-name">{player.fullName}</span>
+              <span className="roster-row-meta">{player.position.abbreviation} · #{player.jerseyNumber}</span>
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );
