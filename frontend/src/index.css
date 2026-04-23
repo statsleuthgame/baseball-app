@@ -5471,11 +5471,12 @@ th.sb-ls-total {
 
 @media (min-width: 1024px) {
   /* --- Wide desktop: stretch the hero HUD ---
-     Team logos pull out to the far left/right edges of the hero, get much
-     larger, and stack with the abbreviation underneath. Scores, state, and
-     bases center between them. */
+     Big team logos pulled inward toward the scores (but not right next to
+     them), with the team abbreviation stacked UNDERNEATH each logo.
+     Away team DOM is [img][abbr] → column puts img on top.
+     Home team DOM is [abbr][img] → column-reverse puts img on top. */
   .app-content--wide .lgp-hero-hud {
-    padding: 28px 200px;
+    padding: 28px 400px;
     gap: 14px;
     min-height: 240px;
   }
@@ -5492,10 +5493,10 @@ th.sb-ls-total {
     align-items: center;
     gap: 10px;
   }
-  .app-content--wide .lgp-hud-team:not(.lgp-hud-team-right) { left: 32px; }
+  .app-content--wide .lgp-hud-team:not(.lgp-hud-team-right) { left: 240px; }
   .app-content--wide .lgp-hud-team-right {
-    right: 32px;
-    flex-direction: column; /* override row-reverse from base */
+    right: 240px;
+    flex-direction: column-reverse; /* DOM [abbr][img] → reverse so img is on top */
   }
   .app-content--wide .lgp-hud-score { font-size: 72px; min-width: 64px; }
   .app-content--wide .lgp-hud-dash { font-size: 36px; }
