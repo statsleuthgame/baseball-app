@@ -8,11 +8,14 @@ import TransactionFeed from "./TransactionFeed";
 export default function TeamDashboard() {
   return (
     <div className="dashboard">
-      {/* Left column on desktop wide: TodayGame, Upcoming, Hot/Cold, Transactions.
+      {/* TodayGame spans full width above the 2-col split.
+          Left column on desktop wide: Upcoming, Hot/Cold, Transactions.
           Right column: Standings + League Leaders.
-          On mobile both columns flow as one stacked list (parent is flex column). */}
-      <div className="dashboard-col-left">
+          On mobile everything stacks (parent is flex column). */}
+      <div className="dashboard-full">
         <TodayGame />
+      </div>
+      <div className="dashboard-col-left">
         <UpcomingSeries />
         <TeamHotCold />
         <TransactionFeed />
