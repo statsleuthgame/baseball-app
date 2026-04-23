@@ -5391,6 +5391,53 @@ th.sb-ls-total {
   }
   .app-content--wide .lgp-pill-teams { font-size: 14px; }
   .app-content--wide .lgp-pill-inning { font-size: 12px; margin-left: 4px; }
+
+  /* --- Scores page: bump all key type sizes on desktop wide --- */
+  /* Date nav + section headers */
+  .app-content--wide .scoreboard-date-label { font-size: 18px; }
+  .app-content--wide .sb-section-hdr { font-size: 12px; letter-spacing: 1.8px; }
+
+  /* Main cards (My Teams, Live) */
+  .app-content--wide .scoreboard-abbr { font-size: 17px; width: 44px; }
+  .app-content--wide .scoreboard-record { font-size: 14px; }
+  .app-content--wide .scoreboard-score { font-size: 26px; min-width: 40px; }
+  .app-content--wide .scoreboard-card.our-game .scoreboard-score { font-size: 30px; }
+  .app-content--wide .sb-winner .scoreboard-score { font-size: 28px; }
+  .app-content--wide .scoreboard-card.our-game .sb-winner .scoreboard-score { font-size: 32px; }
+  .app-content--wide .scoreboard-logo { width: 28px; height: 28px; }
+  .app-content--wide .scoreboard-status-badge { font-size: 12px; padding: 3px 9px; }
+  .app-content--wide .sb-decisions { font-size: 13px; }
+  .app-content--wide .sb-decision-record { font-size: 12px; }
+  .app-content--wide .sb-top-performer { font-size: 13px; max-width: 240px; }
+  .app-content--wide .sb-live-player-name { font-size: 14px; }
+  .app-content--wide .sb-live-player-sub { font-size: 12px; }
+  .app-content--wide .sb-expand-label { font-size: 13px; }
+  .app-content--wide .sb-venue-info,
+  .app-content--wide .sb-venue-weather-line { font-size: 13px; }
+
+  /* Compact Final grid cards — proportional bump */
+  .app-content--wide .sb-final-grid .scoreboard-score { font-size: 22px; min-width: 32px; }
+  .app-content--wide .sb-final-grid .sb-winner .scoreboard-score { font-size: 24px; }
+  .app-content--wide .sb-final-grid .scoreboard-abbr { font-size: 16px; width: 36px; }
+  .app-content--wide .sb-final-grid .scoreboard-logo { width: 26px; height: 26px; }
+  .app-content--wide .sb-final-grid .sb-top-performer { font-size: 11px; }
+  .app-content--wide .sb-final-grid .sb-decisions { font-size: 11px; gap: 8px; }
+  .app-content--wide .sb-final-grid .scoreboard-status-badge { font-size: 11px; padding: 2px 8px; }
+
+  /* Compact Upcoming grid cards */
+  .app-content--wide .sb-upcoming-grid .sb-hero-team-name { font-size: 15px; }
+  .app-content--wide .sb-upcoming-grid .sb-hero-team-record { font-size: 12px; }
+  .app-content--wide .sb-upcoming-grid .sb-hero-vs { font-size: 13px; }
+  .app-content--wide .sb-upcoming-grid .sb-pitcher-line { font-size: 11px; }
+  .app-content--wide .sb-upcoming-grid .sb-pitcher-line-label { font-size: 10px; }
+
+  /* In the single-column (no-live) layout, final and upcoming grids are
+     edge-to-edge and each card is ~2x wider — bump scores/abbr larger still */
+  .app-content--wide .scoreboard-list--single .sb-final-grid .scoreboard-score { font-size: 26px; }
+  .app-content--wide .scoreboard-list--single .sb-final-grid .sb-winner .scoreboard-score { font-size: 28px; }
+  .app-content--wide .scoreboard-list--single .sb-final-grid .scoreboard-abbr { font-size: 17px; width: 42px; }
+  .app-content--wide .scoreboard-list--single .sb-final-grid .sb-top-performer { font-size: 12px; }
+  .app-content--wide .scoreboard-list--single .sb-final-grid .sb-decisions { font-size: 12px; }
 }
 
 /* Final-desktop team-box header — applies at all widths for consistency
