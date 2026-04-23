@@ -580,8 +580,8 @@ body {
   min-width: 0;
 }
 
-/* Wide desktop: split dashboard into 2 columns.
-   Left: Today + Upcoming + Hot/Cold + Transactions.
+/* Wide desktop: TodayGame spans full width on top, then 2-col split.
+   Left: Upcoming + Hot/Cold + Transactions.
    Right: Standings + League Leaders. */
 @media (min-width: 1024px) {
   .app-content--wide .dashboard {
@@ -589,6 +589,9 @@ body {
     grid-template-columns: 1fr 1fr;
     gap: 24px;
     align-items: start;
+  }
+  .app-content--wide .dashboard > .dashboard-full {
+    grid-column: 1 / -1;
   }
 }
 
