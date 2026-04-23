@@ -603,14 +603,38 @@ body {
     width: 80px;
     height: 80px;
   }
-  .app-content--wide .today-game-card.compact .today-game-score {
-    font-size: 32px;
-  }
-  .app-content--wide .today-game-card.compact .today-game-vs {
-    font-size: 28px;
-  }
   .app-content--wide .today-game-card.compact .today-game-abbr {
     font-size: 15px;
+  }
+  /* Bigger final score in the full today-game card (WIN/LOSS/FINAL). The 32px
+     base looks lost next to 80px logos on wide desktop. Bumps both the score
+     numbers and the "@" symbol proportionally. Applies to the compact NEXT
+     GAME card too so the stacked pair stays visually consistent. */
+  .app-content--wide .today-game-score,
+  .app-content--wide .today-game-card.compact .today-game-score {
+    font-size: 56px;
+  }
+  .app-content--wide .today-game-vs-small {
+    font-size: 28px;
+  }
+  .app-content--wide .today-game-vs,
+  .app-content--wide .today-game-card.compact .today-game-vs {
+    font-size: 40px;
+  }
+  /* Breathe the probable-pitcher "vs" row out on desktop wide. */
+  .app-content--wide .today-game-pitchers {
+    gap: 60px;
+    padding-top: 18px;
+  }
+  .app-content--wide .today-game-pitcher {
+    gap: 12px;
+    font-size: 14px;
+  }
+  .app-content--wide .pitcher-vs {
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0.6;
   }
 }
 
@@ -1740,6 +1764,21 @@ body {
 /* Roster */
 .roster-section {
   margin-top: 8px;
+}
+
+/* Column wrappers — stack naturally on mobile, split into 2 columns on wide desktop */
+.roster-col-left,
+.roster-col-right {
+  min-width: 0;
+}
+
+@media (min-width: 1024px) {
+  .app-content--wide .roster-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: start;
+  }
 }
 
 .roster-group-title {

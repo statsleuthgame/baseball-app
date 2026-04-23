@@ -47,7 +47,7 @@ export default function AppShell() {
   // enumerate every gamePk.
   const firstSegment = location.pathname.split("/").slice(3)[0] || "";
   // "" matches the team home (/team/:teamId) where there is no segment after the id.
-  const WIDE_ROUTES = new Set(["", "live", "scores", "matchup"]);
+  const WIDE_ROUTES = new Set(["", "live", "scores", "matchup", "roster"]);
   const isWideRoute = WIDE_ROUTES.has(firstSegment);
 
   useEffect(() => {
