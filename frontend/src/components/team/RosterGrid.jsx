@@ -4,10 +4,15 @@ import { useTeam } from "../../context/TeamContext";
 import { fetchRoster } from "../../api/client";
 import LoadingSpinner from "../common/LoadingSpinner";
 import ErrorMessage from "../common/ErrorMessage";
+import PlayerPhoto from "../common/PlayerPhoto";
+import { useIsMobile } from "../../utils/useIsMobile";
 
 export default function RosterGrid() {
   const { teamId } = useTeam();
   const navigate = useNavigate();
+  // Desktop-wide only: show player headshots in front of the name to fill the
+  // extra horizontal space the 2-col layout provides.
+  const isWide = useIsMobile("(min-width: 1024px)");
 
   const { data: roster, isLoading, error, refetch } = useQuery({
     queryKey: ["roster", teamId],
@@ -37,6 +42,14 @@ export default function RosterGrid() {
               onClick={() => navigate(`/team/${teamId}/player/${player.id}`)}
               aria-label={`View ${player.fullName}, ${player.position.abbreviation}`}
             >
+              {isWide && (
+                <PlayerPhoto
+                  playerId={player.id}
+                  name={player.fullName}
+                  size={56}
+                  className="roster-row-photo"
+                />
+              )}
               <span className="roster-row-name">{player.fullName}</span>
               <span className="roster-row-meta">{player.position.abbreviation} · #{player.jerseyNumber}</span>
             </button>
@@ -54,6 +67,14 @@ export default function RosterGrid() {
               onClick={() => navigate(`/team/${teamId}/player/${player.id}`)}
               aria-label={`View ${player.fullName}, ${player.position.abbreviation}`}
             >
+              {isWide && (
+                <PlayerPhoto
+                  playerId={player.id}
+                  name={player.fullName}
+                  size={56}
+                  className="roster-row-photo"
+                />
+              )}
               <span className="roster-row-name">{player.fullName}</span>
               <span className="roster-row-meta">{player.position.abbreviation} · #{player.jerseyNumber}</span>
             </button>

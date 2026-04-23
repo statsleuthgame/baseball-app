@@ -1779,6 +1779,30 @@ body {
     gap: 24px;
     align-items: start;
   }
+  /* Desktop wide: bigger type and a player headshot in front of each name */
+  .app-content--wide .roster-group-title {
+    font-size: 22px;
+    margin: 20px 0 12px;
+  }
+  .app-content--wide .roster-row {
+    padding: 12px 18px;
+    gap: 16px;
+  }
+  .app-content--wide .roster-row-photo {
+    flex-shrink: 0;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--bg-card-hover);
+  }
+  .app-content--wide .roster-row-name {
+    font-size: 20px;
+    flex: 1;
+    min-width: 0;
+  }
+  .app-content--wide .roster-row-meta {
+    font-size: 16px;
+    letter-spacing: 0.3px;
+  }
 }
 
 .roster-group-title {
