@@ -593,6 +593,25 @@ body {
   .app-content--wide .dashboard > .dashboard-full {
     grid-column: 1 / -1;
   }
+  /* On desktop wide, the compact "NEXT GAME" card sits directly under the
+     full-size game card — match its logo + score sizing to the parent card
+     so the stacked pair feels visually consistent. */
+  .app-content--wide .today-game-card.compact {
+    padding: 16px;
+  }
+  .app-content--wide .today-game-card.compact .today-game-logo-lg {
+    width: 80px;
+    height: 80px;
+  }
+  .app-content--wide .today-game-card.compact .today-game-score {
+    font-size: 32px;
+  }
+  .app-content--wide .today-game-card.compact .today-game-vs {
+    font-size: 28px;
+  }
+  .app-content--wide .today-game-card.compact .today-game-abbr {
+    font-size: 15px;
+  }
 }
 
 /* Today Game Wrapper */
