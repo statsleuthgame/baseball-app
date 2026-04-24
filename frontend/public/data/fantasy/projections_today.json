@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 14,
-  "projection_count": 348,
+  "projection_count": 344,
   "projections": [
     {
       "player_id": 608070,
@@ -1687,7 +1687,11 @@
         "hr": 116,
         "label": "Hitter Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Overcast",
+        "temp": "78",
+        "wind": "10 mph, R To L"
+      },
       "pa_source": "default",
       "stdev_efp": 6.74,
       "mean_efp": 11.8,
@@ -1975,7 +1979,11 @@
         "hr": 116,
         "label": "Hitter Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Overcast",
+        "temp": "78",
+        "wind": "10 mph, R To L"
+      },
       "pa_source": "default",
       "stdev_efp": 5.7,
       "mean_efp": 8.47,
@@ -2101,47 +2109,51 @@
       "tier": "low"
     },
     {
-      "player_id": 677587,
-      "name": "Brayan Rocchio",
+      "player_id": 682829,
+      "name": "Elly De La Cruz",
       "position": "SS",
-      "team_id": 114,
-      "team_abbr": "CLE",
-      "opp_abbr": "TOR",
-      "opp_team_id": 141,
+      "team_id": 113,
+      "team_abbr": "CIN",
+      "opp_abbr": "DET",
+      "opp_team_id": 116,
       "opp_pitcher": {
-        "id": 453286,
-        "fullName": "Max Scherzer"
+        "id": 664285,
+        "fullName": "Framber Valdez"
       },
       "park": {
-        "id": 14,
-        "name": "Rogers Centre",
-        "runs": 104,
-        "hr": 109,
+        "id": 2602,
+        "name": "Great American Ball Park",
+        "runs": 109,
+        "hr": 116,
         "label": "Hitter Friendly"
       },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 6.58,
-      "mean_efp": 6.4,
-      "stats_games": 15,
-      "efp": 9.06,
+      "weather": {
+        "condition": "Overcast",
+        "temp": "78",
+        "wind": "10 mph, R To L"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.28,
+      "mean_efp": 11.06,
+      "stats_games": 16,
+      "efp": 9.07,
       "bat_side": "S",
       "per_event": {
-        "singles": 2.27,
-        "doubles": 0.97,
+        "singles": 1.66,
+        "doubles": 1.03,
         "triples": 0.05,
-        "home_runs": 2.05,
-        "bb_hbp": 0.84,
-        "r": 2.56,
-        "rbi": 1.3,
-        "sb": 0.3
+        "home_runs": 2.09,
+        "bb_hbp": 0.46,
+        "r": 2.73,
+        "rbi": 1.45,
+        "sb": 0.88
       },
       "multipliers": {
-        "park_hr": 1.09,
-        "park_runs": 1.04,
+        "park_hr": 1.16,
+        "park_runs": 1.09,
         "weather_hr": 1.0,
-        "pitcher_hits": 1.036,
-        "pitcher_hr": 1.281,
+        "pitcher_hits": 0.974,
+        "pitcher_hr": 0.65,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -2149,30 +2161,30 @@
         "stx_xwoba": 1.0,
         "stx_barrel": 1.0,
         "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.2,
+        "pitcher_gb_hr": 0.873,
         "k_damper": 1.0,
-        "pitcher_bb": 1.006,
+        "pitcher_bb": 0.75,
         "park_hand_hr": 1.0,
         "sb_speed": 1.0,
         "speed_singles": 1.0,
         "speed_r": 1.0,
         "bvpt": 1.0,
-        "ondeck_r": 1.0,
+        "ondeck_r": 1.15,
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1894,
-        "doubles": 0.0483,
-        "triples": 0.0017,
-        "home_runs": 0.0512,
-        "bb_hbp": 0.1048,
-        "r_per_pa": 0.3197,
-        "rbi_per_pa": 0.1625
+        "singles": 0.1288,
+        "doubles": 0.048,
+        "triples": 0.0016,
+        "home_runs": 0.0487,
+        "bb_hbp": 0.0533,
+        "r_per_pa": 0.3174,
+        "rbi_per_pa": 0.1682
       },
-      "pa": 4.0,
+      "pa": 4.3,
       "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-04-24T17:44:41.439512+00:00"
+  "generated_at": "2026-04-24T18:42:29.498781+00:00"
 }
