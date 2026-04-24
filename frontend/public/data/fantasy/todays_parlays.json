@@ -1,170 +1,170 @@
 {
-  "game_date": "2026-04-23",
-  "generated_at": "2026-04-23T15:39:08.710363+00:00",
+  "game_date": "2026-04-24",
+  "generated_at": "2026-04-24T18:58:16.168924+00:00",
   "weights_version": "2026-04-18",
   "source_pick_count": 10,
   "parlays": [
     {
       "size": 2,
       "payout": 3.0,
-      "combined_prob": 0.6777,
-      "ev_pct": 103.3,
+      "combined_prob": 0.7032,
+      "ev_pct": 111.0,
       "legs": [
         {
-          "player_id": 690993,
-          "name": "Colt Keith",
-          "team_abbr": "DET",
-          "opp_abbr": "MIL",
-          "opp_pitcher": "Brandon Sproat",
-          "line": 5.0,
+          "player_id": 671976,
+          "name": "Tristan Peters",
+          "team_abbr": "CWS",
+          "opp_abbr": "WSH",
+          "opp_pitcher": "Miles Mikolas",
+          "line": 5.5,
           "side": "over",
-          "efp": 8.01,
-          "edge_z": 1.02,
-          "hit_prob": 0.846
+          "efp": 8.4,
+          "edge_z": 1.133,
+          "hit_prob": 0.871
         },
         {
-          "player_id": 545121,
-          "name": "Ildemaro Vargas",
-          "team_abbr": "AZ",
-          "opp_abbr": "CWS",
-          "opp_pitcher": "Davis Martin",
+          "player_id": 665750,
+          "name": "Leody Taveras",
+          "team_abbr": "BAL",
+          "opp_abbr": "BOS",
+          "opp_pitcher": "Brayan Bello",
           "line": 5.0,
           "side": "over",
-          "efp": 8.71,
-          "edge_z": 0.845,
-          "hit_prob": 0.801
+          "efp": 8.9,
+          "edge_z": 0.867,
+          "hit_prob": 0.807
         }
       ]
     },
     {
       "size": 2,
       "payout": 3.0,
-      "combined_prob": 0.5738,
-      "ev_pct": 72.2,
+      "combined_prob": 0.5845,
+      "ev_pct": 75.3,
       "legs": [
         {
-          "player_id": 672695,
-          "name": "Geraldo Perdomo",
-          "team_abbr": "AZ",
-          "opp_abbr": "CWS",
-          "opp_pitcher": "Davis Martin",
-          "line": 5.5,
-          "side": "over",
-          "efp": 9.44,
-          "edge_z": 0.715,
-          "hit_prob": 0.763
-        },
-        {
-          "player_id": 671739,
-          "name": "Michael Harris II",
-          "team_abbr": "ATL",
+          "player_id": 678246,
+          "name": "Miguel Vargas",
+          "team_abbr": "CWS",
           "opp_abbr": "WSH",
-          "opp_pitcher": "Cade Cavalli",
+          "opp_pitcher": "Miles Mikolas",
           "line": 5.0,
           "side": "over",
-          "efp": 9.71,
-          "edge_z": 0.682,
-          "hit_prob": 0.752
+          "efp": 9.96,
+          "edge_z": 0.816,
+          "hit_prob": 0.793
+        },
+        {
+          "player_id": 805808,
+          "name": "Kevin McGonigle",
+          "team_abbr": "DET",
+          "opp_abbr": "CIN",
+          "opp_pitcher": "Andrew Abbott",
+          "line": 5.5,
+          "side": "over",
+          "efp": 9.12,
+          "edge_z": 0.635,
+          "hit_prob": 0.737
         }
       ]
     },
     {
       "size": 3,
       "payout": 5.0,
-      "combined_prob": 0.5099,
-      "ev_pct": 154.9,
+      "combined_prob": 0.5185,
+      "ev_pct": 159.2,
       "legs": [
         {
-          "player_id": 690993,
-          "name": "Colt Keith",
-          "team_abbr": "DET",
-          "opp_abbr": "MIL",
-          "opp_pitcher": "Brandon Sproat",
-          "line": 5.0,
-          "side": "over",
-          "efp": 8.01,
-          "edge_z": 1.02,
-          "hit_prob": 0.846
-        },
-        {
-          "player_id": 545121,
-          "name": "Ildemaro Vargas",
-          "team_abbr": "AZ",
-          "opp_abbr": "CWS",
-          "opp_pitcher": "Davis Martin",
-          "line": 5.0,
-          "side": "over",
-          "efp": 8.71,
-          "edge_z": 0.845,
-          "hit_prob": 0.801
-        },
-        {
-          "player_id": 671739,
-          "name": "Michael Harris II",
-          "team_abbr": "ATL",
+          "player_id": 671976,
+          "name": "Tristan Peters",
+          "team_abbr": "CWS",
           "opp_abbr": "WSH",
-          "opp_pitcher": "Cade Cavalli",
+          "opp_pitcher": "Miles Mikolas",
+          "line": 5.5,
+          "side": "over",
+          "efp": 8.4,
+          "edge_z": 1.133,
+          "hit_prob": 0.871
+        },
+        {
+          "player_id": 665750,
+          "name": "Leody Taveras",
+          "team_abbr": "BAL",
+          "opp_abbr": "BOS",
+          "opp_pitcher": "Brayan Bello",
           "line": 5.0,
           "side": "over",
-          "efp": 9.71,
-          "edge_z": 0.682,
-          "hit_prob": 0.752
+          "efp": 8.9,
+          "edge_z": 0.867,
+          "hit_prob": 0.807
+        },
+        {
+          "player_id": 805808,
+          "name": "Kevin McGonigle",
+          "team_abbr": "DET",
+          "opp_abbr": "CIN",
+          "opp_pitcher": "Andrew Abbott",
+          "line": 5.5,
+          "side": "over",
+          "efp": 9.12,
+          "edge_z": 0.635,
+          "hit_prob": 0.737
         }
       ]
     },
     {
       "size": 4,
       "payout": 10.0,
-      "combined_prob": 0.3699,
-      "ev_pct": 269.9,
+      "combined_prob": 0.373,
+      "ev_pct": 273.0,
       "legs": [
         {
-          "player_id": 690993,
-          "name": "Colt Keith",
-          "team_abbr": "DET",
-          "opp_abbr": "MIL",
-          "opp_pitcher": "Brandon Sproat",
-          "line": 5.0,
-          "side": "over",
-          "efp": 8.01,
-          "edge_z": 1.02,
-          "hit_prob": 0.846
-        },
-        {
-          "player_id": 545121,
-          "name": "Ildemaro Vargas",
-          "team_abbr": "AZ",
-          "opp_abbr": "CWS",
-          "opp_pitcher": "Davis Martin",
-          "line": 5.0,
-          "side": "over",
-          "efp": 8.71,
-          "edge_z": 0.845,
-          "hit_prob": 0.801
-        },
-        {
-          "player_id": 671739,
-          "name": "Michael Harris II",
-          "team_abbr": "ATL",
+          "player_id": 671976,
+          "name": "Tristan Peters",
+          "team_abbr": "CWS",
           "opp_abbr": "WSH",
-          "opp_pitcher": "Cade Cavalli",
-          "line": 5.0,
-          "side": "over",
-          "efp": 9.71,
-          "edge_z": 0.682,
-          "hit_prob": 0.752
-        },
-        {
-          "player_id": 608324,
-          "name": "Alex Bregman",
-          "team_abbr": "CHC",
-          "opp_abbr": "PHI",
-          "opp_pitcher": "Cristopher S\u00e1nchez",
+          "opp_pitcher": "Miles Mikolas",
           "line": 5.5,
           "side": "over",
-          "efp": 8.38,
-          "edge_z": 0.599,
-          "hit_prob": 0.725
+          "efp": 8.4,
+          "edge_z": 1.133,
+          "hit_prob": 0.871
+        },
+        {
+          "player_id": 665750,
+          "name": "Leody Taveras",
+          "team_abbr": "BAL",
+          "opp_abbr": "BOS",
+          "opp_pitcher": "Brayan Bello",
+          "line": 5.0,
+          "side": "over",
+          "efp": 8.9,
+          "edge_z": 0.867,
+          "hit_prob": 0.807
+        },
+        {
+          "player_id": 805808,
+          "name": "Kevin McGonigle",
+          "team_abbr": "DET",
+          "opp_abbr": "CIN",
+          "opp_pitcher": "Andrew Abbott",
+          "line": 5.5,
+          "side": "over",
+          "efp": 9.12,
+          "edge_z": 0.635,
+          "hit_prob": 0.737
+        },
+        {
+          "player_id": 664023,
+          "name": "Ian Happ",
+          "team_abbr": "CHC",
+          "opp_abbr": "LAD",
+          "opp_pitcher": "Emmet Sheehan",
+          "line": 5.5,
+          "side": "over",
+          "efp": 9.48,
+          "edge_z": 0.581,
+          "hit_prob": 0.719
         }
       ]
     }
