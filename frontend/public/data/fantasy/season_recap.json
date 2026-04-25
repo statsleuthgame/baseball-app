@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-04-24T09:50:04.899918+00:00",
-  "days_resolved": 5,
+  "generated_at": "2026-04-25T09:00:50.958281+00:00",
+  "days_resolved": 6,
   "first_date": "2026-04-19",
-  "last_date": "2026-04-23",
+  "last_date": "2026-04-24",
   "totals": {
     "high_conf": {
-      "n": 3,
-      "wins": 0,
-      "hit_rate": 0.0
+      "n": 6,
+      "wins": 1,
+      "hit_rate": 0.167
     },
     "med_conf": {
-      "n": 213,
-      "wins": 109,
-      "hit_rate": 0.512
+      "n": 269,
+      "wins": 136,
+      "hit_rate": 0.506
     },
     "low_conf": {
-      "n": 264,
-      "wins": 123,
-      "hit_rate": 0.466
+      "n": 325,
+      "wins": 150,
+      "hit_rate": 0.462
     },
     "fade": {
-      "n": 186,
-      "wins": 128,
-      "hit_rate": 0.688
+      "n": 215,
+      "wins": 147,
+      "hit_rate": 0.684
     },
     "overall": {
-      "n": 666,
-      "wins": 360,
-      "hit_rate": 0.541
+      "n": 815,
+      "wins": 434,
+      "hit_rate": 0.533
     }
   },
   "days": [
@@ -119,6 +119,24 @@
         "n": 29,
         "wins": 13,
         "hit_rate": 0.448
+      }
+    },
+    {
+      "date": "2026-04-24",
+      "overall": {
+        "n": 149,
+        "wins": 74,
+        "hit_rate": 0.497
+      },
+      "high_conf": {
+        "n": 3,
+        "wins": 1,
+        "hit_rate": 0.333
+      },
+      "med_conf": {
+        "n": 56,
+        "wins": 27,
+        "hit_rate": 0.482
       }
     }
   ]
