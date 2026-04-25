@@ -233,22 +233,29 @@ body {
   min-height: 100vh;
   min-height: -webkit-fill-available;
   background: var(--bg);
-  display: flex;
-  flex-direction: column;
+  /* Body is now the scroll container — see .app-header-sticky and .app-content
+     below. Headers stick to top:0; main flows normally and the document
+     scrolls. This means wheel/trackpad events anywhere in the viewport
+     scroll the page natively, no JS forwarding needed. */
+}
+
+/* TopBar + TopTabs are wrapped in this sticky container so they stay pinned
+   to the top of the viewport while body scrolls beneath. Z-index is high
+   enough to sit above modal-style overlays inside the page (fixed-position
+   dialogs sit at z-index 200+ and remain on top). */
+.app-header-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
 }
 
 .app-content {
-  flex: 1;
-  min-height: 0;
   padding: 16px;
   padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
   max-width: 600px;
   width: 100%;
   margin: 0 auto;
-  overflow-y: auto;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-y: contain;
 }
 
 /* Top Bar — fixed */
