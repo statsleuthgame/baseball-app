@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 337,
+  "projection_count": 332,
   "projections": [
     {
       "player_id": 808959,
@@ -87,6 +87,82 @@
       },
       "pa": 4.3,
       "tier": "medium"
+    },
+    {
+      "player_id": 695578,
+      "name": "James Wood",
+      "position": "LF",
+      "team_id": 120,
+      "team_abbr": "WSH",
+      "opp_abbr": "CWS",
+      "opp_team_id": 145,
+      "opp_pitcher": {
+        "id": 702273,
+        "fullName": "Noah Schultz"
+      },
+      "park": {
+        "id": 4,
+        "name": "Guaranteed Rate Field",
+        "runs": 104,
+        "hr": 110,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "54",
+        "wind": "17 mph, Out To RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 10.01,
+      "mean_efp": 11.83,
+      "stats_games": 6,
+      "efp": 11.02,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 0.89,
+        "doubles": 0.73,
+        "triples": 0.04,
+        "home_runs": 3.26,
+        "bb_hbp": 2.05,
+        "r": 3.37,
+        "rbi": 1.72,
+        "sb": 0.53
+      },
+      "multipliers": {
+        "park_hr": 1.1,
+        "park_runs": 1.04,
+        "weather_hr": 1.035,
+        "pitcher_hits": 0.771,
+        "pitcher_hr": 0.979,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.026,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.173,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.108,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.0686,
+        "doubles": 0.0342,
+        "triples": 0.0011,
+        "home_runs": 0.0759,
+        "bb_hbp": 0.2379,
+        "r_per_pa": 0.3914,
+        "rbi_per_pa": 0.1998
+      },
+      "pa": 4.3,
+      "tier": "low"
     },
     {
       "player_id": 670541,
@@ -449,82 +525,6 @@
       "tier": "low"
     },
     {
-      "player_id": 695578,
-      "name": "James Wood",
-      "position": "LF",
-      "team_id": 120,
-      "team_abbr": "WSH",
-      "opp_abbr": "CWS",
-      "opp_team_id": 145,
-      "opp_pitcher": {
-        "id": 702273,
-        "fullName": "Noah Schultz"
-      },
-      "park": {
-        "id": 4,
-        "name": "Guaranteed Rate Field",
-        "runs": 104,
-        "hr": 110,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "54",
-        "wind": "17 mph, Out To RF"
-      },
-      "pa_source": "default",
-      "stdev_efp": 10.01,
-      "mean_efp": 11.83,
-      "stats_games": 6,
-      "efp": 9.97,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 0.82,
-        "doubles": 0.68,
-        "triples": 0.03,
-        "home_runs": 3.04,
-        "bb_hbp": 1.9,
-        "r": 2.83,
-        "rbi": 1.6,
-        "sb": 0.47
-      },
-      "multipliers": {
-        "park_hr": 1.1,
-        "park_runs": 1.04,
-        "weather_hr": 1.035,
-        "pitcher_hits": 0.771,
-        "pitcher_hr": 0.979,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.026,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.173,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.0686,
-        "doubles": 0.0342,
-        "triples": 0.0011,
-        "home_runs": 0.0759,
-        "bb_hbp": 0.2379,
-        "r_per_pa": 0.3533,
-        "rbi_per_pa": 0.1998
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 672695,
       "name": "Geraldo Perdomo",
       "position": "SS",
@@ -814,82 +814,6 @@
         "rbi_per_pa": 0.1609
       },
       "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 668939,
-      "name": "Adley Rutschman",
-      "position": "C",
-      "team_id": 110,
-      "team_abbr": "BAL",
-      "opp_abbr": "BOS",
-      "opp_team_id": 111,
-      "opp_pitcher": {
-        "id": 676979,
-        "fullName": "Garrett Crochet"
-      },
-      "park": {
-        "id": 2,
-        "name": "Camden Yards",
-        "runs": 103,
-        "hr": 108,
-        "label": "Slight Hitter"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "57",
-        "wind": "13 mph, In From RF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 3.87,
-      "mean_efp": 7.2,
-      "stats_games": 5,
-      "efp": 9.73,
-      "bat_side": "S",
-      "per_event": {
-        "singles": 2.06,
-        "doubles": 1.54,
-        "triples": 0.09,
-        "home_runs": 2.5,
-        "bb_hbp": 0.55,
-        "r": 2.72,
-        "rbi": 1.64,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 1.08,
-        "park_runs": 1.03,
-        "weather_hr": 0.88,
-        "pitcher_hits": 1.059,
-        "pitcher_hr": 1.113,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.03,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.757,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.007,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1599,
-        "doubles": 0.0715,
-        "triples": 0.0026,
-        "home_runs": 0.0582,
-        "bb_hbp": 0.0644,
-        "r_per_pa": 0.3158,
-        "rbi_per_pa": 0.191
-      },
-      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1402,6 +1326,82 @@
         "rbi_per_pa": 0.1616
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 668939,
+      "name": "Adley Rutschman",
+      "position": "C",
+      "team_id": 110,
+      "team_abbr": "BAL",
+      "opp_abbr": "BOS",
+      "opp_team_id": 111,
+      "opp_pitcher": {
+        "id": 676979,
+        "fullName": "Garrett Crochet"
+      },
+      "park": {
+        "id": 2,
+        "name": "Camden Yards",
+        "runs": 103,
+        "hr": 108,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "57",
+        "wind": "13 mph, In From RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 3.87,
+      "mean_efp": 7.2,
+      "stats_games": 5,
+      "efp": 9.56,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 2.02,
+        "doubles": 1.5,
+        "triples": 0.09,
+        "home_runs": 2.45,
+        "bb_hbp": 0.55,
+        "r": 2.68,
+        "rbi": 1.62,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 1.08,
+        "park_runs": 1.03,
+        "weather_hr": 0.88,
+        "pitcher_hits": 1.049,
+        "pitcher_hr": 1.107,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.03,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.757,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.007,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1565,
+        "doubles": 0.07,
+        "triples": 0.0026,
+        "home_runs": 0.0569,
+        "bb_hbp": 0.0639,
+        "r_per_pa": 0.3121,
+        "rbi_per_pa": 0.1882
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -2202,5 +2202,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-04-25T17:13:11.265331+00:00"
+  "generated_at": "2026-04-25T17:32:43.436617+00:00"
 }
