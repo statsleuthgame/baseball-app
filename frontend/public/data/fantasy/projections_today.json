@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 369,
+  "projection_count": 350,
   "projections": [
     {
       "player_id": 670541,
@@ -445,6 +445,82 @@
       "tier": "low"
     },
     {
+      "player_id": 668939,
+      "name": "Adley Rutschman",
+      "position": "C",
+      "team_id": 110,
+      "team_abbr": "BAL",
+      "opp_abbr": "BOS",
+      "opp_team_id": 111,
+      "opp_pitcher": {
+        "id": 676979,
+        "fullName": "Garrett Crochet"
+      },
+      "park": {
+        "id": 2,
+        "name": "Camden Yards",
+        "runs": 103,
+        "hr": 108,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "62",
+        "wind": "13 mph, In From RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 3.87,
+      "mean_efp": 7.2,
+      "stats_games": 5,
+      "efp": 10.0,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 2.09,
+        "doubles": 1.72,
+        "triples": 0.09,
+        "home_runs": 2.49,
+        "bb_hbp": 0.59,
+        "r": 2.77,
+        "rbi": 1.66,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 1.08,
+        "park_runs": 1.03,
+        "weather_hr": 0.88,
+        "pitcher_hits": 1.096,
+        "pitcher_hr": 1.149,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.03,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.757,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.007,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1623,
+        "doubles": 0.08,
+        "triples": 0.0027,
+        "home_runs": 0.0579,
+        "bb_hbp": 0.0691,
+        "r_per_pa": 0.3219,
+        "rbi_per_pa": 0.1929
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 672695,
       "name": "Geraldo Perdomo",
       "position": "SS",
@@ -586,6 +662,82 @@
         "rbi_per_pa": 0.1998
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 608070,
+      "name": "Jos\u00e9 Ram\u00edrez",
+      "position": "3B",
+      "team_id": 114,
+      "team_abbr": "CLE",
+      "opp_abbr": "TOR",
+      "opp_team_id": 141,
+      "opp_pitcher": {
+        "id": 592332,
+        "fullName": "Kevin Gausman"
+      },
+      "park": {
+        "id": 14,
+        "name": "Rogers Centre",
+        "runs": 104,
+        "hr": 109,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 8.65,
+      "mean_efp": 13.0,
+      "stats_games": 5,
+      "efp": 9.81,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 1.38,
+        "doubles": 0.86,
+        "triples": 0.05,
+        "home_runs": 1.65,
+        "bb_hbp": 1.08,
+        "r": 2.69,
+        "rbi": 1.43,
+        "sb": 2.06
+      },
+      "multipliers": {
+        "park_hr": 1.09,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.899,
+        "pitcher_hr": 0.841,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.017,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.95,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1073,
+        "doubles": 0.04,
+        "triples": 0.0013,
+        "home_runs": 0.0384,
+        "bb_hbp": 0.125,
+        "r_per_pa": 0.3125,
+        "rbi_per_pa": 0.1663
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1309,78 +1461,6 @@
       "tier": "low"
     },
     {
-      "player_id": 608070,
-      "name": "Jos\u00e9 Ram\u00edrez",
-      "position": "3B",
-      "team_id": 114,
-      "team_abbr": "CLE",
-      "opp_abbr": "TOR",
-      "opp_team_id": 141,
-      "opp_pitcher": {
-        "id": 592332,
-        "fullName": "Kevin Gausman"
-      },
-      "park": {
-        "id": 14,
-        "name": "Rogers Centre",
-        "runs": 104,
-        "hr": 109,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 8.65,
-      "mean_efp": 13.0,
-      "stats_games": 5,
-      "efp": 9.36,
-      "bat_side": "S",
-      "per_event": {
-        "singles": 1.29,
-        "doubles": 0.8,
-        "triples": 0.04,
-        "home_runs": 1.54,
-        "bb_hbp": 1.0,
-        "r": 2.63,
-        "rbi": 1.33,
-        "sb": 2.06
-      },
-      "multipliers": {
-        "park_hr": 1.09,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.899,
-        "pitcher_hr": 0.841,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.017,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1073,
-        "doubles": 0.04,
-        "triples": 0.0013,
-        "home_runs": 0.0384,
-        "bb_hbp": 0.125,
-        "r_per_pa": 0.3291,
-        "rbi_per_pa": 0.1663
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 676609,
       "name": "Jos\u00e9 Caballero",
       "position": "SS",
@@ -1597,82 +1677,6 @@
       "tier": "low"
     },
     {
-      "player_id": 668939,
-      "name": "Adley Rutschman",
-      "position": "C",
-      "team_id": 110,
-      "team_abbr": "BAL",
-      "opp_abbr": "BOS",
-      "opp_team_id": 111,
-      "opp_pitcher": {
-        "id": 676979,
-        "fullName": "Garrett Crochet"
-      },
-      "park": {
-        "id": 2,
-        "name": "Camden Yards",
-        "runs": 103,
-        "hr": 108,
-        "label": "Slight Hitter"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "62",
-        "wind": "13 mph, In From RF"
-      },
-      "pa_source": "default",
-      "stdev_efp": 3.87,
-      "mean_efp": 7.2,
-      "stats_games": 5,
-      "efp": 9.29,
-      "bat_side": "S",
-      "per_event": {
-        "singles": 1.95,
-        "doubles": 1.6,
-        "triples": 0.09,
-        "home_runs": 2.32,
-        "bb_hbp": 0.55,
-        "r": 2.56,
-        "rbi": 1.54,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 1.08,
-        "park_runs": 1.03,
-        "weather_hr": 0.88,
-        "pitcher_hits": 1.096,
-        "pitcher_hr": 1.149,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.03,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.757,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1623,
-        "doubles": 0.08,
-        "triples": 0.0027,
-        "home_runs": 0.0579,
-        "bb_hbp": 0.0691,
-        "r_per_pa": 0.3195,
-        "rbi_per_pa": 0.1929
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 665833,
       "name": "Oneil Cruz",
       "position": "CF",
@@ -1814,6 +1818,82 @@
         "rbi_per_pa": 0.1939
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 621493,
+      "name": "Taylor Ward",
+      "position": "LF",
+      "team_id": 110,
+      "team_abbr": "BAL",
+      "opp_abbr": "BOS",
+      "opp_team_id": 111,
+      "opp_pitcher": {
+        "id": 676979,
+        "fullName": "Garrett Crochet"
+      },
+      "park": {
+        "id": 2,
+        "name": "Camden Yards",
+        "runs": 103,
+        "hr": 108,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "62",
+        "wind": "13 mph, In From RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 6.74,
+      "mean_efp": 12.2,
+      "stats_games": 5,
+      "efp": 9.21,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.1,
+        "doubles": 1.82,
+        "triples": 0.07,
+        "home_runs": 1.21,
+        "bb_hbp": 0.95,
+        "r": 2.83,
+        "rbi": 1.41,
+        "sb": 0.14
+      },
+      "multipliers": {
+        "park_hr": 1.08,
+        "park_runs": 1.03,
+        "weather_hr": 0.95,
+        "pitcher_hits": 1.096,
+        "pitcher_hr": 1.149,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.03,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.757,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.947,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1628,
+        "doubles": 0.0844,
+        "triples": 0.002,
+        "home_runs": 0.028,
+        "bb_hbp": 0.1106,
+        "r_per_pa": 0.3294,
+        "rbi_per_pa": 0.1637
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -2103,80 +2183,8 @@
       },
       "pa": 4.0,
       "tier": "low"
-    },
-    {
-      "player_id": 678246,
-      "name": "Miguel Vargas",
-      "position": "3B",
-      "team_id": 145,
-      "team_abbr": "CWS",
-      "opp_abbr": "WSH",
-      "opp_team_id": 120,
-      "opp_pitcher": {
-        "id": 663623,
-        "fullName": "Jake Irvin"
-      },
-      "park": {
-        "id": 4,
-        "name": "Guaranteed Rate Field",
-        "runs": 104,
-        "hr": 110,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.55,
-      "mean_efp": 18.2,
-      "stats_games": 5,
-      "efp": 9.12,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.39,
-        "doubles": 0.5,
-        "triples": 0.12,
-        "home_runs": 2.24,
-        "bb_hbp": 1.23,
-        "r": 2.54,
-        "rbi": 1.32,
-        "sb": 1.09
-      },
-      "multipliers": {
-        "park_hr": 1.1,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.907,
-        "pitcher_hr": 1.097,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.073,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.008,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1159,
-        "doubles": 0.025,
-        "triples": 0.0037,
-        "home_runs": 0.056,
-        "bb_hbp": 0.1536,
-        "r_per_pa": 0.3169,
-        "rbi_per_pa": 0.1649
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-04-25T13:58:16.483212+00:00"
+  "generated_at": "2026-04-25T15:39:06.087177+00:00"
 }
