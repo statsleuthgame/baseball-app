@@ -71,10 +71,19 @@ export default function AppShell() {
     });
   }, [location.pathname]);
 
+  // On first mount, give <main> focus so wheel/trackpad scroll works
+  // immediately — without this Chrome on Mac sometimes ignores wheel events
+  // until the user clicks somewhere inside the page first.
+  useEffect(() => {
+    const el = contentRef.current;
+    if (!el) return;
+    el.focus({ preventScroll: true });
+  }, []);
+
   // Forward wheel events that hit the empty "dead zones" beside the centered
-  // <main> column into <main>'s scroll. Without this, wheel/trackpad scroll
-  // does nothing when the cursor sits outside the 600/800/1400px column on
-  // wide desktop viewports because nothing under the cursor is scrollable.
+  // <main> column (or anywhere else outside <main>) into <main>'s scroll.
+  // Without this, wheel/trackpad scroll does nothing when the cursor sits
+  // outside the 600/800/1400px column on wide desktop viewports.
   useEffect(() => {
     const onWheel = (e) => {
       const el = contentRef.current;
