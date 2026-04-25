@@ -71,30 +71,38 @@ export default function AppShell() {
     });
   }, [location.pathname]);
 
-  // On first mount, give <main> focus so wheel/trackpad scroll works
-  // immediately — without this Chrome on Mac sometimes ignores wheel events
-  // until the user clicks somewhere inside the page first.
-  useEffect(() => {
-    const el = contentRef.current;
-    if (!el) return;
-    el.focus({ preventScroll: true });
-  }, []);
-
-  // Forward wheel events that hit the empty "dead zones" beside the centered
-  // <main> column (or anywhere else outside <main>) into <main>'s scroll.
-  // Without this, wheel/trackpad scroll does nothing when the cursor sits
-  // outside the 600/800/1400px column on wide desktop viewports.
+  // Wheel/trackpad scrolling: take full control so scroll works
+  // identically whether the cursor is over <main>, the dead zones to the
+  // sides of the centered column, or anywhere else on the viewport.
+  // Without this, wheel scroll over <main> sometimes fails on Chrome/Mac
+  // until the user clicks first, and never works in the dead zones.
+  // We skip events targeted at nested scrollable children (so they keep
+  // their own scroll behavior) and at portals like the search dialog.
   useEffect(() => {
     const onWheel = (e) => {
       const el = contentRef.current;
       if (!el) return;
-      // Skip when the wheel target is already inside <main> — the browser
-      // handles those natively.
-      if (el.contains(e.target)) return;
+      // Don't hijack wheel inside dialogs / portals.
+      if (e.target.closest && e.target.closest("[role='dialog'], .player-search-overlay")) return;
+      // Don't hijack when the cursor is over a nested scrollable element
+      // (e.g. <details><table> data tables) that has actual overflow.
+      let node = e.target;
+      while (node && node !== el && node !== document.body) {
+        if (node instanceof Element) {
+          const style = getComputedStyle(node);
+          const oy = style.overflowY;
+          const ox = style.overflowX;
+          const canScrollY = (oy === "auto" || oy === "scroll") && node.scrollHeight > node.clientHeight;
+          const canScrollX = (ox === "auto" || ox === "scroll") && node.scrollWidth > node.clientWidth;
+          if (canScrollY || canScrollX) return;
+        }
+        node = node.parentNode;
+      }
+      e.preventDefault();
       el.scrollTop += e.deltaY;
       el.scrollLeft += e.deltaX;
     };
-    window.addEventListener("wheel", onWheel, { passive: true });
+    window.addEventListener("wheel", onWheel, { passive: false });
     return () => window.removeEventListener("wheel", onWheel);
   }, []);
 
