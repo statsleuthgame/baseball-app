@@ -8,6 +8,7 @@ import BaseRunners3D, { getTeamColor } from "./BaseRunners3D";
 import CameraRig from "./CameraRig";
 import ThrowToBase, { parseThrowTargets } from "./ThrowToBase";
 import OutIndicator from "./OutIndicator";
+import useReducedMotion from "../../utils/useReducedMotion";
 import {
   isHitEvent, isOutEvent, isFlyOut, isGroundOut,
   isDoublePlay as isDoublePlayEvent, eventDisplayLabel,
@@ -40,8 +41,9 @@ const BASE_POS = {
  *  - runnersOn: { first: bool, second: bool, third: bool } — runners on base
  */
 export default function BallInPlay3D({ hitData, venueTeamId, runnersOn, runnerNames, outs }) {
+  const reducedMotion = useReducedMotion();
   const [isPlaying, setIsPlaying] = useState(false);
-  const [showMetrics, setShowMetrics] = useState(false);
+  const [showMetrics, setShowMetrics] = useState(reducedMotion);
   const [ballPos, setBallPos] = useState(null);
   const [ballProgress, setBallProgress] = useState(0);
   const [throwIndex, setThrowIndex] = useState(-1); // -1 = no throw, 0+ = which throw in chain
@@ -87,17 +89,21 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn, runnerNa
     return parseThrowTargets(hitData?.description);
   }, [hitData]);
 
-  // Auto-start animation after a short delay
+  // Auto-start animation after a short delay — unless reduced motion is on.
   useEffect(() => {
     if (!hitData) return;
     timersRef.current.forEach(id => clearTimeout(id));
     timersRef.current = [];
     setIsPlaying(false);
-    setShowMetrics(false);
-    setBallProgress(0);
+    setShowMetrics(reducedMotion);
+    setBallProgress(reducedMotion ? 1 : 0);
     setThrowIndex(-1);
     setThrowFromPos(null);
     setOutPositions([]);
+
+    if (reducedMotion) {
+      return;
+    }
 
     const timer = setTimeout(() => setIsPlaying(true), 500);
     timersRef.current.push(timer);
@@ -105,7 +111,7 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn, runnerNa
       timersRef.current.forEach(id => clearTimeout(id));
       timersRef.current = [];
     };
-  }, [hitData]);
+  }, [hitData, reducedMotion]);
 
 
   const handleAnimationComplete = useCallback(() => {
@@ -196,15 +202,60 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn, runnerNa
 
   const animSpeed = hitData.trajectory === "ground_ball" ? 1.5 : 1;
 
+  const recapLabel = (() => {
+    const parts = [];
+    if (isHomeRun) parts.push("Home run");
+    else if (isHit) parts.push(`Hit: ${displayEvent || trajType}`);
+    else if (isOut) parts.push(`Out: ${displayEvent || trajType}`);
+    if (hitData.exitVelo) parts.push(`${hitData.exitVelo} mph exit velocity`);
+    if (hitData.distance) parts.push(`${hitData.distance} feet`);
+    if (hitData.launchAngle != null) parts.push(`${hitData.launchAngle} degree launch angle`);
+    if (outs != null && isOut) parts.push(`${outs} out${outs !== 1 ? "s" : ""}`);
+    return parts.join(", ");
+  })();
+
+  const handleTogglePlay = () => setIsPlaying((p) => !p);
+
   return (
-    <div className="bip3d-container">
+    <div className="bip3d-container" role="region" aria-label={`Ball in play: ${recapLabel}`}>
+      <div className="sr-only" aria-live="polite" aria-atomic="true">
+        {showMetrics ? recapLabel : `Animating ${trajLabel}`}
+      </div>
+      <div
+        role="toolbar"
+        aria-label="Ball flight controls"
+        className="bip3d-toolbar"
+      >
+        <button
+          type="button"
+          className="bip3d-ctrl-btn"
+          onClick={handleTogglePlay}
+          aria-label={isPlaying ? "Pause animation" : "Play animation"}
+          aria-pressed={isPlaying}
+        >
+          {isPlaying ? "Pause" : "Play"}
+        </button>
+        <button
+          type="button"
+          className="bip3d-ctrl-btn"
+          onClick={handleReplay}
+          aria-label="Replay animation"
+        >
+          Replay
+        </button>
+      </div>
       {/* 3D Canvas */}
-      <div className="bip3d-canvas-wrap">
+      <div
+        className="bip3d-canvas-wrap"
+        role="img"
+        aria-label={`3D ball flight: ${recapLabel}`}
+      >
         <Canvas
           camera={{ fov: 45, near: 1, far: 2000, position: [0, 120, 80] }}
           dpr={[1, 1.5]}
           gl={{ antialias: true, alpha: true }}
           style={{ background: "linear-gradient(180deg, #1a4a7a 0%, #4a80b0 100%)" }}
+          aria-hidden="true"
         >
           {/* Lighting — bright daytime */}
           <ambientLight intensity={0.7} />
@@ -275,8 +326,8 @@ export default function BallInPlay3D({ hitData, venueTeamId, runnersOn, runnerNa
         </Canvas>
 
         {/* Event label overlay (top) */}
-        <div className="bip3d-event-label" style={{ color: accentColor }}>
-          {isHomeRun && <span className="bip3d-hr-icon">💥</span>}
+        <div className="bip3d-event-label" style={{ color: accentColor }} aria-live="polite">
+          {isHomeRun && <span className="bip3d-hr-icon" aria-hidden="true">💥</span>}
           {trajLabel}
           {showMetrics && isOut && outs != null && (
             <span className={`bip3d-out-count ${outs >= 3 ? "bip3d-three-outs" : ""}`}> — {outs} Out{outs !== 1 ? "s" : ""}</span>

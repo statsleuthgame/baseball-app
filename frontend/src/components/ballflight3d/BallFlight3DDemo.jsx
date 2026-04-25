@@ -201,7 +201,7 @@ export default function BallFlight3DDemo() {
   return (
     <div className="bip3d-demo">
       <div className="bip3d-demo-header">
-        <h2>3D Ball Flight Viewer</h2>
+        <h1>3D Ball Flight Viewer</h1>
         <p>Concept prototype — select a hit scenario or build your own</p>
       </div>
 
@@ -217,18 +217,22 @@ export default function BallFlight3DDemo() {
       <div className="bip3d-demo-controls">
         {/* Preset hits */}
         <div className="bip3d-demo-section">
-          <h3>Sample Hits</h3>
+          <h2>Sample Hits</h2>
           <div className="bip3d-preset-grid">
             {Object.entries(SAMPLE_HITS).map(([key, { label, data, runnersOn }]) => {
               const isHit = ["Single", "Double", "Triple", "Home Run"].includes(data.event);
               const runnerCount = [runnersOn?.first, runnersOn?.second, runnersOn?.third].filter(Boolean).length;
+              const pressed = selectedPreset === key && !customMode;
               return (
                 <button
                   key={key}
-                  className={`bip3d-preset-btn ${selectedPreset === key && !customMode ? "active" : ""}`}
+                  type="button"
+                  className={`bip3d-preset-btn ${pressed ? "active" : ""}`}
                   onClick={() => handlePresetChange(key)}
+                  aria-pressed={pressed}
+                  aria-label={`${label}. ${data.exitVelo} mph, ${data.distance} feet, ${data.launchAngle} degree launch angle${runnerCount > 0 ? `, ${runnerCount} runner${runnerCount !== 1 ? "s" : ""} on base` : ""}.`}
                 >
-                  <span className="bip3d-preset-dot" style={{ background: isHit ? "#22c55e" : "#ef4444" }} />
+                  <span className="bip3d-preset-dot" style={{ background: isHit ? "#22c55e" : "#ef4444" }} aria-hidden="true" />
                   <span className="bip3d-preset-label">{label}</span>
                   <span className="bip3d-preset-stats">
                     {data.exitVelo} mph · {data.distance}ft · {data.launchAngle}°
@@ -242,32 +246,71 @@ export default function BallFlight3DDemo() {
 
         {/* Custom controls */}
         <div className="bip3d-demo-section">
-          <h3>Custom Hit Builder</h3>
+          <h2>Custom Hit Builder</h2>
           <div className="bip3d-custom-grid">
-            <label>
-              Exit Velocity: <strong>{exitVelo} mph</strong>
-              <input type="range" min="50" max="120" value={exitVelo} onChange={(e) => setExitVelo(+e.target.value)} />
-            </label>
-            <label>
-              Launch Angle: <strong>{launchAngle}°</strong>
-              <input type="range" min="-20" max="70" value={launchAngle} onChange={(e) => setLaunchAngle(+e.target.value)} />
-            </label>
-            <label>
-              Distance: <strong>{distance} ft</strong>
-              <input type="range" min="50" max="500" value={distance} onChange={(e) => setDistance(+e.target.value)} />
-            </label>
-            <label>
-              Trajectory:
-              <select value={trajectory} onChange={(e) => setTrajectory(e.target.value)}>
+            <div className="bip3d-field">
+              <label htmlFor="bip3d-exit-velo">
+                Exit Velocity: <strong>{exitVelo} mph</strong>
+              </label>
+              <input
+                id="bip3d-exit-velo"
+                type="range"
+                min="50"
+                max="120"
+                value={exitVelo}
+                onChange={(e) => setExitVelo(+e.target.value)}
+                aria-valuemin={50}
+                aria-valuemax={120}
+                aria-valuenow={exitVelo}
+                aria-valuetext={`${exitVelo} miles per hour`}
+              />
+            </div>
+            <div className="bip3d-field">
+              <label htmlFor="bip3d-launch-angle">
+                Launch Angle: <strong>{launchAngle}°</strong>
+              </label>
+              <input
+                id="bip3d-launch-angle"
+                type="range"
+                min="-20"
+                max="70"
+                value={launchAngle}
+                onChange={(e) => setLaunchAngle(+e.target.value)}
+                aria-valuemin={-20}
+                aria-valuemax={70}
+                aria-valuenow={launchAngle}
+                aria-valuetext={`${launchAngle} degrees`}
+              />
+            </div>
+            <div className="bip3d-field">
+              <label htmlFor="bip3d-distance">
+                Distance: <strong>{distance} ft</strong>
+              </label>
+              <input
+                id="bip3d-distance"
+                type="range"
+                min="50"
+                max="500"
+                value={distance}
+                onChange={(e) => setDistance(+e.target.value)}
+                aria-valuemin={50}
+                aria-valuemax={500}
+                aria-valuenow={distance}
+                aria-valuetext={`${distance} feet`}
+              />
+            </div>
+            <div className="bip3d-field">
+              <label htmlFor="bip3d-trajectory">Trajectory:</label>
+              <select id="bip3d-trajectory" value={trajectory} onChange={(e) => setTrajectory(e.target.value)}>
                 <option value="fly_ball">Fly Ball</option>
                 <option value="line_drive">Line Drive</option>
                 <option value="ground_ball">Ground Ball</option>
                 <option value="popup">Popup</option>
               </select>
-            </label>
-            <label>
-              Result:
-              <select value={event} onChange={(e) => setEvent(e.target.value)}>
+            </div>
+            <div className="bip3d-field">
+              <label htmlFor="bip3d-result">Result:</label>
+              <select id="bip3d-result" value={event} onChange={(e) => setEvent(e.target.value)}>
                 <option value="Home Run">Home Run</option>
                 <option value="Triple">Triple</option>
                 <option value="Double">Double</option>
@@ -281,32 +324,42 @@ export default function BallFlight3DDemo() {
                 <option value="Fielders Choice">Fielder's Choice</option>
                 <option value="Field Error">Error</option>
               </select>
-            </label>
-            <label>
-              Stadium:
-              <select value={teamId} onChange={(e) => setTeamId(+e.target.value)}>
+            </div>
+            <div className="bip3d-field">
+              <label htmlFor="bip3d-stadium">Stadium:</label>
+              <select id="bip3d-stadium" value={teamId} onChange={(e) => setTeamId(+e.target.value)}>
                 {TEAM_OPTIONS.map((t) => (
                   <option key={t.id} value={t.id}>{t.name}</option>
                 ))}
               </select>
-            </label>
-            <label>
-              Runners On Base:
-              <div className="bip3d-runner-toggles">
-                {["first", "second", "third"].map((base) => (
-                  <button
-                    key={base}
-                    className={`bip3d-runner-toggle ${customRunners[base] ? "active" : ""}`}
-                    onClick={() => setCustomRunners((r) => ({ ...r, [base]: !r[base] }))}
-                  >
-                    {base === "first" ? "1B" : base === "second" ? "2B" : "3B"}
-                  </button>
-                ))}
+            </div>
+            <div className="bip3d-field">
+              <span id="bip3d-runners-label">Runners On Base:</span>
+              <div
+                className="bip3d-runner-toggles"
+                role="group"
+                aria-labelledby="bip3d-runners-label"
+              >
+                {["first", "second", "third"].map((base) => {
+                  const pressed = !!customRunners[base];
+                  return (
+                    <button
+                      key={base}
+                      type="button"
+                      className={`bip3d-runner-toggle ${pressed ? "active" : ""}`}
+                      onClick={() => setCustomRunners((r) => ({ ...r, [base]: !r[base] }))}
+                      aria-pressed={pressed}
+                      aria-label={`Runner on ${base} base`}
+                    >
+                      {base === "first" ? "1B" : base === "second" ? "2B" : "3B"}
+                    </button>
+                  );
+                })}
               </div>
-            </label>
+            </div>
           </div>
-          <button className="bip3d-fire-btn" onClick={handleFireCustom}>
-            🔥 Launch Ball
+          <button type="button" className="bip3d-fire-btn" onClick={handleFireCustom}>
+            <span aria-hidden="true">🔥</span> Launch Ball
           </button>
         </div>
       </div>

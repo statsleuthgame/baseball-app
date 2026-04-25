@@ -40,20 +40,30 @@ export default function UpcomingSeries() {
                 onClick={() => navigate(`/team/${opp.id}`)}
                 aria-label={`Go to ${opp.abbreviation} team page`}
               >
-                <img src={opp.logoUrl} alt={opp.abbreviation} className="series-logo" />
+                <img src={opp.logoUrl} alt="" className="series-logo" />
                 <span>{isHome ? "vs" : "@"} {opp.abbreviation}</span>
               </button>
               <div className="series-pitchers">
                 {us.probablePitcher && (
-                  <span className="series-pitcher-name sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${us.probablePitcher.id}`)}>
+                  <button
+                    type="button"
+                    className="series-pitcher-name sb-player-link"
+                    onClick={() => navigate(`/team/${teamId}/player/${us.probablePitcher.id}`)}
+                    aria-label={`View ${us.probablePitcher.fullName} player page`}
+                  >
                     {shortName(us.probablePitcher.fullName)}
-                  </span>
+                  </button>
                 )}
-                {us.probablePitcher && opp.probablePitcher && <span className="series-pitcher-vs">vs</span>}
+                {us.probablePitcher && opp.probablePitcher && <span className="series-pitcher-vs" aria-hidden="true">vs</span>}
                 {opp.probablePitcher && (
-                  <span className="series-pitcher-name sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${opp.probablePitcher.id}`)}>
+                  <button
+                    type="button"
+                    className="series-pitcher-name sb-player-link"
+                    onClick={() => navigate(`/team/${teamId}/player/${opp.probablePitcher.id}`)}
+                    aria-label={`View ${opp.probablePitcher.fullName} player page`}
+                  >
                     {shortName(opp.probablePitcher.fullName)}
-                  </span>
+                  </button>
                 )}
                 {!us.probablePitcher && !opp.probablePitcher && (
                   <span className="series-tbd">TBD vs TBD</span>

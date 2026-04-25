@@ -71,7 +71,7 @@ export default function PlayerDetail() {
       <div className="player-header">
         <PlayerPhoto playerId={player.id} name={player.fullName} size={96} />
         <div className="player-header-info">
-          <h2 className="player-name">{player.fullName || "Unknown"}</h2>
+          <h1 className="player-name">{player.fullName || "Unknown"}</h1>
           {playerTeam && (
             <button
               type="button"
@@ -81,7 +81,7 @@ export default function PlayerDetail() {
             >
               <img
                 src={`https://www.mlbstatic.com/team-logos/team-cap-on-dark/${playerTeamId}.svg`}
-                alt={playerTeam.abbreviation}
+                alt=""
                 className="player-team-logo"
               />
               <span className="player-team-name">{playerTeam.name}</span>

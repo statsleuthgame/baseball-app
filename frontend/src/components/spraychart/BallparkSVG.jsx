@@ -57,14 +57,29 @@ export default function BallparkSVG({ parkAbbr, parkName, hits, children }) {
   const second = { x: HP.x, y: HP.y - bd * 1.414 };
   const third = { x: HP.x - bd * 0.707, y: HP.y - bd * 0.707 };
 
+  const hitsCount = hits?.length ?? 0;
+  const countsByResult = (hits || []).reduce((acc, h) => {
+    acc[h.result] = (acc[h.result] || 0) + 1;
+    return acc;
+  }, {});
+  const countsText = ["single", "double", "triple", "home_run", "out"]
+    .filter((k) => countsByResult[k])
+    .map((k) => `${countsByResult[k]} ${k.replace("_", " ")}${countsByResult[k] > 1 ? "s" : ""}`)
+    .join(", ");
+  const chartLabel = `Spray chart at ${parkName || "ballpark"}: ${hitsCount} ${hitsCount === 1 ? "hit" : "hits"} plotted${countsText ? ". " + countsText : ""}`;
+
   return (
     <svg
       viewBox={`${minX} ${minY} ${vw} ${vh}`}
       className="ballpark-svg"
       preserveAspectRatio="xMidYMid meet"
       role="img"
-      aria-label={`Spray chart at ${parkName || "ballpark"}`}
+      aria-label={chartLabel}
     >
+      <title>{chartLabel}</title>
+      <desc>
+        Batted ball locations on the {parkName || "ballpark"} field, color-coded by outcome. Each dot is keyboard-focusable and opens a detail readout.
+      </desc>
       {/* Background */}
       <rect x={minX} y={minY} width={vw} height={vh} fill="#0d1117" rx="8" />
 

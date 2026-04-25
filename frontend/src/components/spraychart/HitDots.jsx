@@ -17,6 +17,24 @@ const RESULT_LABELS = {
   out: "Out",
 };
 
+const RESULT_NAMES = {
+  single: "Single",
+  double: "Double",
+  triple: "Triple",
+  home_run: "Home run",
+  out: "Out",
+};
+
+function describeHit(hit) {
+  const type = RESULT_NAMES[hit.result] || hit.event || "Hit";
+  const parts = [type];
+  if (hit.exitVelo) parts.push(`${hit.exitVelo} mph`);
+  if (hit.launchAngle != null) parts.push(`${hit.launchAngle}° launch angle`);
+  if (hit.hitDistance) parts.push(`${hit.hitDistance} feet`);
+  if (hit.date) parts.push(hit.date.split(" ")[0]);
+  return parts.join(", ");
+}
+
 /** 5-pointed star SVG polygon */
 const StarShape = ({ cx, cy, size = 4, fill, stroke, strokeWidth, opacity, style, ...props }) => {
   const pts = [];
@@ -66,11 +84,18 @@ export default function HitDots({ hits, filters, longestHR, onHitSelect }) {
     handleSelect(i);
   };
 
+  const handleKeyDown = (i) => (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      handleSelect(i);
+    }
+  };
+
   const selectedHit = selected !== null ? filtered[selected] : null;
 
   return (
     <>
-      <g className="hit-dots">
+      <g className="hit-dots" role="group" aria-label={`${filtered.length} hits plotted`}>
         {/* Render outs first (behind), then hits on top */}
         {filtered.map((hit, i) => {
           const svgX = xScale(hit.x);
@@ -78,6 +103,7 @@ export default function HitDots({ hits, filters, longestHR, onHitSelect }) {
           const isLongest = isLongestHR(hit);
           const isSelected = selected === i;
           const isOut = hit.result === "out";
+          const label = describeHit(hit) + (isLongest ? ", longest home run" : "");
 
           if (isLongest) {
             return (
@@ -87,20 +113,35 @@ export default function HitDots({ hits, filters, longestHR, onHitSelect }) {
                 fill="#F44336"
                 stroke="#FFD700" strokeWidth={isSelected ? 1.5 : 0.5}
                 opacity="1"
-                style={{ cursor: "pointer", transition: "opacity 0.15s" }}
+                style={{ cursor: "pointer", transition: "opacity 0.15s", outline: "none" }}
+                role="button"
+                tabIndex={0}
+                aria-label={label}
+                aria-pressed={isSelected}
+                focusable="true"
                 onClick={() => handleClick(i)}
+                onKeyDown={handleKeyDown(i)}
                 onTouchStart={(e) => { e.preventDefault(); handleSelect(i, true); }}
               />
             );
           }
 
           return (
-            <g key={`hit-${i}`}>
+            <g
+              key={`hit-${i}`}
+              role="button"
+              tabIndex={0}
+              aria-label={label}
+              aria-pressed={isSelected}
+              focusable="true"
+              className="hit-dot-group"
+              onKeyDown={handleKeyDown(i)}
+              style={{ cursor: "pointer" }}
+            >
               {/* Invisible larger tap target */}
               <circle
                 cx={svgX} cy={svgY} r="6"
                 fill="transparent"
-                style={{ cursor: "pointer" }}
                 onClick={() => handleClick(i)}
                 onTouchStart={(e) => { e.preventDefault(); handleSelect(i, true); }}
               />
@@ -114,6 +155,21 @@ export default function HitDots({ hits, filters, longestHR, onHitSelect }) {
                 strokeWidth={isSelected ? 1 : 0}
                 style={{ transition: "r 0.15s, opacity 0.15s" }}
               />
+              {/* Outs get an "X" overlay so they're differentiated by shape, not just color. */}
+              {isOut && !isSelected && (
+                <g aria-hidden="true">
+                  <line
+                    x1={svgX - 1.4} y1={svgY - 1.4}
+                    x2={svgX + 1.4} y2={svgY + 1.4}
+                    stroke="#fff" strokeWidth="0.5" opacity="0.5"
+                  />
+                  <line
+                    x1={svgX - 1.4} y1={svgY + 1.4}
+                    x2={svgX + 1.4} y2={svgY - 1.4}
+                    stroke="#fff" strokeWidth="0.5" opacity="0.5"
+                  />
+                </g>
+              )}
             </g>
           );
         })}
@@ -128,6 +184,7 @@ export default function HitDots({ hits, filters, longestHR, onHitSelect }) {
             stroke="#fff"
             strokeWidth="0.5"
             opacity="0.5"
+            aria-hidden="true"
           />
         )}
       </g>
@@ -139,10 +196,10 @@ export default function HitDots({ hits, filters, longestHR, onHitSelect }) {
         const color = isLongest ? "#FFD700" : RESULT_COLORS[selectedHit.result] || "#fff";
 
         return (
-          <g>
+          <g aria-hidden="true">
             <rect x="10" y="238" width="230" height="26" rx="5" fill="#1a2236" stroke={color} strokeWidth="0.5" opacity="0.95" />
             <text x="18" y="250" fill={color} fontSize="6" fontWeight="700">{label}</text>
-            <text x="18" y="258" fill="#9299ad" fontSize="5">
+            <text x="18" y="258" fill="#c6ccde" fontSize="5">
               {selectedHit.exitVelo ? `${selectedHit.exitVelo} mph` : ""}
               {selectedHit.launchAngle ? ` · ${selectedHit.launchAngle}°` : ""}
               {selectedHit.hitDistance ? ` · ${selectedHit.hitDistance} ft` : ""}
@@ -155,4 +212,4 @@ export default function HitDots({ hits, filters, longestHR, onHitSelect }) {
   );
 }
 
-export { RESULT_COLORS, RESULT_LABELS };
+export { RESULT_COLORS, RESULT_LABELS, describeHit };

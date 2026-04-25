@@ -30,6 +30,7 @@ export default function PitcherStats({ stats, season, selectedSeason, onSeasonCh
             className="stat-season-select"
             value={selectedSeason}
             onChange={(e) => onSeasonChange(Number(e.target.value))}
+            aria-label="Select pitching season"
           >
             {seasons.map((y) => (
               <option key={y} value={y}>{y}</option>

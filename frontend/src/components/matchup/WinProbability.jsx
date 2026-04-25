@@ -61,20 +61,23 @@ export default function WinProbability({ gamePk, teamId, isHome, awayAbbr, homeA
   const yTicks = [0, 0.25, 0.5, 0.75, 1.0];
   const inningTicks = Array.from({ length: maxInning }, (_, i) => i + 1);
 
+  const wpLabel = `Win probability: ${ourAbbr} ${probPct} percent, ${theirAbbr} ${opponentPct} percent.`;
+
   return (
     <div className="matchup-section">
       <h3>Win Probability</h3>
+      <div className="sr-only" aria-live="polite" aria-atomic="true">{wpLabel}</div>
       <div className="wp-header">
         <div className="wp-team-prob">
-          {ourLogo && <img src={ourLogo} alt={ourAbbr} className="wp-team-logo" />}
-          <span className="wp-pct" style={{ color: probPct >= 50 ? "var(--win)" : "var(--loss)" }}>
+          {ourLogo && <img src={ourLogo} alt="" className="wp-team-logo" />}
+          <span className="wp-pct" style={{ color: probPct >= 50 ? "var(--win)" : "var(--loss)" }} aria-label={`${ourAbbr} ${probPct} percent`}>
             {probPct}%
           </span>
         </div>
-        <span className="wp-label">vs</span>
+        <span className="wp-label" aria-hidden="true">vs</span>
         <div className="wp-team-prob">
-          {theirLogo && <img src={theirLogo} alt={theirAbbr} className="wp-team-logo" />}
-          <span className="wp-pct" style={{ color: opponentPct >= 50 ? "var(--win)" : "var(--loss)" }}>
+          {theirLogo && <img src={theirLogo} alt="" className="wp-team-logo" />}
+          <span className="wp-pct" style={{ color: opponentPct >= 50 ? "var(--win)" : "var(--loss)" }} aria-label={`${theirAbbr} ${opponentPct} percent`}>
             {opponentPct}%
           </span>
         </div>
@@ -83,8 +86,9 @@ export default function WinProbability({ gamePk, teamId, isHome, awayAbbr, homeA
         viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
         className="wp-chart"
         role="img"
-        aria-label={`Win probability chart, ${ourAbbr} ${probPct}% vs ${theirAbbr} ${opponentPct}%`}
+        aria-label={wpLabel}
       >
+        <title>{wpLabel}</title>
         <defs>
           <linearGradient id="wpGradient" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="var(--win)" stopOpacity="0.3" />
@@ -113,20 +117,20 @@ export default function WinProbability({ gamePk, teamId, isHome, awayAbbr, homeA
 
           {/* Y-axis labels */}
           {yTicks.map((t) => (
-            <text key={`y-${t}`} x={-6} y={yScale(t) + 3} fill="#9299ad" fontSize="8" textAnchor="end">
+            <text key={`y-${t}`} x={-6} y={yScale(t) + 3} fill="#c6ccde" fontSize="10" textAnchor="end">
               {Math.round(t * 100)}%
             </text>
           ))}
 
           {/* X-axis inning labels */}
           {inningTicks.map((inn) => (
-            <text key={`x-${inn}`} x={xScale(inn - 0.5)} y={CHART_H + 16} fill="#9299ad" fontSize="8" textAnchor="middle">
+            <text key={`x-${inn}`} x={xScale(inn - 0.5)} y={CHART_H + 16} fill="#c6ccde" fontSize="10" textAnchor="middle">
               {inn}
             </text>
           ))}
 
           {/* X-axis title */}
-          <text x={CHART_W / 2} y={CHART_H + 24} fill="#9299ad" fontSize="8" textAnchor="middle" fontWeight="500">
+          <text x={CHART_W / 2} y={CHART_H + 24} fill="#c6ccde" fontSize="10" textAnchor="middle" fontWeight="500">
             Inning
           </text>
 

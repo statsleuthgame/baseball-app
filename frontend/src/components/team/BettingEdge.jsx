@@ -324,8 +324,9 @@ export default function BettingEdge() {
       <ParlayIdeas />
 
       <div className="edge-controls">
-        <label className="edge-filter">
+        <label className="edge-filter" htmlFor="edge-my-teams">
           <input
+            id="edge-my-teams"
             type="checkbox"
             checked={myTeamsOnly}
             onChange={(e) => setMyTeamsOnly(e.target.checked)}
@@ -545,7 +546,7 @@ function PickCard({ pick, live, onSelectPlayer }) {
           onClick={() => setOpen((o) => !o)}
           aria-expanded={open}
         >
-          {open ? "▴ Hide" : "▾ Details"}
+          <span aria-hidden="true">{open ? "▴ " : "▾ "}</span>{open ? "Hide" : "Details"}
         </button>
       </div>
 

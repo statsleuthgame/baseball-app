@@ -42,9 +42,23 @@ export default function LeagueLeaders() {
   return (
     <div className="leaders-card">
       <h3 className="section-title">League Leaders</h3>
-      <div className="leaders-tabs">
-        <button className={`leaders-tab ${tab === "hitting" ? "active" : ""}`} onClick={() => setTab("hitting")}>Hitting</button>
-        <button className={`leaders-tab ${tab === "pitching" ? "active" : ""}`} onClick={() => setTab("pitching")}>Pitching</button>
+      <div className="leaders-tabs" role="group" aria-label="Leader category">
+        <button
+          type="button"
+          className={`leaders-tab ${tab === "hitting" ? "active" : ""}`}
+          onClick={() => setTab("hitting")}
+          aria-pressed={tab === "hitting"}
+        >
+          Hitting
+        </button>
+        <button
+          type="button"
+          className={`leaders-tab ${tab === "pitching" ? "active" : ""}`}
+          onClick={() => setTab("pitching")}
+          aria-pressed={tab === "pitching"}
+        >
+          Pitching
+        </button>
       </div>
       <div className="leaders-categories">
         {categories.map(({ key, label, fmt }) => {
@@ -55,17 +69,21 @@ export default function LeagueLeaders() {
               <h4 className="leaders-cat-title">{label}</h4>
               {leaders.map((l, idx) => {
                 const isOurTeam = l.teamId == teamId;
+                const value = fmt(l.value);
                 return (
-                  <div
+                  <button
                     key={idx}
+                    type="button"
                     className={`leaders-row sb-player-link ${isOurTeam ? "our-team" : ""}`}
                     onClick={() => l.player?.id && navigate(`/team/${teamId}/player/${l.player.id}`)}
+                    disabled={!l.player?.id}
+                    aria-label={`Rank ${l.rank}: ${l.player.name}, ${l.team}, ${label} ${value}. View player page.`}
                   >
                     <span className="leaders-rank">{l.rank}</span>
                     <span className="leaders-name">{l.player.name}</span>
                     <span className="leaders-team">{l.team}</span>
-                    <span className="leaders-value">{fmt(l.value)}</span>
-                  </div>
+                    <span className="leaders-value">{value}</span>
+                  </button>
                 );
               })}
             </div>

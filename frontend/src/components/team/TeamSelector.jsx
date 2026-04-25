@@ -32,13 +32,15 @@ export default function TeamSelector() {
   return (
     <div className="team-selector">
       <h1 className="team-selector-title">Choose Your Team</h1>
+      <label htmlFor="team-selector-search" className="sr-only">Search teams</label>
       <input
+        id="team-selector-search"
         className="team-selector-search"
-        type="text"
+        type="search"
         placeholder="Search teams..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        autoFocus
+        autoComplete="off"
       />
       {search ? (
         <div className="team-selector-grid">
@@ -69,6 +71,7 @@ export default function TeamSelector() {
 function TeamCard({ team, onSelect }) {
   return (
     <button
+      type="button"
       className="team-card"
       onClick={() => onSelect(team.id)}
       aria-label={`Select ${team.name}`}
@@ -76,7 +79,7 @@ function TeamCard({ team, onSelect }) {
     >
       <img
         src={`https://www.mlbstatic.com/team-logos/team-cap-on-dark/${team.id}.svg`}
-        alt={team.name}
+        alt=""
         className="team-card-logo"
       />
       <span className="team-card-name">{team.name}</span>

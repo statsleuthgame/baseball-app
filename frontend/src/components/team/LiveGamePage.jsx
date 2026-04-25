@@ -35,17 +35,26 @@ function pitchVelo(pitchInfo) {
   return m ? Math.round(parseFloat(m[1])) : null;
 }
 
-// Bold hit types and add HR distance in scoring descriptions
+// Bold hit types and add HR distance in scoring descriptions.
+// Returns an array of React nodes — no dangerouslySetInnerHTML needed.
 function formatScoringDesc(desc, hrDistance) {
-  if (!desc) return "";
-  // Escape any HTML in the description first
-  const escaped = desc.replace(/[<>&"']/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;'}[c]));
-  let html = escaped
-    .replace(/\b(singles|doubles|triples|homers|walks|hit by pitch|grand slam|sacrifice fly|sac fly)\b/gi, "<strong>$1</strong>");
-  if (hrDistance && html.includes("<strong>homers</strong>")) {
-    html = html.replace("<strong>homers</strong>", `<strong>homers</strong> (${hrDistance} ft)`);
+  if (!desc) return null;
+  let working = desc;
+  if (hrDistance && /\bhomers\b/i.test(working)) {
+    working = working.replace(/\b(homers)\b/i, `$1 (${hrDistance} ft)`);
   }
-  return html;
+  const pattern = /\b(singles|doubles|triples|homers|walks|hit by pitch|grand slam|sacrifice fly|sac fly)\b/gi;
+  const parts = [];
+  let lastIndex = 0;
+  let match;
+  let key = 0;
+  while ((match = pattern.exec(working)) !== null) {
+    if (match.index > lastIndex) parts.push(working.slice(lastIndex, match.index));
+    parts.push(<strong key={key++}>{match[0]}</strong>);
+    lastIndex = match.index + match[0].length;
+  }
+  if (lastIndex < working.length) parts.push(working.slice(lastIndex));
+  return parts.length ? parts : working;
 }
 
 export default function LiveGamePage() {
@@ -495,7 +504,7 @@ export default function LiveGamePage() {
                     >
                       <div className="lgp-scoring-top">
                         <span className="lgp-scoring-inning-chip">{p.halfInning === "top" ? "T" : "B"}{p.inning}</span>
-                        <span className="lgp-scoring-desc" dangerouslySetInnerHTML={{ __html: formatScoringDesc(p.description, p.hrDistance) }} />
+                        <span className="lgp-scoring-desc">{formatScoringDesc(p.description, p.hrDistance)}</span>
                         <span className="lgp-scoring-score-box">{p.awayScore}<span>–</span>{p.homeScore}</span>
                       </div>
                       {metrics.length > 0 && (
@@ -836,7 +845,7 @@ export default function LiveGamePage() {
                 >
                   <div className="lgp-scoring-top">
                     <span className="lgp-scoring-inning-chip">{p.halfInning === "top" ? "T" : "B"}{p.inning}</span>
-                    <span className="lgp-scoring-desc" dangerouslySetInnerHTML={{ __html: formatScoringDesc(p.description, p.hrDistance) }} />
+                    <span className="lgp-scoring-desc">{formatScoringDesc(p.description, p.hrDistance)}</span>
                     <span className="lgp-scoring-score-box">{p.awayScore}<span>–</span>{p.homeScore}</span>
                   </div>
                   {metrics.length > 0 && (
@@ -1223,7 +1232,7 @@ function BoxScoreSection({ boxOpen, setBoxOpen, boxData, gameInfo, teamId }) {
                       return (
                         <div key={i} className={`lgp-box-ab ${ab.isScoring ? "lgp-box-ab-scoring" : ""}`}>
                           <span className="lgp-box-ab-inn">{ord}</span>
-                          <span className="lgp-box-ab-event" dangerouslySetInnerHTML={{ __html: formatScoringDesc(ab.description || ab.shortDesc || ab.event, ab.hrDistance) }} />
+                          <span className="lgp-box-ab-event">{formatScoringDesc(ab.description || ab.shortDesc || ab.event, ab.hrDistance)}</span>
                         </div>
                       );
                     })}
@@ -1338,7 +1347,7 @@ function FinalTeamBox({ className, teamInfo, score, batters, pitchers, teamId, n
                   return (
                     <div key={i} className={`lgp-box-ab ${ab.isScoring ? "lgp-box-ab-scoring" : ""}`}>
                       <span className="lgp-box-ab-inn">{ord}</span>
-                      <span className="lgp-box-ab-event" dangerouslySetInnerHTML={{ __html: formatScoringDesc(ab.description || ab.shortDesc || ab.event, ab.hrDistance) }} />
+                      <span className="lgp-box-ab-event">{formatScoringDesc(ab.description || ab.shortDesc || ab.event, ab.hrDistance)}</span>
                     </div>
                   );
                 })}

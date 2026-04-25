@@ -62,9 +62,18 @@ function BvPRow({ batter, pitcherId, compact }) {
     staleTime: 1000 * 60 * 60,
   });
 
+  const statSummary = data && data.pa > 0
+    ? `${data.hits} hits in ${data.ab} at-bats, average ${formatAvg(data.avg)}`
+    : "no prior at-bats";
+
   if (compact) {
     return (
-      <div className="bvp-compact-row sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${batter.id}`)}>
+      <button
+        type="button"
+        className="bvp-compact-row sb-player-link"
+        onClick={() => navigate(`/team/${teamId}/player/${batter.id}`)}
+        aria-label={`${batter.fullName}, ${statSummary}. View player page.`}
+      >
         <span className="bvp-compact-name">{lastName(batter.fullName)}</span>
         <span className="bvp-compact-stat">
           {isLoading ? "..." : !data || data.pa === 0 ? "—" : `${data.hits}-${data.ab}`}
@@ -72,12 +81,17 @@ function BvPRow({ batter, pitcherId, compact }) {
         {data?.avg != null && data.pa > 0 && (
           <span className="bvp-compact-avg">{formatAvg(data.avg)}</span>
         )}
-      </div>
+      </button>
     );
   }
 
   return (
-    <div className="bvp-row" onClick={() => navigate(`/team/${teamId}/player/${batter.id}`)} style={{ cursor: "pointer" }}>
+    <button
+      type="button"
+      className="bvp-row"
+      onClick={() => navigate(`/team/${teamId}/player/${batter.id}`)}
+      aria-label={`${batter.fullName}${batter.position?.abbreviation ? `, ${batter.position.abbreviation}` : ""}: ${statSummary}. View player page.`}
+    >
       <div className="bvp-player">
         <PlayerPhoto playerId={batter.id} name={batter.fullName} size={36} />
         <div className="bvp-player-info">
@@ -85,7 +99,7 @@ function BvPRow({ batter, pitcherId, compact }) {
           <span className="bvp-pos">{batter.position?.abbreviation}</span>
         </div>
       </div>
-      <div className="bvp-stats">
+      <div className="bvp-stats" aria-hidden="true">
         {isLoading ? (
           <span className="bvp-loading">...</span>
         ) : !data || data.pa === 0 ? (
@@ -100,7 +114,7 @@ function BvPRow({ batter, pitcherId, compact }) {
           </>
         )}
       </div>
-    </div>
+    </button>
   );
 }
 

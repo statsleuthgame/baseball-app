@@ -5,6 +5,7 @@ import { useTeam } from "../../context/TeamContext";
 import { fetchStandings } from "../../api/client";
 import { teamNickname, getTeamAbbr } from "../../utils/formatters";
 import SkeletonLoader from "../common/SkeletonLoader";
+import { Tabs, TabList, Tab, TabPanel } from "../common/Tabs";
 
 // League IDs: 103 = American, 104 = National
 const LEAGUE_NAMES = { 103: "American League", 104: "National League" };
@@ -39,8 +40,8 @@ export default function FullStandings() {
   return (
     <div className="full-standings">
       <div className="full-standings-header">
-        <button className="full-standings-back" onClick={() => navigate(`/team/${team?.id}`)} aria-label="Back">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <button type="button" className="full-standings-back" onClick={() => navigate(`/team/${team?.id}`)} aria-label="Back to team dashboard">
+          <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="15 18 9 12 15 6" />
           </svg>
           Back
@@ -48,27 +49,36 @@ export default function FullStandings() {
         <h1 className="full-standings-title">Standings</h1>
       </div>
 
-      <div className="full-standings-tabs" role="tablist">
-        {TABS.map((t) => (
-          <button
-            key={t.id}
-            role="tab"
-            aria-selected={activeTab === t.id}
-            className={`full-standings-tab ${activeTab === t.id ? "active" : ""}`}
-            onClick={() => setActiveTab(t.id)}
-          >
-            {t.label}
-          </button>
-        ))}
-      </div>
+      <Tabs value={activeTab} onChange={setActiveTab} ariaLabel="Standings view">
+        <TabList className="full-standings-tabs">
+          {TABS.map((t) => (
+            <Tab
+              key={t.id}
+              tabKey={t.id}
+              className="full-standings-tab"
+              activeClassName="active"
+            >
+              {t.label}
+            </Tab>
+          ))}
+        </TabList>
 
-      <div className="full-standings-body">
-        {activeTab === "division" && <DivisionView divisions={divisions} myTeamId={team?.id} onTeamClick={onTeamClick} />}
-        {activeTab === "league" && <LeagueView divisions={divisions} myTeamId={team?.id} onTeamClick={onTeamClick} />}
-        {activeTab === "overall" && <OverallView divisions={divisions} myTeamId={team?.id} onTeamClick={onTeamClick} />}
-        {activeTab === "wildcard" && <WildCardView divisions={divisions} myTeamId={team?.id} onTeamClick={onTeamClick} />}
-        {activeTab === "playoffs" && <PlayoffView divisions={divisions} myTeamId={team?.id} onTeamClick={onTeamClick} />}
-      </div>
+        <TabPanel tabKey="division" className="full-standings-body">
+          <DivisionView divisions={divisions} myTeamId={team?.id} onTeamClick={onTeamClick} />
+        </TabPanel>
+        <TabPanel tabKey="league" className="full-standings-body">
+          <LeagueView divisions={divisions} myTeamId={team?.id} onTeamClick={onTeamClick} />
+        </TabPanel>
+        <TabPanel tabKey="overall" className="full-standings-body">
+          <OverallView divisions={divisions} myTeamId={team?.id} onTeamClick={onTeamClick} />
+        </TabPanel>
+        <TabPanel tabKey="wildcard" className="full-standings-body">
+          <WildCardView divisions={divisions} myTeamId={team?.id} onTeamClick={onTeamClick} />
+        </TabPanel>
+        <TabPanel tabKey="playoffs" className="full-standings-body">
+          <PlayoffView divisions={divisions} myTeamId={team?.id} onTeamClick={onTeamClick} />
+        </TabPanel>
+      </Tabs>
     </div>
   );
 }
@@ -344,14 +354,17 @@ function StandingsTable({ title, teams, myTeamId, onTeamClick, seedStart, showWC
   const headerCell = (key, children, { className = "" } = {}) => (
     <th
       scope="col"
-      className={`fs-sortable ${className} ${dirFor(key) ? "fs-sort-active" : ""}`}
-      onClick={() => onSort(key)}
-      role="button"
-      tabIndex={0}
+      className={`${className} ${dirFor(key) ? "fs-sort-active" : ""}`}
       aria-sort={dirFor(key) === "asc" ? "ascending" : dirFor(key) === "desc" ? "descending" : "none"}
-      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onSort(key); } }}
     >
-      {children} <SortIcon dir={dirFor(key)} />
+      <button
+        type="button"
+        className="fs-sortable"
+        onClick={() => onSort(key)}
+        aria-label={`Sort by ${typeof children === "string" ? children : key}`}
+      >
+        {children} <SortIcon dir={dirFor(key)} />
+      </button>
     </th>
   );
 
@@ -388,15 +401,20 @@ function StandingsTable({ title, teams, myTeamId, onTeamClick, seedStart, showWC
                 key={t.id}
                 className={`${t.id === myTeamId ? "my-team" : ""} ${inPlayoffs ? "in-playoffs" : ""}`}
                 aria-current={t.id === myTeamId ? "true" : undefined}
-                onClick={() => onTeamClick(t.id)}
-                style={{ cursor: "pointer" }}
               >
                 {showSeeds && <td className="fs-col-seed">{seedStart + i}</td>}
-                <td className="fs-col-team">
-                  <img src={t.logoUrl} alt="" className="fs-logo" />
-                  <span className="fs-team-name">{teamNickname(t.abbreviation || getTeamAbbr(t.id))}</span>
-                  {t.clinchIndicator && <span className="fs-clinch" title={clinchTooltip(t.clinchIndicator)}>{t.clinchIndicator}</span>}
-                </td>
+                <th scope="row" className="fs-col-team">
+                  <button
+                    type="button"
+                    className="fs-team-link"
+                    onClick={() => onTeamClick(t.id)}
+                    aria-label={`View ${teamNickname(t.abbreviation || getTeamAbbr(t.id))}${t.clinchIndicator ? `, ${clinchTooltip(t.clinchIndicator)}` : ""}`}
+                  >
+                    <img src={t.logoUrl} alt="" className="fs-logo" />
+                    <span className="fs-team-name">{teamNickname(t.abbreviation || getTeamAbbr(t.id))}</span>
+                    {t.clinchIndicator && <span className="fs-clinch" title={clinchTooltip(t.clinchIndicator)}>{t.clinchIndicator}</span>}
+                  </button>
+                </th>
                 <td>{t.wins}</td>
                 <td>{t.losses}</td>
                 <td>{t.winPct}</td>

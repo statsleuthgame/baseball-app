@@ -16,6 +16,11 @@ const PAGE_TITLES = {
   "scores": "Scores",
   "roster": "Roster",
   "spray": "Spray Chart",
+  "player": "Player",
+  "live": "Live Game",
+  "edge": "Daily Edge",
+  "standings": "Standings",
+  "ballflight3d": "Ball Flight 3D",
 };
 
 export default function AppShell() {
@@ -96,22 +101,28 @@ export default function AppShell() {
 
   return (
     <div className="app-shell">
+      <a className="skip-link" href="#main-content">Skip to main content</a>
       <TopBar />
       <TopTabs />
       {pullState.distance > 0 && (
-        <div className="pull-indicator" style={{ height: pullState.distance }}>
+        <div className="pull-indicator" style={{ height: pullState.distance }} aria-hidden="true">
           <div className={`pull-spinner ${pullState.refreshing ? "spinning" : ""}`}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: `rotate(${pullState.distance * 4}deg)` }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: `rotate(${pullState.distance * 4}deg)` }} aria-hidden="true" focusable="false">
               <polyline points="23 4 23 10 17 10" />
               <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
             </svg>
           </div>
         </div>
       )}
+      {pullState.refreshing && (
+        <div role="status" aria-live="polite" className="sr-only">Refreshing data…</div>
+      )}
       <main
+        id="main-content"
         className={`app-content${isWideRoute ? " app-content--wide" : ""}`}
         ref={contentRef}
         tabIndex={-1}
+        aria-label="Main content"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
