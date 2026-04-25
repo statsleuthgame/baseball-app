@@ -13,10 +13,11 @@ export default class ErrorBoundary extends Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div style={{ padding: "2rem", textAlign: "center", color: "#9299ad" }}>
+        <div role="alert" style={{ padding: "2rem", textAlign: "center", color: "#c6ccde" }}>
           <p>Something went wrong loading this page.</p>
           <button
-            style={{ marginTop: "1rem", padding: "0.5rem 1rem", cursor: "pointer" }}
+            type="button"
+            style={{ marginTop: "1rem", padding: "0.75rem 1.25rem", minHeight: 44, cursor: "pointer" }}
             onClick={() => this.setState({ hasError: false })}
           >
             Try again

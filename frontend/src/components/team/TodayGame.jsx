@@ -18,7 +18,7 @@ export default function TodayGame() {
   });
 
   if (isLoading) {
-    return <div className="today-game-card skeleton" />;
+    return <div className="today-game-card skeleton" aria-hidden="true" />;
   }
 
   if (!game || game.noGame) {
@@ -32,7 +32,6 @@ export default function TodayGame() {
   const isLive = game.status === "In Progress";
   const isDelayed = game.status === "Delayed Start" || game.status === "Delayed";
   const isFinal = game.status === "Final";
-  const isNext = game.isNextGame;
 
   // Determine if this game is today or a future date
   const gameDate = new Date(game.gameDate);
@@ -48,46 +47,53 @@ export default function TodayGame() {
   // When live, redirect to the dedicated live game page
   if (isLive && game.gamePk) {
     return (
-      <div className="today-game-wrapper">
-        <div className="today-game-card live" onClick={handleViewLive} style={{ cursor: "pointer" }}>
+      <section className="today-game-wrapper" aria-label="Live game">
+        <div className="today-game-card live">
           <div className="today-game-header">
             <span className="today-game-label label-live">LIVE</span>
-            <span className="today-game-time">Tap for live view</span>
+            <button
+              type="button"
+              className="today-game-tap"
+              onClick={handleViewLive}
+              aria-label={`View live game: ${game.away.abbreviation} at ${game.home.abbreviation}, score ${game.away.score} to ${game.home.score}`}
+            >
+              View live
+            </button>
           </div>
           <div className="today-game-matchup">
             <button
               type="button"
               className="today-game-side today-game-side-link"
-              onClick={(e) => { e.stopPropagation(); navigate(`/team/${game.away.id}`); }}
+              onClick={() => navigate(`/team/${game.away.id}`)}
               aria-label={`Go to ${game.away.abbreviation} team page`}
             >
-              <img src={game.away.logoUrl} alt={game.away.abbreviation} className="today-game-logo-lg" />
+              <img src={game.away.logoUrl} alt="" className="today-game-logo-lg" />
               <span className="today-game-abbr">{game.away.abbreviation}</span>
             </button>
             <div className="today-game-center">
               <div className="today-game-score-row">
-                <span className="today-game-score">{game.away.score}</span>
-                <span className="today-game-vs-small">-</span>
-                <span className="today-game-score">{game.home.score}</span>
+                <span className="today-game-score" aria-label={`Away score ${game.away.score}`}>{game.away.score}</span>
+                <span className="today-game-vs-small" aria-hidden="true">-</span>
+                <span className="today-game-score" aria-label={`Home score ${game.home.score}`}>{game.home.score}</span>
               </div>
             </div>
             <button
               type="button"
               className="today-game-side today-game-side-link"
-              onClick={(e) => { e.stopPropagation(); navigate(`/team/${game.home.id}`); }}
+              onClick={() => navigate(`/team/${game.home.id}`)}
               aria-label={`Go to ${game.home.abbreviation} team page`}
             >
-              <img src={game.home.logoUrl} alt={game.home.abbreviation} className="today-game-logo-lg" />
+              <img src={game.home.logoUrl} alt="" className="today-game-logo-lg" />
               <span className="today-game-abbr">{game.home.abbreviation}</span>
             </button>
           </div>
         </div>
-      </div>
+      </section>
     );
   }
 
   return (
-    <div className="today-game-wrapper">
+    <section className="today-game-wrapper" aria-label={isFinal ? "Previous game" : "Upcoming game"}>
       <GameCard
         game={game}
         teamId={teamId}
@@ -114,7 +120,7 @@ export default function TodayGame() {
           compact
         />
       )}
-    </div>
+    </section>
   );
 }
 
@@ -131,7 +137,7 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
   // Live games are handled by the redirect above — no live queries needed here
 
   return (
-    <div className={`today-game-card ${isLive ? "live" : ""} ${isWin ? "win-card" : ""} ${isLoss ? "loss-card" : ""} ${compact ? "compact" : ""}`} onClick={onTap}>
+    <div className={`today-game-card ${isLive ? "live" : ""} ${isWin ? "win-card" : ""} ${isLoss ? "loss-card" : ""} ${compact ? "compact" : ""}`}>
       <div className="today-game-header">
         <span className={`today-game-label ${label === "LIVE" ? "label-live" : label === "NEXT GAME" ? "label-next" : isWin ? "label-win" : isLoss ? "label-loss" : ""}`}>
           {isWin ? "WIN" : isLoss ? "LOSS" : label}
@@ -147,31 +153,31 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
         <button
           type="button"
           className="today-game-side today-game-side-link"
-          onClick={(e) => { e.stopPropagation(); navigate(`/team/${game.away.id}`); }}
+          onClick={() => navigate(`/team/${game.away.id}`)}
           aria-label={`Go to ${game.away.abbreviation} team page`}
         >
-          <img src={game.away.logoUrl} alt={game.away.abbreviation} className="today-game-logo-lg" />
+          <img src={game.away.logoUrl} alt="" className="today-game-logo-lg" />
           <span className="today-game-abbr">{game.away.abbreviation}</span>
           {game.away.wins != null && <span className="today-game-record">{game.away.wins}-{game.away.losses}</span>}
         </button>
         <div className="today-game-center">
           {(isLive || isFinal) ? (
             <div className="today-game-score-row">
-              <span className="today-game-score">{game.away.score}</span>
-              <span className="today-game-vs-small">-</span>
-              <span className="today-game-score">{game.home.score}</span>
+              <span className="today-game-score" aria-label={`Away score ${game.away.score}`}>{game.away.score}</span>
+              <span className="today-game-vs-small" aria-hidden="true">-</span>
+              <span className="today-game-score" aria-label={`Home score ${game.home.score}`}>{game.home.score}</span>
             </div>
           ) : (
-            <span className="today-game-vs">@</span>
+            <span className="today-game-vs" aria-hidden="true">@</span>
           )}
         </div>
         <button
           type="button"
           className="today-game-side today-game-side-link"
-          onClick={(e) => { e.stopPropagation(); navigate(`/team/${game.home.id}`); }}
+          onClick={() => navigate(`/team/${game.home.id}`)}
           aria-label={`Go to ${game.home.abbreviation} team page`}
         >
-          <img src={game.home.logoUrl} alt={game.home.abbreviation} className="today-game-logo-lg" />
+          <img src={game.home.logoUrl} alt="" className="today-game-logo-lg" />
           <span className="today-game-abbr">{game.home.abbreviation}</span>
           {game.home.wins != null && <span className="today-game-record">{game.home.wins}-{game.home.losses}</span>}
         </button>
@@ -180,37 +186,43 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
       {/* Scheduled: probable pitchers */}
       {!compact && !isLive && (us.probablePitcher || opponent.probablePitcher) && (
         <div className="today-game-pitchers">
-          <div className="today-game-pitcher sb-player-link" onClick={() => us.probablePitcher?.id && navigate(`/team/${teamId}/player/${us.probablePitcher.id}`)}>
-            {us.probablePitcher && (
-              <>
-                <PlayerPhoto
-                  playerId={us.probablePitcher.id}
-                  name={us.probablePitcher.fullName}
-                  size={36}
-                />
-                <div className="today-pitcher-info">
-                  <span>{us.probablePitcher.fullName}</span>
-                  <TodayPitcherStats pitcherId={us.probablePitcher.id} />
-                </div>
-              </>
-            )}
-          </div>
-          <span className="pitcher-vs">vs</span>
-          <div className="today-game-pitcher sb-player-link" onClick={() => opponent.probablePitcher?.id && navigate(`/team/${teamId}/player/${opponent.probablePitcher.id}`)}>
-            {opponent.probablePitcher && (
-              <>
-                <PlayerPhoto
-                  playerId={opponent.probablePitcher.id}
-                  name={opponent.probablePitcher.fullName}
-                  size={36}
-                />
-                <div className="today-pitcher-info">
-                  <span>{opponent.probablePitcher.fullName}</span>
-                  <TodayPitcherStats pitcherId={opponent.probablePitcher.id} />
-                </div>
-              </>
-            )}
-          </div>
+          {us.probablePitcher ? (
+            <button
+              type="button"
+              className="today-game-pitcher sb-player-link"
+              onClick={() => navigate(`/team/${teamId}/player/${us.probablePitcher.id}`)}
+              aria-label={`View ${us.probablePitcher.fullName} player page`}
+            >
+              <PlayerPhoto
+                playerId={us.probablePitcher.id}
+                name={us.probablePitcher.fullName}
+                size={36}
+              />
+              <div className="today-pitcher-info">
+                <span>{us.probablePitcher.fullName}</span>
+                <TodayPitcherStats pitcherId={us.probablePitcher.id} />
+              </div>
+            </button>
+          ) : <div className="today-game-pitcher" />}
+          <span className="pitcher-vs" aria-hidden="true">vs</span>
+          {opponent.probablePitcher ? (
+            <button
+              type="button"
+              className="today-game-pitcher sb-player-link"
+              onClick={() => navigate(`/team/${teamId}/player/${opponent.probablePitcher.id}`)}
+              aria-label={`View ${opponent.probablePitcher.fullName} player page`}
+            >
+              <PlayerPhoto
+                playerId={opponent.probablePitcher.id}
+                name={opponent.probablePitcher.fullName}
+                size={36}
+              />
+              <div className="today-pitcher-info">
+                <span>{opponent.probablePitcher.fullName}</span>
+                <TodayPitcherStats pitcherId={opponent.probablePitcher.id} />
+              </div>
+            </button>
+          ) : <div className="today-game-pitcher" />}
         </div>
       )}
 
@@ -219,21 +231,32 @@ function GameCard({ game, teamId, label, showDate, compact, onTap }) {
           <span className="today-game-venue">{game.venue.name}</span>
           {game.venueLocation && <span className="today-game-venue-loc">{game.venueLocation}</span>}
         </div>
-        {!compact && game.gamePk && (isLive || !isFinal) && (
-          <button
-            className="today-game-watch"
-            onClick={(e) => {
-              e.stopPropagation();
-              window.location.href = `https://www.mlb.com/tv/g${game.gamePk}`;
-            }}
-            aria-label={isLive ? "Watch live game" : "Open in MLB app"}
-          >
-            <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-              <polygon points="5 3 19 12 5 21 5 3" />
-            </svg>
-            Watch
-          </button>
-        )}
+        <div className="today-game-footer-actions">
+          {!compact && onTap && (
+            <button
+              type="button"
+              className="today-game-view"
+              onClick={onTap}
+              aria-label={isFinal ? "View matchup details" : "View matchup"}
+            >
+              {isFinal ? "Details" : "Matchup"}
+            </button>
+          )}
+          {!compact && game.gamePk && (isLive || !isFinal) && (
+            <a
+              className="today-game-watch"
+              href={`https://www.mlb.com/tv/g${game.gamePk}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={isLive ? "Watch live game on MLB (opens in new tab)" : "Watch on MLB (opens in new tab)"}
+            >
+              <svg aria-hidden="true" focusable="false" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="5 3 19 12 5 21 5 3" />
+              </svg>
+              Watch
+            </a>
+          )}
+        </div>
       </div>
 
     </div>

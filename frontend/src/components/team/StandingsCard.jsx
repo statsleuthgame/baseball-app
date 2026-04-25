@@ -58,15 +58,22 @@ export default function StandingsCard() {
         </thead>
         <tbody>
           {myDivision.teams.map((t) => (
-            <tr key={t.id} className={`${t.id === team?.id ? "my-team" : ""} standings-clickable`} aria-current={t.id === team?.id ? "true" : undefined} onClick={() => { setTeamId(t.id); navigate(`/team/${t.id}`); }} style={{ cursor: "pointer" }}>
-              <td className="standings-team-cell">
-                <img
-                  src={t.logoUrl}
-                  alt={t.abbreviation}
-                  className="standings-logo"
-                />
-                <span className="standings-team-name">{teamNickname(t.abbreviation || getTeamAbbr(t.id))}</span>
-              </td>
+            <tr key={t.id} className={t.id === team?.id ? "my-team" : ""} aria-current={t.id === team?.id ? "true" : undefined}>
+              <th scope="row" className="standings-team-cell">
+                <button
+                  type="button"
+                  className="standings-team-link"
+                  onClick={() => { setTeamId(t.id); navigate(`/team/${t.id}`); }}
+                  aria-label={`View ${teamNickname(t.abbreviation || getTeamAbbr(t.id))}`}
+                >
+                  <img
+                    src={t.logoUrl}
+                    alt=""
+                    className="standings-logo"
+                  />
+                  <span className="standings-team-name">{teamNickname(t.abbreviation || getTeamAbbr(t.id))}</span>
+                </button>
+              </th>
               <td>{t.wins}</td>
               <td>{t.losses}</td>
               <td>{t.winPct}</td>

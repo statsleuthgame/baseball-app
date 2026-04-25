@@ -102,11 +102,12 @@ export default function ContractCard({ playerName, teamAbbr }) {
       {hasYearly && (
         <div className="contract-yearly-wrap">
           <table className="contract-yearly">
+            <caption className="sr-only">Yearly contract salaries</caption>
             <thead>
               <tr>
-                <th>Year</th>
-                <th>Age</th>
-                <th>Salary</th>
+                <th scope="col">Year</th>
+                <th scope="col">Age</th>
+                <th scope="col">Salary</th>
               </tr>
             </thead>
             <tbody>

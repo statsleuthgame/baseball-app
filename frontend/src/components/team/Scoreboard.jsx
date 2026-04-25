@@ -6,6 +6,7 @@ import { fetchAllGamesToday, fetchPitcherSeasonStats, fetchBvP, fetchRoster, fet
 import { formatGameTime, getTeamAbbr, lastName, teamDisplayName } from "../../utils/formatters";
 import SkeletonLoader from "../common/SkeletonLoader";
 import PlayerPhoto from "../common/PlayerPhoto";
+import { Tabs, TabList, Tab, TabPanel } from "../common/Tabs";
 import ALL_TEAMS from "../../data/teams";
 import { useIsMobile } from "../../utils/useIsMobile";
 
@@ -25,13 +26,13 @@ const WEATHER_ICONS = {
   dome: "🏟️", roof: "🏟️", retractable: "🏟️",
 };
 
-function weatherIcon(condition) {
-  if (!condition) return "🌤️";
-  const lower = condition.toLowerCase();
-  for (const [key, icon] of Object.entries(WEATHER_ICONS)) {
-    if (lower.includes(key)) return icon;
-  }
-  return "🌤️";
+function describeBases(liveState) {
+  const on = [];
+  if (liveState.onFirst) on.push("first");
+  if (liveState.onSecond) on.push("second");
+  if (liveState.onThird) on.push("third");
+  if (on.length === 0) return "Bases empty";
+  return `Runners on ${on.join(", ")}`;
 }
 
 function formatDateLabel(dateStr) {
@@ -81,14 +82,14 @@ function TopPerformer({ gamePk, side, teamId }) {
   const line = `${s.h}-${s.ab}${s.hr ? `, ${s.hr} HR` : ""}${s.rbi ? `, ${s.rbi} RBI` : ""}`;
 
   return (
-    <span
+    <button
+      type="button"
       className="sb-top-performer sb-player-link"
-      role="link"
-      tabIndex={0}
       onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${best.id}`); }}
+      aria-label={`${best.name}: ${line}. View player page.`}
     >
       {lastName(best.name)} {line}
-    </span>
+    </button>
   );
 }
 
@@ -157,14 +158,20 @@ function BvPPreview({ teamId, pitcherId }) {
       <span className="sb-bvp-title">Key Matchups vs Starter</span>
       {matchups.map((m) => {
         const avg = m.bvp.ab > 0 ? (m.bvp.hits / m.bvp.ab).toFixed(3).replace(/^0/, "") : ".000";
+        const hrText = m.bvp.homeRuns > 0 ? `, ${m.bvp.homeRuns} HR` : "";
         return (
-          <div key={m.id} className="sb-bvp-row sb-tappable" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${m.id}`); }}>
+          <button
+            key={m.id}
+            type="button"
+            className="sb-bvp-row sb-tappable"
+            onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${m.id}`); }}
+            aria-label={`${m.fullName}: ${m.bvp.hits} for ${m.bvp.ab}, ${avg}${hrText}. View player page.`}
+          >
             <span className="sb-bvp-name">{lastName(m.fullName)}</span>
             <span className="sb-bvp-stat">
-              {m.bvp.hits}-{m.bvp.ab} ({avg})
-              {m.bvp.homeRuns > 0 ? `, ${m.bvp.homeRuns} HR` : ""}
+              {m.bvp.hits}-{m.bvp.ab} ({avg}){hrText}
             </span>
-          </div>
+          </button>
         );
       })}
     </div>
@@ -177,20 +184,23 @@ function Linescore({ linescore, away, home }) {
   return (
     <div className="sb-linescore">
       <table className="sb-linescore-table">
+        <caption className="sr-only">
+          Linescore: {away.abbreviation} versus {home.abbreviation}
+        </caption>
         <thead>
           <tr>
-            <th></th>
+            <th scope="col"><span className="sr-only">Team</span></th>
             {linescore.innings.map((inn) => (
-              <th key={inn.num}>{inn.num}</th>
+              <th key={inn.num} scope="col">{inn.num}</th>
             ))}
-            <th className="sb-ls-total">R</th>
-            <th className="sb-ls-total">H</th>
-            <th className="sb-ls-total">E</th>
+            <th scope="col" className="sb-ls-total">R</th>
+            <th scope="col" className="sb-ls-total">H</th>
+            <th scope="col" className="sb-ls-total">E</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td className="sb-ls-team">{away.abbreviation}</td>
+            <th scope="row" className="sb-ls-team">{away.abbreviation}</th>
             {linescore.innings.map((inn) => (
               <td key={inn.num}>{inn.away !== "" ? inn.away : "-"}</td>
             ))}
@@ -199,7 +209,7 @@ function Linescore({ linescore, away, home }) {
             <td className="sb-ls-total">{linescore.away.errors}</td>
           </tr>
           <tr>
-            <td className="sb-ls-team">{home.abbreviation}</td>
+            <th scope="row" className="sb-ls-team">{home.abbreviation}</th>
             {linescore.innings.map((inn) => (
               <td key={inn.num}>{inn.home !== "" ? inn.home : "-"}</td>
             ))}
@@ -227,7 +237,7 @@ function HeroTeam({ side, team }) {
   return (
     <div className={`sb-hero-team sb-hero-${side}`}>
       <div className="sb-hero-team-logo-wrap">
-        <img src={team.logoUrl} alt={team.abbreviation} className="sb-hero-team-logo" />
+        <img src={team.logoUrl} alt="" className="sb-hero-team-logo" />
       </div>
       <div className="sb-hero-team-text">
         <span className="sb-hero-team-name">{team.abbreviation}</span>
@@ -244,41 +254,50 @@ function PitcherMatchupLine({ game, teamId, navigate, hero = false }) {
   const home = game.home.probablePitcher;
   if (!away?.id && !home?.id) return null;
 
-  const clickPitcher = (p) => (e) => {
-    if (!p?.id) return;
-    e.stopPropagation();
-    navigate(`/team/${teamId}/player/${p.id}`);
-  };
-
   const renderSlot = (p, side) => {
     const has = !!p?.id;
     const displayName = hero
       ? (p?.fullName || "TBD")
       : (p?.fullName ? lastName(p.fullName) : "TBD");
 
-    if (hero) {
+    const slotClass = `sb-pitcher-line-slot sb-pitcher-line-slot-${side}${hero ? " sb-pitcher-line-slot-hero" : ""}`;
+
+    if (!has) {
       return (
-        <div
-          className={`sb-pitcher-line-slot sb-pitcher-line-slot-${side} sb-pitcher-line-slot-hero ${has ? "sb-player-link" : ""}`}
-          onClick={clickPitcher(p)}
-        >
-          {has && <PlayerPhoto playerId={p.id} name={p.fullName} size={28} className="sb-pitcher-hero-photo" />}
-          <div className="sb-pitcher-hero-text">
+        <div className={slotClass}>
+          {hero ? (
+            <div className="sb-pitcher-hero-text">
+              <span className="sb-pitcher-line-name">{displayName}</span>
+            </div>
+          ) : (
             <span className="sb-pitcher-line-name">{displayName}</span>
-            {has && <PitcherStats pitcherId={p.id} />}
-          </div>
+          )}
         </div>
       );
     }
 
     return (
-      <div
-        className={`sb-pitcher-line-slot sb-pitcher-line-slot-${side} ${has ? "sb-player-link" : ""}`}
-        onClick={clickPitcher(p)}
+      <button
+        type="button"
+        className={`${slotClass} sb-player-link`}
+        onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${p.id}`); }}
+        aria-label={`View ${p.fullName} player page`}
       >
-        <span className="sb-pitcher-line-name">{displayName}</span>
-        {has && <PitcherStats pitcherId={p.id} />}
-      </div>
+        {hero ? (
+          <>
+            <PlayerPhoto playerId={p.id} name={p.fullName} size={28} className="sb-pitcher-hero-photo" />
+            <div className="sb-pitcher-hero-text">
+              <span className="sb-pitcher-line-name">{displayName}</span>
+              <PitcherStats pitcherId={p.id} />
+            </div>
+          </>
+        ) : (
+          <>
+            <span className="sb-pitcher-line-name">{displayName}</span>
+            <PitcherStats pitcherId={p.id} />
+          </>
+        )}
+      </button>
     );
   };
 
@@ -293,7 +312,7 @@ function PitcherMatchupLine({ game, teamId, navigate, hero = false }) {
   );
 }
 
-function ScoreDisplay({ value, className = "" }) {
+function ScoreDisplay({ value, className = "", label }) {
   const prev = useRef(value);
   const [flash, setFlash] = useState(false);
   useEffect(() => {
@@ -305,7 +324,16 @@ function ScoreDisplay({ value, className = "" }) {
     }
     prev.current = value;
   }, [value]);
-  return <span className={`scoreboard-score ${className} ${flash ? "sb-score-just-changed" : ""}`}>{value}</span>;
+  return (
+    <span
+      className={`scoreboard-score ${className} ${flash ? "sb-score-just-changed" : ""}`}
+      aria-live="polite"
+      aria-atomic="true"
+      aria-label={label ? `${label}: ${value}` : undefined}
+    >
+      {value}
+    </span>
+  );
 }
 
 function InningProgressBar({ inning, total = 9 }) {
@@ -335,31 +363,62 @@ function BatterRow({ batter, teamId }) {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const hasABs = batter.atBats.length > 0;
+  const panelId = `batter-abs-${batter.id}`;
+
+  const summary = `${batter.name}, ${batter.position}: ${batter.stats.ab} at-bats, ${batter.stats.r} runs, ${batter.stats.h} hits, ${batter.stats.hr} home runs, ${batter.stats.rbi} RBI, ${batter.stats.bb} walks, ${batter.stats.k} strikeouts`;
 
   return (
     <div className="sb-batter">
-      <div
-        className={`sb-batter-row ${hasABs ? "sb-tappable" : ""}`}
-        onClick={hasABs ? () => setOpen(!open) : undefined}
-      >
-        <span className="sb-batter-pos">{batter.position}</span>
-        <span className="sb-batter-name-link" role="link" tabIndex={0} onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${batter.id}`); }}>{batter.name}</span>
-        <span className="sb-batter-spacer" />
-        <span className="sb-batter-stat">{batter.stats.ab}</span>
-        <span className="sb-batter-stat">{batter.stats.r}</span>
-        <span className="sb-batter-stat">{batter.stats.h}</span>
-        <span className="sb-batter-stat">{batter.stats.hr}</span>
-        <span className="sb-batter-stat">{batter.stats.rbi}</span>
-        <span className="sb-batter-stat">{batter.stats.bb}</span>
-        <span className="sb-batter-stat">{batter.stats.k}</span>
-        {hasABs && (
-          <svg className="sb-batter-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ transform: open ? "rotate(180deg)" : "none" }}>
+      {hasABs ? (
+        <button
+          type="button"
+          className="sb-batter-row sb-tappable"
+          aria-expanded={open}
+          aria-controls={panelId}
+          onClick={() => setOpen((o) => !o)}
+          aria-label={`${summary}. Toggle at-bats.`}
+        >
+          <span className="sb-batter-pos" aria-hidden="true">{batter.position}</span>
+          <span className="sb-batter-name" aria-hidden="true">{batter.name}</span>
+          <span className="sb-batter-spacer" aria-hidden="true" />
+          <span className="sb-batter-stat" aria-hidden="true">{batter.stats.ab}</span>
+          <span className="sb-batter-stat" aria-hidden="true">{batter.stats.r}</span>
+          <span className="sb-batter-stat" aria-hidden="true">{batter.stats.h}</span>
+          <span className="sb-batter-stat" aria-hidden="true">{batter.stats.hr}</span>
+          <span className="sb-batter-stat" aria-hidden="true">{batter.stats.rbi}</span>
+          <span className="sb-batter-stat" aria-hidden="true">{batter.stats.bb}</span>
+          <span className="sb-batter-stat" aria-hidden="true">{batter.stats.k}</span>
+          <svg
+            className="sb-batter-chevron"
+            width="10" height="10" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" strokeWidth="2.5"
+            aria-hidden="true" focusable="false"
+            style={{ transform: open ? "rotate(180deg)" : "none" }}
+          >
             <polyline points="6 9 12 15 18 9" />
           </svg>
-        )}
-      </div>
-      {open && (
-        <div className="sb-atbats">
+        </button>
+      ) : (
+        <button
+          type="button"
+          className="sb-batter-row"
+          onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${batter.id}`); }}
+          aria-label={`${summary}. View player page.`}
+        >
+          <span className="sb-batter-pos" aria-hidden="true">{batter.position}</span>
+          <span className="sb-batter-name" aria-hidden="true">{batter.name}</span>
+          <span className="sb-batter-spacer" aria-hidden="true" />
+          <span className="sb-batter-stat" aria-hidden="true">{batter.stats.ab}</span>
+          <span className="sb-batter-stat" aria-hidden="true">{batter.stats.r}</span>
+          <span className="sb-batter-stat" aria-hidden="true">{batter.stats.h}</span>
+          <span className="sb-batter-stat" aria-hidden="true">{batter.stats.hr}</span>
+          <span className="sb-batter-stat" aria-hidden="true">{batter.stats.rbi}</span>
+          <span className="sb-batter-stat" aria-hidden="true">{batter.stats.bb}</span>
+          <span className="sb-batter-stat" aria-hidden="true">{batter.stats.k}</span>
+        </button>
+      )}
+      {open && hasABs && (
+        <div className="sb-atbats" id={panelId} role="region" aria-label={`${batter.name} at-bats`}>
           {batter.atBats.map((ab, i) => {
             const ord = ab.inning === 1 ? "1st" : ab.inning === 2 ? "2nd" : ab.inning === 3 ? "3rd" : `${ab.inning}th`;
             return (
@@ -380,22 +439,26 @@ function TeamBoxScore({ batters, abbr, teamId }) {
   if (!batters?.length) return null;
 
   return (
-    <div className="sb-team-box">
-      <div className="sb-box-header">
-        <span className="sb-batter-pos"></span>
-        <span className="sb-batter-name sb-box-team">{teamDisplayName(abbr)}</span>
-        <span className="sb-batter-stat sb-stat-hdr">AB</span>
-        <span className="sb-batter-stat sb-stat-hdr">R</span>
-        <span className="sb-batter-stat sb-stat-hdr">H</span>
-        <span className="sb-batter-stat sb-stat-hdr">HR</span>
-        <span className="sb-batter-stat sb-stat-hdr">RBI</span>
-        <span className="sb-batter-stat sb-stat-hdr">BB</span>
-        <span className="sb-batter-stat sb-stat-hdr">K</span>
-        <span style={{ width: 10 }}></span>
+    <div className="sb-team-box" role="table" aria-label={`${teamDisplayName(abbr)} box score`}>
+      <div className="sb-box-header" role="rowgroup">
+        <div role="row">
+          <span className="sb-batter-pos" role="columnheader"></span>
+          <span className="sb-batter-name sb-box-team" role="columnheader">{teamDisplayName(abbr)}</span>
+          <span className="sb-batter-stat sb-stat-hdr" role="columnheader" title="At-bats">AB</span>
+          <span className="sb-batter-stat sb-stat-hdr" role="columnheader" title="Runs">R</span>
+          <span className="sb-batter-stat sb-stat-hdr" role="columnheader" title="Hits">H</span>
+          <span className="sb-batter-stat sb-stat-hdr" role="columnheader" title="Home runs">HR</span>
+          <span className="sb-batter-stat sb-stat-hdr" role="columnheader" title="Runs batted in">RBI</span>
+          <span className="sb-batter-stat sb-stat-hdr" role="columnheader" title="Walks">BB</span>
+          <span className="sb-batter-stat sb-stat-hdr" role="columnheader" title="Strikeouts">K</span>
+          <span style={{ width: 10 }}></span>
+        </div>
       </div>
-      {batters.map((b) => (
-        <BatterRow key={b.id} batter={b} teamId={teamId} />
-      ))}
+      <div role="rowgroup">
+        {batters.map((b) => (
+          <BatterRow key={b.id} batter={b} teamId={teamId} />
+        ))}
+      </div>
     </div>
   );
 }
@@ -405,34 +468,43 @@ function TeamPitchingBox({ pitchers, abbr, teamId }) {
   if (!pitchers?.length) return null;
 
   return (
-    <div className="sb-team-box sb-pitching-box">
-      <div className="sb-box-header">
-        <span className="sb-batter-name sb-box-team">{teamDisplayName(abbr)} Pitching</span>
-        <span className="sb-batter-stat sb-stat-hdr">IP</span>
-        <span className="sb-batter-stat sb-stat-hdr">H</span>
-        <span className="sb-batter-stat sb-stat-hdr">R</span>
-        <span className="sb-batter-stat sb-stat-hdr">ER</span>
-        <span className="sb-batter-stat sb-stat-hdr">BB</span>
-        <span className="sb-batter-stat sb-stat-hdr">K</span>
-        <span className="sb-batter-stat sb-stat-hdr sb-pc-hdr">PC</span>
-      </div>
-      {pitchers.map((p) => (
-        <div key={p.id} className="sb-batter-row">
-          <span
-            className="sb-batter-name sb-player-link"
-            onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}
-          >
-            {p.name}{p.note ? ` ${p.note}` : ""}
-          </span>
-          <span className="sb-batter-stat">{p.stats.ip}</span>
-          <span className="sb-batter-stat">{p.stats.h}</span>
-          <span className="sb-batter-stat">{p.stats.r}</span>
-          <span className="sb-batter-stat">{p.stats.er}</span>
-          <span className="sb-batter-stat">{p.stats.bb}</span>
-          <span className="sb-batter-stat">{p.stats.k}</span>
-          <span className="sb-batter-stat sb-pc">{p.stats.pitches}</span>
+    <div className="sb-team-box sb-pitching-box" role="table" aria-label={`${teamDisplayName(abbr)} pitching box score`}>
+      <div className="sb-box-header" role="rowgroup">
+        <div role="row">
+          <span className="sb-batter-name sb-box-team" role="columnheader">{teamDisplayName(abbr)} Pitching</span>
+          <span className="sb-batter-stat sb-stat-hdr" role="columnheader" title="Innings pitched">IP</span>
+          <span className="sb-batter-stat sb-stat-hdr" role="columnheader" title="Hits">H</span>
+          <span className="sb-batter-stat sb-stat-hdr" role="columnheader" title="Runs">R</span>
+          <span className="sb-batter-stat sb-stat-hdr" role="columnheader" title="Earned runs">ER</span>
+          <span className="sb-batter-stat sb-stat-hdr" role="columnheader" title="Walks">BB</span>
+          <span className="sb-batter-stat sb-stat-hdr" role="columnheader" title="Strikeouts">K</span>
+          <span className="sb-batter-stat sb-stat-hdr sb-pc-hdr" role="columnheader" title="Pitch count">PC</span>
         </div>
-      ))}
+      </div>
+      <div role="rowgroup">
+        {pitchers.map((p) => {
+          const summary = `${p.name}${p.note ? ` ${p.note}` : ""}: ${p.stats.ip} innings, ${p.stats.h} hits, ${p.stats.r} runs, ${p.stats.er} earned runs, ${p.stats.bb} walks, ${p.stats.k} strikeouts, ${p.stats.pitches} pitches`;
+          return (
+            <button
+              key={p.id}
+              type="button"
+              className="sb-batter-row"
+              role="row"
+              onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}
+              aria-label={`${summary}. View player page.`}
+            >
+              <span className="sb-batter-name" role="cell" aria-hidden="true">{p.name}{p.note ? ` ${p.note}` : ""}</span>
+              <span className="sb-batter-stat" role="cell" aria-hidden="true">{p.stats.ip}</span>
+              <span className="sb-batter-stat" role="cell" aria-hidden="true">{p.stats.h}</span>
+              <span className="sb-batter-stat" role="cell" aria-hidden="true">{p.stats.r}</span>
+              <span className="sb-batter-stat" role="cell" aria-hidden="true">{p.stats.er}</span>
+              <span className="sb-batter-stat" role="cell" aria-hidden="true">{p.stats.bb}</span>
+              <span className="sb-batter-stat" role="cell" aria-hidden="true">{p.stats.k}</span>
+              <span className="sb-batter-stat sb-pc" role="cell" aria-hidden="true">{p.stats.pitches}</span>
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }
@@ -447,17 +519,17 @@ function GameDetail({ gamePk, awayAbbr, homeAbbr, awayId, homeId, teamId }) {
     staleTime: 1000 * 60 * 5,
   });
 
-  if (isLoading) return <div className="sb-plays-loading">Loading...</div>;
+  if (isLoading) return <div className="sb-plays-loading" role="status" aria-live="polite">Loading…</div>;
   if (!data) return <div className="sb-plays-empty">No data available</div>;
 
   return (
-    <div>
-      <div className="sb-detail-tabs">
-        <button className={`sb-detail-tab ${tab === "scoring" ? "sb-detail-tab-active" : ""}`} onClick={() => setTab("scoring")}>Scoring</button>
-        <button className={`sb-detail-tab ${tab === "boxscore" ? "sb-detail-tab-active" : ""}`} onClick={() => setTab("boxscore")}>Box Score</button>
-      </div>
+    <Tabs value={tab} onChange={setTab} ariaLabel="Game detail view">
+      <TabList className="sb-detail-tabs">
+        <Tab tabKey="scoring" className="sb-detail-tab" activeClassName="sb-detail-tab-active">Scoring</Tab>
+        <Tab tabKey="boxscore" className="sb-detail-tab" activeClassName="sb-detail-tab-active">Box Score</Tab>
+      </TabList>
 
-      {tab === "scoring" && (
+      <TabPanel tabKey="scoring">
         <div className="sb-scoring-plays">
           {!data.scoringPlays?.length ? (
             <div className="sb-plays-empty">No scoring plays</div>
@@ -495,17 +567,17 @@ function GameDetail({ gamePk, awayAbbr, homeAbbr, awayId, homeId, teamId }) {
             );
           })}
         </div>
-      )}
+      </TabPanel>
 
-      {tab === "boxscore" && (
+      <TabPanel tabKey="boxscore">
         <div className="sb-boxscore">
           <TeamBoxScore batters={data.away} abbr={awayAbbr} teamId={teamId} />
           <TeamPitchingBox pitchers={data.awayPitchers} abbr={awayAbbr} teamId={teamId} />
           <TeamBoxScore batters={data.home} abbr={homeAbbr} teamId={teamId} />
           <TeamPitchingBox pitchers={data.homePitchers} abbr={homeAbbr} teamId={teamId} />
         </div>
-      )}
-    </div>
+      </TabPanel>
+    </Tabs>
   );
 }
 
@@ -534,42 +606,62 @@ function LiveGameInfo({ gamePk, teamId, isOurGame }) {
     ? `Top ${lastPlay.inning === undefined ? "" : lastPlay.inning} · ${lastPlay.description}`
     : null;
 
+  const basesLabel = describeBases(liveState);
+
   return (
     <div className="sb-live-info">
       <div className="sb-live-info-row">
         {liveState.batter && (
-          <div className="sb-live-player sb-player-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${liveState.batter.id}`); }}>
+          <button
+            type="button"
+            className="sb-live-player sb-player-link"
+            onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${liveState.batter.id}`); }}
+            aria-label={`View batter ${liveState.batter.fullName}${liveState.batter.avg ? `, batting average ${liveState.batter.avg}` : ""}`}
+          >
             <PlayerPhoto playerId={liveState.batter.id} name={liveState.batter.fullName} size={22} />
             <div className="sb-live-player-info">
               <span className="sb-live-player-name">{lastName(liveState.batter.fullName)}</span>
               <span className="sb-live-player-sub">AB{liveState.batter.avg ? ` · ${liveState.batter.avg}` : ""}</span>
             </div>
-          </div>
+          </button>
         )}
-        <svg className={`sb-live-diamond ${isOurGame ? "sb-our-diamond" : ""}`} width="52" height="52" viewBox="-2 -2 56 56">
+        <svg
+          className={`sb-live-diamond ${isOurGame ? "sb-our-diamond" : ""}`}
+          width="52" height="52" viewBox="-2 -2 56 56"
+          role="img"
+          aria-label={basesLabel}
+        >
+          <title>{basesLabel}</title>
           <rect x="17" y="2" width="12" height="12" rx="1.5" transform="rotate(45 23 8)" className={`sb-live-base ${liveState.onSecond ? "occupied" : ""}`} />
           <rect x="30" y="15" width="12" height="12" rx="1.5" transform="rotate(45 36 21)" className={`sb-live-base ${liveState.onFirst ? "occupied" : ""}`} />
           <rect x="4" y="15" width="12" height="12" rx="1.5" transform="rotate(45 10 21)" className={`sb-live-base ${liveState.onThird ? "occupied" : ""}`} />
           <circle cx="23" cy="34" r="2.5" fill="var(--text-muted)" opacity="0.3" />
         </svg>
         {liveState.pitcher && (
-          <div className="sb-live-player sb-player-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${liveState.pitcher.id}`); }}>
+          <button
+            type="button"
+            className="sb-live-player sb-player-link"
+            onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${liveState.pitcher.id}`); }}
+            aria-label={`View pitcher ${liveState.pitcher.fullName}${liveState.pitcher.gameStats ? `, ${liveState.pitcher.gameStats.ip} innings pitched` : ""}`}
+          >
             <PlayerPhoto playerId={liveState.pitcher.id} name={liveState.pitcher.fullName} size={22} />
             <div className="sb-live-player-info">
               <span className="sb-live-player-name">{lastName(liveState.pitcher.fullName)}</span>
               <span className="sb-live-player-sub">P{liveState.pitcher.gameStats ? ` · ${liveState.pitcher.gameStats.ip} IP` : ""}</span>
             </div>
-          </div>
+          </button>
         )}
       </div>
-      <div className="sb-live-situation">
+      <div className="sb-live-situation" role="status" aria-live="polite">
         <div className="sb-live-outs">
           {[0, 1, 2].map((i) => (
-            <span key={i} className={`sb-live-out-dot ${i < liveState.outs ? "filled" : ""}`} />
+            <span key={i} className={`sb-live-out-dot ${i < liveState.outs ? "filled" : ""}`} aria-hidden="true" />
           ))}
           <span>{liveState.outs} out</span>
         </div>
-        <span className="sb-live-count">{liveState.balls}-{liveState.strikes}</span>
+        <span className="sb-live-count" aria-label={`Count: ${liveState.balls} balls, ${liveState.strikes} strikes`}>
+          {liveState.balls}-{liveState.strikes}
+        </span>
       </div>
       {tickerText && (
         <div className="sb-last-play" aria-live="polite">
@@ -618,34 +710,34 @@ function ScoreboardLineups({ gamePk, awayId, homeId, awayAbbr, homeAbbr, teamId 
   const homeLineup = actualHome || projHome;
   const isProjected = actualDone && !actualAway && !actualHome;
 
-  if (!awayLineup?.length && !homeLineup?.length) return <div className="sb-plays-loading">Loading lineups...</div>;
+  if (!awayLineup?.length && !homeLineup?.length) return <div className="sb-plays-loading" role="status" aria-live="polite">Loading lineups…</div>;
+
+  const renderLineup = (lineup, abbr) => (
+    <div className="sb-lineups-col">
+      <div className="sb-lineups-hdr">{abbr}</div>
+      {(lineup || []).map((p) => (
+        <button
+          key={p.id}
+          type="button"
+          className="sb-lineups-row sb-player-link"
+          onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}
+          aria-label={`View ${p.fullName}, batting ${p.order}, position ${p.position}, average ${p.avg}`}
+        >
+          <span className="sb-lu-order">{p.order}</span>
+          <span className="sb-lu-name">{lastName(p.fullName)}</span>
+          <span className="sb-lu-pos">{p.position}</span>
+          <span className="sb-lu-avg">{p.avg}</span>
+        </button>
+      ))}
+    </div>
+  );
 
   return (
     <div className="sb-lineups">
       {isProjected && <div className="sb-lineups-tag">Projected · Based on recent games</div>}
       <div className="sb-lineups-cols">
-        <div className="sb-lineups-col">
-          <div className="sb-lineups-hdr">{awayAbbr}</div>
-          {(awayLineup || []).map((p) => (
-            <div key={p.id} className="sb-lineups-row sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
-              <span className="sb-lu-order">{p.order}</span>
-              <span className="sb-lu-name">{lastName(p.fullName)}</span>
-              <span className="sb-lu-pos">{p.position}</span>
-              <span className="sb-lu-avg">{p.avg}</span>
-            </div>
-          ))}
-        </div>
-        <div className="sb-lineups-col">
-          <div className="sb-lineups-hdr">{homeAbbr}</div>
-          {(homeLineup || []).map((p) => (
-            <div key={p.id} className="sb-lineups-row sb-player-link" onClick={() => navigate(`/team/${teamId}/player/${p.id}`)}>
-              <span className="sb-lu-order">{p.order}</span>
-              <span className="sb-lu-name">{lastName(p.fullName)}</span>
-              <span className="sb-lu-pos">{p.position}</span>
-              <span className="sb-lu-avg">{p.avg}</span>
-            </div>
-          ))}
-        </div>
+        {renderLineup(awayLineup, awayAbbr)}
+        {renderLineup(homeLineup, homeAbbr)}
       </div>
     </div>
   );
@@ -725,32 +817,35 @@ export default function Scoreboard() {
 
   return (
     <div className="scoreboard-page">
-      <div className="scoreboard-date-nav">
+      <h1 className="sr-only">Scores for {formatDateLabel(selectedDate)}</h1>
+      <div className="scoreboard-date-nav" role="group" aria-label="Date navigation">
         <div className="scoreboard-date-center">
-          <button className="scoreboard-date-btn" onClick={() => goDay(-1)} aria-label="Previous day">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <button type="button" className="scoreboard-date-btn" onClick={() => goDay(-1)} aria-label="Previous day">
+            <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="15 18 9 12 15 6" />
             </svg>
           </button>
           <button
+            type="button"
             className="scoreboard-date-label"
             onClick={() => setSelectedDate(fmt(new Date()))}
             aria-label="Go to today"
           >
             {formatDateLabel(selectedDate)}
           </button>
-          <button className="scoreboard-date-btn" onClick={() => goDay(1)} aria-label="Next day">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <button type="button" className="scoreboard-date-btn" onClick={() => goDay(1)} aria-label="Next day">
+            <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="9 18 15 12 9 6" />
             </svg>
           </button>
         </div>
         <button
+          type="button"
           className="scoreboard-date-btn sb-cal-btn"
           onClick={() => dateInputRef.current?.showPicker?.() || dateInputRef.current?.click()}
           aria-label="Pick a date"
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <rect x="3" y="4" width="18" height="18" rx="2" />
             <line x1="16" y1="2" x2="16" y2="6" />
             <line x1="8" y1="2" x2="8" y2="6" />
@@ -763,13 +858,14 @@ export default function Scoreboard() {
             value={selectedDate}
             onChange={(e) => { if (e.target.value) setSelectedDate(e.target.value); }}
             tabIndex={-1}
+            aria-label="Date picker"
           />
         </button>
       </div>
 
       {isLoading && <SkeletonLoader variant="scores" />}
 
-      {error && <div className="scoreboard-error">Failed to load scores. Pull down to refresh.</div>}
+      {error && <div className="scoreboard-error" role="alert">Failed to load scores. Pull down to refresh.</div>}
 
       {!isLoading && !error && !sorted.length && (
         <div className="scoreboard-empty">
@@ -805,15 +901,19 @@ export default function Scoreboard() {
             const isBlowout = isLive && scoreDiff >= 6 && (game.inning ?? 0) >= 6;
             const weatherMod = isScheduled ? deriveWeatherMod(game.weather?.condition) : "";
 
+            const matchupLabel = `${game.away.abbreviation} at ${game.home.abbreviation}${isLive || isFinal ? `, score ${game.away.score} to ${game.home.score}` : ""}`;
+            const primaryActionLabel = isLive
+              ? `View live game: ${matchupLabel}`
+              : isFinal
+              ? `View final game details: ${matchupLabel}`
+              : `View matchup: ${matchupLabel}, ${formatGameTime(game.gameDate)}`;
+
             return (
-              <div
+              <article
                 key={game.gamePk}
-                className={`scoreboard-card ${isOurGame ? "our-game" : ""} ${isLive ? "live" : ""} ${isCloseGame ? "sb-close-game" : ""} ${isBlowout ? "sb-blowout" : ""} ${weatherMod} sb-tappable`}
+                className={`scoreboard-card ${isOurGame ? "our-game" : ""} ${isLive ? "live" : ""} ${isCloseGame ? "sb-close-game" : ""} ${isBlowout ? "sb-blowout" : ""} ${weatherMod}`}
                 style={{ "--away-color": awayColor, "--home-color": homeColor }}
-                onClick={() => navigate(matchupRoute)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); navigate(matchupRoute); } }}
+                aria-label={matchupLabel}
               >
                 {isOurGame && (
                   <img
@@ -825,7 +925,7 @@ export default function Scoreboard() {
                 )}
                 <div className="sb-matchup-link">
                 {isLive && (
-                  <div className="scoreboard-live-badge">
+                  <div className="scoreboard-live-badge" aria-label={`Live, ${game.inningHalf === "Top" ? "top" : "bottom"} of inning ${game.inning}`}>
                     {game.inningHalf === "Top" ? "Top" : "Bot"} {game.inning}
                   </div>
                 )}
@@ -855,15 +955,17 @@ export default function Scoreboard() {
                         onClick={(e) => { e.stopPropagation(); navigate(`/team/${game.away.id}`); }}
                         aria-label={`Go to ${game.away.abbreviation} team page`}
                       >
-                        <img src={game.away.logoUrl} alt={game.away.abbreviation} className="scoreboard-logo" />
+                        <img src={game.away.logoUrl} alt="" className="scoreboard-logo" />
                         <span className="scoreboard-abbr">{game.away.abbreviation}</span>
                       </button>
                       {!isFinal && game.away.wins != null && (
-                        <span className="scoreboard-record">{game.away.wins}-{game.away.losses}</span>
+                        <span className="scoreboard-record" aria-label={`Record ${game.away.wins} wins, ${game.away.losses} losses`}>
+                          {game.away.wins}-{game.away.losses}
+                        </span>
                       )}
                       {isFinal && (!isMobile || isMyTeamGame(game)) && <TopPerformer gamePk={game.gamePk} side="away" teamId={teamId} />}
                       {(isLive || isFinal) && (
-                        <ScoreDisplay value={game.away.score} />
+                        <ScoreDisplay value={game.away.score} label={`${game.away.abbreviation} score`} />
                       )}
                     </div>
                     <div className={`scoreboard-team-row ${isFinal ? (homeWon ? "sb-winner" : "sb-loser") : ""}`}>
@@ -873,15 +975,17 @@ export default function Scoreboard() {
                         onClick={(e) => { e.stopPropagation(); navigate(`/team/${game.home.id}`); }}
                         aria-label={`Go to ${game.home.abbreviation} team page`}
                       >
-                        <img src={game.home.logoUrl} alt={game.home.abbreviation} className="scoreboard-logo" />
+                        <img src={game.home.logoUrl} alt="" className="scoreboard-logo" />
                         <span className="scoreboard-abbr">{game.home.abbreviation}</span>
                       </button>
                       {!isFinal && game.home.wins != null && (
-                        <span className="scoreboard-record">{game.home.wins}-{game.home.losses}</span>
+                        <span className="scoreboard-record" aria-label={`Record ${game.home.wins} wins, ${game.home.losses} losses`}>
+                          {game.home.wins}-{game.home.losses}
+                        </span>
                       )}
                       {isFinal && (!isMobile || isMyTeamGame(game)) && <TopPerformer gamePk={game.gamePk} side="home" teamId={teamId} />}
                       {(isLive || isFinal) && (
-                        <ScoreDisplay value={game.home.score} />
+                        <ScoreDisplay value={game.home.score} label={`${game.home.abbreviation} score`} />
                       )}
                     </div>
                   </div>
@@ -902,27 +1006,42 @@ export default function Scoreboard() {
                     {game.decisions.winner && (
                       <span className="sb-decision">
                         <span className="sb-decision-label">W:</span>
-                        <span className="sb-player-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${game.decisions.winner.id}`); }}>
+                        <button
+                          type="button"
+                          className="sb-player-link sb-decision-link"
+                          onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${game.decisions.winner.id}`); }}
+                          aria-label={`Winning pitcher: ${game.decisions.winner.name}. View player page.`}
+                        >
                           {lastName(game.decisions.winner.name)}
-                        </span>
+                        </button>
                         <PitcherRecord pitcherId={game.decisions.winner.id} type="wl" />
                       </span>
                     )}
                     {game.decisions.loser && (
                       <span className="sb-decision">
                         <span className="sb-decision-label">L:</span>
-                        <span className="sb-player-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${game.decisions.loser.id}`); }}>
+                        <button
+                          type="button"
+                          className="sb-player-link sb-decision-link"
+                          onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${game.decisions.loser.id}`); }}
+                          aria-label={`Losing pitcher: ${game.decisions.loser.name}. View player page.`}
+                        >
                           {lastName(game.decisions.loser.name)}
-                        </span>
+                        </button>
                         <PitcherRecord pitcherId={game.decisions.loser.id} type="wl" />
                       </span>
                     )}
                     {game.decisions.save && (
                       <span className="sb-decision">
                         <span className="sb-decision-label">SV:</span>
-                        <span className="sb-player-link" onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${game.decisions.save.id}`); }}>
+                        <button
+                          type="button"
+                          className="sb-player-link sb-decision-link"
+                          onClick={(e) => { e.stopPropagation(); navigate(`/team/${teamId}/player/${game.decisions.save.id}`); }}
+                          aria-label={`Save pitcher: ${game.decisions.save.name}. View player page.`}
+                        >
                           {lastName(game.decisions.save.name)}
-                        </span>
+                        </button>
                         <PitcherRecord pitcherId={game.decisions.save.id} type="save" />
                       </span>
                     )}
@@ -931,19 +1050,18 @@ export default function Scoreboard() {
 
                 {/* Watch button for our live games (no venue row) */}
                 {isOurGame && isLive && (
-                  <button
+                  <a
                     className="scoreboard-watch-btn"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      window.location.href = `https://www.mlb.com/tv/g${game.gamePk}`;
-                    }}
-                    aria-label="Watch game"
+                    href={`https://www.mlb.com/tv/g${game.gamePk}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Watch game on MLB (opens in new tab)"
                   >
-                    <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                       <polygon points="5 3 19 12 5 21 5 3" />
                     </svg>
                     Watch
-                  </button>
+                  </a>
                 )}
 
                 {/* Gameday link for all active games */}
@@ -951,10 +1069,11 @@ export default function Scoreboard() {
                   <a
                     className="scoreboard-gameday-link"
                     href={`https://www.mlb.com/tv/g${game.gamePk}`}
-                    onClick={(e) => e.stopPropagation()}
-                    aria-label="View on MLB Gameday"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="View on MLB Gameday (opens in new tab)"
                   >
-                    <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg aria-hidden="true" focusable="false" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
                       <polyline points="15 3 21 3 21 9" />
                       <line x1="10" y1="14" x2="21" y2="3" />
@@ -964,17 +1083,20 @@ export default function Scoreboard() {
                 )}
 
                 {/* Stats link → navigates to the matchup/live page (live & final only) */}
-                {showStatsLink && (
-                  <div className="sb-expand-hint">
-                    <span className="sb-expand-label">Stats</span>
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <polyline points="9 6 15 12 9 18" />
-                    </svg>
-                  </div>
-                )}
+                <button
+                  type="button"
+                  className="sb-expand-hint"
+                  onClick={() => navigate(matchupRoute)}
+                  aria-label={primaryActionLabel}
+                >
+                  <span className="sb-expand-label">{showStatsLink ? "Stats" : "Matchup"}</span>
+                  <svg aria-hidden="true" focusable="false" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="9 6 15 12 9 18" />
+                  </svg>
+                </button>
 
                 {isLive && <span className="sb-grass-strip" aria-hidden="true" />}
-              </div>
+              </article>
             );
           };
           return (
@@ -983,34 +1105,36 @@ export default function Scoreboard() {
                   On mobile both columns flow as one stacked list (flex column parent). */}
               <div className="sb-col-left">
                 {groups.myTeams.length > 0 && (
-                  <>
-                    <h3 className="sb-section-hdr">My Teams</h3>
+                  <section aria-labelledby="sb-my-teams-hdr">
+                    <h2 id="sb-my-teams-hdr" className="sb-section-hdr">My Teams</h2>
                     {groups.myTeams.map(renderCard)}
-                  </>
+                  </section>
                 )}
                 {groups.upcoming.length > 0 && (
-                  <>
-                    <h3 className="sb-section-hdr">Upcoming</h3>
+                  <section aria-labelledby="sb-upcoming-hdr">
+                    <h2 id="sb-upcoming-hdr" className="sb-section-hdr">Upcoming</h2>
                     <div className="sb-upcoming-grid">
                       {groups.upcoming.map(renderCard)}
                     </div>
-                  </>
+                  </section>
                 )}
                 {groups.final.length > 0 && (
-                  <>
-                    <h3 className="sb-section-hdr">Final</h3>
+                  <section aria-labelledby="sb-final-hdr">
+                    <h2 id="sb-final-hdr" className="sb-section-hdr">Final</h2>
                     <div className="sb-final-grid">
                       {groups.final.map(renderCard)}
                     </div>
-                  </>
+                  </section>
                 )}
               </div>
               {groups.live.length > 0 && (
                 <div className="sb-col-right">
-                  <h3 className="sb-section-hdr sb-section-hdr-live">
-                    <span className="sb-section-hdr-dot" aria-hidden="true" />Live
-                  </h3>
-                  {groups.live.map(renderCard)}
+                  <section aria-labelledby="sb-live-hdr">
+                    <h2 id="sb-live-hdr" className="sb-section-hdr sb-section-hdr-live">
+                      <span className="sb-section-hdr-dot" aria-hidden="true" />Live
+                    </h2>
+                    {groups.live.map(renderCard)}
+                  </section>
                 </div>
               )}
             </>

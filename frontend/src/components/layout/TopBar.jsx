@@ -1,13 +1,16 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useTeam } from "../../context/TeamContext";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import Dialog from "../common/Dialog";
 
 export default function TopBar() {
   const { team, setTeamId } = useTeam();
   const navigate = useNavigate();
   const location = useLocation();
   const { playerId, gamePk } = useParams();
+  const queryClient = useQueryClient();
   const isSprayPage = location.pathname.includes("/spray");
 
   const isNestedPage = !!playerId || isSprayPage || !!gamePk;
@@ -29,6 +32,10 @@ export default function TopBar() {
     navigate("/");
   };
 
+  const handleRefresh = async () => {
+    await queryClient.invalidateQueries();
+  };
+
   const openEdge = () => {
     if (team?.id) navigate(`/team/${team.id}/edge`);
   };
@@ -46,23 +53,17 @@ export default function TopBar() {
     setSearched(false);
   };
 
-  const closeSearch = () => {
+  const closeSearch = useCallback(() => {
     setSearchOpen(false);
     setQuery("");
     setResults([]);
     setSearched(false);
-  };
-
-  useEffect(() => {
-    if (searchOpen && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [searchOpen]);
+  }, []);
 
   // Close search on route change
   useEffect(() => {
     closeSearch();
-  }, [location.pathname]);
+  }, [location.pathname, closeSearch]);
 
   const searchPlayers = useCallback(async (searchQuery) => {
     if (!searchQuery.trim()) {
@@ -140,20 +141,12 @@ export default function TopBar() {
     closeSearch();
   };
 
-  const handleOverlayClick = (e) => {
-    if (e.target === e.currentTarget) closeSearch();
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Escape") closeSearch();
-  };
-
   return (
     <>
-      <header className="top-bar">
+      <header className="top-bar" role="banner">
         {isNestedPage && (
-          <button className="top-bar-back" onClick={handleBack} aria-label="Back to team dashboard">
-            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+          <button type="button" className="top-bar-back" onClick={handleBack} aria-label="Back">
+            <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <polyline points="15 18 9 12 15 6" />
             </svg>
           </button>
@@ -162,37 +155,44 @@ export default function TopBar() {
           <>
             <img
               src={`https://www.mlbstatic.com/team-logos/team-cap-on-dark/${team.id}.svg`}
-              alt={`${team.name} logo`}
+              alt=""
               className="top-bar-logo"
             />
-            <h1 className="top-bar-title">{team.name}</h1>
-            <button className="top-bar-search" onClick={openSearch} aria-label="Search players">
-              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <span className="top-bar-title">{team.name}</span>
+            <button type="button" className="top-bar-refresh" onClick={handleRefresh} aria-label="Refresh data">
+              <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="23 4 23 10 17 10" />
+                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+              </svg>
+            </button>
+            <button type="button" className="top-bar-search" onClick={openSearch} aria-label="Search players">
+              <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="11" cy="11" r="8" />
                 <line x1="21" y1="21" x2="16.65" y2="16.65" />
               </svg>
             </button>
-            <button className="top-bar-edge" onClick={openEdge} aria-label="Daily edge picks">
-              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <button type="button" className="top-bar-edge" onClick={openEdge} aria-label="Daily edge picks">
+              <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="12" y1="2" x2="12" y2="22" />
                 <path d="M17 6H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" />
               </svg>
             </button>
             <button
+              type="button"
               className="top-bar-stats"
               onClick={openEdgeDashboard}
               aria-label="Open Edge Stats Lab dashboard (opens in new tab)"
               title="Open Edge Stats Lab — 155 years of baseball data"
             >
               {/* Bar-chart icon: three rising columns for the historical/stats vibe. */}
-              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="4"  y1="21" x2="4"  y2="13" />
                 <line x1="12" y1="21" x2="12" y2="7"  />
                 <line x1="20" y1="21" x2="20" y2="3"  />
               </svg>
             </button>
-            <button className="top-bar-switch" onClick={handleSwitchTeam} aria-label="Switch team">
-              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <button type="button" className="top-bar-switch" onClick={handleSwitchTeam} aria-label="Switch team">
+              <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="17 1 21 5 17 9" />
                 <path d="M3 11V9a4 4 0 014-4h14" />
                 <polyline points="7 23 3 19 7 15" />
@@ -201,68 +201,75 @@ export default function TopBar() {
             </button>
           </>
         ) : (
-          <h1 className="top-bar-title">Baseball Stats</h1>
+          <span className="top-bar-title">Baseball Stats</span>
         )}
       </header>
 
-      {searchOpen && (
-        <div className="player-search-overlay" onClick={handleOverlayClick} onKeyDown={handleKeyDown} role="dialog" aria-label="Search players">
-          <div className="player-search-panel">
-            <div className="player-search-header">
-              <svg className="player-search-icon" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="11" cy="11" r="8" />
-                <line x1="21" y1="21" x2="16.65" y2="16.65" />
-              </svg>
-              <input
-                ref={inputRef}
-                className="player-search-input"
-                type="text"
-                placeholder="Search any MLB player..."
-                value={query}
-                onChange={handleQueryChange}
-                onKeyDown={handleKeyDown}
-                aria-label="Search players by name"
-              />
-              <button className="player-search-close" onClick={closeSearch} aria-label="Close search">
-                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="18" y1="6" x2="6" y2="18" />
-                  <line x1="6" y1="6" x2="18" y2="18" />
-                </svg>
-              </button>
-            </div>
-
-            <div className="player-search-results">
-              {loading && (
-                <div className="player-search-status">Searching...</div>
-              )}
-              {!loading && searched && results.length === 0 && (
-                <div className="player-search-status">No players found</div>
-              )}
-              {!loading && results.map((player) => (
-                <button
-                  key={player.id}
-                  className="player-search-result"
-                  onClick={() => handleResultClick(player)}
-                  disabled={!player.teamId}
-                >
-                  <img
-                    src={player.photoUrl}
-                    alt=""
-                    className="player-search-photo"
-                    loading="lazy"
-                  />
-                  <div className="player-search-info">
-                    <span className="player-search-name">{player.fullName}</span>
-                    <span className="player-search-meta">
-                      {player.position && `${player.position} · `}{player.teamName}
-                    </span>
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
+      <Dialog
+        open={searchOpen}
+        onClose={closeSearch}
+        ariaLabel="Search players"
+        className="player-search-overlay"
+        panelClassName="player-search-panel"
+        initialFocusRef={inputRef}
+      >
+        <div className="player-search-header">
+          <svg className="player-search-icon" aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+          <label htmlFor="player-search-input" className="sr-only">
+            Search any MLB player by name
+          </label>
+          <input
+            id="player-search-input"
+            ref={inputRef}
+            className="player-search-input"
+            type="search"
+            placeholder="Search any MLB player..."
+            value={query}
+            onChange={handleQueryChange}
+            autoComplete="off"
+          />
+          <button type="button" className="player-search-close" onClick={closeSearch} aria-label="Close search">
+            <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
         </div>
-      )}
+
+        <div className="player-search-results">
+          {loading && (
+            <div className="player-search-status" role="status" aria-live="polite">Searching…</div>
+          )}
+          {!loading && searched && results.length === 0 && (
+            <div className="player-search-status" role="status" aria-live="polite">No players found</div>
+          )}
+          {!loading && results.map((player) => (
+            <button
+              key={player.id}
+              type="button"
+              className="player-search-result"
+              onClick={() => handleResultClick(player)}
+              disabled={!player.teamId}
+            >
+              <img
+                src={player.photoUrl}
+                alt=""
+                className="player-search-photo"
+                loading="lazy"
+              />
+              <div className="player-search-info">
+                <span className="player-search-name">{player.fullName}</span>
+                <span className="player-search-meta">
+                  {player.position && `${player.position} · `}{player.teamName}
+                </span>
+              </div>
+            </button>
+          ))}
+        </div>
+      </Dialog>
     </>
   );
 }

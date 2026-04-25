@@ -8,9 +8,10 @@ import LoadingSpinner from "../common/LoadingSpinner";
 import ErrorMessage from "../common/ErrorMessage";
 
 const MONTHS = ["Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"];
+const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 export default function ScheduleView() {
-  const { teamId } = useTeam();
+  const { teamId, team } = useTeam();
   const navigate = useNavigate();
   const [selectedMonth, setSelectedMonth] = useState(() => new Date().getMonth());
 
@@ -52,10 +53,13 @@ export default function ScheduleView() {
 
   return (
     <div className="schedule-view">
-      <div className="month-filter">
+      <h1 className="sr-only">{team?.name || "Team"} schedule</h1>
+      <div className="month-filter" role="group" aria-label="Filter by month">
         <button
+          type="button"
           className={`month-pill ${selectedMonth == null ? "active" : ""}`}
           onClick={() => setSelectedMonth(null)}
+          aria-pressed={selectedMonth == null}
         >
           All
         </button>
@@ -64,8 +68,11 @@ export default function ScheduleView() {
           return (
             <button
               key={m}
+              type="button"
               className={`month-pill ${selectedMonth === monthIdx ? "active" : ""}`}
               onClick={() => setSelectedMonth(monthIdx)}
+              aria-pressed={selectedMonth === monthIdx}
+              aria-label={`Show ${MONTH_NAMES[monthIdx]} games`}
             >
               {m}
             </button>
@@ -73,7 +80,7 @@ export default function ScheduleView() {
         })}
       </div>
 
-      <div className="schedule-list">
+      <ul className="schedule-list" aria-label={selectedMonth == null ? "All games" : `${MONTH_NAMES[selectedMonth]} games`}>
         {filtered.map((game) => {
           const isHome = game.home.id === teamId;
           const opponent = isHome ? game.away : game.home;
@@ -89,31 +96,45 @@ export default function ScheduleView() {
             ? game.detailedState
             : null;
 
+          const resultText = isFinal
+            ? `${won ? "Won" : "Lost"} ${us.score} to ${opponent.score}`
+            : offState
+            ? offState
+            : formatGameTime(game.gameDate);
+          const ariaLabel = `${formatGameDate(game.gameDate)}, ${isHome ? "vs" : "at"} ${opponent.abbreviation}. ${resultText}${isFinal ? `, record ${game.record}` : ""}. View ${isFinal ? "game details" : "matchup"}.`;
+
           return (
-            <div key={game.gamePk} className={`schedule-row ${won ? "win" : lost ? "loss" : ""} ${offState ? "off" : ""}`} onClick={() => navigate(`/team/${teamId}/${isFinal ? "live" : "matchup"}/${game.gamePk}`)} style={{ cursor: "pointer" }}>
-              <div className="schedule-date">{formatGameDate(game.gameDate)}</div>
-              <div className="schedule-opponent">
-                <img src={opponent.logoUrl} alt={opponent.abbreviation} className="schedule-logo" />
-                <span>{isHome ? "vs" : "@"} {opponent.abbreviation}</span>
-              </div>
-              <div className="schedule-center">
-                {isFinal ? (
-                  <span className={`schedule-score ${won ? "win-text" : "loss-text"}`}>
-                    {won ? "W" : "L"} {us.score}-{opponent.score}
-                  </span>
-                ) : offState ? (
-                  <span className="schedule-status">{offState.toUpperCase()}</span>
-                ) : (
-                  <span className="schedule-time">{formatGameTime(game.gameDate)}</span>
-                )}
-              </div>
-              <div className="schedule-right">
-                {isFinal && <span className="schedule-record">{game.record}</span>}
-              </div>
-            </div>
+            <li key={game.gamePk}>
+              <button
+                type="button"
+                className={`schedule-row ${won ? "win" : lost ? "loss" : ""} ${offState ? "off" : ""}`}
+                onClick={() => navigate(`/team/${teamId}/${isFinal ? "live" : "matchup"}/${game.gamePk}`)}
+                aria-label={ariaLabel}
+              >
+                <div className="schedule-date">{formatGameDate(game.gameDate)}</div>
+                <div className="schedule-opponent">
+                  <img src={opponent.logoUrl} alt="" className="schedule-logo" />
+                  <span>{isHome ? "vs" : "@"} {opponent.abbreviation}</span>
+                </div>
+                <div className="schedule-center">
+                  {isFinal ? (
+                    <span className={`schedule-score ${won ? "win-text" : "loss-text"}`}>
+                      {won ? "W" : "L"} {us.score}-{opponent.score}
+                    </span>
+                  ) : offState ? (
+                    <span className="schedule-status">{offState.toUpperCase()}</span>
+                  ) : (
+                    <span className="schedule-time">{formatGameTime(game.gameDate)}</span>
+                  )}
+                </div>
+                <div className="schedule-right">
+                  {isFinal && <span className="schedule-record">{game.record}</span>}
+                </div>
+              </button>
+            </li>
           );
         })}
-      </div>
+      </ul>
     </div>
   );
 }

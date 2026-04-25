@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { useQuery, useQueries } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
@@ -7,6 +7,7 @@ import { formatGameDate, formatGameTime, lastName, formatAvg } from "../../utils
 import { computeEdgeScore, computeFadeScore, scoreBucket } from "../../utils/edgeScoring";
 import PARK_FACTORS from "../../data/parkFactors";
 import SkeletonLoader from "../common/SkeletonLoader";
+import CollapsibleSection from "../common/CollapsibleSection";
 import BatterVsPitcher from "./BatterVsPitcher";
 import PitchArsenal from "../player/PitchArsenal";
 import WinProbability from "./WinProbability";
@@ -107,29 +108,32 @@ export default function MatchupView() {
   const awayBatters = (awayRoster || []).filter((p) => p.position.type !== "Pitcher");
   const homeBatters = (homeRoster || []).filter((p) => p.position.type !== "Pitcher");
 
+  const pageTitle = `${game.away.abbreviation} at ${game.home.abbreviation}${(isLive || isFinal) && game.away.score != null ? `, ${game.away.score} to ${game.home.score}` : ""}`;
+
   return (
     <div className="matchup-view">
+      <h1 className="sr-only">Matchup: {pageTitle}</h1>
       {/* Game preview header spans full width above the 2-col split.
           Left column on desktop wide: lineups, park factors, bet edge,
           hot/cold, park history, prior matchups.
           Right column: pitcher arsenals, batter vs pitcher, injuries, bullpen.
           Mobile: everything stacks naturally (parent is flex column). */}
       <div className="matchup-top-row">
-        {isLive && <div className="matchup-preview-title" style={{ color: "var(--live)" }}>LIVE</div>}
-        {isPreview && <div className="matchup-preview-title">Game Preview</div>}
-        {isFinal && <div className="matchup-preview-title" style={{ color: "var(--text-muted)" }}>Final</div>}
+        {isLive && <h2 className="matchup-preview-title" style={{ color: "var(--live)" }}>LIVE</h2>}
+        {isPreview && <h2 className="matchup-preview-title">Game Preview</h2>}
+        {isFinal && <h2 className="matchup-preview-title" style={{ color: "var(--text-muted)" }}>Final</h2>}
         <GameSwitcher currentGamePk={game?.gamePk} teamId={teamId} />
       </div>
 
       {/* Game header — always away on left, home on right */}
-      <div className={`matchup-header ${isLive ? "sb-player-link" : ""}`} onClick={isLive ? () => navigate(`/team/${teamId}/live/${game.gamePk}`) : undefined}>
+      <div className="matchup-header">
         <button
           type="button"
           className="matchup-team matchup-team-link"
-          onClick={(e) => { e.stopPropagation(); navigate(`/team/${game.away.id}`); }}
+          onClick={() => navigate(`/team/${game.away.id}`)}
           aria-label={`Go to ${game.away.abbreviation} team page`}
         >
-          <img src={game.away.logoUrl} alt={game.away.abbreviation} className="matchup-logo" />
+          <img src={game.away.logoUrl} alt="" className="matchup-logo" />
           <span>{game.away.abbreviation}</span>
           {game.away.wins != null && <span className="matchup-record">{game.away.wins}-{game.away.losses}</span>}
         </button>
@@ -137,15 +141,24 @@ export default function MatchupView() {
           {(isLive || isFinal) && game.away.score != null ? (
             <>
               <div className="matchup-score-row">
-                <span className="matchup-score">{game.away.score}</span>
-                <span className="matchup-vs-small">-</span>
-                <span className="matchup-score">{game.home.score}</span>
+                <span className="matchup-score" aria-label={`${game.away.abbreviation} ${game.away.score}`}>{game.away.score}</span>
+                <span className="matchup-vs-small" aria-hidden="true">-</span>
+                <span className="matchup-score" aria-label={`${game.home.abbreviation} ${game.home.score}`}>{game.home.score}</span>
               </div>
-              {isLive && <span className="matchup-live-hint">Tap for live view</span>}
+              {isLive && (
+                <button
+                  type="button"
+                  className="matchup-live-hint"
+                  onClick={() => navigate(`/team/${teamId}/live/${game.gamePk}`)}
+                  aria-label="Open live game view"
+                >
+                  Tap for live view
+                </button>
+              )}
             </>
           ) : (
             <>
-              <span className="matchup-vs">@</span>
+              <span className="matchup-vs" aria-hidden="true">@</span>
               {isPreview && (
                 <span className="matchup-date">{formatGameDate(game.gameDate)} · {formatGameTime(game.gameDate)}</span>
               )}
@@ -158,10 +171,10 @@ export default function MatchupView() {
         <button
           type="button"
           className="matchup-team matchup-team-link"
-          onClick={(e) => { e.stopPropagation(); navigate(`/team/${game.home.id}`); }}
+          onClick={() => navigate(`/team/${game.home.id}`)}
           aria-label={`Go to ${game.home.abbreviation} team page`}
         >
-          <img src={game.home.logoUrl} alt={game.home.abbreviation} className="matchup-logo" />
+          <img src={game.home.logoUrl} alt="" className="matchup-logo" />
           <span>{game.home.abbreviation}</span>
           {game.home.wins != null && <span className="matchup-record">{game.home.wins}-{game.home.losses}</span>}
         </button>
@@ -230,7 +243,7 @@ export default function MatchupView() {
 
       {/* Side-by-side pitcher arsenals */}
       {(game.away.probablePitcher || game.home.probablePitcher) && (
-        <CollapsibleSection title="Pitcher Arsenals">
+        <CollapsibleSection title="Pitcher Arsenals" className="matchup-section">
           <div className="matchup-dual-cols">
             <div className="matchup-dual-col">
               {game.away.probablePitcher ? (
@@ -254,7 +267,7 @@ export default function MatchupView() {
 
       {/* Side-by-side BvP */}
       {(game.away.probablePitcher || game.home.probablePitcher) && (awayBatters.length > 0 || homeBatters.length > 0) && (
-        <CollapsibleSection title="Batter vs Pitcher">
+        <CollapsibleSection title="Batter vs Pitcher" className="matchup-section">
           <div className="matchup-dual-cols">
             <div className="matchup-dual-col">
               {game.home.probablePitcher && awayBatters.length > 0 ? (
@@ -349,23 +362,35 @@ function MatchupLineups({ gamePk, awayId, homeId, awayAbbr, homeAbbr, contextTea
         <div className="matchup-lineups-col">
           <div className="matchup-lineups-col-hdr">{awayAbbr}</div>
           {(awayLineup || []).map((p) => (
-            <div key={p.id} className="matchup-lineup-row sb-player-link" onClick={() => navigate(`/team/${contextTeamId}/player/${p.id}`)}>
+            <button
+              key={p.id}
+              type="button"
+              className="matchup-lineup-row sb-player-link"
+              onClick={() => navigate(`/team/${contextTeamId}/player/${p.id}`)}
+              aria-label={`View ${p.fullName}, batting ${p.order}, position ${p.position}, average ${p.avg}`}
+            >
               <span className="ml-order">{p.order}</span>
               <span className="ml-name">{lastName(p.fullName)}</span>
               <span className="ml-pos">{p.position}</span>
               <span className="ml-avg">{p.avg}</span>
-            </div>
+            </button>
           ))}
         </div>
         <div className="matchup-lineups-col">
           <div className="matchup-lineups-col-hdr">{homeAbbr}</div>
           {(homeLineup || []).map((p) => (
-            <div key={p.id} className="matchup-lineup-row sb-player-link" onClick={() => navigate(`/team/${contextTeamId}/player/${p.id}`)}>
+            <button
+              key={p.id}
+              type="button"
+              className="matchup-lineup-row sb-player-link"
+              onClick={() => navigate(`/team/${contextTeamId}/player/${p.id}`)}
+              aria-label={`View ${p.fullName}, batting ${p.order}, position ${p.position}, average ${p.avg}`}
+            >
               <span className="ml-order">{p.order}</span>
               <span className="ml-name">{lastName(p.fullName)}</span>
               <span className="ml-pos">{p.position}</span>
               <span className="ml-avg">{p.avg}</span>
-            </div>
+            </button>
           ))}
         </div>
       </div>
@@ -513,12 +538,14 @@ function MatchupEdgeSection({
   if (nothing) return null;
 
   const renderRow = (row) => (
-    <div
+    <button
       key={row.key}
+      type="button"
       className="matchup-edge-row sb-player-link"
       onClick={() =>
         navigate(`/team/${contextTeamId || row.teamId}/player/${row.batter.id}`)
       }
+      aria-label={`${row.batter.fullName || "Player"}: ${row.confidence.label} ${row.kind === "fade" ? "fade" : "pick"}, score ${row.score.toFixed(2)}. View player page.`}
     >
       <span className="matchup-edge-name">
         {lastName(row.batter.fullName) || row.batter.fullName || "—"}
@@ -529,12 +556,12 @@ function MatchupEdgeSection({
         {row.confidence.label}
       </span>
       <span className="matchup-edge-score">{row.score.toFixed(2)}</span>
-    </div>
+    </button>
   );
 
   const renderTeamCol = (abbr, picks, fades) => (
     <div className="matchup-edge-col">
-      <div className="matchup-edge-team-hdr">{abbr}</div>
+      <h4 className="matchup-edge-team-hdr">{abbr}</h4>
       <div className="matchup-edge-group">
         <div className="matchup-edge-group-title pick">
           <span className="matchup-edge-arrow" aria-hidden="true">▲</span> Bet on
@@ -559,7 +586,7 @@ function MatchupEdgeSection({
   );
 
   return (
-    <CollapsibleSection title="Bet Edge" defaultOpen={false}>
+    <CollapsibleSection title="Bet Edge" defaultOpen={false} className="matchup-section">
       <div className="matchup-edge-grid">
         {renderTeamCol(awayAbbr, awayPicks, awayFades)}
         {renderTeamCol(homeAbbr, homePicks, homeFades)}
@@ -599,15 +626,21 @@ function HotColdSection({ awayId, homeId, awayAbbr, homeAbbr }) {
     if (!data?.hot?.length && !data?.cold?.length) return null;
     return (
       <div className="hotcold-team-col">
-        <div className="hotcold-team-hdr">{abbr}</div>
+        <h4 className="hotcold-team-hdr">{abbr}</h4>
         {data.hot?.length > 0 && (
           <div className="hotcold-group">
             <div className="hotcold-group-title hot">Hot</div>
             {data.hot.map((p) => (
-              <div key={p.id} className="hotcold-row sb-player-link" onClick={() => navigate(`/team/${contextTeamId}/player/${p.id}`)}>
+              <button
+                key={p.id}
+                type="button"
+                className="hotcold-row sb-player-link"
+                onClick={() => navigate(`/team/${contextTeamId}/player/${p.id}`)}
+                aria-label={`Hot: ${p.fullName || "Player"}, average ${formatAvg(p.avg)}. View player page.`}
+              >
                 <span className="hotcold-name">{lastName(p.fullName) || p.fullName || "—"}</span>
                 <span className="hotcold-stat">{formatAvg(p.avg)}</span>
-              </div>
+              </button>
             ))}
           </div>
         )}
@@ -615,10 +648,16 @@ function HotColdSection({ awayId, homeId, awayAbbr, homeAbbr }) {
           <div className="hotcold-group">
             <div className="hotcold-group-title cold">Cold</div>
             {data.cold.map((p) => (
-              <div key={p.id} className="hotcold-row sb-player-link" onClick={() => navigate(`/team/${contextTeamId}/player/${p.id}`)}>
+              <button
+                key={p.id}
+                type="button"
+                className="hotcold-row sb-player-link"
+                onClick={() => navigate(`/team/${contextTeamId}/player/${p.id}`)}
+                aria-label={`Cold: ${p.fullName || "Player"}, average ${formatAvg(p.avg)}. View player page.`}
+              >
                 <span className="hotcold-name">{lastName(p.fullName) || p.fullName || "—"}</span>
                 <span className="hotcold-stat">{formatAvg(p.avg)}</span>
-              </div>
+              </button>
             ))}
           </div>
         )}
@@ -627,7 +666,7 @@ function HotColdSection({ awayId, homeId, awayAbbr, homeAbbr }) {
   };
 
   return (
-    <CollapsibleSection title="Hot & Cold (Last 7 Games)">
+    <CollapsibleSection title="Hot & Cold (Last 7 Games)" className="matchup-section">
       <div className="hotcold-side-by-side">
         {renderTeamCol(awayData, awayAbbr)}
         {renderTeamCol(homeData, homeAbbr)}
@@ -656,28 +695,36 @@ function BullpenSection({ awayId, homeId, awayAbbr, homeAbbr, awayStarterId, hom
 
   if (!awayBullpen?.length && !homeBullpen?.length) return null;
 
+  const statusLabel = (s) => s === "available" ? "Available" : s === "limited" ? "Limited" : s === "unavailable" ? "Unavailable" : s;
+
   const renderBullpen = (pitchers, abbr) => {
     if (!pitchers?.length) return null;
     return (
       <div className="bullpen-team matchup-dual-col">
-        <div className="bullpen-team-hdr">{abbr}</div>
+        <h4 className="bullpen-team-hdr">{abbr}</h4>
         {pitchers.map((p) => (
-          <div key={p.id} className="bullpen-row sb-player-link" onClick={() => navigate(`/team/${contextTeamId}/player/${p.id}`)}>
-            <span className={`bullpen-status-dot ${p.status}`} />
+          <button
+            key={p.id}
+            type="button"
+            className="bullpen-row sb-player-link"
+            onClick={() => navigate(`/team/${contextTeamId}/player/${p.id}`)}
+            aria-label={`${p.fullName}, ${statusLabel(p.status)}, ${p.daysRest < 99 ? `${p.daysRest} days rest` : "rest unknown"}. View player page.`}
+          >
+            <span className={`bullpen-status-dot ${p.status}`} aria-hidden="true" />
             <span className="bullpen-name">{lastName(p.fullName)}</span>
             <span className="bullpen-rest">{p.daysRest < 99 ? `${p.daysRest}d rest` : "—"}</span>
-          </div>
+          </button>
         ))}
       </div>
     );
   };
 
   return (
-    <CollapsibleSection title="Bullpen Availability">
-      <div className="bullpen-legend">
-        <span><span className="bullpen-status-dot available" /> Available</span>
-        <span><span className="bullpen-status-dot limited" /> Limited</span>
-        <span><span className="bullpen-status-dot unavailable" /> Unavailable</span>
+    <CollapsibleSection title="Bullpen Availability" className="matchup-section">
+      <div className="bullpen-legend" role="list" aria-label="Status legend">
+        <span role="listitem"><span className="bullpen-status-dot available" aria-hidden="true" /> Available</span>
+        <span role="listitem"><span className="bullpen-status-dot limited" aria-hidden="true" /> Limited</span>
+        <span role="listitem"><span className="bullpen-status-dot unavailable" aria-hidden="true" /> Unavailable</span>
       </div>
       <div className="matchup-dual-cols">
         {renderBullpen(awayBullpen, awayAbbr)}
@@ -690,6 +737,8 @@ function BullpenSection({ awayId, homeId, awayAbbr, homeAbbr, awayStarterId, hom
 function GameSwitcher({ currentGamePk, teamId }) {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const containerRef = useRef(null);
+  const btnRef = useRef(null);
 
   const today = new Date();
   const dateStr = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,"0")}-${String(today.getDate()).padStart(2,"0")}`;
@@ -700,23 +749,55 @@ function GameSwitcher({ currentGamePk, teamId }) {
     staleTime: 1000 * 60 * 5,
   });
 
+  useEffect(() => {
+    if (!open) return;
+    const onDocClick = (e) => {
+      if (containerRef.current && !containerRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+    const onKey = (e) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+        btnRef.current?.focus();
+      }
+    };
+    document.addEventListener("mousedown", onDocClick);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDocClick);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
   if (!games?.length || games.length <= 1) return null;
 
   return (
-    <div className="game-switcher">
-      <button className="game-switcher-btn" onClick={() => setOpen(!open)}>
+    <div className="game-switcher" ref={containerRef}>
+      <button
+        type="button"
+        ref={btnRef}
+        className="game-switcher-btn"
+        onClick={() => setOpen(!open)}
+        aria-expanded={open}
+        aria-haspopup="menu"
+        aria-label="Switch game"
+      >
         All Games
-        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: open ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
+        <svg aria-hidden="true" focusable="false" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: open ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
           <polyline points="6 9 12 15 18 9" />
         </svg>
       </button>
       {open && (
-        <div className="game-switcher-dropdown">
+        <div className="game-switcher-dropdown" role="menu" aria-label="Today's games">
           {games.map((g) => (
             <button
               key={g.gamePk}
+              type="button"
+              role="menuitem"
               className={`game-switcher-item ${g.gamePk === currentGamePk ? "active" : ""}`}
               onClick={() => { setOpen(false); navigate(`/team/${teamId}/matchup/${g.gamePk}`); }}
+              aria-current={g.gamePk === currentGamePk ? "page" : undefined}
             >
               <span className="gs-teams">{g.away.abbreviation} @ {g.home.abbreviation}</span>
               <span className="gs-status">
@@ -850,20 +931,26 @@ function InjurySection({ awayId, homeId, awayAbbr, homeAbbr }) {
     if (!injuries?.length) return null;
     return (
       <div className="injury-team">
-        <div className="injury-team-hdr">{abbr}</div>
+        <h4 className="injury-team-hdr">{abbr}</h4>
         {injuries.map((p) => (
-          <div key={p.id} className="injury-row sb-player-link" onClick={() => navigate(`/team/${contextTeamId}/player/${p.id}`)}>
+          <button
+            key={p.id}
+            type="button"
+            className="injury-row sb-player-link"
+            onClick={() => navigate(`/team/${contextTeamId}/player/${p.id}`)}
+            aria-label={`${p.fullName}, ${p.position}, ${p.ilType}. View player page.`}
+          >
             <span className="injury-name">{p.fullName}</span>
             <span className="injury-pos">{p.position}</span>
             <span className="injury-il">{p.ilType.replace("Injured ", "IL-")}</span>
-          </div>
+          </button>
         ))}
       </div>
     );
   };
 
   return (
-    <CollapsibleSection title="Key Injuries">
+    <CollapsibleSection title="Key Injuries" className="matchup-section">
       <div className="injury-cols">
         {renderTeam(awayInjuries, awayAbbr)}
         {renderTeam(homeInjuries, homeAbbr)}
@@ -872,17 +959,3 @@ function InjurySection({ awayId, homeId, awayAbbr, homeAbbr }) {
   );
 }
 
-function CollapsibleSection({ title, children, defaultOpen = true }) {
-  const [open, setOpen] = useState(defaultOpen);
-  return (
-    <div className="matchup-section collapsible-section">
-      <div className="collapsible-header" onClick={() => setOpen(!open)}>
-        <h3>{title}</h3>
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: open ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
-          <polyline points="6 9 12 15 18 9" />
-        </svg>
-      </div>
-      {open && children}
-    </div>
-  );
-}

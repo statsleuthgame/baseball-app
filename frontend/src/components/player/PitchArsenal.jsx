@@ -81,15 +81,16 @@ export default function PitchArsenal({ playerId, embedded, compact }) {
 
       <div className="arsenal-table-wrap">
         <table className="arsenal-table">
+          <caption className="sr-only">Pitch arsenal by pitch type</caption>
           <thead>
             <tr>
-              <th>Pitch</th>
-              <th>Use%</th>
-              <th>Velo</th>
-              <th>Spin</th>
-              <th>Whiff%</th>
-              <th>PutAway%</th>
-              <th>BA</th>
+              <th scope="col">Pitch</th>
+              <th scope="col"><abbr title="Usage percentage">Use%</abbr></th>
+              <th scope="col"><abbr title="Average velocity">Velo</abbr></th>
+              <th scope="col"><abbr title="Average spin rate">Spin</abbr></th>
+              <th scope="col"><abbr title="Whiff rate">Whiff%</abbr></th>
+              <th scope="col"><abbr title="Putaway rate">PutAway%</abbr></th>
+              <th scope="col"><abbr title="Batting average against">BA</abbr></th>
             </tr>
           </thead>
           <tbody>
@@ -156,16 +157,16 @@ function PitchMovementChart({ pitches }) {
           {/* Axis labels */}
           {gridTicks.filter((t) => t % 10 === 0).map((t) => (
             <g key={`label-${t}`}>
-              <text x={xScale(t)} y={MV_H + 14} fill="#9299ad" fontSize="8" textAnchor="middle">{t}"</text>
-              <text x={-8} y={yScale(t) + 3} fill="#9299ad" fontSize="8" textAnchor="end">{t}"</text>
+              <text x={xScale(t)} y={MV_H + 14} fill="#c6ccde" fontSize="8" textAnchor="middle">{t}"</text>
+              <text x={-8} y={yScale(t) + 3} fill="#c6ccde" fontSize="8" textAnchor="end">{t}"</text>
             </g>
           ))}
 
           {/* Axis titles */}
-          <text x={MV_W / 2} y={-12} fill="#9299ad" fontSize="9" textAnchor="middle" fontWeight="500">More Rise</text>
-          <text x={MV_W / 2} y={MV_H + 26} fill="#9299ad" fontSize="9" textAnchor="middle" fontWeight="500">More Drop</text>
-          <text x={MV_W + 10} y={MV_H / 2 + 3} fill="#9299ad" fontSize="8" textAnchor="start">Arm</text>
-          <text x={-12} y={MV_H / 2 + 3} fill="#9299ad" fontSize="8" textAnchor="end">Glove</text>
+          <text x={MV_W / 2} y={-12} fill="#c6ccde" fontSize="9" textAnchor="middle" fontWeight="500">More Rise</text>
+          <text x={MV_W / 2} y={MV_H + 26} fill="#c6ccde" fontSize="9" textAnchor="middle" fontWeight="500">More Drop</text>
+          <text x={MV_W + 10} y={MV_H / 2 + 3} fill="#c6ccde" fontSize="8" textAnchor="start">Arm</text>
+          <text x={-12} y={MV_H / 2 + 3} fill="#c6ccde" fontSize="8" textAnchor="end">Glove</text>
 
           {/* Pitch dots with size proportional to usage */}
           {movementPitches.map((p) => {
@@ -188,7 +189,7 @@ function PitchMovementChart({ pitches }) {
                   <g>
                     <rect x={cx - 45} y={cy - r - 38} width="90" height="30" rx="4" fill="#1a2236" stroke="#2e3a4e" strokeWidth="0.5" />
                     <text x={cx} y={cy - r - 24} fill="#fff" fontSize="8" textAnchor="middle" fontWeight="600">{p.pitchName}</text>
-                    <text x={cx} y={cy - r - 14} fill="#9299ad" fontSize="7" textAnchor="middle">
+                    <text x={cx} y={cy - r - 14} fill="#c6ccde" fontSize="7" textAnchor="middle">
                       {p.avgVelo}mph · {p.horzBreak}"{p.vertBreak >= 0 ? " rise" : " drop"}
                     </text>
                   </g>

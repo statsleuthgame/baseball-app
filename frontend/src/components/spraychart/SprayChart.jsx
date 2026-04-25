@@ -132,15 +132,16 @@ export default function SprayChart() {
 
   return (
     <div className="spray-chart-page">
-      <h2 className="spray-page-title">Spray Chart</h2>
+      <h1 className="spray-page-title">Spray Chart</h1>
 
       <div className="spray-controls">
         <div className="spray-control-row">
+          <label className="sr-only" htmlFor="spray-team">Select team</label>
           <select
+            id="spray-team"
             className="spray-select-sm"
             value={selectedTeamId}
             onChange={(e) => handleTeamChange(e.target.value)}
-            aria-label="Select team"
           >
             {teamList.map((t) => (
               <option key={t.id} value={t.id}>{t.name}</option>
@@ -148,13 +149,14 @@ export default function SprayChart() {
           </select>
         </div>
 
+        <label className="sr-only" htmlFor="spray-player">Select player</label>
         <select
+          id="spray-player"
           className="spray-select"
           value={selectedPlayer}
           onChange={(e) => { setSelectedPlayer(e.target.value); setSelectedHit(null); }}
-          aria-label="Select player"
         >
-          <option value="">Select a player...</option>
+          <option value="" disabled>Select a player…</option>
           {positionPlayers.map((p) => (
             <option key={p.id} value={p.id}>
               {p.fullName} ({p.position.abbreviation})
@@ -163,11 +165,12 @@ export default function SprayChart() {
         </select>
 
         <div className="spray-control-row">
+          <label className="sr-only" htmlFor="spray-park">Select ballpark</label>
           <select
+            id="spray-park"
             className="spray-select-sm"
             value={selectedPark}
             onChange={(e) => setSelectedPark(e.target.value)}
-            aria-label="Select ballpark"
           >
             {(venues || [])
               .slice()
@@ -179,11 +182,12 @@ export default function SprayChart() {
             ))}
           </select>
 
+          <label className="sr-only" htmlFor="spray-season">Select season</label>
           <select
+            id="spray-season"
             className="spray-select-sm"
             value={season}
             onChange={(e) => setSeason(e.target.value)}
-            aria-label="Select season"
           >
             <option value="">All Years</option>
             {seasons.map((y) => (
@@ -247,6 +251,39 @@ export default function SprayChart() {
 
           {filteredData.hits.length === 0 && (
             <p className="spray-empty">No batted ball data found for these filters.</p>
+          )}
+
+          {filteredData.hits.length > 0 && (
+            <details className="spray-data-table">
+              <summary>Data table ({filteredData.hits.length} rows)</summary>
+              <div className="spray-data-table-scroll">
+                <table>
+                  <caption className="sr-only">All batted balls in this view</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Date</th>
+                      <th scope="col">Result</th>
+                      <th scope="col">Exit velo</th>
+                      <th scope="col">Launch°</th>
+                      <th scope="col">Distance</th>
+                      <th scope="col">Pitcher</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredData.hits.map((h, i) => (
+                      <tr key={i}>
+                        <td>{h.date?.split(" ")[0] || "—"}</td>
+                        <td>{RESULT_LABELS[h.result] || h.event}</td>
+                        <td>{h.exitVelo ? `${h.exitVelo}` : "—"}</td>
+                        <td>{h.launchAngle != null ? `${h.launchAngle}` : "—"}</td>
+                        <td>{h.hitDistance ? `${h.hitDistance}` : "—"}</td>
+                        <td>{h.pitcherName || "—"}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </details>
           )}
 
           <SpraySidebar summary={filteredData.summary} />
