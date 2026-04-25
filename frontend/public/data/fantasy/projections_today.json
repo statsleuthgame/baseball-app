@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 14,
-  "projection_count": 279,
+  "projection_count": 275,
   "projections": [
     {
       "player_id": 808959,
@@ -612,6 +612,82 @@
         "bb_hbp": 0.2456,
         "r_per_pa": 0.3645,
         "rbi_per_pa": 0.1855
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 545361,
+      "name": "Mike Trout",
+      "position": "RF",
+      "team_id": 108,
+      "team_abbr": "LAA",
+      "opp_abbr": "KC",
+      "opp_team_id": 118,
+      "opp_pitcher": {
+        "id": 666142,
+        "fullName": "Cole Ragans"
+      },
+      "park": {
+        "id": 7,
+        "name": "Kauffman Stadium",
+        "runs": 101,
+        "hr": 99,
+        "label": "Neutral"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "74",
+        "wind": "9 mph, In From RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.39,
+      "mean_efp": 10.4,
+      "stats_games": 5,
+      "efp": 10.35,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.21,
+        "doubles": 0.75,
+        "triples": 0.06,
+        "home_runs": 2.62,
+        "bb_hbp": 2.11,
+        "r": 2.9,
+        "rbi": 1.38,
+        "sb": 0.79
+      },
+      "multipliers": {
+        "park_hr": 0.99,
+        "park_runs": 1.01,
+        "weather_hr": 0.95,
+        "pitcher_hits": 0.896,
+        "pitcher_hr": 1.328,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.089,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.982,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.0937,
+        "doubles": 0.0347,
+        "triples": 0.0016,
+        "home_runs": 0.061,
+        "bb_hbp": 0.2451,
+        "r_per_pa": 0.337,
+        "rbi_per_pa": 0.1609
       },
       "pa": 4.3,
       "tier": "low"
@@ -1297,82 +1373,6 @@
       "tier": "low"
     },
     {
-      "player_id": 545361,
-      "name": "Mike Trout",
-      "position": "RF",
-      "team_id": 108,
-      "team_abbr": "LAA",
-      "opp_abbr": "KC",
-      "opp_team_id": 118,
-      "opp_pitcher": {
-        "id": 666142,
-        "fullName": "Cole Ragans"
-      },
-      "park": {
-        "id": 7,
-        "name": "Kauffman Stadium",
-        "runs": 101,
-        "hr": 99,
-        "label": "Neutral"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "74",
-        "wind": "9 mph, In From RF"
-      },
-      "pa_source": "default",
-      "stdev_efp": 7.39,
-      "mean_efp": 10.4,
-      "stats_games": 5,
-      "efp": 9.65,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.12,
-        "doubles": 0.69,
-        "triples": 0.05,
-        "home_runs": 2.44,
-        "bb_hbp": 1.96,
-        "r": 2.74,
-        "rbi": 1.29,
-        "sb": 0.72
-      },
-      "multipliers": {
-        "park_hr": 0.99,
-        "park_runs": 1.01,
-        "weather_hr": 0.95,
-        "pitcher_hits": 0.896,
-        "pitcher_hr": 1.328,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.089,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.0937,
-        "doubles": 0.0347,
-        "triples": 0.0016,
-        "home_runs": 0.061,
-        "bb_hbp": 0.2451,
-        "r_per_pa": 0.343,
-        "rbi_per_pa": 0.1609
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 678246,
       "name": "Miguel Vargas",
       "position": "3B",
@@ -1444,6 +1444,82 @@
         "bb_hbp": 0.1536,
         "r_per_pa": 0.3221,
         "rbi_per_pa": 0.1649
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 687263,
+      "name": "Zach Neto",
+      "position": "SS",
+      "team_id": 108,
+      "team_abbr": "LAA",
+      "opp_abbr": "KC",
+      "opp_team_id": 118,
+      "opp_pitcher": {
+        "id": 666142,
+        "fullName": "Cole Ragans"
+      },
+      "park": {
+        "id": 7,
+        "name": "Kauffman Stadium",
+        "runs": 101,
+        "hr": 99,
+        "label": "Neutral"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "74",
+        "wind": "9 mph, In From RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.73,
+      "mean_efp": 8.0,
+      "stats_games": 5,
+      "efp": 9.58,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.56,
+        "doubles": 0.89,
+        "triples": 0.04,
+        "home_runs": 1.7,
+        "bb_hbp": 1.59,
+        "r": 3.01,
+        "rbi": 1.22,
+        "sb": 0.91
+      },
+      "multipliers": {
+        "park_hr": 0.99,
+        "park_runs": 1.01,
+        "weather_hr": 0.95,
+        "pitcher_hits": 0.896,
+        "pitcher_hr": 1.328,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.089,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1208,
+        "doubles": 0.0416,
+        "triples": 0.0013,
+        "home_runs": 0.0396,
+        "bb_hbp": 0.185,
+        "r_per_pa": 0.3497,
+        "rbi_per_pa": 0.1417
       },
       "pa": 4.3,
       "tier": "low"
@@ -1624,7 +1700,7 @@
         "temp": "74",
         "wind": "9 mph, In From RF"
       },
-      "pa_source": "default",
+      "pa_source": "lineup",
       "stdev_efp": 9.56,
       "mean_efp": 6.93,
       "stats_games": 14,
@@ -1636,9 +1712,9 @@
         "triples": 0.05,
         "home_runs": 2.8,
         "bb_hbp": 0.88,
-        "r": 2.53,
+        "r": 2.55,
         "rbi": 1.35,
-        "sb": 0.51
+        "sb": 0.49
       },
       "multipliers": {
         "park_hr": 0.99,
@@ -1661,7 +1737,7 @@
         "speed_singles": 1.0,
         "speed_r": 1.0,
         "bvpt": 1.0,
-        "ondeck_r": 1.0,
+        "ondeck_r": 1.007,
         "preceding_rbi": 1.0
       },
       "rates": {
@@ -1670,7 +1746,7 @@
         "triples": 0.0015,
         "home_runs": 0.0699,
         "bb_hbp": 0.1106,
-        "r_per_pa": 0.3165,
+        "r_per_pa": 0.3187,
         "rbi_per_pa": 0.1689
       },
       "pa": 4.0,
@@ -1704,13 +1780,13 @@
       "stdev_efp": 9.97,
       "mean_efp": 9.0,
       "stats_games": 13,
-      "efp": 9.47,
+      "efp": 9.46,
       "bat_side": "S",
       "per_event": {
-        "singles": 1.62,
+        "singles": 1.63,
         "doubles": 0.88,
         "triples": 0.05,
-        "home_runs": 2.74,
+        "home_runs": 2.7,
         "bb_hbp": 0.47,
         "r": 2.76,
         "rbi": 1.59,
@@ -1720,8 +1796,8 @@
         "park_hr": 1.09,
         "park_runs": 1.04,
         "weather_hr": 1.0,
-        "pitcher_hits": 0.88,
-        "pitcher_hr": 0.831,
+        "pitcher_hits": 0.887,
+        "pitcher_hr": 0.821,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -1741,10 +1817,10 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1252,
-        "doubles": 0.0408,
+        "singles": 0.1262,
+        "doubles": 0.0411,
         "triples": 0.0015,
-        "home_runs": 0.0636,
+        "home_runs": 0.0629,
         "bb_hbp": 0.0542,
         "r_per_pa": 0.3207,
         "rbi_per_pa": 0.1845
@@ -1780,13 +1856,13 @@
       "stdev_efp": 8.65,
       "mean_efp": 13.0,
       "stats_games": 5,
-      "efp": 9.45,
+      "efp": 9.44,
       "bat_side": "S",
       "per_event": {
-        "singles": 1.38,
-        "doubles": 0.85,
-        "triples": 0.04,
-        "home_runs": 1.69,
+        "singles": 1.39,
+        "doubles": 0.86,
+        "triples": 0.05,
+        "home_runs": 1.67,
         "bb_hbp": 0.96,
         "r": 2.57,
         "rbi": 1.43,
@@ -1796,8 +1872,8 @@
         "park_hr": 1.09,
         "park_runs": 1.04,
         "weather_hr": 1.0,
-        "pitcher_hits": 0.88,
-        "pitcher_hr": 0.831,
+        "pitcher_hits": 0.887,
+        "pitcher_hr": 0.821,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -1817,10 +1893,10 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1069,
-        "doubles": 0.0397,
+        "singles": 0.1077,
+        "doubles": 0.04,
         "triples": 0.0013,
-        "home_runs": 0.0393,
+        "home_runs": 0.0388,
         "bb_hbp": 0.1122,
         "r_per_pa": 0.2985,
         "rbi_per_pa": 0.1659
@@ -2203,84 +2279,8 @@
       },
       "pa": 4.0,
       "tier": "low"
-    },
-    {
-      "player_id": 668885,
-      "name": "Austin Martin",
-      "position": "CF",
-      "team_id": 142,
-      "team_abbr": "MIN",
-      "opp_abbr": "TB",
-      "opp_team_id": 139,
-      "opp_pitcher": {
-        "id": 663556,
-        "fullName": "Shane McClanahan"
-      },
-      "park": {
-        "id": 12,
-        "name": "Tropicana Field",
-        "runs": 96,
-        "hr": 98,
-        "label": "Pitcher Friendly"
-      },
-      "weather": {
-        "condition": "Dome",
-        "temp": "72",
-        "wind": "0 mph, None"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 5.47,
-      "mean_efp": 7.08,
-      "stats_games": 13,
-      "efp": 9.28,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.74,
-        "doubles": 0.95,
-        "triples": 0.05,
-        "home_runs": 0.68,
-        "bb_hbp": 2.05,
-        "r": 3.43,
-        "rbi": 1.41,
-        "sb": 0.29
-      },
-      "multipliers": {
-        "park_hr": 0.98,
-        "park_runs": 0.96,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.829,
-        "pitcher_hr": 0.745,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.021,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.073,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1347,
-        "doubles": 0.044,
-        "triples": 0.0014,
-        "home_runs": 0.0159,
-        "bb_hbp": 0.2381,
-        "r_per_pa": 0.3989,
-        "rbi_per_pa": 0.1637
-      },
-      "pa": 4.3,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-04-25T19:25:59.765242+00:00"
+  "generated_at": "2026-04-25T19:39:13.587929+00:00"
 }
