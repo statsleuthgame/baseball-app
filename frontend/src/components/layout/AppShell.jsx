@@ -71,6 +71,24 @@ export default function AppShell() {
     });
   }, [location.pathname]);
 
+  // Forward wheel events that hit the empty "dead zones" beside the centered
+  // <main> column into <main>'s scroll. Without this, wheel/trackpad scroll
+  // does nothing when the cursor sits outside the 600/800/1400px column on
+  // wide desktop viewports because nothing under the cursor is scrollable.
+  useEffect(() => {
+    const onWheel = (e) => {
+      const el = contentRef.current;
+      if (!el) return;
+      // Skip when the wheel target is already inside <main> — the browser
+      // handles those natively.
+      if (el.contains(e.target)) return;
+      el.scrollTop += e.deltaY;
+      el.scrollLeft += e.deltaX;
+    };
+    window.addEventListener("wheel", onWheel, { passive: true });
+    return () => window.removeEventListener("wheel", onWheel);
+  }, []);
+
   const handleTouchStart = useCallback((e) => {
     const el = contentRef.current;
     if (el && el.scrollTop <= 0) {
