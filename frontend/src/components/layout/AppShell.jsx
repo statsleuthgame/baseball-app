@@ -55,25 +55,25 @@ export default function AppShell() {
   const WIDE_ROUTES = new Set(["", "live", "scores", "matchup", "roster", "player"]);
   const isWideRoute = WIDE_ROUTES.has(firstSegment);
 
+  // Scroll-restore: save the document scroll position when leaving a route
+  // and restore it when returning. The window/document is the scroll
+  // container now (not <main>), so read/write window.scrollY.
   useEffect(() => {
-    const el = contentRef.current;
-    if (!el) return;
-
     if (prevPath.current !== location.pathname) {
-      scrollPositions[prevPath.current] = el.scrollTop;
-      el.focus({ preventScroll: true });
+      scrollPositions[prevPath.current] = window.scrollY;
+      const el = contentRef.current;
+      if (el) el.focus({ preventScroll: true });
     }
     prevPath.current = location.pathname;
 
-    const saved = scrollPositions[location.pathname];
+    const saved = scrollPositions[location.pathname] || 0;
     requestAnimationFrame(() => {
-      if (el) el.scrollTop = saved || 0;
+      window.scrollTo(0, saved);
     });
   }, [location.pathname]);
 
   const handleTouchStart = useCallback((e) => {
-    const el = contentRef.current;
-    if (el && el.scrollTop <= 0) {
+    if (window.scrollY <= 0) {
       touchStart.current = e.touches[0].clientY;
     } else {
       touchStart.current = null;
@@ -102,8 +102,10 @@ export default function AppShell() {
   return (
     <div className="app-shell">
       <a className="skip-link" href="#main-content">Skip to main content</a>
-      <TopBar />
-      <TopTabs />
+      <div className="app-header-sticky">
+        <TopBar />
+        <TopTabs />
+      </div>
       {pullState.distance > 0 && (
         <div className="pull-indicator" style={{ height: pullState.distance }} aria-hidden="true">
           <div className={`pull-spinner ${pullState.refreshing ? "spinning" : ""}`}>
