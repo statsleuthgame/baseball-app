@@ -113,7 +113,14 @@ export default function LiveGamePage() {
       return innB - innA;
     });
 
-  const [boxOpen, setBoxOpen] = useState(false);
+  // Default the box score open on desktop, collapsed on mobile. Lazy-init so
+  // it picks up the viewport width on first render (the AppShell remounts
+  // LiveGamePage on each gamePk change via ErrorBoundary's key, so this fires
+  // every time the user navigates to a different game).
+  const [boxOpen, setBoxOpen] = useState(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return false;
+    return !window.matchMedia("(max-width: 640px)").matches;
+  });
   const [replayData, setReplayData] = useState(null); // scoring play hit data for replay
   const [replayKey, setReplayKey] = useState(0);
   // Fetch box data when the user opens the toggle, OR when the wide-desktop
