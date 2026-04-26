@@ -1,170 +1,170 @@
 {
-  "game_date": "2026-04-24",
-  "generated_at": "2026-04-24T18:58:16.168924+00:00",
+  "game_date": "2026-04-26",
+  "generated_at": "2026-04-26T17:13:03.118859+00:00",
   "weights_version": "2026-04-18",
   "source_pick_count": 10,
   "parlays": [
     {
       "size": 2,
       "payout": 3.0,
-      "combined_prob": 0.7032,
-      "ev_pct": 111.0,
+      "combined_prob": 0.6388,
+      "ev_pct": 91.6,
       "legs": [
         {
-          "player_id": 671976,
-          "name": "Tristan Peters",
-          "team_abbr": "CWS",
-          "opp_abbr": "WSH",
-          "opp_pitcher": "Miles Mikolas",
+          "player_id": 690993,
+          "name": "Colt Keith",
+          "team_abbr": "DET",
+          "opp_abbr": "CIN",
+          "opp_pitcher": "Rhett Lowder",
           "line": 5.5,
           "side": "over",
-          "efp": 8.4,
-          "edge_z": 1.133,
-          "hit_prob": 0.871
+          "efp": 8.23,
+          "edge_z": 0.925,
+          "hit_prob": 0.823
         },
         {
-          "player_id": 665750,
-          "name": "Leody Taveras",
-          "team_abbr": "BAL",
-          "opp_abbr": "BOS",
-          "opp_pitcher": "Brayan Bello",
+          "player_id": 657041,
+          "name": "Lane Thomas",
+          "team_abbr": "KC",
+          "opp_abbr": "LAA",
+          "opp_pitcher": "Reid Detmers",
           "line": 5.0,
           "side": "over",
-          "efp": 8.9,
-          "edge_z": 0.867,
-          "hit_prob": 0.807
+          "efp": 7.84,
+          "edge_z": 0.761,
+          "hit_prob": 0.777
         }
       ]
     },
     {
       "size": 2,
       "payout": 3.0,
-      "combined_prob": 0.5845,
-      "ev_pct": 75.3,
+      "combined_prob": 0.5581,
+      "ev_pct": 67.4,
       "legs": [
         {
-          "player_id": 678246,
-          "name": "Miguel Vargas",
-          "team_abbr": "CWS",
-          "opp_abbr": "WSH",
-          "opp_pitcher": "Miles Mikolas",
+          "player_id": 670770,
+          "name": "TJ Friedl",
+          "team_abbr": "CIN",
+          "opp_abbr": "DET",
+          "opp_pitcher": "Keider Montero",
           "line": 5.0,
           "side": "over",
-          "efp": 9.96,
-          "edge_z": 0.816,
-          "hit_prob": 0.793
+          "efp": 7.91,
+          "edge_z": 0.768,
+          "hit_prob": 0.779
         },
         {
-          "player_id": 805808,
-          "name": "Kevin McGonigle",
-          "team_abbr": "DET",
-          "opp_abbr": "CIN",
-          "opp_pitcher": "Andrew Abbott",
+          "player_id": 641584,
+          "name": "Jake Fraley",
+          "team_abbr": "TB",
+          "opp_abbr": "MIN",
+          "opp_pitcher": "Simeon Woods Richardson",
           "line": 5.5,
           "side": "over",
-          "efp": 9.12,
-          "edge_z": 0.635,
-          "hit_prob": 0.737
+          "efp": 8.45,
+          "edge_z": 0.573,
+          "hit_prob": 0.717
         }
       ]
     },
     {
       "size": 3,
       "payout": 5.0,
-      "combined_prob": 0.5185,
-      "ev_pct": 159.2,
+      "combined_prob": 0.4578,
+      "ev_pct": 128.9,
       "legs": [
         {
-          "player_id": 671976,
-          "name": "Tristan Peters",
-          "team_abbr": "CWS",
-          "opp_abbr": "WSH",
-          "opp_pitcher": "Miles Mikolas",
-          "line": 5.5,
-          "side": "over",
-          "efp": 8.4,
-          "edge_z": 1.133,
-          "hit_prob": 0.871
-        },
-        {
-          "player_id": 665750,
-          "name": "Leody Taveras",
-          "team_abbr": "BAL",
-          "opp_abbr": "BOS",
-          "opp_pitcher": "Brayan Bello",
-          "line": 5.0,
-          "side": "over",
-          "efp": 8.9,
-          "edge_z": 0.867,
-          "hit_prob": 0.807
-        },
-        {
-          "player_id": 805808,
-          "name": "Kevin McGonigle",
+          "player_id": 690993,
+          "name": "Colt Keith",
           "team_abbr": "DET",
           "opp_abbr": "CIN",
-          "opp_pitcher": "Andrew Abbott",
+          "opp_pitcher": "Rhett Lowder",
           "line": 5.5,
           "side": "over",
-          "efp": 9.12,
-          "edge_z": 0.635,
-          "hit_prob": 0.737
+          "efp": 8.23,
+          "edge_z": 0.925,
+          "hit_prob": 0.823
+        },
+        {
+          "player_id": 657041,
+          "name": "Lane Thomas",
+          "team_abbr": "KC",
+          "opp_abbr": "LAA",
+          "opp_pitcher": "Reid Detmers",
+          "line": 5.0,
+          "side": "over",
+          "efp": 7.84,
+          "edge_z": 0.761,
+          "hit_prob": 0.777
+        },
+        {
+          "player_id": 641584,
+          "name": "Jake Fraley",
+          "team_abbr": "TB",
+          "opp_abbr": "MIN",
+          "opp_pitcher": "Simeon Woods Richardson",
+          "line": 5.5,
+          "side": "over",
+          "efp": 8.45,
+          "edge_z": 0.573,
+          "hit_prob": 0.717
         }
       ]
     },
     {
       "size": 4,
       "payout": 10.0,
-      "combined_prob": 0.373,
-      "ev_pct": 273.0,
+      "combined_prob": 0.3233,
+      "ev_pct": 223.3,
       "legs": [
         {
-          "player_id": 671976,
-          "name": "Tristan Peters",
-          "team_abbr": "CWS",
-          "opp_abbr": "WSH",
-          "opp_pitcher": "Miles Mikolas",
-          "line": 5.5,
-          "side": "over",
-          "efp": 8.4,
-          "edge_z": 1.133,
-          "hit_prob": 0.871
-        },
-        {
-          "player_id": 665750,
-          "name": "Leody Taveras",
-          "team_abbr": "BAL",
-          "opp_abbr": "BOS",
-          "opp_pitcher": "Brayan Bello",
-          "line": 5.0,
-          "side": "over",
-          "efp": 8.9,
-          "edge_z": 0.867,
-          "hit_prob": 0.807
-        },
-        {
-          "player_id": 805808,
-          "name": "Kevin McGonigle",
+          "player_id": 690993,
+          "name": "Colt Keith",
           "team_abbr": "DET",
           "opp_abbr": "CIN",
-          "opp_pitcher": "Andrew Abbott",
+          "opp_pitcher": "Rhett Lowder",
           "line": 5.5,
           "side": "over",
-          "efp": 9.12,
-          "edge_z": 0.635,
-          "hit_prob": 0.737
+          "efp": 8.23,
+          "edge_z": 0.925,
+          "hit_prob": 0.823
         },
         {
-          "player_id": 664023,
-          "name": "Ian Happ",
-          "team_abbr": "CHC",
-          "opp_abbr": "LAD",
-          "opp_pitcher": "Emmet Sheehan",
+          "player_id": 657041,
+          "name": "Lane Thomas",
+          "team_abbr": "KC",
+          "opp_abbr": "LAA",
+          "opp_pitcher": "Reid Detmers",
+          "line": 5.0,
+          "side": "over",
+          "efp": 7.84,
+          "edge_z": 0.761,
+          "hit_prob": 0.777
+        },
+        {
+          "player_id": 641584,
+          "name": "Jake Fraley",
+          "team_abbr": "TB",
+          "opp_abbr": "MIN",
+          "opp_pitcher": "Simeon Woods Richardson",
           "line": 5.5,
           "side": "over",
-          "efp": 9.48,
-          "edge_z": 0.581,
-          "hit_prob": 0.719
+          "efp": 8.45,
+          "edge_z": 0.573,
+          "hit_prob": 0.717
+        },
+        {
+          "player_id": 661388,
+          "name": "William Contreras",
+          "team_abbr": "MIL",
+          "opp_abbr": "PIT",
+          "opp_pitcher": "Carmen Mlodzinski",
+          "line": 5.0,
+          "side": "over",
+          "efp": 7.15,
+          "edge_z": 0.542,
+          "hit_prob": 0.706
         }
       ]
     }
