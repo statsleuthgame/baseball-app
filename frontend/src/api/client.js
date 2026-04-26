@@ -7,8 +7,29 @@ const dataUrl = (path) => `${BASE}data/${path}`;
 
 const staticFetch = (path) => axios.get(dataUrl(path)).then((r) => r.data);
 
-// Normalize "Game Over" to "Final" — MLB API uses both for completed games
-const normalizeStatus = (s) => s === "Game Over" ? "Final" : (s || "");
+// MLB API uses several distinct `detailedState` values for games that are
+// over and won't resume — collapse them all to "Final" so downstream UI
+// (ScheduleView, TodayGame, Scoreboard, MatchupView, etc.) treats them
+// uniformly. Includes:
+//   "Final"           — standard 9+ inning result
+//   "Game Over"       — interim status briefly emitted between last out and final
+//   "Completed Early" — rain-shortened, suspended-then-final, etc.
+//   "Final: Tied"     — extremely rare ties (extra-inning rule changes, etc.)
+// Anything else (Postponed, Cancelled, Suspended, Scheduled, In Progress…)
+// passes through unchanged.
+const TERMINAL_DETAILED_STATES = new Set([
+  "Final",
+  "Game Over",
+  "Completed Early",
+  "Final: Tied",
+]);
+export const isTerminalDetailedState = (s) => {
+  if (!s) return false;
+  if (TERMINAL_DETAILED_STATES.has(s)) return true;
+  // MLB also emits forms like "Completed Early: Rain" — match the prefix.
+  return s.startsWith("Completed Early") || s.startsWith("Final:");
+};
+export const normalizeStatus = (s) => (isTerminalDetailedState(s) ? "Final" : (s || ""));
 
 // MLB API sometimes marks isScoringPlay=false when runs score on mid-AB events
 // (e.g. pickoff errors, wild pitches, passed balls during a strikeout).
@@ -98,6 +119,8 @@ export const fetchSchedule = async (teamId) => {
     const STATUS_PRIORITY = {
       "Final": 0,
       "Game Over": 0,
+      "Completed Early": 0,
+      "Final: Tied": 0,
       "In Progress": 1,
       "Suspended": 2,
       "Postponed": 3,
@@ -108,12 +131,19 @@ export const fetchSchedule = async (teamId) => {
       "Pre-Game": 5,
       "Scheduled": 6,
     };
+    const prioFor = (s) => {
+      if (s == null) return 99;
+      if (STATUS_PRIORITY[s] !== undefined) return STATUS_PRIORITY[s];
+      // Match the same terminal-state prefixes normalizeStatus does.
+      if (isTerminalDetailedState(s)) return 0;
+      return 99;
+    };
     const byPk = new Map();
     for (const date of resp.data?.dates || []) {
       for (const g of date.games || []) {
         const prev = byPk.get(g.gamePk);
-        const prevPrio = prev ? (STATUS_PRIORITY[prev.status?.detailedState] ?? 99) : 99;
-        const thisPrio = STATUS_PRIORITY[g.status?.detailedState] ?? 99;
+        const prevPrio = prev ? prioFor(prev.status?.detailedState) : 99;
+        const thisPrio = prioFor(g.status?.detailedState);
         if (!prev || thisPrio < prevPrio) byPk.set(g.gamePk, g);
       }
     }
@@ -472,7 +502,7 @@ export const fetchProjectedLineup = async (teamId) => {
     const recentGames = [];
     for (const date of schedResp.data?.dates || []) {
       for (const g of date.games || []) {
-        if (g.status?.detailedState === "Final" || g.status?.detailedState === "Game Over") {
+        if (isTerminalDetailedState(g.status?.detailedState)) {
           recentGames.push(g.gamePk);
         }
       }
@@ -1142,8 +1172,9 @@ export const fetchTodayGame = async (teamId) => {
     );
     if (liveOrScheduled) return formatGame(liveOrScheduled, true);
 
-    // Final game today - also find next game
-    const finalGame = todayGames.find((g) => g.status?.detailedState === "Final" || g.status?.detailedState === "Game Over");
+    // Final game today - also find next game (covers Final, Game Over,
+    // Completed Early, Final: Tied — all terminal MLB statuses).
+    const finalGame = todayGames.find((g) => isTerminalDetailedState(g.status?.detailedState));
 
     // Get upcoming games
     const futureResp = await mlbApi.get("/schedule", {
@@ -1363,9 +1394,8 @@ export const fetchPriorMatchups = async (team1, team2) => {
     }
     if (!games.length) return null;
 
-    const isFinalStatus = (s) => s === "Final" || s === "Game Over" || s === "Completed Early";
-    const played = games.filter((g) => isFinalStatus(g.status?.detailedState));
-    const upcoming = games.filter((g) => !isFinalStatus(g.status?.detailedState));
+    const played = games.filter((g) => isTerminalDetailedState(g.status?.detailedState));
+    const upcoming = games.filter((g) => !isTerminalDetailedState(g.status?.detailedState));
 
     const computeWon = (g) => {
       const isHome = Number(g.teams?.home?.team?.id) === Number(team1);

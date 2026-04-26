@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect, useRef } from "react";
 import { useQuery, useQueries } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
-import { fetchTodayGame, fetchRoster, fetchGameLineup, fetchProjectedLineup, fetchHotColdPlayers, fetchBullpenAvailability, fetchAllGamesToday, fetchTeamInjuries, fetchSchedule, fetchBvP, fetchPlayerCareerVsTeam } from "../../api/client";
+import { fetchTodayGame, fetchRoster, fetchGameLineup, fetchProjectedLineup, fetchHotColdPlayers, fetchBullpenAvailability, fetchAllGamesToday, fetchTeamInjuries, fetchSchedule, fetchBvP, fetchPlayerCareerVsTeam, normalizeStatus } from "../../api/client";
 import { formatGameDate, formatGameTime, lastName, formatAvg } from "../../utils/formatters";
 import { computeEdgeScore, computeFadeScore, scoreBucket } from "../../utils/edgeScoring";
 import PARK_FACTORS from "../../data/parkFactors";
@@ -35,7 +35,7 @@ export default function MatchupView() {
       const ht = home.team || {};
       const extractP = (p) => p ? { id: p.id, fullName: p.fullName } : null;
       return {
-        gamePk: g.gamePk, gameDate: g.gameDate, status: g.status?.detailedState === "Game Over" ? "Final" : (g.status?.detailedState || ""),
+        gamePk: g.gamePk, gameDate: g.gameDate, status: normalizeStatus(g.status?.detailedState),
         isNextGame: true,
         venue: { id: g.venue?.id, name: g.venue?.name || "" },
         venueLocation: g.venue?.location ? `${g.venue.location.city}, ${g.venue.location.stateAbbrev}` : "",
