@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useTeam } from "../../context/TeamContext";
-import { fetchLiveGameState, fetchGameDetail, fetchWinProbability, fetchAllGamesToday } from "../../api/client";
+import { fetchLiveGameState, fetchGameDetail, fetchWinProbability, fetchAllGamesToday, normalizeStatus } from "../../api/client";
 import { lastName, teamDisplayName } from "../../utils/formatters";
 import { useIsMobile } from "../../utils/useIsMobile";
 import ALL_TEAMS from "../../data/teams";
@@ -73,7 +73,7 @@ export default function LiveGamePage() {
       const away = g.teams?.away || {};
       const home = g.teams?.home || {};
       return {
-        gamePk: g.gamePk, gameDate: g.gameDate, status: g.status?.detailedState === "Game Over" ? "Final" : (g.status?.detailedState || ""),
+        gamePk: g.gamePk, gameDate: g.gameDate, status: normalizeStatus(g.status?.detailedState),
         venue: g.venue?.name || "", venueId: g.venue?.id,
         venueLocation: g.venue?.location ? `${g.venue.location.city}, ${g.venue.location.stateAbbrev}` : "",
         away: { id: away.team?.id, abbreviation: away.team?.abbreviation || "", score: away.score, logoUrl: `https://www.mlbstatic.com/team-logos/team-cap-on-dark/${away.team?.id}.svg` },
