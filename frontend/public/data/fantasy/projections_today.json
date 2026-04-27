@@ -15,7 +15,7 @@
     {
       "player_id": 545361,
       "name": "Mike Trout",
-      "position": "RF",
+      "position": "CF",
       "team_id": 108,
       "team_abbr": "LAA",
       "opp_abbr": "CWS",
@@ -375,7 +375,7 @@
     {
       "player_id": 682657,
       "name": "Angel Mart\u00ednez",
-      "position": "CF",
+      "position": "LF",
       "team_id": 114,
       "team_abbr": "CLE",
       "opp_abbr": "TB",
@@ -591,7 +591,7 @@
     {
       "player_id": 672724,
       "name": "Oswald Peraza",
-      "position": "3B",
+      "position": "2B",
       "team_id": 108,
       "team_abbr": "LAA",
       "opp_abbr": "CWS",
@@ -663,7 +663,7 @@
     {
       "player_id": 808975,
       "name": "Hyeseong Kim",
-      "position": "2B",
+      "position": "SS",
       "team_id": 119,
       "team_abbr": "LAD",
       "opp_abbr": "MIA",
@@ -735,7 +735,7 @@
     {
       "player_id": 682177,
       "name": "Daniel Schneemann",
-      "position": "2B",
+      "position": "CF",
       "team_id": 114,
       "team_abbr": "CLE",
       "opp_abbr": "TB",
@@ -951,7 +951,7 @@
     {
       "player_id": 668885,
       "name": "Austin Martin",
-      "position": "CF",
+      "position": "LF",
       "team_id": 142,
       "team_abbr": "MIN",
       "opp_abbr": "SEA",
@@ -1095,7 +1095,7 @@
     {
       "player_id": 500743,
       "name": "Miguel Rojas",
-      "position": "2B",
+      "position": "SS",
       "team_id": 119,
       "team_abbr": "LAD",
       "opp_abbr": "MIA",
@@ -1743,7 +1743,7 @@
     {
       "player_id": 656811,
       "name": "Ryan O'Hearn",
-      "position": "1B",
+      "position": "RF",
       "team_id": 134,
       "team_abbr": "PIT",
       "opp_abbr": "STL",
@@ -1959,7 +1959,7 @@
     {
       "player_id": 693304,
       "name": "Nick Gonzales",
-      "position": "2B",
+      "position": "3B",
       "team_id": 134,
       "team_abbr": "PIT",
       "opp_abbr": "STL",
@@ -2031,7 +2031,7 @@
     {
       "player_id": 669364,
       "name": "Xavier Edwards",
-      "position": "SS",
+      "position": "2B",
       "team_id": 146,
       "team_abbr": "MIA",
       "opp_abbr": "LAD",
@@ -2174,5 +2174,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-04-27T14:55:28.012324+00:00"
+  "generated_at": "2026-04-27T16:25:53.476704+00:00"
 }
