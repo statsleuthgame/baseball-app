@@ -7,8 +7,16 @@ the worker.
 
 ## Endpoint
 
+Primary (use this — corporate firewalls usually block the workers.dev TLD):
+
 ```
-GET https://baseball-app-odds-proxy.<account>.workers.dev/odds?date=YYYY-MM-DD
+GET https://odds.statmask.com/odds?date=YYYY-MM-DD
+```
+
+Fallback (kept enabled as a backstop):
+
+```
+GET https://baseball-app-odds-proxy.codyostler.workers.dev/odds?date=YYYY-MM-DD
 ```
 
 `date` is interpreted in **America/New_York** (matches MLB's local-game-day
