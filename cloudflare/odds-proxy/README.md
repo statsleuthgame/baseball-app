@@ -7,16 +7,18 @@ the worker.
 
 ## Endpoint
 
-Primary (use this — corporate URL filters categorize "odds" subdomains as
-gambling and block them, so the prod URL uses a neutral name):
+Primary (path-based on the apex — corp DNS filters NXDOMAIN newly-seen
+subdomains, so we route a path on the existing apex which is already in
+corp resolvers' caches):
+
+```
+GET https://statmask.com/api/odds?date=YYYY-MM-DD
+```
+
+Fallbacks (same worker, additional hostnames):
 
 ```
 GET https://data.statmask.com/odds?date=YYYY-MM-DD
-```
-
-Fallbacks (kept enabled as backstops; both reach the same worker):
-
-```
 GET https://odds.statmask.com/odds?date=YYYY-MM-DD
 GET https://baseball-app-odds-proxy.codyostler.workers.dev/odds?date=YYYY-MM-DD
 ```

@@ -8,8 +8,11 @@ compatibility_date = "2024-12-01"
 workers_dev = true
 routes = [
   { pattern = "odds.statmask.com", custom_domain = true },
-  # Neutral name as a backup — corp URL filters often categorize anything
-  # containing "odds" as gambling and block it. data.statmask.com is the
-  # corp-friendly path.
   { pattern = "data.statmask.com", custom_domain = true },
+  # Path-based route on the apex. Corp DNS filters block newly-seen
+  # subdomains entirely (NXDOMAIN), so we route /api/* on the apex —
+  # statmask.com itself is in corp DNS caches from the user's game.
+  # Requires the apex A records to be Proxied (orange cloud) and SSL
+  # mode set to Full so Cloudflare can reach GitHub Pages.
+  { pattern = "statmask.com/api/*", zone_name = "statmask.com" },
 ]
