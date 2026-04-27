@@ -1428,6 +1428,31 @@ export const fetchPriorMatchups = async (team1, team2) => {
 
 // ---- New Features: Live MLB API calls ----
 
+// Pregame moneyline odds (consensus median across US books) for the given
+// local-ET date. Calls a Cloudflare Worker that holds the The Odds API key.
+// When VITE_ODDS_PROXY_URL is unset, returns null so the scoreboard can hide
+// the Refresh button gracefully.
+const ODDS_PROXY_URL = (import.meta.env.VITE_ODDS_PROXY_URL || "").replace(/\/+$/, "");
+export const ODDS_PROXY_CONFIGURED = !!ODDS_PROXY_URL;
+
+export const fetchOddsForDate = async (dateStr) => {
+  if (!ODDS_PROXY_URL) return null;
+  const resp = await axios.get(`${ODDS_PROXY_URL}/odds`, {
+    params: { date: dateStr },
+    timeout: 12000,
+  });
+  const byMatchup = new Map();
+  for (const g of resp.data?.games || []) {
+    if (!g?.away_team || !g?.home_team) continue;
+    byMatchup.set(`${g.away_team}@${g.home_team}`, g);
+  }
+  return {
+    updatedAt: resp.data?.updated_at || null,
+    remaining: resp.data?.remaining ?? null,
+    byMatchup,
+  };
+};
+
 // All MLB games today (scoreboard)
 export const fetchAllGamesToday = async (dateStr) => {
   try {

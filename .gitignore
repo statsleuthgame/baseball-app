@@ -1,9 +1,12 @@
 node_modules/
 dist/
 .env
+.env.local
+.env.*.local
 *.pyc
 __pycache__/
 .venv/
 venv/
 .DS_Store
 .statcast_cache/
+.wrangler/

@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
-import { fetchAllGamesToday, fetchPitcherSeasonStats, fetchBvP, fetchRoster, fetchGameDetail, fetchGameLineup, fetchProjectedLineup, fetchLiveGameState } from "../../api/client";
+import { fetchAllGamesToday, fetchPitcherSeasonStats, fetchBvP, fetchRoster, fetchGameDetail, fetchGameLineup, fetchProjectedLineup, fetchLiveGameState, fetchOddsForDate, ODDS_PROXY_CONFIGURED } from "../../api/client";
 import { formatGameTime, getTeamAbbr, lastName, teamDisplayName } from "../../utils/formatters";
 import SkeletonLoader from "../common/SkeletonLoader";
 import PlayerPhoto from "../common/PlayerPhoto";
@@ -223,17 +223,80 @@ function Linescore({ linescore, away, home }) {
   );
 }
 
-function MatchupHero({ game }) {
+function OddsRefreshBar({ oddsQuery }) {
+  const { data, isFetching, isError, error, refetch, dataUpdatedAt } = oddsQuery;
+  const [tick, setTick] = useState(0);
+  // re-render every 30s so the "updated Xm ago" label stays fresh
+  useEffect(() => {
+    if (!dataUpdatedAt) return;
+    const id = setInterval(() => setTick((t) => t + 1), 30000);
+    return () => clearInterval(id);
+  }, [dataUpdatedAt]);
+
+  let status = null;
+  if (isFetching) {
+    status = <span className="sb-odds-status">Refreshing…</span>;
+  } else if (isError) {
+    status = <span className="sb-odds-status sb-odds-status--err">Odds unavailable{error?.message ? ` (${error.message})` : ""}</span>;
+  } else if (dataUpdatedAt) {
+    const mins = Math.max(0, Math.round((Date.now() - dataUpdatedAt) / 60000));
+    const label = mins === 0 ? "just now" : `${mins}m ago`;
+    const count = data?.byMatchup?.size ?? 0;
+    status = <span className="sb-odds-status">Updated {label} · {count} game{count === 1 ? "" : "s"}</span>;
+  } else {
+    status = <span className="sb-odds-status sb-odds-status--muted">Tap to load pregame moneylines</span>;
+  }
+
   return (
-    <div className="sb-matchup-hero">
-      <HeroTeam side="away" team={game.away} />
-      <span className="sb-hero-vs" aria-hidden="true">VS</span>
-      <HeroTeam side="home" team={game.home} />
+    <div className="sb-odds-bar" role="region" aria-label="Pregame moneyline odds controls" data-tick={tick}>
+      <button
+        type="button"
+        className="sb-odds-refresh-btn"
+        onClick={() => refetch()}
+        disabled={isFetching}
+        aria-busy={isFetching}
+      >
+        <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="23 4 23 10 17 10" />
+          <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+        </svg>
+        <span>{dataUpdatedAt ? "Refresh Odds" : "Load Odds"}</span>
+      </button>
+      {status}
     </div>
   );
 }
 
-function HeroTeam({ side, team }) {
+function formatMoneyline(price) {
+  if (typeof price !== "number" || !Number.isFinite(price)) return null;
+  const rounded = Math.round(price);
+  return rounded > 0 ? `+${rounded}` : `${rounded}`;
+}
+
+function MoneylinePill({ side }) {
+  if (!side || typeof side.price !== "number") return null;
+  const text = formatMoneyline(side.price);
+  if (!text) return null;
+  const cls = side.price < 0 ? "sb-ml-pill sb-ml-pill--neg" : "sb-ml-pill sb-ml-pill--pos";
+  const aria = `Moneyline ${text}, consensus across ${side.n_books || 0} book${side.n_books === 1 ? "" : "s"}`;
+  return (
+    <span className={cls} aria-label={aria} title={`Median across ${side.n_books || 0} US books`}>
+      {text}
+    </span>
+  );
+}
+
+function MatchupHero({ game, awayOdds, homeOdds }) {
+  return (
+    <div className="sb-matchup-hero">
+      <HeroTeam side="away" team={game.away} odds={awayOdds} />
+      <span className="sb-hero-vs" aria-hidden="true">VS</span>
+      <HeroTeam side="home" team={game.home} odds={homeOdds} />
+    </div>
+  );
+}
+
+function HeroTeam({ side, team, odds }) {
   return (
     <div className={`sb-hero-team sb-hero-${side}`}>
       <div className="sb-hero-team-logo-wrap">
@@ -244,6 +307,7 @@ function HeroTeam({ side, team }) {
         {team.wins != null && (
           <span className="sb-hero-team-record">{team.wins}-{team.losses}</span>
         )}
+        <MoneylinePill side={odds} />
       </div>
     </div>
   );
@@ -772,6 +836,16 @@ export default function Scoreboard() {
     refetchInterval: isToday ? 1000 * 60 * 2 : false,
   });
 
+  // Manual-only — only fetched when the user clicks "Refresh Odds".
+  const oddsQuery = useQuery({
+    queryKey: ["odds", selectedDate],
+    queryFn: () => fetchOddsForDate(selectedDate),
+    enabled: false,
+    staleTime: Infinity,
+    retry: 0,
+  });
+  const oddsByMatchup = oddsQuery.data?.byMatchup;
+
   const goDay = (offset) => {
     const d = new Date(selectedDate + "T12:00:00");
     d.setDate(d.getDate() + offset);
@@ -863,6 +937,10 @@ export default function Scoreboard() {
         </button>
       </div>
 
+      {ODDS_PROXY_CONFIGURED && groups.upcoming.length + groups.myTeams.filter(g => g.status !== "Final" && g.status !== "Game Over" && g.status !== "In Progress").length > 0 && (
+        <OddsRefreshBar oddsQuery={oddsQuery} />
+      )}
+
       {isLoading && <SkeletonLoader variant="scores" />}
 
       {error && <div className="scoreboard-error" role="alert">Failed to load scores. Pull down to refresh.</div>}
@@ -939,12 +1017,15 @@ export default function Scoreboard() {
                 )}
                 {isScheduled && <div className="scoreboard-status-badge sb-scheduled-time">{formatGameTime(game.gameDate)}</div>}
 
-                {isScheduled && (
-                  <>
-                    <MatchupHero game={game} />
-                    <PitcherMatchupLine game={game} teamId={teamId} navigate={navigate} hero={isMyTeamGame(game)} />
-                  </>
-                )}
+                {isScheduled && (() => {
+                  const oddsRow = oddsByMatchup?.get(`${game.away.name}@${game.home.name}`);
+                  return (
+                    <>
+                      <MatchupHero game={game} awayOdds={oddsRow?.away} homeOdds={oddsRow?.home} />
+                      <PitcherMatchupLine game={game} teamId={teamId} navigate={navigate} hero={isMyTeamGame(game)} />
+                    </>
+                  );
+                })()}
 
                 {!isScheduled && (
                   <div className="scoreboard-teams">
