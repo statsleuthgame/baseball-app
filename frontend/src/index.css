@@ -4327,6 +4327,66 @@ button.bvp-row:focus-visible {
   letter-spacing: -0.3px;
 }
 
+/* Pregame moneyline odds */
+.sb-odds-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 4px 0 2px;
+  flex-wrap: wrap;
+}
+.sb-odds-refresh-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-bright);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, opacity 0.15s;
+}
+.sb-odds-refresh-btn:hover:not(:disabled) {
+  background: var(--bg-card-hover);
+}
+.sb-odds-refresh-btn:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+.sb-odds-refresh-btn svg { opacity: 0.85; }
+.sb-odds-refresh-btn[aria-busy="true"] svg {
+  animation: sb-odds-spin 0.9s linear infinite;
+}
+@keyframes sb-odds-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.sb-odds-status {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.sb-odds-status--err { color: #ef4444; }
+.sb-odds-status--muted { opacity: 0.75; }
+
+.sb-ml-pill {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  margin-left: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-variant-numeric: tabular-nums;
+}
+.sb-ml-pill--neg { color: #f87171; }
+.sb-ml-pill--pos { color: #4ade80; }
+
 .scoreboard-empty {
   text-align: center;
   padding: 60px 20px;

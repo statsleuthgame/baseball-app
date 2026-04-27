@@ -46,6 +46,11 @@ jobs:
 
       - name: Build
         working-directory: frontend
+        env:
+          # URL of the Cloudflare Worker that proxies The Odds API. Set this
+          # in repo Settings → Variables (Actions) so production builds wire
+          # up the "Refresh Odds" button. Safe to expose publicly.
+          VITE_ODDS_PROXY_URL: ${{ vars.VITE_ODDS_PROXY_URL }}
         run: npm run build
 
       - name: Upload artifact
