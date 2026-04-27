@@ -2,27 +2,21 @@
 // Holds the The Odds API key as a Cloudflare Worker secret so the
 // browser never sees it. Returns median American-odds across US books
 // for every MLB game whose local-ET commence date matches ?date=YYYY-MM-DD.
+//
+// CORS: open to any origin. The endpoint only proxies a public,
+// read-only odds API — no auth, no PII, no mutating operations — so
+// origin-locking adds no meaningful security and only causes failures
+// on corporate networks that strip the Origin header.
 
-const ALLOWED_ORIGINS = new Set([
-  "https://statsleuthgame.github.io",
-  "http://localhost:5173",
-  "http://localhost:4173",
-]);
+const cors = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, OPTIONS",
+};
 
 export default {
   async fetch(req, env) {
-    const origin = req.headers.get("origin") || "";
-    const cors = ALLOWED_ORIGINS.has(origin)
-      ? {
-          "Access-Control-Allow-Origin": origin,
-          "Vary": "Origin",
-        }
-      : {};
-
     if (req.method === "OPTIONS") {
-      return new Response(null, {
-        headers: { ...cors, "Access-Control-Allow-Methods": "GET, OPTIONS" },
-      });
+      return new Response(null, { headers: cors });
     }
 
     if (req.method !== "GET") {
