@@ -7,15 +7,17 @@ the worker.
 
 ## Endpoint
 
-Primary (use this — corporate firewalls usually block the workers.dev TLD):
+Primary (use this — corporate URL filters categorize "odds" subdomains as
+gambling and block them, so the prod URL uses a neutral name):
+
+```
+GET https://data.statmask.com/odds?date=YYYY-MM-DD
+```
+
+Fallbacks (kept enabled as backstops; both reach the same worker):
 
 ```
 GET https://odds.statmask.com/odds?date=YYYY-MM-DD
-```
-
-Fallback (kept enabled as a backstop):
-
-```
 GET https://baseball-app-odds-proxy.codyostler.workers.dev/odds?date=YYYY-MM-DD
 ```
 

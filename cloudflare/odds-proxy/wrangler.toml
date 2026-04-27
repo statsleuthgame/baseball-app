@@ -8,4 +8,8 @@ compatibility_date = "2024-12-01"
 workers_dev = true
 routes = [
   { pattern = "odds.statmask.com", custom_domain = true },
+  # Neutral name as a backup — corp URL filters often categorize anything
+  # containing "odds" as gambling and block it. data.statmask.com is the
+  # corp-friendly path.
+  { pattern = "data.statmask.com", custom_domain = true },
 ]
