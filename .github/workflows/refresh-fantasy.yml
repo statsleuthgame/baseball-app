@@ -114,6 +114,11 @@ jobs:
 
       - name: Build frontend
         working-directory: frontend
+        env:
+          # Must mirror deploy-frontend.yml — without this, intraday
+          # fantasy refreshes deploy a build that has no odds proxy URL,
+          # silently breaking the Refresh Odds button on the scoreboard.
+          VITE_ODDS_PROXY_URL: ${{ vars.VITE_ODDS_PROXY_URL }}
         run: npm run build
 
       - name: Upload pages artifact
