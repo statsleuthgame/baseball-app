@@ -1,3 +1,11 @@
 name = "baseball-app-odds-proxy"
 main = "src/index.js"
 compatibility_date = "2024-12-01"
+
+# Both URLs are kept enabled. odds.statmask.com is the primary (corp-network
+# friendly); the *.workers.dev URL stays alive as a fallback and so any old
+# bundles still in browser caches keep working.
+workers_dev = true
+routes = [
+  { pattern = "odds.statmask.com", custom_domain = true },
+]
