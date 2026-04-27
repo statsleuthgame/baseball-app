@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 8,
-  "projection_count": 168,
+  "projection_count": 165,
   "projections": [
     {
       "player_id": 682657,
@@ -331,7 +331,11 @@
         "hr": 108,
         "label": "Slight Hitter"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
       "pa_source": "default",
       "stdev_efp": 9.76,
       "mean_efp": 9.0,
@@ -403,7 +407,11 @@
         "hr": 108,
         "label": "Slight Hitter"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
       "pa_source": "default",
       "stdev_efp": 5.77,
       "mean_efp": 7.5,
@@ -623,7 +631,11 @@
         "hr": 108,
         "label": "Slight Hitter"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
       "pa_source": "default",
       "stdev_efp": 4.15,
       "mean_efp": 11.33,
@@ -1451,7 +1463,11 @@
         "hr": 108,
         "label": "Slight Hitter"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
       "pa_source": "default",
       "stdev_efp": 11.04,
       "mean_efp": 14.0,
@@ -2250,5 +2266,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-04-27T19:55:04.138591+00:00"
+  "generated_at": "2026-04-27T20:04:39.717307+00:00"
 }
