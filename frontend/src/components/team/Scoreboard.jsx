@@ -395,12 +395,12 @@ function shortInningHalf(state) {
   return state;
 }
 
-// Inline status block for live mobile cards: inning text + outs + bases
-// diamond. Sits in row 1's right cell. Pre-fetch state shows just an inning
-// readout (no outs/diamond yet) until the per-game liveState query resolves.
+// Inline status block for live mobile cards: vertical stack of inning text,
+// outs, and a larger bases diamond below. Sits to the right of (and beside)
+// both team rows so the column visually groups with the matchup. Falls back
+// to the all-games inning fields until the per-game liveState query resolves
+// so the block doesn't flash empty.
 function LiveStatusBlock({ liveState, game }) {
-  // The all-games response gives us inning/inningHalf as a fallback so the
-  // block doesn't flash empty during the first 20 s of a live card mount.
   const inning = liveState?.inning ?? game.inning;
   const stateRaw = liveState?.inningState || liveState?.inningHalf || game.inningHalf;
   const halfShort = shortInningHalf(stateRaw);
@@ -420,16 +420,14 @@ function LiveStatusBlock({ liveState, game }) {
 
   return (
     <div className="sb-m-live-status" role="status" aria-label={ariaLabel}>
-      <div className="sb-m-live-text">
-        {inningText && <span className="sb-m-live-inning">{inningText}</span>}
-        {outs != null && (
-          <span className="sb-m-live-outs">{outs} Out{outs === 1 ? "" : "s"}</span>
-        )}
-      </div>
+      {inningText && <span className="sb-m-live-inning">{inningText}</span>}
+      {outs != null && (
+        <span className="sb-m-live-outs">{outs} Out{outs === 1 ? "" : "s"}</span>
+      )}
       <svg
         className="sb-m-live-diamond"
-        width="34"
-        height="34"
+        width="58"
+        height="58"
         viewBox="-2 -2 56 56"
         aria-hidden="true"
         focusable="false"
@@ -475,15 +473,7 @@ function MobileGameCard({ game, oddsRow, teamId, navigate, isMyTeam }) {
     statusEl = <div className="sb-m-status sb-m-status--final">FINAL{extra}</div>;
   }
 
-  // Build the inline live-status block (inning + outs + bases diamond) that
-  // sits in row 1's right cell when the game is live.
-  const liveStatusEl = isLive ? <LiveStatusBlock liveState={liveState} game={game} /> : null;
-
   const renderRowRight = (team, isFirstRow) => {
-    if (isLive) {
-      // Live: row 1 carries the inning/outs/diamond block, row 2 is empty.
-      return isFirstRow ? liveStatusEl : null;
-    }
     if (isFinal) {
       return <span className="sb-m-score">{team.score ?? "—"}</span>;
     }
@@ -503,11 +493,6 @@ function MobileGameCard({ game, oddsRow, teamId, navigate, isMyTeam }) {
     const recordLabel = team.wins != null ? `, record ${team.wins} and ${team.losses}` : "";
     const scoreLabel = (isLive || isFinal) ? `, score ${team.score}` : "";
     const pitcherLabel = pitcherShort ? `, pitcher ${pitcher.fullName}` : "";
-    // Col 3 (between name and right cell) carries the live score on live
-    // games and the W-L record otherwise.
-    const col3Content = isLive
-      ? <span className="sb-m-score sb-m-score--row">{team.score ?? "—"}</span>
-      : <span className="sb-m-record">{team.wins != null ? `${team.wins}-${team.losses}` : ""}</span>;
     return (
       <button
         type="button"
@@ -520,10 +505,19 @@ function MobileGameCard({ game, oddsRow, teamId, navigate, isMyTeam }) {
           <span className="sb-m-name">{teamNickname(team.abbreviation)}</span>
           {pitcherShort && <span className="sb-m-pitcher">{pitcherShort}</span>}
         </span>
-        {col3Content}
-        <div className="sb-m-right">
-          {renderRowRight(team, isFirstRow)}
-        </div>
+        {isLive ? (
+          // Live: col 3 carries the score; the right-side live-status block
+          // (inning + outs + diamond) lives outside the row, beside both
+          // rows, so it spans the height of the matchup.
+          <span className="sb-m-score sb-m-score--row">{team.score ?? "—"}</span>
+        ) : (
+          <>
+            <span className="sb-m-record">
+              {team.wins != null ? `${team.wins}-${team.losses}` : ""}
+            </span>
+            <div className="sb-m-right">{renderRowRight(team, isFirstRow)}</div>
+          </>
+        )}
       </button>
     );
   };
@@ -551,10 +545,23 @@ function MobileGameCard({ game, oddsRow, teamId, navigate, isMyTeam }) {
       aria-label={`${game.away.abbreviation} at ${game.home.abbreviation}`}
     >
       {statusEl}
-      <div className="sb-m-rows">
-        {renderTeamRow(game.away, false, true)}
-        {renderTeamRow(game.home, true, false)}
-      </div>
+      {isLive ? (
+        // Live layout: team rows column on the left, status block (inning,
+        // outs, big diamond) on the right — vertically centered so it
+        // visually spans both team rows.
+        <div className="sb-m-live-layout">
+          <div className="sb-m-rows">
+            {renderTeamRow(game.away, false, true)}
+            {renderTeamRow(game.home, true, false)}
+          </div>
+          <LiveStatusBlock liveState={liveState} game={game} />
+        </div>
+      ) : (
+        <div className="sb-m-rows">
+          {renderTeamRow(game.away, false, true)}
+          {renderTeamRow(game.home, true, false)}
+        </div>
+      )}
 
       {showOddsCard && (
         <div

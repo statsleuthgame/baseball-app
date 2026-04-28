@@ -10399,25 +10399,31 @@ button.leaders-row:focus-visible {
   .sb-col-left,
   .sb-col-right { gap: 0; }
 
-  /* Strip card chrome — the rows sit directly on the page bg. */
+  /* Strip card chrome — the rows sit directly on the page bg. A subtle 1 px
+     separator at the bottom marks the boundary between consecutive games;
+     the last card in a section drops it so the section break breathes. */
   .scoreboard-card.sb-m-card {
     background: none;
-    border: none;
     box-shadow: none;
     border-radius: 0;
-    padding: 0;
-    margin-bottom: 14px;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    padding: 0 0 8px;
+    margin-bottom: 12px;
     overflow: visible;
+  }
+  .scoreboard-card.sb-m-card:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
   }
   .scoreboard-card.sb-m-card::before,
   .scoreboard-card.sb-m-card::after { content: none; }
   .scoreboard-card.sb-m-card.our-game,
   .scoreboard-card.sb-m-card.live {
     background: none;
-    border: none;
     box-shadow: none;
     animation: none;
-    padding: 0;
   }
 
   .sb-m-status {
@@ -10466,11 +10472,22 @@ button.leaders-row:focus-visible {
     cursor: pointer;
     color: inherit;
   }
-  /* Live rows: col 3 holds the score (replaces record) and col 4 widens
-     to fit the inning · outs · diamond block on row 1. Row 2's col 4 is
-     empty, matching the reference layout. */
+  /* Live rows: 3-column grid (logo · name · score). The status block
+     (inning · outs · diamond) sits in a sibling column to the right of
+     both rows — see .sb-m-live-layout below. */
   .sb-m-team-row.sb-m-row-live {
-    grid-template-columns: 36px 1fr 40px 116px;
+    grid-template-columns: 36px 1fr 40px;
+  }
+  /* Wraps the team-rows column and the right-side status column on live
+     cards. Status spans both rows visually because it sits beside them. */
+  .sb-m-live-layout {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .sb-m-live-layout > .sb-m-rows {
+    flex: 1;
+    min-width: 0;
   }
   .sb-m-team-row:active { background: rgba(255, 255, 255, 0.04); }
   .sb-m-team-row:focus-visible {
@@ -10563,20 +10580,16 @@ button.leaders-row:focus-visible {
     line-height: 1;
   }
 
-  /* Inline live-status block (right cell on row 1 of a live card):
-     stacked inning + outs on the left, bases diamond on the right. */
+  /* Live-status column (right side of a live card): stacked vertically —
+     inning text on top, outs below, big bases diamond at the bottom. */
   .sb-m-live-status {
     display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 8px;
-  }
-  .sb-m-live-text {
-    display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    line-height: 1.15;
-    min-width: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    flex-shrink: 0;
+    width: 76px;
   }
   .sb-m-live-inning {
     font-size: 13px;
@@ -10584,15 +10597,18 @@ button.leaders-row:focus-visible {
     color: var(--text-bright);
     letter-spacing: 0.2px;
     white-space: nowrap;
+    line-height: 1.1;
   }
   .sb-m-live-outs {
     font-size: 11px;
     color: var(--text-muted);
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
+    line-height: 1.1;
   }
   .sb-m-live-diamond {
     flex-shrink: 0;
+    margin-top: 2px;
   }
 
   /* Flat odds card — single horizontal row. Cells flex with space-between
