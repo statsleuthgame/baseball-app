@@ -10454,7 +10454,10 @@ button.leaders-row:focus-visible {
     all: unset;
     box-sizing: border-box;
     display: grid;
-    grid-template-columns: 36px 1fr auto auto;
+    /* Fixed widths for the record (col 3) and right-column (col 4) so the
+       game time / score stays anchored at the same x-position regardless
+       of how long each team's record is (e.g. "0-0" vs "100-62"). */
+    grid-template-columns: 36px 1fr 52px 64px;
     align-items: center;
     column-gap: 14px;
     padding: 10px 4px;
@@ -10526,7 +10529,6 @@ button.leaders-row:focus-visible {
     flex-direction: column;
     align-items: flex-end;
     gap: 1px;
-    min-width: 56px;
     text-align: right;
   }
 
