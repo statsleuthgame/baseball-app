@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
 import { fetchAllGamesToday, fetchPitcherSeasonStats, fetchBvP, fetchRoster, fetchGameDetail, fetchGameLineup, fetchProjectedLineup, fetchLiveGameState, fetchOddsForDate, ODDS_PROXY_CONFIGURED } from "../../api/client";
-import { formatGameTime, getTeamAbbr, lastName, teamDisplayName } from "../../utils/formatters";
+import { formatGameTime, getTeamAbbr, lastName, teamDisplayName, teamNickname } from "../../utils/formatters";
 import SkeletonLoader from "../common/SkeletonLoader";
 import PlayerPhoto from "../common/PlayerPhoto";
 import { Tabs, TabList, Tab, TabPanel } from "../common/Tabs";
@@ -373,6 +373,143 @@ function PitcherMatchupLine({ game, teamId, navigate, hero = false }) {
         {renderSlot(home, "home")}
       </div>
     </div>
+  );
+}
+
+function MobileGameCard({ game, oddsRow, teamId, navigate, isMyTeam }) {
+  const [oddsOpen, setOddsOpen] = useState(false);
+
+  const isLive = game.status === "In Progress";
+  const isDelayed = game.status === "Delayed Start" || game.status === "Delayed";
+  const isFinal = game.status === "Final" || game.status === "Game Over";
+  const isScheduled = !isLive && !isDelayed && !isFinal;
+
+  const awayWon = isFinal && game.away.score > game.home.score;
+  const homeWon = isFinal && game.home.score > game.away.score;
+
+  const matchupRoute = `/team/${teamId}/${isLive || isFinal ? "live" : "matchup"}/${game.gamePk}`;
+
+  let statusEl = null;
+  if (isLive) {
+    const half = game.inningHalf === "Top" ? "Top" : "Bot";
+    statusEl = (
+      <div
+        className="sb-m-status sb-m-status--live"
+        aria-label={`Live, ${half === "Top" ? "top" : "bottom"} of inning ${game.inning}`}
+      >
+        <span className="sb-m-live-dot" aria-hidden="true" />
+        LIVE · {half} {game.inning}
+      </div>
+    );
+  } else if (isDelayed) {
+    statusEl = <div className="sb-m-status sb-m-status--delayed">DELAYED</div>;
+  } else if (isFinal) {
+    const extra = game.linescore && game.linescore.innings.length > 9 ? `/${game.linescore.innings.length}` : "";
+    statusEl = <div className="sb-m-status sb-m-status--final">FINAL{extra}</div>;
+  }
+
+  const renderRowRight = (team, isFirstRow) => {
+    if (isLive || isFinal) {
+      return <span className="sb-m-score">{team.score ?? "—"}</span>;
+    }
+    // Scheduled or delayed: show time on first row, MLB.TV on second
+    return isFirstRow
+      ? <span className="sb-m-time">{formatGameTime(game.gameDate)}</span>
+      : <span className="sb-m-broadcast">MLB.TV</span>;
+  };
+
+  const renderTeamRow = (team, isHome, isFirstRow) => {
+    const isWinner = isFinal && (isHome ? homeWon : awayWon);
+    const isLoser = isFinal && !isWinner && game.away.score !== game.home.score;
+    const recordLabel = team.wins != null ? `, record ${team.wins} and ${team.losses}` : "";
+    const scoreLabel = (isLive || isFinal) ? `, score ${team.score}` : "";
+    return (
+      <button
+        type="button"
+        className={`sb-m-team-row${isWinner ? " sb-m-winner" : ""}${isLoser ? " sb-m-loser" : ""}`}
+        onClick={() => navigate(matchupRoute)}
+        aria-label={`${team.name}${recordLabel}${scoreLabel}. View ${isLive || isFinal ? "live game" : "matchup"}.`}
+      >
+        <img src={team.logoUrl} alt="" className="sb-m-logo" />
+        <span className="sb-m-name">{teamNickname(team.abbreviation)}</span>
+        <span className="sb-m-record">
+          {team.wins != null ? `${team.wins}-${team.losses}` : ""}
+        </span>
+        <div className="sb-m-right">
+          {renderRowRight(team, isFirstRow)}
+        </div>
+      </button>
+    );
+  };
+
+  let oddsSummary = null;
+  if (isScheduled && oddsRow) {
+    const awayML = formatMoneyline(oddsRow.away?.price);
+    const homeML = formatMoneyline(oddsRow.home?.price);
+    if (awayML && homeML) {
+      const totalFrag = oddsRow.total != null ? ` · Total: ${oddsRow.total}` : "";
+      oddsSummary = `Moneyline: ${game.away.abbreviation} ${awayML} @ ${game.home.abbreviation} ${homeML}${totalFrag}`;
+    }
+  }
+
+  const hasPitchers = game.away.probablePitcher?.id || game.home.probablePitcher?.id;
+  const showFooter = (isScheduled || isDelayed) && (oddsSummary || hasPitchers);
+
+  return (
+    <article
+      className={`scoreboard-card sb-m-card${isLive ? " live" : ""}${isMyTeam ? " our-game" : ""}`}
+      aria-label={`${game.away.abbreviation} at ${game.home.abbreviation}`}
+    >
+      {statusEl}
+      <div className="sb-m-rows">
+        {renderTeamRow(game.away, false, true)}
+        {renderTeamRow(game.home, true, false)}
+      </div>
+
+      {showFooter && (
+        <div className="sb-m-odds">
+          <button
+            type="button"
+            className={`sb-m-odds-summary${!oddsSummary ? " sb-m-odds-summary--no-odds" : ""}`}
+            onClick={() => setOddsOpen((o) => !o)}
+            aria-expanded={oddsOpen}
+            aria-label={`${oddsSummary || "Pitching matchup"}. Tap to ${oddsOpen ? "hide" : "show"} pitcher details.`}
+          >
+            <span className="sb-m-odds-summary-text">
+              {oddsSummary || "Pitching matchup"}
+            </span>
+            <svg
+              className="sb-m-odds-chevron"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+              focusable="false"
+              style={{ transform: oddsOpen ? "rotate(180deg)" : "none" }}
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </button>
+          {oddsOpen && (
+            <div className="sb-m-odds-detail">
+              {hasPitchers && (
+                <PitcherMatchupLine game={game} teamId={teamId} navigate={navigate} hero />
+              )}
+              {oddsRow?.away?.n_books != null && (
+                <div className="sb-m-odds-source">
+                  From {oddsRow.away.n_books} book{oddsRow.away.n_books === 1 ? "" : "s"}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+    </article>
   );
 }
 
@@ -965,6 +1102,22 @@ export default function Scoreboard() {
             const isDelayed = game.status === "Delayed Start" || game.status === "Delayed";
             const isFinal = game.status === "Final" || game.status === "Game Over";
             const isScheduled = !isLive && !isDelayed && !isFinal;
+
+            if (isMobile) {
+              const oddsRow = isScheduled
+                ? oddsByMatchup?.get(`${game.away.name}@${game.home.name}`)
+                : null;
+              return (
+                <MobileGameCard
+                  key={game.gamePk}
+                  game={game}
+                  oddsRow={oddsRow}
+                  teamId={teamId}
+                  navigate={navigate}
+                  isMyTeam={isMyTeamGame(game)}
+                />
+              );
+            }
 
             const showStatsLink = isLive || isFinal;
             const matchupRoute = `/team/${teamId}/${isLive || isFinal ? "live" : "matchup"}/${game.gamePk}`;
