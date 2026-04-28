@@ -447,25 +447,21 @@ function MobileGameCard({ game, oddsRow, teamId, navigate, isMyTeam }) {
     );
   };
 
-  // Pregame odds: moneyline (always when present) + totals/over-under
-  // (when the proxy supplies a totals object). Layout uses a 3-column grid
-  // — label · away/over · home/under — so values breathe instead of running
-  // together in one line.
+  // Pregame odds — single row, three cells: away ML · home ML · total line.
+  // Only the total LINE is shown (no over/under prices); price detail lives
+  // on the dedicated Edge tab. Cells flex with space-between so they breathe.
   const awayML = isScheduled ? formatMoneyline(oddsRow?.away?.price) : null;
   const homeML = isScheduled ? formatMoneyline(oddsRow?.home?.price) : null;
   const hasMoneyline = !!(awayML && homeML);
-  const total = isScheduled && oddsRow?.total ? oddsRow.total : null;
-  const overPrice = total ? formatMoneyline(total.over) : null;
-  const underPrice = total ? formatMoneyline(total.under) : null;
-  const hasTotal = !!(total && total.line != null && (overPrice || underPrice));
-  const showOddsCard = hasMoneyline || hasTotal;
+  const totalLine = isScheduled && oddsRow?.total?.line != null ? oddsRow.total.line : null;
+  const showOddsCard = hasMoneyline || totalLine != null;
 
   const oddsAriaParts = [];
   if (hasMoneyline) {
-    oddsAriaParts.push(`Moneyline: ${game.away.abbreviation} ${awayML}, ${game.home.abbreviation} ${homeML}`);
+    oddsAriaParts.push(`Moneyline ${game.away.abbreviation} ${awayML}, ${game.home.abbreviation} ${homeML}`);
   }
-  if (hasTotal) {
-    oddsAriaParts.push(`Total ${total.line}: over ${overPrice || "—"}, under ${underPrice || "—"}`);
+  if (totalLine != null) {
+    oddsAriaParts.push(`Total ${totalLine}`);
   }
 
   return (
@@ -486,8 +482,7 @@ function MobileGameCard({ game, oddsRow, teamId, navigate, isMyTeam }) {
           aria-label={oddsAriaParts.join("; ")}
         >
           {hasMoneyline && (
-            <div className="sb-m-odds-row">
-              <span className="sb-m-odds-label">Moneyline</span>
+            <>
               <span className="sb-m-odds-cell">
                 <span className="sb-m-odds-team">{game.away.abbreviation}</span>
                 <span className="sb-m-odds-price">{awayML}</span>
@@ -496,20 +491,13 @@ function MobileGameCard({ game, oddsRow, teamId, navigate, isMyTeam }) {
                 <span className="sb-m-odds-team">{game.home.abbreviation}</span>
                 <span className="sb-m-odds-price">{homeML}</span>
               </span>
-            </div>
+            </>
           )}
-          {hasTotal && (
-            <div className="sb-m-odds-row">
-              <span className="sb-m-odds-label">Total {total.line}</span>
-              <span className="sb-m-odds-cell">
-                <span className="sb-m-odds-team">O</span>
-                <span className="sb-m-odds-price">{overPrice || "—"}</span>
-              </span>
-              <span className="sb-m-odds-cell">
-                <span className="sb-m-odds-team">U</span>
-                <span className="sb-m-odds-price">{underPrice || "—"}</span>
-              </span>
-            </div>
+          {totalLine != null && (
+            <span className="sb-m-odds-cell sb-m-odds-cell--total">
+              <span className="sb-m-odds-team">Total</span>
+              <span className="sb-m-odds-price">{totalLine}</span>
+            </span>
           )}
         </div>
       )}
