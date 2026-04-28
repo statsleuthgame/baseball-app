@@ -4574,6 +4574,57 @@ button.bvp-row:focus-visible {
 .scoreboard-card.live.sb-close-game::before { opacity: 0.22; }
 .scoreboard-card.live.sb-blowout { animation: none; box-shadow: var(--jumbo-glow-mild); }
 
+/* === Compact live cards (desktop right column) ===
+   Live cards were running ~250 px tall. The matchup info reads fine in
+   half that space — the height was driven by a full-width Stats button,
+   the inning progress bar (already implied by the LIVE · "Top 6" badge),
+   a wrapping last-play line, and generous internal gaps. Mobile is
+   unaffected because it renders MobileGameCard which doesn't use any of
+   these classes. */
+.scoreboard-card.live {
+  padding: 6px 12px;
+}
+.scoreboard-card.live.our-game {
+  padding: 8px 14px;
+}
+/* Inning progress bar is redundant on live cards — the badge already shows
+   "TOP 6" right above the team rows. */
+.scoreboard-card.live .sb-inning-bar { display: none; }
+
+/* Trim the LiveGameInfo block (batter · diamond · pitcher + outs + last play). */
+.scoreboard-card.live .sb-live-info {
+  margin-top: 3px;
+  padding-top: 3px;
+  gap: 2px;
+}
+.scoreboard-card.live .sb-live-situation { font-size: 10px; }
+.scoreboard-card.live .sb-live-out-dot { width: 5px; height: 5px; }
+
+/* Last-play to a single line so a long "Top 5 · Aranda singles…" sentence
+   doesn't add a second wrapped row. Hover/title still surfaces full text. */
+.scoreboard-card.live .sb-last-play {
+  margin-top: 4px;
+  padding: 3px 2px 0;
+}
+.scoreboard-card.live .sb-last-play-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Shrink the full-width "Stats >" button to a thin text link. Team-row
+   buttons remain the primary tap target into the live page; this is just
+   a visible affordance. */
+.scoreboard-card.live .sb-expand-hint {
+  min-height: 0;
+  padding: 2px 6px;
+  margin-top: 3px;
+  background: transparent;
+  font-size: 10px;
+}
+.scoreboard-card.live .sb-expand-label { font-size: 10px; }
+.scoreboard-card.live .sb-expand-hint:hover { background: rgba(255, 255, 255, 0.04); }
+
 .sb-delayed-badge {
   background: linear-gradient(180deg, #F9B23B 0%, #D89020 100%) !important;
   color: #1a0f00 !important;
