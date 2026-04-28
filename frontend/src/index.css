@@ -10466,6 +10466,12 @@ button.leaders-row:focus-visible {
     cursor: pointer;
     color: inherit;
   }
+  /* Live rows: col 3 holds the score (replaces record) and col 4 widens
+     to fit the inning · outs · diamond block on row 1. Row 2's col 4 is
+     empty, matching the reference layout. */
+  .sb-m-team-row.sb-m-row-live {
+    grid-template-columns: 36px 1fr 40px 116px;
+  }
   .sb-m-team-row:active { background: rgba(255, 255, 255, 0.04); }
   .sb-m-team-row:focus-visible {
     outline: 2px solid var(--team-secondary);
@@ -10545,6 +10551,48 @@ button.leaders-row:focus-visible {
     color: var(--text-bright);
     font-variant-numeric: tabular-nums;
     line-height: 1;
+  }
+  /* In-row score sits in col 3 of live rows (replacing the record). Right-
+     aligned in its column so it visually mirrors the col-4 right block. */
+  .sb-m-score--row {
+    text-align: right;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text-bright);
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+
+  /* Inline live-status block (right cell on row 1 of a live card):
+     stacked inning + outs on the left, bases diamond on the right. */
+  .sb-m-live-status {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  .sb-m-live-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    line-height: 1.15;
+    min-width: 0;
+  }
+  .sb-m-live-inning {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-bright);
+    letter-spacing: 0.2px;
+    white-space: nowrap;
+  }
+  .sb-m-live-outs {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .sb-m-live-diamond {
+    flex-shrink: 0;
   }
 
   /* Flat odds card — single horizontal row. Cells flex with space-between

@@ -635,6 +635,10 @@ export const fetchLiveGameState = async (gamePk) => {
     return {
       inning: ls.currentInning || null,
       inningHalf: ls.inningHalf || "",
+      // inningState is more granular than inningHalf — covers Top/Middle/
+      // Bottom/End so we can render "Mid 4th" or "End 2nd" between halves.
+      // Falls back to inningHalf when MLB doesn't expose the state field.
+      inningState: ls.inningState || ls.inningHalf || "",
       outs: ls.outs ?? 0,
       balls: ls.balls ?? 0,
       strikes: ls.strikes ?? 0,
