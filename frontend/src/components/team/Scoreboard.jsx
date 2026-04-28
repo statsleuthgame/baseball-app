@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
 import { fetchAllGamesToday, fetchPitcherSeasonStats, fetchBvP, fetchRoster, fetchGameDetail, fetchGameLineup, fetchProjectedLineup, fetchLiveGameState, fetchOddsForDate, ODDS_PROXY_CONFIGURED } from "../../api/client";
-import { formatGameTime, getTeamAbbr, lastName, teamDisplayName, teamNickname } from "../../utils/formatters";
+import { formatGameTime, getTeamAbbr, lastName, shortName, teamDisplayName, teamNickname } from "../../utils/formatters";
 import SkeletonLoader from "../common/SkeletonLoader";
 import PlayerPhoto from "../common/PlayerPhoto";
 import { Tabs, TabList, Tab, TabPanel } from "../common/Tabs";
@@ -377,8 +377,6 @@ function PitcherMatchupLine({ game, teamId, navigate, hero = false }) {
 }
 
 function MobileGameCard({ game, oddsRow, teamId, navigate, isMyTeam }) {
-  const [oddsOpen, setOddsOpen] = useState(false);
-
   const isLive = game.status === "In Progress";
   const isDelayed = game.status === "Delayed Start" || game.status === "Delayed";
   const isFinal = game.status === "Final" || game.status === "Game Over";
@@ -388,6 +386,7 @@ function MobileGameCard({ game, oddsRow, teamId, navigate, isMyTeam }) {
   const homeWon = isFinal && game.home.score > game.away.score;
 
   const matchupRoute = `/team/${teamId}/${isLive || isFinal ? "live" : "matchup"}/${game.gamePk}`;
+  const actionLabel = (isLive || isFinal) ? "Stats" : "Matchup";
 
   let statusEl = null;
   if (isLive) {
@@ -412,26 +411,32 @@ function MobileGameCard({ game, oddsRow, teamId, navigate, isMyTeam }) {
     if (isLive || isFinal) {
       return <span className="sb-m-score">{team.score ?? "—"}</span>;
     }
-    // Scheduled or delayed: show time on first row, MLB.TV on second
+    // Scheduled or delayed: show time on the first row only.
     return isFirstRow
       ? <span className="sb-m-time">{formatGameTime(game.gameDate)}</span>
-      : <span className="sb-m-broadcast">MLB.TV</span>;
+      : null;
   };
 
   const renderTeamRow = (team, isHome, isFirstRow) => {
     const isWinner = isFinal && (isHome ? homeWon : awayWon);
     const isLoser = isFinal && !isWinner && game.away.score !== game.home.score;
+    const pitcher = team.probablePitcher;
+    const pitcherShort = pitcher?.fullName ? shortName(pitcher.fullName) : null;
     const recordLabel = team.wins != null ? `, record ${team.wins} and ${team.losses}` : "";
     const scoreLabel = (isLive || isFinal) ? `, score ${team.score}` : "";
+    const pitcherLabel = pitcherShort ? `, pitcher ${pitcher.fullName}` : "";
     return (
       <button
         type="button"
         className={`sb-m-team-row${isWinner ? " sb-m-winner" : ""}${isLoser ? " sb-m-loser" : ""}`}
         onClick={() => navigate(matchupRoute)}
-        aria-label={`${team.name}${recordLabel}${scoreLabel}. View ${isLive || isFinal ? "live game" : "matchup"}.`}
+        aria-label={`${team.name}${recordLabel}${pitcherLabel}${scoreLabel}. View ${isLive || isFinal ? "live game" : "matchup"}.`}
       >
         <img src={team.logoUrl} alt="" className="sb-m-logo" />
-        <span className="sb-m-name">{teamNickname(team.abbreviation)}</span>
+        <span className="sb-m-name-block">
+          <span className="sb-m-name">{teamNickname(team.abbreviation)}</span>
+          {pitcherShort && <span className="sb-m-pitcher">{pitcherShort}</span>}
+        </span>
         <span className="sb-m-record">
           {team.wins != null ? `${team.wins}-${team.losses}` : ""}
         </span>
@@ -452,9 +457,6 @@ function MobileGameCard({ game, oddsRow, teamId, navigate, isMyTeam }) {
     }
   }
 
-  const hasPitchers = game.away.probablePitcher?.id || game.home.probablePitcher?.id;
-  const showFooter = (isScheduled || isDelayed) && (oddsSummary || hasPitchers);
-
   return (
     <article
       className={`scoreboard-card sb-m-card${isLive ? " live" : ""}${isMyTeam ? " our-game" : ""}`}
@@ -466,49 +468,20 @@ function MobileGameCard({ game, oddsRow, teamId, navigate, isMyTeam }) {
         {renderTeamRow(game.home, true, false)}
       </div>
 
-      {showFooter && (
-        <div className="sb-m-odds">
-          <button
-            type="button"
-            className={`sb-m-odds-summary${!oddsSummary ? " sb-m-odds-summary--no-odds" : ""}`}
-            onClick={() => setOddsOpen((o) => !o)}
-            aria-expanded={oddsOpen}
-            aria-label={`${oddsSummary || "Pitching matchup"}. Tap to ${oddsOpen ? "hide" : "show"} pitcher details.`}
-          >
-            <span className="sb-m-odds-summary-text">
-              {oddsSummary || "Pitching matchup"}
-            </span>
-            <svg
-              className="sb-m-odds-chevron"
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-              focusable="false"
-              style={{ transform: oddsOpen ? "rotate(180deg)" : "none" }}
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </button>
-          {oddsOpen && (
-            <div className="sb-m-odds-detail">
-              {hasPitchers && (
-                <PitcherMatchupLine game={game} teamId={teamId} navigate={navigate} hero />
-              )}
-              {oddsRow?.away?.n_books != null && (
-                <div className="sb-m-odds-source">
-                  From {oddsRow.away.n_books} book{oddsRow.away.n_books === 1 ? "" : "s"}
-                </div>
-              )}
-            </div>
-          )}
+      {oddsSummary && (
+        <div className="sb-m-odds-flat" aria-label={oddsSummary}>
+          {oddsSummary}
         </div>
       )}
+
+      <button
+        type="button"
+        className="sb-m-action"
+        onClick={() => navigate(matchupRoute)}
+        aria-label={`Open ${actionLabel.toLowerCase()} page`}
+      >
+        {actionLabel} ›
+      </button>
     </article>
   );
 }
@@ -1333,44 +1306,58 @@ export default function Scoreboard() {
               </article>
             );
           };
+          const myTeamsSection = groups.myTeams.length > 0 && (
+            <section aria-labelledby="sb-my-teams-hdr">
+              <h2 id="sb-my-teams-hdr" className="sb-section-hdr">My Teams</h2>
+              {groups.myTeams.map(renderCard)}
+            </section>
+          );
+          const liveSection = groups.live.length > 0 && (
+            <section aria-labelledby="sb-live-hdr">
+              <h2 id="sb-live-hdr" className="sb-section-hdr sb-section-hdr-live">
+                <span className="sb-section-hdr-dot" aria-hidden="true" />Live
+              </h2>
+              {groups.live.map(renderCard)}
+            </section>
+          );
+          const upcomingSection = groups.upcoming.length > 0 && (
+            <section aria-labelledby="sb-upcoming-hdr">
+              <h2 id="sb-upcoming-hdr" className="sb-section-hdr">Upcoming</h2>
+              <div className="sb-upcoming-grid">
+                {groups.upcoming.map(renderCard)}
+              </div>
+            </section>
+          );
+          const finalSection = groups.final.length > 0 && (
+            <section aria-labelledby="sb-final-hdr">
+              <h2 id="sb-final-hdr" className="sb-section-hdr">Final</h2>
+              <div className="sb-final-grid">
+                {groups.final.map(renderCard)}
+              </div>
+            </section>
+          );
+
+          if (isMobile) {
+            // Mobile: flat stack with Live below My Teams (not at bottom).
+            return (
+              <>
+                {myTeamsSection}
+                {liveSection}
+                {upcomingSection}
+                {finalSection}
+              </>
+            );
+          }
           return (
             <>
-              {/* Left column on desktop: My Teams + Upcoming + Final. Right column: Live.
-                  On mobile both columns flow as one stacked list (flex column parent). */}
+              {/* Desktop wide: left column carries My Teams + Upcoming + Final;
+                  right column carries Live (side-by-side via the grid in CSS). */}
               <div className="sb-col-left">
-                {groups.myTeams.length > 0 && (
-                  <section aria-labelledby="sb-my-teams-hdr">
-                    <h2 id="sb-my-teams-hdr" className="sb-section-hdr">My Teams</h2>
-                    {groups.myTeams.map(renderCard)}
-                  </section>
-                )}
-                {groups.upcoming.length > 0 && (
-                  <section aria-labelledby="sb-upcoming-hdr">
-                    <h2 id="sb-upcoming-hdr" className="sb-section-hdr">Upcoming</h2>
-                    <div className="sb-upcoming-grid">
-                      {groups.upcoming.map(renderCard)}
-                    </div>
-                  </section>
-                )}
-                {groups.final.length > 0 && (
-                  <section aria-labelledby="sb-final-hdr">
-                    <h2 id="sb-final-hdr" className="sb-section-hdr">Final</h2>
-                    <div className="sb-final-grid">
-                      {groups.final.map(renderCard)}
-                    </div>
-                  </section>
-                )}
+                {myTeamsSection}
+                {upcomingSection}
+                {finalSection}
               </div>
-              {groups.live.length > 0 && (
-                <div className="sb-col-right">
-                  <section aria-labelledby="sb-live-hdr">
-                    <h2 id="sb-live-hdr" className="sb-section-hdr sb-section-hdr-live">
-                      <span className="sb-section-hdr-dot" aria-hidden="true" />Live
-                    </h2>
-                    {groups.live.map(renderCard)}
-                  </section>
-                </div>
-              )}
+              {liveSection && <div className="sb-col-right">{liveSection}</div>}
             </>
           );
           })()}
