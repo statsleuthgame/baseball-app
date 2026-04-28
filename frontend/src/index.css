@@ -10545,18 +10545,54 @@ button.leaders-row:focus-visible {
     line-height: 1;
   }
 
-  /* Flat moneyline/total card — no expand/collapse. */
+  /* Flat odds card — no expand/collapse. Two-row, 3-column grid:
+     [ label ] [ away/over ] [ home/under ]
+     so the label, team abbr, and price each get their own column with
+     comfortable column-gap. Each value cell aligns its abbr left and the
+     price right within the cell, separated by 1fr so they hug the cell edges. */
   .sb-m-odds-flat {
     margin-top: 8px;
-    padding: 12px 16px;
+    padding: 12px 14px;
     border-radius: 12px;
     background: var(--bg-card);
     border: 1px solid var(--border);
-    font-size: 13px;
-    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .sb-m-odds-row {
+    display: grid;
+    grid-template-columns: minmax(72px, auto) 1fr 1fr;
+    align-items: baseline;
+    column-gap: 14px;
+  }
+  .sb-m-odds-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--text-muted);
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  }
+  .sb-m-odds-cell {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    min-width: 0;
+  }
+  .sb-m-odds-team {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.3px;
+  }
+  .sb-m-odds-price {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-bright);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
   }
 
   /* Tiny right-aligned action link below the rows (Matchup › / Stats ›).

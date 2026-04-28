@@ -33,21 +33,26 @@ the rest of that day's slate).
 {
   "updated_at": "2026-04-27T18:30:00.123Z",
   "date": "2026-04-27",
-  "remaining": "499",
+  "remaining": "498",
   "games": [
     {
       "commence_time": "2026-04-27T23:05:00Z",
       "home_team": "Seattle Mariners",
       "away_team": "Houston Astros",
       "home": { "price": -135, "n_books": 7 },
-      "away": { "price": 118, "n_books": 7 }
+      "away": { "price": 118, "n_books": 7 },
+      "total": { "line": 8.5, "over": -110, "under": -110, "n_books": 7 }
     }
   ]
 }
 ```
 
-`price` is the **median** American-odds across US books that posted h2h on
-that game. `home`/`away` is `null` if no book posted a price.
+- `home.price` / `away.price` — **median** American-odds for the moneyline
+  (h2h) across US books. `null` if no book posted that side.
+- `total.line` — median over/under points across books, snapped to 0.5.
+- `total.over` / `total.under` — median American price for each side at the
+  consensus line.
+- Any field is `null` when no book offered that market for the event.
 
 CORS allowlist: `https://statsleuthgame.github.io`, `http://localhost:5173`,
 `http://localhost:4173`. Edit `ALLOWED_ORIGINS` in `src/index.js` to extend.
@@ -96,7 +101,9 @@ curl 'http://localhost:8787/odds?date=2026-04-27' | jq
 
 ## Cost
 
-Every request to `/odds` costs **1 credit** against The Odds API quota
-(`baseball_mlb` × `h2h` market). Free tier is 500 credits/month, so two
-users clicking refresh ~8x/day would consume ~480 credits/month — comfortably
-inside the free tier.
+Every request to `/odds` costs **2 credits** against The Odds API quota
+(`baseball_mlb` × `h2h` + `totals` markets — billed per market, per call).
+Free tier is 500 credits/month, so the budget is roughly **8 refreshes/day**
+across all users before the cap. Manual-only refresh keeps usage predictable;
+if traffic ever exceeds the free tier, drop `totals` from the markets param
+or move to a paid plan.

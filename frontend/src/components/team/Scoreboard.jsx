@@ -447,14 +447,25 @@ function MobileGameCard({ game, oddsRow, teamId, navigate, isMyTeam }) {
     );
   };
 
-  let oddsSummary = null;
-  if (isScheduled && oddsRow) {
-    const awayML = formatMoneyline(oddsRow.away?.price);
-    const homeML = formatMoneyline(oddsRow.home?.price);
-    if (awayML && homeML) {
-      const totalFrag = oddsRow.total != null ? ` · Total: ${oddsRow.total}` : "";
-      oddsSummary = `Moneyline: ${game.away.abbreviation} ${awayML} @ ${game.home.abbreviation} ${homeML}${totalFrag}`;
-    }
+  // Pregame odds: moneyline (always when present) + totals/over-under
+  // (when the proxy supplies a totals object). Layout uses a 3-column grid
+  // — label · away/over · home/under — so values breathe instead of running
+  // together in one line.
+  const awayML = isScheduled ? formatMoneyline(oddsRow?.away?.price) : null;
+  const homeML = isScheduled ? formatMoneyline(oddsRow?.home?.price) : null;
+  const hasMoneyline = !!(awayML && homeML);
+  const total = isScheduled && oddsRow?.total ? oddsRow.total : null;
+  const overPrice = total ? formatMoneyline(total.over) : null;
+  const underPrice = total ? formatMoneyline(total.under) : null;
+  const hasTotal = !!(total && total.line != null && (overPrice || underPrice));
+  const showOddsCard = hasMoneyline || hasTotal;
+
+  const oddsAriaParts = [];
+  if (hasMoneyline) {
+    oddsAriaParts.push(`Moneyline: ${game.away.abbreviation} ${awayML}, ${game.home.abbreviation} ${homeML}`);
+  }
+  if (hasTotal) {
+    oddsAriaParts.push(`Total ${total.line}: over ${overPrice || "—"}, under ${underPrice || "—"}`);
   }
 
   return (
@@ -468,9 +479,38 @@ function MobileGameCard({ game, oddsRow, teamId, navigate, isMyTeam }) {
         {renderTeamRow(game.home, true, false)}
       </div>
 
-      {oddsSummary && (
-        <div className="sb-m-odds-flat" aria-label={oddsSummary}>
-          {oddsSummary}
+      {showOddsCard && (
+        <div
+          className="sb-m-odds-flat"
+          role="group"
+          aria-label={oddsAriaParts.join("; ")}
+        >
+          {hasMoneyline && (
+            <div className="sb-m-odds-row">
+              <span className="sb-m-odds-label">Moneyline</span>
+              <span className="sb-m-odds-cell">
+                <span className="sb-m-odds-team">{game.away.abbreviation}</span>
+                <span className="sb-m-odds-price">{awayML}</span>
+              </span>
+              <span className="sb-m-odds-cell">
+                <span className="sb-m-odds-team">{game.home.abbreviation}</span>
+                <span className="sb-m-odds-price">{homeML}</span>
+              </span>
+            </div>
+          )}
+          {hasTotal && (
+            <div className="sb-m-odds-row">
+              <span className="sb-m-odds-label">Total {total.line}</span>
+              <span className="sb-m-odds-cell">
+                <span className="sb-m-odds-team">O</span>
+                <span className="sb-m-odds-price">{overPrice || "—"}</span>
+              </span>
+              <span className="sb-m-odds-cell">
+                <span className="sb-m-odds-team">U</span>
+                <span className="sb-m-odds-price">{underPrice || "—"}</span>
+              </span>
+            </div>
+          )}
         </div>
       )}
 

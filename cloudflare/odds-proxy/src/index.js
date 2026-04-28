@@ -41,7 +41,7 @@ export default {
       "https://api.the-odds-api.com/v4/sports/baseball_mlb/odds" +
       `?apiKey=${encodeURIComponent(env.ODDS_API_KEY)}` +
       "&regions=us" +
-      "&markets=h2h" +
+      "&markets=h2h,totals" +
       "&oddsFormat=american" +
       "&dateFormat=iso";
 
@@ -77,6 +77,7 @@ export default {
         away_team: e.away_team,
         home: medianFor(e, e.home_team),
         away: medianFor(e, e.away_team),
+        total: medianTotal(e),
       }));
 
     return json(
@@ -115,13 +116,55 @@ function medianFor(event, teamName) {
     if (typeof out?.price === "number") prices.push(out.price);
   }
   if (!prices.length) return null;
-  prices.sort((a, b) => a - b);
-  const mid = Math.floor(prices.length / 2);
-  const median =
-    prices.length % 2 === 1
-      ? prices[mid]
-      : Math.round((prices[mid - 1] + prices[mid]) / 2);
-  return { price: median, n_books: prices.length };
+  return { price: medianAmerican(prices), n_books: prices.length };
+}
+
+// Consensus over/under totals across US books. Lines are usually identical
+// across books (e.g., everyone posts 8.5); when they differ we report the
+// median line and the median over/under prices independently. Returns null
+// if no book posted a totals market for this event.
+function medianTotal(event) {
+  const lines = [];
+  const overPrices = [];
+  const underPrices = [];
+  for (const bk of event.bookmakers || []) {
+    const mkt = (bk.markets || []).find((m) => m.key === "totals");
+    if (!mkt) continue;
+    const over = (mkt.outcomes || []).find((o) => o.name === "Over");
+    const under = (mkt.outcomes || []).find((o) => o.name === "Under");
+    const point = typeof over?.point === "number"
+      ? over.point
+      : (typeof under?.point === "number" ? under.point : null);
+    if (point != null) lines.push(point);
+    if (typeof over?.price === "number") overPrices.push(over.price);
+    if (typeof under?.price === "number") underPrices.push(under.price);
+  }
+  if (!lines.length) return null;
+  return {
+    line: medianHalfPoint(lines),
+    over: overPrices.length ? medianAmerican(overPrices) : null,
+    under: underPrices.length ? medianAmerican(underPrices) : null,
+    n_books: lines.length,
+  };
+}
+
+// American odds median, rounded to integer (e.g., -110, +118).
+function medianAmerican(arr) {
+  const sorted = [...arr].sort((a, b) => a - b);
+  const mid = Math.floor(sorted.length / 2);
+  return sorted.length % 2 === 1
+    ? sorted[mid]
+    : Math.round((sorted[mid - 1] + sorted[mid]) / 2);
+}
+
+// Total points line median, kept at 0.5 precision (lines come as 7, 7.5, 8…).
+function medianHalfPoint(arr) {
+  const sorted = [...arr].sort((a, b) => a - b);
+  const mid = Math.floor(sorted.length / 2);
+  const m = sorted.length % 2 === 1
+    ? sorted[mid]
+    : (sorted[mid - 1] + sorted[mid]) / 2;
+  return Math.round(m * 2) / 2;
 }
 
 function json(body, status, cors) {
