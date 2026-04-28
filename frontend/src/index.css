@@ -4576,36 +4576,63 @@ button.bvp-row:focus-visible {
 
 /* === Compact live cards (desktop right column) ===
    Live cards were running ~250 px tall. The matchup info reads fine in
-   half that space — the height was driven by a full-width Stats button,
-   the inning progress bar (already implied by the LIVE · "Top 6" badge),
-   a wrapping last-play line, and generous internal gaps. Mobile is
-   unaffected because it renders MobileGameCard which doesn't use any of
-   these classes. */
+   half that space — height was driven by a full-width Stats button, the
+   inning progress bar, the LIVE/Gameday header chrome, and a wrapping
+   last-play line. The inning text now lives directly under the diamond
+   so the top-row chrome can drop entirely. Mobile is unaffected because
+   it renders MobileGameCard which doesn't use any of these classes. */
 .scoreboard-card.live {
-  padding: 6px 12px;
+  padding: 4px 10px;
 }
 .scoreboard-card.live.our-game {
-  padding: 8px 14px;
+  padding: 6px 12px;
 }
-/* Inning progress bar is redundant on live cards — the badge already shows
-   "TOP 6" right above the team rows. */
-.scoreboard-card.live .sb-inning-bar { display: none; }
+/* Drop the top chrome — LIVE "TOP 6" badge, inning progress bar, and the
+   absolute-positioned Gameday link. Inning info moves under the diamond. */
+.scoreboard-card.live .sb-inning-bar,
+.scoreboard-card.live .scoreboard-live-badge,
+.scoreboard-card.live .scoreboard-gameday-link { display: none; }
+
+/* Diamond wrapper holds the bases SVG + the inning label below it (e.g.
+   "Top 6"). Centered and tight so the LiveGameInfo row stays compact. */
+.sb-live-diamond-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  flex-shrink: 0;
+}
+.sb-live-diamond-inning {
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  line-height: 1;
+}
 
 /* Trim the LiveGameInfo block (batter · diamond · pitcher + outs + last play). */
 .scoreboard-card.live .sb-live-info {
-  margin-top: 3px;
+  margin-top: 2px;
   padding-top: 3px;
   gap: 2px;
 }
-.scoreboard-card.live .sb-live-situation { font-size: 10px; }
+.scoreboard-card.live .sb-live-info-row { gap: 4px; }
+.scoreboard-card.live .sb-live-player-name { font-size: 11px; }
+.scoreboard-card.live .sb-live-player-sub { font-size: 9px; }
+.scoreboard-card.live .sb-live-situation { font-size: 9px; }
 .scoreboard-card.live .sb-live-out-dot { width: 5px; height: 5px; }
 
 /* Last-play to a single line so a long "Top 5 · Aranda singles…" sentence
    doesn't add a second wrapped row. Hover/title still surfaces full text. */
 .scoreboard-card.live .sb-last-play {
-  margin-top: 4px;
+  margin-top: 3px;
   padding: 3px 2px 0;
+  font-size: 9px;
+  line-height: 1.25;
 }
+.scoreboard-card.live .sb-last-play-label { font-size: 8px; }
 .scoreboard-card.live .sb-last-play-text {
   white-space: nowrap;
   overflow: hidden;
