@@ -915,18 +915,25 @@ function LiveGameInfo({ gamePk, teamId, isOurGame }) {
             </div>
           </button>
         )}
-        <svg
-          className={`sb-live-diamond ${isOurGame ? "sb-our-diamond" : ""}`}
-          width="52" height="52" viewBox="-2 -2 56 56"
-          role="img"
-          aria-label={basesLabel}
-        >
-          <title>{basesLabel}</title>
-          <rect x="17" y="2" width="12" height="12" rx="1.5" transform="rotate(45 23 8)" className={`sb-live-base ${liveState.onSecond ? "occupied" : ""}`} />
-          <rect x="30" y="15" width="12" height="12" rx="1.5" transform="rotate(45 36 21)" className={`sb-live-base ${liveState.onFirst ? "occupied" : ""}`} />
-          <rect x="4" y="15" width="12" height="12" rx="1.5" transform="rotate(45 10 21)" className={`sb-live-base ${liveState.onThird ? "occupied" : ""}`} />
-          <circle cx="23" cy="34" r="2.5" fill="var(--text-muted)" opacity="0.3" />
-        </svg>
+        <div className="sb-live-diamond-wrap">
+          <svg
+            className={`sb-live-diamond ${isOurGame ? "sb-our-diamond" : ""}`}
+            width="44" height="44" viewBox="-2 -2 56 56"
+            role="img"
+            aria-label={basesLabel}
+          >
+            <title>{basesLabel}</title>
+            <rect x="17" y="2" width="12" height="12" rx="1.5" transform="rotate(45 23 8)" className={`sb-live-base ${liveState.onSecond ? "occupied" : ""}`} />
+            <rect x="30" y="15" width="12" height="12" rx="1.5" transform="rotate(45 36 21)" className={`sb-live-base ${liveState.onFirst ? "occupied" : ""}`} />
+            <rect x="4" y="15" width="12" height="12" rx="1.5" transform="rotate(45 10 21)" className={`sb-live-base ${liveState.onThird ? "occupied" : ""}`} />
+            <circle cx="23" cy="34" r="2.5" fill="var(--text-muted)" opacity="0.3" />
+          </svg>
+          {liveState.inning != null && (
+            <span className="sb-live-diamond-inning">
+              {shortInningHalf(liveState.inningState || liveState.inningHalf)} {liveState.inning}
+            </span>
+          )}
+        </div>
         {liveState.pitcher && (
           <button
             type="button"
