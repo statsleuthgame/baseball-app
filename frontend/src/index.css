@@ -7485,13 +7485,50 @@ button.leaders-row:focus-visible {
 }
 .lgp-watch-btn:active { opacity: 0.8; }
 
-/* Game switcher strip */
+/* Game switcher strip — wrapper carries left/right arrow buttons that
+   surface only when content overflows in that direction. */
+.lgp-game-strip-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.lgp-strip-arrow {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 28px;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: var(--text);
+  cursor: pointer;
+  transition: opacity 120ms ease, background-color 120ms ease;
+}
+.lgp-strip-arrow:hover { background: rgba(255, 255, 255, 0.12); }
+.lgp-strip-arrow:active { opacity: 0.7; }
+.lgp-strip-arrow:disabled {
+  opacity: 0;
+  pointer-events: none;
+  cursor: default;
+}
+.lgp-strip-arrow:focus-visible {
+  outline: 2px solid var(--team-secondary);
+  outline-offset: 2px;
+}
+
 .lgp-game-strip {
   display: flex; gap: 6px; overflow-x: auto; padding: 2px 0 8px;
   scrollbar-width: none; -ms-overflow-style: none;
+  flex: 1;
+  min-width: 0;
   /* Center when pills fit; fall back to flex-start on overflow so the
      leading pills don't get clipped and become unreachable via scroll. */
   justify-content: safe center;
+  scroll-behavior: smooth;
 }
 .lgp-game-strip::-webkit-scrollbar { display: none; }
 .lgp-game-pill {

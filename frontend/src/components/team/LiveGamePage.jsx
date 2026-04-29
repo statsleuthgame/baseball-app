@@ -57,6 +57,96 @@ function formatScoringDesc(desc, hrDistance) {
   return parts.length ? parts : working;
 }
 
+// Horizontally scrollable pill list of all live games on the slate, with
+// left/right arrow buttons that surface only when content overflows in
+// that direction. Hidden scrollbar means desktop users had no way to
+// scroll past the visible pills before — the arrows fix that.
+function LiveGamesStrip({ liveGames, currentGamePk, onSelect }) {
+  const stripRef = useRef(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  useEffect(() => {
+    const el = stripRef.current;
+    if (!el) return;
+
+    const update = () => {
+      // Small fudge factor (4 px) so subpixel rounding doesn't leave the
+      // arrow showing when there's effectively nothing left to scroll.
+      const left = el.scrollLeft;
+      const max = el.scrollWidth - el.clientWidth;
+      setCanScrollLeft(left > 4);
+      setCanScrollRight(left < max - 4);
+    };
+
+    update();
+    el.addEventListener("scroll", update, { passive: true });
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    window.addEventListener("resize", update);
+
+    return () => {
+      el.removeEventListener("scroll", update);
+      ro.disconnect();
+      window.removeEventListener("resize", update);
+    };
+  }, [liveGames.length]);
+
+  const scrollByDir = (dir) => {
+    const el = stripRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * Math.max(160, el.clientWidth * 0.7), behavior: "smooth" });
+  };
+
+  return (
+    <div className="lgp-game-strip-wrap">
+      <button
+        type="button"
+        className="lgp-strip-arrow lgp-strip-arrow--left"
+        onClick={() => scrollByDir(-1)}
+        aria-label="Scroll live games left"
+        disabled={!canScrollLeft}
+        tabIndex={canScrollLeft ? 0 : -1}
+        aria-hidden={!canScrollLeft}
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+      </button>
+      <div className="lgp-game-strip" ref={stripRef}>
+        {liveGames.map((g) => {
+          const half = g.inningHalf === "Top" ? "T" : g.inningHalf === "Bottom" ? "B" : "";
+          return (
+            <button
+              key={g.gamePk}
+              className={`lgp-game-pill${String(g.gamePk) === String(currentGamePk) ? " active" : ""}`}
+              onClick={() => onSelect(g.gamePk)}
+            >
+              <span className="lgp-pill-teams">{g.away.abbreviation} {g.away.score ?? 0}</span>
+              <span className="lgp-pill-at">@</span>
+              <span className="lgp-pill-teams">{g.home.abbreviation} {g.home.score ?? 0}</span>
+              {g.inning && <span className="lgp-pill-inning">· {half}{g.inning}</span>}
+            </button>
+          );
+        })}
+      </div>
+      <button
+        type="button"
+        className="lgp-strip-arrow lgp-strip-arrow--right"
+        onClick={() => scrollByDir(1)}
+        aria-label="Scroll live games right"
+        disabled={!canScrollRight}
+        tabIndex={canScrollRight ? 0 : -1}
+        aria-hidden={!canScrollRight}
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="9 18 15 12 9 6" />
+        </svg>
+      </button>
+    </div>
+  );
+}
+
 export default function LiveGamePage() {
   const { gamePk } = useParams();
   const { teamId } = useTeam();
@@ -311,23 +401,11 @@ export default function LiveGamePage() {
     <div className="lgp">
       {/* Game switcher strip — between nav and hero, only when 2+ live games */}
       {liveGames.length >= 2 && (
-        <div className="lgp-game-strip">
-          {liveGames.map(g => {
-            const half = g.inningHalf === "Top" ? "T" : g.inningHalf === "Bottom" ? "B" : "";
-            return (
-              <button
-                key={g.gamePk}
-                className={`lgp-game-pill${String(g.gamePk) === String(gamePk) ? " active" : ""}`}
-                onClick={() => navigate(`/team/${teamId}/live/${g.gamePk}`)}
-              >
-                <span className="lgp-pill-teams">{g.away.abbreviation} {g.away.score ?? 0}</span>
-                <span className="lgp-pill-at">@</span>
-                <span className="lgp-pill-teams">{g.home.abbreviation} {g.home.score ?? 0}</span>
-                {g.inning && <span className="lgp-pill-inning">· {half}{g.inning}</span>}
-              </button>
-            );
-          })}
-        </div>
+        <LiveGamesStrip
+          liveGames={liveGames}
+          currentGamePk={gamePk}
+          onSelect={(pk) => navigate(`/team/${teamId}/live/${pk}`)}
+        />
       )}
 
       {/* ===== HERO HUD ===== */}

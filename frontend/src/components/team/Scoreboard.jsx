@@ -1378,22 +1378,6 @@ export default function Scoreboard() {
                   </div>
                 )}
 
-                {/* Watch button for our live games (no venue row) */}
-                {isOurGame && isLive && (
-                  <a
-                    className="scoreboard-watch-btn"
-                    href={`https://www.mlb.com/tv/g${game.gamePk}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Watch game on MLB (opens in new tab)"
-                  >
-                    <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                      <polygon points="5 3 19 12 5 21 5 3" />
-                    </svg>
-                    Watch
-                  </a>
-                )}
-
                 {/* Gameday link for all active games */}
                 {isLive && !isOurGame && (
                   <a
