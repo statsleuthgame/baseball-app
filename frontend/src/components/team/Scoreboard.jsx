@@ -376,6 +376,20 @@ function PitcherMatchupLine({ game, teamId, navigate, hero = false }) {
   );
 }
 
+// MLB sometimes emits unfamiliar `detailedState` values during late-game
+// review/challenge scenarios ("Manager Challenge", "Umpire Review", etc.)
+// — these were falling through to the upcoming bucket because our string
+// match only knew "In Progress" / "Delayed" / "Delayed Start". Trust
+// abstractGameState as the source of truth: it's "Live" for any game
+// currently being played, regardless of detailedState quirks.
+function isLiveGame(g) {
+  if (!g) return false;
+  if (g.abstractGameState === "Live") return true;
+  return g.status === "In Progress"
+    || g.status === "Delayed"
+    || g.status === "Delayed Start";
+}
+
 function ordinalInning(n) {
   if (!n) return "";
   const mod10 = n % 10;
@@ -441,8 +455,8 @@ function LiveStatusBlock({ liveState, game }) {
 }
 
 function MobileGameCard({ game, oddsRow, teamId, navigate, isMyTeam }) {
-  const isLive = game.status === "In Progress";
-  const isDelayed = game.status === "Delayed Start" || game.status === "Delayed";
+  const isLive = isLiveGame(game);
+  const isDelayed = !isLive && (game.status === "Delayed Start" || game.status === "Delayed");
   const isFinal = game.status === "Final" || game.status === "Game Over";
   const isScheduled = !isLive && !isDelayed && !isFinal;
 
@@ -1104,8 +1118,14 @@ export default function Scoreboard() {
         if (aIsPartner && !bIsPartner && !bIsOurs) return -1;
         if (!aIsPartner && !aIsOurs && bIsPartner) return 1;
 
-        const statusOrder = { "In Progress": 0, "Delayed": 0.5, "Delayed Start": 0.5, "Pre-Game": 1, Warmup: 1, Scheduled: 2, Final: 3 };
-        return (statusOrder[a.status] ?? 4) - (statusOrder[b.status] ?? 4);
+        const sortRank = (g) => {
+          if (isLiveGame(g)) return 0;
+          if (g.status === "Pre-Game" || g.status === "Warmup") return 1;
+          if (g.status === "Scheduled") return 2;
+          if (g.status === "Final") return 3;
+          return 4;
+        };
+        return sortRank(a) - sortRank(b);
       })
     : [];
 
@@ -1117,7 +1137,7 @@ export default function Scoreboard() {
   const groups = { myTeams: [], live: [], upcoming: [], final: [] };
   for (const g of sorted) {
     if (isMyTeamGame(g)) groups.myTeams.push(g);
-    else if (g.status === "In Progress" || g.status === "Delayed" || g.status === "Delayed Start") groups.live.push(g);
+    else if (isLiveGame(g)) groups.live.push(g);
     else if (g.status === "Final" || g.status === "Game Over") groups.final.push(g);
     else groups.upcoming.push(g);
   }
@@ -1194,8 +1214,8 @@ export default function Scoreboard() {
           {(() => {
           const renderCard = (game) => {
             const isOurGame = game.home.id === teamId || game.away.id === teamId;
-            const isLive = game.status === "In Progress";
-            const isDelayed = game.status === "Delayed Start" || game.status === "Delayed";
+            const isLive = isLiveGame(game);
+            const isDelayed = !isLive && (game.status === "Delayed Start" || game.status === "Delayed");
             const isFinal = game.status === "Final" || game.status === "Game Over";
             const isScheduled = !isLive && !isDelayed && !isFinal;
 
