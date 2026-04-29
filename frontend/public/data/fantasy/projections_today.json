@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 372,
+  "projection_count": 349,
   "projections": [
     {
       "player_id": 682829,
@@ -82,6 +82,82 @@
         "rbi_per_pa": 0.1975
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 678246,
+      "name": "Miguel Vargas",
+      "position": "3B",
+      "team_id": 145,
+      "team_abbr": "CWS",
+      "opp_abbr": "LAA",
+      "opp_team_id": 108,
+      "opp_pitcher": {
+        "id": 579328,
+        "fullName": "Yusei Kikuchi"
+      },
+      "park": {
+        "id": 4,
+        "name": "Guaranteed Rate Field",
+        "runs": 104,
+        "hr": 110,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "50",
+        "wind": "13 mph, Out To RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 9.16,
+      "mean_efp": 15.5,
+      "stats_games": 6,
+      "efp": 10.99,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.65,
+        "doubles": 0.95,
+        "triples": 0.33,
+        "home_runs": 2.22,
+        "bb_hbp": 1.81,
+        "r": 3.29,
+        "rbi": 1.43,
+        "sb": 0.86
+      },
+      "multipliers": {
+        "park_hr": 1.1,
+        "park_runs": 1.04,
+        "weather_hr": 0.927,
+        "pitcher_hits": 1.069,
+        "pitcher_hr": 0.916,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.005,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.238,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1276,
+        "doubles": 0.0441,
+        "triples": 0.0096,
+        "home_runs": 0.0517,
+        "bb_hbp": 0.211,
+        "r_per_pa": 0.3826,
+        "rbi_per_pa": 0.1663
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -373,6 +449,82 @@
       "tier": "low"
     },
     {
+      "player_id": 545361,
+      "name": "Mike Trout",
+      "position": "CF",
+      "team_id": 108,
+      "team_abbr": "LAA",
+      "opp_abbr": "CWS",
+      "opp_team_id": 145,
+      "opp_pitcher": {
+        "id": 607200,
+        "fullName": "Erick Fedde"
+      },
+      "park": {
+        "id": 4,
+        "name": "Guaranteed Rate Field",
+        "runs": 104,
+        "hr": 110,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "50",
+        "wind": "13 mph, Out To RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.32,
+      "mean_efp": 11.67,
+      "stats_games": 6,
+      "efp": 10.16,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.31,
+        "doubles": 0.67,
+        "triples": 0.04,
+        "home_runs": 2.37,
+        "bb_hbp": 1.84,
+        "r": 2.8,
+        "rbi": 1.53,
+        "sb": 1.05
+      },
+      "multipliers": {
+        "park_hr": 1.1,
+        "park_runs": 1.04,
+        "weather_hr": 0.927,
+        "pitcher_hits": 0.87,
+        "pitcher_hr": 0.985,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.024,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.038,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.907,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1013,
+        "doubles": 0.0312,
+        "triples": 0.0012,
+        "home_runs": 0.0551,
+        "bb_hbp": 0.2134,
+        "r_per_pa": 0.3253,
+        "rbi_per_pa": 0.1782
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 545121,
       "name": "Ildemaro Vargas",
       "position": "1B",
@@ -512,78 +664,6 @@
         "bb_hbp": 0.0629,
         "r_per_pa": 0.2987,
         "rbi_per_pa": 0.1614
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 678246,
-      "name": "Miguel Vargas",
-      "position": "3B",
-      "team_id": 145,
-      "team_abbr": "CWS",
-      "opp_abbr": "LAA",
-      "opp_team_id": 108,
-      "opp_pitcher": {
-        "id": 579328,
-        "fullName": "Yusei Kikuchi"
-      },
-      "park": {
-        "id": 4,
-        "name": "Guaranteed Rate Field",
-        "runs": 104,
-        "hr": 110,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 9.16,
-      "mean_efp": 15.5,
-      "stats_games": 6,
-      "efp": 10.0,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.53,
-        "doubles": 0.88,
-        "triples": 0.31,
-        "home_runs": 2.23,
-        "bb_hbp": 1.69,
-        "r": 2.66,
-        "rbi": 1.33,
-        "sb": 0.78
-      },
-      "multipliers": {
-        "park_hr": 1.1,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.069,
-        "pitcher_hr": 0.916,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.005,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.238,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1276,
-        "doubles": 0.0441,
-        "triples": 0.0096,
-        "home_runs": 0.0558,
-        "bb_hbp": 0.211,
-        "r_per_pa": 0.3327,
-        "rbi_per_pa": 0.1663
       },
       "pa": 4.0,
       "tier": "low"
@@ -800,78 +880,6 @@
         "bb_hbp": 0.1083,
         "r_per_pa": 0.3256,
         "rbi_per_pa": 0.1979
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 545361,
-      "name": "Mike Trout",
-      "position": "CF",
-      "team_id": 108,
-      "team_abbr": "LAA",
-      "opp_abbr": "CWS",
-      "opp_team_id": 145,
-      "opp_pitcher": {
-        "id": 607200,
-        "fullName": "Erick Fedde"
-      },
-      "park": {
-        "id": 4,
-        "name": "Guaranteed Rate Field",
-        "runs": 104,
-        "hr": 110,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.32,
-      "mean_efp": 11.67,
-      "stats_games": 6,
-      "efp": 9.82,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.22,
-        "doubles": 0.62,
-        "triples": 0.04,
-        "home_runs": 2.38,
-        "bb_hbp": 1.71,
-        "r": 2.87,
-        "rbi": 1.43,
-        "sb": 0.95
-      },
-      "multipliers": {
-        "park_hr": 1.1,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.87,
-        "pitcher_hr": 0.985,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.024,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.038,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1013,
-        "doubles": 0.0312,
-        "triples": 0.0012,
-        "home_runs": 0.0594,
-        "bb_hbp": 0.2134,
-        "r_per_pa": 0.3585,
-        "rbi_per_pa": 0.1782
       },
       "pa": 4.0,
       "tier": "low"
@@ -1813,6 +1821,82 @@
       "tier": "low"
     },
     {
+      "player_id": 668227,
+      "name": "Randy Arozarena",
+      "position": "LF",
+      "team_id": 136,
+      "team_abbr": "SEA",
+      "opp_abbr": "MIN",
+      "opp_team_id": 142,
+      "opp_pitcher": {
+        "id": 671737,
+        "fullName": "Taj Bradley"
+      },
+      "park": {
+        "id": 3312,
+        "name": "Target Field",
+        "runs": 100,
+        "hr": 101,
+        "label": "Neutral"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "49",
+        "wind": "11 mph, Out To RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.87,
+      "mean_efp": 7.67,
+      "stats_games": 6,
+      "efp": 9.26,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.74,
+        "doubles": 1.4,
+        "triples": 0.35,
+        "home_runs": 0.7,
+        "bb_hbp": 1.0,
+        "r": 2.93,
+        "rbi": 1.32,
+        "sb": 1.13
+      },
+      "multipliers": {
+        "park_hr": 1.01,
+        "park_runs": 1.0,
+        "weather_hr": 0.927,
+        "pitcher_hits": 0.97,
+        "pitcher_hr": 0.978,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.072,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.146,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1452,
+        "doubles": 0.07,
+        "triples": 0.0109,
+        "home_runs": 0.0176,
+        "bb_hbp": 0.125,
+        "r_per_pa": 0.3657,
+        "rbi_per_pa": 0.1649
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
       "player_id": 575929,
       "name": "Willson Contreras",
       "position": "1B",
@@ -2099,80 +2183,8 @@
       },
       "pa": 4.0,
       "tier": "low"
-    },
-    {
-      "player_id": 682998,
-      "name": "Corbin Carroll",
-      "position": "RF",
-      "team_id": 109,
-      "team_abbr": "AZ",
-      "opp_abbr": "MIL",
-      "opp_team_id": 158,
-      "opp_pitcher": {
-        "id": 687075,
-        "fullName": "Brandon Sproat"
-      },
-      "park": {
-        "id": 32,
-        "name": "American Family Field",
-        "runs": 103,
-        "hr": 108,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 11.99,
-      "mean_efp": 8.6,
-      "stats_games": 5,
-      "efp": 9.07,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.42,
-        "doubles": 0.85,
-        "triples": 0.67,
-        "home_runs": 1.29,
-        "bb_hbp": 1.52,
-        "r": 2.5,
-        "rbi": 1.21,
-        "sb": 0.9
-      },
-      "multipliers": {
-        "park_hr": 1.08,
-        "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.026,
-        "pitcher_hr": 1.232,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.959,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1181,
-        "doubles": 0.0423,
-        "triples": 0.0211,
-        "home_runs": 0.0324,
-        "bb_hbp": 0.1895,
-        "r_per_pa": 0.3129,
-        "rbi_per_pa": 0.1507
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-04-29T12:32:26.788863+00:00"
+  "generated_at": "2026-04-29T15:02:38.025453+00:00"
 }
