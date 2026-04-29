@@ -165,82 +165,6 @@
       "tier": "low"
     },
     {
-      "player_id": 575929,
-      "name": "Willson Contreras",
-      "position": "1B",
-      "team_id": 111,
-      "team_abbr": "BOS",
-      "opp_abbr": "TOR",
-      "opp_team_id": 141,
-      "opp_pitcher": {
-        "id": 641778,
-        "fullName": "Eric Lauer"
-      },
-      "park": {
-        "id": 14,
-        "name": "Rogers Centre",
-        "runs": 104,
-        "hr": 109,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Roof Closed",
-        "temp": "68",
-        "wind": "0 mph, None"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 6.69,
-      "mean_efp": 5.71,
-      "stats_games": 7,
-      "efp": 11.0,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.59,
-        "doubles": 0.62,
-        "triples": 0.05,
-        "home_runs": 4.32,
-        "bb_hbp": 1.51,
-        "r": 2.98,
-        "rbi": 1.48,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 1.09,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.993,
-        "pitcher_hr": 1.3,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.25,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.15,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1232,
-        "doubles": 0.029,
-        "triples": 0.0014,
-        "home_runs": 0.1006,
-        "bb_hbp": 0.1751,
-        "r_per_pa": 0.3465,
-        "rbi_per_pa": 0.1724
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
       "player_id": 701398,
       "name": "Sal Stewart",
       "position": "1B",
@@ -314,6 +238,82 @@
         "rbi_per_pa": 0.1848
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 575929,
+      "name": "Willson Contreras",
+      "position": "1B",
+      "team_id": 111,
+      "team_abbr": "BOS",
+      "opp_abbr": "TOR",
+      "opp_team_id": 141,
+      "opp_pitcher": {
+        "id": 641778,
+        "fullName": "Eric Lauer"
+      },
+      "park": {
+        "id": 14,
+        "name": "Rogers Centre",
+        "runs": 104,
+        "hr": 109,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "68",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 6.69,
+      "mean_efp": 5.71,
+      "stats_games": 7,
+      "efp": 10.95,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.57,
+        "doubles": 0.62,
+        "triples": 0.05,
+        "home_runs": 4.3,
+        "bb_hbp": 1.51,
+        "r": 2.98,
+        "rbi": 1.48,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 1.09,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.982,
+        "pitcher_hr": 1.292,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.25,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1219,
+        "doubles": 0.0287,
+        "triples": 0.0014,
+        "home_runs": 0.0999,
+        "bb_hbp": 0.1751,
+        "r_per_pa": 0.3465,
+        "rbi_per_pa": 0.1724
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -489,7 +489,7 @@
       },
       "weather": {
         "condition": "Sunny",
-        "temp": "67",
+        "temp": "71",
         "wind": "13 mph, L To R"
       },
       "pa_source": "lineup",
@@ -540,6 +540,82 @@
         "bb_hbp": 0.1128,
         "r_per_pa": 0.342,
         "rbi_per_pa": 0.1987
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 678246,
+      "name": "Miguel Vargas",
+      "position": "3B",
+      "team_id": 145,
+      "team_abbr": "CWS",
+      "opp_abbr": "LAA",
+      "opp_team_id": 108,
+      "opp_pitcher": {
+        "id": 579328,
+        "fullName": "Yusei Kikuchi"
+      },
+      "park": {
+        "id": 4,
+        "name": "Guaranteed Rate Field",
+        "runs": 104,
+        "hr": 110,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "51",
+        "wind": "12 mph, Out To RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 9.16,
+      "mean_efp": 15.5,
+      "stats_games": 6,
+      "efp": 10.49,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.65,
+        "doubles": 0.93,
+        "triples": 0.33,
+        "home_runs": 1.96,
+        "bb_hbp": 1.82,
+        "r": 3.25,
+        "rbi": 1.32,
+        "sb": 0.71
+      },
+      "multipliers": {
+        "park_hr": 1.1,
+        "park_runs": 1.04,
+        "weather_hr": 0.927,
+        "pitcher_hits": 1.065,
+        "pitcher_hr": 0.895,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.005,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.238,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1281,
+        "doubles": 0.0434,
+        "triples": 0.0095,
+        "home_runs": 0.0456,
+        "bb_hbp": 0.2118,
+        "r_per_pa": 0.3774,
+        "rbi_per_pa": 0.1533
       },
       "pa": 4.3,
       "tier": "low"
@@ -693,82 +769,6 @@
       "tier": "low"
     },
     {
-      "player_id": 678246,
-      "name": "Miguel Vargas",
-      "position": "3B",
-      "team_id": 145,
-      "team_abbr": "CWS",
-      "opp_abbr": "LAA",
-      "opp_team_id": 108,
-      "opp_pitcher": {
-        "id": 579328,
-        "fullName": "Yusei Kikuchi"
-      },
-      "park": {
-        "id": 4,
-        "name": "Guaranteed Rate Field",
-        "runs": 104,
-        "hr": 110,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "51",
-        "wind": "12 mph, Out To RF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 9.16,
-      "mean_efp": 15.5,
-      "stats_games": 6,
-      "efp": 10.42,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.67,
-        "doubles": 0.94,
-        "triples": 0.33,
-        "home_runs": 1.97,
-        "bb_hbp": 1.76,
-        "r": 3.2,
-        "rbi": 1.32,
-        "sb": 0.71
-      },
-      "multipliers": {
-        "park_hr": 1.1,
-        "park_runs": 1.04,
-        "weather_hr": 0.927,
-        "pitcher_hits": 1.065,
-        "pitcher_hr": 0.895,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.005,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.238,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.15,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1293,
-        "doubles": 0.0437,
-        "triples": 0.0095,
-        "home_runs": 0.0458,
-        "bb_hbp": 0.2046,
-        "r_per_pa": 0.3718,
-        "rbi_per_pa": 0.1533
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
       "player_id": 672695,
       "name": "Geraldo Perdomo",
       "position": "SS",
@@ -865,7 +865,7 @@
       },
       "weather": {
         "condition": "Sunny",
-        "temp": "67",
+        "temp": "71",
         "wind": "13 mph, L To R"
       },
       "pa_source": "lineup",
@@ -948,11 +948,11 @@
       "stdev_efp": 6.26,
       "mean_efp": 7.13,
       "stats_games": 15,
-      "efp": 10.2,
+      "efp": 10.24,
       "bat_side": "R",
       "per_event": {
-        "singles": 3.43,
-        "doubles": 1.62,
+        "singles": 3.47,
+        "doubles": 1.64,
         "triples": 0.06,
         "home_runs": 0.9,
         "bb_hbp": 0.9,
@@ -964,8 +964,8 @@
         "park_hr": 1.09,
         "park_runs": 1.04,
         "weather_hr": 1.0,
-        "pitcher_hits": 1.258,
-        "pitcher_hr": 1.305,
+        "pitcher_hits": 1.27,
+        "pitcher_hr": 1.301,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -985,9 +985,9 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.2662,
-        "doubles": 0.0755,
-        "triples": 0.0018,
+        "singles": 0.2687,
+        "doubles": 0.0762,
+        "triples": 0.0019,
         "home_runs": 0.021,
         "bb_hbp": 0.105,
         "r_per_pa": 0.3454,
@@ -1100,13 +1100,13 @@
       "stdev_efp": 6.26,
       "mean_efp": 7.83,
       "stats_games": 6,
-      "efp": 10.0,
+      "efp": 10.02,
       "bat_side": "L",
       "per_event": {
-        "singles": 2.44,
-        "doubles": 1.24,
+        "singles": 2.47,
+        "doubles": 1.26,
         "triples": 0.07,
-        "home_runs": 2.83,
+        "home_runs": 2.82,
         "bb_hbp": 0.6,
         "r": 2.74,
         "rbi": 1.48,
@@ -1116,8 +1116,8 @@
         "park_hr": 1.09,
         "park_runs": 1.04,
         "weather_hr": 1.0,
-        "pitcher_hits": 1.258,
-        "pitcher_hr": 1.305,
+        "pitcher_hits": 1.27,
+        "pitcher_hr": 1.301,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -1137,10 +1137,10 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1894,
-        "doubles": 0.0578,
+        "singles": 0.1912,
+        "doubles": 0.0584,
         "triples": 0.0021,
-        "home_runs": 0.0658,
+        "home_runs": 0.0656,
         "bb_hbp": 0.0703,
         "r_per_pa": 0.3182,
         "rbi_per_pa": 0.1724
@@ -1297,6 +1297,82 @@
       "tier": "low"
     },
     {
+      "player_id": 673962,
+      "name": "Josh Jung",
+      "position": "3B",
+      "team_id": 140,
+      "team_abbr": "TEX",
+      "opp_abbr": "NYY",
+      "opp_team_id": 147,
+      "opp_pitcher": {
+        "id": 695684,
+        "fullName": "Elmer Rodr\u00edguez"
+      },
+      "park": {
+        "id": 5325,
+        "name": "Globe Life Field",
+        "runs": 104,
+        "hr": 108,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "74",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.19,
+      "mean_efp": 10.5,
+      "stats_games": 6,
+      "efp": 9.92,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.08,
+        "doubles": 1.85,
+        "triples": 0.05,
+        "home_runs": 1.63,
+        "bb_hbp": 0.88,
+        "r": 2.98,
+        "rbi": 1.53,
+        "sb": 0.31
+      },
+      "multipliers": {
+        "park_hr": 1.08,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.0,
+        "pitcher_hr": 1.0,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.0,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.0,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.054,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1616,
+        "doubles": 0.0862,
+        "triples": 0.0015,
+        "home_runs": 0.0379,
+        "bb_hbp": 0.1024,
+        "r_per_pa": 0.3469,
+        "rbi_per_pa": 0.1778
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 671056,
       "name": "Iv\u00e1n Herrera",
       "position": "C",
@@ -1368,82 +1444,6 @@
         "bb_hbp": 0.237,
         "r_per_pa": 0.3991,
         "rbi_per_pa": 0.1642
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 673962,
-      "name": "Josh Jung",
-      "position": "3B",
-      "team_id": 140,
-      "team_abbr": "TEX",
-      "opp_abbr": "NYY",
-      "opp_team_id": 147,
-      "opp_pitcher": {
-        "id": 695684,
-        "fullName": "Elmer Rodr\u00edguez"
-      },
-      "park": {
-        "id": 5325,
-        "name": "Globe Life Field",
-        "runs": 104,
-        "hr": 108,
-        "label": "Slight Hitter"
-      },
-      "weather": {
-        "condition": "Roof Closed",
-        "temp": "74",
-        "wind": "0 mph, None"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 5.19,
-      "mean_efp": 10.5,
-      "stats_games": 6,
-      "efp": 9.85,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.02,
-        "doubles": 1.87,
-        "triples": 0.05,
-        "home_runs": 1.64,
-        "bb_hbp": 0.89,
-        "r": 2.95,
-        "rbi": 1.52,
-        "sb": 0.31
-      },
-      "multipliers": {
-        "park_hr": 1.08,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 1.0,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.0,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.054,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1565,
-        "doubles": 0.0869,
-        "triples": 0.0015,
-        "home_runs": 0.0381,
-        "bb_hbp": 0.1033,
-        "r_per_pa": 0.3431,
-        "rbi_per_pa": 0.1766
       },
       "pa": 4.3,
       "tier": "low"
@@ -1552,15 +1552,15 @@
       "stdev_efp": 6.25,
       "mean_efp": 6.71,
       "stats_games": 7,
-      "efp": 9.77,
+      "efp": 9.78,
       "bat_side": "L",
       "per_event": {
-        "singles": 2.51,
-        "doubles": 1.2,
+        "singles": 2.46,
+        "doubles": 1.17,
         "triples": 0.13,
-        "home_runs": 2.05,
-        "bb_hbp": 1.09,
-        "r": 2.71,
+        "home_runs": 2.02,
+        "bb_hbp": 1.17,
+        "r": 2.76,
         "rbi": 1.46,
         "sb": 0.0
       },
@@ -1568,8 +1568,8 @@
         "park_hr": 1.09,
         "park_runs": 1.04,
         "weather_hr": 1.0,
-        "pitcher_hits": 0.993,
-        "pitcher_hr": 1.3,
+        "pitcher_hits": 0.982,
+        "pitcher_hr": 1.292,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -1589,13 +1589,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1947,
-        "doubles": 0.0556,
-        "triples": 0.0039,
-        "home_runs": 0.0477,
-        "bb_hbp": 0.1268,
-        "r_per_pa": 0.3155,
-        "rbi_per_pa": 0.1695
+        "singles": 0.191,
+        "doubles": 0.0545,
+        "triples": 0.0038,
+        "home_runs": 0.0469,
+        "bb_hbp": 0.1355,
+        "r_per_pa": 0.3204,
+        "rbi_per_pa": 0.1696
       },
       "pa": 4.3,
       "tier": "low"
@@ -1693,7 +1693,7 @@
       },
       "weather": {
         "condition": "Sunny",
-        "temp": "67",
+        "temp": "71",
         "wind": "13 mph, L To R"
       },
       "pa_source": "lineup",
@@ -1901,6 +1901,82 @@
       "tier": "low"
     },
     {
+      "player_id": 676391,
+      "name": "Ernie Clement",
+      "position": "2B",
+      "team_id": 141,
+      "team_abbr": "TOR",
+      "opp_abbr": "BOS",
+      "opp_team_id": 111,
+      "opp_pitcher": {
+        "id": 678394,
+        "fullName": "Brayan Bello"
+      },
+      "park": {
+        "id": 14,
+        "name": "Rogers Centre",
+        "runs": 104,
+        "hr": 109,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "68",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 3.04,
+      "mean_efp": 8.33,
+      "stats_games": 6,
+      "efp": 9.4,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.87,
+        "doubles": 2.45,
+        "triples": 0.06,
+        "home_runs": 0.64,
+        "bb_hbp": 0.47,
+        "r": 2.84,
+        "rbi": 1.25,
+        "sb": 0.15
+      },
+      "multipliers": {
+        "park_hr": 1.09,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.27,
+        "pitcher_hr": 1.301,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.911,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.0,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.2223,
+        "doubles": 0.114,
+        "triples": 0.0019,
+        "home_runs": 0.015,
+        "bb_hbp": 0.0548,
+        "r_per_pa": 0.33,
+        "rbi_per_pa": 0.1449
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 663538,
       "name": "Nico Hoerner",
       "position": "2B",
@@ -1921,7 +1997,7 @@
       },
       "weather": {
         "condition": "Sunny",
-        "temp": "67",
+        "temp": "71",
         "wind": "13 mph, L To R"
       },
       "pa_source": "lineup",
@@ -2129,82 +2205,6 @@
       "tier": "low"
     },
     {
-      "player_id": 676391,
-      "name": "Ernie Clement",
-      "position": "2B",
-      "team_id": 141,
-      "team_abbr": "TOR",
-      "opp_abbr": "BOS",
-      "opp_team_id": 111,
-      "opp_pitcher": {
-        "id": 678394,
-        "fullName": "Brayan Bello"
-      },
-      "park": {
-        "id": 14,
-        "name": "Rogers Centre",
-        "runs": 104,
-        "hr": 109,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Roof Closed",
-        "temp": "68",
-        "wind": "0 mph, None"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 3.04,
-      "mean_efp": 8.33,
-      "stats_games": 6,
-      "efp": 9.36,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.84,
-        "doubles": 2.43,
-        "triples": 0.06,
-        "home_runs": 0.65,
-        "bb_hbp": 0.47,
-        "r": 2.84,
-        "rbi": 1.25,
-        "sb": 0.15
-      },
-      "multipliers": {
-        "park_hr": 1.09,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.258,
-        "pitcher_hr": 1.305,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.911,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.0,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.15,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.2202,
-        "doubles": 0.1129,
-        "triples": 0.0018,
-        "home_runs": 0.015,
-        "bb_hbp": 0.0548,
-        "r_per_pa": 0.33,
-        "rbi_per_pa": 0.1449
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
       "player_id": 676609,
       "name": "Jos\u00e9 Caballero",
       "position": "SS",
@@ -2282,5 +2282,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-04-29T20:00:24.914024+00:00"
+  "generated_at": "2026-04-29T20:08:39.119446+00:00"
 }
