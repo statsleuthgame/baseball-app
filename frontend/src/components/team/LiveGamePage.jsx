@@ -1245,10 +1245,6 @@ function BoxScoreSection({ boxOpen, setBoxOpen, boxData, gameInfo, teamId }) {
       </button>
       {boxOpen && boxData && (
         <div className="lgp-box-full">
-          {(!isMobile || isFinal) && (
-            <TopPerformersStrip teams={teams} navigate={navigate} teamId={teamId} />
-          )}
-
           {/* Team selector tabs */}
           <div className="lgp-box-tabs">
             {["away", "home"].map((side) => (
@@ -1360,6 +1356,13 @@ function BoxScoreSection({ boxOpen, setBoxOpen, boxData, gameInfo, teamId }) {
                 );
               })}
             </>
+          )}
+
+          {/* Top Performers strip — moved to the bottom so the box score
+              table reads first. Mobile in-progress games still skip it
+              (the live HUD already surfaces the same info up top). */}
+          {(!isMobile || isFinal) && (
+            <TopPerformersStrip teams={teams} navigate={navigate} teamId={teamId} />
           )}
         </div>
       )}
