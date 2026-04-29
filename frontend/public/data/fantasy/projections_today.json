@@ -10,8 +10,84 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 313,
+  "projection_count": 309,
   "projections": [
+    {
+      "player_id": 682829,
+      "name": "Elly De La Cruz",
+      "position": "SS",
+      "team_id": 113,
+      "team_abbr": "CIN",
+      "opp_abbr": "COL",
+      "opp_team_id": 115,
+      "opp_pitcher": {
+        "id": 608372,
+        "fullName": "Tomoyuki Sugano"
+      },
+      "park": {
+        "id": 2602,
+        "name": "Great American Ball Park",
+        "runs": 109,
+        "hr": 116,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "63",
+        "wind": "11 mph, Out To CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.28,
+      "mean_efp": 11.06,
+      "stats_games": 16,
+      "efp": 12.4,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 2.18,
+        "doubles": 0.82,
+        "triples": 0.05,
+        "home_runs": 4.05,
+        "bb_hbp": 0.65,
+        "r": 3.17,
+        "rbi": 1.7,
+        "sb": 1.53
+      },
+      "multipliers": {
+        "park_hr": 1.16,
+        "park_runs": 1.09,
+        "weather_hr": 1.08,
+        "pitcher_hits": 0.995,
+        "pitcher_hr": 1.174,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.988,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1686,
+        "doubles": 0.0384,
+        "triples": 0.0015,
+        "home_runs": 0.0942,
+        "bb_hbp": 0.0758,
+        "r_per_pa": 0.3691,
+        "rbi_per_pa": 0.1975
+      },
+      "pa": 4.3,
+      "tier": "medium"
+    },
     {
       "player_id": 592450,
       "name": "Aaron Judge",
@@ -89,9 +165,9 @@
       "tier": "medium"
     },
     {
-      "player_id": 682829,
-      "name": "Elly De La Cruz",
-      "position": "SS",
+      "player_id": 701398,
+      "name": "Sal Stewart",
+      "position": "1B",
       "team_id": 113,
       "team_abbr": "CIN",
       "opp_abbr": "COL",
@@ -112,21 +188,21 @@
         "temp": "63",
         "wind": "11 mph, Out To CF"
       },
-      "pa_source": "default",
-      "stdev_efp": 7.28,
-      "mean_efp": 11.06,
-      "stats_games": 16,
-      "efp": 11.29,
-      "bat_side": "S",
+      "pa_source": "lineup",
+      "stdev_efp": 10.22,
+      "mean_efp": 9.83,
+      "stats_games": 6,
+      "efp": 10.99,
+      "bat_side": "R",
       "per_event": {
-        "singles": 2.02,
-        "doubles": 0.77,
+        "singles": 1.81,
+        "doubles": 1.04,
         "triples": 0.05,
-        "home_runs": 3.77,
-        "bb_hbp": 0.61,
-        "r": 2.57,
-        "rbi": 1.58,
-        "sb": 1.53
+        "home_runs": 3.3,
+        "bb_hbp": 0.64,
+        "r": 2.9,
+        "rbi": 1.48,
+        "sb": 1.32
       },
       "multipliers": {
         "park_hr": 1.16,
@@ -149,17 +225,17 @@
         "speed_singles": 1.0,
         "speed_r": 1.0,
         "bvpt": 1.0,
-        "ondeck_r": 1.0,
+        "ondeck_r": 1.15,
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1686,
-        "doubles": 0.0384,
+        "singles": 0.1508,
+        "doubles": 0.0519,
         "triples": 0.0015,
-        "home_runs": 0.0942,
-        "bb_hbp": 0.0758,
-        "r_per_pa": 0.321,
-        "rbi_per_pa": 0.1975
+        "home_runs": 0.0825,
+        "bb_hbp": 0.0798,
+        "r_per_pa": 0.3629,
+        "rbi_per_pa": 0.1848
       },
       "pa": 4.0,
       "tier": "low"
@@ -238,82 +314,6 @@
         "rbi_per_pa": 0.1979
       },
       "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 701398,
-      "name": "Sal Stewart",
-      "position": "1B",
-      "team_id": 113,
-      "team_abbr": "CIN",
-      "opp_abbr": "COL",
-      "opp_team_id": 115,
-      "opp_pitcher": {
-        "id": 608372,
-        "fullName": "Tomoyuki Sugano"
-      },
-      "park": {
-        "id": 2602,
-        "name": "Great American Ball Park",
-        "runs": 109,
-        "hr": 116,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "63",
-        "wind": "11 mph, Out To CF"
-      },
-      "pa_source": "default",
-      "stdev_efp": 10.22,
-      "mean_efp": 9.83,
-      "stats_games": 6,
-      "efp": 10.71,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.81,
-        "doubles": 1.04,
-        "triples": 0.05,
-        "home_runs": 3.3,
-        "bb_hbp": 0.64,
-        "r": 2.52,
-        "rbi": 1.48,
-        "sb": 1.39
-      },
-      "multipliers": {
-        "park_hr": 1.16,
-        "park_runs": 1.09,
-        "weather_hr": 1.08,
-        "pitcher_hits": 0.995,
-        "pitcher_hr": 1.174,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.988,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1508,
-        "doubles": 0.0519,
-        "triples": 0.0015,
-        "home_runs": 0.0825,
-        "bb_hbp": 0.0798,
-        "r_per_pa": 0.3156,
-        "rbi_per_pa": 0.1848
-      },
-      "pa": 4.0,
       "tier": "low"
     },
     {
@@ -420,16 +420,16 @@
       "stdev_efp": 9.16,
       "mean_efp": 15.5,
       "stats_games": 6,
-      "efp": 10.49,
+      "efp": 10.6,
       "bat_side": "R",
       "per_event": {
-        "singles": 1.61,
-        "doubles": 0.96,
+        "singles": 1.7,
+        "doubles": 0.95,
         "triples": 0.33,
-        "home_runs": 2.0,
-        "bb_hbp": 1.81,
-        "r": 3.22,
-        "rbi": 1.33,
+        "home_runs": 1.99,
+        "bb_hbp": 1.79,
+        "r": 3.27,
+        "rbi": 1.35,
         "sb": 0.71
       },
       "multipliers": {
@@ -457,13 +457,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1244,
-        "doubles": 0.0446,
+        "singles": 0.1319,
+        "doubles": 0.0443,
         "triples": 0.0096,
-        "home_runs": 0.0465,
-        "bb_hbp": 0.2106,
-        "r_per_pa": 0.3745,
-        "rbi_per_pa": 0.1549
+        "home_runs": 0.0463,
+        "bb_hbp": 0.2085,
+        "r_per_pa": 0.38,
+        "rbi_per_pa": 0.1575
       },
       "pa": 4.3,
       "tier": "low"
@@ -536,6 +536,82 @@
         "bb_hbp": 0.1587,
         "r_per_pa": 0.3546,
         "rbi_per_pa": 0.2029
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 663993,
+      "name": "Nathaniel Lowe",
+      "position": "1B",
+      "team_id": 113,
+      "team_abbr": "CIN",
+      "opp_abbr": "COL",
+      "opp_team_id": 115,
+      "opp_pitcher": {
+        "id": 608372,
+        "fullName": "Tomoyuki Sugano"
+      },
+      "park": {
+        "id": 2602,
+        "name": "Great American Ball Park",
+        "runs": 109,
+        "hr": 116,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "63",
+        "wind": "11 mph, Out To CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 4.15,
+      "mean_efp": 4.5,
+      "stats_games": 6,
+      "efp": 10.44,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.82,
+        "doubles": 1.11,
+        "triples": 0.07,
+        "home_runs": 4.16,
+        "bb_hbp": 0.55,
+        "r": 2.68,
+        "rbi": 1.54,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 1.16,
+        "park_runs": 1.09,
+        "weather_hr": 1.08,
+        "pitcher_hits": 0.995,
+        "pitcher_hr": 1.174,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.988,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.11,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1518,
+        "doubles": 0.0553,
+        "triples": 0.0021,
+        "home_runs": 0.104,
+        "bb_hbp": 0.0682,
+        "r_per_pa": 0.3344,
+        "rbi_per_pa": 0.1929
       },
       "pa": 4.0,
       "tier": "low"
@@ -845,82 +921,6 @@
       "tier": "low"
     },
     {
-      "player_id": 663993,
-      "name": "Nathaniel Lowe",
-      "position": "1B",
-      "team_id": 113,
-      "team_abbr": "CIN",
-      "opp_abbr": "COL",
-      "opp_team_id": 115,
-      "opp_pitcher": {
-        "id": 608372,
-        "fullName": "Tomoyuki Sugano"
-      },
-      "park": {
-        "id": 2602,
-        "name": "Great American Ball Park",
-        "runs": 109,
-        "hr": 116,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "63",
-        "wind": "11 mph, Out To CF"
-      },
-      "pa_source": "default",
-      "stdev_efp": 4.15,
-      "mean_efp": 4.5,
-      "stats_games": 6,
-      "efp": 10.21,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.82,
-        "doubles": 1.11,
-        "triples": 0.07,
-        "home_runs": 4.16,
-        "bb_hbp": 0.55,
-        "r": 2.41,
-        "rbi": 1.54,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 1.16,
-        "park_runs": 1.09,
-        "weather_hr": 1.08,
-        "pitcher_hits": 0.995,
-        "pitcher_hr": 1.174,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.988,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1518,
-        "doubles": 0.0553,
-        "triples": 0.0021,
-        "home_runs": 0.104,
-        "bb_hbp": 0.0682,
-        "r_per_pa": 0.3013,
-        "rbi_per_pa": 0.1929
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 545361,
       "name": "Mike Trout",
       "position": "CF",
@@ -948,13 +948,13 @@
       "stdev_efp": 7.32,
       "mean_efp": 11.67,
       "stats_games": 6,
-      "efp": 10.1,
+      "efp": 10.09,
       "bat_side": "R",
       "per_event": {
         "singles": 1.24,
         "doubles": 0.66,
         "triples": 0.04,
-        "home_runs": 2.33,
+        "home_runs": 2.32,
         "bb_hbp": 1.87,
         "r": 2.81,
         "rbi": 1.55,
@@ -985,11 +985,11 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.0959,
+        "singles": 0.0957,
         "doubles": 0.0308,
         "triples": 0.0012,
-        "home_runs": 0.0542,
-        "bb_hbp": 0.2178,
+        "home_runs": 0.0541,
+        "bb_hbp": 0.2173,
         "r_per_pa": 0.3271,
         "rbi_per_pa": 0.1801
       },
@@ -2189,51 +2189,51 @@
       "tier": "low"
     },
     {
-      "player_id": 668227,
-      "name": "Randy Arozarena",
-      "position": "LF",
-      "team_id": 136,
-      "team_abbr": "SEA",
-      "opp_abbr": "MIN",
-      "opp_team_id": 142,
+      "player_id": 680574,
+      "name": "Matt McLain",
+      "position": "2B",
+      "team_id": 113,
+      "team_abbr": "CIN",
+      "opp_abbr": "COL",
+      "opp_team_id": 115,
       "opp_pitcher": {
-        "id": 671737,
-        "fullName": "Taj Bradley"
+        "id": 608372,
+        "fullName": "Tomoyuki Sugano"
       },
       "park": {
-        "id": 3312,
-        "name": "Target Field",
-        "runs": 100,
-        "hr": 101,
-        "label": "Neutral"
+        "id": 2602,
+        "name": "Great American Ball Park",
+        "runs": 109,
+        "hr": 116,
+        "label": "Hitter Friendly"
       },
       "weather": {
         "condition": "Partly Cloudy",
-        "temp": "51",
-        "wind": "12 mph, R To L"
+        "temp": "63",
+        "wind": "11 mph, Out To CF"
       },
       "pa_source": "lineup",
-      "stdev_efp": 7.87,
-      "mean_efp": 7.67,
+      "stdev_efp": 10.58,
+      "mean_efp": 12.5,
       "stats_games": 6,
-      "efp": 9.25,
+      "efp": 9.2,
       "bat_side": "R",
       "per_event": {
-        "singles": 1.67,
-        "doubles": 1.43,
-        "triples": 0.36,
-        "home_runs": 0.68,
-        "bb_hbp": 1.01,
-        "r": 2.94,
-        "rbi": 1.34,
-        "sb": 1.13
+        "singles": 1.66,
+        "doubles": 1.33,
+        "triples": 0.05,
+        "home_runs": 1.75,
+        "bb_hbp": 0.79,
+        "r": 2.9,
+        "rbi": 1.25,
+        "sb": 0.76
       },
       "multipliers": {
-        "park_hr": 1.01,
-        "park_runs": 1.0,
-        "weather_hr": 0.9,
-        "pitcher_hits": 0.954,
-        "pitcher_hr": 0.969,
+        "park_hr": 1.16,
+        "park_runs": 1.09,
+        "weather_hr": 1.08,
+        "pitcher_hits": 0.995,
+        "pitcher_hr": 1.174,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -2241,9 +2241,9 @@
         "stx_xwoba": 1.0,
         "stx_barrel": 1.0,
         "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.072,
+        "pitcher_gb_hr": 0.988,
         "k_damper": 1.0,
-        "pitcher_bb": 1.146,
+        "pitcher_bb": 0.75,
         "park_hand_hr": 1.0,
         "sb_speed": 1.0,
         "speed_singles": 1.0,
@@ -2253,18 +2253,18 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1394,
-        "doubles": 0.0713,
-        "triples": 0.0113,
-        "home_runs": 0.0169,
-        "bb_hbp": 0.1265,
-        "r_per_pa": 0.367,
-        "rbi_per_pa": 0.1675
+        "singles": 0.1287,
+        "doubles": 0.0618,
+        "triples": 0.0015,
+        "home_runs": 0.0407,
+        "bb_hbp": 0.0917,
+        "r_per_pa": 0.3372,
+        "rbi_per_pa": 0.1459
       },
-      "pa": 4.0,
+      "pa": 4.3,
       "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-04-29T18:00:59.369984+00:00"
+  "generated_at": "2026-04-29T18:09:41.512083+00:00"
 }
