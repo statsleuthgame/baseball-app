@@ -6721,9 +6721,9 @@ button.leaders-row:focus-visible {
   .lgp-hud-abbr { font-size: 13px; }
 }
 
-/* === Top Performers strip (box score header) === */
+/* === Top Performers strip (sits at the bottom of the box score) === */
 .lgp-top-performers {
-  margin-bottom: 10px;
+  margin-top: 12px;
   padding: 8px 10px;
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.06);
