@@ -1493,6 +1493,12 @@ export const fetchAllGamesToday = async (dateStr) => {
           gamePk: g.gamePk,
           gameDate: g.gameDate || "",
           status: normalizeStatus(g.status?.detailedState),
+          // abstractGameState is the most reliable signal of "is this game
+          // currently being played?" — detailedState briefly takes on
+          // unfamiliar values during late-game review/challenge states
+          // ("Manager Challenge", "Umpire Review", etc.), which would
+          // otherwise miscategorize a 9th-inning game as upcoming.
+          abstractGameState: g.status?.abstractGameState || "",
           inning: ls.currentInning || null,
           inningHalf: ls.inningHalf || "",
           venue: g.venue?.name || "",
