@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 315,
+  "projection_count": 307,
   "projections": [
     {
       "player_id": 592450,
@@ -81,6 +81,82 @@
         "bb_hbp": 0.1501,
         "r_per_pa": 0.3771,
         "rbi_per_pa": 0.1993
+      },
+      "pa": 4.3,
+      "tier": "medium"
+    },
+    {
+      "player_id": 670541,
+      "name": "Yordan Alvarez",
+      "position": "LF",
+      "team_id": 117,
+      "team_abbr": "HOU",
+      "opp_abbr": "BOS",
+      "opp_team_id": 111,
+      "opp_pitcher": {
+        "id": 687562,
+        "fullName": "Jake Bennett"
+      },
+      "park": {
+        "id": 3,
+        "name": "Fenway Park",
+        "runs": 108,
+        "hr": 99,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Clear",
+        "temp": "60",
+        "wind": "6 mph, Out To RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 6.12,
+      "mean_efp": 11.83,
+      "stats_games": 6,
+      "efp": 11.53,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.56,
+        "doubles": 1.14,
+        "triples": 0.05,
+        "home_runs": 3.47,
+        "bb_hbp": 1.05,
+        "r": 2.94,
+        "rbi": 1.83,
+        "sb": 0.14
+      },
+      "multipliers": {
+        "park_hr": 0.99,
+        "park_runs": 1.08,
+        "weather_hr": 1.15,
+        "pitcher_hits": 1.0,
+        "pitcher_hr": 1.0,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.0,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.0,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.935,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1983,
+        "doubles": 0.0529,
+        "triples": 0.0014,
+        "home_runs": 0.0806,
+        "bb_hbp": 0.1222,
+        "r_per_pa": 0.3413,
+        "rbi_per_pa": 0.2131
       },
       "pa": 4.3,
       "tier": "medium"
@@ -232,82 +308,6 @@
         "rbi_per_pa": 0.202
       },
       "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 670541,
-      "name": "Yordan Alvarez",
-      "position": "LF",
-      "team_id": 117,
-      "team_abbr": "HOU",
-      "opp_abbr": "BOS",
-      "opp_team_id": 111,
-      "opp_pitcher": {
-        "id": 687562,
-        "fullName": "Jake Bennett"
-      },
-      "park": {
-        "id": 3,
-        "name": "Fenway Park",
-        "runs": 108,
-        "hr": 99,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Clear",
-        "temp": "60",
-        "wind": "6 mph, Out To RF"
-      },
-      "pa_source": "default",
-      "stdev_efp": 6.12,
-      "mean_efp": 11.83,
-      "stats_games": 6,
-      "efp": 10.89,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.38,
-        "doubles": 1.06,
-        "triples": 0.05,
-        "home_runs": 3.22,
-        "bb_hbp": 0.98,
-        "r": 2.92,
-        "rbi": 1.7,
-        "sb": 0.12
-      },
-      "multipliers": {
-        "park_hr": 0.99,
-        "park_runs": 1.08,
-        "weather_hr": 1.15,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 1.0,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.0,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1983,
-        "doubles": 0.0529,
-        "triples": 0.0014,
-        "home_runs": 0.0806,
-        "bb_hbp": 0.1222,
-        "r_per_pa": 0.365,
-        "rbi_per_pa": 0.2131
-      },
-      "pa": 4.0,
       "tier": "low"
     },
     {
@@ -539,6 +539,82 @@
       "tier": "low"
     },
     {
+      "player_id": 545121,
+      "name": "Ildemaro Vargas",
+      "position": "1B",
+      "team_id": 109,
+      "team_abbr": "AZ",
+      "opp_abbr": "CHC",
+      "opp_team_id": 112,
+      "opp_pitcher": {
+        "id": 607067,
+        "fullName": "Colin Rea"
+      },
+      "park": {
+        "id": 17,
+        "name": "Wrigley Field",
+        "runs": 104,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "44",
+        "wind": "13 mph, In From CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 14.57,
+      "mean_efp": 19.0,
+      "stats_games": 5,
+      "efp": 10.25,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 2.91,
+        "doubles": 1.34,
+        "triples": 0.57,
+        "home_runs": 1.29,
+        "bb_hbp": 0.46,
+        "r": 3.42,
+        "rbi": 1.72,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.04,
+        "weather_hr": 0.81,
+        "pitcher_hits": 1.046,
+        "pitcher_hr": 0.904,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.954,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.895,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.2259,
+        "doubles": 0.0622,
+        "triples": 0.0167,
+        "home_runs": 0.0299,
+        "bb_hbp": 0.0535,
+        "r_per_pa": 0.3972,
+        "rbi_per_pa": 0.1997
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 545361,
       "name": "Mike Trout",
       "position": "CF",
@@ -687,82 +763,6 @@
       "tier": "low"
     },
     {
-      "player_id": 545121,
-      "name": "Ildemaro Vargas",
-      "position": "1B",
-      "team_id": 109,
-      "team_abbr": "AZ",
-      "opp_abbr": "CHC",
-      "opp_team_id": 112,
-      "opp_pitcher": {
-        "id": 607067,
-        "fullName": "Colin Rea"
-      },
-      "park": {
-        "id": 17,
-        "name": "Wrigley Field",
-        "runs": 104,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "44",
-        "wind": "13 mph, In From CF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 14.57,
-      "mean_efp": 19.0,
-      "stats_games": 5,
-      "efp": 10.14,
-      "bat_side": "S",
-      "per_event": {
-        "singles": 2.82,
-        "doubles": 1.34,
-        "triples": 0.58,
-        "home_runs": 1.31,
-        "bb_hbp": 0.46,
-        "r": 3.36,
-        "rbi": 1.71,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.04,
-        "weather_hr": 0.81,
-        "pitcher_hits": 1.04,
-        "pitcher_hr": 0.911,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.954,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.895,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.15,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.2184,
-        "doubles": 0.0622,
-        "triples": 0.0168,
-        "home_runs": 0.0304,
-        "bb_hbp": 0.0539,
-        "r_per_pa": 0.3911,
-        "rbi_per_pa": 0.1983
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
       "player_id": 621566,
       "name": "Matt Olson",
       "position": "1B",
@@ -836,6 +836,82 @@
         "rbi_per_pa": 0.1988
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 668930,
+      "name": "Brice Turang",
+      "position": "2B",
+      "team_id": 158,
+      "team_abbr": "MIL",
+      "opp_abbr": "WSH",
+      "opp_team_id": 120,
+      "opp_pitcher": {
+        "id": 663623,
+        "fullName": "Jake Irvin"
+      },
+      "park": {
+        "id": 3309,
+        "name": "Nationals Park",
+        "runs": 100,
+        "hr": 101,
+        "label": "Neutral"
+      },
+      "weather": {
+        "condition": "Clear",
+        "temp": "67",
+        "wind": "7 mph, Out To CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.41,
+      "mean_efp": 5.33,
+      "stats_games": 6,
+      "efp": 9.83,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.61,
+        "doubles": 1.18,
+        "triples": 0.18,
+        "home_runs": 1.51,
+        "bb_hbp": 1.13,
+        "r": 3.16,
+        "rbi": 1.36,
+        "sb": 1.1
+      },
+      "multipliers": {
+        "park_hr": 1.01,
+        "park_runs": 1.0,
+        "weather_hr": 1.08,
+        "pitcher_hits": 0.899,
+        "pitcher_hr": 1.024,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.071,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.866,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.1,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1245,
+        "doubles": 0.0547,
+        "triples": 0.0053,
+        "home_runs": 0.0351,
+        "bb_hbp": 0.1317,
+        "r_per_pa": 0.3675,
+        "rbi_per_pa": 0.1578
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1516,82 +1592,6 @@
       "tier": "low"
     },
     {
-      "player_id": 672695,
-      "name": "Geraldo Perdomo",
-      "position": "SS",
-      "team_id": 109,
-      "team_abbr": "AZ",
-      "opp_abbr": "CHC",
-      "opp_team_id": 112,
-      "opp_pitcher": {
-        "id": 607067,
-        "fullName": "Colin Rea"
-      },
-      "park": {
-        "id": 17,
-        "name": "Wrigley Field",
-        "runs": 104,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "44",
-        "wind": "13 mph, In From CF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 5.51,
-      "mean_efp": 6.25,
-      "stats_games": 16,
-      "efp": 9.51,
-      "bat_side": "S",
-      "per_event": {
-        "singles": 1.83,
-        "doubles": 0.74,
-        "triples": 1.07,
-        "home_runs": 0.56,
-        "bb_hbp": 1.19,
-        "r": 3.2,
-        "rbi": 1.32,
-        "sb": 0.96
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.04,
-        "weather_hr": 0.81,
-        "pitcher_hits": 1.04,
-        "pitcher_hr": 0.911,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.954,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.895,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.15,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1416,
-        "doubles": 0.0346,
-        "triples": 0.031,
-        "home_runs": 0.013,
-        "bb_hbp": 0.1383,
-        "r_per_pa": 0.3724,
-        "rbi_per_pa": 0.1529
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
       "player_id": 682928,
       "name": "CJ Abrams",
       "position": "SS",
@@ -1815,6 +1815,82 @@
         "bb_hbp": 0.1611,
         "r_per_pa": 0.404,
         "rbi_per_pa": 0.1438
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 672695,
+      "name": "Geraldo Perdomo",
+      "position": "SS",
+      "team_id": 109,
+      "team_abbr": "AZ",
+      "opp_abbr": "CHC",
+      "opp_team_id": 112,
+      "opp_pitcher": {
+        "id": 607067,
+        "fullName": "Colin Rea"
+      },
+      "park": {
+        "id": 17,
+        "name": "Wrigley Field",
+        "runs": 104,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "44",
+        "wind": "13 mph, In From CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.51,
+      "mean_efp": 6.25,
+      "stats_games": 16,
+      "efp": 9.43,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 1.82,
+        "doubles": 0.74,
+        "triples": 1.05,
+        "home_runs": 0.55,
+        "bb_hbp": 1.18,
+        "r": 3.17,
+        "rbi": 1.29,
+        "sb": 0.96
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.04,
+        "weather_hr": 0.81,
+        "pitcher_hits": 1.046,
+        "pitcher_hr": 0.904,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.954,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.895,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1413,
+        "doubles": 0.0346,
+        "triples": 0.0305,
+        "home_runs": 0.0128,
+        "bb_hbp": 0.1368,
+        "r_per_pa": 0.3681,
+        "rbi_per_pa": 0.1505
       },
       "pa": 4.3,
       "tier": "low"
@@ -2198,84 +2274,8 @@
       },
       "pa": 4.3,
       "tier": "low"
-    },
-    {
-      "player_id": 665489,
-      "name": "Vladimir Guerrero Jr.",
-      "position": "1B",
-      "team_id": 141,
-      "team_abbr": "TOR",
-      "opp_abbr": "MIN",
-      "opp_team_id": 142,
-      "opp_pitcher": {
-        "id": 680573,
-        "fullName": "Simeon Woods Richardson"
-      },
-      "park": {
-        "id": 3312,
-        "name": "Target Field",
-        "runs": 100,
-        "hr": 101,
-        "label": "Neutral"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "53",
-        "wind": "7 mph, Out To RF"
-      },
-      "pa_source": "default",
-      "stdev_efp": 6.26,
-      "mean_efp": 7.13,
-      "stats_games": 15,
-      "efp": 9.15,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 3.02,
-        "doubles": 1.27,
-        "triples": 0.05,
-        "home_runs": 0.71,
-        "bb_hbp": 0.89,
-        "r": 2.83,
-        "rbi": 1.28,
-        "sb": 0.4
-      },
-      "multipliers": {
-        "park_hr": 1.01,
-        "park_runs": 1.0,
-        "weather_hr": 0.927,
-        "pitcher_hits": 1.148,
-        "pitcher_hr": 1.158,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.024,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.018,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.2515,
-        "doubles": 0.0633,
-        "triples": 0.0016,
-        "home_runs": 0.0176,
-        "bb_hbp": 0.1113,
-        "r_per_pa": 0.3541,
-        "rbi_per_pa": 0.1603
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-05-01T19:49:02.790643+00:00"
+  "generated_at": "2026-05-01T20:02:29.985077+00:00"
 }
