@@ -458,21 +458,21 @@
         "label": "Slight Hitter"
       },
       "weather": {
-        "condition": "Sunny",
-        "temp": "46",
-        "wind": "11 mph, In From LF"
+        "condition": "Partly Cloudy",
+        "temp": "44",
+        "wind": "13 mph, In From CF"
       },
       "pa_source": "lineup",
       "stdev_efp": 14.57,
       "mean_efp": 19.0,
       "stats_games": 5,
-      "efp": 10.01,
+      "efp": 10.04,
       "bat_side": "S",
       "per_event": {
         "singles": 2.45,
         "doubles": 1.28,
         "triples": 0.54,
-        "home_runs": 1.68,
+        "home_runs": 1.71,
         "bb_hbp": 0.46,
         "r": 3.24,
         "rbi": 1.78,
@@ -481,7 +481,7 @@
       "multipliers": {
         "park_hr": 1.07,
         "park_runs": 1.04,
-        "weather_hr": 0.792,
+        "weather_hr": 0.81,
         "pitcher_hits": 1.001,
         "pitcher_hr": 0.958,
         "slot_r": 1.0,
@@ -506,7 +506,7 @@
         "singles": 0.1897,
         "doubles": 0.0595,
         "triples": 0.0157,
-        "home_runs": 0.039,
+        "home_runs": 0.0398,
         "bb_hbp": 0.0537,
         "r_per_pa": 0.3766,
         "rbi_per_pa": 0.2069
@@ -1032,21 +1032,21 @@
         "label": "Slight Hitter"
       },
       "weather": {
-        "condition": "Sunny",
-        "temp": "46",
-        "wind": "11 mph, In From LF"
+        "condition": "Partly Cloudy",
+        "temp": "44",
+        "wind": "13 mph, In From CF"
       },
       "pa_source": "lineup",
       "stdev_efp": 5.51,
       "mean_efp": 6.25,
       "stats_games": 16,
-      "efp": 9.55,
+      "efp": 9.57,
       "bat_side": "S",
       "per_event": {
         "singles": 1.86,
         "doubles": 0.72,
         "triples": 0.99,
-        "home_runs": 0.58,
+        "home_runs": 0.59,
         "bb_hbp": 1.17,
         "r": 3.26,
         "rbi": 1.34,
@@ -1055,7 +1055,7 @@
       "multipliers": {
         "park_hr": 1.07,
         "park_runs": 1.04,
-        "weather_hr": 0.792,
+        "weather_hr": 0.81,
         "pitcher_hits": 1.001,
         "pitcher_hr": 0.958,
         "slot_r": 1.0,
@@ -1080,7 +1080,7 @@
         "singles": 0.1443,
         "doubles": 0.0334,
         "triples": 0.0287,
-        "home_runs": 0.0134,
+        "home_runs": 0.0137,
         "bb_hbp": 0.1364,
         "r_per_pa": 0.379,
         "rbi_per_pa": 0.1553
@@ -1468,21 +1468,21 @@
         "label": "Slight Hitter"
       },
       "weather": {
-        "condition": "Sunny",
-        "temp": "46",
-        "wind": "11 mph, In From LF"
+        "condition": "Partly Cloudy",
+        "temp": "44",
+        "wind": "13 mph, In From CF"
       },
       "pa_source": "lineup",
       "stdev_efp": 11.99,
       "mean_efp": 8.6,
       "stats_games": 5,
-      "efp": 9.16,
+      "efp": 9.1,
       "bat_side": "L",
       "per_event": {
         "singles": 1.66,
         "doubles": 1.04,
         "triples": 0.69,
-        "home_runs": 1.26,
+        "home_runs": 1.19,
         "bb_hbp": 1.04,
         "r": 2.39,
         "rbi": 1.52,
@@ -1491,7 +1491,7 @@
       "multipliers": {
         "park_hr": 1.07,
         "park_runs": 1.04,
-        "weather_hr": 0.855,
+        "weather_hr": 0.81,
         "pitcher_hits": 1.001,
         "pitcher_hr": 0.958,
         "slot_r": 1.0,
@@ -1516,86 +1516,10 @@
         "singles": 0.1289,
         "doubles": 0.0485,
         "triples": 0.02,
-        "home_runs": 0.0293,
+        "home_runs": 0.0277,
         "bb_hbp": 0.1208,
         "r_per_pa": 0.2777,
         "rbi_per_pa": 0.1768
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 694208,
-      "name": "Mois\u00e9s Ballesteros",
-      "position": "C",
-      "team_id": 112,
-      "team_abbr": "CHC",
-      "opp_abbr": "AZ",
-      "opp_team_id": 109,
-      "opp_pitcher": {
-        "id": 668678,
-        "fullName": "Zac Gallen"
-      },
-      "park": {
-        "id": 17,
-        "name": "Wrigley Field",
-        "runs": 104,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": {
-        "condition": "Sunny",
-        "temp": "46",
-        "wind": "11 mph, In From LF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 3.65,
-      "mean_efp": 6.8,
-      "stats_games": 5,
-      "efp": 9.12,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.15,
-        "doubles": 1.66,
-        "triples": 0.07,
-        "home_runs": 1.64,
-        "bb_hbp": 0.57,
-        "r": 2.74,
-        "rbi": 1.58,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.04,
-        "weather_hr": 0.855,
-        "pitcher_hits": 1.116,
-        "pitcher_hr": 0.824,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.956,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.05,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1667,
-        "doubles": 0.0774,
-        "triples": 0.0019,
-        "home_runs": 0.0382,
-        "bb_hbp": 0.0658,
-        "r_per_pa": 0.3183,
-        "rbi_per_pa": 0.184
       },
       "pa": 4.3,
       "tier": "low"
@@ -1670,6 +1594,82 @@
         "rbi_per_pa": 0.1673
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 694208,
+      "name": "Mois\u00e9s Ballesteros",
+      "position": "C",
+      "team_id": 112,
+      "team_abbr": "CHC",
+      "opp_abbr": "AZ",
+      "opp_team_id": 109,
+      "opp_pitcher": {
+        "id": 668678,
+        "fullName": "Zac Gallen"
+      },
+      "park": {
+        "id": 17,
+        "name": "Wrigley Field",
+        "runs": 104,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "44",
+        "wind": "13 mph, In From CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 3.65,
+      "mean_efp": 6.8,
+      "stats_games": 5,
+      "efp": 9.04,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.15,
+        "doubles": 1.66,
+        "triples": 0.07,
+        "home_runs": 1.55,
+        "bb_hbp": 0.57,
+        "r": 2.74,
+        "rbi": 1.58,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.04,
+        "weather_hr": 0.81,
+        "pitcher_hits": 1.116,
+        "pitcher_hr": 0.824,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.956,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.05,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1667,
+        "doubles": 0.0774,
+        "triples": 0.0019,
+        "home_runs": 0.0361,
+        "bb_hbp": 0.0658,
+        "r_per_pa": 0.3183,
+        "rbi_per_pa": 0.184
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -2178,5 +2178,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-05-01T17:35:53.780985+00:00"
+  "generated_at": "2026-05-01T17:51:40.269264+00:00"
 }
