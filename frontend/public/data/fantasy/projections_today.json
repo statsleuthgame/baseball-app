@@ -1104,23 +1104,23 @@
       "stdev_efp": 5.64,
       "mean_efp": 9.2,
       "stats_games": 5,
-      "efp": 9.61,
+      "efp": 9.56,
       "bat_side": "R",
       "per_event": {
-        "singles": 1.66,
-        "doubles": 0.8,
-        "triples": 0.18,
-        "home_runs": 2.28,
-        "bb_hbp": 0.91,
-        "r": 3.05,
-        "rbi": 1.79,
+        "singles": 1.68,
+        "doubles": 0.81,
+        "triples": 0.19,
+        "home_runs": 2.25,
+        "bb_hbp": 0.9,
+        "r": 3.01,
+        "rbi": 1.76,
         "sb": 0.3
       },
       "multipliers": {
         "park_hr": 1.01,
         "park_runs": 1.0,
         "weather_hr": 1.15,
-        "pitcher_hits": 0.921,
+        "pitcher_hits": 0.943,
         "pitcher_hr": 0.65,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
@@ -1141,13 +1141,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1285,
-        "doubles": 0.0371,
-        "triples": 0.0053,
-        "home_runs": 0.053,
-        "bb_hbp": 0.1059,
-        "r_per_pa": 0.3541,
-        "rbi_per_pa": 0.208
+        "singles": 0.1303,
+        "doubles": 0.0377,
+        "triples": 0.0054,
+        "home_runs": 0.0523,
+        "bb_hbp": 0.1052,
+        "r_per_pa": 0.3502,
+        "rbi_per_pa": 0.2051
       },
       "pa": 4.3,
       "tier": "low"
@@ -1400,16 +1400,16 @@
       "stdev_efp": 5.77,
       "mean_efp": 7.5,
       "stats_games": 6,
-      "efp": 9.32,
+      "efp": 9.24,
       "bat_side": "R",
       "per_event": {
-        "singles": 2.08,
+        "singles": 2.06,
         "doubles": 0.84,
         "triples": 0.05,
-        "home_runs": 1.68,
-        "bb_hbp": 0.84,
-        "r": 2.36,
-        "rbi": 1.16,
+        "home_runs": 1.65,
+        "bb_hbp": 0.83,
+        "r": 2.33,
+        "rbi": 1.14,
         "sb": 1.64
       },
       "multipliers": {
@@ -1437,13 +1437,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1872,
-        "doubles": 0.0454,
+        "singles": 0.1856,
+        "doubles": 0.0452,
         "triples": 0.0017,
-        "home_runs": 0.0453,
-        "bb_hbp": 0.1136,
-        "r_per_pa": 0.319,
-        "rbi_per_pa": 0.1566
+        "home_runs": 0.0446,
+        "bb_hbp": 0.1124,
+        "r_per_pa": 0.3152,
+        "rbi_per_pa": 0.1544
       },
       "pa": 3.7,
       "tier": "low"
@@ -1601,82 +1601,6 @@
       "tier": "low"
     },
     {
-      "player_id": 694208,
-      "name": "Mois\u00e9s Ballesteros",
-      "position": "C",
-      "team_id": 112,
-      "team_abbr": "CHC",
-      "opp_abbr": "AZ",
-      "opp_team_id": 109,
-      "opp_pitcher": {
-        "id": 669194,
-        "fullName": "Ryne Nelson"
-      },
-      "park": {
-        "id": 17,
-        "name": "Wrigley Field",
-        "runs": 104,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "50",
-        "wind": "5 mph, In From CF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 3.65,
-      "mean_efp": 6.8,
-      "stats_games": 5,
-      "efp": 9.12,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.89,
-        "doubles": 1.09,
-        "triples": 0.06,
-        "home_runs": 2.63,
-        "bb_hbp": 0.71,
-        "r": 2.6,
-        "rbi": 1.42,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.04,
-        "weather_hr": 0.81,
-        "pitcher_hits": 1.012,
-        "pitcher_hr": 1.219,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.122,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.854,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.054,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1468,
-        "doubles": 0.0507,
-        "triples": 0.0017,
-        "home_runs": 0.0613,
-        "bb_hbp": 0.0825,
-        "r_per_pa": 0.3027,
-        "rbi_per_pa": 0.1653
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
       "player_id": 663993,
       "name": "Nathaniel Lowe",
       "position": "1B",
@@ -1750,82 +1674,6 @@
         "rbi_per_pa": 0.2025
       },
       "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 682998,
-      "name": "Corbin Carroll",
-      "position": "RF",
-      "team_id": 109,
-      "team_abbr": "AZ",
-      "opp_abbr": "CHC",
-      "opp_team_id": 112,
-      "opp_pitcher": {
-        "id": 684007,
-        "fullName": "Shota Imanaga"
-      },
-      "park": {
-        "id": 17,
-        "name": "Wrigley Field",
-        "runs": 104,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "50",
-        "wind": "5 mph, In From CF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 11.99,
-      "mean_efp": 8.6,
-      "stats_games": 5,
-      "efp": 9.07,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.74,
-        "doubles": 1.06,
-        "triples": 0.74,
-        "home_runs": 1.25,
-        "bb_hbp": 0.68,
-        "r": 3.05,
-        "rbi": 1.41,
-        "sb": 0.43
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.04,
-        "weather_hr": 0.81,
-        "pitcher_hits": 0.825,
-        "pitcher_hr": 0.88,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.206,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.15,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1348,
-        "doubles": 0.0491,
-        "triples": 0.0215,
-        "home_runs": 0.0291,
-        "bb_hbp": 0.0793,
-        "r_per_pa": 0.3543,
-        "rbi_per_pa": 0.1636
-      },
-      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -2279,8 +2127,160 @@
       },
       "pa": 4.0,
       "tier": "low"
+    },
+    {
+      "player_id": 694208,
+      "name": "Mois\u00e9s Ballesteros",
+      "position": "C",
+      "team_id": 112,
+      "team_abbr": "CHC",
+      "opp_abbr": "AZ",
+      "opp_team_id": 109,
+      "opp_pitcher": {
+        "id": 669194,
+        "fullName": "Ryne Nelson"
+      },
+      "park": {
+        "id": 17,
+        "name": "Wrigley Field",
+        "runs": 104,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "50",
+        "wind": "5 mph, In From CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 3.65,
+      "mean_efp": 6.8,
+      "stats_games": 5,
+      "efp": 8.98,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.85,
+        "doubles": 1.07,
+        "triples": 0.06,
+        "home_runs": 2.58,
+        "bb_hbp": 0.7,
+        "r": 2.58,
+        "rbi": 1.41,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.04,
+        "weather_hr": 0.81,
+        "pitcher_hits": 0.994,
+        "pitcher_hr": 1.207,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.122,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.854,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.054,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1436,
+        "doubles": 0.0495,
+        "triples": 0.0017,
+        "home_runs": 0.0601,
+        "bb_hbp": 0.0818,
+        "r_per_pa": 0.3,
+        "rbi_per_pa": 0.1634
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 683002,
+      "name": "Gunnar Henderson",
+      "position": "SS",
+      "team_id": 110,
+      "team_abbr": "BAL",
+      "opp_abbr": "NYY",
+      "opp_team_id": 147,
+      "opp_pitcher": {
+        "id": 677960,
+        "fullName": "Ryan Weathers"
+      },
+      "park": {
+        "id": 3313,
+        "name": "Yankee Stadium",
+        "runs": 107,
+        "hr": 115,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Cloudy",
+        "temp": "63",
+        "wind": "8 mph, Out To LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 8.97,
+      "mean_efp": 9.33,
+      "stats_games": 6,
+      "efp": 8.95,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.42,
+        "doubles": 1.16,
+        "triples": 0.13,
+        "home_runs": 2.82,
+        "bb_hbp": 0.55,
+        "r": 2.15,
+        "rbi": 1.32,
+        "sb": 0.66
+      },
+      "multipliers": {
+        "park_hr": 1.15,
+        "park_runs": 1.07,
+        "weather_hr": 1.03,
+        "pitcher_hits": 1.016,
+        "pitcher_hr": 1.099,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.97,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.971,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1104,
+        "doubles": 0.0539,
+        "triples": 0.0037,
+        "home_runs": 0.0656,
+        "bb_hbp": 0.0645,
+        "r_per_pa": 0.2498,
+        "rbi_per_pa": 0.1536
+      },
+      "pa": 4.3,
+      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-05-02T19:34:53.158109+00:00"
+  "generated_at": "2026-05-02T19:48:05.384330+00:00"
 }
