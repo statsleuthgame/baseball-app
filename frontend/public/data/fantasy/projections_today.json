@@ -10,8 +10,84 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 379,
+  "projection_count": 371,
   "projections": [
+    {
+      "player_id": 621439,
+      "name": "Byron Buxton",
+      "position": "CF",
+      "team_id": 142,
+      "team_abbr": "MIN",
+      "opp_abbr": "TOR",
+      "opp_team_id": 141,
+      "opp_pitcher": {
+        "id": 702056,
+        "fullName": "Trey Yesavage"
+      },
+      "park": {
+        "id": 3312,
+        "name": "Target Field",
+        "runs": 100,
+        "hr": 101,
+        "label": "Neutral"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "62",
+        "wind": "13 mph, Out To RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.64,
+      "mean_efp": 9.2,
+      "stats_games": 5,
+      "efp": 10.55,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.76,
+        "doubles": 0.85,
+        "triples": 0.2,
+        "home_runs": 3.54,
+        "bb_hbp": 0.71,
+        "r": 2.95,
+        "rbi": 1.74,
+        "sb": 0.3
+      },
+      "multipliers": {
+        "park_hr": 1.01,
+        "park_runs": 1.0,
+        "weather_hr": 1.03,
+        "pitcher_hits": 1.0,
+        "pitcher_hr": 1.0,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.026,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.0,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.122,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1361,
+        "doubles": 0.0394,
+        "triples": 0.0057,
+        "home_runs": 0.0824,
+        "bb_hbp": 0.0829,
+        "r_per_pa": 0.3426,
+        "rbi_per_pa": 0.2022
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
     {
       "player_id": 668930,
       "name": "Brice Turang",
@@ -589,6 +665,82 @@
       "tier": "low"
     },
     {
+      "player_id": 668885,
+      "name": "Austin Martin",
+      "position": "LF",
+      "team_id": 142,
+      "team_abbr": "MIN",
+      "opp_abbr": "TOR",
+      "opp_team_id": 141,
+      "opp_pitcher": {
+        "id": 702056,
+        "fullName": "Trey Yesavage"
+      },
+      "park": {
+        "id": 3312,
+        "name": "Target Field",
+        "runs": 100,
+        "hr": 101,
+        "label": "Neutral"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "62",
+        "wind": "13 mph, Out To RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.47,
+      "mean_efp": 7.08,
+      "stats_games": 13,
+      "efp": 9.62,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.55,
+        "doubles": 0.99,
+        "triples": 0.05,
+        "home_runs": 0.73,
+        "bb_hbp": 1.31,
+        "r": 3.23,
+        "rbi": 1.28,
+        "sb": 0.84
+      },
+      "multipliers": {
+        "park_hr": 1.01,
+        "park_runs": 1.0,
+        "weather_hr": 1.03,
+        "pitcher_hits": 1.0,
+        "pitcher_hr": 1.0,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.026,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.0,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.057,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1979,
+        "doubles": 0.046,
+        "triples": 0.0016,
+        "home_runs": 0.0169,
+        "bb_hbp": 0.1522,
+        "r_per_pa": 0.376,
+        "rbi_per_pa": 0.1489
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 621020,
       "name": "Dansby Swanson",
       "position": "SS",
@@ -728,78 +880,6 @@
         "bb_hbp": 0.0973,
         "r_per_pa": 0.323,
         "rbi_per_pa": 0.2132
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 621439,
-      "name": "Byron Buxton",
-      "position": "CF",
-      "team_id": 142,
-      "team_abbr": "MIN",
-      "opp_abbr": "TOR",
-      "opp_team_id": 141,
-      "opp_pitcher": {
-        "id": 702056,
-        "fullName": "Trey Yesavage"
-      },
-      "park": {
-        "id": 3312,
-        "name": "Target Field",
-        "runs": 100,
-        "hr": 101,
-        "label": "Neutral"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 5.64,
-      "mean_efp": 9.2,
-      "stats_games": 5,
-      "efp": 9.46,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.63,
-        "doubles": 0.79,
-        "triples": 0.18,
-        "home_runs": 3.2,
-        "bb_hbp": 0.66,
-        "r": 2.44,
-        "rbi": 1.62,
-        "sb": 0.27
-      },
-      "multipliers": {
-        "park_hr": 1.01,
-        "park_runs": 1.0,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 1.0,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.026,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.0,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1361,
-        "doubles": 0.0394,
-        "triples": 0.0057,
-        "home_runs": 0.08,
-        "bb_hbp": 0.0829,
-        "r_per_pa": 0.3053,
-        "rbi_per_pa": 0.2022
       },
       "pa": 4.0,
       "tier": "low"
@@ -1018,6 +1098,82 @@
         "rbi_per_pa": 0.1943
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 663616,
+      "name": "Trevor Larnach",
+      "position": "LF",
+      "team_id": 142,
+      "team_abbr": "MIN",
+      "opp_abbr": "TOR",
+      "opp_team_id": 141,
+      "opp_pitcher": {
+        "id": 702056,
+        "fullName": "Trey Yesavage"
+      },
+      "park": {
+        "id": 3312,
+        "name": "Target Field",
+        "runs": 100,
+        "hr": 101,
+        "label": "Neutral"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "62",
+        "wind": "13 mph, Out To RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 3.39,
+      "mean_efp": 5.83,
+      "stats_games": 6,
+      "efp": 9.36,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.01,
+        "doubles": 1.21,
+        "triples": 0.43,
+        "home_runs": 0.82,
+        "bb_hbp": 1.31,
+        "r": 3.27,
+        "rbi": 1.31,
+        "sb": 0.33
+      },
+      "multipliers": {
+        "park_hr": 1.01,
+        "park_runs": 1.0,
+        "weather_hr": 1.15,
+        "pitcher_hits": 1.0,
+        "pitcher_hr": 1.0,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.026,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.0,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1559,
+        "doubles": 0.0562,
+        "triples": 0.0125,
+        "home_runs": 0.019,
+        "bb_hbp": 0.1527,
+        "r_per_pa": 0.3805,
+        "rbi_per_pa": 0.152
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1450,6 +1606,82 @@
         "rbi_per_pa": 0.1607
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 575929,
+      "name": "Willson Contreras",
+      "position": "1B",
+      "team_id": 111,
+      "team_abbr": "BOS",
+      "opp_abbr": "HOU",
+      "opp_team_id": 117,
+      "opp_pitcher": {
+        "id": 675989,
+        "fullName": "Cody Bolton"
+      },
+      "park": {
+        "id": 3,
+        "name": "Fenway Park",
+        "runs": 108,
+        "hr": 99,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "54",
+        "wind": "13 mph, L To R"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 6.69,
+      "mean_efp": 5.71,
+      "stats_games": 7,
+      "efp": 9.04,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.91,
+        "doubles": 0.7,
+        "triples": 0.05,
+        "home_runs": 1.8,
+        "bb_hbp": 1.36,
+        "r": 2.96,
+        "rbi": 1.53,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 0.99,
+        "park_runs": 1.08,
+        "weather_hr": 0.9,
+        "pitcher_hits": 0.917,
+        "pitcher_hr": 0.94,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.009,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.08,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1484,
+        "doubles": 0.0324,
+        "triples": 0.0013,
+        "home_runs": 0.0419,
+        "bb_hbp": 0.1587,
+        "r_per_pa": 0.3447,
+        "rbi_per_pa": 0.1779
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1952,224 +2184,8 @@
       },
       "pa": 4.0,
       "tier": "low"
-    },
-    {
-      "player_id": 656941,
-      "name": "Kyle Schwarber",
-      "position": "LF",
-      "team_id": 143,
-      "team_abbr": "PHI",
-      "opp_abbr": "MIA",
-      "opp_team_id": 146,
-      "opp_pitcher": {
-        "id": 663978,
-        "fullName": "Chris Paddack"
-      },
-      "park": {
-        "id": 4169,
-        "name": "LoanDepot Park",
-        "runs": 95,
-        "hr": 91,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 9.4,
-      "mean_efp": 9.0,
-      "stats_games": 7,
-      "efp": 8.88,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 0.95,
-        "doubles": 0.97,
-        "triples": 0.3,
-        "home_runs": 2.73,
-        "bb_hbp": 1.02,
-        "r": 2.59,
-        "rbi": 1.58,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 0.91,
-        "park_runs": 0.95,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.133,
-        "pitcher_hr": 1.11,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.951,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.0795,
-        "doubles": 0.0483,
-        "triples": 0.0093,
-        "home_runs": 0.0682,
-        "bb_hbp": 0.1274,
-        "r_per_pa": 0.3242,
-        "rbi_per_pa": 0.1971
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 691718,
-      "name": "Pete Crow-Armstrong",
-      "position": "CF",
-      "team_id": 112,
-      "team_abbr": "CHC",
-      "opp_abbr": "AZ",
-      "opp_team_id": 109,
-      "opp_pitcher": {
-        "id": 518876,
-        "fullName": "Merrill Kelly"
-      },
-      "park": {
-        "id": 17,
-        "name": "Wrigley Field",
-        "runs": 104,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 6.02,
-      "mean_efp": 8.0,
-      "stats_games": 7,
-      "efp": 8.87,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.08,
-        "doubles": 0.64,
-        "triples": 0.14,
-        "home_runs": 2.11,
-        "bb_hbp": 0.93,
-        "r": 2.23,
-        "rbi": 1.12,
-        "sb": 0.87
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.159,
-        "pitcher_hr": 1.345,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.086,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1732,
-        "doubles": 0.0322,
-        "triples": 0.0043,
-        "home_runs": 0.0527,
-        "bb_hbp": 0.1169,
-        "r_per_pa": 0.2785,
-        "rbi_per_pa": 0.1399
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 668885,
-      "name": "Austin Martin",
-      "position": "LF",
-      "team_id": 142,
-      "team_abbr": "MIN",
-      "opp_abbr": "TOR",
-      "opp_team_id": 141,
-      "opp_pitcher": {
-        "id": 702056,
-        "fullName": "Trey Yesavage"
-      },
-      "park": {
-        "id": 3312,
-        "name": "Target Field",
-        "runs": 100,
-        "hr": 101,
-        "label": "Neutral"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 5.47,
-      "mean_efp": 7.08,
-      "stats_games": 13,
-      "efp": 8.84,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.38,
-        "doubles": 0.92,
-        "triples": 0.05,
-        "home_runs": 0.65,
-        "bb_hbp": 1.22,
-        "r": 2.85,
-        "rbi": 1.19,
-        "sb": 0.84
-      },
-      "multipliers": {
-        "park_hr": 1.01,
-        "park_runs": 1.0,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 1.0,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.026,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.0,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1979,
-        "doubles": 0.046,
-        "triples": 0.0016,
-        "home_runs": 0.0164,
-        "bb_hbp": 0.1522,
-        "r_per_pa": 0.3558,
-        "rbi_per_pa": 0.1489
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-05-03T11:38:45.205170+00:00"
+  "generated_at": "2026-05-03T14:05:46.507414+00:00"
 }
