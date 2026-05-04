@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 12,
-  "projection_count": 300,
+  "projection_count": 293,
   "projections": [
     {
       "player_id": 700250,
@@ -157,6 +157,234 @@
       "tier": "low"
     },
     {
+      "player_id": 666160,
+      "name": "Mickey Moniak",
+      "position": "LF",
+      "team_id": 115,
+      "team_abbr": "COL",
+      "opp_abbr": "NYM",
+      "opp_team_id": 121,
+      "opp_pitcher": {
+        "id": 623211,
+        "fullName": "Huascar Brazob\u00e1n"
+      },
+      "park": {
+        "id": 19,
+        "name": "Coors Field",
+        "runs": 116,
+        "hr": 118,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Cloudy",
+        "temp": "62",
+        "wind": "10 mph, Varies"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 12.17,
+      "mean_efp": 14.0,
+      "stats_games": 6,
+      "efp": 10.35,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.04,
+        "doubles": 1.13,
+        "triples": 0.05,
+        "home_runs": 2.86,
+        "bb_hbp": 0.65,
+        "r": 3.11,
+        "rbi": 1.79,
+        "sb": 0.17
+      },
+      "multipliers": {
+        "park_hr": 1.18,
+        "park_runs": 1.16,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.902,
+        "pitcher_hr": 0.831,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.897,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.103,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1582,
+        "doubles": 0.0528,
+        "triples": 0.0016,
+        "home_runs": 0.0666,
+        "bb_hbp": 0.0752,
+        "r_per_pa": 0.3618,
+        "rbi_per_pa": 0.2086
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 665742,
+      "name": "Juan Soto",
+      "position": "LF",
+      "team_id": 121,
+      "team_abbr": "NYM",
+      "opp_abbr": "COL",
+      "opp_team_id": 115,
+      "opp_pitcher": {
+        "id": 608372,
+        "fullName": "Tomoyuki Sugano"
+      },
+      "park": {
+        "id": 19,
+        "name": "Coors Field",
+        "runs": 116,
+        "hr": 118,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Cloudy",
+        "temp": "62",
+        "wind": "10 mph, Varies"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.13,
+      "mean_efp": 6.94,
+      "stats_games": 0,
+      "efp": 10.33,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.54,
+        "doubles": 1.26,
+        "triples": 0.06,
+        "home_runs": 2.18,
+        "bb_hbp": 0.99,
+        "r": 2.87,
+        "rbi": 1.48,
+        "sb": 0.4
+      },
+      "multipliers": {
+        "park_hr": 1.18,
+        "park_runs": 1.16,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.978,
+        "pitcher_hr": 1.101,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.975,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.861,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.002,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1971,
+        "doubles": 0.0587,
+        "triples": 0.0019,
+        "home_runs": 0.0508,
+        "bb_hbp": 0.1153,
+        "r_per_pa": 0.3339,
+        "rbi_per_pa": 0.1723
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 669004,
+      "name": "MJ Melendez",
+      "position": "LF",
+      "team_id": 121,
+      "team_abbr": "NYM",
+      "opp_abbr": "COL",
+      "opp_team_id": 115,
+      "opp_pitcher": {
+        "id": 608372,
+        "fullName": "Tomoyuki Sugano"
+      },
+      "park": {
+        "id": 19,
+        "name": "Coors Field",
+        "runs": 116,
+        "hr": 118,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Cloudy",
+        "temp": "62",
+        "wind": "10 mph, Varies"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.13,
+      "mean_efp": 6.94,
+      "stats_games": 0,
+      "efp": 9.68,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.32,
+        "doubles": 1.4,
+        "triples": 0.08,
+        "home_runs": 2.31,
+        "bb_hbp": 0.74,
+        "r": 2.72,
+        "rbi": 1.47,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 1.18,
+        "park_runs": 1.16,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.978,
+        "pitcher_hr": 1.101,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.975,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.861,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.995,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.18,
+        "doubles": 0.0649,
+        "triples": 0.0023,
+        "home_runs": 0.0538,
+        "bb_hbp": 0.0863,
+        "r_per_pa": 0.3165,
+        "rbi_per_pa": 0.1711
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 660271,
       "name": "Shohei Ohtani",
       "position": "TWP",
@@ -296,78 +524,6 @@
         "bb_hbp": 0.1565,
         "r_per_pa": 0.3556,
         "rbi_per_pa": 0.1622
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 665742,
-      "name": "Juan Soto",
-      "position": "LF",
-      "team_id": 121,
-      "team_abbr": "NYM",
-      "opp_abbr": "COL",
-      "opp_team_id": 115,
-      "opp_pitcher": {
-        "id": 608372,
-        "fullName": "Tomoyuki Sugano"
-      },
-      "park": {
-        "id": 19,
-        "name": "Coors Field",
-        "runs": 116,
-        "hr": 118,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.13,
-      "mean_efp": 6.94,
-      "stats_games": 0,
-      "efp": 9.59,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.37,
-        "doubles": 1.17,
-        "triples": 0.06,
-        "home_runs": 2.03,
-        "bb_hbp": 0.92,
-        "r": 2.67,
-        "rbi": 1.38,
-        "sb": 0.35
-      },
-      "multipliers": {
-        "park_hr": 1.18,
-        "park_runs": 1.16,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.978,
-        "pitcher_hr": 1.101,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.975,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.861,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1971,
-        "doubles": 0.0587,
-        "triples": 0.0019,
-        "home_runs": 0.0508,
-        "bb_hbp": 0.1153,
-        "r_per_pa": 0.3331,
-        "rbi_per_pa": 0.1723
       },
       "pa": 4.0,
       "tier": "low"
@@ -584,78 +740,6 @@
         "bb_hbp": 0.1474,
         "r_per_pa": 0.3722,
         "rbi_per_pa": 0.1983
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 666160,
-      "name": "Mickey Moniak",
-      "position": "LF",
-      "team_id": 115,
-      "team_abbr": "COL",
-      "opp_abbr": "NYM",
-      "opp_team_id": 121,
-      "opp_pitcher": {
-        "id": 623211,
-        "fullName": "Huascar Brazob\u00e1n"
-      },
-      "park": {
-        "id": 19,
-        "name": "Coors Field",
-        "runs": 116,
-        "hr": 118,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 12.17,
-      "mean_efp": 14.0,
-      "stats_games": 6,
-      "efp": 9.38,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.9,
-        "doubles": 1.06,
-        "triples": 0.05,
-        "home_runs": 2.66,
-        "bb_hbp": 0.6,
-        "r": 2.63,
-        "rbi": 1.67,
-        "sb": 0.15
-      },
-      "multipliers": {
-        "park_hr": 1.18,
-        "park_runs": 1.16,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.902,
-        "pitcher_hr": 0.831,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.897,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1582,
-        "doubles": 0.0528,
-        "triples": 0.0016,
-        "home_runs": 0.0666,
-        "bb_hbp": 0.0752,
-        "r_per_pa": 0.3281,
-        "rbi_per_pa": 0.2086
       },
       "pa": 4.0,
       "tier": "low"
@@ -1016,78 +1100,6 @@
         "bb_hbp": 0.0762,
         "r_per_pa": 0.3509,
         "rbi_per_pa": 0.1963
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 669004,
-      "name": "MJ Melendez",
-      "position": "LF",
-      "team_id": 121,
-      "team_abbr": "NYM",
-      "opp_abbr": "COL",
-      "opp_team_id": 115,
-      "opp_pitcher": {
-        "id": 608372,
-        "fullName": "Tomoyuki Sugano"
-      },
-      "park": {
-        "id": 19,
-        "name": "Coors Field",
-        "runs": 116,
-        "hr": 118,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.13,
-      "mean_efp": 6.94,
-      "stats_games": 0,
-      "efp": 9.01,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.16,
-        "doubles": 1.3,
-        "triples": 0.07,
-        "home_runs": 2.15,
-        "bb_hbp": 0.69,
-        "r": 2.54,
-        "rbi": 1.37,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 1.18,
-        "park_runs": 1.16,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.978,
-        "pitcher_hr": 1.101,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.975,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.861,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.18,
-        "doubles": 0.0649,
-        "triples": 0.0023,
-        "home_runs": 0.0538,
-        "bb_hbp": 0.0863,
-        "r_per_pa": 0.318,
-        "rbi_per_pa": 0.1711
       },
       "pa": 4.0,
       "tier": "low"
@@ -2174,5 +2186,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-05-04T16:30:39.853092+00:00"
+  "generated_at": "2026-05-04T18:04:27.686208+00:00"
 }
