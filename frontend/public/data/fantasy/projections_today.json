@@ -2113,47 +2113,44 @@
       "tier": "low"
     },
     {
-      "player_id": 691011,
-      "name": "Drew Romo",
-      "position": "C",
-      "team_id": 145,
-      "team_abbr": "CWS",
-      "opp_abbr": "LAA",
-      "opp_team_id": 108,
-      "opp_pitcher": {
-        "id": 667755,
-        "fullName": "Jos\u00e9 Soriano"
-      },
+      "player_id": 575929,
+      "name": "Willson Contreras",
+      "position": "1B",
+      "team_id": 111,
+      "team_abbr": "BOS",
+      "opp_abbr": "DET",
+      "opp_team_id": 116,
+      "opp_pitcher": null,
       "park": {
-        "id": 1,
-        "name": "Angel Stadium",
+        "id": 2394,
+        "name": "Comerica Park",
         "runs": 97,
-        "hr": 96,
+        "hr": 93,
         "label": "Pitcher Friendly"
       },
       "weather": null,
       "pa_source": "default",
-      "stdev_efp": 7.13,
-      "mean_efp": 6.94,
-      "stats_games": 0,
+      "stdev_efp": 6.69,
+      "mean_efp": 5.71,
+      "stats_games": 7,
       "efp": 8.56,
-      "bat_side": "S",
+      "bat_side": "R",
       "per_event": {
-        "singles": 0.95,
-        "doubles": 0.49,
-        "triples": 0.07,
-        "home_runs": 2.18,
-        "bb_hbp": 1.54,
-        "r": 2.76,
-        "rbi": 1.79,
-        "sb": 0.0
+        "singles": 1.84,
+        "doubles": 0.82,
+        "triples": 0.05,
+        "home_runs": 1.7,
+        "bb_hbp": 1.0,
+        "r": 2.66,
+        "rbi": 1.42,
+        "sb": 0.26
       },
       "multipliers": {
-        "park_hr": 0.96,
+        "park_hr": 0.93,
         "park_runs": 0.97,
         "weather_hr": 1.0,
-        "pitcher_hits": 0.782,
-        "pitcher_hr": 0.853,
+        "pitcher_hits": 1.0,
+        "pitcher_hr": 1.0,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -2161,9 +2158,9 @@
         "stx_xwoba": 1.0,
         "stx_barrel": 1.0,
         "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.879,
+        "pitcher_gb_hr": 1.0,
         "k_damper": 1.0,
-        "pitcher_bb": 1.109,
+        "pitcher_bb": 1.0,
         "park_hand_hr": 1.0,
         "sb_speed": 1.0,
         "speed_singles": 1.0,
@@ -2173,18 +2170,18 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.0789,
-        "doubles": 0.0247,
-        "triples": 0.0022,
-        "home_runs": 0.0546,
-        "bb_hbp": 0.1922,
-        "r_per_pa": 0.3447,
-        "rbi_per_pa": 0.2235
+        "singles": 0.1534,
+        "doubles": 0.0411,
+        "triples": 0.0016,
+        "home_runs": 0.0424,
+        "bb_hbp": 0.1255,
+        "r_per_pa": 0.333,
+        "rbi_per_pa": 0.1778
       },
       "pa": 4.0,
       "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-05-04T18:04:27.686208+00:00"
+  "generated_at": "2026-05-04T18:10:55.604278+00:00"
 }
