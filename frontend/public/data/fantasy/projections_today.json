@@ -1165,78 +1165,6 @@
       "tier": "low"
     },
     {
-      "player_id": 669004,
-      "name": "MJ Melendez",
-      "position": "LF",
-      "team_id": 121,
-      "team_abbr": "NYM",
-      "opp_abbr": "COL",
-      "opp_team_id": 115,
-      "opp_pitcher": {
-        "id": 547179,
-        "fullName": "Michael Lorenzen"
-      },
-      "park": {
-        "id": 19,
-        "name": "Coors Field",
-        "runs": 116,
-        "hr": 118,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.13,
-      "mean_efp": 6.94,
-      "stats_games": 0,
-      "efp": 9.19,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.67,
-        "doubles": 1.34,
-        "triples": 0.09,
-        "home_runs": 1.98,
-        "bb_hbp": 0.64,
-        "r": 2.47,
-        "rbi": 1.3,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 1.18,
-        "park_runs": 1.16,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.224,
-        "pitcher_hr": 1.085,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.924,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.815,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.2227,
-        "doubles": 0.0669,
-        "triples": 0.0028,
-        "home_runs": 0.0495,
-        "bb_hbp": 0.0804,
-        "r_per_pa": 0.3084,
-        "rbi_per_pa": 0.1622
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 665833,
       "name": "Oneil Cruz",
       "position": "CF",
@@ -1304,6 +1232,78 @@
         "bb_hbp": 0.093,
         "r_per_pa": 0.2805,
         "rbi_per_pa": 0.1558
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 669004,
+      "name": "MJ Melendez",
+      "position": "LF",
+      "team_id": 121,
+      "team_abbr": "NYM",
+      "opp_abbr": "COL",
+      "opp_team_id": 115,
+      "opp_pitcher": {
+        "id": 547179,
+        "fullName": "Michael Lorenzen"
+      },
+      "park": {
+        "id": 19,
+        "name": "Coors Field",
+        "runs": 116,
+        "hr": 118,
+        "label": "Hitter Friendly"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 7.13,
+      "mean_efp": 6.94,
+      "stats_games": 0,
+      "efp": 9.19,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.67,
+        "doubles": 1.34,
+        "triples": 0.09,
+        "home_runs": 1.98,
+        "bb_hbp": 0.64,
+        "r": 2.47,
+        "rbi": 1.3,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 1.18,
+        "park_runs": 1.16,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.224,
+        "pitcher_hr": 1.085,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.924,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.815,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.2227,
+        "doubles": 0.0669,
+        "triples": 0.0028,
+        "home_runs": 0.0495,
+        "bb_hbp": 0.0804,
+        "r_per_pa": 0.3084,
+        "rbi_per_pa": 0.1622
       },
       "pa": 4.0,
       "tier": "low"
@@ -2174,5 +2174,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-05-05T12:06:40.941041+00:00"
+  "generated_at": "2026-05-05T16:24:23.969403+00:00"
 }
