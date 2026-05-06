@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 14,
-  "projection_count": 262,
+  "projection_count": 259,
   "projections": [
     {
       "player_id": 592450,
@@ -116,13 +116,13 @@
       "stdev_efp": 7.15,
       "mean_efp": 11.29,
       "stats_games": 7,
-      "efp": 11.72,
+      "efp": 11.71,
       "bat_side": "L",
       "per_event": {
-        "singles": 1.38,
-        "doubles": 1.42,
+        "singles": 1.37,
+        "doubles": 1.41,
         "triples": 0.04,
-        "home_runs": 4.43,
+        "home_runs": 4.42,
         "bb_hbp": 0.81,
         "r": 3.33,
         "rbi": 1.98,
@@ -132,8 +132,8 @@
         "park_hr": 0.96,
         "park_runs": 0.95,
         "weather_hr": 1.08,
-        "pitcher_hits": 1.019,
-        "pitcher_hr": 1.08,
+        "pitcher_hits": 1.015,
+        "pitcher_hr": 1.078,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -153,10 +153,10 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1067,
-        "doubles": 0.066,
+        "singles": 0.1063,
+        "doubles": 0.0658,
         "triples": 0.0012,
-        "home_runs": 0.103,
+        "home_runs": 0.1028,
         "bb_hbp": 0.0939,
         "r_per_pa": 0.3875,
         "rbi_per_pa": 0.2302
@@ -496,14 +496,14 @@
       "stdev_efp": 5.41,
       "mean_efp": 5.33,
       "stats_games": 6,
-      "efp": 10.73,
+      "efp": 10.74,
       "bat_side": "L",
       "per_event": {
-        "singles": 2.01,
-        "doubles": 1.15,
-        "triples": 0.18,
-        "home_runs": 1.15,
-        "bb_hbp": 1.65,
+        "singles": 2.02,
+        "doubles": 1.14,
+        "triples": 0.17,
+        "home_runs": 1.14,
+        "bb_hbp": 1.67,
         "r": 3.65,
         "rbi": 1.58,
         "sb": 0.88
@@ -533,11 +533,11 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1562,
-        "doubles": 0.0534,
-        "triples": 0.0052,
-        "home_runs": 0.0267,
-        "bb_hbp": 0.1915,
+        "singles": 0.1569,
+        "doubles": 0.0531,
+        "triples": 0.0051,
+        "home_runs": 0.0264,
+        "bb_hbp": 0.1943,
         "r_per_pa": 0.4249,
         "rbi_per_pa": 0.1837
       },
@@ -651,11 +651,11 @@
       "efp": 10.08,
       "bat_side": "R",
       "per_event": {
-        "singles": 1.95,
+        "singles": 1.94,
         "doubles": 0.88,
         "triples": 0.04,
-        "home_runs": 2.51,
-        "bb_hbp": 1.1,
+        "home_runs": 2.5,
+        "bb_hbp": 1.12,
         "r": 2.47,
         "rbi": 1.52,
         "sb": 1.03
@@ -685,11 +685,11 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1628,
-        "doubles": 0.044,
+        "singles": 0.1619,
+        "doubles": 0.0438,
         "triples": 0.0013,
-        "home_runs": 0.0628,
-        "bb_hbp": 0.1369,
+        "home_runs": 0.0625,
+        "bb_hbp": 0.1406,
         "r_per_pa": 0.3092,
         "rbi_per_pa": 0.1902
       },
@@ -849,82 +849,6 @@
       "tier": "low"
     },
     {
-      "player_id": 645277,
-      "name": "Ozzie Albies",
-      "position": "2B",
-      "team_id": 144,
-      "team_abbr": "ATL",
-      "opp_abbr": "SEA",
-      "opp_team_id": 136,
-      "opp_pitcher": {
-        "id": 693433,
-        "fullName": "Bryan Woo"
-      },
-      "park": {
-        "id": 680,
-        "name": "T-Mobile Park",
-        "runs": 95,
-        "hr": 96,
-        "label": "Pitcher Friendly"
-      },
-      "weather": {
-        "condition": "Cloudy",
-        "temp": "58",
-        "wind": "7 mph, Out To CF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 8.12,
-      "mean_efp": 8.71,
-      "stats_games": 7,
-      "efp": 9.92,
-      "bat_side": "S",
-      "per_event": {
-        "singles": 2.17,
-        "doubles": 1.0,
-        "triples": 0.04,
-        "home_runs": 2.56,
-        "bb_hbp": 0.65,
-        "r": 3.27,
-        "rbi": 1.64,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 0.96,
-        "park_runs": 0.95,
-        "weather_hr": 1.08,
-        "pitcher_hits": 1.019,
-        "pitcher_hr": 1.08,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.122,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.15,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1683,
-        "doubles": 0.0465,
-        "triples": 0.0012,
-        "home_runs": 0.0596,
-        "bb_hbp": 0.0751,
-        "r_per_pa": 0.3804,
-        "rbi_per_pa": 0.1902
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
       "player_id": 681807,
       "name": "David Fry",
       "position": "RF",
@@ -994,82 +918,6 @@
         "rbi_per_pa": 0.1944
       },
       "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 545361,
-      "name": "Mike Trout",
-      "position": "CF",
-      "team_id": 108,
-      "team_abbr": "LAA",
-      "opp_abbr": "CWS",
-      "opp_team_id": 145,
-      "opp_pitcher": {
-        "id": 702273,
-        "fullName": "Noah Schultz"
-      },
-      "park": {
-        "id": 1,
-        "name": "Angel Stadium",
-        "runs": 97,
-        "hr": 96,
-        "label": "Pitcher Friendly"
-      },
-      "weather": {
-        "condition": "Sunny",
-        "temp": "74",
-        "wind": "8 mph, Out To LF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 7.32,
-      "mean_efp": 11.67,
-      "stats_games": 6,
-      "efp": 9.87,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.11,
-        "doubles": 0.58,
-        "triples": 0.03,
-        "home_runs": 1.93,
-        "bb_hbp": 2.08,
-        "r": 3.35,
-        "rbi": 1.58,
-        "sb": 0.61
-      },
-      "multipliers": {
-        "park_hr": 0.96,
-        "park_runs": 0.97,
-        "weather_hr": 1.15,
-        "pitcher_hits": 0.7,
-        "pitcher_hr": 0.729,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.041,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.075,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.0857,
-        "doubles": 0.0269,
-        "triples": 0.0008,
-        "home_runs": 0.0449,
-        "bb_hbp": 0.2415,
-        "r_per_pa": 0.3894,
-        "rbi_per_pa": 0.1835
-      },
-      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1480,7 +1328,7 @@
       "stdev_efp": 3.84,
       "mean_efp": 4.71,
       "stats_games": 7,
-      "efp": 9.76,
+      "efp": 9.74,
       "bat_side": "R",
       "per_event": {
         "singles": 2.33,
@@ -1489,7 +1337,7 @@
         "home_runs": 1.93,
         "bb_hbp": 0.72,
         "r": 2.9,
-        "rbi": 1.44,
+        "rbi": 1.43,
         "sb": 0.89
       },
       "multipliers": {
@@ -1517,13 +1365,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1944,
-        "doubles": 0.0441,
+        "singles": 0.194,
+        "doubles": 0.044,
         "triples": 0.0013,
-        "home_runs": 0.0483,
-        "bb_hbp": 0.0902,
-        "r_per_pa": 0.363,
-        "rbi_per_pa": 0.1799
+        "home_runs": 0.0482,
+        "bb_hbp": 0.0899,
+        "r_per_pa": 0.3623,
+        "rbi_per_pa": 0.1794
       },
       "pa": 4.0,
       "tier": "low"
@@ -1750,6 +1598,158 @@
         "rbi_per_pa": 0.1898
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 545361,
+      "name": "Mike Trout",
+      "position": "CF",
+      "team_id": 108,
+      "team_abbr": "LAA",
+      "opp_abbr": "CWS",
+      "opp_team_id": 145,
+      "opp_pitcher": {
+        "id": 702273,
+        "fullName": "Noah Schultz"
+      },
+      "park": {
+        "id": 1,
+        "name": "Angel Stadium",
+        "runs": 97,
+        "hr": 96,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "74",
+        "wind": "8 mph, Out To LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.32,
+      "mean_efp": 11.67,
+      "stats_games": 6,
+      "efp": 9.63,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.11,
+        "doubles": 0.58,
+        "triples": 0.03,
+        "home_runs": 2.01,
+        "bb_hbp": 1.95,
+        "r": 3.25,
+        "rbi": 1.58,
+        "sb": 0.49
+      },
+      "multipliers": {
+        "park_hr": 0.96,
+        "park_runs": 0.97,
+        "weather_hr": 1.15,
+        "pitcher_hits": 0.7,
+        "pitcher_hr": 0.729,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.041,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.075,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.0857,
+        "doubles": 0.0269,
+        "triples": 0.0008,
+        "home_runs": 0.0467,
+        "bb_hbp": 0.2268,
+        "r_per_pa": 0.3778,
+        "rbi_per_pa": 0.1842
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 645277,
+      "name": "Ozzie Albies",
+      "position": "2B",
+      "team_id": 144,
+      "team_abbr": "ATL",
+      "opp_abbr": "SEA",
+      "opp_team_id": 136,
+      "opp_pitcher": {
+        "id": 693433,
+        "fullName": "Bryan Woo"
+      },
+      "park": {
+        "id": 680,
+        "name": "T-Mobile Park",
+        "runs": 95,
+        "hr": 96,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Cloudy",
+        "temp": "58",
+        "wind": "7 mph, Out To CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 8.12,
+      "mean_efp": 8.71,
+      "stats_games": 7,
+      "efp": 9.62,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 2.19,
+        "doubles": 1.03,
+        "triples": 0.04,
+        "home_runs": 2.31,
+        "bb_hbp": 0.62,
+        "r": 3.22,
+        "rbi": 1.57,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 0.96,
+        "park_runs": 0.95,
+        "weather_hr": 1.08,
+        "pitcher_hits": 1.015,
+        "pitcher_hr": 1.078,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.122,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.17,
+        "doubles": 0.0479,
+        "triples": 0.0012,
+        "home_runs": 0.0536,
+        "bb_hbp": 0.0723,
+        "r_per_pa": 0.3749,
+        "rbi_per_pa": 0.1822
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1981,82 +1981,6 @@
       "tier": "low"
     },
     {
-      "player_id": 686948,
-      "name": "Drake Baldwin",
-      "position": "C",
-      "team_id": 144,
-      "team_abbr": "ATL",
-      "opp_abbr": "SEA",
-      "opp_team_id": 136,
-      "opp_pitcher": {
-        "id": 693433,
-        "fullName": "Bryan Woo"
-      },
-      "park": {
-        "id": 680,
-        "name": "T-Mobile Park",
-        "runs": 95,
-        "hr": 96,
-        "label": "Pitcher Friendly"
-      },
-      "weather": {
-        "condition": "Cloudy",
-        "temp": "58",
-        "wind": "7 mph, Out To CF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 7.21,
-      "mean_efp": 11.57,
-      "stats_games": 7,
-      "efp": 9.36,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.14,
-        "doubles": 0.71,
-        "triples": 0.04,
-        "home_runs": 2.66,
-        "bb_hbp": 0.69,
-        "r": 2.83,
-        "rbi": 1.5,
-        "sb": 0.12
-      },
-      "multipliers": {
-        "park_hr": 0.96,
-        "park_runs": 0.95,
-        "weather_hr": 1.08,
-        "pitcher_hits": 1.019,
-        "pitcher_hr": 1.08,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.122,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.012,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1656,
-        "doubles": 0.0331,
-        "triples": 0.0012,
-        "home_runs": 0.0618,
-        "bb_hbp": 0.0807,
-        "r_per_pa": 0.329,
-        "rbi_per_pa": 0.1741
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
       "player_id": 666397,
       "name": "Edouard Julien",
       "position": "2B",
@@ -2209,6 +2133,82 @@
       "tier": "low"
     },
     {
+      "player_id": 686948,
+      "name": "Drake Baldwin",
+      "position": "C",
+      "team_id": 144,
+      "team_abbr": "ATL",
+      "opp_abbr": "SEA",
+      "opp_team_id": 136,
+      "opp_pitcher": {
+        "id": 693433,
+        "fullName": "Bryan Woo"
+      },
+      "park": {
+        "id": 680,
+        "name": "T-Mobile Park",
+        "runs": 95,
+        "hr": 96,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Cloudy",
+        "temp": "58",
+        "wind": "7 mph, Out To CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.21,
+      "mean_efp": 11.57,
+      "stats_games": 7,
+      "efp": 9.27,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.03,
+        "doubles": 0.72,
+        "triples": 0.04,
+        "home_runs": 2.7,
+        "bb_hbp": 0.71,
+        "r": 2.78,
+        "rbi": 1.49,
+        "sb": 0.12
+      },
+      "multipliers": {
+        "park_hr": 0.96,
+        "park_runs": 0.95,
+        "weather_hr": 1.08,
+        "pitcher_hits": 1.015,
+        "pitcher_hr": 1.078,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.122,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.012,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1571,
+        "doubles": 0.0334,
+        "triples": 0.0012,
+        "home_runs": 0.0629,
+        "bb_hbp": 0.0821,
+        "r_per_pa": 0.3234,
+        "rbi_per_pa": 0.1727
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 671056,
       "name": "Iv\u00e1n Herrera",
       "position": "C",
@@ -2239,11 +2239,11 @@
       "efp": 9.25,
       "bat_side": "R",
       "per_event": {
-        "singles": 1.56,
-        "doubles": 1.43,
+        "singles": 1.55,
+        "doubles": 1.46,
         "triples": 0.04,
         "home_runs": 1.15,
-        "bb_hbp": 1.73,
+        "bb_hbp": 1.72,
         "r": 3.25,
         "rbi": 1.28,
         "sb": 0.12
@@ -2273,11 +2273,11 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1206,
-        "doubles": 0.0666,
+        "singles": 0.12,
+        "doubles": 0.0679,
         "triples": 0.0012,
-        "home_runs": 0.0268,
-        "bb_hbp": 0.2009,
+        "home_runs": 0.0267,
+        "bb_hbp": 0.1996,
         "r_per_pa": 0.3775,
         "rbi_per_pa": 0.1488
       },
@@ -2286,5 +2286,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-05-06T20:10:18.980391+00:00"
+  "generated_at": "2026-05-06T20:18:35.402041+00:00"
 }
