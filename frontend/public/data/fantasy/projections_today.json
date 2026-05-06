@@ -248,21 +248,21 @@
         "label": "Slight Pitcher"
       },
       "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "57",
-        "wind": "8 mph, In From LF"
+        "condition": "Overcast",
+        "temp": "129",
+        "wind": "7 mph, In From RF"
       },
       "pa_source": "lineup",
       "stdev_efp": 5.41,
       "mean_efp": 5.33,
       "stats_games": 6,
-      "efp": 10.48,
+      "efp": 10.37,
       "bat_side": "L",
       "per_event": {
         "singles": 1.87,
         "doubles": 1.11,
         "triples": 0.17,
-        "home_runs": 1.33,
+        "home_runs": 1.2,
         "bb_hbp": 1.53,
         "r": 3.5,
         "rbi": 1.54,
@@ -271,7 +271,7 @@
       "multipliers": {
         "park_hr": 0.97,
         "park_runs": 0.98,
-        "weather_hr": 0.95,
+        "weather_hr": 0.861,
         "pitcher_hits": 0.927,
         "pitcher_hr": 1.0,
         "slot_r": 1.0,
@@ -296,12 +296,88 @@
         "singles": 0.1448,
         "doubles": 0.0518,
         "triples": 0.005,
-        "home_runs": 0.0309,
+        "home_runs": 0.028,
         "bb_hbp": 0.1783,
         "r_per_pa": 0.407,
         "rbi_per_pa": 0.1794
       },
       "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 691023,
+      "name": "Jordan Walker",
+      "position": "RF",
+      "team_id": 138,
+      "team_abbr": "STL",
+      "opp_abbr": "MIL",
+      "opp_team_id": 158,
+      "opp_pitcher": {
+        "id": 687075,
+        "fullName": "Brandon Sproat"
+      },
+      "park": {
+        "id": 2889,
+        "name": "Busch Stadium",
+        "runs": 98,
+        "hr": 97,
+        "label": "Slight Pitcher"
+      },
+      "weather": {
+        "condition": "Overcast",
+        "temp": "129",
+        "wind": "7 mph, In From RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 4.86,
+      "mean_efp": 6.0,
+      "stats_games": 5,
+      "efp": 10.35,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.2,
+        "doubles": 0.93,
+        "triples": 0.04,
+        "home_runs": 2.77,
+        "bb_hbp": 0.95,
+        "r": 2.44,
+        "rbi": 1.54,
+        "sb": 0.94
+      },
+      "multipliers": {
+        "park_hr": 0.97,
+        "park_runs": 0.98,
+        "weather_hr": 0.997,
+        "pitcher_hits": 1.057,
+        "pitcher_hr": 1.296,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.002,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.926,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1834,
+        "doubles": 0.0466,
+        "triples": 0.0013,
+        "home_runs": 0.0691,
+        "bb_hbp": 0.1189,
+        "r_per_pa": 0.3054,
+        "rbi_per_pa": 0.1927
+      },
+      "pa": 4.0,
       "tier": "low"
     },
     {
@@ -665,82 +741,6 @@
       "tier": "low"
     },
     {
-      "player_id": 691023,
-      "name": "Jordan Walker",
-      "position": "RF",
-      "team_id": 138,
-      "team_abbr": "STL",
-      "opp_abbr": "MIL",
-      "opp_team_id": 158,
-      "opp_pitcher": {
-        "id": 687075,
-        "fullName": "Brandon Sproat"
-      },
-      "park": {
-        "id": 2889,
-        "name": "Busch Stadium",
-        "runs": 98,
-        "hr": 97,
-        "label": "Slight Pitcher"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "57",
-        "wind": "8 mph, In From LF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 4.86,
-      "mean_efp": 6.0,
-      "stats_games": 5,
-      "efp": 9.92,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.2,
-        "doubles": 0.93,
-        "triples": 0.04,
-        "home_runs": 2.27,
-        "bb_hbp": 0.95,
-        "r": 2.44,
-        "rbi": 1.54,
-        "sb": 0.94
-      },
-      "multipliers": {
-        "park_hr": 0.97,
-        "park_runs": 0.98,
-        "weather_hr": 0.82,
-        "pitcher_hits": 1.057,
-        "pitcher_hr": 1.296,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.002,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 0.926,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1834,
-        "doubles": 0.0466,
-        "triples": 0.0013,
-        "home_runs": 0.0568,
-        "bb_hbp": 0.1189,
-        "r_per_pa": 0.3054,
-        "rbi_per_pa": 0.1927
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 681807,
       "name": "David Fry",
       "position": "RF",
@@ -813,6 +813,82 @@
       "tier": "low"
     },
     {
+      "player_id": 671056,
+      "name": "Iv\u00e1n Herrera",
+      "position": "C",
+      "team_id": 138,
+      "team_abbr": "STL",
+      "opp_abbr": "MIL",
+      "opp_team_id": 158,
+      "opp_pitcher": {
+        "id": 687075,
+        "fullName": "Brandon Sproat"
+      },
+      "park": {
+        "id": 2889,
+        "name": "Busch Stadium",
+        "runs": 98,
+        "hr": 97,
+        "label": "Slight Pitcher"
+      },
+      "weather": {
+        "condition": "Overcast",
+        "temp": "129",
+        "wind": "7 mph, In From RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 3.09,
+      "mean_efp": 7.33,
+      "stats_games": 6,
+      "efp": 9.91,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.65,
+        "doubles": 1.47,
+        "triples": 0.04,
+        "home_runs": 1.28,
+        "bb_hbp": 1.89,
+        "r": 3.4,
+        "rbi": 1.3,
+        "sb": 0.28
+      },
+      "multipliers": {
+        "park_hr": 0.97,
+        "park_runs": 0.98,
+        "weather_hr": 0.997,
+        "pitcher_hits": 1.057,
+        "pitcher_hr": 1.296,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.002,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1281,
+        "doubles": 0.0682,
+        "triples": 0.0013,
+        "home_runs": 0.0298,
+        "bb_hbp": 0.2199,
+        "r_per_pa": 0.3953,
+        "rbi_per_pa": 0.1507
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 665742,
       "name": "Juan Soto",
       "position": "LF",
@@ -882,158 +958,6 @@
         "rbi_per_pa": 0.166
       },
       "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 676475,
-      "name": "Alec Burleson",
-      "position": "1B",
-      "team_id": 138,
-      "team_abbr": "STL",
-      "opp_abbr": "MIL",
-      "opp_team_id": 158,
-      "opp_pitcher": {
-        "id": 687075,
-        "fullName": "Brandon Sproat"
-      },
-      "park": {
-        "id": 2889,
-        "name": "Busch Stadium",
-        "runs": 98,
-        "hr": 97,
-        "label": "Slight Pitcher"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "57",
-        "wind": "8 mph, In From LF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 5.46,
-      "mean_efp": 3.2,
-      "stats_games": 5,
-      "efp": 9.83,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.9,
-        "doubles": 1.41,
-        "triples": 0.05,
-        "home_runs": 1.98,
-        "bb_hbp": 1.23,
-        "r": 3.08,
-        "rbi": 1.45,
-        "sb": 0.12
-      },
-      "multipliers": {
-        "park_hr": 0.97,
-        "park_runs": 0.98,
-        "weather_hr": 0.95,
-        "pitcher_hits": 1.057,
-        "pitcher_hr": 1.296,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.002,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.15,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1474,
-        "doubles": 0.0656,
-        "triples": 0.0013,
-        "home_runs": 0.0461,
-        "bb_hbp": 0.1432,
-        "r_per_pa": 0.3586,
-        "rbi_per_pa": 0.1683
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 802139,
-      "name": "JJ Wetherholt",
-      "position": "2B",
-      "team_id": 138,
-      "team_abbr": "STL",
-      "opp_abbr": "MIL",
-      "opp_team_id": 158,
-      "opp_pitcher": {
-        "id": 687075,
-        "fullName": "Brandon Sproat"
-      },
-      "park": {
-        "id": 2889,
-        "name": "Busch Stadium",
-        "runs": 98,
-        "hr": 97,
-        "label": "Slight Pitcher"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "57",
-        "wind": "8 mph, In From LF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 5.12,
-      "mean_efp": 6.5,
-      "stats_games": 6,
-      "efp": 9.8,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.76,
-        "doubles": 1.07,
-        "triples": 0.04,
-        "home_runs": 2.0,
-        "bb_hbp": 1.42,
-        "r": 3.05,
-        "rbi": 1.34,
-        "sb": 0.51
-      },
-      "multipliers": {
-        "park_hr": 0.97,
-        "park_runs": 0.98,
-        "weather_hr": 0.95,
-        "pitcher_hits": 1.057,
-        "pitcher_hr": 1.296,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.002,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.15,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1361,
-        "doubles": 0.0498,
-        "triples": 0.0013,
-        "home_runs": 0.0464,
-        "bb_hbp": 0.1653,
-        "r_per_pa": 0.3551,
-        "rbi_per_pa": 0.1558
-      },
-      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1185,9 +1109,9 @@
       "tier": "low"
     },
     {
-      "player_id": 671056,
-      "name": "Iv\u00e1n Herrera",
-      "position": "C",
+      "player_id": 676475,
+      "name": "Alec Burleson",
+      "position": "1B",
       "team_id": 138,
       "team_abbr": "STL",
       "opp_abbr": "MIL",
@@ -1204,30 +1128,30 @@
         "label": "Slight Pitcher"
       },
       "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "57",
-        "wind": "8 mph, In From LF"
+        "condition": "Overcast",
+        "temp": "129",
+        "wind": "7 mph, In From RF"
       },
       "pa_source": "lineup",
-      "stdev_efp": 3.09,
-      "mean_efp": 7.33,
-      "stats_games": 6,
-      "efp": 9.71,
-      "bat_side": "R",
+      "stdev_efp": 5.46,
+      "mean_efp": 3.2,
+      "stats_games": 5,
+      "efp": 9.67,
+      "bat_side": "L",
       "per_event": {
-        "singles": 1.65,
-        "doubles": 1.47,
-        "triples": 0.04,
-        "home_runs": 1.05,
-        "bb_hbp": 1.89,
-        "r": 3.4,
-        "rbi": 1.3,
-        "sb": 0.28
+        "singles": 1.9,
+        "doubles": 1.41,
+        "triples": 0.05,
+        "home_runs": 1.8,
+        "bb_hbp": 1.23,
+        "r": 3.08,
+        "rbi": 1.45,
+        "sb": 0.12
       },
       "multipliers": {
         "park_hr": 0.97,
         "park_runs": 0.98,
-        "weather_hr": 0.82,
+        "weather_hr": 0.861,
         "pitcher_hits": 1.057,
         "pitcher_hr": 1.296,
         "slot_r": 1.0,
@@ -1249,13 +1173,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1281,
-        "doubles": 0.0682,
+        "singles": 0.1474,
+        "doubles": 0.0656,
         "triples": 0.0013,
-        "home_runs": 0.0245,
-        "bb_hbp": 0.2199,
-        "r_per_pa": 0.3953,
-        "rbi_per_pa": 0.1507
+        "home_runs": 0.0418,
+        "bb_hbp": 0.1432,
+        "r_per_pa": 0.3586,
+        "rbi_per_pa": 0.1683
       },
       "pa": 4.3,
       "tier": "low"
@@ -1330,6 +1254,82 @@
         "rbi_per_pa": 0.1898
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 802139,
+      "name": "JJ Wetherholt",
+      "position": "2B",
+      "team_id": 138,
+      "team_abbr": "STL",
+      "opp_abbr": "MIL",
+      "opp_team_id": 158,
+      "opp_pitcher": {
+        "id": 687075,
+        "fullName": "Brandon Sproat"
+      },
+      "park": {
+        "id": 2889,
+        "name": "Busch Stadium",
+        "runs": 98,
+        "hr": 97,
+        "label": "Slight Pitcher"
+      },
+      "weather": {
+        "condition": "Overcast",
+        "temp": "129",
+        "wind": "7 mph, In From RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.12,
+      "mean_efp": 6.5,
+      "stats_games": 6,
+      "efp": 9.64,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.76,
+        "doubles": 1.07,
+        "triples": 0.04,
+        "home_runs": 1.81,
+        "bb_hbp": 1.42,
+        "r": 3.05,
+        "rbi": 1.34,
+        "sb": 0.51
+      },
+      "multipliers": {
+        "park_hr": 0.97,
+        "park_runs": 0.98,
+        "weather_hr": 0.861,
+        "pitcher_hits": 1.057,
+        "pitcher_hr": 1.296,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.002,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1361,
+        "doubles": 0.0498,
+        "triples": 0.0013,
+        "home_runs": 0.0421,
+        "bb_hbp": 0.1653,
+        "r_per_pa": 0.3551,
+        "rbi_per_pa": 0.1558
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1616,78 +1616,6 @@
         "bb_hbp": 0.1454,
         "r_per_pa": 0.3356,
         "rbi_per_pa": 0.169
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 669477,
-      "name": "Casey Schmitt",
-      "position": "1B",
-      "team_id": 137,
-      "team_abbr": "SF",
-      "opp_abbr": "SD",
-      "opp_team_id": 135,
-      "opp_pitcher": {
-        "id": 663362,
-        "fullName": "Matt Waldron"
-      },
-      "park": {
-        "id": 2395,
-        "name": "Oracle Park",
-        "runs": 93,
-        "hr": 88,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.96,
-      "mean_efp": 6.4,
-      "stats_games": 5,
-      "efp": 9.27,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.17,
-        "doubles": 1.09,
-        "triples": 0.43,
-        "home_runs": 1.83,
-        "bb_hbp": 0.67,
-        "r": 2.51,
-        "rbi": 1.47,
-        "sb": 0.41
-      },
-      "multipliers": {
-        "park_hr": 0.88,
-        "park_runs": 0.93,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.243,
-        "pitcher_hr": 1.152,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.921,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.012,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1808,
-        "doubles": 0.0543,
-        "triples": 0.0136,
-        "home_runs": 0.0458,
-        "bb_hbp": 0.0844,
-        "r_per_pa": 0.3138,
-        "rbi_per_pa": 0.1835
       },
       "pa": 4.0,
       "tier": "low"
@@ -2195,8 +2123,80 @@
       },
       "pa": 4.0,
       "tier": "low"
+    },
+    {
+      "player_id": 665833,
+      "name": "Oneil Cruz",
+      "position": "CF",
+      "team_id": 134,
+      "team_abbr": "PIT",
+      "opp_abbr": "AZ",
+      "opp_team_id": 109,
+      "opp_pitcher": {
+        "id": 647336,
+        "fullName": "Michael Soroka"
+      },
+      "park": {
+        "id": 15,
+        "name": "Chase Field",
+        "runs": 106,
+        "hr": 110,
+        "label": "Hitter Friendly"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 6.4,
+      "mean_efp": 9.2,
+      "stats_games": 5,
+      "efp": 9.0,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.01,
+        "doubles": 0.9,
+        "triples": 0.05,
+        "home_runs": 1.79,
+        "bb_hbp": 0.62,
+        "r": 2.23,
+        "rbi": 1.24,
+        "sb": 1.44
+      },
+      "multipliers": {
+        "park_hr": 1.1,
+        "park_runs": 1.06,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.093,
+        "pitcher_hr": 0.909,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.043,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.934,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1678,
+        "doubles": 0.0448,
+        "triples": 0.0015,
+        "home_runs": 0.0448,
+        "bb_hbp": 0.0773,
+        "r_per_pa": 0.279,
+        "rbi_per_pa": 0.1547
+      },
+      "pa": 4.0,
+      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-05-06T15:20:35.873940+00:00"
+  "generated_at": "2026-05-06T16:27:28.901902+00:00"
 }
