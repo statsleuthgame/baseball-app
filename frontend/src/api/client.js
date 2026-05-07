@@ -1969,6 +1969,122 @@ export const fetchLeagueLeaders = async () => {
   }
 };
 
+// 9b. Team leaders (mirror of fetchLeagueLeaders, scoped to one team).
+//
+// /stats/leaders applies league-wide qualifiers (e.g. ~3.1 PA × team games
+// for batting title), which on a single team in April returns nearly nobody
+// for rate stats. Instead we hit /stats?stats=season&group=...&teamId=...
+// once for hitting and once for pitching — full season stat block per
+// player on the active roster — then sort/filter client-side per category.
+//
+// Rate stats (AVG, OPS, ERA, WHIP) get a min-sample filter so a backup
+// catcher with 3 ABs can't lead the team in batting average.
+const TEAM_HITTING_MIN_PA = 30;
+const TEAM_PITCHING_MIN_IP = 10;
+
+// "X.Y" innings pitched strings — Y is outs (0/1/2), not tenths.
+// "5.2" = 5⅔ IP = 17 outs. We compare in outs to keep the math integer.
+const ipToOuts = (ipStr) => {
+  if (ipStr == null) return 0;
+  const s = String(ipStr);
+  if (!s.length) return 0;
+  const dot = s.indexOf(".");
+  if (dot === -1) return parseInt(s, 10) * 3 || 0;
+  const whole = parseInt(s.slice(0, dot), 10) || 0;
+  const frac = parseInt(s.slice(dot + 1), 10) || 0;
+  return whole * 3 + frac;
+};
+
+export const fetchTeamLeaders = async (teamId, season) => {
+  if (!teamId) return { hitting: {}, pitching: {} };
+  const year = season || new Date().getFullYear();
+  const teamAbbr = getTeamAbbr(teamId);
+
+  // Pull every player on the active roster with their season stat block.
+  // sportIds=1 keeps it MLB-level (filters out minors stints).
+  const params = (group) => ({ stats: "season", group, season: year, teamId, sportIds: 1, limit: 200 });
+
+  const fetchSplits = async (group) => {
+    try {
+      const resp = await mlbApi.get("/stats", { params: params(group) });
+      const splits = resp.data?.stats?.[0]?.splits || [];
+      return splits.map((sp) => ({
+        playerId: sp.player?.id,
+        playerName: sp.player?.fullName || "",
+        stat: sp.stat || {},
+      }));
+    } catch {
+      return [];
+    }
+  };
+
+  const [hittingSplits, pitchingSplits] = await Promise.all([
+    fetchSplits("hitting"),
+    fetchSplits("pitching"),
+  ]);
+
+  // Build a top-N leader array for one category.
+  // - extract: stat → numeric value (or null if absent / unparseable)
+  // - eligible: per-row gate (used for rate-stat min-sample filter)
+  // - asc: when true, lower value ranks higher (ERA, WHIP — and 0 is best)
+  // - excludeZero: drop rows where the value is exactly 0 — used for
+  //   counting stats so we don't show "5 leaders tied at 0 saves" in April
+  const topN = (rows, statKey, { extract, eligible, asc = false, n = 5, excludeZero = false }) => {
+    const eligibleRows = rows.filter((r) => {
+      const num = extract(r.stat);
+      if (num == null || !Number.isFinite(num)) return false;
+      if (eligible && !eligible(r.stat, num)) return false;
+      if (excludeZero && num === 0) return false;
+      return true;
+    });
+    eligibleRows.sort((a, b) => {
+      const av = extract(a.stat);
+      const bv = extract(b.stat);
+      return asc ? av - bv : bv - av;
+    });
+    return eligibleRows.slice(0, n).map((r, idx) => {
+      const raw = r.stat[statKey];
+      const value = raw != null ? String(raw) : String(extract(r.stat));
+      return {
+        rank: idx + 1,
+        value,
+        player: { id: r.playerId, name: r.playerName },
+        team: teamAbbr,
+        teamId: Number(teamId),
+      };
+    });
+  };
+
+  const num = (v) => {
+    if (v == null) return null;
+    const n = typeof v === "string" ? parseFloat(v) : Number(v);
+    return Number.isFinite(n) ? n : null;
+  };
+
+  // Plate appearances live as `plateAppearances` on the season hitting stat.
+  const eligibleHitterRate = (stat) => num(stat.plateAppearances) >= TEAM_HITTING_MIN_PA;
+  const eligiblePitcherRate = (stat) => ipToOuts(stat.inningsPitched) >= TEAM_PITCHING_MIN_IP * 3;
+
+  const hitting = {
+    homeRuns:           topN(hittingSplits, "homeRuns",           { extract: (s) => num(s.homeRuns), excludeZero: true }),
+    runsBattedIn:       topN(hittingSplits, "runsBattedIn",       { extract: (s) => num(s.rbi), excludeZero: true }),
+    hits:               topN(hittingSplits, "hits",               { extract: (s) => num(s.hits), excludeZero: true }),
+    stolenBases:        topN(hittingSplits, "stolenBases",        { extract: (s) => num(s.stolenBases), excludeZero: true }),
+    battingAverage:     topN(hittingSplits, "battingAverage",     { extract: (s) => num(s.avg ?? s.battingAverage), eligible: eligibleHitterRate }),
+    onBasePlusSlugging: topN(hittingSplits, "onBasePlusSlugging", { extract: (s) => num(s.ops ?? s.onBasePlusSlugging), eligible: eligibleHitterRate }),
+  };
+
+  const pitching = {
+    strikeouts:       topN(pitchingSplits, "strikeouts",       { extract: (s) => num(s.strikeOuts ?? s.strikeouts), excludeZero: true }),
+    wins:             topN(pitchingSplits, "wins",             { extract: (s) => num(s.wins), excludeZero: true }),
+    saves:            topN(pitchingSplits, "saves",            { extract: (s) => num(s.saves), excludeZero: true }),
+    earnedRunAverage: topN(pitchingSplits, "earnedRunAverage", { extract: (s) => num(s.era ?? s.earnedRunAverage), eligible: eligiblePitcherRate, asc: true }),
+    whip:             topN(pitchingSplits, "whip",             { extract: (s) => num(s.whip), eligible: eligiblePitcherRate, asc: true }),
+  };
+
+  return { hitting, pitching };
+};
+
 // 10. Upcoming series (next 4 games with probable pitchers)
 export const fetchUpcomingSeries = async (teamId) => {
   try {

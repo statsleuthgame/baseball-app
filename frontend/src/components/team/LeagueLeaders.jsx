@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useTeam } from "../../context/TeamContext";
-import { fetchLeagueLeaders } from "../../api/client";
+import { fetchLeagueLeaders, fetchTeamLeaders } from "../../api/client";
 import { formatAvg } from "../../utils/formatters";
 
 const HITTING_CATS = [
@@ -24,24 +24,54 @@ const PITCHING_CATS = [
 ];
 
 export default function LeagueLeaders() {
-  const { teamId } = useTeam();
+  const { teamId, team } = useTeam();
   const navigate = useNavigate();
+  const [scope, setScope] = useState("team"); // "team" | "league"
   const [tab, setTab] = useState("hitting");
 
+  const currentYear = new Date().getFullYear();
   const { data } = useQuery({
-    queryKey: ["leagueLeaders"],
-    queryFn: fetchLeagueLeaders,
+    queryKey: ["leaders", scope, scope === "team" ? teamId : null, currentYear],
+    queryFn: () => scope === "team"
+      ? fetchTeamLeaders(teamId, currentYear)
+      : fetchLeagueLeaders(),
+    enabled: scope === "team" ? !!teamId : true,
     staleTime: 1000 * 60 * 60,
   });
 
   if (!data || (!Object.keys(data.hitting || {}).length && !Object.keys(data.pitching || {}).length)) return null;
 
-  const categories = tab === "hitting" ? HITTING_CATS : PITCHING_CATS;
+  // Drop the longestHomeRun row in Team mode — the custom backend endpoint
+  // that powers it doesn't support team filtering.
+  const allHittingCats = scope === "team"
+    ? HITTING_CATS.filter((c) => c.key !== "longestHomeRun")
+    : HITTING_CATS;
+  const categories = tab === "hitting" ? allHittingCats : PITCHING_CATS;
   const source = tab === "hitting" ? data.hitting : data.pitching;
+
+  const teamLabel = team?.abbreviation || "Team";
 
   return (
     <div className="leaders-card">
-      <h3 className="section-title">League Leaders</h3>
+      <h3 className="section-title">{scope === "team" ? `${teamLabel} Leaders` : "League Leaders"}</h3>
+      <div className="leaders-tabs leaders-mode-toggle" role="group" aria-label="Leader scope">
+        <button
+          type="button"
+          className={`leaders-tab ${scope === "team" ? "active" : ""}`}
+          onClick={() => setScope("team")}
+          aria-pressed={scope === "team"}
+        >
+          {teamLabel}
+        </button>
+        <button
+          type="button"
+          className={`leaders-tab ${scope === "league" ? "active" : ""}`}
+          onClick={() => setScope("league")}
+          aria-pressed={scope === "league"}
+        >
+          League
+        </button>
+      </div>
       <div className="leaders-tabs" role="group" aria-label="Leader category">
         <button
           type="button"
@@ -68,7 +98,9 @@ export default function LeagueLeaders() {
             <div key={key} className="leaders-category">
               <h4 className="leaders-cat-title">{label}</h4>
               {leaders.map((l, idx) => {
-                const isOurTeam = l.teamId == teamId;
+                // In Team mode every row is our team — the highlight is
+                // redundant and visually noisy. Only flag in League mode.
+                const isOurTeam = scope === "league" && l.teamId == teamId;
                 const value = fmt(l.value);
                 return (
                   <button
