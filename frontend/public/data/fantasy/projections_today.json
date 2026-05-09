@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 344,
+  "projection_count": 340,
   "projections": [
     {
       "player_id": 669127,
@@ -602,6 +602,82 @@
         "rbi_per_pa": 0.2135
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 668939,
+      "name": "Adley Rutschman",
+      "position": "C",
+      "team_id": 110,
+      "team_abbr": "BAL",
+      "opp_abbr": "ATH",
+      "opp_team_id": 133,
+      "opp_pitcher": {
+        "id": 650644,
+        "fullName": "Aaron Civale"
+      },
+      "park": {
+        "id": 2,
+        "name": "Camden Yards",
+        "runs": 103,
+        "hr": 108,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Cloudy",
+        "temp": "71",
+        "wind": "11 mph, Out To CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 3.87,
+      "mean_efp": 7.2,
+      "stats_games": 5,
+      "efp": 9.86,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 2.06,
+        "doubles": 1.73,
+        "triples": 0.06,
+        "home_runs": 2.28,
+        "bb_hbp": 0.64,
+        "r": 3.02,
+        "rbi": 1.46,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 1.08,
+        "park_runs": 1.03,
+        "weather_hr": 1.08,
+        "pitcher_hits": 1.066,
+        "pitcher_hr": 0.954,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.198,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.149,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1599,
+        "doubles": 0.0804,
+        "triples": 0.0017,
+        "home_runs": 0.053,
+        "bb_hbp": 0.0746,
+        "r_per_pa": 0.3509,
+        "rbi_per_pa": 0.17
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -2135,84 +2211,8 @@
       },
       "pa": 4.0,
       "tier": "low"
-    },
-    {
-      "player_id": 572233,
-      "name": "Christian Walker",
-      "position": "1B",
-      "team_id": 117,
-      "team_abbr": "HOU",
-      "opp_abbr": "CIN",
-      "opp_team_id": 113,
-      "opp_pitcher": {
-        "id": 695505,
-        "fullName": "Chase Burns"
-      },
-      "park": {
-        "id": 2602,
-        "name": "Great American Ball Park",
-        "runs": 109,
-        "hr": 116,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Sunny",
-        "temp": "75",
-        "wind": "9 mph, Out To LF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 11.38,
-      "mean_efp": 12.17,
-      "stats_games": 6,
-      "efp": 9.16,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.88,
-        "doubles": 0.85,
-        "triples": 0.04,
-        "home_runs": 2.8,
-        "bb_hbp": 0.64,
-        "r": 2.84,
-        "rbi": 1.41,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 1.16,
-        "park_runs": 1.09,
-        "weather_hr": 1.15,
-        "pitcher_hits": 0.882,
-        "pitcher_hr": 1.024,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.991,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.829,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.126,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1566,
-        "doubles": 0.0427,
-        "triples": 0.0012,
-        "home_runs": 0.07,
-        "bb_hbp": 0.0801,
-        "r_per_pa": 0.3544,
-        "rbi_per_pa": 0.1759
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-05-09T17:31:53.321365+00:00"
+  "generated_at": "2026-05-09T17:43:06.492680+00:00"
 }
