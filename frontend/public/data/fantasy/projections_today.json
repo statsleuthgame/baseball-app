@@ -116,15 +116,15 @@
       "stdev_efp": 9.4,
       "mean_efp": 9.0,
       "stats_games": 7,
-      "efp": 11.68,
+      "efp": 11.65,
       "bat_side": "L",
       "per_event": {
         "singles": 1.1,
         "doubles": 0.83,
         "triples": 0.11,
-        "home_runs": 5.68,
-        "bb_hbp": 0.98,
-        "r": 2.9,
+        "home_runs": 5.67,
+        "bb_hbp": 0.97,
+        "r": 2.89,
         "rbi": 1.74,
         "sb": 0.0
       },
@@ -153,13 +153,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.0853,
-        "doubles": 0.0385,
+        "singles": 0.0851,
+        "doubles": 0.0384,
         "triples": 0.0032,
-        "home_runs": 0.1321,
-        "bb_hbp": 0.1134,
-        "r_per_pa": 0.3368,
-        "rbi_per_pa": 0.2026
+        "home_runs": 0.1319,
+        "bb_hbp": 0.1132,
+        "r_per_pa": 0.3359,
+        "rbi_per_pa": 0.2021
       },
       "pa": 4.3,
       "tier": "medium"
@@ -268,15 +268,15 @@
       "stdev_efp": 4.15,
       "mean_efp": 11.33,
       "stats_games": 6,
-      "efp": 10.84,
+      "efp": 10.88,
       "bat_side": "R",
       "per_event": {
-        "singles": 1.42,
+        "singles": 1.41,
         "doubles": 0.85,
         "triples": 0.04,
-        "home_runs": 3.53,
-        "bb_hbp": 0.97,
-        "r": 3.32,
+        "home_runs": 3.5,
+        "bb_hbp": 1.01,
+        "r": 3.37,
         "rbi": 1.75,
         "sb": 0.49
       },
@@ -305,13 +305,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1099,
-        "doubles": 0.0396,
+        "singles": 0.1091,
+        "doubles": 0.0394,
         "triples": 0.0012,
-        "home_runs": 0.0822,
-        "bb_hbp": 0.113,
-        "r_per_pa": 0.3862,
-        "rbi_per_pa": 0.2038
+        "home_runs": 0.0814,
+        "bb_hbp": 0.1176,
+        "r_per_pa": 0.3921,
+        "rbi_per_pa": 0.2039
       },
       "pa": 4.3,
       "tier": "low"
@@ -420,16 +420,16 @@
       "stdev_efp": 9.76,
       "mean_efp": 9.0,
       "stats_games": 6,
-      "efp": 10.65,
+      "efp": 10.55,
       "bat_side": "L",
       "per_event": {
-        "singles": 1.67,
+        "singles": 1.65,
         "doubles": 1.22,
         "triples": 0.04,
-        "home_runs": 2.99,
+        "home_runs": 2.96,
         "bb_hbp": 0.85,
-        "r": 3.27,
-        "rbi": 1.71,
+        "r": 3.24,
+        "rbi": 1.69,
         "sb": 0.4
       },
       "multipliers": {
@@ -457,13 +457,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1291,
-        "doubles": 0.0569,
+        "singles": 0.1278,
+        "doubles": 0.0566,
         "triples": 0.0013,
-        "home_runs": 0.0695,
-        "bb_hbp": 0.099,
-        "r_per_pa": 0.3801,
-        "rbi_per_pa": 0.1992
+        "home_runs": 0.0689,
+        "bb_hbp": 0.0985,
+        "r_per_pa": 0.3764,
+        "rbi_per_pa": 0.1968
       },
       "pa": 4.3,
       "tier": "low"
@@ -572,13 +572,13 @@
       "stdev_efp": 6.54,
       "mean_efp": 6.64,
       "stats_games": 11,
-      "efp": 10.12,
+      "efp": 10.09,
       "bat_side": "R",
       "per_event": {
-        "singles": 1.88,
-        "doubles": 1.27,
+        "singles": 1.86,
+        "doubles": 1.26,
         "triples": 0.4,
-        "home_runs": 2.0,
+        "home_runs": 1.99,
         "bb_hbp": 0.99,
         "r": 2.87,
         "rbi": 1.44,
@@ -588,8 +588,8 @@
         "park_hr": 1.08,
         "park_runs": 1.04,
         "weather_hr": 1.0,
-        "pitcher_hits": 0.924,
-        "pitcher_hr": 1.298,
+        "pitcher_hits": 0.917,
+        "pitcher_hr": 1.293,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -609,10 +609,10 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1454,
-        "doubles": 0.0591,
-        "triples": 0.0117,
-        "home_runs": 0.0464,
+        "singles": 0.1444,
+        "doubles": 0.0587,
+        "triples": 0.0116,
+        "home_runs": 0.0462,
         "bb_hbp": 0.1153,
         "r_per_pa": 0.3341,
         "rbi_per_pa": 0.1671
@@ -648,13 +648,13 @@
       "stdev_efp": 10.83,
       "mean_efp": 9.71,
       "stats_games": 7,
-      "efp": 10.09,
+      "efp": 10.05,
       "bat_side": "R",
       "per_event": {
-        "singles": 1.77,
-        "doubles": 0.79,
+        "singles": 1.75,
+        "doubles": 0.78,
         "triples": 0.05,
-        "home_runs": 3.16,
+        "home_runs": 3.14,
         "bb_hbp": 0.91,
         "r": 3.31,
         "rbi": 1.53,
@@ -664,8 +664,8 @@
         "park_hr": 1.08,
         "park_runs": 1.04,
         "weather_hr": 1.0,
-        "pitcher_hits": 0.911,
-        "pitcher_hr": 1.087,
+        "pitcher_hits": 0.901,
+        "pitcher_hr": 1.08,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -685,10 +685,10 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1371,
-        "doubles": 0.0368,
-        "triples": 0.0014,
-        "home_runs": 0.0735,
+        "singles": 0.1356,
+        "doubles": 0.0364,
+        "triples": 0.0013,
+        "home_runs": 0.0731,
         "bb_hbp": 0.1057,
         "r_per_pa": 0.3845,
         "rbi_per_pa": 0.1785
@@ -1001,82 +1001,6 @@
       "tier": "low"
     },
     {
-      "player_id": 668709,
-      "name": "JJ Bleday",
-      "position": "LF",
-      "team_id": 113,
-      "team_abbr": "CIN",
-      "opp_abbr": "HOU",
-      "opp_team_id": 117,
-      "opp_pitcher": {
-        "id": 678906,
-        "fullName": "Kai-Wei Teng"
-      },
-      "park": {
-        "id": 2602,
-        "name": "Great American Ball Park",
-        "runs": 109,
-        "hr": 116,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "68",
-        "wind": "3 mph, Out To RF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 7.13,
-      "mean_efp": 6.94,
-      "stats_games": 0,
-      "efp": 9.8,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.3,
-        "doubles": 0.88,
-        "triples": 0.33,
-        "home_runs": 3.08,
-        "bb_hbp": 1.26,
-        "r": 2.51,
-        "rbi": 1.4,
-        "sb": 0.43
-      },
-      "multipliers": {
-        "park_hr": 1.16,
-        "park_runs": 1.09,
-        "weather_hr": 1.15,
-        "pitcher_hits": 0.917,
-        "pitcher_hr": 0.998,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.957,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.233,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.042,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1084,
-        "doubles": 0.0439,
-        "triples": 0.0105,
-        "home_runs": 0.0769,
-        "bb_hbp": 0.1576,
-        "r_per_pa": 0.3141,
-        "rbi_per_pa": 0.1752
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 678246,
       "name": "Miguel Vargas",
       "position": "3B",
@@ -1104,13 +1028,13 @@
       "stdev_efp": 9.16,
       "mean_efp": 15.5,
       "stats_games": 6,
-      "efp": 9.77,
+      "efp": 9.73,
       "bat_side": "R",
       "per_event": {
-        "singles": 1.63,
-        "doubles": 0.77,
+        "singles": 1.61,
+        "doubles": 0.76,
         "triples": 0.12,
-        "home_runs": 2.38,
+        "home_runs": 2.37,
         "bb_hbp": 1.0,
         "r": 2.92,
         "rbi": 1.57,
@@ -1120,8 +1044,8 @@
         "park_hr": 1.1,
         "park_runs": 1.04,
         "weather_hr": 0.82,
-        "pitcher_hits": 1.045,
-        "pitcher_hr": 1.117,
+        "pitcher_hits": 1.036,
+        "pitcher_hr": 1.111,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -1141,15 +1065,91 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1261,
-        "doubles": 0.0358,
-        "triples": 0.0035,
-        "home_runs": 0.0554,
+        "singles": 0.125,
+        "doubles": 0.0355,
+        "triples": 0.0034,
+        "home_runs": 0.0551,
         "bb_hbp": 0.1166,
         "r_per_pa": 0.3392,
         "rbi_per_pa": 0.1827
       },
       "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 668709,
+      "name": "JJ Bleday",
+      "position": "LF",
+      "team_id": 113,
+      "team_abbr": "CIN",
+      "opp_abbr": "HOU",
+      "opp_team_id": 117,
+      "opp_pitcher": {
+        "id": 678906,
+        "fullName": "Kai-Wei Teng"
+      },
+      "park": {
+        "id": 2602,
+        "name": "Great American Ball Park",
+        "runs": 109,
+        "hr": 116,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "68",
+        "wind": "3 mph, Out To RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.13,
+      "mean_efp": 6.94,
+      "stats_games": 0,
+      "efp": 9.71,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.29,
+        "doubles": 0.87,
+        "triples": 0.33,
+        "home_runs": 3.05,
+        "bb_hbp": 1.25,
+        "r": 2.49,
+        "rbi": 1.38,
+        "sb": 0.43
+      },
+      "multipliers": {
+        "park_hr": 1.16,
+        "park_runs": 1.09,
+        "weather_hr": 1.15,
+        "pitcher_hits": 0.917,
+        "pitcher_hr": 0.998,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.957,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.233,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.042,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1076,
+        "doubles": 0.0435,
+        "triples": 0.0103,
+        "home_runs": 0.0763,
+        "bb_hbp": 0.1563,
+        "r_per_pa": 0.311,
+        "rbi_per_pa": 0.1728
+      },
+      "pa": 4.0,
       "tier": "low"
     },
     {
@@ -1224,82 +1224,6 @@
         "bb_hbp": 0.0714,
         "r_per_pa": 0.3289,
         "rbi_per_pa": 0.2026
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 808959,
-      "name": "Munetaka Murakami",
-      "position": "1B",
-      "team_id": 145,
-      "team_abbr": "CWS",
-      "opp_abbr": "SEA",
-      "opp_team_id": 136,
-      "opp_pitcher": {
-        "id": 669302,
-        "fullName": "Logan Gilbert"
-      },
-      "park": {
-        "id": 4,
-        "name": "Guaranteed Rate Field",
-        "runs": 104,
-        "hr": 110,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "57",
-        "wind": "3 mph, In From LF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 9.01,
-      "mean_efp": 13.5,
-      "stats_games": 6,
-      "efp": 9.65,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.51,
-        "doubles": 0.5,
-        "triples": 0.04,
-        "home_runs": 3.71,
-        "bb_hbp": 0.86,
-        "r": 2.88,
-        "rbi": 1.5,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 1.1,
-        "park_runs": 1.04,
-        "weather_hr": 0.95,
-        "pitcher_hits": 1.045,
-        "pitcher_hr": 1.117,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.043,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.15,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1171,
-        "doubles": 0.0235,
-        "triples": 0.0013,
-        "home_runs": 0.0864,
-        "bb_hbp": 0.0998,
-        "r_per_pa": 0.3346,
-        "rbi_per_pa": 0.1745
       },
       "pa": 4.3,
       "tier": "low"
@@ -1381,6 +1305,82 @@
       "tier": "low"
     },
     {
+      "player_id": 808959,
+      "name": "Munetaka Murakami",
+      "position": "1B",
+      "team_id": 145,
+      "team_abbr": "CWS",
+      "opp_abbr": "SEA",
+      "opp_team_id": 136,
+      "opp_pitcher": {
+        "id": 669302,
+        "fullName": "Logan Gilbert"
+      },
+      "park": {
+        "id": 4,
+        "name": "Guaranteed Rate Field",
+        "runs": 104,
+        "hr": 110,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "57",
+        "wind": "3 mph, In From LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 9.01,
+      "mean_efp": 13.5,
+      "stats_games": 6,
+      "efp": 9.61,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.5,
+        "doubles": 0.5,
+        "triples": 0.04,
+        "home_runs": 3.69,
+        "bb_hbp": 0.86,
+        "r": 2.88,
+        "rbi": 1.5,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 1.1,
+        "park_runs": 1.04,
+        "weather_hr": 0.95,
+        "pitcher_hits": 1.036,
+        "pitcher_hr": 1.111,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.043,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1161,
+        "doubles": 0.0233,
+        "triples": 0.0013,
+        "home_runs": 0.0859,
+        "bb_hbp": 0.0998,
+        "r_per_pa": 0.3346,
+        "rbi_per_pa": 0.1745
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 668939,
       "name": "Adley Rutschman",
       "position": "C",
@@ -1408,16 +1408,16 @@
       "stdev_efp": 3.87,
       "mean_efp": 7.2,
       "stats_games": 5,
-      "efp": 9.47,
+      "efp": 9.38,
       "bat_side": "S",
       "per_event": {
-        "singles": 1.81,
-        "doubles": 1.77,
+        "singles": 1.8,
+        "doubles": 1.76,
         "triples": 0.05,
-        "home_runs": 1.66,
-        "bb_hbp": 1.03,
-        "r": 2.99,
-        "rbi": 1.49,
+        "home_runs": 1.65,
+        "bb_hbp": 1.02,
+        "r": 2.95,
+        "rbi": 1.47,
         "sb": 0.0
       },
       "multipliers": {
@@ -1445,13 +1445,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1406,
-        "doubles": 0.0824,
-        "triples": 0.0016,
-        "home_runs": 0.0386,
-        "bb_hbp": 0.1196,
-        "r_per_pa": 0.3474,
-        "rbi_per_pa": 0.1736
+        "singles": 0.1396,
+        "doubles": 0.0816,
+        "triples": 0.0015,
+        "home_runs": 0.0383,
+        "bb_hbp": 0.1185,
+        "r_per_pa": 0.3435,
+        "rbi_per_pa": 0.1715
       },
       "pa": 4.3,
       "tier": "low"
@@ -1484,16 +1484,16 @@
       "stdev_efp": 12.94,
       "mean_efp": 9.4,
       "stats_games": 5,
-      "efp": 9.24,
+      "efp": 9.32,
       "bat_side": "L",
       "per_event": {
-        "singles": 2.9,
+        "singles": 2.96,
         "doubles": 0.89,
-        "triples": 0.3,
-        "home_runs": 1.67,
-        "bb_hbp": 0.51,
-        "r": 2.59,
-        "rbi": 1.37,
+        "triples": 0.29,
+        "home_runs": 1.66,
+        "bb_hbp": 0.5,
+        "r": 2.62,
+        "rbi": 1.39,
         "sb": 0.31
       },
       "multipliers": {
@@ -1521,13 +1521,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.2417,
-        "doubles": 0.0447,
-        "triples": 0.0094,
-        "home_runs": 0.0417,
-        "bb_hbp": 0.0635,
-        "r_per_pa": 0.3237,
-        "rbi_per_pa": 0.1718
+        "singles": 0.2468,
+        "doubles": 0.0446,
+        "triples": 0.0092,
+        "home_runs": 0.0415,
+        "bb_hbp": 0.0631,
+        "r_per_pa": 0.3279,
+        "rbi_per_pa": 0.1734
       },
       "pa": 4.0,
       "tier": "low"
@@ -1606,82 +1606,6 @@
         "rbi_per_pa": 0.1387
       },
       "pa": 3.7,
-      "tier": "low"
-    },
-    {
-      "player_id": 803011,
-      "name": "Sam Antonacci",
-      "position": "LF",
-      "team_id": 145,
-      "team_abbr": "CWS",
-      "opp_abbr": "SEA",
-      "opp_team_id": 136,
-      "opp_pitcher": {
-        "id": 669302,
-        "fullName": "Logan Gilbert"
-      },
-      "park": {
-        "id": 4,
-        "name": "Guaranteed Rate Field",
-        "runs": 104,
-        "hr": 110,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "57",
-        "wind": "3 mph, In From LF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 7.13,
-      "mean_efp": 6.94,
-      "stats_games": 0,
-      "efp": 9.17,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.4,
-        "doubles": 0.7,
-        "triples": 0.49,
-        "home_runs": 1.01,
-        "bb_hbp": 0.86,
-        "r": 3.13,
-        "rbi": 1.16,
-        "sb": 0.71
-      },
-      "multipliers": {
-        "park_hr": 1.1,
-        "park_runs": 1.04,
-        "weather_hr": 0.95,
-        "pitcher_hits": 1.045,
-        "pitcher_hr": 1.117,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.043,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.15,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1861,
-        "doubles": 0.0326,
-        "triples": 0.0144,
-        "home_runs": 0.0235,
-        "bb_hbp": 0.1005,
-        "r_per_pa": 0.3643,
-        "rbi_per_pa": 0.1347
-      },
-      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1832,6 +1756,82 @@
         "bb_hbp": 0.0945,
         "r_per_pa": 0.3691,
         "rbi_per_pa": 0.1601
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 803011,
+      "name": "Sam Antonacci",
+      "position": "LF",
+      "team_id": 145,
+      "team_abbr": "CWS",
+      "opp_abbr": "SEA",
+      "opp_team_id": 136,
+      "opp_pitcher": {
+        "id": 669302,
+        "fullName": "Logan Gilbert"
+      },
+      "park": {
+        "id": 4,
+        "name": "Guaranteed Rate Field",
+        "runs": 104,
+        "hr": 110,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "57",
+        "wind": "3 mph, In From LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.13,
+      "mean_efp": 6.94,
+      "stats_games": 0,
+      "efp": 9.06,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.36,
+        "doubles": 0.69,
+        "triples": 0.49,
+        "home_runs": 1.0,
+        "bb_hbp": 0.86,
+        "r": 3.1,
+        "rbi": 1.15,
+        "sb": 0.71
+      },
+      "multipliers": {
+        "park_hr": 1.1,
+        "park_runs": 1.04,
+        "weather_hr": 0.95,
+        "pitcher_hits": 1.036,
+        "pitcher_hr": 1.111,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.043,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1827,
+        "doubles": 0.0322,
+        "triples": 0.0142,
+        "home_runs": 0.0233,
+        "bb_hbp": 0.0995,
+        "r_per_pa": 0.3601,
+        "rbi_per_pa": 0.1332
       },
       "pa": 4.3,
       "tier": "low"
@@ -2294,5 +2294,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-05-10T19:41:13.718620+00:00"
+  "generated_at": "2026-05-10T19:53:55.406644+00:00"
 }
