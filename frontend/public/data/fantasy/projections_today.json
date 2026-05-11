@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 6,
-  "projection_count": 125,
+  "projection_count": 121,
   "projections": [
     {
       "player_id": 592450,
@@ -160,6 +160,82 @@
         "bb_hbp": 0.1315,
         "r_per_pa": 0.3728,
         "rbi_per_pa": 0.1947
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 647304,
+      "name": "Josh Naylor",
+      "position": "1B",
+      "team_id": 136,
+      "team_abbr": "SEA",
+      "opp_abbr": "HOU",
+      "opp_team_id": 117,
+      "opp_pitcher": {
+        "id": 663567,
+        "fullName": "Peter Lambert"
+      },
+      "park": {
+        "id": 2392,
+        "name": "Minute Maid Park",
+        "runs": 103,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 8.39,
+      "mean_efp": 5.4,
+      "stats_games": 15,
+      "efp": 9.54,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.48,
+        "doubles": 0.83,
+        "triples": 0.04,
+        "home_runs": 1.62,
+        "bb_hbp": 0.96,
+        "r": 2.45,
+        "rbi": 1.34,
+        "sb": 1.17
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.03,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.0,
+        "pitcher_hr": 1.0,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.031,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.916,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1923,
+        "doubles": 0.0388,
+        "triples": 0.0013,
+        "home_runs": 0.0376,
+        "bb_hbp": 0.1111,
+        "r_per_pa": 0.2852,
+        "rbi_per_pa": 0.1562
       },
       "pa": 4.3,
       "tier": "low"
@@ -469,82 +545,6 @@
       "tier": "low"
     },
     {
-      "player_id": 647304,
-      "name": "Josh Naylor",
-      "position": "1B",
-      "team_id": 136,
-      "team_abbr": "SEA",
-      "opp_abbr": "HOU",
-      "opp_team_id": 117,
-      "opp_pitcher": {
-        "id": 663567,
-        "fullName": "Peter Lambert"
-      },
-      "park": {
-        "id": 2392,
-        "name": "Minute Maid Park",
-        "runs": 103,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": {
-        "condition": "Roof Closed",
-        "temp": "72",
-        "wind": "0 mph, None"
-      },
-      "pa_source": "default",
-      "stdev_efp": 8.39,
-      "mean_efp": 5.4,
-      "stats_games": 15,
-      "efp": 9.13,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.31,
-        "doubles": 0.78,
-        "triples": 0.04,
-        "home_runs": 1.5,
-        "bb_hbp": 0.89,
-        "r": 2.49,
-        "rbi": 1.25,
-        "sb": 1.17
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 1.0,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.031,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1923,
-        "doubles": 0.0388,
-        "triples": 0.0013,
-        "home_runs": 0.0376,
-        "bb_hbp": 0.1111,
-        "r_per_pa": 0.3113,
-        "rbi_per_pa": 0.1562
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 641355,
       "name": "Cody Bellinger",
       "position": "LF",
@@ -616,6 +616,158 @@
         "bb_hbp": 0.1418,
         "r_per_pa": 0.2921,
         "rbi_per_pa": 0.1766
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 680977,
+      "name": "Brendan Donovan",
+      "position": "3B",
+      "team_id": 136,
+      "team_abbr": "SEA",
+      "opp_abbr": "HOU",
+      "opp_team_id": 117,
+      "opp_pitcher": {
+        "id": 663567,
+        "fullName": "Peter Lambert"
+      },
+      "park": {
+        "id": 2392,
+        "name": "Minute Maid Park",
+        "runs": 103,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.78,
+      "mean_efp": 5.58,
+      "stats_games": 12,
+      "efp": 9.11,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.96,
+        "doubles": 0.95,
+        "triples": 0.06,
+        "home_runs": 1.54,
+        "bb_hbp": 1.61,
+        "r": 2.85,
+        "rbi": 1.21,
+        "sb": 0.22
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.03,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.0,
+        "pitcher_hr": 1.0,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.031,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.062,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1518,
+        "doubles": 0.044,
+        "triples": 0.0017,
+        "home_runs": 0.0357,
+        "bb_hbp": 0.1877,
+        "r_per_pa": 0.3318,
+        "rbi_per_pa": 0.1407
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 670042,
+      "name": "Luke Raley",
+      "position": "RF",
+      "team_id": 136,
+      "team_abbr": "SEA",
+      "opp_abbr": "HOU",
+      "opp_team_id": 117,
+      "opp_pitcher": {
+        "id": 663567,
+        "fullName": "Peter Lambert"
+      },
+      "park": {
+        "id": 2392,
+        "name": "Minute Maid Park",
+        "runs": 103,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 8.75,
+      "mean_efp": 7.38,
+      "stats_games": 16,
+      "efp": 9.06,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.4,
+        "doubles": 0.71,
+        "triples": 0.19,
+        "home_runs": 3.21,
+        "bb_hbp": 0.79,
+        "r": 2.52,
+        "rbi": 1.51,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.03,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.0,
+        "pitcher_hr": 1.0,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.031,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1163,
+        "doubles": 0.0354,
+        "triples": 0.0061,
+        "home_runs": 0.0803,
+        "bb_hbp": 0.0992,
+        "r_per_pa": 0.3155,
+        "rbi_per_pa": 0.1889
       },
       "pa": 4.0,
       "tier": "low"
@@ -921,6 +1073,82 @@
       "tier": "low"
     },
     {
+      "player_id": 668227,
+      "name": "Randy Arozarena",
+      "position": "LF",
+      "team_id": 136,
+      "team_abbr": "SEA",
+      "opp_abbr": "HOU",
+      "opp_team_id": 117,
+      "opp_pitcher": {
+        "id": 663567,
+        "fullName": "Peter Lambert"
+      },
+      "park": {
+        "id": 2392,
+        "name": "Minute Maid Park",
+        "runs": 103,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.87,
+      "mean_efp": 7.67,
+      "stats_games": 6,
+      "efp": 8.88,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.11,
+        "doubles": 0.88,
+        "triples": 0.16,
+        "home_runs": 0.77,
+        "bb_hbp": 1.18,
+        "r": 2.84,
+        "rbi": 1.09,
+        "sb": 1.11
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.03,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.0,
+        "pitcher_hr": 1.0,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.031,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.176,
+        "doubles": 0.0438,
+        "triples": 0.0049,
+        "home_runs": 0.0192,
+        "bb_hbp": 0.1471,
+        "r_per_pa": 0.3552,
+        "rbi_per_pa": 0.1367
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
       "player_id": 681624,
       "name": "Andy Pages",
       "position": "CF",
@@ -990,6 +1218,82 @@
         "rbi_per_pa": 0.2022
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 677594,
+      "name": "Julio Rodr\u00edguez",
+      "position": "CF",
+      "team_id": 136,
+      "team_abbr": "SEA",
+      "opp_abbr": "HOU",
+      "opp_team_id": 117,
+      "opp_pitcher": {
+        "id": 663567,
+        "fullName": "Peter Lambert"
+      },
+      "park": {
+        "id": 2392,
+        "name": "Minute Maid Park",
+        "runs": 103,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 4.11,
+      "mean_efp": 6.5,
+      "stats_games": 6,
+      "efp": 8.82,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.16,
+        "doubles": 1.03,
+        "triples": 0.04,
+        "home_runs": 1.59,
+        "bb_hbp": 0.92,
+        "r": 2.64,
+        "rbi": 1.36,
+        "sb": 0.32
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.03,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.0,
+        "pitcher_hr": 1.0,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.031,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.042,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1676,
+        "doubles": 0.0478,
+        "triples": 0.0012,
+        "home_runs": 0.037,
+        "bb_hbp": 0.1067,
+        "r_per_pa": 0.3074,
+        "rbi_per_pa": 0.1587
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1066,82 +1370,6 @@
         "rbi_per_pa": 0.1326
       },
       "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 670042,
-      "name": "Luke Raley",
-      "position": "RF",
-      "team_id": 136,
-      "team_abbr": "SEA",
-      "opp_abbr": "HOU",
-      "opp_team_id": 117,
-      "opp_pitcher": {
-        "id": 663567,
-        "fullName": "Peter Lambert"
-      },
-      "park": {
-        "id": 2392,
-        "name": "Minute Maid Park",
-        "runs": 103,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": {
-        "condition": "Roof Closed",
-        "temp": "72",
-        "wind": "0 mph, None"
-      },
-      "pa_source": "default",
-      "stdev_efp": 8.75,
-      "mean_efp": 7.38,
-      "stats_games": 16,
-      "efp": 8.77,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.4,
-        "doubles": 0.71,
-        "triples": 0.19,
-        "home_runs": 3.21,
-        "bb_hbp": 0.79,
-        "r": 2.19,
-        "rbi": 1.51,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 1.0,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.031,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1163,
-        "doubles": 0.0354,
-        "triples": 0.0061,
-        "home_runs": 0.0803,
-        "bb_hbp": 0.0992,
-        "r_per_pa": 0.2743,
-        "rbi_per_pa": 0.1889
-      },
-      "pa": 4.0,
       "tier": "low"
     },
     {
@@ -1360,82 +1588,6 @@
         "bb_hbp": 0.0925,
         "r_per_pa": 0.2768,
         "rbi_per_pa": 0.1622
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 668227,
-      "name": "Randy Arozarena",
-      "position": "LF",
-      "team_id": 136,
-      "team_abbr": "SEA",
-      "opp_abbr": "HOU",
-      "opp_team_id": 117,
-      "opp_pitcher": {
-        "id": 663567,
-        "fullName": "Peter Lambert"
-      },
-      "park": {
-        "id": 2392,
-        "name": "Minute Maid Park",
-        "runs": 103,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": {
-        "condition": "Roof Closed",
-        "temp": "72",
-        "wind": "0 mph, None"
-      },
-      "pa_source": "default",
-      "stdev_efp": 7.87,
-      "mean_efp": 7.67,
-      "stats_games": 6,
-      "efp": 8.6,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.11,
-        "doubles": 0.88,
-        "triples": 0.16,
-        "home_runs": 0.77,
-        "bb_hbp": 1.18,
-        "r": 2.47,
-        "rbi": 1.09,
-        "sb": 1.16
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 1.0,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.031,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.176,
-        "doubles": 0.0438,
-        "triples": 0.0049,
-        "home_runs": 0.0192,
-        "bb_hbp": 0.1471,
-        "r_per_pa": 0.3089,
-        "rbi_per_pa": 0.1367
       },
       "pa": 4.0,
       "tier": "low"
@@ -1669,82 +1821,6 @@
       "tier": "low"
     },
     {
-      "player_id": 656582,
-      "name": "Connor Joe",
-      "position": "1B",
-      "team_id": 136,
-      "team_abbr": "SEA",
-      "opp_abbr": "HOU",
-      "opp_team_id": 117,
-      "opp_pitcher": {
-        "id": 663567,
-        "fullName": "Peter Lambert"
-      },
-      "park": {
-        "id": 2392,
-        "name": "Minute Maid Park",
-        "runs": 103,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": {
-        "condition": "Roof Closed",
-        "temp": "72",
-        "wind": "0 mph, None"
-      },
-      "pa_source": "default",
-      "stdev_efp": 7.13,
-      "mean_efp": 6.94,
-      "stats_games": 0,
-      "efp": 8.39,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.51,
-        "doubles": 1.29,
-        "triples": 0.09,
-        "home_runs": 1.7,
-        "bb_hbp": 1.02,
-        "r": 2.32,
-        "rbi": 1.28,
-        "sb": 0.36
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 1.0,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.031,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.126,
-        "doubles": 0.0647,
-        "triples": 0.0028,
-        "home_runs": 0.0425,
-        "bb_hbp": 0.1272,
-        "r_per_pa": 0.2904,
-        "rbi_per_pa": 0.16
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 683679,
       "name": "Jesus Rodriguez",
       "position": "C",
@@ -1812,82 +1888,6 @@
         "bb_hbp": 0.1056,
         "r_per_pa": 0.3019,
         "rbi_per_pa": 0.157
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 680977,
-      "name": "Brendan Donovan",
-      "position": "3B",
-      "team_id": 136,
-      "team_abbr": "SEA",
-      "opp_abbr": "HOU",
-      "opp_team_id": 117,
-      "opp_pitcher": {
-        "id": 663567,
-        "fullName": "Peter Lambert"
-      },
-      "park": {
-        "id": 2392,
-        "name": "Minute Maid Park",
-        "runs": 103,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": {
-        "condition": "Roof Closed",
-        "temp": "72",
-        "wind": "0 mph, None"
-      },
-      "pa_source": "default",
-      "stdev_efp": 5.78,
-      "mean_efp": 5.58,
-      "stats_games": 12,
-      "efp": 8.33,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.82,
-        "doubles": 0.88,
-        "triples": 0.05,
-        "home_runs": 1.43,
-        "bb_hbp": 1.5,
-        "r": 2.5,
-        "rbi": 1.13,
-        "sb": 0.2
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 1.0,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.031,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1518,
-        "doubles": 0.044,
-        "triples": 0.0017,
-        "home_runs": 0.0357,
-        "bb_hbp": 0.1877,
-        "r_per_pa": 0.3126,
-        "rbi_per_pa": 0.1407
       },
       "pa": 4.0,
       "tier": "low"
@@ -1964,82 +1964,6 @@
         "bb_hbp": 0.061,
         "r_per_pa": 0.3278,
         "rbi_per_pa": 0.1646
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 677594,
-      "name": "Julio Rodr\u00edguez",
-      "position": "CF",
-      "team_id": 136,
-      "team_abbr": "SEA",
-      "opp_abbr": "HOU",
-      "opp_team_id": 117,
-      "opp_pitcher": {
-        "id": 663567,
-        "fullName": "Peter Lambert"
-      },
-      "park": {
-        "id": 2392,
-        "name": "Minute Maid Park",
-        "runs": 103,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": {
-        "condition": "Roof Closed",
-        "temp": "72",
-        "wind": "0 mph, None"
-      },
-      "pa_source": "default",
-      "stdev_efp": 4.11,
-      "mean_efp": 6.5,
-      "stats_games": 6,
-      "efp": 8.11,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.01,
-        "doubles": 0.96,
-        "triples": 0.04,
-        "home_runs": 1.48,
-        "bb_hbp": 0.85,
-        "r": 2.36,
-        "rbi": 1.27,
-        "sb": 0.29
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 1.0,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.031,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1676,
-        "doubles": 0.0478,
-        "triples": 0.0012,
-        "home_runs": 0.037,
-        "bb_hbp": 0.1067,
-        "r_per_pa": 0.295,
-        "rbi_per_pa": 0.1587
       },
       "pa": 4.0,
       "tier": "low"
@@ -2263,8 +2187,80 @@
       },
       "pa": 4.0,
       "tier": "low"
+    },
+    {
+      "player_id": 545121,
+      "name": "Ildemaro Vargas",
+      "position": "1B",
+      "team_id": 109,
+      "team_abbr": "AZ",
+      "opp_abbr": "TEX",
+      "opp_team_id": 140,
+      "opp_pitcher": {
+        "id": 543135,
+        "fullName": "Nathan Eovaldi"
+      },
+      "park": {
+        "id": 5325,
+        "name": "Globe Life Field",
+        "runs": 104,
+        "hr": 108,
+        "label": "Slight Hitter"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 14.57,
+      "mean_efp": 19.0,
+      "stats_games": 5,
+      "efp": 7.98,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 2.23,
+        "doubles": 1.12,
+        "triples": 0.28,
+        "home_runs": 1.38,
+        "bb_hbp": 0.36,
+        "r": 2.25,
+        "rbi": 1.23,
+        "sb": 0.27
+      },
+      "multipliers": {
+        "park_hr": 1.08,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.021,
+        "pitcher_hr": 1.21,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.899,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1861,
+        "doubles": 0.0558,
+        "triples": 0.0087,
+        "home_runs": 0.0344,
+        "bb_hbp": 0.0456,
+        "r_per_pa": 0.2809,
+        "rbi_per_pa": 0.1536
+      },
+      "pa": 4.0,
+      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-05-11T20:15:41.228957+00:00"
+  "generated_at": "2026-05-11T20:27:23.428816+00:00"
 }
