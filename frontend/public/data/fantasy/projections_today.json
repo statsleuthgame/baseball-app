@@ -732,7 +732,7 @@
     {
       "player_id": 677588,
       "name": "Jos\u00e9 Tena",
-      "position": "2B",
+      "position": "DH",
       "team_id": 120,
       "team_abbr": "WSH",
       "opp_abbr": "CIN",
@@ -1800,7 +1800,7 @@
     {
       "player_id": 670541,
       "name": "Yordan Alvarez",
-      "position": "LF",
+      "position": "DH",
       "team_id": 117,
       "team_abbr": "HOU",
       "opp_abbr": "SEA",
@@ -2016,7 +2016,7 @@
     {
       "player_id": 656941,
       "name": "Kyle Schwarber",
-      "position": "LF",
+      "position": "DH",
       "team_id": 143,
       "team_abbr": "PHI",
       "opp_abbr": "BOS",
@@ -2156,5 +2156,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-05-12T13:02:23.012090+00:00"
+  "generated_at": "2026-05-12T15:37:21.292505+00:00"
 }
