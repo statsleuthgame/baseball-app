@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 295,
+  "projection_count": 288,
   "projections": [
     {
       "player_id": 695578,
@@ -464,6 +464,82 @@
         "bb_hbp": 0.0876,
         "r_per_pa": 0.3316,
         "rbi_per_pa": 0.1514
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 624424,
+      "name": "Michael Conforto",
+      "position": "RF",
+      "team_id": 112,
+      "team_abbr": "CHC",
+      "opp_abbr": "ATL",
+      "opp_team_id": 144,
+      "opp_pitcher": {
+        "id": 656550,
+        "fullName": "Grant Holmes"
+      },
+      "park": {
+        "id": 4705,
+        "name": "Truist Park",
+        "runs": 102,
+        "hr": 105,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "75",
+        "wind": "7 mph, In From LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.42,
+      "mean_efp": 5.57,
+      "stats_games": 7,
+      "efp": 10.54,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.61,
+        "doubles": 2.05,
+        "triples": 0.06,
+        "home_runs": 2.01,
+        "bb_hbp": 1.46,
+        "r": 3.06,
+        "rbi": 1.78,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 1.05,
+        "park_runs": 1.02,
+        "weather_hr": 0.95,
+        "pitcher_hits": 0.939,
+        "pitcher_hr": 1.094,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.967,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.014,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.125,
+        "doubles": 0.0952,
+        "triples": 0.0018,
+        "home_runs": 0.0468,
+        "bb_hbp": 0.1701,
+        "r_per_pa": 0.3559,
+        "rbi_per_pa": 0.207
       },
       "pa": 4.3,
       "tier": "low"
@@ -1300,82 +1376,6 @@
         "bb_hbp": 0.2334,
         "r_per_pa": 0.349,
         "rbi_per_pa": 0.1382
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 624424,
-      "name": "Michael Conforto",
-      "position": "RF",
-      "team_id": 112,
-      "team_abbr": "CHC",
-      "opp_abbr": "ATL",
-      "opp_team_id": 144,
-      "opp_pitcher": {
-        "id": 656550,
-        "fullName": "Grant Holmes"
-      },
-      "park": {
-        "id": 4705,
-        "name": "Truist Park",
-        "runs": 102,
-        "hr": 105,
-        "label": "Slight Hitter"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "75",
-        "wind": "7 mph, In From LF"
-      },
-      "pa_source": "default",
-      "stdev_efp": 5.42,
-      "mean_efp": 5.57,
-      "stats_games": 7,
-      "efp": 9.78,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.5,
-        "doubles": 1.9,
-        "triples": 0.06,
-        "home_runs": 1.87,
-        "bb_hbp": 1.36,
-        "r": 2.81,
-        "rbi": 1.66,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 1.05,
-        "park_runs": 1.02,
-        "weather_hr": 0.95,
-        "pitcher_hits": 0.939,
-        "pitcher_hr": 1.094,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.967,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.125,
-        "doubles": 0.0952,
-        "triples": 0.0018,
-        "home_runs": 0.0468,
-        "bb_hbp": 0.1701,
-        "r_per_pa": 0.3511,
-        "rbi_per_pa": 0.207
       },
       "pa": 4.0,
       "tier": "low"
@@ -2278,5 +2278,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-05-12T20:15:09.280767+00:00"
+  "generated_at": "2026-05-12T20:27:37.482528+00:00"
 }
