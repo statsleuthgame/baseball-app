@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 350,
+  "projection_count": 346,
   "projections": [
     {
       "player_id": 592450,
@@ -40,24 +40,24 @@
       "stdev_efp": 4.15,
       "mean_efp": 11.33,
       "stats_games": 6,
-      "efp": 10.98,
+      "efp": 10.86,
       "bat_side": "R",
       "per_event": {
-        "singles": 1.65,
-        "doubles": 0.96,
+        "singles": 1.61,
+        "doubles": 0.95,
         "triples": 0.04,
-        "home_runs": 2.82,
-        "bb_hbp": 1.68,
-        "r": 3.35,
-        "rbi": 1.57,
+        "home_runs": 2.79,
+        "bb_hbp": 1.67,
+        "r": 3.32,
+        "rbi": 1.56,
         "sb": 0.45
       },
       "multipliers": {
         "park_hr": 1.08,
         "park_runs": 1.03,
         "weather_hr": 1.15,
-        "pitcher_hits": 1.038,
-        "pitcher_hr": 0.951,
+        "pitcher_hits": 1.023,
+        "pitcher_hr": 0.943,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -77,13 +77,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1277,
-        "doubles": 0.0448,
+        "singles": 0.125,
+        "doubles": 0.044,
         "triples": 0.0012,
-        "home_runs": 0.0656,
-        "bb_hbp": 0.1955,
-        "r_per_pa": 0.3894,
-        "rbi_per_pa": 0.1829
+        "home_runs": 0.0649,
+        "bb_hbp": 0.1942,
+        "r_per_pa": 0.3865,
+        "rbi_per_pa": 0.1816
       },
       "pa": 4.3,
       "tier": "low"
@@ -188,15 +188,15 @@
       "stdev_efp": 9.76,
       "mean_efp": 9.0,
       "stats_games": 6,
-      "efp": 10.24,
+      "efp": 10.26,
       "bat_side": "L",
       "per_event": {
-        "singles": 1.58,
-        "doubles": 1.27,
+        "singles": 1.55,
+        "doubles": 1.24,
         "triples": 0.05,
-        "home_runs": 2.63,
-        "bb_hbp": 1.31,
-        "r": 3.0,
+        "home_runs": 2.59,
+        "bb_hbp": 1.38,
+        "r": 3.05,
         "rbi": 1.63,
         "sb": 0.23
       },
@@ -204,8 +204,8 @@
         "park_hr": 1.08,
         "park_runs": 1.03,
         "weather_hr": 1.03,
-        "pitcher_hits": 1.038,
-        "pitcher_hr": 0.951,
+        "pitcher_hits": 1.023,
+        "pitcher_hr": 0.943,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -225,12 +225,12 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1223,
-        "doubles": 0.0589,
+        "singles": 0.12,
+        "doubles": 0.0578,
         "triples": 0.0013,
-        "home_runs": 0.0612,
-        "bb_hbp": 0.1528,
-        "r_per_pa": 0.349,
+        "home_runs": 0.0602,
+        "bb_hbp": 0.1599,
+        "r_per_pa": 0.3548,
         "rbi_per_pa": 0.1898
       },
       "pa": 4.3,
@@ -704,24 +704,24 @@
       "stdev_efp": 8.9,
       "mean_efp": 11.17,
       "stats_games": 6,
-      "efp": 9.72,
+      "efp": 9.64,
       "bat_side": "S",
       "per_event": {
-        "singles": 1.57,
+        "singles": 1.55,
         "doubles": 0.7,
         "triples": 0.04,
-        "home_runs": 1.32,
-        "bb_hbp": 1.42,
-        "r": 3.07,
-        "rbi": 1.08,
+        "home_runs": 1.3,
+        "bb_hbp": 1.41,
+        "r": 3.04,
+        "rbi": 1.07,
         "sb": 1.91
       },
       "multipliers": {
         "park_hr": 0.95,
         "park_runs": 0.97,
         "weather_hr": 1.0,
-        "pitcher_hits": 0.953,
-        "pitcher_hr": 0.87,
+        "pitcher_hits": 0.95,
+        "pitcher_hr": 0.862,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -741,13 +741,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1214,
-        "doubles": 0.0325,
+        "singles": 0.12,
+        "doubles": 0.0324,
         "triples": 0.001,
-        "home_runs": 0.0306,
-        "bb_hbp": 0.1653,
-        "r_per_pa": 0.3568,
-        "rbi_per_pa": 0.1258
+        "home_runs": 0.0303,
+        "bb_hbp": 0.1637,
+        "r_per_pa": 0.3532,
+        "rbi_per_pa": 0.1248
       },
       "pa": 4.3,
       "tier": "low"
@@ -897,6 +897,82 @@
       "tier": "low"
     },
     {
+      "player_id": 683953,
+      "name": "Travis Bazzana",
+      "position": "2B",
+      "team_id": 114,
+      "team_abbr": "CLE",
+      "opp_abbr": "LAA",
+      "opp_team_id": 108,
+      "opp_pitcher": {
+        "id": 672282,
+        "fullName": "Reid Detmers"
+      },
+      "park": {
+        "id": 5,
+        "name": "Progressive Field",
+        "runs": 97,
+        "hr": 95,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "55",
+        "wind": "18 mph, L To R"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.13,
+      "mean_efp": 6.94,
+      "stats_games": 0,
+      "efp": 9.5,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.56,
+        "doubles": 0.68,
+        "triples": 0.07,
+        "home_runs": 1.0,
+        "bb_hbp": 1.46,
+        "r": 2.87,
+        "rbi": 1.14,
+        "sb": 2.06
+      },
+      "multipliers": {
+        "park_hr": 0.95,
+        "park_runs": 0.97,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.95,
+        "pitcher_hr": 0.862,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.028,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.111,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.077,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1303,
+        "doubles": 0.0338,
+        "triples": 0.0021,
+        "home_runs": 0.0251,
+        "bb_hbp": 0.1826,
+        "r_per_pa": 0.3587,
+        "rbi_per_pa": 0.1427
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
       "player_id": 681624,
       "name": "Andy Pages",
       "position": "CF",
@@ -1036,82 +1112,6 @@
         "bb_hbp": 0.1759,
         "r_per_pa": 0.3466,
         "rbi_per_pa": 0.1768
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 683953,
-      "name": "Travis Bazzana",
-      "position": "2B",
-      "team_id": 114,
-      "team_abbr": "CLE",
-      "opp_abbr": "LAA",
-      "opp_team_id": 108,
-      "opp_pitcher": {
-        "id": 672282,
-        "fullName": "Reid Detmers"
-      },
-      "park": {
-        "id": 5,
-        "name": "Progressive Field",
-        "runs": 97,
-        "hr": 95,
-        "label": "Pitcher Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "55",
-        "wind": "18 mph, L To R"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 7.13,
-      "mean_efp": 6.94,
-      "stats_games": 0,
-      "efp": 9.4,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.46,
-        "doubles": 0.69,
-        "triples": 0.07,
-        "home_runs": 1.03,
-        "bb_hbp": 1.48,
-        "r": 2.82,
-        "rbi": 1.12,
-        "sb": 2.06
-      },
-      "multipliers": {
-        "park_hr": 0.95,
-        "park_runs": 0.97,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.953,
-        "pitcher_hr": 0.87,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.028,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.111,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.077,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.122,
-        "doubles": 0.0343,
-        "triples": 0.0021,
-        "home_runs": 0.0256,
-        "bb_hbp": 0.1854,
-        "r_per_pa": 0.3526,
-        "rbi_per_pa": 0.1396
       },
       "pa": 4.0,
       "tier": "low"
@@ -1489,6 +1489,82 @@
       "tier": "low"
     },
     {
+      "player_id": 682998,
+      "name": "Corbin Carroll",
+      "position": "RF",
+      "team_id": 109,
+      "team_abbr": "AZ",
+      "opp_abbr": "TEX",
+      "opp_team_id": 140,
+      "opp_pitcher": {
+        "id": 677958,
+        "fullName": "Kumar Rocker"
+      },
+      "park": {
+        "id": 5325,
+        "name": "Globe Life Field",
+        "runs": 104,
+        "hr": 108,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 11.99,
+      "mean_efp": 8.6,
+      "stats_games": 5,
+      "efp": 9.1,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.55,
+        "doubles": 1.28,
+        "triples": 0.44,
+        "home_runs": 1.39,
+        "bb_hbp": 1.16,
+        "r": 2.72,
+        "rbi": 1.4,
+        "sb": 0.45
+      },
+      "multipliers": {
+        "park_hr": 1.08,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.069,
+        "pitcher_hr": 0.983,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.898,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.003,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.023,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1203,
+        "doubles": 0.0595,
+        "triples": 0.0127,
+        "home_runs": 0.0324,
+        "bb_hbp": 0.1352,
+        "r_per_pa": 0.316,
+        "rbi_per_pa": 0.1624
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 677649,
       "name": "Ezequiel Duran",
       "position": "2B",
@@ -1507,7 +1583,11 @@
         "hr": 108,
         "label": "Slight Hitter"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
       "pa_source": "default",
       "stdev_efp": 6.54,
       "mean_efp": 6.64,
@@ -2139,80 +2219,8 @@
       },
       "pa": 4.0,
       "tier": "low"
-    },
-    {
-      "player_id": 669364,
-      "name": "Xavier Edwards",
-      "position": "2B",
-      "team_id": 146,
-      "team_abbr": "MIA",
-      "opp_abbr": "MIN",
-      "opp_team_id": 142,
-      "opp_pitcher": {
-        "id": 680573,
-        "fullName": "Simeon Woods Richardson"
-      },
-      "park": {
-        "id": 3312,
-        "name": "Target Field",
-        "runs": 100,
-        "hr": 101,
-        "label": "Neutral"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 6.88,
-      "mean_efp": 9.0,
-      "stats_games": 6,
-      "efp": 8.82,
-      "bat_side": "S",
-      "per_event": {
-        "singles": 2.32,
-        "doubles": 0.84,
-        "triples": 0.3,
-        "home_runs": 1.55,
-        "bb_hbp": 0.92,
-        "r": 2.5,
-        "rbi": 1.26,
-        "sb": 0.38
-      },
-      "multipliers": {
-        "park_hr": 1.01,
-        "park_runs": 1.0,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.161,
-        "pitcher_hr": 1.163,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.017,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.984,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1934,
-        "doubles": 0.0418,
-        "triples": 0.0094,
-        "home_runs": 0.0388,
-        "bb_hbp": 0.1145,
-        "r_per_pa": 0.3128,
-        "rbi_per_pa": 0.158
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-05-13T18:26:51.218819+00:00"
+  "generated_at": "2026-05-13T18:54:19.301680+00:00"
 }
