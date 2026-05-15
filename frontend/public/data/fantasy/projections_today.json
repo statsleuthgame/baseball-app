@@ -252,16 +252,16 @@
       "stdev_efp": 5.76,
       "mean_efp": 11.33,
       "stats_games": 6,
-      "efp": 10.32,
+      "efp": 10.22,
       "bat_side": "R",
       "per_event": {
-        "singles": 2.38,
-        "doubles": 1.06,
+        "singles": 2.36,
+        "doubles": 1.05,
         "triples": 0.11,
-        "home_runs": 1.71,
-        "bb_hbp": 0.72,
-        "r": 2.85,
-        "rbi": 1.63,
+        "home_runs": 1.68,
+        "bb_hbp": 0.71,
+        "r": 2.82,
+        "rbi": 1.61,
         "sb": 1.32
       },
       "multipliers": {
@@ -289,13 +289,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1983,
-        "doubles": 0.0531,
+        "singles": 0.1964,
+        "doubles": 0.0527,
         "triples": 0.0033,
-        "home_runs": 0.0427,
-        "bb_hbp": 0.0901,
-        "r_per_pa": 0.3563,
-        "rbi_per_pa": 0.2044
+        "home_runs": 0.042,
+        "bb_hbp": 0.0892,
+        "r_per_pa": 0.3521,
+        "rbi_per_pa": 0.2012
       },
       "pa": 4.0,
       "tier": "low"
@@ -872,6 +872,78 @@
         "bb_hbp": 0.0384,
         "r_per_pa": 0.2822,
         "rbi_per_pa": 0.1602
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 656537,
+      "name": "Derek Hill",
+      "position": "RF",
+      "team_id": 145,
+      "team_abbr": "CWS",
+      "opp_abbr": "CHC",
+      "opp_team_id": 112,
+      "opp_pitcher": {
+        "id": 665795,
+        "fullName": "Edward Cabrera"
+      },
+      "park": {
+        "id": 4,
+        "name": "Guaranteed Rate Field",
+        "runs": 104,
+        "hr": 110,
+        "label": "Hitter Friendly"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 2.55,
+      "mean_efp": 3.62,
+      "stats_games": 8,
+      "efp": 9.52,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.81,
+        "doubles": 0.58,
+        "triples": 0.08,
+        "home_runs": 3.13,
+        "bb_hbp": 0.68,
+        "r": 2.37,
+        "rbi": 1.47,
+        "sb": 0.75
+      },
+      "multipliers": {
+        "park_hr": 1.1,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.047,
+        "pitcher_hr": 1.083,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.974,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.866,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1504,
+        "doubles": 0.0288,
+        "triples": 0.0026,
+        "home_runs": 0.0784,
+        "bb_hbp": 0.0851,
+        "r_per_pa": 0.2966,
+        "rbi_per_pa": 0.1834
       },
       "pa": 4.0,
       "tier": "low"
@@ -1876,78 +1948,6 @@
       "tier": "low"
     },
     {
-      "player_id": 678246,
-      "name": "Miguel Vargas",
-      "position": "3B",
-      "team_id": 145,
-      "team_abbr": "CWS",
-      "opp_abbr": "CHC",
-      "opp_team_id": 112,
-      "opp_pitcher": {
-        "id": 665795,
-        "fullName": "Edward Cabrera"
-      },
-      "park": {
-        "id": 4,
-        "name": "Guaranteed Rate Field",
-        "runs": 104,
-        "hr": 110,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 9.16,
-      "mean_efp": 15.5,
-      "stats_games": 6,
-      "efp": 8.99,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.72,
-        "doubles": 0.71,
-        "triples": 0.11,
-        "home_runs": 2.05,
-        "bb_hbp": 1.06,
-        "r": 2.65,
-        "rbi": 1.38,
-        "sb": 0.57
-      },
-      "multipliers": {
-        "park_hr": 1.1,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.047,
-        "pitcher_hr": 1.083,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.974,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.866,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1433,
-        "doubles": 0.0357,
-        "triples": 0.0033,
-        "home_runs": 0.0512,
-        "bb_hbp": 0.1331,
-        "r_per_pa": 0.3309,
-        "rbi_per_pa": 0.1731
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 545341,
       "name": "Randal Grichuk",
       "position": "RF",
@@ -2092,47 +2092,47 @@
       "tier": "low"
     },
     {
-      "player_id": 608070,
-      "name": "Jos\u00e9 Ram\u00edrez",
+      "player_id": 678246,
+      "name": "Miguel Vargas",
       "position": "3B",
-      "team_id": 114,
-      "team_abbr": "CLE",
-      "opp_abbr": "CIN",
-      "opp_team_id": 113,
+      "team_id": 145,
+      "team_abbr": "CWS",
+      "opp_abbr": "CHC",
+      "opp_team_id": 112,
       "opp_pitcher": {
-        "id": 671096,
-        "fullName": "Andrew Abbott"
+        "id": 665795,
+        "fullName": "Edward Cabrera"
       },
       "park": {
-        "id": 5,
-        "name": "Progressive Field",
-        "runs": 97,
-        "hr": 95,
-        "label": "Pitcher Friendly"
+        "id": 4,
+        "name": "Guaranteed Rate Field",
+        "runs": 104,
+        "hr": 110,
+        "label": "Hitter Friendly"
       },
       "weather": null,
       "pa_source": "default",
-      "stdev_efp": 8.9,
-      "mean_efp": 11.17,
+      "stdev_efp": 9.16,
+      "mean_efp": 15.5,
       "stats_games": 6,
-      "efp": 8.89,
-      "bat_side": "S",
+      "efp": 8.9,
+      "bat_side": "R",
       "per_event": {
-        "singles": 1.58,
+        "singles": 1.7,
         "doubles": 0.71,
-        "triples": 0.04,
-        "home_runs": 1.24,
-        "bb_hbp": 1.41,
-        "r": 2.43,
-        "rbi": 0.99,
-        "sb": 1.74
+        "triples": 0.11,
+        "home_runs": 2.03,
+        "bb_hbp": 1.05,
+        "r": 2.62,
+        "rbi": 1.37,
+        "sb": 0.57
       },
       "multipliers": {
-        "park_hr": 0.95,
-        "park_runs": 0.97,
+        "park_hr": 1.1,
+        "park_runs": 1.04,
         "weather_hr": 1.0,
-        "pitcher_hits": 1.064,
-        "pitcher_hr": 0.944,
+        "pitcher_hits": 1.047,
+        "pitcher_hr": 1.083,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -2140,9 +2140,9 @@
         "stx_xwoba": 1.0,
         "stx_barrel": 1.0,
         "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.988,
+        "pitcher_gb_hr": 0.974,
         "k_damper": 1.0,
-        "pitcher_bb": 1.16,
+        "pitcher_bb": 0.866,
         "park_hand_hr": 1.0,
         "sb_speed": 1.0,
         "speed_singles": 1.0,
@@ -2152,18 +2152,18 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1318,
-        "doubles": 0.0357,
-        "triples": 0.0011,
-        "home_runs": 0.031,
-        "bb_hbp": 0.1764,
-        "r_per_pa": 0.3042,
-        "rbi_per_pa": 0.1239
+        "singles": 0.1418,
+        "doubles": 0.0354,
+        "triples": 0.0033,
+        "home_runs": 0.0507,
+        "bb_hbp": 0.1318,
+        "r_per_pa": 0.3275,
+        "rbi_per_pa": 0.1707
       },
       "pa": 4.0,
       "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-05-15T01:24:44.242390+00:00"
+  "generated_at": "2026-05-15T12:58:43.534502+00:00"
 }
