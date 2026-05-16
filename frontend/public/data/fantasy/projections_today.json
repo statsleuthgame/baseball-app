@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 377,
+  "projection_count": 373,
   "projections": [
     {
       "player_id": 656941,
@@ -1741,6 +1741,82 @@
       "tier": "low"
     },
     {
+      "player_id": 805808,
+      "name": "Kevin McGonigle",
+      "position": "SS",
+      "team_id": 116,
+      "team_abbr": "DET",
+      "opp_abbr": "TOR",
+      "opp_team_id": 141,
+      "opp_pitcher": {
+        "id": 689254,
+        "fullName": "Mason Fluharty"
+      },
+      "park": {
+        "id": 2394,
+        "name": "Comerica Park",
+        "runs": 97,
+        "hr": 93,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Cloudy",
+        "temp": "70",
+        "wind": "14 mph, In From CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 2.54,
+      "mean_efp": 10.17,
+      "stats_games": 6,
+      "efp": 8.85,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.91,
+        "doubles": 1.0,
+        "triples": 0.16,
+        "home_runs": 0.41,
+        "bb_hbp": 1.16,
+        "r": 3.31,
+        "rbi": 1.19,
+        "sb": 0.97
+      },
+      "multipliers": {
+        "park_hr": 0.93,
+        "park_runs": 0.97,
+        "weather_hr": 0.9,
+        "pitcher_hits": 0.982,
+        "pitcher_hr": 0.801,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.09,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.882,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1482,
+        "doubles": 0.0466,
+        "triples": 0.0047,
+        "home_runs": 0.0096,
+        "bb_hbp": 0.1345,
+        "r_per_pa": 0.385,
+        "rbi_per_pa": 0.1379
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 664983,
       "name": "Jake McCarthy",
       "position": "LF",
@@ -1957,6 +2033,82 @@
       "tier": "low"
     },
     {
+      "player_id": 682985,
+      "name": "Riley Greene",
+      "position": "LF",
+      "team_id": 116,
+      "team_abbr": "DET",
+      "opp_abbr": "TOR",
+      "opp_team_id": 141,
+      "opp_pitcher": {
+        "id": 689254,
+        "fullName": "Mason Fluharty"
+      },
+      "park": {
+        "id": 2394,
+        "name": "Comerica Park",
+        "runs": 97,
+        "hr": 93,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Cloudy",
+        "temp": "70",
+        "wind": "14 mph, In From CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 6.54,
+      "mean_efp": 11.57,
+      "stats_games": 7,
+      "efp": 8.78,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.22,
+        "doubles": 1.52,
+        "triples": 0.03,
+        "home_runs": 0.61,
+        "bb_hbp": 0.96,
+        "r": 3.2,
+        "rbi": 1.41,
+        "sb": 0.07
+      },
+      "multipliers": {
+        "park_hr": 0.93,
+        "park_runs": 0.97,
+        "weather_hr": 0.9,
+        "pitcher_hits": 0.982,
+        "pitcher_hr": 0.801,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.09,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.882,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.076,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1847,
+        "doubles": 0.0762,
+        "triples": 0.0011,
+        "home_runs": 0.0152,
+        "bb_hbp": 0.1205,
+        "r_per_pa": 0.3996,
+        "rbi_per_pa": 0.1767
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
       "player_id": 665833,
       "name": "Oneil Cruz",
       "position": "CF",
@@ -2027,152 +2179,8 @@
       },
       "pa": 4.0,
       "tier": "low"
-    },
-    {
-      "player_id": 669699,
-      "name": "Braden Shewmake",
-      "position": "SS",
-      "team_id": 117,
-      "team_abbr": "HOU",
-      "opp_abbr": "TEX",
-      "opp_team_id": 140,
-      "opp_pitcher": {
-        "id": 594798,
-        "fullName": "Jacob deGrom"
-      },
-      "park": {
-        "id": 2392,
-        "name": "Minute Maid Park",
-        "runs": 103,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.13,
-      "mean_efp": 6.94,
-      "stats_games": 0,
-      "efp": 8.76,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.42,
-        "doubles": 0.71,
-        "triples": 0.06,
-        "home_runs": 2.72,
-        "bb_hbp": 0.29,
-        "r": 2.45,
-        "rbi": 1.35,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.91,
-        "pitcher_hr": 1.062,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.206,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.2019,
-        "doubles": 0.0354,
-        "triples": 0.0019,
-        "home_runs": 0.068,
-        "bb_hbp": 0.036,
-        "r_per_pa": 0.3063,
-        "rbi_per_pa": 0.1685
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 680777,
-      "name": "Ryan Jeffers",
-      "position": "C",
-      "team_id": 142,
-      "team_abbr": "MIN",
-      "opp_abbr": "MIL",
-      "opp_team_id": 158,
-      "opp_pitcher": {
-        "id": 701656,
-        "fullName": "Logan Henderson"
-      },
-      "park": {
-        "id": 3312,
-        "name": "Target Field",
-        "runs": 100,
-        "hr": 101,
-        "label": "Neutral"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 9.13,
-      "mean_efp": 10.17,
-      "stats_games": 12,
-      "efp": 8.72,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.39,
-        "doubles": 1.07,
-        "triples": 0.11,
-        "home_runs": 2.21,
-        "bb_hbp": 0.9,
-        "r": 2.7,
-        "rbi": 1.46,
-        "sb": 0.12
-      },
-      "multipliers": {
-        "park_hr": 1.01,
-        "park_runs": 1.0,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.96,
-        "pitcher_hr": 0.905,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.25,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1157,
-        "doubles": 0.0536,
-        "triples": 0.0034,
-        "home_runs": 0.0552,
-        "bb_hbp": 0.1127,
-        "r_per_pa": 0.3369,
-        "rbi_per_pa": 0.1827
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-05-16T11:57:11.814000+00:00"
+  "generated_at": "2026-05-16T14:18:44.567756+00:00"
 }
