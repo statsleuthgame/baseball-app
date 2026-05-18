@@ -373,6 +373,78 @@
       "tier": "low"
     },
     {
+      "player_id": 657757,
+      "name": "Gavin Sheets",
+      "position": "1B",
+      "team_id": 135,
+      "team_abbr": "SD",
+      "opp_abbr": "LAD",
+      "opp_team_id": 119,
+      "opp_pitcher": {
+        "id": 808967,
+        "fullName": "Yoshinobu Yamamoto"
+      },
+      "park": {
+        "id": 2680,
+        "name": "Petco Park",
+        "runs": 95,
+        "hr": 93,
+        "label": "Pitcher Friendly"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 8.67,
+      "mean_efp": 8.07,
+      "stats_games": 14,
+      "efp": 9.83,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.38,
+        "doubles": 1.06,
+        "triples": 0.04,
+        "home_runs": 2.88,
+        "bb_hbp": 0.8,
+        "r": 2.84,
+        "rbi": 1.79,
+        "sb": 0.43
+      },
+      "multipliers": {
+        "park_hr": 0.93,
+        "park_runs": 0.95,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.954,
+        "pitcher_hr": 1.129,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.003,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1148,
+        "doubles": 0.0529,
+        "triples": 0.0012,
+        "home_runs": 0.0721,
+        "bb_hbp": 0.1005,
+        "r_per_pa": 0.3552,
+        "rbi_per_pa": 0.224
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
       "player_id": 805999,
       "name": "A.J. Ewing",
       "position": "CF",
@@ -512,78 +584,6 @@
         "bb_hbp": 0.1147,
         "r_per_pa": 0.3475,
         "rbi_per_pa": 0.1944
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 657757,
-      "name": "Gavin Sheets",
-      "position": "1B",
-      "team_id": 135,
-      "team_abbr": "SD",
-      "opp_abbr": "LAD",
-      "opp_team_id": 119,
-      "opp_pitcher": {
-        "id": 808967,
-        "fullName": "Yoshinobu Yamamoto"
-      },
-      "park": {
-        "id": 2680,
-        "name": "Petco Park",
-        "runs": 95,
-        "hr": 93,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 8.67,
-      "mean_efp": 8.07,
-      "stats_games": 14,
-      "efp": 9.66,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.4,
-        "doubles": 1.01,
-        "triples": 0.04,
-        "home_runs": 2.82,
-        "bb_hbp": 0.75,
-        "r": 2.8,
-        "rbi": 1.78,
-        "sb": 0.43
-      },
-      "multipliers": {
-        "park_hr": 0.93,
-        "park_runs": 0.95,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.954,
-        "pitcher_hr": 1.129,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.003,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.117,
-        "doubles": 0.0504,
-        "triples": 0.0012,
-        "home_runs": 0.0704,
-        "bb_hbp": 0.0941,
-        "r_per_pa": 0.3497,
-        "rbi_per_pa": 0.2222
       },
       "pa": 4.0,
       "tier": "low"
@@ -2174,5 +2174,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-05-18T01:31:37.123266+00:00"
+  "generated_at": "2026-05-18T13:59:33.882035+00:00"
 }
