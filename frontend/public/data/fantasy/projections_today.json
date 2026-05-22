@@ -10,8 +10,84 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 374,
+  "projection_count": 366,
   "projections": [
+    {
+      "player_id": 670541,
+      "name": "Yordan Alvarez",
+      "position": "DH",
+      "team_id": 117,
+      "team_abbr": "HOU",
+      "opp_abbr": "CHC",
+      "opp_team_id": 112,
+      "opp_pitcher": {
+        "id": 592791,
+        "fullName": "Jameson Taillon"
+      },
+      "park": {
+        "id": 17,
+        "name": "Wrigley Field",
+        "runs": 104,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "57",
+        "wind": "14 mph, In From CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 6.12,
+      "mean_efp": 11.83,
+      "stats_games": 6,
+      "efp": 11.08,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.71,
+        "doubles": 1.05,
+        "triples": 0.04,
+        "home_runs": 3.75,
+        "bb_hbp": 1.33,
+        "r": 3.06,
+        "rbi": 1.64,
+        "sb": 0.08
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.04,
+        "weather_hr": 0.9,
+        "pitcher_hits": 0.966,
+        "pitcher_hr": 1.35,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.151,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.065,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.065,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1326,
+        "doubles": 0.0487,
+        "triples": 0.001,
+        "home_runs": 0.0871,
+        "bb_hbp": 0.1542,
+        "r_per_pa": 0.3564,
+        "rbi_per_pa": 0.1909
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
     {
       "player_id": 665742,
       "name": "Juan Soto",
@@ -80,78 +156,6 @@
         "bb_hbp": 0.1712,
         "r_per_pa": 0.3429,
         "rbi_per_pa": 0.1971
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 670541,
-      "name": "Yordan Alvarez",
-      "position": "DH",
-      "team_id": 117,
-      "team_abbr": "HOU",
-      "opp_abbr": "CHC",
-      "opp_team_id": 112,
-      "opp_pitcher": {
-        "id": 592791,
-        "fullName": "Jameson Taillon"
-      },
-      "park": {
-        "id": 17,
-        "name": "Wrigley Field",
-        "runs": 104,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 6.12,
-      "mean_efp": 11.83,
-      "stats_games": 6,
-      "efp": 10.5,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.59,
-        "doubles": 0.97,
-        "triples": 0.03,
-        "home_runs": 3.87,
-        "bb_hbp": 1.23,
-        "r": 2.68,
-        "rbi": 1.53,
-        "sb": 0.08
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.966,
-        "pitcher_hr": 1.35,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.151,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.065,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1326,
-        "doubles": 0.0487,
-        "triples": 0.001,
-        "home_runs": 0.0968,
-        "bb_hbp": 0.1542,
-        "r_per_pa": 0.3347,
-        "rbi_per_pa": 0.1909
       },
       "pa": 4.0,
       "tier": "low"
@@ -2168,5 +2172,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-05-22T13:24:18.786237+00:00"
+  "generated_at": "2026-05-22T15:45:27.104260+00:00"
 }
