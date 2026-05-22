@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 365,
+  "projection_count": 364,
   "projections": [
     {
       "player_id": 670541,
@@ -33,8 +33,8 @@
       },
       "weather": {
         "condition": "Sunny",
-        "temp": "57",
-        "wind": "14 mph, In From CF"
+        "temp": "60",
+        "wind": "12 mph, In From CF"
       },
       "pa_source": "lineup",
       "stdev_efp": 6.12,
@@ -2172,5 +2172,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-05-22T17:08:54.502693+00:00"
+  "generated_at": "2026-05-22T18:18:57.244038+00:00"
 }
