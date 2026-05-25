@@ -10,8 +10,84 @@
     "n": 1721
   },
   "game_count": 13,
-  "projection_count": 281,
+  "projection_count": 267,
   "projections": [
+    {
+      "player_id": 683953,
+      "name": "Travis Bazzana",
+      "position": "2B",
+      "team_id": 114,
+      "team_abbr": "CLE",
+      "opp_abbr": "WSH",
+      "opp_team_id": 120,
+      "opp_pitcher": {
+        "id": 641793,
+        "fullName": "Zack Littell"
+      },
+      "park": {
+        "id": 5,
+        "name": "Progressive Field",
+        "runs": 97,
+        "hr": 95,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "69",
+        "wind": "5 mph, In From CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.13,
+      "mean_efp": 6.94,
+      "stats_games": 0,
+      "efp": 10.7,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.46,
+        "doubles": 0.77,
+        "triples": 0.06,
+        "home_runs": 2.12,
+        "bb_hbp": 0.97,
+        "r": 3.14,
+        "rbi": 1.39,
+        "sb": 1.31
+      },
+      "multipliers": {
+        "park_hr": 0.95,
+        "park_runs": 0.97,
+        "weather_hr": 0.9,
+        "pitcher_hits": 1.074,
+        "pitcher_hr": 1.35,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.121,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.993,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1909,
+        "doubles": 0.0356,
+        "triples": 0.0016,
+        "home_runs": 0.0493,
+        "bb_hbp": 0.1127,
+        "r_per_pa": 0.3651,
+        "rbi_per_pa": 0.1621
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
     {
       "player_id": 691406,
       "name": "Junior Caminero",
@@ -32,32 +108,32 @@
         "label": "Slight Hitter"
       },
       "weather": {
-        "condition": "Overcast",
-        "temp": "68",
-        "wind": "3 mph, R To L"
+        "condition": "Rain",
+        "temp": "69",
+        "wind": "2 mph, Out To LF"
       },
       "pa_source": "lineup",
       "stdev_efp": 9.72,
       "mean_efp": 12.5,
       "stats_games": 6,
-      "efp": 9.95,
+      "efp": 10.28,
       "bat_side": "R",
       "per_event": {
-        "singles": 2.05,
-        "doubles": 0.79,
+        "singles": 2.12,
+        "doubles": 0.69,
         "triples": 0.04,
-        "home_runs": 2.18,
-        "bb_hbp": 1.4,
-        "r": 3.32,
-        "rbi": 1.58,
+        "home_runs": 2.51,
+        "bb_hbp": 1.43,
+        "r": 3.36,
+        "rbi": 1.59,
         "sb": 0.0
       },
       "multipliers": {
         "park_hr": 1.08,
         "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.002,
-        "pitcher_hr": 0.965,
+        "weather_hr": 1.15,
+        "pitcher_hits": 1.008,
+        "pitcher_hr": 0.949,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -77,13 +153,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1589,
-        "doubles": 0.0366,
+        "singles": 0.1644,
+        "doubles": 0.0321,
         "triples": 0.0011,
-        "home_runs": 0.0508,
-        "bb_hbp": 0.1627,
-        "r_per_pa": 0.3859,
-        "rbi_per_pa": 0.184
+        "home_runs": 0.0584,
+        "bb_hbp": 0.1668,
+        "r_per_pa": 0.3908,
+        "rbi_per_pa": 0.1846
       },
       "pa": 4.3,
       "tier": "low"
@@ -108,9 +184,9 @@
         "label": "Hitter Friendly"
       },
       "weather": {
-        "condition": "Sunny",
+        "condition": "Partly Cloudy",
         "temp": "80",
-        "wind": "5 mph, Out To LF"
+        "wind": "2 mph, Out To LF"
       },
       "pa_source": "lineup",
       "stdev_efp": 5.64,
@@ -165,47 +241,51 @@
       "tier": "low"
     },
     {
-      "player_id": 683953,
-      "name": "Travis Bazzana",
-      "position": "2B",
-      "team_id": 114,
-      "team_abbr": "CLE",
-      "opp_abbr": "WSH",
-      "opp_team_id": 120,
+      "player_id": 682998,
+      "name": "Corbin Carroll",
+      "position": "RF",
+      "team_id": 109,
+      "team_abbr": "AZ",
+      "opp_abbr": "SF",
+      "opp_team_id": 137,
       "opp_pitcher": {
-        "id": 641793,
-        "fullName": "Zack Littell"
+        "id": 694738,
+        "fullName": "Landen Roupp"
       },
       "park": {
-        "id": 5,
-        "name": "Progressive Field",
-        "runs": 97,
-        "hr": 95,
+        "id": 2395,
+        "name": "Oracle Park",
+        "runs": 93,
+        "hr": 88,
         "label": "Pitcher Friendly"
       },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.13,
-      "mean_efp": 6.94,
-      "stats_games": 0,
-      "efp": 9.77,
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "59",
+        "wind": "13 mph, Out To LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 11.99,
+      "mean_efp": 8.6,
+      "stats_games": 5,
+      "efp": 9.76,
       "bat_side": "L",
       "per_event": {
-        "singles": 2.29,
-        "doubles": 0.71,
-        "triples": 0.05,
-        "home_runs": 2.19,
-        "bb_hbp": 0.9,
-        "r": 2.54,
-        "rbi": 1.3,
-        "sb": 1.17
+        "singles": 1.4,
+        "doubles": 0.88,
+        "triples": 1.17,
+        "home_runs": 0.93,
+        "bb_hbp": 1.22,
+        "r": 3.15,
+        "rbi": 1.85,
+        "sb": 0.54
       },
       "multipliers": {
-        "park_hr": 0.95,
-        "park_runs": 0.97,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.074,
-        "pitcher_hr": 1.35,
+        "park_hr": 0.88,
+        "park_runs": 0.93,
+        "weather_hr": 1.03,
+        "pitcher_hits": 0.904,
+        "pitcher_hr": 0.662,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -213,27 +293,27 @@
         "stx_xwoba": 1.0,
         "stx_barrel": 1.0,
         "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.121,
+        "pitcher_gb_hr": 0.892,
         "k_damper": 1.0,
-        "pitcher_bb": 0.993,
+        "pitcher_bb": 1.151,
         "park_hand_hr": 1.0,
         "sb_speed": 1.0,
         "speed_singles": 1.0,
         "speed_r": 1.0,
         "bvpt": 1.0,
-        "ondeck_r": 1.0,
+        "ondeck_r": 1.05,
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1909,
-        "doubles": 0.0356,
-        "triples": 0.0016,
-        "home_runs": 0.0548,
-        "bb_hbp": 0.1127,
-        "r_per_pa": 0.3174,
-        "rbi_per_pa": 0.1621
+        "singles": 0.1086,
+        "doubles": 0.0411,
+        "triples": 0.034,
+        "home_runs": 0.0216,
+        "bb_hbp": 0.1419,
+        "r_per_pa": 0.3661,
+        "rbi_per_pa": 0.2148
       },
-      "pa": 4.0,
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -330,7 +410,7 @@
       "weather": {
         "condition": "Partly Cloudy",
         "temp": "80",
-        "wind": "10 mph, In From RF"
+        "wind": "8 mph, In From RF"
       },
       "pa_source": "lineup",
       "stdev_efp": 5.41,
@@ -385,6 +465,158 @@
       "tier": "low"
     },
     {
+      "player_id": 669477,
+      "name": "Casey Schmitt",
+      "position": "DH",
+      "team_id": 137,
+      "team_abbr": "SF",
+      "opp_abbr": "AZ",
+      "opp_team_id": 109,
+      "opp_pitcher": {
+        "id": 518876,
+        "fullName": "Merrill Kelly"
+      },
+      "park": {
+        "id": 2395,
+        "name": "Oracle Park",
+        "runs": 93,
+        "hr": 88,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "59",
+        "wind": "13 mph, Out To LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.96,
+      "mean_efp": 6.4,
+      "stats_games": 5,
+      "efp": 9.66,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.87,
+        "doubles": 0.91,
+        "triples": 0.16,
+        "home_runs": 3.35,
+        "bb_hbp": 0.6,
+        "r": 2.28,
+        "rbi": 1.61,
+        "sb": 0.27
+      },
+      "multipliers": {
+        "park_hr": 0.88,
+        "park_runs": 0.93,
+        "weather_hr": 1.15,
+        "pitcher_hits": 1.056,
+        "pitcher_hr": 1.159,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.107,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.971,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.9,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.145,
+        "doubles": 0.0423,
+        "triples": 0.0045,
+        "home_runs": 0.0778,
+        "bb_hbp": 0.0692,
+        "r_per_pa": 0.2648,
+        "rbi_per_pa": 0.1869
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 608070,
+      "name": "Jos\u00e9 Ram\u00edrez",
+      "position": "3B",
+      "team_id": 114,
+      "team_abbr": "CLE",
+      "opp_abbr": "WSH",
+      "opp_team_id": 120,
+      "opp_pitcher": {
+        "id": 641793,
+        "fullName": "Zack Littell"
+      },
+      "park": {
+        "id": 5,
+        "name": "Progressive Field",
+        "runs": 97,
+        "hr": 95,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "69",
+        "wind": "5 mph, In From CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 8.9,
+      "mean_efp": 11.17,
+      "stats_games": 6,
+      "efp": 9.64,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 1.54,
+        "doubles": 1.09,
+        "triples": 0.04,
+        "home_runs": 1.66,
+        "bb_hbp": 1.09,
+        "r": 2.74,
+        "rbi": 1.23,
+        "sb": 1.6
+      },
+      "multipliers": {
+        "park_hr": 0.95,
+        "park_runs": 0.97,
+        "weather_hr": 0.9,
+        "pitcher_hits": 1.074,
+        "pitcher_hr": 1.35,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.121,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.993,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.104,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1196,
+        "doubles": 0.0508,
+        "triples": 0.001,
+        "home_runs": 0.0387,
+        "bb_hbp": 0.1273,
+        "r_per_pa": 0.3189,
+        "rbi_per_pa": 0.1432
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 650490,
       "name": "Yandy D\u00edaz",
       "position": "DH",
@@ -404,32 +636,32 @@
         "label": "Slight Hitter"
       },
       "weather": {
-        "condition": "Overcast",
-        "temp": "68",
-        "wind": "3 mph, R To L"
+        "condition": "Rain",
+        "temp": "69",
+        "wind": "2 mph, Out To LF"
       },
       "pa_source": "lineup",
       "stdev_efp": 6.41,
       "mean_efp": 6.83,
       "stats_games": 6,
-      "efp": 9.44,
+      "efp": 9.46,
       "bat_side": "R",
       "per_event": {
-        "singles": 2.11,
-        "doubles": 1.12,
+        "singles": 2.15,
+        "doubles": 1.18,
         "triples": 0.14,
-        "home_runs": 1.78,
-        "bb_hbp": 1.15,
-        "r": 2.8,
-        "rbi": 1.59,
+        "home_runs": 1.83,
+        "bb_hbp": 1.12,
+        "r": 2.77,
+        "rbi": 1.53,
         "sb": 0.08
       },
       "multipliers": {
         "park_hr": 1.08,
         "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.002,
-        "pitcher_hr": 0.965,
+        "weather_hr": 1.15,
+        "pitcher_hits": 1.008,
+        "pitcher_hr": 0.949,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -449,13 +681,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1757,
-        "doubles": 0.0562,
+        "singles": 0.1789,
+        "doubles": 0.0589,
         "triples": 0.0043,
-        "home_runs": 0.0445,
-        "bb_hbp": 0.1442,
-        "r_per_pa": 0.3505,
-        "rbi_per_pa": 0.1987
+        "home_runs": 0.0458,
+        "bb_hbp": 0.1395,
+        "r_per_pa": 0.3463,
+        "rbi_per_pa": 0.1918
       },
       "pa": 4.0,
       "tier": "low"
@@ -556,9 +788,9 @@
         "label": "Hitter Friendly"
       },
       "weather": {
-        "condition": "Sunny",
+        "condition": "Partly Cloudy",
         "temp": "80",
-        "wind": "5 mph, Out To LF"
+        "wind": "2 mph, Out To LF"
       },
       "pa_source": "lineup",
       "stdev_efp": 9.16,
@@ -610,78 +842,6 @@
         "rbi_per_pa": 0.165
       },
       "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 677587,
-      "name": "Brayan Rocchio",
-      "position": "SS",
-      "team_id": 114,
-      "team_abbr": "CLE",
-      "opp_abbr": "WSH",
-      "opp_team_id": 120,
-      "opp_pitcher": {
-        "id": 641793,
-        "fullName": "Zack Littell"
-      },
-      "park": {
-        "id": 5,
-        "name": "Progressive Field",
-        "runs": 97,
-        "hr": 95,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 6.04,
-      "mean_efp": 8.83,
-      "stats_games": 6,
-      "efp": 9.34,
-      "bat_side": "S",
-      "per_event": {
-        "singles": 2.12,
-        "doubles": 0.94,
-        "triples": 0.32,
-        "home_runs": 1.51,
-        "bb_hbp": 0.96,
-        "r": 2.65,
-        "rbi": 1.34,
-        "sb": 0.84
-      },
-      "multipliers": {
-        "park_hr": 0.95,
-        "park_runs": 0.97,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.074,
-        "pitcher_hr": 1.35,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.121,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.993,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1763,
-        "doubles": 0.0468,
-        "triples": 0.01,
-        "home_runs": 0.0378,
-        "bb_hbp": 0.1194,
-        "r_per_pa": 0.3313,
-        "rbi_per_pa": 0.1673
-      },
-      "pa": 4.0,
       "tier": "low"
     },
     {
@@ -981,6 +1141,82 @@
       "tier": "low"
     },
     {
+      "player_id": 814439,
+      "name": "Ryan Waldschmidt",
+      "position": "CF",
+      "team_id": 109,
+      "team_abbr": "AZ",
+      "opp_abbr": "SF",
+      "opp_team_id": 137,
+      "opp_pitcher": {
+        "id": 694738,
+        "fullName": "Landen Roupp"
+      },
+      "park": {
+        "id": 2395,
+        "name": "Oracle Park",
+        "runs": 93,
+        "hr": 88,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "59",
+        "wind": "13 mph, Out To LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.13,
+      "mean_efp": 6.94,
+      "stats_games": 0,
+      "efp": 9.26,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.99,
+        "doubles": 0.94,
+        "triples": 0.44,
+        "home_runs": 0.37,
+        "bb_hbp": 0.82,
+        "r": 2.94,
+        "rbi": 1.36,
+        "sb": 1.73
+      },
+      "multipliers": {
+        "park_hr": 0.88,
+        "park_runs": 0.93,
+        "weather_hr": 1.15,
+        "pitcher_hits": 0.904,
+        "pitcher_hr": 0.662,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.892,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.151,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.06,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1657,
+        "doubles": 0.0469,
+        "triples": 0.0136,
+        "home_runs": 0.0091,
+        "bb_hbp": 0.1021,
+        "r_per_pa": 0.367,
+        "rbi_per_pa": 0.1697
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
       "player_id": 668227,
       "name": "Randy Arozarena",
       "position": "LF",
@@ -1129,78 +1365,6 @@
       "tier": "low"
     },
     {
-      "player_id": 814439,
-      "name": "Ryan Waldschmidt",
-      "position": "CF",
-      "team_id": 109,
-      "team_abbr": "AZ",
-      "opp_abbr": "SF",
-      "opp_team_id": 137,
-      "opp_pitcher": {
-        "id": 694738,
-        "fullName": "Landen Roupp"
-      },
-      "park": {
-        "id": 2395,
-        "name": "Oracle Park",
-        "runs": 93,
-        "hr": 88,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.13,
-      "mean_efp": 6.94,
-      "stats_games": 0,
-      "efp": 9.15,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.99,
-        "doubles": 0.94,
-        "triples": 0.44,
-        "home_runs": 0.32,
-        "bb_hbp": 0.82,
-        "r": 2.77,
-        "rbi": 1.36,
-        "sb": 1.82
-      },
-      "multipliers": {
-        "park_hr": 0.88,
-        "park_runs": 0.93,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.904,
-        "pitcher_hr": 0.662,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.892,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.151,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1657,
-        "doubles": 0.0469,
-        "triples": 0.0136,
-        "home_runs": 0.008,
-        "bb_hbp": 0.1021,
-        "r_per_pa": 0.3461,
-        "rbi_per_pa": 0.1697
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 694192,
       "name": "Jackson Chourio",
       "position": "LF",
@@ -1222,7 +1386,7 @@
       "weather": {
         "condition": "Partly Cloudy",
         "temp": "80",
-        "wind": "10 mph, In From RF"
+        "wind": "8 mph, In From RF"
       },
       "pa_source": "lineup",
       "stdev_efp": 7.13,
@@ -1368,9 +1532,9 @@
         "label": "Hitter Friendly"
       },
       "weather": {
-        "condition": "Sunny",
+        "condition": "Partly Cloudy",
         "temp": "80",
-        "wind": "5 mph, Out To LF"
+        "wind": "2 mph, Out To LF"
       },
       "pa_source": "lineup",
       "stdev_efp": 5.47,
@@ -1420,6 +1584,82 @@
         "bb_hbp": 0.1718,
         "r_per_pa": 0.2975,
         "rbi_per_pa": 0.1448
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 650333,
+      "name": "Luis Arraez",
+      "position": "2B",
+      "team_id": 137,
+      "team_abbr": "SF",
+      "opp_abbr": "AZ",
+      "opp_team_id": 109,
+      "opp_pitcher": {
+        "id": 518876,
+        "fullName": "Merrill Kelly"
+      },
+      "park": {
+        "id": 2395,
+        "name": "Oracle Park",
+        "runs": 93,
+        "hr": 88,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "59",
+        "wind": "13 mph, Out To LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.74,
+      "mean_efp": 5.67,
+      "stats_games": 6,
+      "efp": 8.96,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.61,
+        "doubles": 0.72,
+        "triples": 0.47,
+        "home_runs": 0.92,
+        "bb_hbp": 0.69,
+        "r": 3.12,
+        "rbi": 1.35,
+        "sb": 0.35
+      },
+      "multipliers": {
+        "park_hr": 0.88,
+        "park_runs": 0.93,
+        "weather_hr": 1.03,
+        "pitcher_hits": 1.056,
+        "pitcher_hr": 1.159,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.107,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.971,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.144,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.2024,
+        "doubles": 0.0335,
+        "triples": 0.0137,
+        "home_runs": 0.0214,
+        "bb_hbp": 0.0799,
+        "r_per_pa": 0.3623,
+        "rbi_per_pa": 0.1569
       },
       "pa": 4.3,
       "tier": "low"
@@ -1492,150 +1732,6 @@
         "bb_hbp": 0.1182,
         "r_per_pa": 0.3366,
         "rbi_per_pa": 0.1701
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 682998,
-      "name": "Corbin Carroll",
-      "position": "RF",
-      "team_id": 109,
-      "team_abbr": "AZ",
-      "opp_abbr": "SF",
-      "opp_team_id": 137,
-      "opp_pitcher": {
-        "id": 694738,
-        "fullName": "Landen Roupp"
-      },
-      "park": {
-        "id": 2395,
-        "name": "Oracle Park",
-        "runs": 93,
-        "hr": 88,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 11.99,
-      "mean_efp": 8.6,
-      "stats_games": 5,
-      "efp": 8.92,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.3,
-        "doubles": 0.82,
-        "triples": 1.09,
-        "home_runs": 0.84,
-        "bb_hbp": 1.13,
-        "r": 2.79,
-        "rbi": 1.72,
-        "sb": 0.49
-      },
-      "multipliers": {
-        "park_hr": 0.88,
-        "park_runs": 0.93,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.904,
-        "pitcher_hr": 0.662,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.892,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.151,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1086,
-        "doubles": 0.0411,
-        "triples": 0.034,
-        "home_runs": 0.021,
-        "bb_hbp": 0.1419,
-        "r_per_pa": 0.3488,
-        "rbi_per_pa": 0.2148
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 695578,
-      "name": "James Wood",
-      "position": "RF",
-      "team_id": 120,
-      "team_abbr": "WSH",
-      "opp_abbr": "CLE",
-      "opp_team_id": 114,
-      "opp_pitcher": {
-        "id": 676440,
-        "fullName": "Tanner Bibee"
-      },
-      "park": {
-        "id": 5,
-        "name": "Progressive Field",
-        "runs": 97,
-        "hr": 95,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 9.29,
-      "mean_efp": 11.57,
-      "stats_games": 7,
-      "efp": 8.92,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.44,
-        "doubles": 0.99,
-        "triples": 0.03,
-        "home_runs": 1.83,
-        "bb_hbp": 1.01,
-        "r": 2.77,
-        "rbi": 1.38,
-        "sb": 0.74
-      },
-      "multipliers": {
-        "park_hr": 0.95,
-        "park_runs": 0.97,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.984,
-        "pitcher_hr": 0.988,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.077,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1198,
-        "doubles": 0.0497,
-        "triples": 0.0009,
-        "home_runs": 0.0457,
-        "bb_hbp": 0.1266,
-        "r_per_pa": 0.346,
-        "rbi_per_pa": 0.1727
       },
       "pa": 4.0,
       "tier": "low"
@@ -1793,78 +1889,6 @@
       "tier": "low"
     },
     {
-      "player_id": 608070,
-      "name": "Jos\u00e9 Ram\u00edrez",
-      "position": "3B",
-      "team_id": 114,
-      "team_abbr": "CLE",
-      "opp_abbr": "WSH",
-      "opp_team_id": 120,
-      "opp_pitcher": {
-        "id": 641793,
-        "fullName": "Zack Littell"
-      },
-      "park": {
-        "id": 5,
-        "name": "Progressive Field",
-        "runs": 97,
-        "hr": 95,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 8.9,
-      "mean_efp": 11.17,
-      "stats_games": 6,
-      "efp": 8.88,
-      "bat_side": "S",
-      "per_event": {
-        "singles": 1.43,
-        "doubles": 1.02,
-        "triples": 0.03,
-        "home_runs": 1.72,
-        "bb_hbp": 1.02,
-        "r": 2.31,
-        "rbi": 1.15,
-        "sb": 1.45
-      },
-      "multipliers": {
-        "park_hr": 0.95,
-        "park_runs": 0.97,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.074,
-        "pitcher_hr": 1.35,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.121,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.993,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1196,
-        "doubles": 0.0508,
-        "triples": 0.001,
-        "home_runs": 0.043,
-        "bb_hbp": 0.1273,
-        "r_per_pa": 0.2888,
-        "rbi_per_pa": 0.1432
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 808959,
       "name": "Munetaka Murakami",
       "position": "1B",
@@ -1884,9 +1908,9 @@
         "label": "Hitter Friendly"
       },
       "weather": {
-        "condition": "Sunny",
+        "condition": "Partly Cloudy",
         "temp": "80",
-        "wind": "5 mph, Out To LF"
+        "wind": "2 mph, Out To LF"
       },
       "pa_source": "lineup",
       "stdev_efp": 9.01,
@@ -1938,78 +1962,6 @@
         "rbi_per_pa": 0.1598
       },
       "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 669477,
-      "name": "Casey Schmitt",
-      "position": "DH",
-      "team_id": 137,
-      "team_abbr": "SF",
-      "opp_abbr": "AZ",
-      "opp_team_id": 109,
-      "opp_pitcher": {
-        "id": 518876,
-        "fullName": "Merrill Kelly"
-      },
-      "park": {
-        "id": 2395,
-        "name": "Oracle Park",
-        "runs": 93,
-        "hr": 88,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.96,
-      "mean_efp": 6.4,
-      "stats_games": 5,
-      "efp": 8.86,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.74,
-        "doubles": 0.85,
-        "triples": 0.14,
-        "home_runs": 2.71,
-        "bb_hbp": 0.55,
-        "r": 2.35,
-        "rbi": 1.5,
-        "sb": 0.27
-      },
-      "multipliers": {
-        "park_hr": 0.88,
-        "park_runs": 0.93,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.056,
-        "pitcher_hr": 1.159,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.107,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.971,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.145,
-        "doubles": 0.0423,
-        "triples": 0.0045,
-        "home_runs": 0.0677,
-        "bb_hbp": 0.0692,
-        "r_per_pa": 0.2941,
-        "rbi_per_pa": 0.1869
-      },
-      "pa": 4.0,
       "tier": "low"
     },
     {
@@ -2106,7 +2058,7 @@
       "weather": {
         "condition": "Partly Cloudy",
         "temp": "80",
-        "wind": "10 mph, In From RF"
+        "wind": "8 mph, In From RF"
       },
       "pa_source": "lineup",
       "stdev_efp": 3.87,
@@ -2161,9 +2113,9 @@
       "tier": "low"
     },
     {
-      "player_id": 682928,
-      "name": "CJ Abrams",
-      "position": "SS",
+      "player_id": 695578,
+      "name": "James Wood",
+      "position": "RF",
       "team_id": 120,
       "team_abbr": "WSH",
       "opp_abbr": "CLE",
@@ -2179,27 +2131,31 @@
         "hr": 95,
         "label": "Pitcher Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "69",
+        "wind": "5 mph, In From CF"
+      },
       "pa_source": "default",
-      "stdev_efp": 6.06,
-      "mean_efp": 5.14,
+      "stdev_efp": 9.29,
+      "mean_efp": 11.57,
       "stats_games": 7,
-      "efp": 8.7,
+      "efp": 8.76,
       "bat_side": "L",
       "per_event": {
-        "singles": 1.43,
-        "doubles": 0.84,
-        "triples": 0.33,
-        "home_runs": 2.01,
-        "bb_hbp": 0.81,
-        "r": 2.54,
-        "rbi": 1.44,
-        "sb": 0.53
+        "singles": 1.44,
+        "doubles": 0.99,
+        "triples": 0.03,
+        "home_runs": 1.64,
+        "bb_hbp": 1.01,
+        "r": 2.77,
+        "rbi": 1.38,
+        "sb": 0.74
       },
       "multipliers": {
         "park_hr": 0.95,
         "park_runs": 0.97,
-        "weather_hr": 1.0,
+        "weather_hr": 0.9,
         "pitcher_hits": 0.984,
         "pitcher_hr": 0.988,
         "slot_r": 1.0,
@@ -2221,18 +2177,94 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1192,
-        "doubles": 0.042,
-        "triples": 0.0102,
-        "home_runs": 0.0503,
-        "bb_hbp": 0.1012,
-        "r_per_pa": 0.3175,
-        "rbi_per_pa": 0.1803
+        "singles": 0.1198,
+        "doubles": 0.0497,
+        "triples": 0.0009,
+        "home_runs": 0.0411,
+        "bb_hbp": 0.1266,
+        "r_per_pa": 0.346,
+        "rbi_per_pa": 0.1727
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 677587,
+      "name": "Brayan Rocchio",
+      "position": "SS",
+      "team_id": 114,
+      "team_abbr": "CLE",
+      "opp_abbr": "WSH",
+      "opp_team_id": 120,
+      "opp_pitcher": {
+        "id": 641793,
+        "fullName": "Zack Littell"
+      },
+      "park": {
+        "id": 5,
+        "name": "Progressive Field",
+        "runs": 97,
+        "hr": 95,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "69",
+        "wind": "5 mph, In From CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 6.04,
+      "mean_efp": 8.83,
+      "stats_games": 6,
+      "efp": 8.73,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 1.96,
+        "doubles": 0.87,
+        "triples": 0.3,
+        "home_runs": 1.26,
+        "bb_hbp": 0.88,
+        "r": 2.76,
+        "rbi": 1.24,
+        "sb": 0.71
+      },
+      "multipliers": {
+        "park_hr": 0.95,
+        "park_runs": 0.97,
+        "weather_hr": 0.9,
+        "pitcher_hits": 1.074,
+        "pitcher_hr": 1.35,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.121,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.993,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.124,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1763,
+        "doubles": 0.0468,
+        "triples": 0.01,
+        "home_runs": 0.0341,
+        "bb_hbp": 0.1194,
+        "r_per_pa": 0.3723,
+        "rbi_per_pa": 0.1673
+      },
+      "pa": 3.7,
       "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-05-25T17:06:54.581307+00:00"
+  "generated_at": "2026-05-25T18:12:32.114454+00:00"
 }
