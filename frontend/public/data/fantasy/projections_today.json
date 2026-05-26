@@ -949,78 +949,6 @@
       "tier": "low"
     },
     {
-      "player_id": 665862,
-      "name": "Jazz Chisholm Jr.",
-      "position": "2B",
-      "team_id": 147,
-      "team_abbr": "NYY",
-      "opp_abbr": "KC",
-      "opp_team_id": 118,
-      "opp_pitcher": {
-        "id": 663559,
-        "fullName": "Bailey Falter"
-      },
-      "park": {
-        "id": 7,
-        "name": "Kauffman Stadium",
-        "runs": 101,
-        "hr": 99,
-        "label": "Neutral"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 11.04,
-      "mean_efp": 14.0,
-      "stats_games": 5,
-      "efp": 9.09,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.42,
-        "doubles": 1.04,
-        "triples": 0.47,
-        "home_runs": 1.1,
-        "bb_hbp": 0.77,
-        "r": 2.43,
-        "rbi": 1.25,
-        "sb": 0.9
-      },
-      "multipliers": {
-        "park_hr": 0.99,
-        "park_runs": 1.01,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.239,
-        "pitcher_hr": 0.96,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.093,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.057,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.2016,
-        "doubles": 0.0518,
-        "triples": 0.0147,
-        "home_runs": 0.0275,
-        "bb_hbp": 0.0962,
-        "r_per_pa": 0.3036,
-        "rbi_per_pa": 0.1564
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 668723,
       "name": "Ryan Vilade",
       "position": "RF",
@@ -1373,6 +1301,78 @@
         "bb_hbp": 0.1353,
         "r_per_pa": 0.3322,
         "rbi_per_pa": 0.1771
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 665862,
+      "name": "Jazz Chisholm Jr.",
+      "position": "2B",
+      "team_id": 147,
+      "team_abbr": "NYY",
+      "opp_abbr": "KC",
+      "opp_team_id": 118,
+      "opp_pitcher": {
+        "id": 663559,
+        "fullName": "Bailey Falter"
+      },
+      "park": {
+        "id": 7,
+        "name": "Kauffman Stadium",
+        "runs": 101,
+        "hr": 99,
+        "label": "Neutral"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 11.04,
+      "mean_efp": 14.0,
+      "stats_games": 5,
+      "efp": 8.94,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.33,
+        "doubles": 1.04,
+        "triples": 0.47,
+        "home_runs": 1.1,
+        "bb_hbp": 0.77,
+        "r": 2.38,
+        "rbi": 1.23,
+        "sb": 0.9
+      },
+      "multipliers": {
+        "park_hr": 0.99,
+        "park_runs": 1.01,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.239,
+        "pitcher_hr": 0.96,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.093,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.057,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1942,
+        "doubles": 0.0518,
+        "triples": 0.0147,
+        "home_runs": 0.0275,
+        "bb_hbp": 0.0962,
+        "r_per_pa": 0.2969,
+        "rbi_per_pa": 0.1535
       },
       "pa": 4.0,
       "tier": "low"
@@ -2171,5 +2171,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-05-26T16:36:32.457394+00:00"
+  "generated_at": "2026-05-26T17:56:42.084183+00:00"
 }
