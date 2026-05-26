@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 301,
+  "projection_count": 297,
   "projections": [
     {
       "player_id": 682998,
@@ -469,6 +469,82 @@
       "tier": "low"
     },
     {
+      "player_id": 607043,
+      "name": "Brandon Nimmo",
+      "position": "RF",
+      "team_id": 140,
+      "team_abbr": "TEX",
+      "opp_abbr": "HOU",
+      "opp_team_id": 117,
+      "opp_pitcher": {
+        "id": 669920,
+        "fullName": "Jason Alexander"
+      },
+      "park": {
+        "id": 5325,
+        "name": "Globe Life Field",
+        "runs": 104,
+        "hr": 108,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 4.4,
+      "mean_efp": 5.0,
+      "stats_games": 6,
+      "efp": 9.65,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.12,
+        "doubles": 1.11,
+        "triples": 0.27,
+        "home_runs": 1.71,
+        "bb_hbp": 1.27,
+        "r": 3.06,
+        "rbi": 1.39,
+        "sb": 0.08
+      },
+      "multipliers": {
+        "park_hr": 1.08,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.102,
+        "pitcher_hr": 1.066,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.982,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.226,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.141,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1641,
+        "doubles": 0.0517,
+        "triples": 0.0079,
+        "home_runs": 0.0398,
+        "bb_hbp": 0.1482,
+        "r_per_pa": 0.3557,
+        "rbi_per_pa": 0.1616
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 668227,
       "name": "Randy Arozarena",
       "position": "LF",
@@ -787,7 +863,11 @@
         "hr": 108,
         "label": "Slight Hitter"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
       "pa_source": "default",
       "stdev_efp": 3.2,
       "mean_efp": 1.6,
@@ -1369,6 +1449,82 @@
       "tier": "low"
     },
     {
+      "player_id": 696030,
+      "name": "Alejandro Osuna",
+      "position": "LF",
+      "team_id": 140,
+      "team_abbr": "TEX",
+      "opp_abbr": "HOU",
+      "opp_team_id": 117,
+      "opp_pitcher": {
+        "id": 669920,
+        "fullName": "Jason Alexander"
+      },
+      "park": {
+        "id": 5325,
+        "name": "Globe Life Field",
+        "runs": 104,
+        "hr": 108,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.13,
+      "mean_efp": 6.94,
+      "stats_games": 0,
+      "efp": 9.26,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.87,
+        "doubles": 0.92,
+        "triples": 0.07,
+        "home_runs": 0.67,
+        "bb_hbp": 1.43,
+        "r": 3.27,
+        "rbi": 1.18,
+        "sb": 0.16
+      },
+      "multipliers": {
+        "park_hr": 1.08,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.102,
+        "pitcher_hr": 1.066,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.982,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.226,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.2226,
+        "doubles": 0.0429,
+        "triples": 0.0019,
+        "home_runs": 0.0156,
+        "bb_hbp": 0.1661,
+        "r_per_pa": 0.3808,
+        "rbi_per_pa": 0.1376
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 545361,
       "name": "Mike Trout",
       "position": "CF",
@@ -1611,7 +1767,11 @@
         "hr": 108,
         "label": "Slight Hitter"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
       "pa_source": "default",
       "stdev_efp": 11.38,
       "mean_efp": 12.17,
@@ -2037,92 +2197,16 @@
       "tier": "low"
     },
     {
-      "player_id": 694362,
-      "name": "Blake Dunn",
-      "position": "RF",
-      "team_id": 113,
-      "team_abbr": "CIN",
-      "opp_abbr": "NYM",
-      "opp_team_id": 121,
-      "opp_pitcher": {
-        "id": 656849,
-        "fullName": "David Peterson"
-      },
-      "park": {
-        "id": 3289,
-        "name": "Citi Field",
-        "runs": 96,
-        "hr": 93,
-        "label": "Pitcher Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "73",
-        "wind": "7 mph, Out To LF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 7.13,
-      "mean_efp": 6.94,
-      "stats_games": 0,
-      "efp": 8.9,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.4,
-        "doubles": 0.94,
-        "triples": 0.48,
-        "home_runs": 0.65,
-        "bb_hbp": 0.68,
-        "r": 3.04,
-        "rbi": 1.34,
-        "sb": 0.64
-      },
-      "multipliers": {
-        "park_hr": 0.93,
-        "park_runs": 0.96,
-        "weather_hr": 1.15,
-        "pitcher_hits": 1.059,
-        "pitcher_hr": 0.661,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.869,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.963,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.15,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1858,
-        "doubles": 0.0438,
-        "triples": 0.0139,
-        "home_runs": 0.015,
-        "bb_hbp": 0.0796,
-        "r_per_pa": 0.3536,
-        "rbi_per_pa": 0.1555
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 670541,
-      "name": "Yordan Alvarez",
+      "player_id": 592626,
+      "name": "Joc Pederson",
       "position": "DH",
-      "team_id": 117,
-      "team_abbr": "HOU",
-      "opp_abbr": "TEX",
-      "opp_team_id": 140,
+      "team_id": 140,
+      "team_abbr": "TEX",
+      "opp_abbr": "HOU",
+      "opp_team_id": 117,
       "opp_pitcher": {
-        "id": 683004,
-        "fullName": "Jack Leiter"
+        "id": 669920,
+        "fullName": "Jason Alexander"
       },
       "park": {
         "id": 5325,
@@ -2131,29 +2215,33 @@
         "hr": 108,
         "label": "Slight Hitter"
       },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 6.12,
-      "mean_efp": 11.83,
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 2.22,
+      "mean_efp": 4.5,
       "stats_games": 6,
-      "efp": 8.9,
+      "efp": 8.92,
       "bat_side": "L",
       "per_event": {
-        "singles": 1.54,
-        "doubles": 0.85,
-        "triples": 0.03,
-        "home_runs": 2.49,
-        "bb_hbp": 1.21,
-        "r": 2.61,
-        "rbi": 1.37,
-        "sb": 0.07
+        "singles": 2.24,
+        "doubles": 1.21,
+        "triples": 0.05,
+        "home_runs": 1.04,
+        "bb_hbp": 1.39,
+        "r": 3.02,
+        "rbi": 1.24,
+        "sb": 0.0
       },
       "multipliers": {
         "park_hr": 1.08,
         "park_runs": 1.04,
         "weather_hr": 1.0,
-        "pitcher_hits": 1.002,
-        "pitcher_hr": 1.053,
+        "pitcher_hits": 1.102,
+        "pitcher_hr": 1.066,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -2161,106 +2249,30 @@
         "stx_xwoba": 1.0,
         "stx_barrel": 1.0,
         "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.04,
+        "pitcher_gb_hr": 0.982,
         "k_damper": 1.0,
-        "pitcher_bb": 0.943,
+        "pitcher_bb": 1.226,
         "park_hand_hr": 1.0,
         "sb_speed": 1.0,
         "speed_singles": 1.0,
         "speed_r": 1.0,
         "bvpt": 1.0,
-        "ondeck_r": 1.0,
+        "ondeck_r": 1.097,
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1283,
-        "doubles": 0.0423,
-        "triples": 0.001,
-        "home_runs": 0.0622,
-        "bb_hbp": 0.1508,
-        "r_per_pa": 0.3262,
-        "rbi_per_pa": 0.1709
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 664040,
-      "name": "Brandon Lowe",
-      "position": "2B",
-      "team_id": 134,
-      "team_abbr": "PIT",
-      "opp_abbr": "CHC",
-      "opp_team_id": 112,
-      "opp_pitcher": {
-        "id": 696136,
-        "fullName": "Jordan Wicks"
-      },
-      "park": {
-        "id": 31,
-        "name": "PNC Park",
-        "runs": 96,
-        "hr": 92,
-        "label": "Pitcher Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "78",
-        "wind": "5 mph, Out To LF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 11.19,
-      "mean_efp": 10.0,
-      "stats_games": 14,
-      "efp": 8.88,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.8,
-        "doubles": 0.91,
-        "triples": 0.09,
-        "home_runs": 1.94,
-        "bb_hbp": 0.86,
-        "r": 2.99,
-        "rbi": 1.55,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 0.92,
-        "park_runs": 0.96,
-        "weather_hr": 1.03,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 1.0,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.0,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.094,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1393,
-        "doubles": 0.0424,
-        "triples": 0.0027,
-        "home_runs": 0.0451,
-        "bb_hbp": 0.0997,
-        "r_per_pa": 0.3472,
-        "rbi_per_pa": 0.1806
+        "singles": 0.1733,
+        "doubles": 0.0563,
+        "triples": 0.0015,
+        "home_runs": 0.0241,
+        "bb_hbp": 0.1615,
+        "r_per_pa": 0.3513,
+        "rbi_per_pa": 0.1439
       },
       "pa": 4.3,
       "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-05-26T20:30:36.615276+00:00"
+  "generated_at": "2026-05-26T20:52:27.763161+00:00"
 }
