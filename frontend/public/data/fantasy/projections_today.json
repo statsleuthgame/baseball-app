@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 374,
+  "projection_count": 370,
   "projections": [
     {
       "player_id": 670541,
@@ -1236,6 +1236,82 @@
       "tier": "low"
     },
     {
+      "player_id": 660821,
+      "name": "Jes\u00fas S\u00e1nchez",
+      "position": "RF",
+      "team_id": 141,
+      "team_abbr": "TOR",
+      "opp_abbr": "MIA",
+      "opp_team_id": 146,
+      "opp_pitcher": {
+        "id": 691587,
+        "fullName": "Eury P\u00e9rez"
+      },
+      "park": {
+        "id": 14,
+        "name": "Rogers Centre",
+        "runs": 104,
+        "hr": 109,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "60",
+        "wind": "5 mph, Out To RF"
+      },
+      "pa_source": "default",
+      "stdev_efp": 6.26,
+      "mean_efp": 7.83,
+      "stats_games": 6,
+      "efp": 9.02,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.86,
+        "doubles": 1.37,
+        "triples": 0.04,
+        "home_runs": 2.27,
+        "bb_hbp": 0.77,
+        "r": 2.5,
+        "rbi": 1.42,
+        "sb": 0.08
+      },
+      "multipliers": {
+        "park_hr": 1.09,
+        "park_runs": 1.04,
+        "weather_hr": 1.15,
+        "pitcher_hits": 0.917,
+        "pitcher_hr": 1.157,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.08,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1551,
+        "doubles": 0.0684,
+        "triples": 0.0011,
+        "home_runs": 0.0569,
+        "bb_hbp": 0.0961,
+        "r_per_pa": 0.3124,
+        "rbi_per_pa": 0.177
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
       "player_id": 641355,
       "name": "Cody Bellinger",
       "position": "LF",
@@ -1668,9 +1744,9 @@
       "tier": "low"
     },
     {
-      "player_id": 660821,
-      "name": "Jes\u00fas S\u00e1nchez",
-      "position": "RF",
+      "player_id": 676391,
+      "name": "Ernie Clement",
+      "position": "2B",
       "team_id": 141,
       "team_abbr": "TOR",
       "opp_abbr": "MIA",
@@ -1686,27 +1762,31 @@
         "hr": 109,
         "label": "Hitter Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "60",
+        "wind": "5 mph, Out To RF"
+      },
       "pa_source": "default",
-      "stdev_efp": 6.26,
-      "mean_efp": 7.83,
+      "stdev_efp": 3.04,
+      "mean_efp": 8.33,
       "stats_games": 6,
-      "efp": 8.76,
-      "bat_side": "L",
+      "efp": 8.73,
+      "bat_side": "R",
       "per_event": {
-        "singles": 1.86,
-        "doubles": 1.37,
-        "triples": 0.04,
-        "home_runs": 1.98,
-        "bb_hbp": 0.77,
-        "r": 2.5,
+        "singles": 1.94,
+        "doubles": 1.54,
+        "triples": 0.03,
+        "home_runs": 1.83,
+        "bb_hbp": 0.51,
+        "r": 2.41,
         "rbi": 1.42,
-        "sb": 0.08
+        "sb": 0.29
       },
       "multipliers": {
         "park_hr": 1.09,
         "park_runs": 1.04,
-        "weather_hr": 1.0,
+        "weather_hr": 1.03,
         "pitcher_hits": 0.917,
         "pitcher_hr": 1.157,
         "slot_r": 1.0,
@@ -1728,13 +1808,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1551,
-        "doubles": 0.0684,
-        "triples": 0.0011,
-        "home_runs": 0.0495,
-        "bb_hbp": 0.0961,
-        "r_per_pa": 0.3124,
-        "rbi_per_pa": 0.177
+        "singles": 0.1616,
+        "doubles": 0.077,
+        "triples": 0.001,
+        "home_runs": 0.0457,
+        "bb_hbp": 0.0639,
+        "r_per_pa": 0.3007,
+        "rbi_per_pa": 0.1773
       },
       "pa": 4.0,
       "tier": "low"
@@ -2098,80 +2178,8 @@
       },
       "pa": 4.0,
       "tier": "low"
-    },
-    {
-      "player_id": 676391,
-      "name": "Ernie Clement",
-      "position": "2B",
-      "team_id": 141,
-      "team_abbr": "TOR",
-      "opp_abbr": "MIA",
-      "opp_team_id": 146,
-      "opp_pitcher": {
-        "id": 691587,
-        "fullName": "Eury P\u00e9rez"
-      },
-      "park": {
-        "id": 14,
-        "name": "Rogers Centre",
-        "runs": 104,
-        "hr": 109,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 3.04,
-      "mean_efp": 8.33,
-      "stats_games": 6,
-      "efp": 8.68,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.94,
-        "doubles": 1.54,
-        "triples": 0.03,
-        "home_runs": 1.77,
-        "bb_hbp": 0.51,
-        "r": 2.41,
-        "rbi": 1.42,
-        "sb": 0.29
-      },
-      "multipliers": {
-        "park_hr": 1.09,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.917,
-        "pitcher_hr": 1.157,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.08,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1616,
-        "doubles": 0.077,
-        "triples": 0.001,
-        "home_runs": 0.0444,
-        "bb_hbp": 0.0639,
-        "r_per_pa": 0.3007,
-        "rbi_per_pa": 0.1773
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-05-27T13:50:35.052815+00:00"
+  "generated_at": "2026-05-27T14:19:28.400084+00:00"
 }
