@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 348,
+  "projection_count": 340,
   "projections": [
     {
       "player_id": 695578,
@@ -1573,82 +1573,6 @@
       "tier": "low"
     },
     {
-      "player_id": 575929,
-      "name": "Willson Contreras",
-      "position": "1B",
-      "team_id": 111,
-      "team_abbr": "BOS",
-      "opp_abbr": "CLE",
-      "opp_team_id": 114,
-      "opp_pitcher": {
-        "id": 677944,
-        "fullName": "Slade Cecconi"
-      },
-      "park": {
-        "id": 5,
-        "name": "Progressive Field",
-        "runs": 97,
-        "hr": 95,
-        "label": "Pitcher Friendly"
-      },
-      "weather": {
-        "condition": "Clear",
-        "temp": "77",
-        "wind": "6 mph, L To R"
-      },
-      "pa_source": "default",
-      "stdev_efp": 6.69,
-      "mean_efp": 5.71,
-      "stats_games": 7,
-      "efp": 9.03,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.28,
-        "doubles": 0.57,
-        "triples": 0.57,
-        "home_runs": 1.63,
-        "bb_hbp": 0.9,
-        "r": 2.78,
-        "rbi": 1.5,
-        "sb": 0.08
-      },
-      "multipliers": {
-        "park_hr": 0.95,
-        "park_runs": 0.97,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.092,
-        "pitcher_hr": 1.074,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.966,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.946,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1903,
-        "doubles": 0.0283,
-        "triples": 0.0177,
-        "home_runs": 0.0408,
-        "bb_hbp": 0.1124,
-        "r_per_pa": 0.348,
-        "rbi_per_pa": 0.1872
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 621566,
       "name": "Matt Olson",
       "position": "1B",
@@ -1720,6 +1644,82 @@
         "bb_hbp": 0.0915,
         "r_per_pa": 0.2677,
         "rbi_per_pa": 0.1641
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 545361,
+      "name": "Mike Trout",
+      "position": "CF",
+      "team_id": 108,
+      "team_abbr": "LAA",
+      "opp_abbr": "TB",
+      "opp_team_id": 139,
+      "opp_pitcher": {
+        "id": 607259,
+        "fullName": "Nick Martinez"
+      },
+      "park": {
+        "id": 12,
+        "name": "Tropicana Field",
+        "runs": 96,
+        "hr": 98,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Dome",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.32,
+      "mean_efp": 11.67,
+      "stats_games": 6,
+      "efp": 9.02,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.33,
+        "doubles": 1.03,
+        "triples": 0.03,
+        "home_runs": 1.62,
+        "bb_hbp": 1.22,
+        "r": 3.21,
+        "rbi": 1.46,
+        "sb": 0.39
+      },
+      "multipliers": {
+        "park_hr": 0.98,
+        "park_runs": 0.96,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.003,
+        "pitcher_hr": 0.821,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.053,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.071,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1034,
+        "doubles": 0.0478,
+        "triples": 0.0009,
+        "home_runs": 0.0377,
+        "bb_hbp": 0.142,
+        "r_per_pa": 0.3734,
+        "rbi_per_pa": 0.1698
       },
       "pa": 4.3,
       "tier": "low"
@@ -1868,6 +1868,158 @@
         "bb_hbp": 0.0971,
         "r_per_pa": 0.2464,
         "rbi_per_pa": 0.1811
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 575929,
+      "name": "Willson Contreras",
+      "position": "1B",
+      "team_id": 111,
+      "team_abbr": "BOS",
+      "opp_abbr": "CLE",
+      "opp_team_id": 114,
+      "opp_pitcher": {
+        "id": 677944,
+        "fullName": "Slade Cecconi"
+      },
+      "park": {
+        "id": 5,
+        "name": "Progressive Field",
+        "runs": 97,
+        "hr": 95,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Clear",
+        "temp": "77",
+        "wind": "6 mph, L To R"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 6.69,
+      "mean_efp": 5.71,
+      "stats_games": 7,
+      "efp": 8.95,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.28,
+        "doubles": 0.57,
+        "triples": 0.57,
+        "home_runs": 1.63,
+        "bb_hbp": 0.9,
+        "r": 2.69,
+        "rbi": 1.5,
+        "sb": 0.07
+      },
+      "multipliers": {
+        "park_hr": 0.95,
+        "park_runs": 0.97,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.092,
+        "pitcher_hr": 1.074,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.966,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.946,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.968,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1903,
+        "doubles": 0.0283,
+        "triples": 0.0177,
+        "home_runs": 0.0408,
+        "bb_hbp": 0.1124,
+        "r_per_pa": 0.3369,
+        "rbi_per_pa": 0.1872
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 687263,
+      "name": "Zach Neto",
+      "position": "SS",
+      "team_id": 108,
+      "team_abbr": "LAA",
+      "opp_abbr": "TB",
+      "opp_team_id": 139,
+      "opp_pitcher": {
+        "id": 607259,
+        "fullName": "Nick Martinez"
+      },
+      "park": {
+        "id": 12,
+        "name": "Tropicana Field",
+        "runs": 96,
+        "hr": 98,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Dome",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.65,
+      "mean_efp": 10.5,
+      "stats_games": 6,
+      "efp": 8.93,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.46,
+        "doubles": 1.19,
+        "triples": 0.08,
+        "home_runs": 1.53,
+        "bb_hbp": 0.81,
+        "r": 3.1,
+        "rbi": 1.46,
+        "sb": 0.55
+      },
+      "multipliers": {
+        "park_hr": 0.98,
+        "park_runs": 0.96,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.003,
+        "pitcher_hr": 0.821,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.053,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1133,
+        "doubles": 0.0556,
+        "triples": 0.0024,
+        "home_runs": 0.0356,
+        "bb_hbp": 0.0943,
+        "r_per_pa": 0.3609,
+        "rbi_per_pa": 0.1695
       },
       "pa": 4.3,
       "tier": "low"
@@ -2091,156 +2243,8 @@
       },
       "pa": 4.0,
       "tier": "low"
-    },
-    {
-      "player_id": 700250,
-      "name": "Ben Rice",
-      "position": "1B",
-      "team_id": 147,
-      "team_abbr": "NYY",
-      "opp_abbr": "ATH",
-      "opp_team_id": 133,
-      "opp_pitcher": {
-        "id": 622663,
-        "fullName": "Luis Severino"
-      },
-      "park": {
-        "id": 2529,
-        "name": "Unknown",
-        "runs": 100,
-        "hr": 100,
-        "label": "Neutral"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 9.76,
-      "mean_efp": 9.0,
-      "stats_games": 6,
-      "efp": 8.83,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.55,
-        "doubles": 0.99,
-        "triples": 0.26,
-        "home_runs": 2.08,
-        "bb_hbp": 1.15,
-        "r": 2.47,
-        "rbi": 1.43,
-        "sb": 0.16
-      },
-      "multipliers": {
-        "park_hr": 1.0,
-        "park_runs": 1.0,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.994,
-        "pitcher_hr": 1.016,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.994,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.129,
-        "doubles": 0.0495,
-        "triples": 0.0081,
-        "home_runs": 0.0519,
-        "bb_hbp": 0.1435,
-        "r_per_pa": 0.3093,
-        "rbi_per_pa": 0.1785
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 668804,
-      "name": "Bryan Reynolds",
-      "position": "LF",
-      "team_id": 134,
-      "team_abbr": "PIT",
-      "opp_abbr": "MIN",
-      "opp_team_id": 142,
-      "opp_pitcher": {
-        "id": 671737,
-        "fullName": "Taj Bradley"
-      },
-      "park": {
-        "id": 31,
-        "name": "PNC Park",
-        "runs": 96,
-        "hr": 92,
-        "label": "Pitcher Friendly"
-      },
-      "weather": {
-        "condition": "Clear",
-        "temp": "76",
-        "wind": "10 mph, Out To CF"
-      },
-      "pa_source": "default",
-      "stdev_efp": 4.68,
-      "mean_efp": 5.67,
-      "stats_games": 6,
-      "efp": 8.82,
-      "bat_side": "S",
-      "per_event": {
-        "singles": 1.69,
-        "doubles": 1.13,
-        "triples": 0.19,
-        "home_runs": 1.05,
-        "bb_hbp": 1.27,
-        "r": 2.89,
-        "rbi": 1.43,
-        "sb": 0.42
-      },
-      "multipliers": {
-        "park_hr": 0.92,
-        "park_runs": 0.96,
-        "weather_hr": 1.08,
-        "pitcher_hits": 0.921,
-        "pitcher_hr": 0.923,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.087,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.11,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1412,
-        "doubles": 0.0563,
-        "triples": 0.006,
-        "home_runs": 0.0263,
-        "bb_hbp": 0.1585,
-        "r_per_pa": 0.3612,
-        "rbi_per_pa": 0.1786
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-05-29T19:13:46.726159+00:00"
+  "generated_at": "2026-05-29T19:28:40.321530+00:00"
 }
