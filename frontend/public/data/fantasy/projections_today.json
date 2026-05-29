@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 374,
+  "projection_count": 375,
   "projections": [
     {
       "player_id": 695578,
@@ -180,16 +180,16 @@
       "stdev_efp": 6.12,
       "mean_efp": 11.83,
       "stats_games": 6,
-      "efp": 10.37,
+      "efp": 10.24,
       "bat_side": "L",
       "per_event": {
-        "singles": 1.5,
-        "doubles": 0.81,
+        "singles": 1.49,
+        "doubles": 0.8,
         "triples": 0.03,
-        "home_runs": 3.81,
+        "home_runs": 3.75,
         "bb_hbp": 0.95,
-        "r": 2.82,
-        "rbi": 1.84,
+        "r": 2.79,
+        "rbi": 1.81,
         "sb": 0.07
       },
       "multipliers": {
@@ -217,13 +217,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1253,
-        "doubles": 0.0403,
+        "singles": 0.1241,
+        "doubles": 0.04,
         "triples": 0.001,
-        "home_runs": 0.0953,
-        "bb_hbp": 0.1191,
-        "r_per_pa": 0.352,
-        "rbi_per_pa": 0.23
+        "home_runs": 0.0938,
+        "bb_hbp": 0.1183,
+        "r_per_pa": 0.3486,
+        "rbi_per_pa": 0.2267
       },
       "pa": 4.0,
       "tier": "low"
@@ -944,78 +944,6 @@
         "bb_hbp": 0.1581,
         "r_per_pa": 0.3222,
         "rbi_per_pa": 0.1613
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 669397,
-      "name": "Nick Allen",
-      "position": "SS",
-      "team_id": 117,
-      "team_abbr": "HOU",
-      "opp_abbr": "MIL",
-      "opp_team_id": 158,
-      "opp_pitcher": {
-        "id": 689441,
-        "fullName": "Coleman Crow"
-      },
-      "park": {
-        "id": 2392,
-        "name": "Minute Maid Park",
-        "runs": 103,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 3.2,
-      "mean_efp": 1.6,
-      "stats_games": 5,
-      "efp": 9.16,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.63,
-        "doubles": 0.65,
-        "triples": 0.08,
-        "home_runs": 2.08,
-        "bb_hbp": 0.57,
-        "r": 2.74,
-        "rbi": 1.43,
-        "sb": 0.29
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 1.0,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.101,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.2188,
-        "doubles": 0.0324,
-        "triples": 0.0025,
-        "home_runs": 0.052,
-        "bb_hbp": 0.071,
-        "r_per_pa": 0.3423,
-        "rbi_per_pa": 0.1786
       },
       "pa": 4.0,
       "tier": "low"
@@ -2098,47 +2026,47 @@
       "tier": "low"
     },
     {
-      "player_id": 666211,
-      "name": "Taylor Trammell",
-      "position": "CF",
-      "team_id": 117,
-      "team_abbr": "HOU",
-      "opp_abbr": "MIL",
-      "opp_team_id": 158,
+      "player_id": 665489,
+      "name": "Vladimir Guerrero Jr.",
+      "position": "1B",
+      "team_id": 141,
+      "team_abbr": "TOR",
+      "opp_abbr": "BAL",
+      "opp_team_id": 110,
       "opp_pitcher": {
-        "id": 689441,
-        "fullName": "Coleman Crow"
+        "id": 669432,
+        "fullName": "Trevor Rogers"
       },
       "park": {
-        "id": 2392,
-        "name": "Minute Maid Park",
+        "id": 2,
+        "name": "Camden Yards",
         "runs": 103,
-        "hr": 107,
+        "hr": 108,
         "label": "Slight Hitter"
       },
       "weather": null,
       "pa_source": "default",
-      "stdev_efp": 7.13,
-      "mean_efp": 6.94,
-      "stats_games": 0,
-      "efp": 8.78,
-      "bat_side": "L",
+      "stdev_efp": 6.26,
+      "mean_efp": 7.13,
+      "stats_games": 15,
+      "efp": 8.76,
+      "bat_side": "R",
       "per_event": {
-        "singles": 2.58,
-        "doubles": 1.21,
-        "triples": 0.41,
-        "home_runs": 0.78,
-        "bb_hbp": 0.56,
-        "r": 2.69,
-        "rbi": 1.36,
-        "sb": 0.45
+        "singles": 2.62,
+        "doubles": 0.62,
+        "triples": 0.04,
+        "home_runs": 1.04,
+        "bb_hbp": 1.22,
+        "r": 2.85,
+        "rbi": 1.09,
+        "sb": 0.52
       },
       "multipliers": {
-        "park_hr": 1.07,
+        "park_hr": 1.08,
         "park_runs": 1.03,
         "weather_hr": 1.0,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 1.0,
+        "pitcher_hits": 1.113,
+        "pitcher_hr": 1.019,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -2148,7 +2076,7 @@
         "stx_hardhit": 1.0,
         "pitcher_gb_hr": 1.101,
         "k_damper": 1.0,
-        "pitcher_bb": 0.75,
+        "pitcher_bb": 0.886,
         "park_hand_hr": 1.0,
         "sb_speed": 1.0,
         "speed_singles": 1.0,
@@ -2158,18 +2086,90 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.2148,
-        "doubles": 0.0603,
-        "triples": 0.0127,
-        "home_runs": 0.0194,
-        "bb_hbp": 0.0694,
-        "r_per_pa": 0.3358,
-        "rbi_per_pa": 0.1702
+        "singles": 0.2181,
+        "doubles": 0.0312,
+        "triples": 0.0012,
+        "home_runs": 0.0261,
+        "bb_hbp": 0.1523,
+        "r_per_pa": 0.3557,
+        "rbi_per_pa": 0.1365
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 668804,
+      "name": "Bryan Reynolds",
+      "position": "LF",
+      "team_id": 134,
+      "team_abbr": "PIT",
+      "opp_abbr": "MIN",
+      "opp_team_id": 142,
+      "opp_pitcher": {
+        "id": 671737,
+        "fullName": "Taj Bradley"
+      },
+      "park": {
+        "id": 31,
+        "name": "PNC Park",
+        "runs": 96,
+        "hr": 92,
+        "label": "Pitcher Friendly"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 4.68,
+      "mean_efp": 5.67,
+      "stats_games": 6,
+      "efp": 8.75,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 1.69,
+        "doubles": 1.13,
+        "triples": 0.19,
+        "home_runs": 0.97,
+        "bb_hbp": 1.27,
+        "r": 2.89,
+        "rbi": 1.43,
+        "sb": 0.42
+      },
+      "multipliers": {
+        "park_hr": 0.92,
+        "park_runs": 0.96,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.921,
+        "pitcher_hr": 0.923,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.087,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.11,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1412,
+        "doubles": 0.0563,
+        "triples": 0.006,
+        "home_runs": 0.0243,
+        "bb_hbp": 0.1585,
+        "r_per_pa": 0.3612,
+        "rbi_per_pa": 0.1786
       },
       "pa": 4.0,
       "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-05-29T01:35:08.873935+00:00"
+  "generated_at": "2026-05-29T13:34:53.971313+00:00"
 }
