@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 321,
+  "projection_count": 313,
   "projections": [
     {
       "player_id": 670541,
@@ -1065,8 +1065,8 @@
       },
       "weather": {
         "condition": "Partly Cloudy",
-        "temp": "66",
-        "wind": "15 mph, L To R"
+        "temp": "68",
+        "wind": "13 mph, L To R"
       },
       "pa_source": "lineup",
       "stdev_efp": 9.16,
@@ -1269,6 +1269,82 @@
       "tier": "low"
     },
     {
+      "player_id": 669364,
+      "name": "Xavier Edwards",
+      "position": "2B",
+      "team_id": 146,
+      "team_abbr": "MIA",
+      "opp_abbr": "NYM",
+      "opp_team_id": 121,
+      "opp_pitcher": {
+        "id": 681035,
+        "fullName": "Christian Scott"
+      },
+      "park": {
+        "id": 3289,
+        "name": "Citi Field",
+        "runs": 96,
+        "hr": 93,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "61",
+        "wind": "18 mph, In From LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 6.88,
+      "mean_efp": 9.0,
+      "stats_games": 6,
+      "efp": 9.33,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 1.96,
+        "doubles": 1.02,
+        "triples": 0.5,
+        "home_runs": 0.52,
+        "bb_hbp": 1.26,
+        "r": 2.99,
+        "rbi": 1.46,
+        "sb": 0.94
+      },
+      "multipliers": {
+        "park_hr": 0.93,
+        "park_runs": 0.96,
+        "weather_hr": 0.88,
+        "pitcher_hits": 0.894,
+        "pitcher_hr": 0.658,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.129,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.016,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1521,
+        "doubles": 0.0474,
+        "triples": 0.0146,
+        "home_runs": 0.012,
+        "bb_hbp": 0.1461,
+        "r_per_pa": 0.348,
+        "rbi_per_pa": 0.1701
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 805808,
       "name": "Kevin McGonigle",
       "position": "SS",
@@ -1289,8 +1365,8 @@
       },
       "weather": {
         "condition": "Partly Cloudy",
-        "temp": "66",
-        "wind": "15 mph, L To R"
+        "temp": "68",
+        "wind": "13 mph, L To R"
       },
       "pa_source": "lineup",
       "stdev_efp": 2.54,
@@ -2167,80 +2243,8 @@
       },
       "pa": 4.3,
       "tier": "low"
-    },
-    {
-      "player_id": 696100,
-      "name": "Hunter Goodman",
-      "position": "C",
-      "team_id": 115,
-      "team_abbr": "COL",
-      "opp_abbr": "SF",
-      "opp_team_id": 137,
-      "opp_pitcher": {
-        "id": 605288,
-        "fullName": "Adrian Houser"
-      },
-      "park": {
-        "id": 19,
-        "name": "Coors Field",
-        "runs": 116,
-        "hr": 118,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 9.81,
-      "mean_efp": 9.4,
-      "stats_games": 5,
-      "efp": 9.02,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.94,
-        "doubles": 1.02,
-        "triples": 0.04,
-        "home_runs": 2.5,
-        "bb_hbp": 0.68,
-        "r": 2.26,
-        "rbi": 1.34,
-        "sb": 0.52
-      },
-      "multipliers": {
-        "park_hr": 1.18,
-        "park_runs": 1.16,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.077,
-        "pitcher_hr": 1.058,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.932,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.931,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1615,
-        "doubles": 0.0508,
-        "triples": 0.0013,
-        "home_runs": 0.0625,
-        "bb_hbp": 0.0846,
-        "r_per_pa": 0.2831,
-        "rbi_per_pa": 0.1672
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-05-30T17:38:21.620791+00:00"
+  "generated_at": "2026-05-30T17:58:45.580071+00:00"
 }
