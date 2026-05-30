@@ -185,8 +185,8 @@
       },
       "weather": {
         "condition": "Sunny",
-        "temp": "70",
-        "wind": "11 mph, In From LF"
+        "temp": "71",
+        "wind": "10 mph, In From LF"
       },
       "pa_source": "lineup",
       "stdev_efp": 9.29,
@@ -482,7 +482,7 @@
       "weather": {
         "condition": "Sunny",
         "temp": "59",
-        "wind": "16 mph, In From RF"
+        "wind": "23 mph, In From RF"
       },
       "pa_source": "lineup",
       "stdev_efp": 7.13,
@@ -1092,13 +1092,13 @@
       "stdev_efp": 9.16,
       "mean_efp": 15.5,
       "stats_games": 6,
-      "efp": 9.41,
+      "efp": 9.4,
       "bat_side": "R",
       "per_event": {
-        "singles": 1.42,
+        "singles": 1.43,
         "doubles": 0.78,
         "triples": 0.18,
-        "home_runs": 2.24,
+        "home_runs": 2.23,
         "bb_hbp": 1.23,
         "r": 2.78,
         "rbi": 1.42,
@@ -1108,8 +1108,8 @@
         "park_hr": 1.1,
         "park_runs": 1.04,
         "weather_hr": 1.0,
-        "pitcher_hits": 0.963,
-        "pitcher_hr": 0.891,
+        "pitcher_hits": 0.968,
+        "pitcher_hr": 0.889,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -1129,13 +1129,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1104,
-        "doubles": 0.0361,
-        "triples": 0.0053,
-        "home_runs": 0.0521,
-        "bb_hbp": 0.1434,
-        "r_per_pa": 0.3237,
-        "rbi_per_pa": 0.1654
+        "singles": 0.1109,
+        "doubles": 0.0363,
+        "triples": 0.0054,
+        "home_runs": 0.0519,
+        "bb_hbp": 0.1432,
+        "r_per_pa": 0.3228,
+        "rbi_per_pa": 0.1649
       },
       "pa": 4.3,
       "tier": "low"
@@ -1817,82 +1817,6 @@
       "tier": "low"
     },
     {
-      "player_id": 805808,
-      "name": "Kevin McGonigle",
-      "position": "SS",
-      "team_id": 116,
-      "team_abbr": "DET",
-      "opp_abbr": "CWS",
-      "opp_team_id": 145,
-      "opp_pitcher": {
-        "id": 641743,
-        "fullName": "Anthony Kay"
-      },
-      "park": {
-        "id": 4,
-        "name": "Guaranteed Rate Field",
-        "runs": 104,
-        "hr": 110,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "68",
-        "wind": "13 mph, L To R"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 2.54,
-      "mean_efp": 10.17,
-      "stats_games": 6,
-      "efp": 9.19,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.37,
-        "doubles": 0.78,
-        "triples": 0.39,
-        "home_runs": 0.78,
-        "bb_hbp": 1.16,
-        "r": 3.15,
-        "rbi": 1.23,
-        "sb": 0.63
-      },
-      "multipliers": {
-        "park_hr": 1.1,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.987,
-        "pitcher_hr": 1.024,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.036,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.15,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.15,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.184,
-        "doubles": 0.0365,
-        "triples": 0.0114,
-        "home_runs": 0.0181,
-        "bb_hbp": 0.135,
-        "r_per_pa": 0.3661,
-        "rbi_per_pa": 0.1428
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
       "player_id": 665489,
       "name": "Vladimir Guerrero Jr.",
       "position": "1B",
@@ -1913,7 +1837,7 @@
       },
       "weather": {
         "condition": "Sunny",
-        "temp": "70",
+        "temp": "67",
         "wind": "14 mph, In From LF"
       },
       "pa_source": "lineup",
@@ -1969,6 +1893,82 @@
       "tier": "low"
     },
     {
+      "player_id": 805808,
+      "name": "Kevin McGonigle",
+      "position": "SS",
+      "team_id": 116,
+      "team_abbr": "DET",
+      "opp_abbr": "CWS",
+      "opp_team_id": 145,
+      "opp_pitcher": {
+        "id": 641743,
+        "fullName": "Anthony Kay"
+      },
+      "park": {
+        "id": 4,
+        "name": "Guaranteed Rate Field",
+        "runs": 104,
+        "hr": 110,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "68",
+        "wind": "13 mph, L To R"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 2.54,
+      "mean_efp": 10.17,
+      "stats_games": 6,
+      "efp": 9.13,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.35,
+        "doubles": 0.78,
+        "triples": 0.39,
+        "home_runs": 0.78,
+        "bb_hbp": 1.16,
+        "r": 3.12,
+        "rbi": 1.22,
+        "sb": 0.63
+      },
+      "multipliers": {
+        "park_hr": 1.1,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.987,
+        "pitcher_hr": 1.024,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.036,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.15,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1825,
+        "doubles": 0.0364,
+        "triples": 0.0112,
+        "home_runs": 0.018,
+        "bb_hbp": 0.1343,
+        "r_per_pa": 0.3631,
+        "rbi_per_pa": 0.1416
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 682928,
       "name": "CJ Abrams",
       "position": "SS",
@@ -1989,8 +1989,8 @@
       },
       "weather": {
         "condition": "Sunny",
-        "temp": "70",
-        "wind": "11 mph, In From LF"
+        "temp": "71",
+        "wind": "10 mph, In From LF"
       },
       "pa_source": "lineup",
       "stdev_efp": 6.06,
@@ -2213,8 +2213,8 @@
       },
       "weather": {
         "condition": "Sunny",
-        "temp": "70",
-        "wind": "11 mph, In From LF"
+        "temp": "71",
+        "wind": "10 mph, In From LF"
       },
       "pa_source": "lineup",
       "stdev_efp": 3.72,
@@ -2270,5 +2270,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-05-30T19:49:23.660323+00:00"
+  "generated_at": "2026-05-30T20:04:11.490508+00:00"
 }
