@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 9,
-  "projection_count": 171,
+  "projection_count": 167,
   "projections": [
     {
       "player_id": 668709,
@@ -312,6 +312,82 @@
         "bb_hbp": 0.0782,
         "r_per_pa": 0.3549,
         "rbi_per_pa": 0.202
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 682998,
+      "name": "Corbin Carroll",
+      "position": "RF",
+      "team_id": 109,
+      "team_abbr": "AZ",
+      "opp_abbr": "LAD",
+      "opp_team_id": 119,
+      "opp_pitcher": {
+        "id": 686218,
+        "fullName": "Emmet Sheehan"
+      },
+      "park": {
+        "id": 15,
+        "name": "Chase Field",
+        "runs": 106,
+        "hr": 110,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 11.99,
+      "mean_efp": 8.6,
+      "stats_games": 5,
+      "efp": 10.0,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.83,
+        "doubles": 1.11,
+        "triples": 1.05,
+        "home_runs": 1.56,
+        "bb_hbp": 0.89,
+        "r": 2.78,
+        "rbi": 1.48,
+        "sb": 0.72
+      },
+      "multipliers": {
+        "park_hr": 1.1,
+        "park_runs": 1.06,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.023,
+        "pitcher_hr": 1.133,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.064,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.888,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.017,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1416,
+        "doubles": 0.0518,
+        "triples": 0.0304,
+        "home_runs": 0.0363,
+        "bb_hbp": 0.104,
+        "r_per_pa": 0.3228,
+        "rbi_per_pa": 0.1725
       },
       "pa": 4.3,
       "tier": "low"
@@ -1001,82 +1077,6 @@
       "tier": "low"
     },
     {
-      "player_id": 682998,
-      "name": "Corbin Carroll",
-      "position": "RF",
-      "team_id": 109,
-      "team_abbr": "AZ",
-      "opp_abbr": "LAD",
-      "opp_team_id": 119,
-      "opp_pitcher": {
-        "id": 686218,
-        "fullName": "Emmet Sheehan"
-      },
-      "park": {
-        "id": 15,
-        "name": "Chase Field",
-        "runs": 106,
-        "hr": 110,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Roof Closed",
-        "temp": "72",
-        "wind": "0 mph, None"
-      },
-      "pa_source": "default",
-      "stdev_efp": 11.99,
-      "mean_efp": 8.6,
-      "stats_games": 5,
-      "efp": 9.25,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.7,
-        "doubles": 1.04,
-        "triples": 0.97,
-        "home_runs": 1.45,
-        "bb_hbp": 0.83,
-        "r": 2.54,
-        "rbi": 1.38,
-        "sb": 0.65
-      },
-      "multipliers": {
-        "park_hr": 1.1,
-        "park_runs": 1.06,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.023,
-        "pitcher_hr": 1.133,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.064,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.888,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1416,
-        "doubles": 0.0518,
-        "triples": 0.0304,
-        "home_runs": 0.0363,
-        "bb_hbp": 0.104,
-        "r_per_pa": 0.3175,
-        "rbi_per_pa": 0.1725
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 691023,
       "name": "Jordan Walker",
       "position": "RF",
@@ -1300,6 +1300,82 @@
         "bb_hbp": 0.0658,
         "r_per_pa": 0.3816,
         "rbi_per_pa": 0.1814
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 606466,
+      "name": "Ketel Marte",
+      "position": "2B",
+      "team_id": 109,
+      "team_abbr": "AZ",
+      "opp_abbr": "LAD",
+      "opp_team_id": 119,
+      "opp_pitcher": {
+        "id": 686218,
+        "fullName": "Emmet Sheehan"
+      },
+      "park": {
+        "id": 15,
+        "name": "Chase Field",
+        "runs": 106,
+        "hr": 110,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 2.06,
+      "mean_efp": 6.6,
+      "stats_games": 5,
+      "efp": 9.21,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 2.11,
+        "doubles": 1.19,
+        "triples": 0.2,
+        "home_runs": 2.02,
+        "bb_hbp": 0.66,
+        "r": 2.93,
+        "rbi": 1.4,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 1.1,
+        "park_runs": 1.06,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.023,
+        "pitcher_hr": 1.133,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.064,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.888,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1633,
+        "doubles": 0.0553,
+        "triples": 0.0058,
+        "home_runs": 0.047,
+        "bb_hbp": 0.0771,
+        "r_per_pa": 0.3411,
+        "rbi_per_pa": 0.1627
       },
       "pa": 4.3,
       "tier": "low"
@@ -2215,84 +2291,8 @@
       },
       "pa": 4.3,
       "tier": "low"
-    },
-    {
-      "player_id": 803011,
-      "name": "Sam Antonacci",
-      "position": "LF",
-      "team_id": 145,
-      "team_abbr": "CWS",
-      "opp_abbr": "MIN",
-      "opp_team_id": 142,
-      "opp_pitcher": {
-        "id": 657746,
-        "fullName": "Joe Ryan"
-      },
-      "park": {
-        "id": 3312,
-        "name": "Target Field",
-        "runs": 100,
-        "hr": 101,
-        "label": "Neutral"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "79",
-        "wind": "7 mph, In From CF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 7.13,
-      "mean_efp": 6.94,
-      "stats_games": 0,
-      "efp": 8.45,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.15,
-        "doubles": 0.6,
-        "triples": 0.25,
-        "home_runs": 0.45,
-        "bb_hbp": 0.7,
-        "r": 3.03,
-        "rbi": 1.12,
-        "sb": 1.33
-      },
-      "multipliers": {
-        "park_hr": 1.01,
-        "park_runs": 1.0,
-        "weather_hr": 0.9,
-        "pitcher_hits": 0.883,
-        "pitcher_hr": 0.806,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.051,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.15,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.167,
-        "doubles": 0.0279,
-        "triples": 0.0074,
-        "home_runs": 0.0106,
-        "bb_hbp": 0.0816,
-        "r_per_pa": 0.3526,
-        "rbi_per_pa": 0.13
-      },
-      "pa": 4.3,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-06-01T21:49:00.057842+00:00"
+  "generated_at": "2026-06-01T21:57:56.952624+00:00"
 }
