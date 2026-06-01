@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 9,
-  "projection_count": 183,
+  "projection_count": 171,
   "projections": [
     {
       "player_id": 668709,
@@ -165,6 +165,158 @@
       "tier": "low"
     },
     {
+      "player_id": 545361,
+      "name": "Mike Trout",
+      "position": "CF",
+      "team_id": 108,
+      "team_abbr": "LAA",
+      "opp_abbr": "COL",
+      "opp_team_id": 115,
+      "opp_pitcher": {
+        "id": 607536,
+        "fullName": "Kyle Freeland"
+      },
+      "park": {
+        "id": 1,
+        "name": "Angel Stadium",
+        "runs": 97,
+        "hr": 96,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Clear",
+        "temp": "73",
+        "wind": "8 mph, Out To LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.32,
+      "mean_efp": 11.67,
+      "stats_games": 6,
+      "efp": 10.52,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.58,
+        "doubles": 1.11,
+        "triples": 0.04,
+        "home_runs": 2.73,
+        "bb_hbp": 1.56,
+        "r": 3.26,
+        "rbi": 1.43,
+        "sb": 0.3
+      },
+      "multipliers": {
+        "park_hr": 0.96,
+        "park_runs": 0.97,
+        "weather_hr": 1.15,
+        "pitcher_hits": 1.191,
+        "pitcher_hr": 1.285,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.041,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.882,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.07,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1223,
+        "doubles": 0.0515,
+        "triples": 0.0011,
+        "home_runs": 0.0635,
+        "bb_hbp": 0.1809,
+        "r_per_pa": 0.3795,
+        "rbi_per_pa": 0.1666
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 681624,
+      "name": "Andy Pages",
+      "position": "CF",
+      "team_id": 119,
+      "team_abbr": "LAD",
+      "opp_abbr": "AZ",
+      "opp_team_id": 109,
+      "opp_pitcher": {
+        "id": 593958,
+        "fullName": "Eduardo Rodriguez"
+      },
+      "park": {
+        "id": 15,
+        "name": "Chase Field",
+        "runs": 106,
+        "hr": 110,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 3.84,
+      "mean_efp": 4.71,
+      "stats_games": 7,
+      "efp": 10.39,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.74,
+        "doubles": 1.6,
+        "triples": 0.27,
+        "home_runs": 2.25,
+        "bb_hbp": 0.67,
+        "r": 3.05,
+        "rbi": 1.74,
+        "sb": 0.54
+      },
+      "multipliers": {
+        "park_hr": 1.1,
+        "park_runs": 1.06,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.946,
+        "pitcher_hr": 0.853,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.007,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.081,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1345,
+        "doubles": 0.0745,
+        "triples": 0.0078,
+        "home_runs": 0.0524,
+        "bb_hbp": 0.0782,
+        "r_per_pa": 0.3549,
+        "rbi_per_pa": 0.202
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 677951,
       "name": "Bobby Witt Jr.",
       "position": "SS",
@@ -236,6 +388,158 @@
         "bb_hbp": 0.083,
         "r_per_pa": 0.2764,
         "rbi_per_pa": 0.1634
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 660271,
+      "name": "Shohei Ohtani",
+      "position": "TWP",
+      "team_id": 119,
+      "team_abbr": "LAD",
+      "opp_abbr": "AZ",
+      "opp_team_id": 109,
+      "opp_pitcher": {
+        "id": 593958,
+        "fullName": "Eduardo Rodriguez"
+      },
+      "park": {
+        "id": 15,
+        "name": "Chase Field",
+        "runs": 106,
+        "hr": 110,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 10.71,
+      "mean_efp": 9.43,
+      "stats_games": 7,
+      "efp": 9.73,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.9,
+        "doubles": 0.94,
+        "triples": 0.09,
+        "home_runs": 1.74,
+        "bb_hbp": 1.29,
+        "r": 3.3,
+        "rbi": 1.49,
+        "sb": 0.37
+      },
+      "multipliers": {
+        "park_hr": 1.1,
+        "park_runs": 1.06,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.946,
+        "pitcher_hr": 0.853,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.007,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.081,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.134,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1474,
+        "doubles": 0.0435,
+        "triples": 0.0025,
+        "home_runs": 0.0404,
+        "bb_hbp": 0.1503,
+        "r_per_pa": 0.3832,
+        "rbi_per_pa": 0.1735
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 687263,
+      "name": "Zach Neto",
+      "position": "SS",
+      "team_id": 108,
+      "team_abbr": "LAA",
+      "opp_abbr": "COL",
+      "opp_team_id": 115,
+      "opp_pitcher": {
+        "id": 607536,
+        "fullName": "Kyle Freeland"
+      },
+      "park": {
+        "id": 1,
+        "name": "Angel Stadium",
+        "runs": 97,
+        "hr": 96,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Clear",
+        "temp": "73",
+        "wind": "8 mph, Out To LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.65,
+      "mean_efp": 10.5,
+      "stats_games": 6,
+      "efp": 9.64,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.81,
+        "doubles": 1.3,
+        "triples": 0.2,
+        "home_runs": 1.78,
+        "bb_hbp": 1.06,
+        "r": 2.98,
+        "rbi": 1.26,
+        "sb": 0.61
+      },
+      "multipliers": {
+        "park_hr": 0.96,
+        "park_runs": 0.97,
+        "weather_hr": 1.15,
+        "pitcher_hits": 1.191,
+        "pitcher_hr": 1.285,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.041,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.882,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1406,
+        "doubles": 0.0604,
+        "triples": 0.006,
+        "home_runs": 0.0414,
+        "bb_hbp": 0.1232,
+        "r_per_pa": 0.3469,
+        "rbi_per_pa": 0.1468
       },
       "pa": 4.3,
       "tier": "low"
@@ -335,7 +639,11 @@
         "hr": 96,
         "label": "Pitcher Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
       "pa_source": "default",
       "stdev_efp": 7.13,
       "mean_efp": 6.94,
@@ -617,78 +925,6 @@
       "tier": "low"
     },
     {
-      "player_id": 681624,
-      "name": "Andy Pages",
-      "position": "CF",
-      "team_id": 119,
-      "team_abbr": "LAD",
-      "opp_abbr": "AZ",
-      "opp_team_id": 109,
-      "opp_pitcher": {
-        "id": 593958,
-        "fullName": "Eduardo Rodriguez"
-      },
-      "park": {
-        "id": 15,
-        "name": "Chase Field",
-        "runs": 106,
-        "hr": 110,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 3.84,
-      "mean_efp": 4.71,
-      "stats_games": 7,
-      "efp": 9.33,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.61,
-        "doubles": 1.49,
-        "triples": 0.25,
-        "home_runs": 2.1,
-        "bb_hbp": 0.63,
-        "r": 2.47,
-        "rbi": 1.62,
-        "sb": 0.49
-      },
-      "multipliers": {
-        "park_hr": 1.1,
-        "park_runs": 1.06,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.946,
-        "pitcher_hr": 0.853,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.007,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.081,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1345,
-        "doubles": 0.0745,
-        "triples": 0.0078,
-        "home_runs": 0.0524,
-        "bb_hbp": 0.0782,
-        "r_per_pa": 0.3086,
-        "rbi_per_pa": 0.202
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 650490,
       "name": "Yandy D\u00edaz",
       "position": "DH",
@@ -765,150 +1001,6 @@
       "tier": "low"
     },
     {
-      "player_id": 545361,
-      "name": "Mike Trout",
-      "position": "CF",
-      "team_id": 108,
-      "team_abbr": "LAA",
-      "opp_abbr": "COL",
-      "opp_team_id": 115,
-      "opp_pitcher": {
-        "id": 607536,
-        "fullName": "Kyle Freeland"
-      },
-      "park": {
-        "id": 1,
-        "name": "Angel Stadium",
-        "runs": 97,
-        "hr": 96,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.32,
-      "mean_efp": 11.67,
-      "stats_games": 6,
-      "efp": 9.31,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.47,
-        "doubles": 1.03,
-        "triples": 0.03,
-        "home_runs": 2.21,
-        "bb_hbp": 1.45,
-        "r": 2.84,
-        "rbi": 1.33,
-        "sb": 0.27
-      },
-      "multipliers": {
-        "park_hr": 0.96,
-        "park_runs": 0.97,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.191,
-        "pitcher_hr": 1.285,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.041,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.882,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1223,
-        "doubles": 0.0515,
-        "triples": 0.0011,
-        "home_runs": 0.0552,
-        "bb_hbp": 0.1809,
-        "r_per_pa": 0.3547,
-        "rbi_per_pa": 0.1666
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 642350,
-      "name": "Jose Siri",
-      "position": "LF",
-      "team_id": 108,
-      "team_abbr": "LAA",
-      "opp_abbr": "COL",
-      "opp_team_id": 115,
-      "opp_pitcher": {
-        "id": 607536,
-        "fullName": "Kyle Freeland"
-      },
-      "park": {
-        "id": 1,
-        "name": "Angel Stadium",
-        "runs": 97,
-        "hr": 96,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.13,
-      "mean_efp": 6.94,
-      "stats_games": 0,
-      "efp": 9.25,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.12,
-        "doubles": 1.38,
-        "triples": 0.1,
-        "home_runs": 2.38,
-        "bb_hbp": 0.64,
-        "r": 2.5,
-        "rbi": 1.44,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 0.96,
-        "park_runs": 0.97,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.191,
-        "pitcher_hr": 1.285,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.041,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.882,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1765,
-        "doubles": 0.0688,
-        "triples": 0.0033,
-        "home_runs": 0.0596,
-        "bb_hbp": 0.0804,
-        "r_per_pa": 0.3124,
-        "rbi_per_pa": 0.1794
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 682998,
       "name": "Corbin Carroll",
       "position": "RF",
@@ -927,7 +1019,11 @@
         "hr": 110,
         "label": "Hitter Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
       "pa_source": "default",
       "stdev_efp": 11.99,
       "mean_efp": 8.6,
@@ -1361,6 +1457,82 @@
       "tier": "low"
     },
     {
+      "player_id": 672724,
+      "name": "Oswald Peraza",
+      "position": "2B",
+      "team_id": 108,
+      "team_abbr": "LAA",
+      "opp_abbr": "COL",
+      "opp_team_id": 115,
+      "opp_pitcher": {
+        "id": 607536,
+        "fullName": "Kyle Freeland"
+      },
+      "park": {
+        "id": 1,
+        "name": "Angel Stadium",
+        "runs": 97,
+        "hr": 96,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Clear",
+        "temp": "73",
+        "wind": "8 mph, Out To LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 9.56,
+      "mean_efp": 6.93,
+      "stats_games": 14,
+      "efp": 9.13,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.24,
+        "doubles": 0.9,
+        "triples": 0.23,
+        "home_runs": 2.61,
+        "bb_hbp": 0.51,
+        "r": 2.24,
+        "rbi": 1.24,
+        "sb": 0.45
+      },
+      "multipliers": {
+        "park_hr": 0.96,
+        "park_runs": 0.97,
+        "weather_hr": 1.15,
+        "pitcher_hits": 1.191,
+        "pitcher_hr": 1.285,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.041,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.882,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.969,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1867,
+        "doubles": 0.0449,
+        "triples": 0.007,
+        "home_runs": 0.0653,
+        "bb_hbp": 0.0641,
+        "r_per_pa": 0.2801,
+        "rbi_per_pa": 0.1556
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
       "player_id": 682928,
       "name": "CJ Abrams",
       "position": "SS",
@@ -1432,78 +1604,6 @@
         "bb_hbp": 0.1096,
         "r_per_pa": 0.3392,
         "rbi_per_pa": 0.1784
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 672724,
-      "name": "Oswald Peraza",
-      "position": "2B",
-      "team_id": 108,
-      "team_abbr": "LAA",
-      "opp_abbr": "COL",
-      "opp_team_id": 115,
-      "opp_pitcher": {
-        "id": 607536,
-        "fullName": "Kyle Freeland"
-      },
-      "park": {
-        "id": 1,
-        "name": "Angel Stadium",
-        "runs": 97,
-        "hr": 96,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 9.56,
-      "mean_efp": 6.93,
-      "stats_games": 14,
-      "efp": 8.91,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.24,
-        "doubles": 0.9,
-        "triples": 0.23,
-        "home_runs": 2.27,
-        "bb_hbp": 0.51,
-        "r": 2.31,
-        "rbi": 1.24,
-        "sb": 0.47
-      },
-      "multipliers": {
-        "park_hr": 0.96,
-        "park_runs": 0.97,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.191,
-        "pitcher_hr": 1.285,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.041,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.882,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1867,
-        "doubles": 0.0449,
-        "triples": 0.007,
-        "home_runs": 0.0568,
-        "bb_hbp": 0.0641,
-        "r_per_pa": 0.2891,
-        "rbi_per_pa": 0.1556
       },
       "pa": 4.0,
       "tier": "low"
@@ -1661,9 +1761,9 @@
       "tier": "low"
     },
     {
-      "player_id": 660271,
-      "name": "Shohei Ohtani",
-      "position": "TWP",
+      "player_id": 518692,
+      "name": "Freddie Freeman",
+      "position": "1B",
       "team_id": 119,
       "team_abbr": "LAD",
       "opp_abbr": "AZ",
@@ -1679,22 +1779,26 @@
         "hr": 110,
         "label": "Hitter Friendly"
       },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 10.71,
-      "mean_efp": 9.43,
-      "stats_games": 7,
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 6.88,
+      "mean_efp": 10.13,
+      "stats_games": 15,
       "efp": 8.72,
       "bat_side": "L",
       "per_event": {
-        "singles": 1.77,
-        "doubles": 0.87,
-        "triples": 0.08,
-        "home_runs": 1.61,
-        "bb_hbp": 1.2,
-        "r": 2.7,
-        "rbi": 1.39,
-        "sb": 0.33
+        "singles": 1.84,
+        "doubles": 1.05,
+        "triples": 0.09,
+        "home_runs": 1.5,
+        "bb_hbp": 1.09,
+        "r": 2.79,
+        "rbi": 1.46,
+        "sb": 0.11
       },
       "multipliers": {
         "park_hr": 1.1,
@@ -1717,19 +1821,19 @@
         "speed_singles": 1.0,
         "speed_r": 1.0,
         "bvpt": 1.0,
-        "ondeck_r": 1.0,
+        "ondeck_r": 1.045,
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1474,
-        "doubles": 0.0435,
-        "triples": 0.0025,
-        "home_runs": 0.0404,
-        "bb_hbp": 0.1503,
-        "r_per_pa": 0.338,
-        "rbi_per_pa": 0.1735
+        "singles": 0.143,
+        "doubles": 0.0491,
+        "triples": 0.0026,
+        "home_runs": 0.0349,
+        "bb_hbp": 0.1269,
+        "r_per_pa": 0.3249,
+        "rbi_per_pa": 0.1702
       },
-      "pa": 4.0,
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1809,8 +1913,8 @@
       "tier": "low"
     },
     {
-      "player_id": 685133,
-      "name": "Wade Meckler",
+      "player_id": 642350,
+      "name": "Jose Siri",
       "position": "LF",
       "team_id": 108,
       "team_abbr": "LAA",
@@ -1827,27 +1931,31 @@
         "hr": 96,
         "label": "Pitcher Friendly"
       },
-      "weather": null,
-      "pa_source": "default",
+      "weather": {
+        "condition": "Clear",
+        "temp": "73",
+        "wind": "8 mph, Out To LF"
+      },
+      "pa_source": "lineup",
       "stdev_efp": 7.13,
       "mean_efp": 6.94,
       "stats_games": 0,
-      "efp": 8.58,
-      "bat_side": "L",
+      "efp": 8.65,
+      "bat_side": "R",
       "per_event": {
-        "singles": 2.21,
-        "doubles": 0.7,
+        "singles": 1.96,
+        "doubles": 1.27,
         "triples": 0.1,
-        "home_runs": 2.06,
-        "bb_hbp": 0.49,
-        "r": 2.13,
-        "rbi": 1.17,
-        "sb": 0.94
+        "home_runs": 2.53,
+        "bb_hbp": 0.59,
+        "r": 2.09,
+        "rbi": 1.33,
+        "sb": 0.0
       },
       "multipliers": {
         "park_hr": 0.96,
         "park_runs": 0.97,
-        "weather_hr": 1.0,
+        "weather_hr": 1.15,
         "pitcher_hits": 1.191,
         "pitcher_hr": 1.285,
         "slot_r": 1.0,
@@ -1865,19 +1973,19 @@
         "speed_singles": 1.0,
         "speed_r": 1.0,
         "bvpt": 1.0,
-        "ondeck_r": 1.0,
+        "ondeck_r": 0.903,
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1845,
-        "doubles": 0.0348,
-        "triples": 0.0031,
-        "home_runs": 0.0516,
-        "bb_hbp": 0.0607,
-        "r_per_pa": 0.2665,
-        "rbi_per_pa": 0.1458
+        "singles": 0.1765,
+        "doubles": 0.0688,
+        "triples": 0.0033,
+        "home_runs": 0.0685,
+        "bb_hbp": 0.0804,
+        "r_per_pa": 0.2821,
+        "rbi_per_pa": 0.1794
       },
-      "pa": 4.0,
+      "pa": 3.7,
       "tier": "low"
     },
     {
@@ -1957,14 +2065,17 @@
       "tier": "low"
     },
     {
-      "player_id": 686797,
-      "name": "Brooks Lee",
-      "position": "SS",
+      "player_id": 621439,
+      "name": "Byron Buxton",
+      "position": "CF",
       "team_id": 142,
       "team_abbr": "MIN",
       "opp_abbr": "CWS",
       "opp_team_id": 145,
-      "opp_pitcher": null,
+      "opp_pitcher": {
+        "id": 689818,
+        "fullName": "David Sandlin"
+      },
       "park": {
         "id": 3312,
         "name": "Target Field",
@@ -1978,27 +2089,27 @@
         "wind": "7 mph, In From CF"
       },
       "pa_source": "lineup",
-      "stdev_efp": 8.84,
-      "mean_efp": 10.33,
-      "stats_games": 6,
-      "efp": 8.5,
-      "bat_side": "S",
+      "stdev_efp": 5.64,
+      "mean_efp": 9.2,
+      "stats_games": 5,
+      "efp": 8.48,
+      "bat_side": "R",
       "per_event": {
-        "singles": 1.74,
-        "doubles": 0.91,
-        "triples": 0.12,
-        "home_runs": 2.04,
-        "bb_hbp": 0.71,
-        "r": 2.48,
-        "rbi": 1.46,
-        "sb": 0.24
+        "singles": 1.25,
+        "doubles": 0.74,
+        "triples": 0.11,
+        "home_runs": 2.77,
+        "bb_hbp": 0.84,
+        "r": 2.13,
+        "rbi": 1.47,
+        "sb": 0.36
       },
       "multipliers": {
         "park_hr": 1.01,
         "park_runs": 1.0,
         "weather_hr": 0.9,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 1.0,
+        "pitcher_hits": 0.817,
+        "pitcher_hr": 1.073,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -2006,7 +2117,7 @@
         "stx_xwoba": 1.0,
         "stx_barrel": 1.0,
         "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
+        "pitcher_gb_hr": 1.064,
         "k_damper": 1.0,
         "pitcher_bb": 1.0,
         "park_hand_hr": 1.0,
@@ -2014,17 +2125,17 @@
         "speed_singles": 1.0,
         "speed_r": 1.0,
         "bvpt": 1.0,
-        "ondeck_r": 1.022,
+        "ondeck_r": 0.854,
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.135,
-        "doubles": 0.0423,
-        "triples": 0.0035,
-        "home_runs": 0.0475,
-        "bb_hbp": 0.0823,
-        "r_per_pa": 0.288,
-        "rbi_per_pa": 0.1703
+        "singles": 0.0971,
+        "doubles": 0.0345,
+        "triples": 0.0032,
+        "home_runs": 0.0644,
+        "bb_hbp": 0.0978,
+        "r_per_pa": 0.2477,
+        "rbi_per_pa": 0.1712
       },
       "pa": 4.3,
       "tier": "low"
@@ -2180,80 +2291,8 @@
       },
       "pa": 4.3,
       "tier": "low"
-    },
-    {
-      "player_id": 687263,
-      "name": "Zach Neto",
-      "position": "SS",
-      "team_id": 108,
-      "team_abbr": "LAA",
-      "opp_abbr": "COL",
-      "opp_team_id": 115,
-      "opp_pitcher": {
-        "id": 607536,
-        "fullName": "Kyle Freeland"
-      },
-      "park": {
-        "id": 1,
-        "name": "Angel Stadium",
-        "runs": 97,
-        "hr": 96,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.65,
-      "mean_efp": 10.5,
-      "stats_games": 6,
-      "efp": 8.44,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.69,
-        "doubles": 1.21,
-        "triples": 0.19,
-        "home_runs": 1.44,
-        "bb_hbp": 0.99,
-        "r": 2.41,
-        "rbi": 1.17,
-        "sb": 0.54
-      },
-      "multipliers": {
-        "park_hr": 0.96,
-        "park_runs": 0.97,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.191,
-        "pitcher_hr": 1.285,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.041,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.882,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1406,
-        "doubles": 0.0604,
-        "triples": 0.006,
-        "home_runs": 0.036,
-        "bb_hbp": 0.1232,
-        "r_per_pa": 0.3016,
-        "rbi_per_pa": 0.1468
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-06-01T20:51:15.903271+00:00"
+  "generated_at": "2026-06-01T21:49:00.057842+00:00"
 }
