@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 9,
-  "projection_count": 224,
+  "projection_count": 223,
   "projections": [
     {
       "player_id": 695578,
@@ -612,7 +612,7 @@
       "stdev_efp": 4.86,
       "mean_efp": 6.0,
       "stats_games": 5,
-      "efp": 9.21,
+      "efp": 9.2,
       "bat_side": "R",
       "per_event": {
         "singles": 1.74,
@@ -649,85 +649,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.145,
-        "doubles": 0.0416,
+        "singles": 0.1448,
+        "doubles": 0.0415,
         "triples": 0.0009,
-        "home_runs": 0.0765,
+        "home_runs": 0.0764,
         "bb_hbp": 0.0689,
         "r_per_pa": 0.3029,
         "rbi_per_pa": 0.1722
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 682829,
-      "name": "Elly De La Cruz",
-      "position": "SS",
-      "team_id": 113,
-      "team_abbr": "CIN",
-      "opp_abbr": "KC",
-      "opp_team_id": 118,
-      "opp_pitcher": {
-        "id": 679883,
-        "fullName": "Luinder Avila"
-      },
-      "park": {
-        "id": 2602,
-        "name": "Great American Ball Park",
-        "runs": 109,
-        "hr": 116,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.28,
-      "mean_efp": 11.06,
-      "stats_games": 16,
-      "efp": 9.2,
-      "bat_side": "S",
-      "per_event": {
-        "singles": 2.21,
-        "doubles": 1.16,
-        "triples": 0.37,
-        "home_runs": 1.22,
-        "bb_hbp": 0.97,
-        "r": 2.39,
-        "rbi": 1.35,
-        "sb": 0.83
-      },
-      "multipliers": {
-        "park_hr": 1.16,
-        "park_runs": 1.09,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.16,
-        "pitcher_hr": 0.701,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.948,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1844,
-        "doubles": 0.0582,
-        "triples": 0.0117,
-        "home_runs": 0.0304,
-        "bb_hbp": 0.1206,
-        "r_per_pa": 0.2988,
-        "rbi_per_pa": 0.1683
       },
       "pa": 4.0,
       "tier": "low"
@@ -1239,7 +1167,7 @@
     {
       "player_id": 685133,
       "name": "Wade Meckler",
-      "position": "OF",
+      "position": "LF",
       "team_id": 108,
       "team_abbr": "LAA",
       "opp_abbr": "COL",
@@ -2168,8 +2096,80 @@
       },
       "pa": 4.0,
       "tier": "low"
+    },
+    {
+      "player_id": 571970,
+      "name": "Max Muncy",
+      "position": "3B",
+      "team_id": 119,
+      "team_abbr": "LAD",
+      "opp_abbr": "AZ",
+      "opp_team_id": 109,
+      "opp_pitcher": {
+        "id": 593958,
+        "fullName": "Eduardo Rodriguez"
+      },
+      "park": {
+        "id": 15,
+        "name": "Chase Field",
+        "runs": 106,
+        "hr": 110,
+        "label": "Hitter Friendly"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 12.7,
+      "mean_efp": 12.33,
+      "stats_games": 6,
+      "efp": 8.2,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.39,
+        "doubles": 0.72,
+        "triples": 0.03,
+        "home_runs": 2.43,
+        "bb_hbp": 0.95,
+        "r": 2.38,
+        "rbi": 1.45,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 1.1,
+        "park_runs": 1.06,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.946,
+        "pitcher_hr": 0.853,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.007,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.081,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1162,
+        "doubles": 0.0359,
+        "triples": 0.0011,
+        "home_runs": 0.0608,
+        "bb_hbp": 0.1188,
+        "r_per_pa": 0.2974,
+        "rbi_per_pa": 0.1807
+      },
+      "pa": 4.0,
+      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-06-01T01:42:39.457988+00:00"
+  "generated_at": "2026-06-01T16:42:34.972148+00:00"
 }
