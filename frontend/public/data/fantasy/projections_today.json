@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 283,
+  "projection_count": 279,
   "projections": [
     {
       "player_id": 700250,
@@ -697,6 +697,82 @@
       "tier": "low"
     },
     {
+      "player_id": 681624,
+      "name": "Andy Pages",
+      "position": "CF",
+      "team_id": 119,
+      "team_abbr": "LAD",
+      "opp_abbr": "AZ",
+      "opp_team_id": 109,
+      "opp_pitcher": {
+        "id": 647336,
+        "fullName": "Michael Soroka"
+      },
+      "park": {
+        "id": 15,
+        "name": "Chase Field",
+        "runs": 106,
+        "hr": 110,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 3.84,
+      "mean_efp": 4.71,
+      "stats_games": 7,
+      "efp": 10.34,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.05,
+        "doubles": 1.56,
+        "triples": 0.33,
+        "home_runs": 1.97,
+        "bb_hbp": 0.48,
+        "r": 3.04,
+        "rbi": 1.7,
+        "sb": 0.67
+      },
+      "multipliers": {
+        "park_hr": 1.1,
+        "park_runs": 1.06,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.025,
+        "pitcher_hr": 0.806,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.032,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.764,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1589,
+        "doubles": 0.0727,
+        "triples": 0.0096,
+        "home_runs": 0.0458,
+        "bb_hbp": 0.0554,
+        "r_per_pa": 0.354,
+        "rbi_per_pa": 0.1974
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 677951,
       "name": "Bobby Witt Jr.",
       "position": "SS",
@@ -996,6 +1072,82 @@
         "bb_hbp": 0.1165,
         "r_per_pa": 0.3867,
         "rbi_per_pa": 0.1718
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 660271,
+      "name": "Shohei Ohtani",
+      "position": "TWP",
+      "team_id": 119,
+      "team_abbr": "LAD",
+      "opp_abbr": "AZ",
+      "opp_team_id": 109,
+      "opp_pitcher": {
+        "id": 647336,
+        "fullName": "Michael Soroka"
+      },
+      "park": {
+        "id": 15,
+        "name": "Chase Field",
+        "runs": 106,
+        "hr": 110,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 10.71,
+      "mean_efp": 9.43,
+      "stats_games": 7,
+      "efp": 10.12,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.19,
+        "doubles": 1.21,
+        "triples": 0.13,
+        "home_runs": 1.65,
+        "bb_hbp": 0.92,
+        "r": 3.39,
+        "rbi": 1.59,
+        "sb": 0.46
+      },
+      "multipliers": {
+        "park_hr": 1.1,
+        "park_runs": 1.06,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.025,
+        "pitcher_hr": 0.806,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.032,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.764,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.13,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.17,
+        "doubles": 0.0562,
+        "triples": 0.0039,
+        "home_runs": 0.0385,
+        "bb_hbp": 0.1073,
+        "r_per_pa": 0.3946,
+        "rbi_per_pa": 0.1844
       },
       "pa": 4.3,
       "tier": "low"
@@ -1931,7 +2083,11 @@
         "hr": 110,
         "label": "Hitter Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
       "pa_source": "default",
       "stdev_efp": 11.99,
       "mean_efp": 8.6,
@@ -2135,156 +2291,8 @@
       },
       "pa": 4.0,
       "tier": "low"
-    },
-    {
-      "player_id": 650490,
-      "name": "Yandy D\u00edaz",
-      "position": "DH",
-      "team_id": 139,
-      "team_abbr": "TB",
-      "opp_abbr": "DET",
-      "opp_team_id": 116,
-      "opp_pitcher": {
-        "id": 656427,
-        "fullName": "Jack Flaherty"
-      },
-      "park": {
-        "id": 12,
-        "name": "Tropicana Field",
-        "runs": 96,
-        "hr": 98,
-        "label": "Pitcher Friendly"
-      },
-      "weather": {
-        "condition": "Dome",
-        "temp": "72",
-        "wind": "0 mph, None"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 6.41,
-      "mean_efp": 6.83,
-      "stats_games": 6,
-      "efp": 9.38,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.89,
-        "doubles": 0.88,
-        "triples": 0.12,
-        "home_runs": 2.42,
-        "bb_hbp": 1.16,
-        "r": 2.63,
-        "rbi": 1.54,
-        "sb": 0.07
-      },
-      "multipliers": {
-        "park_hr": 0.98,
-        "park_runs": 0.96,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.997,
-        "pitcher_hr": 1.037,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.165,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 0.971,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1579,
-        "doubles": 0.0441,
-        "triples": 0.0036,
-        "home_runs": 0.0605,
-        "bb_hbp": 0.1452,
-        "r_per_pa": 0.3284,
-        "rbi_per_pa": 0.1921
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 665742,
-      "name": "Juan Soto",
-      "position": "LF",
-      "team_id": 121,
-      "team_abbr": "NYM",
-      "opp_abbr": "SEA",
-      "opp_team_id": 136,
-      "opp_pitcher": {
-        "id": 669302,
-        "fullName": "Logan Gilbert"
-      },
-      "park": {
-        "id": 680,
-        "name": "T-Mobile Park",
-        "runs": 95,
-        "hr": 96,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.13,
-      "mean_efp": 6.94,
-      "stats_games": 0,
-      "efp": 9.35,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.7,
-        "doubles": 0.49,
-        "triples": 0.09,
-        "home_runs": 3.13,
-        "bb_hbp": 0.73,
-        "r": 2.56,
-        "rbi": 1.52,
-        "sb": 0.47
-      },
-      "multipliers": {
-        "park_hr": 0.96,
-        "park_runs": 0.95,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.987,
-        "pitcher_hr": 1.118,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.064,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1413,
-        "doubles": 0.0243,
-        "triples": 0.0029,
-        "home_runs": 0.0782,
-        "bb_hbp": 0.0913,
-        "r_per_pa": 0.3197,
-        "rbi_per_pa": 0.19
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-06-02T21:30:53.285223+00:00"
+  "generated_at": "2026-06-02T21:42:51.079258+00:00"
 }
