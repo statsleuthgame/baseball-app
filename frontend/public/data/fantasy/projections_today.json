@@ -1480,10 +1480,10 @@
       "stdev_efp": 6.47,
       "mean_efp": 5.67,
       "stats_games": 6,
-      "efp": 9.17,
+      "efp": 9.16,
       "bat_side": "L",
       "per_event": {
-        "singles": 1.61,
+        "singles": 1.6,
         "doubles": 0.59,
         "triples": 0.03,
         "home_runs": 2.2,
@@ -1496,8 +1496,8 @@
         "park_hr": 0.96,
         "park_runs": 0.95,
         "weather_hr": 1.03,
-        "pitcher_hits": 0.965,
-        "pitcher_hr": 1.005,
+        "pitcher_hits": 0.959,
+        "pitcher_hr": 1.002,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -1517,10 +1517,10 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1246,
-        "doubles": 0.0275,
+        "singles": 0.1238,
+        "doubles": 0.0273,
         "triples": 0.0009,
-        "home_runs": 0.0513,
+        "home_runs": 0.0511,
         "bb_hbp": 0.1666,
         "r_per_pa": 0.3541,
         "rbi_per_pa": 0.1718
@@ -2286,5 +2286,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-06-03T21:36:16.850583+00:00"
+  "generated_at": "2026-06-03T21:42:33.976517+00:00"
 }
