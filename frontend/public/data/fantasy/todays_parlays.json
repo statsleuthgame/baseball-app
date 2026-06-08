@@ -1,170 +1,170 @@
 {
-  "game_date": "2026-06-06",
-  "generated_at": "2026-06-06T16:06:14.968512+00:00",
+  "game_date": "2026-06-08",
+  "generated_at": "2026-06-08T19:16:21.289494+00:00",
   "weights_version": "2026-04-18",
-  "source_pick_count": 10,
+  "source_pick_count": 7,
   "parlays": [
     {
       "size": 2,
       "payout": 3.0,
-      "combined_prob": 0.5286,
-      "ev_pct": 58.6,
+      "combined_prob": 0.4174,
+      "ev_pct": 25.2,
       "legs": [
-        {
-          "player_id": 643217,
-          "name": "Andrew Benintendi",
-          "team_abbr": "CWS",
-          "opp_abbr": "PHI",
-          "opp_pitcher": "Andrew Painter",
-          "line": 5.0,
-          "side": "over",
-          "efp": 8.64,
-          "edge_z": 0.615,
-          "hit_prob": 0.731
-        },
         {
           "player_id": 808982,
           "name": "Jung Hoo Lee",
           "team_abbr": "SF",
-          "opp_abbr": "CHC",
-          "opp_pitcher": "Ben Brown",
-          "line": 5.0,
+          "opp_abbr": "WSH",
+          "opp_pitcher": "Miles Mikolas",
+          "line": 6.0,
           "side": "over",
-          "efp": 8.23,
-          "edge_z": 0.593,
-          "hit_prob": 0.723
+          "efp": 8.47,
+          "edge_z": 0.453,
+          "hit_prob": 0.675
+        },
+        {
+          "player_id": 592885,
+          "name": "Christian Yelich",
+          "team_abbr": "MIL",
+          "opp_abbr": "ATH",
+          "opp_pitcher": "Jeffrey Springs",
+          "line": 6.5,
+          "side": "over",
+          "efp": 8.48,
+          "edge_z": 0.302,
+          "hit_prob": 0.619
         }
       ]
     },
     {
       "size": 2,
       "payout": 3.0,
-      "combined_prob": 0.4832,
-      "ev_pct": 45.0,
+      "combined_prob": 0.3228,
+      "ev_pct": -3.2,
       "legs": [
         {
-          "player_id": 681715,
-          "name": "Heriberto Hern\u00e1ndez",
-          "team_abbr": "MIA",
-          "opp_abbr": "TB",
-          "opp_pitcher": "Shane McClanahan",
-          "line": 5.0,
-          "side": "over",
-          "efp": 7.49,
-          "edge_z": 0.516,
-          "hit_prob": 0.697
-        },
-        {
-          "player_id": 687462,
-          "name": "Spencer Horwitz",
-          "team_abbr": "PIT",
-          "opp_abbr": "ATL",
-          "opp_pitcher": "Spencer Strider",
+          "player_id": 678554,
+          "name": "Curtis Mead",
+          "team_abbr": "WSH",
+          "opp_abbr": "SF",
+          "opp_pitcher": "Logan Webb",
           "line": 5.5,
           "side": "over",
-          "efp": 8.32,
-          "edge_z": 0.505,
-          "hit_prob": 0.693
+          "efp": 7.04,
+          "edge_z": 0.198,
+          "hit_prob": 0.578
+        },
+        {
+          "player_id": 681297,
+          "name": "Colton Cowser",
+          "team_abbr": "BAL",
+          "opp_abbr": "SEA",
+          "opp_pitcher": "Emerson Hancock",
+          "line": 7.5,
+          "side": "over",
+          "efp": 7.95,
+          "edge_z": 0.146,
+          "hit_prob": 0.558
         }
       ]
     },
     {
       "size": 3,
       "payout": 5.0,
-      "combined_prob": 0.3685,
-      "ev_pct": 84.2,
+      "combined_prob": 0.2329,
+      "ev_pct": 16.5,
       "legs": [
-        {
-          "player_id": 643217,
-          "name": "Andrew Benintendi",
-          "team_abbr": "CWS",
-          "opp_abbr": "PHI",
-          "opp_pitcher": "Andrew Painter",
-          "line": 5.0,
-          "side": "over",
-          "efp": 8.64,
-          "edge_z": 0.615,
-          "hit_prob": 0.731
-        },
         {
           "player_id": 808982,
           "name": "Jung Hoo Lee",
           "team_abbr": "SF",
-          "opp_abbr": "CHC",
-          "opp_pitcher": "Ben Brown",
-          "line": 5.0,
+          "opp_abbr": "WSH",
+          "opp_pitcher": "Miles Mikolas",
+          "line": 6.0,
           "side": "over",
-          "efp": 8.23,
-          "edge_z": 0.593,
-          "hit_prob": 0.723
+          "efp": 8.47,
+          "edge_z": 0.453,
+          "hit_prob": 0.675
         },
         {
-          "player_id": 681715,
-          "name": "Heriberto Hern\u00e1ndez",
-          "team_abbr": "MIA",
-          "opp_abbr": "TB",
-          "opp_pitcher": "Shane McClanahan",
-          "line": 5.0,
+          "player_id": 592885,
+          "name": "Christian Yelich",
+          "team_abbr": "MIL",
+          "opp_abbr": "ATH",
+          "opp_pitcher": "Jeffrey Springs",
+          "line": 6.5,
           "side": "over",
-          "efp": 7.49,
-          "edge_z": 0.516,
-          "hit_prob": 0.697
+          "efp": 8.48,
+          "edge_z": 0.302,
+          "hit_prob": 0.619
+        },
+        {
+          "player_id": 681297,
+          "name": "Colton Cowser",
+          "team_abbr": "BAL",
+          "opp_abbr": "SEA",
+          "opp_pitcher": "Emerson Hancock",
+          "line": 7.5,
+          "side": "over",
+          "efp": 7.95,
+          "edge_z": 0.146,
+          "hit_prob": 0.558
         }
       ]
     },
     {
       "size": 4,
       "payout": 10.0,
-      "combined_prob": 0.2554,
-      "ev_pct": 155.4,
+      "combined_prob": 0.1293,
+      "ev_pct": 29.3,
       "legs": [
-        {
-          "player_id": 643217,
-          "name": "Andrew Benintendi",
-          "team_abbr": "CWS",
-          "opp_abbr": "PHI",
-          "opp_pitcher": "Andrew Painter",
-          "line": 5.0,
-          "side": "over",
-          "efp": 8.64,
-          "edge_z": 0.615,
-          "hit_prob": 0.731
-        },
         {
           "player_id": 808982,
           "name": "Jung Hoo Lee",
           "team_abbr": "SF",
-          "opp_abbr": "CHC",
-          "opp_pitcher": "Ben Brown",
-          "line": 5.0,
+          "opp_abbr": "WSH",
+          "opp_pitcher": "Miles Mikolas",
+          "line": 6.0,
           "side": "over",
-          "efp": 8.23,
-          "edge_z": 0.593,
-          "hit_prob": 0.723
+          "efp": 8.47,
+          "edge_z": 0.453,
+          "hit_prob": 0.675
         },
         {
-          "player_id": 681715,
-          "name": "Heriberto Hern\u00e1ndez",
-          "team_abbr": "MIA",
-          "opp_abbr": "TB",
-          "opp_pitcher": "Shane McClanahan",
-          "line": 5.0,
+          "player_id": 592885,
+          "name": "Christian Yelich",
+          "team_abbr": "MIL",
+          "opp_abbr": "ATH",
+          "opp_pitcher": "Jeffrey Springs",
+          "line": 6.5,
           "side": "over",
-          "efp": 7.49,
-          "edge_z": 0.516,
-          "hit_prob": 0.697
+          "efp": 8.48,
+          "edge_z": 0.302,
+          "hit_prob": 0.619
         },
         {
-          "player_id": 687462,
-          "name": "Spencer Horwitz",
-          "team_abbr": "PIT",
-          "opp_abbr": "ATL",
-          "opp_pitcher": "Spencer Strider",
+          "player_id": 681297,
+          "name": "Colton Cowser",
+          "team_abbr": "BAL",
+          "opp_abbr": "SEA",
+          "opp_pitcher": "Emerson Hancock",
+          "line": 7.5,
+          "side": "over",
+          "efp": 7.95,
+          "edge_z": 0.146,
+          "hit_prob": 0.558
+        },
+        {
+          "player_id": 592663,
+          "name": "J.T. Realmuto",
+          "team_abbr": "PHI",
+          "opp_abbr": "TOR",
+          "opp_pitcher": "Patrick Corbin",
           "line": 5.5,
           "side": "over",
-          "efp": 8.32,
-          "edge_z": 0.505,
-          "hit_prob": 0.693
+          "efp": 6.38,
+          "edge_z": 0.138,
+          "hit_prob": 0.555
         }
       ]
     }

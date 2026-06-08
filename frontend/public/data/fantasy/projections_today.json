@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 8,
-  "projection_count": 189,
+  "projection_count": 185,
   "projections": [
     {
       "player_id": 670541,
@@ -82,7 +82,22 @@
         "rbi_per_pa": 0.2134
       },
       "pa": 4.0,
-      "tier": "low"
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 7.5,
+        "total_bases": 1.5,
+        "hrr": 5.5,
+        "hits": 2.5,
+        "rbis": 1.5,
+        "runs": 1.5,
+        "strikeouts": 1.5,
+        "walks": 0.5,
+        "doubles": 0.5,
+        "home_runs": 0.5,
+        "singles": 0.5
+      },
+      "edge_fantasy": 3.38,
+      "edge_z": 0.477
     },
     {
       "player_id": 608070,
@@ -158,7 +173,23 @@
         "rbi_per_pa": 0.1674
       },
       "pa": 4.3,
-      "tier": "low"
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 7.5,
+        "total_bases": 4.5,
+        "hrr": 1.5,
+        "hits": 1.5,
+        "strikeouts": 0.5,
+        "rbis": 1.5,
+        "runs": 1.5,
+        "singles": 1.5,
+        "doubles": 0.5,
+        "home_runs": 0.5,
+        "stolen_bases": 0.5,
+        "walks": 0.5
+      },
+      "edge_fantasy": 2.34,
+      "edge_z": 0.245
     },
     {
       "player_id": 641343,
@@ -233,6 +264,98 @@
       "tier": "low"
     },
     {
+      "player_id": 668227,
+      "name": "Randy Arozarena",
+      "position": "LF",
+      "team_id": 136,
+      "team_abbr": "SEA",
+      "opp_abbr": "BAL",
+      "opp_team_id": 110,
+      "opp_pitcher": {
+        "id": 694346,
+        "fullName": "Trey Gibson"
+      },
+      "park": {
+        "id": 2,
+        "name": "Camden Yards",
+        "runs": 103,
+        "hr": 108,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Clear",
+        "temp": "78",
+        "wind": "11 mph, In From RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.84,
+      "mean_efp": 8.86,
+      "stats_games": 7,
+      "efp": 9.66,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.92,
+        "doubles": 1.28,
+        "triples": 0.11,
+        "home_runs": 0.8,
+        "bb_hbp": 1.34,
+        "r": 2.97,
+        "rbi": 1.16,
+        "sb": 1.44
+      },
+      "multipliers": {
+        "park_hr": 1.08,
+        "park_runs": 1.03,
+        "weather_hr": 0.95,
+        "pitcher_hits": 1.035,
+        "pitcher_hr": 1.076,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.909,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1596,
+        "doubles": 0.064,
+        "triples": 0.0035,
+        "home_runs": 0.0201,
+        "bb_hbp": 0.1674,
+        "r_per_pa": 0.3711,
+        "rbi_per_pa": 0.1452
+      },
+      "pa": 4.0,
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 9.5,
+        "hrr": 4.5,
+        "total_bases": 4.5,
+        "hits": 1.5,
+        "strikeouts": 1.5,
+        "rbis": 1.5,
+        "runs": 1.5,
+        "singles": 1.5,
+        "home_runs": 0.5,
+        "stolen_bases": 0.5,
+        "walks": 0.5,
+        "doubles": 0.5
+      },
+      "edge_fantasy": 0.16,
+      "edge_z": 0.02
+    },
+    {
       "player_id": 669016,
       "name": "Brandon Marsh",
       "position": "LF",
@@ -302,7 +425,23 @@
         "rbi_per_pa": 0.1948
       },
       "pa": 4.0,
-      "tier": "low"
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 5.5,
+        "total_bases": 4.5,
+        "hrr": 4.5,
+        "hits": 1.5,
+        "rbis": 1.5,
+        "strikeouts": 1.5,
+        "singles": 1.5,
+        "doubles": 0.5,
+        "runs": 0.5,
+        "stolen_bases": 0.5,
+        "walks": 0.5,
+        "home_runs": 0.5
+      },
+      "edge_fantasy": 4.08,
+      "edge_z": 0.331
     },
     {
       "player_id": 668930,
@@ -374,151 +513,23 @@
         "rbi_per_pa": 0.1859
       },
       "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 668227,
-      "name": "Randy Arozarena",
-      "position": "LF",
-      "team_id": 136,
-      "team_abbr": "SEA",
-      "opp_abbr": "BAL",
-      "opp_team_id": 110,
-      "opp_pitcher": {
-        "id": 694346,
-        "fullName": "Trey Gibson"
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 7.5,
+        "hrr": 5.5,
+        "total_bases": 4.5,
+        "hits": 2.5,
+        "strikeouts": 1.5,
+        "rbis": 1.5,
+        "runs": 1.5,
+        "walks": 0.5,
+        "singles": 1.5,
+        "doubles": 0.5,
+        "home_runs": 0.5,
+        "stolen_bases": 0.5
       },
-      "park": {
-        "id": 2,
-        "name": "Camden Yards",
-        "runs": 103,
-        "hr": 108,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.84,
-      "mean_efp": 8.86,
-      "stats_games": 7,
-      "efp": 9.42,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.92,
-        "doubles": 1.28,
-        "triples": 0.11,
-        "home_runs": 0.85,
-        "bb_hbp": 1.34,
-        "r": 2.58,
-        "rbi": 1.16,
-        "sb": 1.52
-      },
-      "multipliers": {
-        "park_hr": 1.08,
-        "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.035,
-        "pitcher_hr": 1.076,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.909,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1596,
-        "doubles": 0.064,
-        "triples": 0.0035,
-        "home_runs": 0.0212,
-        "bb_hbp": 0.1674,
-        "r_per_pa": 0.3227,
-        "rbi_per_pa": 0.1452
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 686527,
-      "name": "Dominic Canzone",
-      "position": "DH",
-      "team_id": 136,
-      "team_abbr": "SEA",
-      "opp_abbr": "BAL",
-      "opp_team_id": 110,
-      "opp_pitcher": {
-        "id": 694346,
-        "fullName": "Trey Gibson"
-      },
-      "park": {
-        "id": 2,
-        "name": "Camden Yards",
-        "runs": 103,
-        "hr": 108,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 9.31,
-      "mean_efp": 10.6,
-      "stats_games": 5,
-      "efp": 9.37,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.02,
-        "doubles": 1.29,
-        "triples": 0.04,
-        "home_runs": 2.29,
-        "bb_hbp": 0.85,
-        "r": 2.6,
-        "rbi": 1.55,
-        "sb": 0.07
-      },
-      "multipliers": {
-        "park_hr": 1.08,
-        "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.035,
-        "pitcher_hr": 1.076,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.909,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1681,
-        "doubles": 0.0643,
-        "triples": 0.0013,
-        "home_runs": 0.0571,
-        "bb_hbp": 0.1057,
-        "r_per_pa": 0.3249,
-        "rbi_per_pa": 0.1935
-      },
-      "pa": 4.0,
-      "tier": "low"
+      "edge_fantasy": 2.01,
+      "edge_z": 0.214
     },
     {
       "player_id": 694192,
@@ -590,12 +601,28 @@
         "rbi_per_pa": 0.178
       },
       "pa": 4.0,
-      "tier": "low"
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 7.5,
+        "total_bases": 1.5,
+        "hrr": 2.5,
+        "hits": 2.5,
+        "strikeouts": 1.5,
+        "rbis": 1.5,
+        "runs": 1.5,
+        "singles": 1.5,
+        "doubles": 0.5,
+        "home_runs": 0.5,
+        "stolen_bases": 0.5,
+        "walks": 0.5
+      },
+      "edge_fantasy": 1.82,
+      "edge_z": 0.256
     },
     {
-      "player_id": 641487,
-      "name": "J.P. Crawford",
-      "position": "SS",
+      "player_id": 677594,
+      "name": "Julio Rodr\u00edguez",
+      "position": "CF",
       "team_id": 136,
       "team_abbr": "SEA",
       "opp_abbr": "BAL",
@@ -611,27 +638,31 @@
         "hr": 108,
         "label": "Slight Hitter"
       },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 6.47,
-      "mean_efp": 5.67,
-      "stats_games": 6,
-      "efp": 8.96,
-      "bat_side": "L",
+      "weather": {
+        "condition": "Clear",
+        "temp": "78",
+        "wind": "11 mph, In From RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 3.84,
+      "mean_efp": 6.29,
+      "stats_games": 7,
+      "efp": 9.04,
+      "bat_side": "R",
       "per_event": {
-        "singles": 1.65,
-        "doubles": 0.67,
+        "singles": 1.87,
+        "doubles": 1.06,
         "triples": 0.03,
-        "home_runs": 2.22,
-        "bb_hbp": 1.54,
-        "r": 2.65,
-        "rbi": 1.38,
-        "sb": 0.07
+        "home_runs": 1.58,
+        "bb_hbp": 0.89,
+        "r": 2.39,
+        "rbi": 1.27,
+        "sb": 1.23
       },
       "multipliers": {
         "park_hr": 1.08,
         "park_runs": 1.03,
-        "weather_hr": 1.0,
+        "weather_hr": 0.95,
         "pitcher_hits": 1.035,
         "pitcher_hr": 1.076,
         "slot_r": 1.0,
@@ -649,20 +680,36 @@
         "speed_singles": 1.0,
         "speed_r": 1.0,
         "bvpt": 1.0,
-        "ondeck_r": 1.0,
+        "ondeck_r": 1.029,
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1374,
-        "doubles": 0.0334,
-        "triples": 0.0011,
-        "home_runs": 0.0556,
-        "bb_hbp": 0.193,
-        "r_per_pa": 0.3314,
-        "rbi_per_pa": 0.173
+        "singles": 0.1448,
+        "doubles": 0.0492,
+        "triples": 0.0009,
+        "home_runs": 0.0366,
+        "bb_hbp": 0.1036,
+        "r_per_pa": 0.2785,
+        "rbi_per_pa": 0.1483
       },
-      "pa": 4.0,
-      "tier": "low"
+      "pa": 4.3,
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 12.5,
+        "hrr": 5.5,
+        "total_bases": 1.5,
+        "hits": 2.5,
+        "strikeouts": 1.5,
+        "rbis": 1.5,
+        "runs": 0.5,
+        "singles": 1.5,
+        "home_runs": 0.5,
+        "stolen_bases": 0.5,
+        "walks": 0.5,
+        "doubles": 0.5
+      },
+      "edge_fantasy": -3.46,
+      "edge_z": -0.901
     },
     {
       "player_id": 575929,
@@ -738,7 +785,22 @@
         "rbi_per_pa": 0.1961
       },
       "pa": 4.0,
-      "tier": "low"
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 5.5,
+        "total_bases": 4.5,
+        "hrr": 1.5,
+        "hits": 1.5,
+        "rbis": 1.5,
+        "runs": 1.5,
+        "strikeouts": 1.5,
+        "doubles": 0.5,
+        "home_runs": 0.5,
+        "singles": 0.5,
+        "walks": 0.5
+      },
+      "edge_fantasy": 3.41,
+      "edge_z": 0.51
     },
     {
       "player_id": 700250,
@@ -814,7 +876,22 @@
         "rbi_per_pa": 0.197
       },
       "pa": 4.0,
-      "tier": "low"
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 5.5,
+        "total_bases": 4.5,
+        "hrr": 1.5,
+        "strikeouts": 2.5,
+        "hits": 1.5,
+        "rbis": 1.5,
+        "runs": 1.5,
+        "doubles": 0.5,
+        "home_runs": 0.5,
+        "singles": 0.5,
+        "walks": 0.5
+      },
+      "edge_fantasy": 3.4,
+      "edge_z": 0.348
     },
     {
       "player_id": 691406,
@@ -890,7 +967,22 @@
         "rbi_per_pa": 0.1693
       },
       "pa": 4.3,
-      "tier": "low"
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 5.5,
+        "total_bases": 4.5,
+        "hrr": 1.5,
+        "hits": 1.5,
+        "rbis": 1.5,
+        "runs": 1.5,
+        "strikeouts": 1.5,
+        "singles": 1.5,
+        "doubles": 0.5,
+        "home_runs": 0.5,
+        "walks": 0.5
+      },
+      "edge_fantasy": 3.35,
+      "edge_z": 0.335
     },
     {
       "player_id": 683953,
@@ -966,7 +1058,23 @@
         "rbi_per_pa": 0.1463
       },
       "pa": 4.3,
-      "tier": "low"
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 5.5,
+        "hrr": 1.5,
+        "total_bases": 3.5,
+        "hits": 1.5,
+        "strikeouts": 1.5,
+        "rbis": 1.5,
+        "runs": 1.5,
+        "singles": 0.5,
+        "doubles": 0.5,
+        "home_runs": 0.5,
+        "stolen_bases": 0.5,
+        "walks": 0.5
+      },
+      "edge_fantasy": 3.35,
+      "edge_z": 0.471
     },
     {
       "player_id": 666152,
@@ -1110,7 +1218,113 @@
         "rbi_per_pa": 0.1745
       },
       "pa": 4.0,
-      "tier": "low"
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 6.5,
+        "total_bases": 4.5,
+        "hrr": 1.5,
+        "strikeouts": 2.5,
+        "hits": 1.5,
+        "rbis": 1.5,
+        "runs": 0.5,
+        "walks": 0.5,
+        "home_runs": 0.5,
+        "doubles": 0.5,
+        "singles": 0.5
+      },
+      "edge_fantasy": 2.26,
+      "edge_z": 0.249
+    },
+    {
+      "player_id": 686527,
+      "name": "Dominic Canzone",
+      "position": "DH",
+      "team_id": 136,
+      "team_abbr": "SEA",
+      "opp_abbr": "BAL",
+      "opp_team_id": 110,
+      "opp_pitcher": {
+        "id": 694346,
+        "fullName": "Trey Gibson"
+      },
+      "park": {
+        "id": 2,
+        "name": "Camden Yards",
+        "runs": 103,
+        "hr": 108,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Clear",
+        "temp": "78",
+        "wind": "11 mph, In From RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 9.31,
+      "mean_efp": 10.6,
+      "stats_games": 5,
+      "efp": 8.66,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.02,
+        "doubles": 1.29,
+        "triples": 0.04,
+        "home_runs": 1.87,
+        "bb_hbp": 0.85,
+        "r": 2.21,
+        "rbi": 1.55,
+        "sb": 0.07
+      },
+      "multipliers": {
+        "park_hr": 1.08,
+        "park_runs": 1.03,
+        "weather_hr": 0.82,
+        "pitcher_hits": 1.035,
+        "pitcher_hr": 1.076,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.909,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.85,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1681,
+        "doubles": 0.0643,
+        "triples": 0.0013,
+        "home_runs": 0.0469,
+        "bb_hbp": 0.1057,
+        "r_per_pa": 0.2762,
+        "rbi_per_pa": 0.1935
+      },
+      "pa": 4.0,
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 9.5,
+        "total_bases": 4.5,
+        "hrr": 1.5,
+        "hits": 1.5,
+        "strikeouts": 0.5,
+        "rbis": 1.5,
+        "singles": 1.5,
+        "runs": 1.5,
+        "home_runs": 0.5,
+        "walks": 0.5,
+        "doubles": 0.5
+      },
+      "edge_fantasy": -0.84,
+      "edge_z": -0.09
     },
     {
       "player_id": 665161,
@@ -1182,7 +1396,23 @@
         "rbi_per_pa": 0.1543
       },
       "pa": 4.0,
-      "tier": "low"
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 6.5,
+        "hrr": 5.5,
+        "total_bases": 1.5,
+        "hits": 2.5,
+        "rbis": 1.5,
+        "runs": 0.5,
+        "strikeouts": 1.5,
+        "singles": 1.5,
+        "doubles": 0.5,
+        "home_runs": 0.5,
+        "stolen_bases": 0.5,
+        "walks": 0.5
+      },
+      "edge_fantasy": 2.13,
+      "edge_z": 0.525
     },
     {
       "player_id": 670623,
@@ -1254,7 +1484,22 @@
         "rbi_per_pa": 0.172
       },
       "pa": 4.0,
-      "tier": "low"
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 5.5,
+        "hrr": 1.5,
+        "total_bases": 4.5,
+        "hits": 1.5,
+        "rbis": 1.5,
+        "runs": 1.5,
+        "strikeouts": 1.5,
+        "singles": 0.5,
+        "doubles": 0.5,
+        "home_runs": 0.5,
+        "walks": 0.5
+      },
+      "edge_fantasy": 3.1,
+      "edge_z": 0.289
     },
     {
       "player_id": 650490,
@@ -1330,7 +1575,22 @@
         "rbi_per_pa": 0.1703
       },
       "pa": 4.3,
-      "tier": "low"
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 6.5,
+        "total_bases": 4.5,
+        "hrr": 4.5,
+        "hits": 2.5,
+        "rbis": 1.5,
+        "runs": 0.5,
+        "strikeouts": 0.5,
+        "singles": 1.5,
+        "doubles": 0.5,
+        "home_runs": 0.5,
+        "walks": 0.5
+      },
+      "edge_fantasy": 2.09,
+      "edge_z": 0.317
     },
     {
       "player_id": 683734,
@@ -1402,7 +1662,22 @@
         "rbi_per_pa": 0.1591
       },
       "pa": 4.0,
-      "tier": "low"
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 6.5,
+        "hrr": 5.5,
+        "total_bases": 1.5,
+        "hits": 2.5,
+        "strikeouts": 0.5,
+        "rbis": 1.5,
+        "runs": 0.5,
+        "singles": 1.5,
+        "doubles": 0.5,
+        "home_runs": 0.5,
+        "walks": 0.5
+      },
+      "edge_fantasy": 2.08,
+      "edge_z": 0.292
     },
     {
       "player_id": 664774,
@@ -1474,7 +1749,111 @@
         "rbi_per_pa": 0.1707
       },
       "pa": 4.0,
-      "tier": "low"
+      "tier": "low",
+      "prizepicks": {
+        "hrr": 3.5,
+        "total_bases": 3.5,
+        "hits": 1.5,
+        "rbis": 1.5,
+        "strikeouts": 1.5,
+        "doubles": 0.5,
+        "home_runs": 0.5,
+        "runs": 0.5,
+        "singles": 0.5,
+        "walks": 0.5
+      }
+    },
+    {
+      "player_id": 647304,
+      "name": "Josh Naylor",
+      "position": "1B",
+      "team_id": 136,
+      "team_abbr": "SEA",
+      "opp_abbr": "BAL",
+      "opp_team_id": 110,
+      "opp_pitcher": {
+        "id": 694346,
+        "fullName": "Trey Gibson"
+      },
+      "park": {
+        "id": 2,
+        "name": "Camden Yards",
+        "runs": 103,
+        "hr": 108,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Clear",
+        "temp": "78",
+        "wind": "11 mph, In From RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.28,
+      "mean_efp": 13.4,
+      "stats_games": 5,
+      "efp": 8.56,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.26,
+        "doubles": 0.84,
+        "triples": 0.03,
+        "home_runs": 1.01,
+        "bb_hbp": 0.94,
+        "r": 2.71,
+        "rbi": 1.19,
+        "sb": 0.79
+      },
+      "multipliers": {
+        "park_hr": 1.08,
+        "park_runs": 1.03,
+        "weather_hr": 0.82,
+        "pitcher_hits": 1.035,
+        "pitcher_hr": 1.076,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.909,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.11,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1754,
+        "doubles": 0.0391,
+        "triples": 0.001,
+        "home_runs": 0.0235,
+        "bb_hbp": 0.1094,
+        "r_per_pa": 0.3146,
+        "rbi_per_pa": 0.1388
+      },
+      "pa": 4.3,
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 10.5,
+        "total_bases": 4.5,
+        "hrr": 4.5,
+        "hits": 2.5,
+        "strikeouts": 1.5,
+        "rbis": 1.5,
+        "runs": 1.5,
+        "singles": 1.5,
+        "home_runs": 0.5,
+        "stolen_bases": 0.5,
+        "walks": 0.5,
+        "doubles": 0.5
+      },
+      "edge_fantasy": -1.94,
+      "edge_z": -0.266
     },
     {
       "player_id": 547180,
@@ -1546,7 +1925,23 @@
         "rbi_per_pa": 0.1676
       },
       "pa": 4.0,
-      "tier": "low"
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 6.5,
+        "total_bases": 4.5,
+        "hrr": 4.5,
+        "hits": 1.5,
+        "rbis": 1.5,
+        "runs": 1.5,
+        "strikeouts": 1.5,
+        "singles": 0.5,
+        "home_runs": 0.5,
+        "doubles": 0.5,
+        "stolen_bases": 0.5,
+        "walks": 0.5
+      },
+      "edge_fantasy": 2.06,
+      "edge_z": 0.352
     },
     {
       "player_id": 678882,
@@ -1622,79 +2017,23 @@
         "rbi_per_pa": 0.148
       },
       "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 806068,
-      "name": "Colt Emerson",
-      "position": "3B",
-      "team_id": 136,
-      "team_abbr": "SEA",
-      "opp_abbr": "BAL",
-      "opp_team_id": 110,
-      "opp_pitcher": {
-        "id": 694346,
-        "fullName": "Trey Gibson"
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 5.0,
+        "hrr": 1.5,
+        "total_bases": 4.5,
+        "hits": 1.5,
+        "rbis": 1.5,
+        "strikeouts": 1.5,
+        "singles": 0.5,
+        "runs": 1.5,
+        "doubles": 0.5,
+        "home_runs": 0.5,
+        "stolen_bases": 0.5,
+        "walks": 0.5
       },
-      "park": {
-        "id": 2,
-        "name": "Camden Yards",
-        "runs": 103,
-        "hr": 108,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.12,
-      "mean_efp": 6.86,
-      "stats_games": 0,
-      "efp": 8.5,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.38,
-        "doubles": 1.47,
-        "triples": 0.16,
-        "home_runs": 2.19,
-        "bb_hbp": 0.88,
-        "r": 2.26,
-        "rbi": 1.36,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 1.08,
-        "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.035,
-        "pitcher_hr": 1.076,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.909,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.115,
-        "doubles": 0.0734,
-        "triples": 0.005,
-        "home_runs": 0.0547,
-        "bb_hbp": 0.1102,
-        "r_per_pa": 0.2827,
-        "rbi_per_pa": 0.1704
-      },
-      "pa": 4.0,
-      "tier": "low"
+      "edge_fantasy": 3.53,
+      "edge_z": 0.608
     },
     {
       "player_id": 592885,
@@ -1766,7 +2105,23 @@
         "rbi_per_pa": 0.149
       },
       "pa": 4.0,
-      "tier": "low"
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 6.5,
+        "total_bases": 5.5,
+        "hrr": 4.5,
+        "hits": 2.5,
+        "rbis": 1.5,
+        "runs": 0.5,
+        "strikeouts": 1.5,
+        "singles": 1.5,
+        "doubles": 0.5,
+        "home_runs": 0.5,
+        "stolen_bases": 0.5,
+        "walks": 0.5
+      },
+      "edge_fantasy": 1.98,
+      "edge_z": 0.302
     },
     {
       "player_id": 808982,
@@ -1838,7 +2193,21 @@
         "rbi_per_pa": 0.1617
       },
       "pa": 4.0,
-      "tier": "low"
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 6.0,
+        "hrr": 4.5,
+        "total_bases": 3.5,
+        "hits": 2.5,
+        "rbis": 1.5,
+        "runs": 1.5,
+        "singles": 1.5,
+        "doubles": 0.5,
+        "strikeouts": 0.5,
+        "walks": 0.5
+      },
+      "edge_fantasy": 2.47,
+      "edge_z": 0.453
     },
     {
       "player_id": 596142,
@@ -1913,78 +2282,6 @@
       "tier": "low"
     },
     {
-      "player_id": 677594,
-      "name": "Julio Rodr\u00edguez",
-      "position": "CF",
-      "team_id": 136,
-      "team_abbr": "SEA",
-      "opp_abbr": "BAL",
-      "opp_team_id": 110,
-      "opp_pitcher": {
-        "id": 694346,
-        "fullName": "Trey Gibson"
-      },
-      "park": {
-        "id": 2,
-        "name": "Camden Yards",
-        "runs": 103,
-        "hr": 108,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 3.84,
-      "mean_efp": 6.29,
-      "stats_games": 7,
-      "efp": 8.4,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.74,
-        "doubles": 0.98,
-        "triples": 0.03,
-        "home_runs": 1.54,
-        "bb_hbp": 0.83,
-        "r": 2.16,
-        "rbi": 1.19,
-        "sb": 1.12
-      },
-      "multipliers": {
-        "park_hr": 1.08,
-        "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.035,
-        "pitcher_hr": 1.076,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.909,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1448,
-        "doubles": 0.0492,
-        "triples": 0.0009,
-        "home_runs": 0.0386,
-        "bb_hbp": 0.1036,
-        "r_per_pa": 0.2706,
-        "rbi_per_pa": 0.1483
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 701762,
       "name": "Nick Kurtz",
       "position": "1B",
@@ -2054,7 +2351,22 @@
         "rbi_per_pa": 0.1709
       },
       "pa": 4.0,
-      "tier": "low"
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 5.5,
+        "hrr": 1.5,
+        "total_bases": 4.5,
+        "strikeouts": 2.5,
+        "hits": 1.5,
+        "rbis": 1.5,
+        "runs": 0.5,
+        "walks": 1.5,
+        "doubles": 0.5,
+        "home_runs": 0.5,
+        "singles": 0.5
+      },
+      "edge_fantasy": 2.88,
+      "edge_z": 0.383
     },
     {
       "player_id": 606992,
@@ -2126,7 +2438,460 @@
         "rbi_per_pa": 0.1736
       },
       "pa": 4.0,
-      "tier": "low"
+      "tier": "low",
+      "prizepicks": {
+        "hrr": 1.5,
+        "doubles": 0.5,
+        "hits": 0.5,
+        "strikeouts": 0.5,
+        "home_runs": 0.5,
+        "rbis": 0.5,
+        "runs": 0.5,
+        "singles": 0.5,
+        "total_bases": 0.5,
+        "walks": 0.5
+      }
+    },
+    {
+      "player_id": 677800,
+      "name": "Wilyer Abreu",
+      "position": "RF",
+      "team_id": 111,
+      "team_abbr": "BOS",
+      "opp_abbr": "TB",
+      "opp_team_id": 139,
+      "opp_pitcher": {
+        "id": 693855,
+        "fullName": "Ian Seymour"
+      },
+      "park": {
+        "id": 12,
+        "name": "Tropicana Field",
+        "runs": 96,
+        "hr": 98,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Dome",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 6.25,
+      "mean_efp": 6.71,
+      "stats_games": 7,
+      "efp": 8.31,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.18,
+        "doubles": 0.94,
+        "triples": 0.08,
+        "home_runs": 1.22,
+        "bb_hbp": 0.66,
+        "r": 2.93,
+        "rbi": 1.28,
+        "sb": 0.21
+      },
+      "multipliers": {
+        "park_hr": 0.98,
+        "park_runs": 0.96,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.944,
+        "pitcher_hr": 1.01,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.104,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.845,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1687,
+        "doubles": 0.0438,
+        "triples": 0.0022,
+        "home_runs": 0.0283,
+        "bb_hbp": 0.0771,
+        "r_per_pa": 0.3412,
+        "rbi_per_pa": 0.1486
+      },
+      "pa": 4.3,
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 5.0,
+        "hrr": 1.5,
+        "total_bases": 4.5,
+        "hits": 1.5,
+        "rbis": 1.5,
+        "runs": 1.5,
+        "strikeouts": 1.5,
+        "singles": 0.5,
+        "doubles": 0.5,
+        "home_runs": 0.5,
+        "stolen_bases": 0.5,
+        "walks": 0.5
+      },
+      "edge_fantasy": 3.31,
+      "edge_z": 0.53
+    },
+    {
+      "player_id": 669477,
+      "name": "Casey Schmitt",
+      "position": "DH",
+      "team_id": 137,
+      "team_abbr": "SF",
+      "opp_abbr": "WSH",
+      "opp_team_id": 120,
+      "opp_pitcher": {
+        "id": 571945,
+        "fullName": "Miles Mikolas"
+      },
+      "park": {
+        "id": 2395,
+        "name": "Oracle Park",
+        "runs": 93,
+        "hr": 88,
+        "label": "Pitcher Friendly"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 7.65,
+      "mean_efp": 5.33,
+      "stats_games": 6,
+      "efp": 8.13,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.65,
+        "doubles": 0.78,
+        "triples": 0.12,
+        "home_runs": 2.54,
+        "bb_hbp": 0.36,
+        "r": 2.09,
+        "rbi": 1.39,
+        "sb": 0.34
+      },
+      "multipliers": {
+        "park_hr": 0.88,
+        "park_runs": 0.93,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.092,
+        "pitcher_hr": 1.268,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.954,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.834,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1379,
+        "doubles": 0.0389,
+        "triples": 0.0038,
+        "home_runs": 0.0634,
+        "bb_hbp": 0.0451,
+        "r_per_pa": 0.2616,
+        "rbi_per_pa": 0.1735
+      },
+      "pa": 4.0,
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 5.5,
+        "total_bases": 1.5,
+        "hrr": 4.5,
+        "hits": 2.5,
+        "rbis": 1.5,
+        "runs": 0.5,
+        "strikeouts": 1.5,
+        "singles": 1.5,
+        "doubles": 0.5,
+        "home_runs": 0.5,
+        "walks": 0.5
+      },
+      "edge_fantasy": 2.63,
+      "edge_z": 0.344
+    }
+  ],
+  "best_bets": [
+    {
+      "player_id": 808982,
+      "name": "Jung Hoo Lee",
+      "position": "RF",
+      "team_id": 137,
+      "team_abbr": "SF",
+      "opp_abbr": "WSH",
+      "opp_team_id": 120,
+      "opp_pitcher": {
+        "id": 571945,
+        "fullName": "Miles Mikolas"
+      },
+      "park": {
+        "id": 2395,
+        "name": "Oracle Park",
+        "runs": 93,
+        "hr": 88,
+        "label": "Pitcher Friendly"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 5.45,
+      "mean_efp": 5.62,
+      "stats_games": 16,
+      "efp": 8.47,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.76,
+        "doubles": 1.25,
+        "triples": 0.22,
+        "home_runs": 0.66,
+        "bb_hbp": 0.41,
+        "r": 2.65,
+        "rbi": 1.29,
+        "sb": 0.42
+      },
+      "multipliers": {
+        "park_hr": 0.88,
+        "park_runs": 0.93,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.092,
+        "pitcher_hr": 1.268,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.954,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.834,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.2296,
+        "doubles": 0.0625,
+        "triples": 0.0068,
+        "home_runs": 0.0166,
+        "bb_hbp": 0.0517,
+        "r_per_pa": 0.3316,
+        "rbi_per_pa": 0.1617
+      },
+      "pa": 4.0,
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 6.0,
+        "hrr": 4.5,
+        "total_bases": 3.5,
+        "hits": 2.5,
+        "rbis": 1.5,
+        "runs": 1.5,
+        "singles": 1.5,
+        "doubles": 0.5,
+        "strikeouts": 0.5,
+        "walks": 0.5
+      },
+      "edge_fantasy": 2.47,
+      "edge_z": 0.453
+    },
+    {
+      "player_id": 592885,
+      "name": "Christian Yelich",
+      "position": "DH",
+      "team_id": 158,
+      "team_abbr": "MIL",
+      "opp_abbr": "ATH",
+      "opp_team_id": 133,
+      "opp_pitcher": {
+        "id": 605488,
+        "fullName": "Jeffrey Springs"
+      },
+      "park": {
+        "id": 5355,
+        "name": "Unknown",
+        "runs": 100,
+        "hr": 100,
+        "label": "Neutral"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 6.56,
+      "mean_efp": 7.7,
+      "stats_games": 10,
+      "efp": 8.48,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.13,
+        "doubles": 0.78,
+        "triples": 0.25,
+        "home_runs": 1.5,
+        "bb_hbp": 0.81,
+        "r": 2.53,
+        "rbi": 1.19,
+        "sb": 0.49
+      },
+      "multipliers": {
+        "park_hr": 1.0,
+        "park_runs": 1.0,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.005,
+        "pitcher_hr": 1.188,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.12,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.941,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1771,
+        "doubles": 0.0388,
+        "triples": 0.0079,
+        "home_runs": 0.0376,
+        "bb_hbp": 0.1017,
+        "r_per_pa": 0.3161,
+        "rbi_per_pa": 0.149
+      },
+      "pa": 4.0,
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 6.5,
+        "total_bases": 5.5,
+        "hrr": 4.5,
+        "hits": 2.5,
+        "rbis": 1.5,
+        "runs": 0.5,
+        "strikeouts": 1.5,
+        "singles": 1.5,
+        "doubles": 0.5,
+        "home_runs": 0.5,
+        "stolen_bases": 0.5,
+        "walks": 0.5
+      },
+      "edge_fantasy": 1.98,
+      "edge_z": 0.302
+    },
+    {
+      "player_id": 678554,
+      "name": "Curtis Mead",
+      "position": "1B",
+      "team_id": 120,
+      "team_abbr": "WSH",
+      "opp_abbr": "SF",
+      "opp_team_id": 137,
+      "opp_pitcher": {
+        "id": 657277,
+        "fullName": "Logan Webb"
+      },
+      "park": {
+        "id": 2395,
+        "name": "Oracle Park",
+        "runs": 93,
+        "hr": 88,
+        "label": "Pitcher Friendly"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 7.76,
+      "mean_efp": 5.64,
+      "stats_games": 11,
+      "efp": 7.04,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.36,
+        "doubles": 0.9,
+        "triples": 0.03,
+        "home_runs": 1.09,
+        "bb_hbp": 0.82,
+        "r": 2.35,
+        "rbi": 1.25,
+        "sb": 0.24
+      },
+      "multipliers": {
+        "park_hr": 0.88,
+        "park_runs": 0.93,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.003,
+        "pitcher_hr": 0.811,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.854,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.831,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1132,
+        "doubles": 0.0449,
+        "triples": 0.0011,
+        "home_runs": 0.0272,
+        "bb_hbp": 0.1026,
+        "r_per_pa": 0.2941,
+        "rbi_per_pa": 0.1565
+      },
+      "pa": 4.0,
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 5.5,
+        "hrr": 1.5,
+        "total_bases": 3.5,
+        "hits": 1.5,
+        "rbis": 1.5,
+        "strikeouts": 1.5,
+        "singles": 1.5,
+        "doubles": 0.5,
+        "runs": 0.5,
+        "walks": 0.5
+      },
+      "edge_fantasy": 1.54,
+      "edge_z": 0.198
     },
     {
       "player_id": 681297,
@@ -2147,18 +2912,22 @@
         "hr": 108,
         "label": "Slight Hitter"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Clear",
+        "temp": "78",
+        "wind": "11 mph, In From RF"
+      },
       "pa_source": "default",
       "stdev_efp": 3.08,
       "mean_efp": 2.54,
       "stats_games": 13,
-      "efp": 8.35,
+      "efp": 7.95,
       "bat_side": "L",
       "per_event": {
         "singles": 1.81,
         "doubles": 0.48,
         "triples": 0.04,
-        "home_runs": 2.55,
+        "home_runs": 2.09,
         "bb_hbp": 0.66,
         "r": 2.5,
         "rbi": 1.42,
@@ -2167,7 +2936,7 @@
       "multipliers": {
         "park_hr": 1.08,
         "park_runs": 1.03,
-        "weather_hr": 1.0,
+        "weather_hr": 0.82,
         "pitcher_hits": 0.916,
         "pitcher_hr": 1.088,
         "slot_r": 1.0,
@@ -2192,15 +2961,290 @@
         "singles": 0.1505,
         "doubles": 0.0242,
         "triples": 0.0012,
-        "home_runs": 0.0638,
+        "home_runs": 0.0524,
         "bb_hbp": 0.0825,
         "r_per_pa": 0.3121,
         "rbi_per_pa": 0.1775
       },
       "pa": 4.0,
-      "tier": "low"
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 7.5,
+        "hrr": 3.5,
+        "total_bases": 3.5,
+        "hits": 1.5,
+        "strikeouts": 1.5,
+        "rbis": 1.5,
+        "home_runs": 0.5,
+        "runs": 0.5,
+        "stolen_bases": 0.5,
+        "walks": 0.5,
+        "doubles": 0.5,
+        "singles": 0.5
+      },
+      "edge_fantasy": 0.45,
+      "edge_z": 0.146
+    },
+    {
+      "player_id": 592663,
+      "name": "J.T. Realmuto",
+      "position": "C",
+      "team_id": 143,
+      "team_abbr": "PHI",
+      "opp_abbr": "TOR",
+      "opp_team_id": 141,
+      "opp_pitcher": {
+        "id": 571578,
+        "fullName": "Patrick Corbin"
+      },
+      "park": {
+        "id": 14,
+        "name": "Rogers Centre",
+        "runs": 104,
+        "hr": 109,
+        "label": "Hitter Friendly"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 6.37,
+      "mean_efp": 6.73,
+      "stats_games": 11,
+      "efp": 6.38,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.62,
+        "doubles": 0.5,
+        "triples": 0.04,
+        "home_runs": 1.0,
+        "bb_hbp": 0.78,
+        "r": 2.14,
+        "rbi": 0.94,
+        "sb": 0.26
+      },
+      "multipliers": {
+        "park_hr": 1.09,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.079,
+        "pitcher_hr": 0.958,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.021,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.798,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1349,
+        "doubles": 0.0252,
+        "triples": 0.0014,
+        "home_runs": 0.0251,
+        "bb_hbp": 0.0972,
+        "r_per_pa": 0.2675,
+        "rbi_per_pa": 0.1169
+      },
+      "pa": 4.0,
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 5.5,
+        "hrr": 1.5,
+        "total_bases": 3.5,
+        "hits": 1.5,
+        "rbis": 1.5,
+        "strikeouts": 1.5,
+        "singles": 0.5,
+        "home_runs": 0.5,
+        "doubles": 0.5,
+        "runs": 0.5,
+        "stolen_bases": 0.5,
+        "walks": 0.5
+      },
+      "edge_fantasy": 0.88,
+      "edge_z": 0.138
+    },
+    {
+      "player_id": 677942,
+      "name": "Blaze Alexander",
+      "position": "3B",
+      "team_id": 110,
+      "team_abbr": "BAL",
+      "opp_abbr": "SEA",
+      "opp_team_id": 136,
+      "opp_pitcher": {
+        "id": 676106,
+        "fullName": "Emerson Hancock"
+      },
+      "park": {
+        "id": 2,
+        "name": "Camden Yards",
+        "runs": 103,
+        "hr": 108,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Clear",
+        "temp": "78",
+        "wind": "11 mph, In From RF"
+      },
+      "pa_source": "default",
+      "stdev_efp": 5.46,
+      "mean_efp": 5.3,
+      "stats_games": 10,
+      "efp": 8.07,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.85,
+        "doubles": 1.18,
+        "triples": 0.1,
+        "home_runs": 1.16,
+        "bb_hbp": 0.5,
+        "r": 2.46,
+        "rbi": 1.31,
+        "sb": 0.65
+      },
+      "multipliers": {
+        "park_hr": 1.08,
+        "park_runs": 1.03,
+        "weather_hr": 0.95,
+        "pitcher_hits": 0.916,
+        "pitcher_hr": 1.088,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.03,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1541,
+        "doubles": 0.059,
+        "triples": 0.0032,
+        "home_runs": 0.029,
+        "bb_hbp": 0.0623,
+        "r_per_pa": 0.3073,
+        "rbi_per_pa": 0.1637
+      },
+      "pa": 4.0,
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 7.5
+      },
+      "edge_fantasy": 0.57,
+      "edge_z": 0.104
+    },
+    {
+      "player_id": 641857,
+      "name": "Ryan McMahon",
+      "position": "3B",
+      "team_id": 147,
+      "team_abbr": "NYY",
+      "opp_abbr": "CLE",
+      "opp_team_id": 114,
+      "opp_pitcher": {
+        "id": 668909,
+        "fullName": "Gavin Williams"
+      },
+      "park": {
+        "id": 5,
+        "name": "Progressive Field",
+        "runs": 97,
+        "hr": 95,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "89",
+        "wind": "8 mph, R To L"
+      },
+      "pa_source": "default",
+      "stdev_efp": 3.93,
+      "mean_efp": 3.54,
+      "stats_games": 13,
+      "efp": 6.57,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.61,
+        "doubles": 0.44,
+        "triples": 0.03,
+        "home_runs": 1.64,
+        "bb_hbp": 0.41,
+        "r": 2.05,
+        "rbi": 1.11,
+        "sb": 0.21
+      },
+      "multipliers": {
+        "park_hr": 0.95,
+        "park_runs": 0.97,
+        "weather_hr": 1.05,
+        "pitcher_hits": 0.924,
+        "pitcher_hr": 1.057,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.982,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.78,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1342,
+        "doubles": 0.0218,
+        "triples": 0.0011,
+        "home_runs": 0.0411,
+        "bb_hbp": 0.0515,
+        "r_per_pa": 0.2565,
+        "rbi_per_pa": 0.1387
+      },
+      "pa": 4.0,
+      "tier": "low",
+      "prizepicks": {
+        "fantasy": 6.5,
+        "hrr": 3.5,
+        "total_bases": 0.5,
+        "strikeouts": 2.5,
+        "hits": 0.5,
+        "rbis": 1.5,
+        "doubles": 0.5,
+        "home_runs": 0.5,
+        "runs": 0.5,
+        "singles": 0.5,
+        "walks": 0.5
+      },
+      "edge_fantasy": 0.07,
+      "edge_z": 0.018
     }
   ],
-  "best_bets": [],
-  "generated_at": "2026-06-08T19:05:06.341826+00:00"
+  "generated_at": "2026-06-08T19:16:21.289494+00:00"
 }
