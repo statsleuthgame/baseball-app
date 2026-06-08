@@ -940,78 +940,6 @@
       "tier": "low"
     },
     {
-      "player_id": 808982,
-      "name": "Jung Hoo Lee",
-      "position": "RF",
-      "team_id": 137,
-      "team_abbr": "SF",
-      "opp_abbr": "WSH",
-      "opp_team_id": 120,
-      "opp_pitcher": {
-        "id": 571945,
-        "fullName": "Miles Mikolas"
-      },
-      "park": {
-        "id": 2395,
-        "name": "Oracle Park",
-        "runs": 93,
-        "hr": 88,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 5.45,
-      "mean_efp": 5.62,
-      "stats_games": 16,
-      "efp": 8.65,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.82,
-        "doubles": 1.28,
-        "triples": 0.22,
-        "home_runs": 0.67,
-        "bb_hbp": 0.42,
-        "r": 2.72,
-        "rbi": 1.33,
-        "sb": 0.42
-      },
-      "multipliers": {
-        "park_hr": 0.88,
-        "park_runs": 0.93,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.092,
-        "pitcher_hr": 1.268,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.954,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.834,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.2349,
-        "doubles": 0.064,
-        "triples": 0.0068,
-        "home_runs": 0.0167,
-        "bb_hbp": 0.0525,
-        "r_per_pa": 0.3403,
-        "rbi_per_pa": 0.1658
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 665161,
       "name": "Jeremy Pe\u00f1a",
       "position": "SS",
@@ -1439,6 +1367,78 @@
         "bb_hbp": 0.1017,
         "r_per_pa": 0.3161,
         "rbi_per_pa": 0.149
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 808982,
+      "name": "Jung Hoo Lee",
+      "position": "RF",
+      "team_id": 137,
+      "team_abbr": "SF",
+      "opp_abbr": "WSH",
+      "opp_team_id": 120,
+      "opp_pitcher": {
+        "id": 571945,
+        "fullName": "Miles Mikolas"
+      },
+      "park": {
+        "id": 2395,
+        "name": "Oracle Park",
+        "runs": 93,
+        "hr": 88,
+        "label": "Pitcher Friendly"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 5.45,
+      "mean_efp": 5.62,
+      "stats_games": 16,
+      "efp": 8.47,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.76,
+        "doubles": 1.25,
+        "triples": 0.22,
+        "home_runs": 0.66,
+        "bb_hbp": 0.41,
+        "r": 2.65,
+        "rbi": 1.29,
+        "sb": 0.42
+      },
+      "multipliers": {
+        "park_hr": 0.88,
+        "park_runs": 0.93,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.092,
+        "pitcher_hr": 1.268,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.954,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.834,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.2296,
+        "doubles": 0.0625,
+        "triples": 0.0068,
+        "home_runs": 0.0166,
+        "bb_hbp": 0.0517,
+        "r_per_pa": 0.3316,
+        "rbi_per_pa": 0.1617
       },
       "pa": 4.0,
       "tier": "low"
@@ -1876,78 +1876,6 @@
       "tier": "low"
     },
     {
-      "player_id": 669477,
-      "name": "Casey Schmitt",
-      "position": "DH",
-      "team_id": 137,
-      "team_abbr": "SF",
-      "opp_abbr": "WSH",
-      "opp_team_id": 120,
-      "opp_pitcher": {
-        "id": 571945,
-        "fullName": "Miles Mikolas"
-      },
-      "park": {
-        "id": 2395,
-        "name": "Oracle Park",
-        "runs": 93,
-        "hr": 88,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.65,
-      "mean_efp": 5.33,
-      "stats_games": 6,
-      "efp": 8.31,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.69,
-        "doubles": 0.79,
-        "triples": 0.12,
-        "home_runs": 2.62,
-        "bb_hbp": 0.36,
-        "r": 2.13,
-        "rbi": 1.42,
-        "sb": 0.34
-      },
-      "multipliers": {
-        "park_hr": 0.88,
-        "park_runs": 0.93,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.092,
-        "pitcher_hr": 1.268,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.954,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.834,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1409,
-        "doubles": 0.0393,
-        "triples": 0.0038,
-        "home_runs": 0.0654,
-        "bb_hbp": 0.0456,
-        "r_per_pa": 0.2668,
-        "rbi_per_pa": 0.1779
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 677594,
       "name": "Julio Rodr\u00edguez",
       "position": "CF",
@@ -2012,6 +1940,78 @@
         "bb_hbp": 0.086,
         "r_per_pa": 0.2706,
         "rbi_per_pa": 0.1483
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 669477,
+      "name": "Casey Schmitt",
+      "position": "DH",
+      "team_id": 137,
+      "team_abbr": "SF",
+      "opp_abbr": "WSH",
+      "opp_team_id": 120,
+      "opp_pitcher": {
+        "id": 571945,
+        "fullName": "Miles Mikolas"
+      },
+      "park": {
+        "id": 2395,
+        "name": "Oracle Park",
+        "runs": 93,
+        "hr": 88,
+        "label": "Pitcher Friendly"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 7.65,
+      "mean_efp": 5.33,
+      "stats_games": 6,
+      "efp": 8.13,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.65,
+        "doubles": 0.78,
+        "triples": 0.12,
+        "home_runs": 2.54,
+        "bb_hbp": 0.36,
+        "r": 2.09,
+        "rbi": 1.39,
+        "sb": 0.34
+      },
+      "multipliers": {
+        "park_hr": 0.88,
+        "park_runs": 0.93,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.092,
+        "pitcher_hr": 1.268,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.954,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.834,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1379,
+        "doubles": 0.0389,
+        "triples": 0.0038,
+        "home_runs": 0.0634,
+        "bb_hbp": 0.0451,
+        "r_per_pa": 0.2616,
+        "rbi_per_pa": 0.1735
       },
       "pa": 4.0,
       "tier": "low"
@@ -2162,5 +2162,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-06-08T01:57:25.894643+00:00"
+  "generated_at": "2026-06-08T14:59:50.629998+00:00"
 }
