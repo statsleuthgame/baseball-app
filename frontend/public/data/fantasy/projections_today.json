@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 309,
+  "projection_count": 301,
   "projections": [
     {
       "player_id": 691718,
@@ -241,82 +241,6 @@
       "tier": "low"
     },
     {
-      "player_id": 665833,
-      "name": "Oneil Cruz",
-      "position": "CF",
-      "team_id": 134,
-      "team_abbr": "PIT",
-      "opp_abbr": "LAD",
-      "opp_team_id": 119,
-      "opp_pitcher": {
-        "id": 641778,
-        "fullName": "Eric Lauer"
-      },
-      "park": {
-        "id": 31,
-        "name": "PNC Park",
-        "runs": 96,
-        "hr": 92,
-        "label": "Pitcher Friendly"
-      },
-      "weather": {
-        "condition": "Overcast",
-        "temp": "82",
-        "wind": "11 mph, R To L"
-      },
-      "pa_source": "default",
-      "stdev_efp": 5.88,
-      "mean_efp": 9.5,
-      "stats_games": 6,
-      "efp": 10.27,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.95,
-        "doubles": 0.63,
-        "triples": 0.03,
-        "home_runs": 2.59,
-        "bb_hbp": 1.14,
-        "r": 2.78,
-        "rbi": 1.33,
-        "sb": 1.28
-      },
-      "multipliers": {
-        "park_hr": 0.92,
-        "park_runs": 0.96,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.023,
-        "pitcher_hr": 1.317,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.22,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.019,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1627,
-        "doubles": 0.0314,
-        "triples": 0.0009,
-        "home_runs": 0.0647,
-        "bb_hbp": 0.1425,
-        "r_per_pa": 0.3469,
-        "rbi_per_pa": 0.1667
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 608070,
       "name": "Jos\u00e9 Ram\u00edrez",
       "position": "3B",
@@ -390,6 +314,82 @@
         "rbi_per_pa": 0.1662
       },
       "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 665833,
+      "name": "Oneil Cruz",
+      "position": "CF",
+      "team_id": 134,
+      "team_abbr": "PIT",
+      "opp_abbr": "LAD",
+      "opp_team_id": 119,
+      "opp_pitcher": {
+        "id": 641778,
+        "fullName": "Eric Lauer"
+      },
+      "park": {
+        "id": 31,
+        "name": "PNC Park",
+        "runs": 96,
+        "hr": 92,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Overcast",
+        "temp": "82",
+        "wind": "11 mph, R To L"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.88,
+      "mean_efp": 9.5,
+      "stats_games": 6,
+      "efp": 10.22,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.95,
+        "doubles": 0.63,
+        "triples": 0.03,
+        "home_runs": 2.59,
+        "bb_hbp": 1.14,
+        "r": 2.78,
+        "rbi": 1.33,
+        "sb": 1.21
+      },
+      "multipliers": {
+        "park_hr": 0.92,
+        "park_runs": 0.96,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.023,
+        "pitcher_hr": 1.317,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.22,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.019,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1627,
+        "doubles": 0.0314,
+        "triples": 0.0009,
+        "home_runs": 0.0647,
+        "bb_hbp": 0.1425,
+        "r_per_pa": 0.3469,
+        "rbi_per_pa": 0.1667
+      },
+      "pa": 4.0,
       "tier": "low"
     },
     {
@@ -1669,82 +1669,6 @@
       "tier": "low"
     },
     {
-      "player_id": 663968,
-      "name": "Jake Mangum",
-      "position": "LF",
-      "team_id": 134,
-      "team_abbr": "PIT",
-      "opp_abbr": "LAD",
-      "opp_team_id": 119,
-      "opp_pitcher": {
-        "id": 641778,
-        "fullName": "Eric Lauer"
-      },
-      "park": {
-        "id": 31,
-        "name": "PNC Park",
-        "runs": 96,
-        "hr": 92,
-        "label": "Pitcher Friendly"
-      },
-      "weather": {
-        "condition": "Overcast",
-        "temp": "82",
-        "wind": "11 mph, R To L"
-      },
-      "pa_source": "default",
-      "stdev_efp": 6.23,
-      "mean_efp": 5.46,
-      "stats_games": 11,
-      "efp": 9.14,
-      "bat_side": "S",
-      "per_event": {
-        "singles": 2.67,
-        "doubles": 0.68,
-        "triples": 0.04,
-        "home_runs": 1.21,
-        "bb_hbp": 0.61,
-        "r": 2.62,
-        "rbi": 1.26,
-        "sb": 1.34
-      },
-      "multipliers": {
-        "park_hr": 0.92,
-        "park_runs": 0.96,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.023,
-        "pitcher_hr": 1.317,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.22,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.019,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.2226,
-        "doubles": 0.0339,
-        "triples": 0.0013,
-        "home_runs": 0.0302,
-        "bb_hbp": 0.0768,
-        "r_per_pa": 0.3279,
-        "rbi_per_pa": 0.1576
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 643217,
       "name": "Andrew Benintendi",
       "position": "DH",
@@ -2201,6 +2125,82 @@
       "tier": "low"
     },
     {
+      "player_id": 664040,
+      "name": "Brandon Lowe",
+      "position": "2B",
+      "team_id": 134,
+      "team_abbr": "PIT",
+      "opp_abbr": "LAD",
+      "opp_team_id": 119,
+      "opp_pitcher": {
+        "id": 641778,
+        "fullName": "Eric Lauer"
+      },
+      "park": {
+        "id": 31,
+        "name": "PNC Park",
+        "runs": 96,
+        "hr": 92,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Overcast",
+        "temp": "82",
+        "wind": "11 mph, R To L"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 11.19,
+      "mean_efp": 10.0,
+      "stats_games": 14,
+      "efp": 9.06,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.37,
+        "doubles": 1.05,
+        "triples": 0.08,
+        "home_runs": 2.83,
+        "bb_hbp": 0.84,
+        "r": 2.73,
+        "rbi": 1.43,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 0.92,
+        "park_runs": 0.96,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.023,
+        "pitcher_hr": 1.317,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.22,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.019,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.143,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1062,
+        "doubles": 0.0489,
+        "triples": 0.0024,
+        "home_runs": 0.0658,
+        "bb_hbp": 0.0979,
+        "r_per_pa": 0.3178,
+        "rbi_per_pa": 0.1667
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 650489,
       "name": "Willi Castro",
       "position": "2B",
@@ -2278,5 +2278,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-06-09T20:26:36.377906+00:00"
+  "generated_at": "2026-06-09T20:54:35.066543+00:00"
 }
