@@ -1,6 +1,6 @@
 {
-  "recap_date": "2026-06-06",
-  "generated_at": "2026-06-07T10:32:58.436663+00:00",
+  "recap_date": "2026-06-08",
+  "generated_at": "2026-06-09T11:22:34.352173+00:00",
   "totals": {
     "high_conf": {
       "n": 0,
@@ -8,168 +8,132 @@
       "hit_rate": null
     },
     "med_conf": {
-      "n": 12,
-      "wins": 6,
-      "hit_rate": 0.5
+      "n": 2,
+      "wins": 2,
+      "hit_rate": 1.0
     },
     "low_conf": {
-      "n": 4,
-      "wins": 3,
-      "hit_rate": 0.75
+      "n": 5,
+      "wins": 2,
+      "hit_rate": 0.4
     },
     "fade": {
-      "n": 28,
-      "wins": 17,
-      "hit_rate": 0.607
+      "n": 30,
+      "wins": 18,
+      "hit_rate": 0.6
     },
     "overall": {
-      "n": 44,
-      "wins": 26,
-      "hit_rate": 0.591
+      "n": 37,
+      "wins": 22,
+      "hit_rate": 0.595
     }
   },
   "top_hit": {
-    "name": "Curtis Mead",
-    "team": "WSH",
-    "opp": "AZ",
-    "projected": 7.91,
-    "line": 5.5,
-    "actual": 18.0,
-    "edge_z": 0.311,
+    "name": "Jung Hoo Lee",
+    "team": "SF",
+    "opp": "WSH",
+    "projected": 8.47,
+    "line": 6.0,
+    "actual": 16.0,
+    "edge_z": 0.453,
     "tier": "MED",
     "won": true,
     "grade": "over"
   },
   "biggest_miss": {
-    "name": "Geraldo Perdomo",
-    "team": "AZ",
-    "opp": "WSH",
-    "projected": 7.65,
-    "line": 5.5,
+    "name": "Colton Cowser",
+    "team": "BAL",
+    "opp": "SEA",
+    "projected": 7.95,
+    "line": 7.5,
     "actual": 0.0,
-    "edge_z": 0.39,
-    "tier": "MED",
+    "edge_z": 0.146,
+    "tier": "LOW",
     "won": false,
     "grade": "under"
   },
   "sample_picks": [
     {
-      "name": "Andrew Benintendi",
-      "team": "CWS",
-      "opp": "PHI",
-      "projected": 8.64,
-      "line": 5.0,
-      "actual": 7.0,
-      "edge_z": 0.615,
-      "tier": "MED",
-      "won": true,
-      "grade": "over"
-    },
-    {
       "name": "Jung Hoo Lee",
       "team": "SF",
-      "opp": "CHC",
-      "projected": 8.23,
-      "line": 5.0,
-      "actual": 13.0,
-      "edge_z": 0.593,
-      "tier": "MED",
-      "won": true,
-      "grade": "over"
-    },
-    {
-      "name": "Heriberto Hern\u00e1ndez",
-      "team": "MIA",
-      "opp": "TB",
-      "projected": 7.49,
-      "line": 5.0,
-      "actual": 5.0,
-      "edge_z": 0.516,
-      "tier": "MED",
-      "won": false,
-      "grade": "push"
-    },
-    {
-      "name": "Spencer Horwitz",
-      "team": "PIT",
-      "opp": "ATL",
-      "projected": 8.32,
-      "line": 5.5,
-      "actual": 3.0,
-      "edge_z": 0.505,
-      "tier": "MED",
-      "won": false,
-      "grade": "under"
-    },
-    {
-      "name": "Carson Benge",
-      "team": "NYM",
-      "opp": "SD",
-      "projected": 8.23,
-      "line": 6.5,
-      "actual": 3.0,
-      "edge_z": 0.501,
-      "tier": "MED",
-      "won": false,
-      "grade": "under"
-    },
-    {
-      "name": "Leody Taveras",
-      "team": "BAL",
-      "opp": "TOR",
-      "projected": 7.05,
-      "line": 5.0,
-      "actual": 0.0,
-      "edge_z": 0.456,
-      "tier": "MED",
-      "won": false,
-      "grade": "under"
-    },
-    {
-      "name": "Tristan Peters",
-      "team": "CWS",
-      "opp": "PHI",
-      "projected": 8.57,
-      "line": 7.5,
-      "actual": 15.0,
-      "edge_z": 0.418,
-      "tier": "MED",
-      "won": true,
-      "grade": "over"
-    },
-    {
-      "name": "Geraldo Perdomo",
-      "team": "AZ",
       "opp": "WSH",
-      "projected": 7.65,
-      "line": 5.5,
-      "actual": 0.0,
-      "edge_z": 0.39,
-      "tier": "MED",
-      "won": false,
-      "grade": "under"
-    },
-    {
-      "name": "Austin Martin",
-      "team": "MIN",
-      "opp": "KC",
-      "projected": 7.04,
-      "line": 5.0,
-      "actual": 7.0,
-      "edge_z": 0.373,
+      "projected": 8.47,
+      "line": 6.0,
+      "actual": 16.0,
+      "edge_z": 0.453,
       "tier": "MED",
       "won": true,
       "grade": "over"
     },
     {
-      "name": "Keibert Ruiz",
-      "team": "WSH",
-      "opp": "AZ",
-      "projected": 7.68,
+      "name": "Christian Yelich",
+      "team": "MIL",
+      "opp": "ATH",
+      "projected": 8.48,
       "line": 6.5,
-      "actual": 9.0,
-      "edge_z": 0.327,
+      "actual": 15.0,
+      "edge_z": 0.302,
       "tier": "MED",
+      "won": true,
+      "grade": "over"
+    },
+    {
+      "name": "Curtis Mead",
+      "team": "WSH",
+      "opp": "SF",
+      "projected": 7.04,
+      "line": 5.5,
+      "actual": 2.0,
+      "edge_z": 0.198,
+      "tier": "LOW",
+      "won": false,
+      "grade": "under"
+    },
+    {
+      "name": "Colton Cowser",
+      "team": "BAL",
+      "opp": "SEA",
+      "projected": 7.95,
+      "line": 7.5,
+      "actual": 0.0,
+      "edge_z": 0.146,
+      "tier": "LOW",
+      "won": false,
+      "grade": "under"
+    },
+    {
+      "name": "J.T. Realmuto",
+      "team": "PHI",
+      "opp": "TOR",
+      "projected": 6.38,
+      "line": 5.5,
+      "actual": 5.0,
+      "edge_z": 0.138,
+      "tier": "LOW",
+      "won": false,
+      "grade": "under"
+    },
+    {
+      "name": "Blaze Alexander",
+      "team": "BAL",
+      "opp": "SEA",
+      "projected": 8.07,
+      "line": 7.5,
+      "actual": 12.0,
+      "edge_z": 0.104,
+      "tier": "LOW",
+      "won": true,
+      "grade": "over"
+    },
+    {
+      "name": "Ryan McMahon",
+      "team": "NYY",
+      "opp": "CLE",
+      "projected": 6.57,
+      "line": 6.5,
+      "actual": 14.0,
+      "edge_z": 0.018,
+      "tier": "LOW",
       "won": true,
       "grade": "over"
     }
