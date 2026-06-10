@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 330,
+  "projection_count": 322,
   "projections": [
     {
       "player_id": 660271,
@@ -107,18 +107,22 @@
         "hr": 118,
         "label": "Hitter Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Clear",
+        "temp": "88",
+        "wind": "17 mph, L To R"
+      },
       "pa_source": "default",
       "stdev_efp": 10.28,
       "mean_efp": 11.25,
       "stats_games": 8,
-      "efp": 10.71,
+      "efp": 10.82,
       "bat_side": "L",
       "per_event": {
         "singles": 2.71,
         "doubles": 0.86,
         "triples": 0.23,
-        "home_runs": 2.54,
+        "home_runs": 2.67,
         "bb_hbp": 0.79,
         "r": 2.53,
         "rbi": 1.43,
@@ -127,7 +131,7 @@
       "multipliers": {
         "park_hr": 1.18,
         "park_runs": 1.16,
-        "weather_hr": 1.0,
+        "weather_hr": 1.05,
         "pitcher_hits": 1.266,
         "pitcher_hr": 1.084,
         "slot_r": 1.0,
@@ -152,7 +156,7 @@
         "singles": 0.2261,
         "doubles": 0.0431,
         "triples": 0.0072,
-        "home_runs": 0.0636,
+        "home_runs": 0.0668,
         "bb_hbp": 0.0986,
         "r_per_pa": 0.3162,
         "rbi_per_pa": 0.1788
@@ -179,27 +183,31 @@
         "hr": 118,
         "label": "Hitter Friendly"
       },
-      "weather": null,
-      "pa_source": "default",
+      "weather": {
+        "condition": "Clear",
+        "temp": "88",
+        "wind": "17 mph, L To R"
+      },
+      "pa_source": "lineup",
       "stdev_efp": 9.37,
       "mean_efp": 8.17,
       "stats_games": 6,
-      "efp": 10.69,
+      "efp": 10.75,
       "bat_side": "R",
       "per_event": {
         "singles": 1.27,
         "doubles": 1.08,
         "triples": 0.03,
-        "home_runs": 4.56,
+        "home_runs": 4.79,
         "bb_hbp": 0.67,
-        "r": 2.44,
+        "r": 2.31,
         "rbi": 1.66,
-        "sb": 0.49
+        "sb": 0.47
       },
       "multipliers": {
         "park_hr": 1.18,
         "park_runs": 1.16,
-        "weather_hr": 1.0,
+        "weather_hr": 1.05,
         "pitcher_hits": 0.952,
         "pitcher_hr": 1.253,
         "slot_r": 1.0,
@@ -217,16 +225,16 @@
         "speed_singles": 1.0,
         "speed_r": 1.0,
         "bvpt": 1.0,
-        "ondeck_r": 1.0,
+        "ondeck_r": 0.946,
         "preceding_rbi": 1.0
       },
       "rates": {
         "singles": 0.1059,
         "doubles": 0.0538,
         "triples": 0.001,
-        "home_runs": 0.1141,
+        "home_runs": 0.1198,
         "bb_hbp": 0.0835,
-        "r_per_pa": 0.3047,
+        "r_per_pa": 0.2882,
         "rbi_per_pa": 0.2071
       },
       "pa": 4.0,
@@ -749,6 +757,82 @@
       "tier": "low"
     },
     {
+      "player_id": 664023,
+      "name": "Ian Happ",
+      "position": "LF",
+      "team_id": 112,
+      "team_abbr": "CHC",
+      "opp_abbr": "COL",
+      "opp_team_id": 115,
+      "opp_pitcher": {
+        "id": 547179,
+        "fullName": "Michael Lorenzen"
+      },
+      "park": {
+        "id": 19,
+        "name": "Coors Field",
+        "runs": 116,
+        "hr": 118,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Clear",
+        "temp": "88",
+        "wind": "17 mph, L To R"
+      },
+      "pa_source": "default",
+      "stdev_efp": 6.42,
+      "mean_efp": 8.5,
+      "stats_games": 8,
+      "efp": 9.84,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 1.58,
+        "doubles": 1.7,
+        "triples": 0.57,
+        "home_runs": 2.33,
+        "bb_hbp": 1.1,
+        "r": 2.44,
+        "rbi": 1.38,
+        "sb": 0.13
+      },
+      "multipliers": {
+        "park_hr": 1.18,
+        "park_runs": 1.16,
+        "weather_hr": 1.05,
+        "pitcher_hits": 1.266,
+        "pitcher_hr": 1.084,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.952,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.937,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1319,
+        "doubles": 0.0852,
+        "triples": 0.0177,
+        "home_runs": 0.0582,
+        "bb_hbp": 0.1374,
+        "r_per_pa": 0.3047,
+        "rbi_per_pa": 0.1728
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
       "player_id": 668227,
       "name": "Randy Arozarena",
       "position": "LF",
@@ -816,78 +900,6 @@
         "bb_hbp": 0.1177,
         "r_per_pa": 0.3498,
         "rbi_per_pa": 0.1696
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 664023,
-      "name": "Ian Happ",
-      "position": "LF",
-      "team_id": 112,
-      "team_abbr": "CHC",
-      "opp_abbr": "COL",
-      "opp_team_id": 115,
-      "opp_pitcher": {
-        "id": 547179,
-        "fullName": "Michael Lorenzen"
-      },
-      "park": {
-        "id": 19,
-        "name": "Coors Field",
-        "runs": 116,
-        "hr": 118,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 6.42,
-      "mean_efp": 8.5,
-      "stats_games": 8,
-      "efp": 9.74,
-      "bat_side": "S",
-      "per_event": {
-        "singles": 1.58,
-        "doubles": 1.7,
-        "triples": 0.57,
-        "home_runs": 2.22,
-        "bb_hbp": 1.1,
-        "r": 2.44,
-        "rbi": 1.38,
-        "sb": 0.13
-      },
-      "multipliers": {
-        "park_hr": 1.18,
-        "park_runs": 1.16,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.266,
-        "pitcher_hr": 1.084,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.952,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.937,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1319,
-        "doubles": 0.0852,
-        "triples": 0.0177,
-        "home_runs": 0.0555,
-        "bb_hbp": 0.1374,
-        "r_per_pa": 0.3047,
-        "rbi_per_pa": 0.1728
       },
       "pa": 4.0,
       "tier": "low"
@@ -1559,6 +1571,82 @@
       "tier": "low"
     },
     {
+      "player_id": 650489,
+      "name": "Willi Castro",
+      "position": "2B",
+      "team_id": 115,
+      "team_abbr": "COL",
+      "opp_abbr": "CHC",
+      "opp_team_id": 112,
+      "opp_pitcher": {
+        "id": 684007,
+        "fullName": "Shota Imanaga"
+      },
+      "park": {
+        "id": 19,
+        "name": "Coors Field",
+        "runs": 116,
+        "hr": 118,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Clear",
+        "temp": "88",
+        "wind": "17 mph, L To R"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 4.56,
+      "mean_efp": 6.0,
+      "stats_games": 5,
+      "efp": 9.23,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 2.58,
+        "doubles": 1.29,
+        "triples": 0.04,
+        "home_runs": 1.37,
+        "bb_hbp": 0.69,
+        "r": 2.91,
+        "rbi": 1.27,
+        "sb": 0.39
+      },
+      "multipliers": {
+        "park_hr": 1.18,
+        "park_runs": 1.16,
+        "weather_hr": 1.05,
+        "pitcher_hits": 0.952,
+        "pitcher_hr": 1.253,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.081,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.057,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1998,
+        "doubles": 0.06,
+        "triples": 0.0012,
+        "home_runs": 0.0318,
+        "bb_hbp": 0.08,
+        "r_per_pa": 0.3383,
+        "rbi_per_pa": 0.1474
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 693307,
       "name": "Dillon Dingler",
       "position": "C",
@@ -1632,6 +1720,82 @@
       "tier": "low"
     },
     {
+      "player_id": 683737,
+      "name": "Michael Busch",
+      "position": "1B",
+      "team_id": 112,
+      "team_abbr": "CHC",
+      "opp_abbr": "COL",
+      "opp_team_id": 115,
+      "opp_pitcher": {
+        "id": 547179,
+        "fullName": "Michael Lorenzen"
+      },
+      "park": {
+        "id": 19,
+        "name": "Coors Field",
+        "runs": 116,
+        "hr": 118,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Clear",
+        "temp": "88",
+        "wind": "17 mph, L To R"
+      },
+      "pa_source": "default",
+      "stdev_efp": 6.64,
+      "mean_efp": 10.12,
+      "stats_games": 8,
+      "efp": 9.21,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.35,
+        "doubles": 1.25,
+        "triples": 0.48,
+        "home_runs": 1.47,
+        "bb_hbp": 1.11,
+        "r": 2.57,
+        "rbi": 1.22,
+        "sb": 0.06
+      },
+      "multipliers": {
+        "park_hr": 1.18,
+        "park_runs": 1.16,
+        "weather_hr": 1.05,
+        "pitcher_hits": 1.266,
+        "pitcher_hr": 1.084,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.952,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.937,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1956,
+        "doubles": 0.0625,
+        "triples": 0.0151,
+        "home_runs": 0.0368,
+        "bb_hbp": 0.1383,
+        "r_per_pa": 0.3214,
+        "rbi_per_pa": 0.1529
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
       "player_id": 641343,
       "name": "Jake Bauers",
       "position": "1B",
@@ -1699,78 +1863,6 @@
         "bb_hbp": 0.147,
         "r_per_pa": 0.3521,
         "rbi_per_pa": 0.1986
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 683737,
-      "name": "Michael Busch",
-      "position": "1B",
-      "team_id": 112,
-      "team_abbr": "CHC",
-      "opp_abbr": "COL",
-      "opp_team_id": 115,
-      "opp_pitcher": {
-        "id": 547179,
-        "fullName": "Michael Lorenzen"
-      },
-      "park": {
-        "id": 19,
-        "name": "Coors Field",
-        "runs": 116,
-        "hr": 118,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 6.64,
-      "mean_efp": 10.12,
-      "stats_games": 8,
-      "efp": 9.15,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.35,
-        "doubles": 1.25,
-        "triples": 0.48,
-        "home_runs": 1.4,
-        "bb_hbp": 1.11,
-        "r": 2.57,
-        "rbi": 1.22,
-        "sb": 0.06
-      },
-      "multipliers": {
-        "park_hr": 1.18,
-        "park_runs": 1.16,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.266,
-        "pitcher_hr": 1.084,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.952,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.937,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1956,
-        "doubles": 0.0625,
-        "triples": 0.0151,
-        "home_runs": 0.035,
-        "bb_hbp": 0.1383,
-        "r_per_pa": 0.3214,
-        "rbi_per_pa": 0.1529
       },
       "pa": 4.0,
       "tier": "low"
@@ -2068,78 +2160,6 @@
       "tier": "low"
     },
     {
-      "player_id": 695506,
-      "name": "Jac Caglianone",
-      "position": "RF",
-      "team_id": 118,
-      "team_abbr": "KC",
-      "opp_abbr": "TEX",
-      "opp_team_id": 140,
-      "opp_pitcher": {
-        "id": 669022,
-        "fullName": "MacKenzie Gore"
-      },
-      "park": {
-        "id": 7,
-        "name": "Kauffman Stadium",
-        "runs": 101,
-        "hr": 99,
-        "label": "Neutral"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 5.34,
-      "mean_efp": 5.47,
-      "stats_games": 15,
-      "efp": 8.98,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.76,
-        "doubles": 0.78,
-        "triples": 0.08,
-        "home_runs": 1.87,
-        "bb_hbp": 1.1,
-        "r": 2.75,
-        "rbi": 1.53,
-        "sb": 0.39
-      },
-      "multipliers": {
-        "park_hr": 0.99,
-        "park_runs": 1.01,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.923,
-        "pitcher_hr": 0.896,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.039,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1469,
-        "doubles": 0.0389,
-        "triples": 0.0026,
-        "home_runs": 0.0466,
-        "bb_hbp": 0.138,
-        "r_per_pa": 0.3431,
-        "rbi_per_pa": 0.1908
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 650490,
       "name": "Yandy D\u00edaz",
       "position": "DH",
@@ -2167,16 +2187,16 @@
       "stdev_efp": 7.0,
       "mean_efp": 9.25,
       "stats_games": 8,
-      "efp": 8.93,
+      "efp": 8.99,
       "bat_side": "R",
       "per_event": {
-        "singles": 2.9,
+        "singles": 2.95,
         "doubles": 0.95,
         "triples": 0.09,
         "home_runs": 1.24,
         "bb_hbp": 0.84,
-        "r": 2.55,
-        "rbi": 1.56,
+        "r": 2.57,
+        "rbi": 1.57,
         "sb": 0.06
       },
       "multipliers": {
@@ -2204,18 +2224,18 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.2252,
-        "doubles": 0.0444,
+        "singles": 0.2289,
+        "doubles": 0.0442,
         "triples": 0.0027,
-        "home_runs": 0.0289,
-        "bb_hbp": 0.0978,
-        "r_per_pa": 0.296,
-        "rbi_per_pa": 0.1811
+        "home_runs": 0.0288,
+        "bb_hbp": 0.0975,
+        "r_per_pa": 0.2986,
+        "rbi_per_pa": 0.1821
       },
       "pa": 4.3,
       "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-06-10T19:16:09.919674+00:00"
+  "generated_at": "2026-06-10T19:30:29.161780+00:00"
 }
