@@ -165,82 +165,6 @@
       "tier": "low"
     },
     {
-      "player_id": 696100,
-      "name": "Hunter Goodman",
-      "position": "C",
-      "team_id": 115,
-      "team_abbr": "COL",
-      "opp_abbr": "CHC",
-      "opp_team_id": 112,
-      "opp_pitcher": {
-        "id": 665795,
-        "fullName": "Edward Cabrera"
-      },
-      "park": {
-        "id": 19,
-        "name": "Coors Field",
-        "runs": 116,
-        "hr": 118,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Sunny",
-        "temp": "73",
-        "wind": "15 mph, In From CF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 9.37,
-      "mean_efp": 8.17,
-      "stats_games": 6,
-      "efp": 10.29,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.69,
-        "doubles": 1.02,
-        "triples": 0.04,
-        "home_runs": 3.33,
-        "bb_hbp": 0.93,
-        "r": 2.58,
-        "rbi": 1.59,
-        "sb": 0.57
-      },
-      "multipliers": {
-        "park_hr": 1.18,
-        "park_runs": 1.16,
-        "weather_hr": 0.9,
-        "pitcher_hits": 1.066,
-        "pitcher_hr": 1.162,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.975,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.94,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.025,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1404,
-        "doubles": 0.051,
-        "triples": 0.0012,
-        "home_runs": 0.0832,
-        "bb_hbp": 0.1164,
-        "r_per_pa": 0.3227,
-        "rbi_per_pa": 0.1991
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 691023,
       "name": "Jordan Walker",
       "position": "RF",
@@ -268,16 +192,16 @@
       "stdev_efp": 7.43,
       "mean_efp": 8.67,
       "stats_games": 6,
-      "efp": 10.26,
+      "efp": 10.19,
       "bat_side": "R",
       "per_event": {
-        "singles": 1.91,
-        "doubles": 1.17,
+        "singles": 1.89,
+        "doubles": 1.16,
         "triples": 0.03,
-        "home_runs": 2.3,
+        "home_runs": 2.28,
         "bb_hbp": 0.72,
-        "r": 2.99,
-        "rbi": 1.61,
+        "r": 2.96,
+        "rbi": 1.6,
         "sb": 0.99
       },
       "multipliers": {
@@ -305,13 +229,89 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.159,
-        "doubles": 0.0586,
+        "singles": 0.1578,
+        "doubles": 0.0581,
         "triples": 0.0008,
-        "home_runs": 0.0574,
+        "home_runs": 0.057,
         "bb_hbp": 0.0901,
-        "r_per_pa": 0.3733,
-        "rbi_per_pa": 0.2013
+        "r_per_pa": 0.3705,
+        "rbi_per_pa": 0.1996
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 696100,
+      "name": "Hunter Goodman",
+      "position": "C",
+      "team_id": 115,
+      "team_abbr": "COL",
+      "opp_abbr": "CHC",
+      "opp_team_id": 112,
+      "opp_pitcher": {
+        "id": 665795,
+        "fullName": "Edward Cabrera"
+      },
+      "park": {
+        "id": 19,
+        "name": "Coors Field",
+        "runs": 116,
+        "hr": 118,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "73",
+        "wind": "15 mph, In From CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 9.37,
+      "mean_efp": 8.17,
+      "stats_games": 6,
+      "efp": 10.16,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.67,
+        "doubles": 1.01,
+        "triples": 0.04,
+        "home_runs": 3.27,
+        "bb_hbp": 0.92,
+        "r": 2.55,
+        "rbi": 1.57,
+        "sb": 0.57
+      },
+      "multipliers": {
+        "park_hr": 1.18,
+        "park_runs": 1.16,
+        "weather_hr": 0.9,
+        "pitcher_hits": 1.064,
+        "pitcher_hr": 1.154,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.975,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.94,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.025,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1393,
+        "doubles": 0.0506,
+        "triples": 0.0011,
+        "home_runs": 0.0817,
+        "bb_hbp": 0.1149,
+        "r_per_pa": 0.3184,
+        "rbi_per_pa": 0.1958
       },
       "pa": 4.0,
       "tier": "low"
@@ -390,6 +390,82 @@
         "rbi_per_pa": 0.1671
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 665742,
+      "name": "Juan Soto",
+      "position": "LF",
+      "team_id": 121,
+      "team_abbr": "NYM",
+      "opp_abbr": "STL",
+      "opp_team_id": 138,
+      "opp_pitcher": {
+        "id": 690928,
+        "fullName": "Hunter Dobbins"
+      },
+      "park": {
+        "id": 3289,
+        "name": "Citi Field",
+        "runs": 96,
+        "hr": 93,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "91",
+        "wind": "8 mph, Out To RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.15,
+      "mean_efp": 6.89,
+      "stats_games": 0,
+      "efp": 9.99,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.7,
+        "doubles": 0.64,
+        "triples": 0.09,
+        "home_runs": 2.67,
+        "bb_hbp": 1.36,
+        "r": 2.94,
+        "rbi": 1.38,
+        "sb": 0.61
+      },
+      "multipliers": {
+        "park_hr": 0.93,
+        "park_runs": 0.96,
+        "weather_hr": 1.208,
+        "pitcher_hits": 1.029,
+        "pitcher_hr": 1.13,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.934,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1321,
+        "doubles": 0.0297,
+        "triples": 0.0027,
+        "home_runs": 0.0621,
+        "bb_hbp": 0.1578,
+        "r_per_pa": 0.3422,
+        "rbi_per_pa": 0.1606
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -572,7 +648,7 @@
       "stdev_efp": 5.88,
       "mean_efp": 6.43,
       "stats_games": 7,
-      "efp": 9.79,
+      "efp": 9.84,
       "bat_side": "R",
       "per_event": {
         "singles": 2.64,
@@ -582,7 +658,7 @@
         "bb_hbp": 0.45,
         "r": 2.72,
         "rbi": 1.47,
-        "sb": 1.25
+        "sb": 1.31
       },
       "multipliers": {
         "park_hr": 0.91,
@@ -616,82 +692,6 @@
         "bb_hbp": 0.0524,
         "r_per_pa": 0.3157,
         "rbi_per_pa": 0.1714
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 665742,
-      "name": "Juan Soto",
-      "position": "LF",
-      "team_id": 121,
-      "team_abbr": "NYM",
-      "opp_abbr": "STL",
-      "opp_team_id": 138,
-      "opp_pitcher": {
-        "id": 690928,
-        "fullName": "Hunter Dobbins"
-      },
-      "park": {
-        "id": 3289,
-        "name": "Citi Field",
-        "runs": 96,
-        "hr": 93,
-        "label": "Pitcher Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "91",
-        "wind": "8 mph, Out To RF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 7.15,
-      "mean_efp": 6.89,
-      "stats_games": 0,
-      "efp": 9.54,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.71,
-        "doubles": 0.64,
-        "triples": 0.09,
-        "home_runs": 2.32,
-        "bb_hbp": 1.37,
-        "r": 2.88,
-        "rbi": 1.26,
-        "sb": 0.61
-      },
-      "multipliers": {
-        "park_hr": 0.93,
-        "park_runs": 0.96,
-        "weather_hr": 1.208,
-        "pitcher_hits": 1.029,
-        "pitcher_hr": 1.13,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.934,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.15,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1327,
-        "doubles": 0.0299,
-        "triples": 0.0028,
-        "home_runs": 0.0539,
-        "bb_hbp": 0.159,
-        "r_per_pa": 0.3353,
-        "rbi_per_pa": 0.1469
       },
       "pa": 4.3,
       "tier": "low"
@@ -844,6 +844,82 @@
         "bb_hbp": 0.114,
         "r_per_pa": 0.3334,
         "rbi_per_pa": 0.1446
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 650489,
+      "name": "Willi Castro",
+      "position": "2B",
+      "team_id": 115,
+      "team_abbr": "COL",
+      "opp_abbr": "CHC",
+      "opp_team_id": 112,
+      "opp_pitcher": {
+        "id": 665795,
+        "fullName": "Edward Cabrera"
+      },
+      "park": {
+        "id": 19,
+        "name": "Coors Field",
+        "runs": 116,
+        "hr": 118,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "73",
+        "wind": "15 mph, In From CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 4.56,
+      "mean_efp": 6.0,
+      "stats_games": 5,
+      "efp": 9.26,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 2.56,
+        "doubles": 1.38,
+        "triples": 0.04,
+        "home_runs": 1.22,
+        "bb_hbp": 0.83,
+        "r": 2.72,
+        "rbi": 1.27,
+        "sb": 0.54
+      },
+      "multipliers": {
+        "park_hr": 1.18,
+        "park_runs": 1.16,
+        "weather_hr": 0.9,
+        "pitcher_hits": 1.064,
+        "pitcher_hr": 1.154,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.975,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.94,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.027,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1987,
+        "doubles": 0.064,
+        "triples": 0.0013,
+        "home_runs": 0.0283,
+        "bb_hbp": 0.097,
+        "r_per_pa": 0.3163,
+        "rbi_per_pa": 0.1479
       },
       "pa": 4.3,
       "tier": "low"
@@ -1522,82 +1598,6 @@
       "tier": "low"
     },
     {
-      "player_id": 650489,
-      "name": "Willi Castro",
-      "position": "2B",
-      "team_id": 115,
-      "team_abbr": "COL",
-      "opp_abbr": "CHC",
-      "opp_team_id": 112,
-      "opp_pitcher": {
-        "id": 665795,
-        "fullName": "Edward Cabrera"
-      },
-      "park": {
-        "id": 19,
-        "name": "Coors Field",
-        "runs": 116,
-        "hr": 118,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Sunny",
-        "temp": "73",
-        "wind": "15 mph, In From CF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 4.56,
-      "mean_efp": 6.0,
-      "stats_games": 5,
-      "efp": 8.95,
-      "bat_side": "S",
-      "per_event": {
-        "singles": 2.47,
-        "doubles": 1.39,
-        "triples": 0.04,
-        "home_runs": 1.24,
-        "bb_hbp": 0.84,
-        "r": 2.67,
-        "rbi": 1.26,
-        "sb": 0.31
-      },
-      "multipliers": {
-        "park_hr": 1.18,
-        "park_runs": 1.16,
-        "weather_hr": 0.9,
-        "pitcher_hits": 1.066,
-        "pitcher_hr": 1.162,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.975,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.94,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.027,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1913,
-        "doubles": 0.0648,
-        "triples": 0.0013,
-        "home_runs": 0.0288,
-        "bb_hbp": 0.0977,
-        "r_per_pa": 0.3103,
-        "rbi_per_pa": 0.146
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
       "player_id": 671056,
       "name": "Iv\u00e1n Herrera",
       "position": "DH",
@@ -1671,82 +1671,6 @@
         "rbi_per_pa": 0.1401
       },
       "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 693307,
-      "name": "Dillon Dingler",
-      "position": "C",
-      "team_id": 116,
-      "team_abbr": "DET",
-      "opp_abbr": "MIN",
-      "opp_team_id": 142,
-      "opp_pitcher": {
-        "id": 805673,
-        "fullName": "Zebby Matthews"
-      },
-      "park": {
-        "id": 2394,
-        "name": "Comerica Park",
-        "runs": 97,
-        "hr": 93,
-        "label": "Pitcher Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "82",
-        "wind": "8 mph, L To R"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 10.7,
-      "mean_efp": 7.33,
-      "stats_games": 6,
-      "efp": 8.89,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.59,
-        "doubles": 1.03,
-        "triples": 0.03,
-        "home_runs": 3.04,
-        "bb_hbp": 0.6,
-        "r": 2.31,
-        "rbi": 1.56,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 0.93,
-        "park_runs": 0.97,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.013,
-        "pitcher_hr": 1.238,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.057,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 0.912,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1321,
-        "doubles": 0.0513,
-        "triples": 0.0009,
-        "home_runs": 0.0759,
-        "bb_hbp": 0.0753,
-        "r_per_pa": 0.2882,
-        "rbi_per_pa": 0.1951
-      },
-      "pa": 4.0,
       "tier": "low"
     },
     {
@@ -1978,6 +1902,82 @@
       "tier": "low"
     },
     {
+      "player_id": 681198,
+      "name": "TJ Rumfield",
+      "position": "1B",
+      "team_id": 115,
+      "team_abbr": "COL",
+      "opp_abbr": "CHC",
+      "opp_team_id": 112,
+      "opp_pitcher": {
+        "id": 665795,
+        "fullName": "Edward Cabrera"
+      },
+      "park": {
+        "id": 19,
+        "name": "Coors Field",
+        "runs": 116,
+        "hr": 118,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "73",
+        "wind": "15 mph, In From CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 6.18,
+      "mean_efp": 8.0,
+      "stats_games": 8,
+      "efp": 8.85,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.15,
+        "doubles": 1.13,
+        "triples": 0.15,
+        "home_runs": 1.77,
+        "bb_hbp": 1.0,
+        "r": 2.66,
+        "rbi": 1.24,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 1.18,
+        "park_runs": 1.16,
+        "weather_hr": 0.9,
+        "pitcher_hits": 1.064,
+        "pitcher_hr": 1.154,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.975,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.94,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.036,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1667,
+        "doubles": 0.0525,
+        "triples": 0.0043,
+        "home_runs": 0.0413,
+        "bb_hbp": 0.1161,
+        "r_per_pa": 0.3093,
+        "rbi_per_pa": 0.144
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 805999,
       "name": "A.J. Ewing",
       "position": "CF",
@@ -2130,6 +2130,82 @@
       "tier": "low"
     },
     {
+      "player_id": 693307,
+      "name": "Dillon Dingler",
+      "position": "C",
+      "team_id": 116,
+      "team_abbr": "DET",
+      "opp_abbr": "MIN",
+      "opp_team_id": 142,
+      "opp_pitcher": {
+        "id": 805673,
+        "fullName": "Zebby Matthews"
+      },
+      "park": {
+        "id": 2394,
+        "name": "Comerica Park",
+        "runs": 97,
+        "hr": 93,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "82",
+        "wind": "8 mph, L To R"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 10.7,
+      "mean_efp": 7.33,
+      "stats_games": 6,
+      "efp": 8.81,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.57,
+        "doubles": 1.02,
+        "triples": 0.03,
+        "home_runs": 3.01,
+        "bb_hbp": 0.6,
+        "r": 2.28,
+        "rbi": 1.54,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 0.93,
+        "park_runs": 0.97,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.013,
+        "pitcher_hr": 1.238,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.057,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.912,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.131,
+        "doubles": 0.0509,
+        "triples": 0.0009,
+        "home_runs": 0.0752,
+        "bb_hbp": 0.0748,
+        "r_per_pa": 0.2855,
+        "rbi_per_pa": 0.1927
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
       "player_id": 677594,
       "name": "Julio Rodr\u00edguez",
       "position": "CF",
@@ -2204,84 +2280,8 @@
       },
       "pa": 4.3,
       "tier": "low"
-    },
-    {
-      "player_id": 681198,
-      "name": "TJ Rumfield",
-      "position": "1B",
-      "team_id": 115,
-      "team_abbr": "COL",
-      "opp_abbr": "CHC",
-      "opp_team_id": 112,
-      "opp_pitcher": {
-        "id": 665795,
-        "fullName": "Edward Cabrera"
-      },
-      "park": {
-        "id": 19,
-        "name": "Coors Field",
-        "runs": 116,
-        "hr": 118,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Sunny",
-        "temp": "73",
-        "wind": "15 mph, In From CF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 6.18,
-      "mean_efp": 8.0,
-      "stats_games": 8,
-      "efp": 8.8,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.16,
-        "doubles": 1.14,
-        "triples": 0.15,
-        "home_runs": 1.8,
-        "bb_hbp": 0.95,
-        "r": 2.61,
-        "rbi": 1.24,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 1.18,
-        "park_runs": 1.16,
-        "weather_hr": 0.9,
-        "pitcher_hits": 1.066,
-        "pitcher_hr": 1.162,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.975,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.94,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.036,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1677,
-        "doubles": 0.053,
-        "triples": 0.0044,
-        "home_runs": 0.0419,
-        "bb_hbp": 0.11,
-        "r_per_pa": 0.3031,
-        "rbi_per_pa": 0.144
-      },
-      "pa": 4.3,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-06-11T19:21:05.815297+00:00"
+  "generated_at": "2026-06-11T19:29:53.557009+00:00"
 }
