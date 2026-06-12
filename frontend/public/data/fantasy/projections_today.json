@@ -465,16 +465,16 @@
       "stdev_efp": 7.37,
       "mean_efp": 9.12,
       "stats_games": 8,
-      "efp": 9.66,
+      "efp": 9.63,
       "bat_side": "R",
       "per_event": {
-        "singles": 2.09,
-        "doubles": 1.19,
+        "singles": 2.08,
+        "doubles": 1.18,
         "triples": 0.1,
         "home_runs": 1.46,
         "bb_hbp": 0.96,
         "r": 2.73,
-        "rbi": 1.32,
+        "rbi": 1.31,
         "sb": 1.17
       },
       "multipliers": {
@@ -502,13 +502,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1741,
-        "doubles": 0.0593,
-        "triples": 0.0033,
-        "home_runs": 0.0366,
-        "bb_hbp": 0.1205,
-        "r_per_pa": 0.3412,
-        "rbi_per_pa": 0.1647
+        "singles": 0.1731,
+        "doubles": 0.059,
+        "triples": 0.0032,
+        "home_runs": 0.0364,
+        "bb_hbp": 0.1206,
+        "r_per_pa": 0.3407,
+        "rbi_per_pa": 0.1644
       },
       "pa": 4.0,
       "tier": "low"
@@ -897,13 +897,13 @@
       "stdev_efp": 8.51,
       "mean_efp": 10.83,
       "stats_games": 6,
-      "efp": 9.27,
+      "efp": 9.3,
       "bat_side": "L",
       "per_event": {
-        "singles": 1.63,
+        "singles": 1.62,
         "doubles": 1.38,
         "triples": 0.04,
-        "home_runs": 2.91,
+        "home_runs": 2.97,
         "bb_hbp": 0.64,
         "r": 2.42,
         "rbi": 1.49,
@@ -934,11 +934,11 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1361,
-        "doubles": 0.0692,
+        "singles": 0.1354,
+        "doubles": 0.0688,
         "triples": 0.0012,
-        "home_runs": 0.0728,
-        "bb_hbp": 0.08,
+        "home_runs": 0.0742,
+        "bb_hbp": 0.0796,
         "r_per_pa": 0.3019,
         "rbi_per_pa": 0.1868
       },
@@ -1519,6 +1519,78 @@
       "tier": "low"
     },
     {
+      "player_id": 668939,
+      "name": "Adley Rutschman",
+      "position": "C",
+      "team_id": 110,
+      "team_abbr": "BAL",
+      "opp_abbr": "SD",
+      "opp_team_id": 135,
+      "opp_pitcher": {
+        "id": 656288,
+        "fullName": "Griffin Canning"
+      },
+      "park": {
+        "id": 2,
+        "name": "Camden Yards",
+        "runs": 103,
+        "hr": 108,
+        "label": "Slight Hitter"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 3.87,
+      "mean_efp": 7.2,
+      "stats_games": 5,
+      "efp": 8.95,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 1.72,
+        "doubles": 1.5,
+        "triples": 0.32,
+        "home_runs": 1.61,
+        "bb_hbp": 1.04,
+        "r": 2.58,
+        "rbi": 1.44,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 1.08,
+        "park_runs": 1.03,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.003,
+        "pitcher_hr": 1.149,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.902,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1437,
+        "doubles": 0.0752,
+        "triples": 0.0099,
+        "home_runs": 0.0403,
+        "bb_hbp": 0.1299,
+        "r_per_pa": 0.3229,
+        "rbi_per_pa": 0.1802
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
       "player_id": 665019,
       "name": "Kody Clemens",
       "position": "1B",
@@ -1586,78 +1658,6 @@
         "bb_hbp": 0.0791,
         "r_per_pa": 0.2875,
         "rbi_per_pa": 0.1859
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 668939,
-      "name": "Adley Rutschman",
-      "position": "C",
-      "team_id": 110,
-      "team_abbr": "BAL",
-      "opp_abbr": "SD",
-      "opp_team_id": 135,
-      "opp_pitcher": {
-        "id": 656288,
-        "fullName": "Griffin Canning"
-      },
-      "park": {
-        "id": 2,
-        "name": "Camden Yards",
-        "runs": 103,
-        "hr": 108,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 3.87,
-      "mean_efp": 7.2,
-      "stats_games": 5,
-      "efp": 8.93,
-      "bat_side": "S",
-      "per_event": {
-        "singles": 1.71,
-        "doubles": 1.48,
-        "triples": 0.32,
-        "home_runs": 1.62,
-        "bb_hbp": 1.03,
-        "r": 2.58,
-        "rbi": 1.44,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 1.08,
-        "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.003,
-        "pitcher_hr": 1.149,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.902,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1428,
-        "doubles": 0.0742,
-        "triples": 0.0099,
-        "home_runs": 0.0406,
-        "bb_hbp": 0.1287,
-        "r_per_pa": 0.3229,
-        "rbi_per_pa": 0.1802
       },
       "pa": 4.0,
       "tier": "low"
@@ -2165,5 +2165,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-06-12T02:00:02.859680+00:00"
+  "generated_at": "2026-06-12T13:29:57.463727+00:00"
 }
