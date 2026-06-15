@@ -1069,82 +1069,6 @@
       "tier": "low"
     },
     {
-      "player_id": 672640,
-      "name": "Otto Lopez",
-      "position": "SS",
-      "team_id": 146,
-      "team_abbr": "MIA",
-      "opp_abbr": "PHI",
-      "opp_team_id": 143,
-      "opp_pitcher": {
-        "id": 554430,
-        "fullName": "Zack Wheeler"
-      },
-      "park": {
-        "id": 2681,
-        "name": "Citizens Bank Park",
-        "runs": 105,
-        "hr": 112,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Clear",
-        "temp": "78",
-        "wind": "7 mph, Out To CF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 5.88,
-      "mean_efp": 6.43,
-      "stats_games": 7,
-      "efp": 9.51,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.49,
-        "doubles": 1.17,
-        "triples": 0.34,
-        "home_runs": 0.93,
-        "bb_hbp": 0.37,
-        "r": 2.79,
-        "rbi": 1.48,
-        "sb": 1.28
-      },
-      "multipliers": {
-        "park_hr": 1.12,
-        "park_runs": 1.05,
-        "weather_hr": 1.08,
-        "pitcher_hits": 0.849,
-        "pitcher_hr": 1.045,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.975,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 0.975,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1931,
-        "doubles": 0.0546,
-        "triples": 0.0098,
-        "home_runs": 0.0216,
-        "bb_hbp": 0.0434,
-        "r_per_pa": 0.3241,
-        "rbi_per_pa": 0.1725
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
       "player_id": 701398,
       "name": "Sal Stewart",
       "position": "1B",
@@ -1297,6 +1221,82 @@
       "tier": "low"
     },
     {
+      "player_id": 672640,
+      "name": "Otto Lopez",
+      "position": "SS",
+      "team_id": 146,
+      "team_abbr": "MIA",
+      "opp_abbr": "PHI",
+      "opp_team_id": 143,
+      "opp_pitcher": {
+        "id": 554430,
+        "fullName": "Zack Wheeler"
+      },
+      "park": {
+        "id": 2681,
+        "name": "Citizens Bank Park",
+        "runs": 105,
+        "hr": 112,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Clear",
+        "temp": "77",
+        "wind": "14 mph, L To R"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.88,
+      "mean_efp": 6.43,
+      "stats_games": 7,
+      "efp": 9.45,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.49,
+        "doubles": 1.17,
+        "triples": 0.34,
+        "home_runs": 0.86,
+        "bb_hbp": 0.37,
+        "r": 2.79,
+        "rbi": 1.48,
+        "sb": 1.28
+      },
+      "multipliers": {
+        "park_hr": 1.12,
+        "park_runs": 1.05,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.849,
+        "pitcher_hr": 1.045,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.975,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.975,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1931,
+        "doubles": 0.0546,
+        "triples": 0.0098,
+        "home_runs": 0.02,
+        "bb_hbp": 0.0434,
+        "r_per_pa": 0.3241,
+        "rbi_per_pa": 0.1725
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 694362,
       "name": "Blake Dunn",
       "position": "RF",
@@ -1444,158 +1444,6 @@
         "bb_hbp": 0.0692,
         "r_per_pa": 0.3353,
         "rbi_per_pa": 0.161
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 547180,
-      "name": "Bryce Harper",
-      "position": "1B",
-      "team_id": 143,
-      "team_abbr": "PHI",
-      "opp_abbr": "MIA",
-      "opp_team_id": 146,
-      "opp_pitcher": {
-        "id": 687473,
-        "fullName": "Ryan Gusto"
-      },
-      "park": {
-        "id": 2681,
-        "name": "Citizens Bank Park",
-        "runs": 105,
-        "hr": 112,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Clear",
-        "temp": "78",
-        "wind": "7 mph, Out To CF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 5.56,
-      "mean_efp": 5.67,
-      "stats_games": 9,
-      "efp": 9.19,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.57,
-        "doubles": 1.1,
-        "triples": 0.08,
-        "home_runs": 2.26,
-        "bb_hbp": 0.95,
-        "r": 2.83,
-        "rbi": 1.42,
-        "sb": 0.28
-      },
-      "multipliers": {
-        "park_hr": 1.12,
-        "park_runs": 1.05,
-        "weather_hr": 1.08,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 1.0,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.915,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.042,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1215,
-        "doubles": 0.0513,
-        "triples": 0.0024,
-        "home_runs": 0.0526,
-        "bb_hbp": 0.1106,
-        "r_per_pa": 0.3292,
-        "rbi_per_pa": 0.1647
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 689414,
-      "name": "Liam Hicks",
-      "position": "C",
-      "team_id": 146,
-      "team_abbr": "MIA",
-      "opp_abbr": "PHI",
-      "opp_team_id": 143,
-      "opp_pitcher": {
-        "id": 554430,
-        "fullName": "Zack Wheeler"
-      },
-      "park": {
-        "id": 2681,
-        "name": "Citizens Bank Park",
-        "runs": 105,
-        "hr": 112,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Clear",
-        "temp": "78",
-        "wind": "7 mph, Out To CF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 5.54,
-      "mean_efp": 9.0,
-      "stats_games": 6,
-      "efp": 9.15,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.85,
-        "doubles": 0.71,
-        "triples": 0.25,
-        "home_runs": 2.28,
-        "bb_hbp": 0.78,
-        "r": 3.01,
-        "rbi": 1.5,
-        "sb": 0.06
-      },
-      "multipliers": {
-        "park_hr": 1.12,
-        "park_runs": 1.05,
-        "weather_hr": 1.08,
-        "pitcher_hits": 0.849,
-        "pitcher_hr": 1.045,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.975,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.061,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1435,
-        "doubles": 0.033,
-        "triples": 0.0073,
-        "home_runs": 0.053,
-        "bb_hbp": 0.0906,
-        "r_per_pa": 0.3497,
-        "rbi_per_pa": 0.1745
       },
       "pa": 4.3,
       "tier": "low"
@@ -1897,6 +1745,82 @@
       "tier": "low"
     },
     {
+      "player_id": 547180,
+      "name": "Bryce Harper",
+      "position": "1B",
+      "team_id": 143,
+      "team_abbr": "PHI",
+      "opp_abbr": "MIA",
+      "opp_team_id": 146,
+      "opp_pitcher": {
+        "id": 687473,
+        "fullName": "Ryan Gusto"
+      },
+      "park": {
+        "id": 2681,
+        "name": "Citizens Bank Park",
+        "runs": 105,
+        "hr": 112,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Clear",
+        "temp": "77",
+        "wind": "14 mph, L To R"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.56,
+      "mean_efp": 5.67,
+      "stats_games": 9,
+      "efp": 9.05,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.57,
+        "doubles": 1.1,
+        "triples": 0.08,
+        "home_runs": 2.09,
+        "bb_hbp": 0.95,
+        "r": 2.83,
+        "rbi": 1.42,
+        "sb": 0.28
+      },
+      "multipliers": {
+        "park_hr": 1.12,
+        "park_runs": 1.05,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.0,
+        "pitcher_hr": 1.0,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.915,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.042,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1215,
+        "doubles": 0.0513,
+        "triples": 0.0024,
+        "home_runs": 0.0487,
+        "bb_hbp": 0.1106,
+        "r_per_pa": 0.3292,
+        "rbi_per_pa": 0.1647
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 691016,
       "name": "Tyler Soderstrom",
       "position": "LF",
@@ -2045,16 +1969,16 @@
       "tier": "low"
     },
     {
-      "player_id": 656941,
-      "name": "Kyle Schwarber",
-      "position": "DH",
-      "team_id": 143,
-      "team_abbr": "PHI",
-      "opp_abbr": "MIA",
-      "opp_team_id": 146,
+      "player_id": 689414,
+      "name": "Liam Hicks",
+      "position": "C",
+      "team_id": 146,
+      "team_abbr": "MIA",
+      "opp_abbr": "PHI",
+      "opp_team_id": 143,
       "opp_pitcher": {
-        "id": 687473,
-        "fullName": "Ryan Gusto"
+        "id": 554430,
+        "fullName": "Zack Wheeler"
       },
       "park": {
         "id": 2681,
@@ -2065,31 +1989,31 @@
       },
       "weather": {
         "condition": "Clear",
-        "temp": "78",
-        "wind": "7 mph, Out To CF"
+        "temp": "77",
+        "wind": "14 mph, L To R"
       },
       "pa_source": "lineup",
-      "stdev_efp": 8.62,
-      "mean_efp": 7.78,
-      "stats_games": 9,
+      "stdev_efp": 5.54,
+      "mean_efp": 9.0,
+      "stats_games": 6,
       "efp": 9.0,
       "bat_side": "L",
       "per_event": {
-        "singles": 1.68,
-        "doubles": 0.59,
-        "triples": 0.08,
-        "home_runs": 2.98,
-        "bb_hbp": 0.92,
-        "r": 2.42,
-        "rbi": 1.52,
-        "sb": 0.07
+        "singles": 1.85,
+        "doubles": 0.71,
+        "triples": 0.25,
+        "home_runs": 2.11,
+        "bb_hbp": 0.78,
+        "r": 3.01,
+        "rbi": 1.5,
+        "sb": 0.06
       },
       "multipliers": {
         "park_hr": 1.12,
         "park_runs": 1.05,
-        "weather_hr": 1.08,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 1.0,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.849,
+        "pitcher_hr": 1.045,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -2097,7 +2021,7 @@
         "stx_xwoba": 1.0,
         "stx_barrel": 1.0,
         "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.915,
+        "pitcher_gb_hr": 0.975,
         "k_damper": 1.0,
         "pitcher_bb": 0.75,
         "park_hand_hr": 1.0,
@@ -2105,17 +2029,17 @@
         "speed_singles": 1.0,
         "speed_r": 1.0,
         "bvpt": 1.0,
-        "ondeck_r": 0.873,
+        "ondeck_r": 1.061,
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1306,
-        "doubles": 0.0277,
-        "triples": 0.0024,
-        "home_runs": 0.0692,
-        "bb_hbp": 0.1072,
-        "r_per_pa": 0.2819,
-        "rbi_per_pa": 0.1769
+        "singles": 0.1435,
+        "doubles": 0.033,
+        "triples": 0.0073,
+        "home_runs": 0.0491,
+        "bb_hbp": 0.0906,
+        "r_per_pa": 0.3497,
+        "rbi_per_pa": 0.1745
       },
       "pa": 4.3,
       "tier": "low"
@@ -2271,8 +2195,80 @@
       },
       "pa": 4.0,
       "tier": "low"
+    },
+    {
+      "player_id": 641680,
+      "name": "Jonah Heim",
+      "position": "C",
+      "team_id": 133,
+      "team_abbr": "ATH",
+      "opp_abbr": "PIT",
+      "opp_team_id": 134,
+      "opp_pitcher": {
+        "id": 683003,
+        "fullName": "Jared Jones"
+      },
+      "park": {
+        "id": 2529,
+        "name": "Unknown",
+        "runs": 100,
+        "hr": 100,
+        "label": "Neutral"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 7.15,
+      "mean_efp": 6.89,
+      "stats_games": 0,
+      "efp": 8.96,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 1.59,
+        "doubles": 1.39,
+        "triples": 0.06,
+        "home_runs": 2.6,
+        "bb_hbp": 0.65,
+        "r": 2.39,
+        "rbi": 1.55,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 1.0,
+        "park_runs": 1.0,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.05,
+        "pitcher_hr": 1.06,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.017,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.01,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1324,
+        "doubles": 0.0693,
+        "triples": 0.002,
+        "home_runs": 0.065,
+        "bb_hbp": 0.0818,
+        "r_per_pa": 0.2984,
+        "rbi_per_pa": 0.1937
+      },
+      "pa": 4.0,
+      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-06-15T21:30:44.910914+00:00"
+  "generated_at": "2026-06-15T21:39:45.563921+00:00"
 }
