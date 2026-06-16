@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 337,
+  "projection_count": 328,
   "projections": [
     {
       "player_id": 668709,
@@ -393,6 +393,82 @@
       "tier": "low"
     },
     {
+      "player_id": 670541,
+      "name": "Yordan Alvarez",
+      "position": "DH",
+      "team_id": 117,
+      "team_abbr": "HOU",
+      "opp_abbr": "DET",
+      "opp_team_id": 116,
+      "opp_pitcher": {
+        "id": 664285,
+        "fullName": "Framber Valdez"
+      },
+      "park": {
+        "id": 2392,
+        "name": "Minute Maid Park",
+        "runs": 103,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.35,
+      "mean_efp": 12.38,
+      "stats_games": 8,
+      "efp": 10.46,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.36,
+        "doubles": 0.84,
+        "triples": 0.03,
+        "home_runs": 2.76,
+        "bb_hbp": 0.92,
+        "r": 3.14,
+        "rbi": 1.84,
+        "sb": 0.05
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.03,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.996,
+        "pitcher_hr": 0.969,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.909,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.89,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.99,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1829,
+        "doubles": 0.0392,
+        "triples": 0.0008,
+        "home_runs": 0.0643,
+        "bb_hbp": 0.107,
+        "r_per_pa": 0.3652,
+        "rbi_per_pa": 0.2135
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 701762,
       "name": "Nick Kurtz",
       "position": "1B",
@@ -608,6 +684,82 @@
         "bb_hbp": 0.0923,
         "r_per_pa": 0.3148,
         "rbi_per_pa": 0.1328
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 672640,
+      "name": "Otto Lopez",
+      "position": "SS",
+      "team_id": 146,
+      "team_abbr": "MIA",
+      "opp_abbr": "PHI",
+      "opp_team_id": 143,
+      "opp_pitcher": {
+        "id": 666200,
+        "fullName": "Jes\u00fas Luzardo"
+      },
+      "park": {
+        "id": 2681,
+        "name": "Citizens Bank Park",
+        "runs": 105,
+        "hr": 112,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Clear",
+        "temp": "78",
+        "wind": "7 mph, Out To RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.88,
+      "mean_efp": 6.43,
+      "stats_games": 7,
+      "efp": 10.17,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 3.44,
+        "doubles": 1.39,
+        "triples": 0.41,
+        "home_runs": 0.71,
+        "bb_hbp": 0.42,
+        "r": 2.85,
+        "rbi": 1.38,
+        "sb": 1.01
+      },
+      "multipliers": {
+        "park_hr": 1.12,
+        "park_runs": 1.05,
+        "weather_hr": 1.03,
+        "pitcher_hits": 1.043,
+        "pitcher_hr": 0.933,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.907,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.832,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.017,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.2667,
+        "doubles": 0.0646,
+        "triples": 0.0118,
+        "home_runs": 0.0164,
+        "bb_hbp": 0.0486,
+        "r_per_pa": 0.3313,
+        "rbi_per_pa": 0.161
       },
       "pa": 4.3,
       "tier": "low"
@@ -1365,78 +1517,6 @@
       "tier": "low"
     },
     {
-      "player_id": 670541,
-      "name": "Yordan Alvarez",
-      "position": "DH",
-      "team_id": 117,
-      "team_abbr": "HOU",
-      "opp_abbr": "DET",
-      "opp_team_id": 116,
-      "opp_pitcher": {
-        "id": 664285,
-        "fullName": "Framber Valdez"
-      },
-      "park": {
-        "id": 2392,
-        "name": "Minute Maid Park",
-        "runs": 103,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.35,
-      "mean_efp": 12.38,
-      "stats_games": 8,
-      "efp": 9.76,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.19,
-        "doubles": 0.78,
-        "triples": 0.03,
-        "home_runs": 2.57,
-        "bb_hbp": 0.86,
-        "r": 2.95,
-        "rbi": 1.71,
-        "sb": 0.04
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.996,
-        "pitcher_hr": 0.969,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.909,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.89,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1829,
-        "doubles": 0.0392,
-        "triples": 0.0008,
-        "home_runs": 0.0643,
-        "bb_hbp": 0.107,
-        "r_per_pa": 0.3688,
-        "rbi_per_pa": 0.2135
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 545361,
       "name": "Mike Trout",
       "position": "CF",
@@ -1885,82 +1965,6 @@
       "tier": "low"
     },
     {
-      "player_id": 672640,
-      "name": "Otto Lopez",
-      "position": "SS",
-      "team_id": 146,
-      "team_abbr": "MIA",
-      "opp_abbr": "PHI",
-      "opp_team_id": 143,
-      "opp_pitcher": {
-        "id": 666200,
-        "fullName": "Jes\u00fas Luzardo"
-      },
-      "park": {
-        "id": 2681,
-        "name": "Citizens Bank Park",
-        "runs": 105,
-        "hr": 112,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Clear",
-        "temp": "78",
-        "wind": "7 mph, Out To RF"
-      },
-      "pa_source": "default",
-      "stdev_efp": 5.88,
-      "mean_efp": 6.43,
-      "stats_games": 7,
-      "efp": 9.4,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 3.2,
-        "doubles": 1.29,
-        "triples": 0.38,
-        "home_runs": 0.66,
-        "bb_hbp": 0.39,
-        "r": 2.61,
-        "rbi": 1.29,
-        "sb": 0.92
-      },
-      "multipliers": {
-        "park_hr": 1.12,
-        "park_runs": 1.05,
-        "weather_hr": 1.03,
-        "pitcher_hits": 1.043,
-        "pitcher_hr": 0.933,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.907,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.832,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.2667,
-        "doubles": 0.0646,
-        "triples": 0.0118,
-        "home_runs": 0.0164,
-        "bb_hbp": 0.0486,
-        "r_per_pa": 0.3257,
-        "rbi_per_pa": 0.161
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 656941,
       "name": "Kyle Schwarber",
       "position": "DH",
@@ -2037,9 +2041,9 @@
       "tier": "low"
     },
     {
-      "player_id": 665923,
-      "name": "Esteury Ruiz",
-      "position": "RF",
+      "player_id": 689414,
+      "name": "Liam Hicks",
+      "position": "C",
       "team_id": 146,
       "team_abbr": "MIA",
       "opp_abbr": "PHI",
@@ -2060,26 +2064,26 @@
         "temp": "78",
         "wind": "7 mph, Out To RF"
       },
-      "pa_source": "default",
-      "stdev_efp": 7.15,
-      "mean_efp": 6.89,
-      "stats_games": 0,
-      "efp": 9.35,
-      "bat_side": "R",
+      "pa_source": "lineup",
+      "stdev_efp": 5.54,
+      "mean_efp": 9.0,
+      "stats_games": 6,
+      "efp": 9.36,
+      "bat_side": "L",
       "per_event": {
-        "singles": 1.25,
-        "doubles": 1.74,
-        "triples": 0.35,
-        "home_runs": 1.33,
-        "bb_hbp": 0.86,
-        "r": 2.47,
-        "rbi": 1.31,
-        "sb": 1.35
+        "singles": 2.34,
+        "doubles": 0.72,
+        "triples": 0.27,
+        "home_runs": 1.7,
+        "bb_hbp": 0.84,
+        "r": 3.23,
+        "rbi": 1.53,
+        "sb": 0.05
       },
       "multipliers": {
         "park_hr": 1.12,
         "park_runs": 1.05,
-        "weather_hr": 1.03,
+        "weather_hr": 1.15,
         "pitcher_hits": 1.043,
         "pitcher_hr": 0.933,
         "slot_r": 1.0,
@@ -2097,19 +2101,19 @@
         "speed_singles": 1.0,
         "speed_r": 1.0,
         "bvpt": 1.0,
-        "ondeck_r": 1.0,
+        "ondeck_r": 1.119,
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1038,
-        "doubles": 0.0872,
-        "triples": 0.011,
-        "home_runs": 0.0332,
-        "bb_hbp": 0.1081,
-        "r_per_pa": 0.3091,
-        "rbi_per_pa": 0.1634
+        "singles": 0.1814,
+        "doubles": 0.0334,
+        "triples": 0.008,
+        "home_runs": 0.0396,
+        "bb_hbp": 0.0975,
+        "r_per_pa": 0.376,
+        "rbi_per_pa": 0.1781
       },
-      "pa": 4.0,
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -2266,5 +2270,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-06-16T19:58:09.400513+00:00"
+  "generated_at": "2026-06-16T20:03:49.919405+00:00"
 }
