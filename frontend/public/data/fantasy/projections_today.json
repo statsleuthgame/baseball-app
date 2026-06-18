@@ -89,82 +89,6 @@
       "tier": "medium"
     },
     {
-      "player_id": 621439,
-      "name": "Byron Buxton",
-      "position": "CF",
-      "team_id": 142,
-      "team_abbr": "MIN",
-      "opp_abbr": "TEX",
-      "opp_team_id": 140,
-      "opp_pitcher": {
-        "id": 683004,
-        "fullName": "Jack Leiter"
-      },
-      "park": {
-        "id": 5325,
-        "name": "Globe Life Field",
-        "runs": 104,
-        "hr": 108,
-        "label": "Slight Hitter"
-      },
-      "weather": {
-        "condition": "Roof Closed",
-        "temp": "74",
-        "wind": "0 mph, None"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 5.64,
-      "mean_efp": 9.2,
-      "stats_games": 5,
-      "efp": 11.68,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.67,
-        "doubles": 1.25,
-        "triples": 0.12,
-        "home_runs": 4.3,
-        "bb_hbp": 0.74,
-        "r": 2.82,
-        "rbi": 1.81,
-        "sb": 0.64
-      },
-      "multipliers": {
-        "park_hr": 1.08,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.009,
-        "pitcher_hr": 1.114,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.091,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.011,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.063,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1292,
-        "doubles": 0.058,
-        "triples": 0.0035,
-        "home_runs": 0.0999,
-        "bb_hbp": 0.0859,
-        "r_per_pa": 0.3279,
-        "rbi_per_pa": 0.2101
-      },
-      "pa": 4.3,
-      "tier": "medium"
-    },
-    {
       "player_id": 545341,
       "name": "Randal Grichuk",
       "position": "RF",
@@ -236,6 +160,82 @@
         "bb_hbp": 0.0682,
         "r_per_pa": 0.3483,
         "rbi_per_pa": 0.1836
+      },
+      "pa": 4.3,
+      "tier": "medium"
+    },
+    {
+      "player_id": 621439,
+      "name": "Byron Buxton",
+      "position": "CF",
+      "team_id": 142,
+      "team_abbr": "MIN",
+      "opp_abbr": "TEX",
+      "opp_team_id": 140,
+      "opp_pitcher": {
+        "id": 683004,
+        "fullName": "Jack Leiter"
+      },
+      "park": {
+        "id": 5325,
+        "name": "Globe Life Field",
+        "runs": 104,
+        "hr": 108,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "74",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.64,
+      "mean_efp": 9.2,
+      "stats_games": 5,
+      "efp": 11.57,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.65,
+        "doubles": 1.23,
+        "triples": 0.12,
+        "home_runs": 4.25,
+        "bb_hbp": 0.73,
+        "r": 2.8,
+        "rbi": 1.79,
+        "sb": 0.64
+      },
+      "multipliers": {
+        "park_hr": 1.08,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.009,
+        "pitcher_hr": 1.114,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.091,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.011,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.063,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1281,
+        "doubles": 0.0573,
+        "triples": 0.0035,
+        "home_runs": 0.0988,
+        "bb_hbp": 0.0852,
+        "r_per_pa": 0.3253,
+        "rbi_per_pa": 0.208
       },
       "pa": 4.3,
       "tier": "medium"
@@ -572,16 +572,16 @@
       "stdev_efp": 7.15,
       "mean_efp": 6.89,
       "stats_games": 0,
-      "efp": 10.16,
+      "efp": 10.09,
       "bat_side": "R",
       "per_event": {
-        "singles": 2.08,
+        "singles": 2.07,
         "doubles": 0.89,
         "triples": 0.04,
-        "home_runs": 2.79,
-        "bb_hbp": 0.52,
-        "r": 3.09,
-        "rbi": 1.74,
+        "home_runs": 2.76,
+        "bb_hbp": 0.51,
+        "r": 3.07,
+        "rbi": 1.72,
         "sb": 0.46
       },
       "multipliers": {
@@ -609,13 +609,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1609,
+        "singles": 0.1601,
         "doubles": 0.0415,
         "triples": 0.0011,
-        "home_runs": 0.0649,
-        "bb_hbp": 0.0599,
-        "r_per_pa": 0.359,
-        "rbi_per_pa": 0.2024
+        "home_runs": 0.0641,
+        "bb_hbp": 0.0596,
+        "r_per_pa": 0.3565,
+        "rbi_per_pa": 0.2003
       },
       "pa": 4.3,
       "tier": "low"
@@ -766,82 +766,6 @@
       "tier": "low"
     },
     {
-      "player_id": 663616,
-      "name": "Trevor Larnach",
-      "position": "LF",
-      "team_id": 142,
-      "team_abbr": "MIN",
-      "opp_abbr": "TEX",
-      "opp_team_id": 140,
-      "opp_pitcher": {
-        "id": 683004,
-        "fullName": "Jack Leiter"
-      },
-      "park": {
-        "id": 5325,
-        "name": "Globe Life Field",
-        "runs": 104,
-        "hr": 108,
-        "label": "Slight Hitter"
-      },
-      "weather": {
-        "condition": "Roof Closed",
-        "temp": "74",
-        "wind": "0 mph, None"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 3.74,
-      "mean_efp": 5.0,
-      "stats_games": 7,
-      "efp": 9.61,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.38,
-        "doubles": 0.9,
-        "triples": 0.14,
-        "home_runs": 1.86,
-        "bb_hbp": 1.04,
-        "r": 3.11,
-        "rbi": 1.4,
-        "sb": 0.15
-      },
-      "multipliers": {
-        "park_hr": 1.08,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.009,
-        "pitcher_hr": 1.114,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.091,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.011,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.1,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1842,
-        "doubles": 0.0421,
-        "triples": 0.0041,
-        "home_runs": 0.0432,
-        "bb_hbp": 0.1205,
-        "r_per_pa": 0.3611,
-        "rbi_per_pa": 0.1633
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
       "player_id": 671056,
       "name": "Iv\u00e1n Herrera",
       "position": "DH",
@@ -918,51 +842,51 @@
       "tier": "low"
     },
     {
-      "player_id": 686527,
-      "name": "Dominic Canzone",
-      "position": "DH",
-      "team_id": 136,
-      "team_abbr": "SEA",
-      "opp_abbr": "BAL",
-      "opp_team_id": 110,
+      "player_id": 663616,
+      "name": "Trevor Larnach",
+      "position": "LF",
+      "team_id": 142,
+      "team_abbr": "MIN",
+      "opp_abbr": "TEX",
+      "opp_team_id": 140,
       "opp_pitcher": {
-        "id": 669358,
-        "fullName": "Shane Baz"
+        "id": 683004,
+        "fullName": "Jack Leiter"
       },
       "park": {
-        "id": 680,
-        "name": "T-Mobile Park",
-        "runs": 95,
-        "hr": 96,
-        "label": "Pitcher Friendly"
+        "id": 5325,
+        "name": "Globe Life Field",
+        "runs": 104,
+        "hr": 108,
+        "label": "Slight Hitter"
       },
       "weather": {
-        "condition": "Sunny",
-        "temp": "72",
-        "wind": "11 mph, L To R"
+        "condition": "Roof Closed",
+        "temp": "74",
+        "wind": "0 mph, None"
       },
       "pa_source": "lineup",
-      "stdev_efp": 8.51,
-      "mean_efp": 10.83,
-      "stats_games": 6,
+      "stdev_efp": 3.74,
+      "mean_efp": 5.0,
+      "stats_games": 7,
       "efp": 9.53,
       "bat_side": "L",
       "per_event": {
-        "singles": 1.67,
-        "doubles": 0.98,
-        "triples": 0.34,
-        "home_runs": 2.31,
-        "bb_hbp": 0.94,
-        "r": 2.86,
-        "rbi": 1.72,
-        "sb": 0.06
+        "singles": 2.36,
+        "doubles": 0.9,
+        "triples": 0.14,
+        "home_runs": 1.83,
+        "bb_hbp": 1.03,
+        "r": 3.08,
+        "rbi": 1.39,
+        "sb": 0.15
       },
       "multipliers": {
-        "park_hr": 0.96,
-        "park_runs": 0.95,
+        "park_hr": 1.08,
+        "park_runs": 1.04,
         "weather_hr": 1.0,
-        "pitcher_hits": 1.045,
-        "pitcher_hr": 0.908,
+        "pitcher_hits": 1.009,
+        "pitcher_hr": 1.114,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -970,27 +894,27 @@
         "stx_xwoba": 1.0,
         "stx_barrel": 1.0,
         "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.057,
+        "pitcher_gb_hr": 1.091,
         "k_damper": 1.0,
-        "pitcher_bb": 1.003,
+        "pitcher_bb": 1.011,
         "park_hand_hr": 1.0,
         "sb_speed": 1.0,
         "speed_singles": 1.0,
         "speed_r": 1.0,
         "bvpt": 1.0,
-        "ondeck_r": 1.033,
+        "ondeck_r": 1.1,
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.139,
-        "doubles": 0.0489,
-        "triples": 0.0108,
-        "home_runs": 0.0579,
-        "bb_hbp": 0.1178,
-        "r_per_pa": 0.3569,
-        "rbi_per_pa": 0.2152
+        "singles": 0.1826,
+        "doubles": 0.0421,
+        "triples": 0.0041,
+        "home_runs": 0.0426,
+        "bb_hbp": 0.12,
+        "r_per_pa": 0.3579,
+        "rbi_per_pa": 0.1615
       },
-      "pa": 4.0,
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1139,82 +1063,6 @@
       "tier": "low"
     },
     {
-      "player_id": 665019,
-      "name": "Kody Clemens",
-      "position": "1B",
-      "team_id": 142,
-      "team_abbr": "MIN",
-      "opp_abbr": "TEX",
-      "opp_team_id": 140,
-      "opp_pitcher": {
-        "id": 683004,
-        "fullName": "Jack Leiter"
-      },
-      "park": {
-        "id": 5325,
-        "name": "Globe Life Field",
-        "runs": 104,
-        "hr": 108,
-        "label": "Slight Hitter"
-      },
-      "weather": {
-        "condition": "Roof Closed",
-        "temp": "74",
-        "wind": "0 mph, None"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 1.6,
-      "mean_efp": 4.0,
-      "stats_games": 7,
-      "efp": 9.4,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.65,
-        "doubles": 1.25,
-        "triples": 0.23,
-        "home_runs": 2.67,
-        "bb_hbp": 0.77,
-        "r": 2.31,
-        "rbi": 1.46,
-        "sb": 0.38
-      },
-      "multipliers": {
-        "park_hr": 1.08,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.009,
-        "pitcher_hr": 1.114,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.091,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.011,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 0.941,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.128,
-        "doubles": 0.0582,
-        "triples": 0.0067,
-        "home_runs": 0.0621,
-        "bb_hbp": 0.0899,
-        "r_per_pa": 0.2687,
-        "rbi_per_pa": 0.17
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
       "player_id": 700250,
       "name": "Ben Rice",
       "position": "1B",
@@ -1291,6 +1139,82 @@
       "tier": "low"
     },
     {
+      "player_id": 686527,
+      "name": "Dominic Canzone",
+      "position": "DH",
+      "team_id": 136,
+      "team_abbr": "SEA",
+      "opp_abbr": "BAL",
+      "opp_team_id": 110,
+      "opp_pitcher": {
+        "id": 669358,
+        "fullName": "Shane Baz"
+      },
+      "park": {
+        "id": 680,
+        "name": "T-Mobile Park",
+        "runs": 95,
+        "hr": 96,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "72",
+        "wind": "11 mph, L To R"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 8.51,
+      "mean_efp": 10.83,
+      "stats_games": 6,
+      "efp": 9.36,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.63,
+        "doubles": 0.96,
+        "triples": 0.33,
+        "home_runs": 2.27,
+        "bb_hbp": 0.93,
+        "r": 2.82,
+        "rbi": 1.69,
+        "sb": 0.06
+      },
+      "multipliers": {
+        "park_hr": 0.96,
+        "park_runs": 0.95,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.033,
+        "pitcher_hr": 0.901,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.057,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.003,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.033,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1361,
+        "doubles": 0.0482,
+        "triples": 0.0104,
+        "home_runs": 0.0567,
+        "bb_hbp": 0.1163,
+        "r_per_pa": 0.352,
+        "rbi_per_pa": 0.2111
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
       "player_id": 805367,
       "name": "Chase Meidroth",
       "position": "2B",
@@ -1362,6 +1286,82 @@
         "bb_hbp": 0.0766,
         "r_per_pa": 0.3566,
         "rbi_per_pa": 0.1482
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 665019,
+      "name": "Kody Clemens",
+      "position": "1B",
+      "team_id": 142,
+      "team_abbr": "MIN",
+      "opp_abbr": "TEX",
+      "opp_team_id": 140,
+      "opp_pitcher": {
+        "id": 683004,
+        "fullName": "Jack Leiter"
+      },
+      "park": {
+        "id": 5325,
+        "name": "Globe Life Field",
+        "runs": 104,
+        "hr": 108,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "74",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 1.6,
+      "mean_efp": 4.0,
+      "stats_games": 7,
+      "efp": 9.31,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.65,
+        "doubles": 1.24,
+        "triples": 0.23,
+        "home_runs": 2.63,
+        "bb_hbp": 0.76,
+        "r": 2.29,
+        "rbi": 1.45,
+        "sb": 0.38
+      },
+      "multipliers": {
+        "park_hr": 1.08,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.009,
+        "pitcher_hr": 1.114,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.091,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.011,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.941,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1276,
+        "doubles": 0.0576,
+        "triples": 0.0067,
+        "home_runs": 0.0612,
+        "bb_hbp": 0.0889,
+        "r_per_pa": 0.2664,
+        "rbi_per_pa": 0.1683
       },
       "pa": 4.3,
       "tier": "low"
@@ -2254,5 +2254,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-06-18T20:44:03.453838+00:00"
+  "generated_at": "2026-06-18T21:16:51.707136+00:00"
 }
