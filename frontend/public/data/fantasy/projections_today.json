@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 14,
-  "projection_count": 350,
+  "projection_count": 349,
   "projections": [
     {
       "player_id": 668804,
@@ -517,78 +517,6 @@
       "tier": "low"
     },
     {
-      "player_id": 701762,
-      "name": "Nick Kurtz",
-      "position": "1B",
-      "team_id": 133,
-      "team_abbr": "ATH",
-      "opp_abbr": "LAA",
-      "opp_team_id": 108,
-      "opp_pitcher": {
-        "id": 667755,
-        "fullName": "Jos\u00e9 Soriano"
-      },
-      "park": {
-        "id": 2529,
-        "name": "Unknown",
-        "runs": 100,
-        "hr": 100,
-        "label": "Neutral"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 10.89,
-      "mean_efp": 15.0,
-      "stats_games": 8,
-      "efp": 9.77,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.47,
-        "doubles": 0.83,
-        "triples": 0.08,
-        "home_runs": 1.96,
-        "bb_hbp": 1.81,
-        "r": 2.98,
-        "rbi": 1.63,
-        "sb": 0.38
-      },
-      "multipliers": {
-        "park_hr": 1.0,
-        "park_runs": 1.0,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.883,
-        "pitcher_hr": 0.949,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.894,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1228,
-        "doubles": 0.0413,
-        "triples": 0.0026,
-        "home_runs": 0.049,
-        "bb_hbp": 0.2262,
-        "r_per_pa": 0.3729,
-        "rbi_per_pa": 0.2043
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 660271,
       "name": "Shohei Ohtani",
       "position": "TWP",
@@ -728,6 +656,78 @@
         "bb_hbp": 0.067,
         "r_per_pa": 0.3296,
         "rbi_per_pa": 0.1918
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 701762,
+      "name": "Nick Kurtz",
+      "position": "1B",
+      "team_id": 133,
+      "team_abbr": "ATH",
+      "opp_abbr": "LAA",
+      "opp_team_id": 108,
+      "opp_pitcher": {
+        "id": 667755,
+        "fullName": "Jos\u00e9 Soriano"
+      },
+      "park": {
+        "id": 2529,
+        "name": "Unknown",
+        "runs": 100,
+        "hr": 100,
+        "label": "Neutral"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 10.89,
+      "mean_efp": 15.0,
+      "stats_games": 8,
+      "efp": 9.61,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.45,
+        "doubles": 0.83,
+        "triples": 0.08,
+        "home_runs": 1.92,
+        "bb_hbp": 1.79,
+        "r": 2.93,
+        "rbi": 1.6,
+        "sb": 0.38
+      },
+      "multipliers": {
+        "park_hr": 1.0,
+        "park_runs": 1.0,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.883,
+        "pitcher_hr": 0.949,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.894,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1208,
+        "doubles": 0.0413,
+        "triples": 0.0026,
+        "home_runs": 0.0479,
+        "bb_hbp": 0.2231,
+        "r_per_pa": 0.3668,
+        "rbi_per_pa": 0.1994
       },
       "pa": 4.0,
       "tier": "low"
@@ -1165,78 +1165,6 @@
       "tier": "low"
     },
     {
-      "player_id": 680869,
-      "name": "Zack Gelof",
-      "position": "3B",
-      "team_id": 133,
-      "team_abbr": "ATH",
-      "opp_abbr": "LAA",
-      "opp_team_id": 108,
-      "opp_pitcher": {
-        "id": 667755,
-        "fullName": "Jos\u00e9 Soriano"
-      },
-      "park": {
-        "id": 2529,
-        "name": "Unknown",
-        "runs": 100,
-        "hr": 100,
-        "label": "Neutral"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.15,
-      "mean_efp": 6.89,
-      "stats_games": 0,
-      "efp": 9.2,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.84,
-        "doubles": 0.78,
-        "triples": 0.08,
-        "home_runs": 1.9,
-        "bb_hbp": 0.85,
-        "r": 2.64,
-        "rbi": 1.58,
-        "sb": 0.83
-      },
-      "multipliers": {
-        "park_hr": 1.0,
-        "park_runs": 1.0,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.883,
-        "pitcher_hr": 0.949,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.894,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1533,
-        "doubles": 0.0388,
-        "triples": 0.0025,
-        "home_runs": 0.0476,
-        "bb_hbp": 0.1061,
-        "r_per_pa": 0.3305,
-        "rbi_per_pa": 0.1972
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 665923,
       "name": "Esteury Ruiz",
       "position": "RF",
@@ -1517,6 +1445,78 @@
         "bb_hbp": 0.1331,
         "r_per_pa": 0.3142,
         "rbi_per_pa": 0.181
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 680869,
+      "name": "Zack Gelof",
+      "position": "3B",
+      "team_id": 133,
+      "team_abbr": "ATH",
+      "opp_abbr": "LAA",
+      "opp_team_id": 108,
+      "opp_pitcher": {
+        "id": 667755,
+        "fullName": "Jos\u00e9 Soriano"
+      },
+      "park": {
+        "id": 2529,
+        "name": "Unknown",
+        "runs": 100,
+        "hr": 100,
+        "label": "Neutral"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 7.15,
+      "mean_efp": 6.89,
+      "stats_games": 0,
+      "efp": 9.01,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.81,
+        "doubles": 0.76,
+        "triples": 0.08,
+        "home_runs": 1.85,
+        "bb_hbp": 0.84,
+        "r": 2.58,
+        "rbi": 1.53,
+        "sb": 0.83
+      },
+      "multipliers": {
+        "park_hr": 1.0,
+        "park_runs": 1.0,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.883,
+        "pitcher_hr": 0.949,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.894,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1509,
+        "doubles": 0.0381,
+        "triples": 0.0025,
+        "home_runs": 0.0463,
+        "bb_hbp": 0.1054,
+        "r_per_pa": 0.3224,
+        "rbi_per_pa": 0.1916
       },
       "pa": 4.0,
       "tier": "low"
@@ -1954,78 +1954,6 @@
       "tier": "low"
     },
     {
-      "player_id": 687263,
-      "name": "Zach Neto",
-      "position": "SS",
-      "team_id": 108,
-      "team_abbr": "LAA",
-      "opp_abbr": "ATH",
-      "opp_team_id": 133,
-      "opp_pitcher": {
-        "id": 605488,
-        "fullName": "Jeffrey Springs"
-      },
-      "park": {
-        "id": 2529,
-        "name": "Unknown",
-        "runs": 100,
-        "hr": 100,
-        "label": "Neutral"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 6.93,
-      "mean_efp": 11.62,
-      "stats_games": 8,
-      "efp": 8.81,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.43,
-        "doubles": 0.68,
-        "triples": 0.38,
-        "home_runs": 2.63,
-        "bb_hbp": 0.85,
-        "r": 2.22,
-        "rbi": 1.28,
-        "sb": 0.6
-      },
-      "multipliers": {
-        "park_hr": 1.0,
-        "park_runs": 1.0,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.043,
-        "pitcher_hr": 1.258,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.108,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.894,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1193,
-        "doubles": 0.0338,
-        "triples": 0.0118,
-        "home_runs": 0.0657,
-        "bb_hbp": 0.1063,
-        "r_per_pa": 0.2769,
-        "rbi_per_pa": 0.1606
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 683953,
       "name": "Travis Bazzana",
       "position": "2B",
@@ -2168,8 +2096,80 @@
       },
       "pa": 4.0,
       "tier": "low"
+    },
+    {
+      "player_id": 802139,
+      "name": "JJ Wetherholt",
+      "position": "2B",
+      "team_id": 138,
+      "team_abbr": "STL",
+      "opp_abbr": "KC",
+      "opp_team_id": 118,
+      "opp_pitcher": {
+        "id": 607625,
+        "fullName": "Seth Lugo"
+      },
+      "park": {
+        "id": 7,
+        "name": "Kauffman Stadium",
+        "runs": 101,
+        "hr": 99,
+        "label": "Neutral"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 5.12,
+      "mean_efp": 6.5,
+      "stats_games": 6,
+      "efp": 8.75,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.39,
+        "doubles": 0.66,
+        "triples": 0.03,
+        "home_runs": 1.28,
+        "bb_hbp": 0.97,
+        "r": 2.77,
+        "rbi": 1.28,
+        "sb": 0.61
+      },
+      "multipliers": {
+        "park_hr": 0.99,
+        "park_runs": 1.01,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.062,
+        "pitcher_hr": 0.893,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.074,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.928,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1994,
+        "doubles": 0.0329,
+        "triples": 0.0009,
+        "home_runs": 0.032,
+        "bb_hbp": 0.1212,
+        "r_per_pa": 0.3459,
+        "rbi_per_pa": 0.1599
+      },
+      "pa": 4.0,
+      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-06-19T02:21:36.174320+00:00"
+  "generated_at": "2026-06-19T14:16:53.083066+00:00"
 }
