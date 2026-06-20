@@ -40,16 +40,16 @@
       "stdev_efp": 10.28,
       "mean_efp": 11.25,
       "stats_games": 8,
-      "efp": 11.41,
+      "efp": 11.66,
       "bat_side": "L",
       "per_event": {
-        "singles": 2.5,
+        "singles": 2.48,
         "doubles": 0.91,
-        "triples": 0.52,
-        "home_runs": 2.08,
-        "bb_hbp": 0.85,
-        "r": 3.08,
-        "rbi": 1.86,
+        "triples": 0.51,
+        "home_runs": 2.29,
+        "bb_hbp": 0.84,
+        "r": 3.11,
+        "rbi": 1.94,
         "sb": 1.22
       },
       "multipliers": {
@@ -77,13 +77,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1935,
-        "doubles": 0.0425,
-        "triples": 0.015,
-        "home_runs": 0.0484,
-        "bb_hbp": 0.0984,
-        "r_per_pa": 0.3587,
-        "rbi_per_pa": 0.2162
+        "singles": 0.1921,
+        "doubles": 0.0421,
+        "triples": 0.0148,
+        "home_runs": 0.0534,
+        "bb_hbp": 0.0978,
+        "r_per_pa": 0.3621,
+        "rbi_per_pa": 0.226
       },
       "pa": 4.3,
       "tier": "medium"
@@ -1593,6 +1593,82 @@
       "tier": "low"
     },
     {
+      "player_id": 701398,
+      "name": "Sal Stewart",
+      "position": "1B",
+      "team_id": 113,
+      "team_abbr": "CIN",
+      "opp_abbr": "NYY",
+      "opp_team_id": 147,
+      "opp_pitcher": {
+        "id": 701542,
+        "fullName": "Will Warren"
+      },
+      "park": {
+        "id": 3313,
+        "name": "Yankee Stadium",
+        "runs": 107,
+        "hr": 115,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "79",
+        "wind": "16 mph, Out To RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 9.43,
+      "mean_efp": 8.25,
+      "stats_games": 8,
+      "efp": 9.39,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.79,
+        "doubles": 1.32,
+        "triples": 0.03,
+        "home_runs": 1.75,
+        "bb_hbp": 0.76,
+        "r": 2.94,
+        "rbi": 1.4,
+        "sb": 0.73
+      },
+      "multipliers": {
+        "park_hr": 1.15,
+        "park_runs": 1.07,
+        "weather_hr": 1.03,
+        "pitcher_hits": 1.02,
+        "pitcher_hr": 0.929,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.964,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.81,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1391,
+        "doubles": 0.0612,
+        "triples": 0.0009,
+        "home_runs": 0.0406,
+        "bb_hbp": 0.0888,
+        "r_per_pa": 0.3423,
+        "rbi_per_pa": 0.1624
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 683953,
       "name": "Travis Bazzana",
       "position": "2B",
@@ -1664,82 +1740,6 @@
         "bb_hbp": 0.1687,
         "r_per_pa": 0.3165,
         "rbi_per_pa": 0.1538
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 701398,
-      "name": "Sal Stewart",
-      "position": "1B",
-      "team_id": 113,
-      "team_abbr": "CIN",
-      "opp_abbr": "NYY",
-      "opp_team_id": 147,
-      "opp_pitcher": {
-        "id": 701542,
-        "fullName": "Will Warren"
-      },
-      "park": {
-        "id": 3313,
-        "name": "Yankee Stadium",
-        "runs": 107,
-        "hr": 115,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "79",
-        "wind": "16 mph, Out To RF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 9.43,
-      "mean_efp": 8.25,
-      "stats_games": 8,
-      "efp": 9.35,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.8,
-        "doubles": 1.29,
-        "triples": 0.03,
-        "home_runs": 1.75,
-        "bb_hbp": 0.76,
-        "r": 2.93,
-        "rbi": 1.39,
-        "sb": 0.73
-      },
-      "multipliers": {
-        "park_hr": 1.15,
-        "park_runs": 1.07,
-        "weather_hr": 1.03,
-        "pitcher_hits": 1.02,
-        "pitcher_hr": 0.929,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.964,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.81,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.15,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1393,
-        "doubles": 0.0598,
-        "triples": 0.0009,
-        "home_runs": 0.0407,
-        "bb_hbp": 0.0889,
-        "r_per_pa": 0.3412,
-        "rbi_per_pa": 0.1614
       },
       "pa": 4.3,
       "tier": "low"
@@ -2117,82 +2117,6 @@
       "tier": "low"
     },
     {
-      "player_id": 665487,
-      "name": "Fernando Tatis Jr.",
-      "position": "RF",
-      "team_id": 135,
-      "team_abbr": "SD",
-      "opp_abbr": "TEX",
-      "opp_team_id": 140,
-      "opp_pitcher": {
-        "id": 669022,
-        "fullName": "MacKenzie Gore"
-      },
-      "park": {
-        "id": 5325,
-        "name": "Globe Life Field",
-        "runs": 104,
-        "hr": 108,
-        "label": "Slight Hitter"
-      },
-      "weather": {
-        "condition": "Roof Closed",
-        "temp": "74",
-        "wind": "0 mph, None"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 3.54,
-      "mean_efp": 5.43,
-      "stats_games": 7,
-      "efp": 8.98,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.38,
-        "doubles": 0.98,
-        "triples": 0.18,
-        "home_runs": 0.58,
-        "bb_hbp": 1.03,
-        "r": 2.72,
-        "rbi": 1.12,
-        "sb": 1.27
-      },
-      "multipliers": {
-        "park_hr": 1.08,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.938,
-        "pitcher_hr": 0.933,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.054,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.047,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1845,
-        "doubles": 0.0457,
-        "triples": 0.0053,
-        "home_runs": 0.0135,
-        "bb_hbp": 0.1198,
-        "r_per_pa": 0.3159,
-        "rbi_per_pa": 0.1298
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
       "player_id": 664040,
       "name": "Brandon Lowe",
       "position": "2B",
@@ -2267,8 +2191,84 @@
       },
       "pa": 4.0,
       "tier": "low"
+    },
+    {
+      "player_id": 678554,
+      "name": "Curtis Mead",
+      "position": "1B",
+      "team_id": 120,
+      "team_abbr": "WSH",
+      "opp_abbr": "TB",
+      "opp_team_id": 139,
+      "opp_pitcher": {
+        "id": 693855,
+        "fullName": "Ian Seymour"
+      },
+      "park": {
+        "id": 12,
+        "name": "Tropicana Field",
+        "runs": 96,
+        "hr": 98,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Dome",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 8.06,
+      "mean_efp": 7.2,
+      "stats_games": 5,
+      "efp": 8.96,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.2,
+        "doubles": 0.76,
+        "triples": 0.03,
+        "home_runs": 2.69,
+        "bb_hbp": 1.06,
+        "r": 2.93,
+        "rbi": 1.39,
+        "sb": 0.18
+      },
+      "multipliers": {
+        "park_hr": 0.98,
+        "park_runs": 0.96,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.89,
+        "pitcher_hr": 1.085,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.117,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.956,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.0932,
+        "doubles": 0.0352,
+        "triples": 0.0009,
+        "home_runs": 0.0625,
+        "bb_hbp": 0.1234,
+        "r_per_pa": 0.3408,
+        "rbi_per_pa": 0.1612
+      },
+      "pa": 4.3,
+      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-06-20T20:04:48.832003+00:00"
+  "generated_at": "2026-06-20T20:11:56.574140+00:00"
 }
