@@ -10,8 +10,84 @@
     "n": 1721
   },
   "game_count": 14,
-  "projection_count": 336,
+  "projection_count": 325,
   "projections": [
+    {
+      "player_id": 691718,
+      "name": "Pete Crow-Armstrong",
+      "position": "CF",
+      "team_id": 112,
+      "team_abbr": "CHC",
+      "opp_abbr": "TOR",
+      "opp_team_id": 141,
+      "opp_pitcher": {
+        "id": 571578,
+        "fullName": "Patrick Corbin"
+      },
+      "park": {
+        "id": 17,
+        "name": "Wrigley Field",
+        "runs": 104,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "74",
+        "wind": "11 mph, L To R"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 10.28,
+      "mean_efp": 11.25,
+      "stats_games": 8,
+      "efp": 11.77,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.49,
+        "doubles": 1.03,
+        "triples": 0.51,
+        "home_runs": 2.47,
+        "bb_hbp": 0.79,
+        "r": 3.06,
+        "rbi": 1.86,
+        "sb": 1.23
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.098,
+        "pitcher_hr": 0.962,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.036,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.865,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.026,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.193,
+        "doubles": 0.0477,
+        "triples": 0.0148,
+        "home_runs": 0.0576,
+        "bb_hbp": 0.0919,
+        "r_per_pa": 0.3553,
+        "rbi_per_pa": 0.2162
+      },
+      "pa": 4.3,
+      "tier": "medium"
+    },
     {
       "player_id": 700250,
       "name": "Ben Rice",
@@ -32,9 +108,9 @@
         "label": "Hitter Friendly"
       },
       "weather": {
-        "condition": "Sunny",
-        "temp": "80",
-        "wind": "15 mph, Out To RF"
+        "condition": "Partly Cloudy",
+        "temp": "77",
+        "wind": "16 mph, Out To RF"
       },
       "pa_source": "lineup",
       "stdev_efp": 9.21,
@@ -89,78 +165,6 @@
       "tier": "low"
     },
     {
-      "player_id": 691718,
-      "name": "Pete Crow-Armstrong",
-      "position": "CF",
-      "team_id": 112,
-      "team_abbr": "CHC",
-      "opp_abbr": "TOR",
-      "opp_team_id": 141,
-      "opp_pitcher": {
-        "id": 571578,
-        "fullName": "Patrick Corbin"
-      },
-      "park": {
-        "id": 17,
-        "name": "Wrigley Field",
-        "runs": 104,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 10.28,
-      "mean_efp": 11.25,
-      "stats_games": 8,
-      "efp": 10.85,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.32,
-        "doubles": 0.95,
-        "triples": 0.47,
-        "home_runs": 2.3,
-        "bb_hbp": 0.74,
-        "r": 2.77,
-        "rbi": 1.73,
-        "sb": 1.1
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.098,
-        "pitcher_hr": 0.962,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.036,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.865,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.193,
-        "doubles": 0.0477,
-        "triples": 0.0148,
-        "home_runs": 0.0576,
-        "bb_hbp": 0.0919,
-        "r_per_pa": 0.3463,
-        "rbi_per_pa": 0.2162
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 502671,
       "name": "Paul Goldschmidt",
       "position": "1B",
@@ -180,9 +184,9 @@
         "label": "Hitter Friendly"
       },
       "weather": {
-        "condition": "Sunny",
-        "temp": "80",
-        "wind": "15 mph, Out To RF"
+        "condition": "Partly Cloudy",
+        "temp": "77",
+        "wind": "16 mph, Out To RF"
       },
       "pa_source": "lineup",
       "stdev_efp": 7.15,
@@ -544,9 +548,9 @@
         "label": "Hitter Friendly"
       },
       "weather": {
-        "condition": "Sunny",
-        "temp": "80",
-        "wind": "15 mph, Out To RF"
+        "condition": "Partly Cloudy",
+        "temp": "77",
+        "wind": "16 mph, Out To RF"
       },
       "pa_source": "lineup",
       "stdev_efp": 7.15,
@@ -673,6 +677,82 @@
       "tier": "low"
     },
     {
+      "player_id": 673548,
+      "name": "Seiya Suzuki",
+      "position": "RF",
+      "team_id": 112,
+      "team_abbr": "CHC",
+      "opp_abbr": "TOR",
+      "opp_team_id": 141,
+      "opp_pitcher": {
+        "id": 571578,
+        "fullName": "Patrick Corbin"
+      },
+      "park": {
+        "id": 17,
+        "name": "Wrigley Field",
+        "runs": 104,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "74",
+        "wind": "11 mph, L To R"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 10.37,
+      "mean_efp": 8.88,
+      "stats_games": 8,
+      "efp": 9.91,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.29,
+        "doubles": 1.54,
+        "triples": 0.04,
+        "home_runs": 1.62,
+        "bb_hbp": 1.02,
+        "r": 3.27,
+        "rbi": 1.54,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.098,
+        "pitcher_hr": 0.962,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.036,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.865,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.114,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1778,
+        "doubles": 0.0715,
+        "triples": 0.0011,
+        "home_runs": 0.0376,
+        "bb_hbp": 0.1181,
+        "r_per_pa": 0.3804,
+        "rbi_per_pa": 0.1785
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 665923,
       "name": "Esteury Ruiz",
       "position": "RF",
@@ -742,6 +822,82 @@
         "rbi_per_pa": 0.2044
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 694671,
+      "name": "Wyatt Langford",
+      "position": "LF",
+      "team_id": 140,
+      "team_abbr": "TEX",
+      "opp_abbr": "SD",
+      "opp_team_id": 135,
+      "opp_pitcher": {
+        "id": 621111,
+        "fullName": "Walker Buehler"
+      },
+      "park": {
+        "id": 5325,
+        "name": "Globe Life Field",
+        "runs": 104,
+        "hr": 108,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.39,
+      "mean_efp": 7.23,
+      "stats_games": 13,
+      "efp": 9.63,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.29,
+        "doubles": 1.12,
+        "triples": 0.29,
+        "home_runs": 1.62,
+        "bb_hbp": 0.51,
+        "r": 2.99,
+        "rbi": 1.54,
+        "sb": 0.63
+      },
+      "multipliers": {
+        "park_hr": 1.08,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.04,
+        "pitcher_hr": 0.837,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.963,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.854,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1771,
+        "doubles": 0.0523,
+        "triples": 0.0083,
+        "home_runs": 0.0377,
+        "bb_hbp": 0.0595,
+        "r_per_pa": 0.348,
+        "rbi_per_pa": 0.1787
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -835,7 +991,11 @@
         "hr": 108,
         "label": "Slight Hitter"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
       "pa_source": "default",
       "stdev_efp": 7.15,
       "mean_efp": 6.89,
@@ -1127,7 +1287,11 @@
         "hr": 98,
         "label": "Pitcher Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Dome",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
       "pa_source": "default",
       "stdev_efp": 8.32,
       "mean_efp": 10.89,
@@ -1200,9 +1364,9 @@
         "label": "Hitter Friendly"
       },
       "weather": {
-        "condition": "Sunny",
-        "temp": "80",
-        "wind": "15 mph, Out To RF"
+        "condition": "Partly Cloudy",
+        "temp": "77",
+        "wind": "16 mph, Out To RF"
       },
       "pa_source": "lineup",
       "stdev_efp": 4.47,
@@ -1348,9 +1512,9 @@
         "label": "Hitter Friendly"
       },
       "weather": {
-        "condition": "Sunny",
-        "temp": "80",
-        "wind": "15 mph, Out To RF"
+        "condition": "Partly Cloudy",
+        "temp": "77",
+        "wind": "16 mph, Out To RF"
       },
       "pa_source": "lineup",
       "stdev_efp": 7.15,
@@ -1495,7 +1659,11 @@
         "hr": 107,
         "label": "Slight Hitter"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Sunny",
+        "temp": "74",
+        "wind": "11 mph, L To R"
+      },
       "pa_source": "default",
       "stdev_efp": 3.16,
       "mean_efp": 5.67,
@@ -1568,9 +1736,9 @@
         "label": "Hitter Friendly"
       },
       "weather": {
-        "condition": "Sunny",
-        "temp": "80",
-        "wind": "15 mph, Out To RF"
+        "condition": "Partly Cloudy",
+        "temp": "77",
+        "wind": "16 mph, Out To RF"
       },
       "pa_source": "lineup",
       "stdev_efp": 11.03,
@@ -1864,9 +2032,9 @@
         "label": "Hitter Friendly"
       },
       "weather": {
-        "condition": "Sunny",
-        "temp": "80",
-        "wind": "15 mph, Out To RF"
+        "condition": "Partly Cloudy",
+        "temp": "77",
+        "wind": "16 mph, Out To RF"
       },
       "pa_source": "lineup",
       "stdev_efp": 9.43,
@@ -1918,78 +2086,6 @@
         "rbi_per_pa": 0.1498
       },
       "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 673548,
-      "name": "Seiya Suzuki",
-      "position": "RF",
-      "team_id": 112,
-      "team_abbr": "CHC",
-      "opp_abbr": "TOR",
-      "opp_team_id": 141,
-      "opp_pitcher": {
-        "id": 571578,
-        "fullName": "Patrick Corbin"
-      },
-      "park": {
-        "id": 17,
-        "name": "Wrigley Field",
-        "runs": 104,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 10.37,
-      "mean_efp": 8.88,
-      "stats_games": 8,
-      "efp": 8.94,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.13,
-        "doubles": 1.43,
-        "triples": 0.03,
-        "home_runs": 1.5,
-        "bb_hbp": 0.94,
-        "r": 2.73,
-        "rbi": 1.43,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.098,
-        "pitcher_hr": 0.962,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.036,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.865,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1778,
-        "doubles": 0.0715,
-        "triples": 0.0011,
-        "home_runs": 0.0376,
-        "bb_hbp": 0.1181,
-        "r_per_pa": 0.3415,
-        "rbi_per_pa": 0.1785
-      },
-      "pa": 4.0,
       "tier": "low"
     },
     {
@@ -2135,84 +2231,8 @@
       },
       "pa": 4.0,
       "tier": "low"
-    },
-    {
-      "player_id": 695657,
-      "name": "Colson Montgomery",
-      "position": "SS",
-      "team_id": 145,
-      "team_abbr": "CWS",
-      "opp_abbr": "DET",
-      "opp_team_id": 116,
-      "opp_pitcher": {
-        "id": 675512,
-        "fullName": "Troy Melton"
-      },
-      "park": {
-        "id": 2394,
-        "name": "Comerica Park",
-        "runs": 97,
-        "hr": 93,
-        "label": "Pitcher Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "67",
-        "wind": "13 mph, Out To LF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 7.17,
-      "mean_efp": 13.29,
-      "stats_games": 7,
-      "efp": 8.87,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.01,
-        "doubles": 0.76,
-        "triples": 0.02,
-        "home_runs": 3.3,
-        "bb_hbp": 0.71,
-        "r": 2.7,
-        "rbi": 1.56,
-        "sb": 0.05
-      },
-      "multipliers": {
-        "park_hr": 0.93,
-        "park_runs": 0.97,
-        "weather_hr": 1.03,
-        "pitcher_hits": 0.928,
-        "pitcher_hr": 1.202,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.984,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.15,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.0844,
-        "doubles": 0.038,
-        "triples": 0.0008,
-        "home_runs": 0.0826,
-        "bb_hbp": 0.0886,
-        "r_per_pa": 0.3371,
-        "rbi_per_pa": 0.1956
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-06-20T14:59:46.935047+00:00"
+  "generated_at": "2026-06-20T16:16:42.052300+00:00"
 }
