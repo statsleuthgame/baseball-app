@@ -780,10 +780,10 @@
       "stdev_efp": 7.15,
       "mean_efp": 6.89,
       "stats_games": 0,
-      "efp": 9.9,
+      "efp": 9.88,
       "bat_side": "L",
       "per_event": {
-        "singles": 1.39,
+        "singles": 1.38,
         "doubles": 0.99,
         "triples": 0.16,
         "home_runs": 2.95,
@@ -796,8 +796,8 @@
         "park_hr": 1.15,
         "park_runs": 1.07,
         "weather_hr": 1.15,
-        "pitcher_hits": 1.007,
-        "pitcher_hr": 0.91,
+        "pitcher_hits": 1.002,
+        "pitcher_hr": 0.907,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -817,89 +817,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1078,
-        "doubles": 0.0462,
+        "singles": 0.1072,
+        "doubles": 0.0459,
         "triples": 0.0046,
-        "home_runs": 0.0687,
+        "home_runs": 0.0685,
         "bb_hbp": 0.1208,
         "r_per_pa": 0.3555,
         "rbi_per_pa": 0.1773
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 803011,
-      "name": "Sam Antonacci",
-      "position": "LF",
-      "team_id": 145,
-      "team_abbr": "CWS",
-      "opp_abbr": "DET",
-      "opp_team_id": 116,
-      "opp_pitcher": {
-        "id": 675512,
-        "fullName": "Troy Melton"
-      },
-      "park": {
-        "id": 2394,
-        "name": "Comerica Park",
-        "runs": 97,
-        "hr": 93,
-        "label": "Pitcher Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "74",
-        "wind": "13 mph, Out To LF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 9.27,
-      "mean_efp": 9.6,
-      "stats_games": 5,
-      "efp": 9.81,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.73,
-        "doubles": 0.97,
-        "triples": 0.2,
-        "home_runs": 2.02,
-        "bb_hbp": 0.77,
-        "r": 3.24,
-        "rbi": 1.56,
-        "sb": 0.71
-      },
-      "multipliers": {
-        "park_hr": 0.93,
-        "park_runs": 0.97,
-        "weather_hr": 1.03,
-        "pitcher_hits": 0.885,
-        "pitcher_hr": 1.224,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.984,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.15,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1339,
-        "doubles": 0.0453,
-        "triples": 0.0058,
-        "home_runs": 0.047,
-        "bb_hbp": 0.089,
-        "r_per_pa": 0.3771,
-        "rbi_per_pa": 0.1813
       },
       "pa": 4.3,
       "tier": "low"
@@ -976,6 +900,82 @@
         "bb_hbp": 0.1027,
         "r_per_pa": 0.3026,
         "rbi_per_pa": 0.1547
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 803011,
+      "name": "Sam Antonacci",
+      "position": "LF",
+      "team_id": 145,
+      "team_abbr": "CWS",
+      "opp_abbr": "DET",
+      "opp_team_id": 116,
+      "opp_pitcher": {
+        "id": 675512,
+        "fullName": "Troy Melton"
+      },
+      "park": {
+        "id": 2394,
+        "name": "Comerica Park",
+        "runs": 97,
+        "hr": 93,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "74",
+        "wind": "13 mph, Out To LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 9.27,
+      "mean_efp": 9.6,
+      "stats_games": 5,
+      "efp": 9.74,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.72,
+        "doubles": 0.97,
+        "triples": 0.2,
+        "home_runs": 1.96,
+        "bb_hbp": 0.77,
+        "r": 3.24,
+        "rbi": 1.56,
+        "sb": 0.71
+      },
+      "multipliers": {
+        "park_hr": 0.93,
+        "park_runs": 0.97,
+        "weather_hr": 1.03,
+        "pitcher_hits": 0.88,
+        "pitcher_hr": 1.221,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.984,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1334,
+        "doubles": 0.0451,
+        "triples": 0.0057,
+        "home_runs": 0.0455,
+        "bb_hbp": 0.0892,
+        "r_per_pa": 0.3771,
+        "rbi_per_pa": 0.1813
       },
       "pa": 4.3,
       "tier": "low"
@@ -1497,82 +1497,6 @@
       "tier": "low"
     },
     {
-      "player_id": 694362,
-      "name": "Blake Dunn",
-      "position": "RF",
-      "team_id": 113,
-      "team_abbr": "CIN",
-      "opp_abbr": "NYY",
-      "opp_team_id": 147,
-      "opp_pitcher": {
-        "id": 701542,
-        "fullName": "Will Warren"
-      },
-      "park": {
-        "id": 3313,
-        "name": "Yankee Stadium",
-        "runs": 107,
-        "hr": 115,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "79",
-        "wind": "16 mph, Out To RF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 7.15,
-      "mean_efp": 6.89,
-      "stats_games": 0,
-      "efp": 9.1,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.19,
-        "doubles": 1.13,
-        "triples": 0.22,
-        "home_runs": 0.9,
-        "bb_hbp": 0.65,
-        "r": 2.84,
-        "rbi": 1.15,
-        "sb": 1.29
-      },
-      "multipliers": {
-        "park_hr": 1.15,
-        "park_runs": 1.07,
-        "weather_hr": 1.03,
-        "pitcher_hits": 1.007,
-        "pitcher_hr": 0.91,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.964,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.81,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.15,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.17,
-        "doubles": 0.0527,
-        "triples": 0.0063,
-        "home_runs": 0.021,
-        "bb_hbp": 0.0754,
-        "r_per_pa": 0.3307,
-        "rbi_per_pa": 0.1341
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
       "player_id": 665862,
       "name": "Jazz Chisholm Jr.",
       "position": "2B",
@@ -1646,6 +1570,82 @@
         "rbi_per_pa": 0.1585
       },
       "pa": 3.7,
+      "tier": "low"
+    },
+    {
+      "player_id": 694362,
+      "name": "Blake Dunn",
+      "position": "RF",
+      "team_id": 113,
+      "team_abbr": "CIN",
+      "opp_abbr": "NYY",
+      "opp_team_id": 147,
+      "opp_pitcher": {
+        "id": 701542,
+        "fullName": "Will Warren"
+      },
+      "park": {
+        "id": 3313,
+        "name": "Yankee Stadium",
+        "runs": 107,
+        "hr": 115,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "79",
+        "wind": "16 mph, Out To RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.15,
+      "mean_efp": 6.89,
+      "stats_games": 0,
+      "efp": 9.08,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.18,
+        "doubles": 1.13,
+        "triples": 0.21,
+        "home_runs": 0.9,
+        "bb_hbp": 0.65,
+        "r": 2.84,
+        "rbi": 1.15,
+        "sb": 1.29
+      },
+      "multipliers": {
+        "park_hr": 1.15,
+        "park_runs": 1.07,
+        "weather_hr": 1.03,
+        "pitcher_hits": 1.002,
+        "pitcher_hr": 0.907,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.964,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.81,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.169,
+        "doubles": 0.0524,
+        "triples": 0.0062,
+        "home_runs": 0.021,
+        "bb_hbp": 0.0754,
+        "r_per_pa": 0.3307,
+        "rbi_per_pa": 0.1341
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1725,82 +1725,6 @@
       "tier": "low"
     },
     {
-      "player_id": 701398,
-      "name": "Sal Stewart",
-      "position": "1B",
-      "team_id": 113,
-      "team_abbr": "CIN",
-      "opp_abbr": "NYY",
-      "opp_team_id": 147,
-      "opp_pitcher": {
-        "id": 701542,
-        "fullName": "Will Warren"
-      },
-      "park": {
-        "id": 3313,
-        "name": "Yankee Stadium",
-        "runs": 107,
-        "hr": 115,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "79",
-        "wind": "16 mph, Out To RF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 9.43,
-      "mean_efp": 8.25,
-      "stats_games": 8,
-      "efp": 9.04,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.82,
-        "doubles": 1.01,
-        "triples": 0.03,
-        "home_runs": 1.76,
-        "bb_hbp": 0.78,
-        "r": 2.88,
-        "rbi": 1.31,
-        "sb": 0.73
-      },
-      "multipliers": {
-        "park_hr": 1.15,
-        "park_runs": 1.07,
-        "weather_hr": 1.03,
-        "pitcher_hits": 1.007,
-        "pitcher_hr": 0.91,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.964,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.81,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.15,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.141,
-        "doubles": 0.0468,
-        "triples": 0.0009,
-        "home_runs": 0.0409,
-        "bb_hbp": 0.0907,
-        "r_per_pa": 0.3349,
-        "rbi_per_pa": 0.1527
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
       "player_id": 668952,
       "name": "Ryan Kreidler",
       "position": "CF",
@@ -1873,51 +1797,51 @@
       "tier": "low"
     },
     {
-      "player_id": 695657,
-      "name": "Colson Montgomery",
-      "position": "SS",
-      "team_id": 145,
-      "team_abbr": "CWS",
-      "opp_abbr": "DET",
-      "opp_team_id": 116,
+      "player_id": 701398,
+      "name": "Sal Stewart",
+      "position": "1B",
+      "team_id": 113,
+      "team_abbr": "CIN",
+      "opp_abbr": "NYY",
+      "opp_team_id": 147,
       "opp_pitcher": {
-        "id": 675512,
-        "fullName": "Troy Melton"
+        "id": 701542,
+        "fullName": "Will Warren"
       },
       "park": {
-        "id": 2394,
-        "name": "Comerica Park",
-        "runs": 97,
-        "hr": 93,
-        "label": "Pitcher Friendly"
+        "id": 3313,
+        "name": "Yankee Stadium",
+        "runs": 107,
+        "hr": 115,
+        "label": "Hitter Friendly"
       },
       "weather": {
         "condition": "Partly Cloudy",
-        "temp": "74",
-        "wind": "13 mph, Out To LF"
+        "temp": "79",
+        "wind": "16 mph, Out To RF"
       },
       "pa_source": "lineup",
-      "stdev_efp": 7.17,
-      "mean_efp": 13.29,
-      "stats_games": 7,
-      "efp": 8.99,
-      "bat_side": "L",
+      "stdev_efp": 9.43,
+      "mean_efp": 8.25,
+      "stats_games": 8,
+      "efp": 9.02,
+      "bat_side": "R",
       "per_event": {
-        "singles": 0.97,
-        "doubles": 0.74,
-        "triples": 0.02,
-        "home_runs": 3.51,
-        "bb_hbp": 0.68,
-        "r": 2.69,
-        "rbi": 1.6,
-        "sb": 0.05
+        "singles": 1.81,
+        "doubles": 1.0,
+        "triples": 0.03,
+        "home_runs": 1.75,
+        "bb_hbp": 0.78,
+        "r": 2.88,
+        "rbi": 1.31,
+        "sb": 0.73
       },
       "multipliers": {
-        "park_hr": 0.93,
-        "park_runs": 0.97,
+        "park_hr": 1.15,
+        "park_runs": 1.07,
         "weather_hr": 1.03,
-        "pitcher_hits": 0.885,
-        "pitcher_hr": 1.224,
+        "pitcher_hits": 1.002,
+        "pitcher_hr": 0.907,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -1925,9 +1849,9 @@
         "stx_xwoba": 1.0,
         "stx_barrel": 1.0,
         "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.984,
+        "pitcher_gb_hr": 0.964,
         "k_damper": 1.0,
-        "pitcher_bb": 0.75,
+        "pitcher_bb": 0.81,
         "park_hand_hr": 1.0,
         "sb_speed": 1.0,
         "speed_singles": 1.0,
@@ -1937,15 +1861,15 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.0808,
-        "doubles": 0.0368,
-        "triples": 0.0007,
-        "home_runs": 0.0876,
-        "bb_hbp": 0.085,
-        "r_per_pa": 0.3364,
-        "rbi_per_pa": 0.2006
+        "singles": 0.1402,
+        "doubles": 0.0466,
+        "triples": 0.0009,
+        "home_runs": 0.0408,
+        "bb_hbp": 0.0907,
+        "r_per_pa": 0.3349,
+        "rbi_per_pa": 0.1527
       },
-      "pa": 4.0,
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -2169,6 +2093,82 @@
       "tier": "low"
     },
     {
+      "player_id": 695657,
+      "name": "Colson Montgomery",
+      "position": "SS",
+      "team_id": 145,
+      "team_abbr": "CWS",
+      "opp_abbr": "DET",
+      "opp_team_id": 116,
+      "opp_pitcher": {
+        "id": 675512,
+        "fullName": "Troy Melton"
+      },
+      "park": {
+        "id": 2394,
+        "name": "Comerica Park",
+        "runs": 97,
+        "hr": 93,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "74",
+        "wind": "13 mph, Out To LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.17,
+      "mean_efp": 13.29,
+      "stats_games": 7,
+      "efp": 8.97,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 0.97,
+        "doubles": 0.73,
+        "triples": 0.02,
+        "home_runs": 3.5,
+        "bb_hbp": 0.68,
+        "r": 2.69,
+        "rbi": 1.6,
+        "sb": 0.05
+      },
+      "multipliers": {
+        "park_hr": 0.93,
+        "park_runs": 0.97,
+        "weather_hr": 1.03,
+        "pitcher_hits": 0.88,
+        "pitcher_hr": 1.221,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.984,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.0804,
+        "doubles": 0.0366,
+        "triples": 0.0007,
+        "home_runs": 0.0874,
+        "bb_hbp": 0.085,
+        "r_per_pa": 0.3364,
+        "rbi_per_pa": 0.2006
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
       "player_id": 678554,
       "name": "Curtis Mead",
       "position": "1B",
@@ -2246,5 +2246,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-06-20T17:57:38.783893+00:00"
+  "generated_at": "2026-06-20T18:06:49.332361+00:00"
 }
