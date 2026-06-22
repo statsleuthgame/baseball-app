@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 13,
-  "projection_count": 329,
+  "projection_count": 328,
   "projections": [
     {
       "player_id": 691718,
@@ -301,6 +301,78 @@
       "tier": "low"
     },
     {
+      "player_id": 656941,
+      "name": "Kyle Schwarber",
+      "position": "DH",
+      "team_id": 143,
+      "team_abbr": "PHI",
+      "opp_abbr": "WSH",
+      "opp_team_id": 120,
+      "opp_pitcher": {
+        "id": 656492,
+        "fullName": "Foster Griffin"
+      },
+      "park": {
+        "id": 3309,
+        "name": "Nationals Park",
+        "runs": 100,
+        "hr": 101,
+        "label": "Neutral"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 8.62,
+      "mean_efp": 7.78,
+      "stats_games": 9,
+      "efp": 9.81,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.33,
+        "doubles": 0.54,
+        "triples": 0.11,
+        "home_runs": 3.93,
+        "bb_hbp": 0.85,
+        "r": 2.63,
+        "rbi": 1.76,
+        "sb": 0.04
+      },
+      "multipliers": {
+        "park_hr": 1.01,
+        "park_runs": 1.0,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.944,
+        "pitcher_hr": 1.15,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.98,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.77,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1112,
+        "doubles": 0.027,
+        "triples": 0.0035,
+        "home_runs": 0.0982,
+        "bb_hbp": 0.1065,
+        "r_per_pa": 0.3288,
+        "rbi_per_pa": 0.2194
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
       "player_id": 694192,
       "name": "Jackson Chourio",
       "position": "LF",
@@ -368,78 +440,6 @@
         "bb_hbp": 0.0844,
         "r_per_pa": 0.2944,
         "rbi_per_pa": 0.1711
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 656941,
-      "name": "Kyle Schwarber",
-      "position": "DH",
-      "team_id": 143,
-      "team_abbr": "PHI",
-      "opp_abbr": "WSH",
-      "opp_team_id": 120,
-      "opp_pitcher": {
-        "id": 656492,
-        "fullName": "Foster Griffin"
-      },
-      "park": {
-        "id": 3309,
-        "name": "Nationals Park",
-        "runs": 100,
-        "hr": 101,
-        "label": "Neutral"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 8.62,
-      "mean_efp": 7.78,
-      "stats_games": 9,
-      "efp": 9.77,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.34,
-        "doubles": 0.55,
-        "triples": 0.11,
-        "home_runs": 3.88,
-        "bb_hbp": 0.85,
-        "r": 2.63,
-        "rbi": 1.76,
-        "sb": 0.04
-      },
-      "multipliers": {
-        "park_hr": 1.01,
-        "park_runs": 1.0,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.944,
-        "pitcher_hr": 1.15,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.98,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.77,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.112,
-        "doubles": 0.0273,
-        "triples": 0.0035,
-        "home_runs": 0.097,
-        "bb_hbp": 0.106,
-        "r_per_pa": 0.3288,
-        "rbi_per_pa": 0.2194
       },
       "pa": 4.0,
       "tier": "low"
@@ -594,8 +594,8 @@
       "opp_abbr": "TEX",
       "opp_team_id": 140,
       "opp_pitcher": {
-        "id": 677958,
-        "fullName": "Kumar Rocker"
+        "id": 641302,
+        "fullName": "Tyler Alexander"
       },
       "park": {
         "id": 4169,
@@ -609,24 +609,24 @@
       "stdev_efp": 7.15,
       "mean_efp": 6.89,
       "stats_games": 0,
-      "efp": 9.6,
+      "efp": 9.61,
       "bat_side": "R",
       "per_event": {
-        "singles": 1.39,
-        "doubles": 1.38,
-        "triples": 0.13,
-        "home_runs": 1.21,
+        "singles": 1.36,
+        "doubles": 1.62,
+        "triples": 0.3,
+        "home_runs": 1.15,
         "bb_hbp": 1.11,
         "r": 2.66,
         "rbi": 1.49,
-        "sb": 1.59
+        "sb": 1.27
       },
       "multipliers": {
         "park_hr": 0.91,
         "park_runs": 0.95,
         "weather_hr": 1.0,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 0.969,
+        "pitcher_hits": 1.102,
+        "pitcher_hr": 0.793,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -634,9 +634,9 @@
         "stx_xwoba": 1.0,
         "stx_barrel": 1.0,
         "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.957,
+        "pitcher_gb_hr": 0.879,
         "k_damper": 1.0,
-        "pitcher_bb": 1.131,
+        "pitcher_bb": 1.044,
         "park_hand_hr": 1.0,
         "sb_speed": 1.0,
         "speed_singles": 1.0,
@@ -646,11 +646,11 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1156,
-        "doubles": 0.0689,
-        "triples": 0.0041,
-        "home_runs": 0.0304,
-        "bb_hbp": 0.1392,
+        "singles": 0.1135,
+        "doubles": 0.0812,
+        "triples": 0.0094,
+        "home_runs": 0.0288,
+        "bb_hbp": 0.1388,
         "r_per_pa": 0.3326,
         "rbi_per_pa": 0.1857
       },
@@ -797,75 +797,6 @@
         "bb_hbp": 0.0819,
         "r_per_pa": 0.3489,
         "rbi_per_pa": 0.1752
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 670541,
-      "name": "Yordan Alvarez",
-      "position": "DH",
-      "team_id": 117,
-      "team_abbr": "HOU",
-      "opp_abbr": "TOR",
-      "opp_team_id": 141,
-      "opp_pitcher": null,
-      "park": {
-        "id": 14,
-        "name": "Rogers Centre",
-        "runs": 104,
-        "hr": 109,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.35,
-      "mean_efp": 12.38,
-      "stats_games": 8,
-      "efp": 9.43,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.83,
-        "doubles": 1.03,
-        "triples": 0.03,
-        "home_runs": 2.44,
-        "bb_hbp": 1.06,
-        "r": 2.76,
-        "rbi": 1.57,
-        "sb": 0.05
-      },
-      "multipliers": {
-        "park_hr": 1.09,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 1.0,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.0,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1522,
-        "doubles": 0.0514,
-        "triples": 0.001,
-        "home_runs": 0.0609,
-        "bb_hbp": 0.1326,
-        "r_per_pa": 0.3451,
-        "rbi_per_pa": 0.1963
       },
       "pa": 4.0,
       "tier": "low"
@@ -1732,6 +1663,78 @@
       "tier": "low"
     },
     {
+      "player_id": 670541,
+      "name": "Yordan Alvarez",
+      "position": "DH",
+      "team_id": 117,
+      "team_abbr": "HOU",
+      "opp_abbr": "TOR",
+      "opp_team_id": 141,
+      "opp_pitcher": {
+        "id": 656302,
+        "fullName": "Dylan Cease"
+      },
+      "park": {
+        "id": 14,
+        "name": "Rogers Centre",
+        "runs": 104,
+        "hr": 109,
+        "label": "Hitter Friendly"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 7.35,
+      "mean_efp": 12.38,
+      "stats_games": 8,
+      "efp": 9.04,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.63,
+        "doubles": 0.94,
+        "triples": 0.02,
+        "home_runs": 2.02,
+        "bb_hbp": 1.32,
+        "r": 2.76,
+        "rbi": 1.57,
+        "sb": 0.05
+      },
+      "multipliers": {
+        "park_hr": 1.09,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.896,
+        "pitcher_hr": 0.821,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.96,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.155,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.136,
+        "doubles": 0.0468,
+        "triples": 0.0007,
+        "home_runs": 0.0505,
+        "bb_hbp": 0.1655,
+        "r_per_pa": 0.3451,
+        "rbi_per_pa": 0.1963
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
       "player_id": 683734,
       "name": "Andrew Vaughn",
       "position": "1B",
@@ -2165,5 +2168,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-06-22T02:06:34.952778+00:00"
+  "generated_at": "2026-06-22T16:07:00.613325+00:00"
 }
