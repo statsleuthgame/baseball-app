@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 379,
+  "projection_count": 375,
   "projections": [
     {
       "player_id": 691718,
@@ -535,7 +535,11 @@
         "hr": 109,
         "label": "Hitter Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
       "pa_source": "default",
       "stdev_efp": 7.35,
       "mean_efp": 12.38,
@@ -1615,7 +1619,11 @@
         "hr": 109,
         "label": "Hitter Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
       "pa_source": "default",
       "stdev_efp": 4.06,
       "mean_efp": 6.29,
@@ -1666,6 +1674,82 @@
         "rbi_per_pa": 0.1773
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 543807,
+      "name": "George Springer",
+      "position": "DH",
+      "team_id": 141,
+      "team_abbr": "TOR",
+      "opp_abbr": "HOU",
+      "opp_team_id": 117,
+      "opp_pitcher": {
+        "id": 663567,
+        "fullName": "Peter Lambert"
+      },
+      "park": {
+        "id": 14,
+        "name": "Rogers Centre",
+        "runs": 104,
+        "hr": 109,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 3.16,
+      "mean_efp": 5.67,
+      "stats_games": 9,
+      "efp": 9.18,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.73,
+        "doubles": 0.78,
+        "triples": 0.03,
+        "home_runs": 1.68,
+        "bb_hbp": 1.01,
+        "r": 2.91,
+        "rbi": 1.37,
+        "sb": 0.96
+      },
+      "multipliers": {
+        "park_hr": 1.09,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.869,
+        "pitcher_hr": 0.921,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.039,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.122,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.101,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1342,
+        "doubles": 0.0363,
+        "triples": 0.0009,
+        "home_runs": 0.0391,
+        "bb_hbp": 0.1176,
+        "r_per_pa": 0.3378,
+        "rbi_per_pa": 0.1598
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -2099,80 +2183,8 @@
       },
       "pa": 4.0,
       "tier": "low"
-    },
-    {
-      "player_id": 678882,
-      "name": "Ceddanne Rafaela",
-      "position": "CF",
-      "team_id": 111,
-      "team_abbr": "BOS",
-      "opp_abbr": "COL",
-      "opp_team_id": 115,
-      "opp_pitcher": {
-        "id": 807743,
-        "fullName": "Sean Sullivan"
-      },
-      "park": {
-        "id": 19,
-        "name": "Coors Field",
-        "runs": 116,
-        "hr": 118,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 5.42,
-      "mean_efp": 4.57,
-      "stats_games": 7,
-      "efp": 9.0,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.35,
-        "doubles": 1.74,
-        "triples": 0.41,
-        "home_runs": 1.53,
-        "bb_hbp": 0.44,
-        "r": 2.17,
-        "rbi": 1.16,
-        "sb": 0.47
-      },
-      "multipliers": {
-        "park_hr": 1.18,
-        "park_runs": 1.16,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.135,
-        "pitcher_hr": 1.156,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.19,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.835,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1955,
-        "doubles": 0.0868,
-        "triples": 0.0129,
-        "home_runs": 0.0383,
-        "bb_hbp": 0.0548,
-        "r_per_pa": 0.2718,
-        "rbi_per_pa": 0.1451
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-06-23T15:44:12.082388+00:00"
+  "generated_at": "2026-06-23T17:17:14.485936+00:00"
 }
