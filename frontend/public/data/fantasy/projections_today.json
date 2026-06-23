@@ -317,6 +317,82 @@
       "tier": "low"
     },
     {
+      "player_id": 670541,
+      "name": "Yordan Alvarez",
+      "position": "DH",
+      "team_id": 117,
+      "team_abbr": "HOU",
+      "opp_abbr": "TOR",
+      "opp_team_id": 141,
+      "opp_pitcher": {
+        "id": 669456,
+        "fullName": "Shane Bieber"
+      },
+      "park": {
+        "id": 14,
+        "name": "Rogers Centre",
+        "runs": 104,
+        "hr": 109,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "76",
+        "wind": "14 mph, R To L"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.35,
+      "mean_efp": 12.38,
+      "stats_games": 8,
+      "efp": 10.51,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.91,
+        "doubles": 1.16,
+        "triples": 0.03,
+        "home_runs": 2.74,
+        "bb_hbp": 1.36,
+        "r": 3.04,
+        "rbi": 1.72,
+        "sb": 0.06
+      },
+      "multipliers": {
+        "park_hr": 1.09,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.0,
+        "pitcher_hr": 1.0,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.0,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.0,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.984,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1478,
+        "doubles": 0.0539,
+        "triples": 0.0008,
+        "home_runs": 0.0637,
+        "bb_hbp": 0.1587,
+        "r_per_pa": 0.353,
+        "rbi_per_pa": 0.1995
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 656941,
       "name": "Kyle Schwarber",
       "position": "DH",
@@ -464,82 +540,6 @@
         "bb_hbp": 0.1663,
         "r_per_pa": 0.3302,
         "rbi_per_pa": 0.16
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 670541,
-      "name": "Yordan Alvarez",
-      "position": "DH",
-      "team_id": 117,
-      "team_abbr": "HOU",
-      "opp_abbr": "TOR",
-      "opp_team_id": 141,
-      "opp_pitcher": {
-        "id": 669456,
-        "fullName": "Shane Bieber"
-      },
-      "park": {
-        "id": 14,
-        "name": "Rogers Centre",
-        "runs": 104,
-        "hr": 109,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "76",
-        "wind": "14 mph, R To L"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 7.35,
-      "mean_efp": 12.38,
-      "stats_games": 8,
-      "efp": 10.33,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.92,
-        "doubles": 1.0,
-        "triples": 0.03,
-        "home_runs": 2.75,
-        "bb_hbp": 1.38,
-        "r": 2.99,
-        "rbi": 1.66,
-        "sb": 0.06
-      },
-      "multipliers": {
-        "park_hr": 1.09,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 1.0,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.0,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 0.984,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1487,
-        "doubles": 0.0467,
-        "triples": 0.0008,
-        "home_runs": 0.064,
-        "bb_hbp": 0.16,
-        "r_per_pa": 0.348,
-        "rbi_per_pa": 0.1933
       },
       "pa": 4.3,
       "tier": "low"
@@ -2282,5 +2282,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-06-23T20:32:25.553735+00:00"
+  "generated_at": "2026-06-23T20:59:47.665076+00:00"
 }
