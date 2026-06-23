@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 375,
+  "projection_count": 367,
   "projections": [
     {
       "player_id": 691718,
@@ -157,6 +157,82 @@
       "tier": "low"
     },
     {
+      "player_id": 670541,
+      "name": "Yordan Alvarez",
+      "position": "DH",
+      "team_id": 117,
+      "team_abbr": "HOU",
+      "opp_abbr": "TOR",
+      "opp_team_id": 141,
+      "opp_pitcher": {
+        "id": 669456,
+        "fullName": "Shane Bieber"
+      },
+      "park": {
+        "id": 14,
+        "name": "Rogers Centre",
+        "runs": 104,
+        "hr": 109,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.35,
+      "mean_efp": 12.38,
+      "stats_games": 8,
+      "efp": 10.51,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.97,
+        "doubles": 1.11,
+        "triples": 0.03,
+        "home_runs": 2.73,
+        "bb_hbp": 1.35,
+        "r": 3.04,
+        "rbi": 1.71,
+        "sb": 0.06
+      },
+      "multipliers": {
+        "park_hr": 1.09,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.0,
+        "pitcher_hr": 1.0,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.0,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.0,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.984,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1528,
+        "doubles": 0.0518,
+        "triples": 0.0008,
+        "home_runs": 0.0635,
+        "bb_hbp": 0.1572,
+        "r_per_pa": 0.3536,
+        "rbi_per_pa": 0.199
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 547180,
       "name": "Bryce Harper",
       "position": "1B",
@@ -298,6 +374,82 @@
         "rbi_per_pa": 0.1895
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 668804,
+      "name": "Bryan Reynolds",
+      "position": "LF",
+      "team_id": 134,
+      "team_abbr": "PIT",
+      "opp_abbr": "SEA",
+      "opp_team_id": 136,
+      "opp_pitcher": {
+        "id": 669923,
+        "fullName": "George Kirby"
+      },
+      "park": {
+        "id": 31,
+        "name": "PNC Park",
+        "runs": 96,
+        "hr": 92,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Clear",
+        "temp": "76",
+        "wind": "13 mph, Out To RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 4.36,
+      "mean_efp": 5.86,
+      "stats_games": 7,
+      "efp": 10.2,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 2.09,
+        "doubles": 1.31,
+        "triples": 0.19,
+        "home_runs": 1.8,
+        "bb_hbp": 0.91,
+        "r": 3.29,
+        "rbi": 1.8,
+        "sb": 0.26
+      },
+      "multipliers": {
+        "park_hr": 0.92,
+        "park_runs": 0.96,
+        "weather_hr": 1.09,
+        "pitcher_hits": 1.096,
+        "pitcher_hr": 0.936,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.923,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.039,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1623,
+        "doubles": 0.061,
+        "triples": 0.0054,
+        "home_runs": 0.0419,
+        "bb_hbp": 0.1057,
+        "r_per_pa": 0.3826,
+        "rbi_per_pa": 0.2094
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -512,82 +664,6 @@
         "bb_hbp": 0.2142,
         "r_per_pa": 0.3711,
         "rbi_per_pa": 0.2
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 670541,
-      "name": "Yordan Alvarez",
-      "position": "DH",
-      "team_id": 117,
-      "team_abbr": "HOU",
-      "opp_abbr": "TOR",
-      "opp_team_id": 141,
-      "opp_pitcher": {
-        "id": 669456,
-        "fullName": "Shane Bieber"
-      },
-      "park": {
-        "id": 14,
-        "name": "Rogers Centre",
-        "runs": 104,
-        "hr": 109,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Roof Closed",
-        "temp": "72",
-        "wind": "0 mph, None"
-      },
-      "pa_source": "default",
-      "stdev_efp": 7.35,
-      "mean_efp": 12.38,
-      "stats_games": 8,
-      "efp": 9.82,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.83,
-        "doubles": 1.04,
-        "triples": 0.03,
-        "home_runs": 2.54,
-        "bb_hbp": 1.26,
-        "r": 2.87,
-        "rbi": 1.59,
-        "sb": 0.05
-      },
-      "multipliers": {
-        "park_hr": 1.09,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 1.0,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.0,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1528,
-        "doubles": 0.0518,
-        "triples": 0.0008,
-        "home_runs": 0.0635,
-        "bb_hbp": 0.1572,
-        "r_per_pa": 0.3592,
-        "rbi_per_pa": 0.199
       },
       "pa": 4.0,
       "tier": "low"
@@ -1241,78 +1317,6 @@
       "tier": "low"
     },
     {
-      "player_id": 668804,
-      "name": "Bryan Reynolds",
-      "position": "LF",
-      "team_id": 134,
-      "team_abbr": "PIT",
-      "opp_abbr": "SEA",
-      "opp_team_id": 136,
-      "opp_pitcher": {
-        "id": 669923,
-        "fullName": "George Kirby"
-      },
-      "park": {
-        "id": 31,
-        "name": "PNC Park",
-        "runs": 96,
-        "hr": 92,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 4.36,
-      "mean_efp": 5.86,
-      "stats_games": 7,
-      "efp": 9.29,
-      "bat_side": "S",
-      "per_event": {
-        "singles": 1.95,
-        "doubles": 1.22,
-        "triples": 0.17,
-        "home_runs": 1.54,
-        "bb_hbp": 0.85,
-        "r": 2.95,
-        "rbi": 1.67,
-        "sb": 0.26
-      },
-      "multipliers": {
-        "park_hr": 0.92,
-        "park_runs": 0.96,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.096,
-        "pitcher_hr": 0.936,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.923,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1623,
-        "doubles": 0.061,
-        "triples": 0.0054,
-        "home_runs": 0.0384,
-        "bb_hbp": 0.1057,
-        "r_per_pa": 0.3682,
-        "rbi_per_pa": 0.2094
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 665923,
       "name": "Esteury Ruiz",
       "position": "RF",
@@ -1596,82 +1600,6 @@
         "bb_hbp": 0.0847,
         "r_per_pa": 0.3049,
         "rbi_per_pa": 0.1506
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 665161,
-      "name": "Jeremy Pe\u00f1a",
-      "position": "SS",
-      "team_id": 117,
-      "team_abbr": "HOU",
-      "opp_abbr": "TOR",
-      "opp_team_id": 141,
-      "opp_pitcher": {
-        "id": 669456,
-        "fullName": "Shane Bieber"
-      },
-      "park": {
-        "id": 14,
-        "name": "Rogers Centre",
-        "runs": 104,
-        "hr": 109,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Roof Closed",
-        "temp": "72",
-        "wind": "0 mph, None"
-      },
-      "pa_source": "default",
-      "stdev_efp": 4.06,
-      "mean_efp": 6.29,
-      "stats_games": 7,
-      "efp": 9.25,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.1,
-        "doubles": 1.05,
-        "triples": 0.04,
-        "home_runs": 1.99,
-        "bb_hbp": 0.59,
-        "r": 2.42,
-        "rbi": 1.42,
-        "sb": 0.95
-      },
-      "multipliers": {
-        "park_hr": 1.09,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 1.0,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.0,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1746,
-        "doubles": 0.0527,
-        "triples": 0.0012,
-        "home_runs": 0.0497,
-        "bb_hbp": 0.0743,
-        "r_per_pa": 0.3024,
-        "rbi_per_pa": 0.1773
       },
       "pa": 4.0,
       "tier": "low"
@@ -2183,8 +2111,80 @@
       },
       "pa": 4.0,
       "tier": "low"
+    },
+    {
+      "player_id": 678882,
+      "name": "Ceddanne Rafaela",
+      "position": "CF",
+      "team_id": 111,
+      "team_abbr": "BOS",
+      "opp_abbr": "COL",
+      "opp_team_id": 115,
+      "opp_pitcher": {
+        "id": 807743,
+        "fullName": "Sean Sullivan"
+      },
+      "park": {
+        "id": 19,
+        "name": "Coors Field",
+        "runs": 116,
+        "hr": 118,
+        "label": "Hitter Friendly"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 5.42,
+      "mean_efp": 4.57,
+      "stats_games": 7,
+      "efp": 9.0,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.35,
+        "doubles": 1.74,
+        "triples": 0.41,
+        "home_runs": 1.53,
+        "bb_hbp": 0.44,
+        "r": 2.17,
+        "rbi": 1.16,
+        "sb": 0.47
+      },
+      "multipliers": {
+        "park_hr": 1.18,
+        "park_runs": 1.16,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.135,
+        "pitcher_hr": 1.156,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.19,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.835,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1955,
+        "doubles": 0.0868,
+        "triples": 0.0129,
+        "home_runs": 0.0383,
+        "bb_hbp": 0.0548,
+        "r_per_pa": 0.2718,
+        "rbi_per_pa": 0.1451
+      },
+      "pa": 4.0,
+      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-06-23T17:17:14.485936+00:00"
+  "generated_at": "2026-06-23T18:24:57.114062+00:00"
 }
