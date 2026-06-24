@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 16,
-  "projection_count": 376,
+  "projection_count": 368,
   "projections": [
     {
       "player_id": 681987,
@@ -165,82 +165,6 @@
       "tier": "low"
     },
     {
-      "player_id": 691718,
-      "name": "Pete Crow-Armstrong",
-      "position": "CF",
-      "team_id": 112,
-      "team_abbr": "CHC",
-      "opp_abbr": "NYM",
-      "opp_team_id": 121,
-      "opp_pitcher": {
-        "id": 690997,
-        "fullName": "Nolan McLean"
-      },
-      "park": {
-        "id": 3289,
-        "name": "Citi Field",
-        "runs": 96,
-        "hr": 93,
-        "label": "Pitcher Friendly"
-      },
-      "weather": {
-        "condition": "Sunny",
-        "temp": "81",
-        "wind": "9 mph, L To R"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 10.28,
-      "mean_efp": 11.25,
-      "stats_games": 8,
-      "efp": 11.31,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.65,
-        "doubles": 0.69,
-        "triples": 0.38,
-        "home_runs": 2.27,
-        "bb_hbp": 1.11,
-        "r": 3.34,
-        "rbi": 1.94,
-        "sb": 1.51
-      },
-      "multipliers": {
-        "park_hr": 0.93,
-        "park_runs": 0.96,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.857,
-        "pitcher_hr": 0.926,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.956,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.091,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.087,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1279,
-        "doubles": 0.0323,
-        "triples": 0.0111,
-        "home_runs": 0.0527,
-        "bb_hbp": 0.1296,
-        "r_per_pa": 0.3889,
-        "rbi_per_pa": 0.2261
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
       "player_id": 677800,
       "name": "Wilyer Abreu",
       "position": "RF",
@@ -312,6 +236,82 @@
         "bb_hbp": 0.0811,
         "r_per_pa": 0.3637,
         "rbi_per_pa": 0.1714
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 691718,
+      "name": "Pete Crow-Armstrong",
+      "position": "CF",
+      "team_id": 112,
+      "team_abbr": "CHC",
+      "opp_abbr": "NYM",
+      "opp_team_id": 121,
+      "opp_pitcher": {
+        "id": 690997,
+        "fullName": "Nolan McLean"
+      },
+      "park": {
+        "id": 3289,
+        "name": "Citi Field",
+        "runs": 96,
+        "hr": 93,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "81",
+        "wind": "9 mph, L To R"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 10.28,
+      "mean_efp": 11.25,
+      "stats_games": 8,
+      "efp": 11.16,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.53,
+        "doubles": 0.68,
+        "triples": 0.38,
+        "home_runs": 2.28,
+        "bb_hbp": 1.19,
+        "r": 3.36,
+        "rbi": 1.98,
+        "sb": 1.34
+      },
+      "multipliers": {
+        "park_hr": 0.93,
+        "park_runs": 0.96,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.842,
+        "pitcher_hr": 0.911,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.956,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.091,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.087,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1188,
+        "doubles": 0.0318,
+        "triples": 0.0111,
+        "home_runs": 0.0529,
+        "bb_hbp": 0.138,
+        "r_per_pa": 0.3906,
+        "rbi_per_pa": 0.2304
       },
       "pa": 4.3,
       "tier": "low"
@@ -416,17 +416,17 @@
       "stdev_efp": 10.28,
       "mean_efp": 11.25,
       "stats_games": 8,
-      "efp": 10.39,
+      "efp": 10.34,
       "bat_side": "L",
       "per_event": {
-        "singles": 1.99,
+        "singles": 1.89,
         "doubles": 0.62,
-        "triples": 0.4,
-        "home_runs": 2.26,
-        "bb_hbp": 0.85,
-        "r": 2.86,
-        "rbi": 1.81,
-        "sb": 1.08
+        "triples": 0.41,
+        "home_runs": 2.31,
+        "bb_hbp": 0.9,
+        "r": 2.88,
+        "rbi": 1.84,
+        "sb": 0.96
       },
       "multipliers": {
         "park_hr": 0.93,
@@ -453,15 +453,91 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1655,
-        "doubles": 0.0309,
-        "triples": 0.0125,
-        "home_runs": 0.0564,
-        "bb_hbp": 0.106,
-        "r_per_pa": 0.3578,
-        "rbi_per_pa": 0.2261
+        "singles": 0.1572,
+        "doubles": 0.0311,
+        "triples": 0.0127,
+        "home_runs": 0.0576,
+        "bb_hbp": 0.1127,
+        "r_per_pa": 0.3594,
+        "rbi_per_pa": 0.2304
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 694671,
+      "name": "Wyatt Langford",
+      "position": "LF",
+      "team_id": 140,
+      "team_abbr": "TEX",
+      "opp_abbr": "MIA",
+      "opp_team_id": 146,
+      "opp_pitcher": {
+        "id": 691587,
+        "fullName": "Eury P\u00e9rez"
+      },
+      "park": {
+        "id": 4169,
+        "name": "LoanDepot Park",
+        "runs": 95,
+        "hr": 91,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.39,
+      "mean_efp": 7.23,
+      "stats_games": 13,
+      "efp": 10.3,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.8,
+        "doubles": 0.91,
+        "triples": 0.21,
+        "home_runs": 2.53,
+        "bb_hbp": 0.9,
+        "r": 3.0,
+        "rbi": 1.67,
+        "sb": 0.74
+      },
+      "multipliers": {
+        "park_hr": 0.91,
+        "park_runs": 0.95,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.919,
+        "pitcher_hr": 1.146,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.095,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.214,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.096,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1398,
+        "doubles": 0.0424,
+        "triples": 0.0062,
+        "home_runs": 0.0587,
+        "bb_hbp": 0.1043,
+        "r_per_pa": 0.3494,
+        "rbi_per_pa": 0.1944
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1189,82 +1265,6 @@
       "tier": "low"
     },
     {
-      "player_id": 694671,
-      "name": "Wyatt Langford",
-      "position": "LF",
-      "team_id": 140,
-      "team_abbr": "TEX",
-      "opp_abbr": "MIA",
-      "opp_team_id": 146,
-      "opp_pitcher": {
-        "id": 691587,
-        "fullName": "Eury P\u00e9rez"
-      },
-      "park": {
-        "id": 4169,
-        "name": "LoanDepot Park",
-        "runs": 95,
-        "hr": 91,
-        "label": "Pitcher Friendly"
-      },
-      "weather": {
-        "condition": "Roof Closed",
-        "temp": "72",
-        "wind": "0 mph, None"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 5.39,
-      "mean_efp": 7.23,
-      "stats_games": 13,
-      "efp": 9.58,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.75,
-        "doubles": 0.93,
-        "triples": 0.21,
-        "home_runs": 2.18,
-        "bb_hbp": 0.91,
-        "r": 2.92,
-        "rbi": 1.56,
-        "sb": 0.46
-      },
-      "multipliers": {
-        "park_hr": 0.91,
-        "park_runs": 0.95,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.921,
-        "pitcher_hr": 1.121,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.095,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.214,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.096,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1358,
-        "doubles": 0.0432,
-        "triples": 0.0062,
-        "home_runs": 0.0508,
-        "bb_hbp": 0.1063,
-        "r_per_pa": 0.3396,
-        "rbi_per_pa": 0.1816
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
       "player_id": 701762,
       "name": "Nick Kurtz",
       "position": "1B",
@@ -1364,24 +1364,24 @@
       "stdev_efp": 5.88,
       "mean_efp": 6.43,
       "stats_games": 7,
-      "efp": 9.32,
+      "efp": 9.31,
       "bat_side": "R",
       "per_event": {
-        "singles": 2.35,
-        "doubles": 1.15,
+        "singles": 2.33,
+        "doubles": 1.13,
         "triples": 0.17,
-        "home_runs": 0.85,
-        "bb_hbp": 0.48,
-        "r": 2.9,
-        "rbi": 1.38,
+        "home_runs": 0.84,
+        "bb_hbp": 0.52,
+        "r": 2.92,
+        "rbi": 1.37,
         "sb": 1.35
       },
       "multipliers": {
         "park_hr": 0.91,
         "park_runs": 0.95,
         "weather_hr": 1.0,
-        "pitcher_hits": 0.936,
-        "pitcher_hr": 1.156,
+        "pitcher_hits": 0.939,
+        "pitcher_hr": 1.141,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -1401,13 +1401,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1825,
-        "doubles": 0.0533,
+        "singles": 0.1805,
+        "doubles": 0.0526,
         "triples": 0.0049,
-        "home_runs": 0.0199,
-        "bb_hbp": 0.0561,
-        "r_per_pa": 0.3377,
-        "rbi_per_pa": 0.161
+        "home_runs": 0.0195,
+        "bb_hbp": 0.0602,
+        "r_per_pa": 0.3395,
+        "rbi_per_pa": 0.1593
       },
       "pa": 4.3,
       "tier": "low"
@@ -1921,82 +1921,6 @@
       "tier": "low"
     },
     {
-      "player_id": 669065,
-      "name": "Kyle Stowers",
-      "position": "LF",
-      "team_id": 146,
-      "team_abbr": "MIA",
-      "opp_abbr": "TEX",
-      "opp_team_id": 140,
-      "opp_pitcher": {
-        "id": 594798,
-        "fullName": "Jacob deGrom"
-      },
-      "park": {
-        "id": 4169,
-        "name": "LoanDepot Park",
-        "runs": 95,
-        "hr": 91,
-        "label": "Pitcher Friendly"
-      },
-      "weather": {
-        "condition": "Roof Closed",
-        "temp": "72",
-        "wind": "0 mph, None"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 7.15,
-      "mean_efp": 6.89,
-      "stats_games": 0,
-      "efp": 9.02,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.15,
-        "doubles": 1.2,
-        "triples": 0.11,
-        "home_runs": 2.46,
-        "bb_hbp": 0.81,
-        "r": 2.94,
-        "rbi": 1.55,
-        "sb": 0.07
-      },
-      "multipliers": {
-        "park_hr": 0.91,
-        "park_runs": 0.95,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.936,
-        "pitcher_hr": 1.156,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.168,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.119,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.0888,
-        "doubles": 0.0558,
-        "triples": 0.0033,
-        "home_runs": 0.0573,
-        "bb_hbp": 0.094,
-        "r_per_pa": 0.3424,
-        "rbi_per_pa": 0.1799
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
       "player_id": 669016,
       "name": "Brandon Marsh",
       "position": "LF",
@@ -2141,6 +2065,82 @@
       "tier": "low"
     },
     {
+      "player_id": 694203,
+      "name": "Denzer Guzman",
+      "position": "3B",
+      "team_id": 108,
+      "team_abbr": "LAA",
+      "opp_abbr": "BAL",
+      "opp_team_id": 110,
+      "opp_pitcher": {
+        "id": 694346,
+        "fullName": "Trey Gibson"
+      },
+      "park": {
+        "id": 1,
+        "name": "Angel Stadium",
+        "runs": 97,
+        "hr": 96,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "77",
+        "wind": "9 mph, Out To CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.15,
+      "mean_efp": 6.89,
+      "stats_games": 0,
+      "efp": 8.89,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.88,
+        "doubles": 0.8,
+        "triples": 0.06,
+        "home_runs": 1.94,
+        "bb_hbp": 1.09,
+        "r": 2.59,
+        "rbi": 1.46,
+        "sb": 0.34
+      },
+      "multipliers": {
+        "park_hr": 0.96,
+        "park_runs": 0.97,
+        "weather_hr": 1.08,
+        "pitcher_hits": 1.02,
+        "pitcher_hr": 1.044,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.913,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.005,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1454,
+        "doubles": 0.037,
+        "triples": 0.0018,
+        "home_runs": 0.045,
+        "bb_hbp": 0.127,
+        "r_per_pa": 0.3009,
+        "rbi_per_pa": 0.1695
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 575929,
       "name": "Willson Contreras",
       "position": "1B",
@@ -2218,5 +2218,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-06-24T17:04:53.718535+00:00"
+  "generated_at": "2026-06-24T18:21:04.878398+00:00"
 }
