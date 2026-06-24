@@ -271,12 +271,12 @@
       "efp": 11.16,
       "bat_side": "L",
       "per_event": {
-        "singles": 1.53,
+        "singles": 1.57,
         "doubles": 0.68,
         "triples": 0.38,
-        "home_runs": 2.28,
-        "bb_hbp": 1.19,
-        "r": 3.36,
+        "home_runs": 2.24,
+        "bb_hbp": 1.18,
+        "r": 3.38,
         "rbi": 1.98,
         "sb": 1.34
       },
@@ -284,8 +284,8 @@
         "park_hr": 0.93,
         "park_runs": 0.96,
         "weather_hr": 1.0,
-        "pitcher_hits": 0.842,
-        "pitcher_hr": 0.911,
+        "pitcher_hits": 0.839,
+        "pitcher_hr": 0.909,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -305,13 +305,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1188,
-        "doubles": 0.0318,
-        "triples": 0.0111,
-        "home_runs": 0.0529,
-        "bb_hbp": 0.138,
-        "r_per_pa": 0.3906,
-        "rbi_per_pa": 0.2304
+        "singles": 0.1217,
+        "doubles": 0.0316,
+        "triples": 0.0109,
+        "home_runs": 0.0522,
+        "bb_hbp": 0.1368,
+        "r_per_pa": 0.393,
+        "rbi_per_pa": 0.2297
       },
       "pa": 4.3,
       "tier": "low"
@@ -416,15 +416,15 @@
       "stdev_efp": 10.28,
       "mean_efp": 11.25,
       "stats_games": 8,
-      "efp": 10.34,
+      "efp": 10.35,
       "bat_side": "L",
       "per_event": {
-        "singles": 1.89,
+        "singles": 1.94,
         "doubles": 0.62,
-        "triples": 0.41,
-        "home_runs": 2.31,
-        "bb_hbp": 0.9,
-        "r": 2.88,
+        "triples": 0.4,
+        "home_runs": 2.28,
+        "bb_hbp": 0.89,
+        "r": 2.89,
         "rbi": 1.84,
         "sb": 0.96
       },
@@ -453,13 +453,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1572,
-        "doubles": 0.0311,
-        "triples": 0.0127,
-        "home_runs": 0.0576,
-        "bb_hbp": 0.1127,
-        "r_per_pa": 0.3594,
-        "rbi_per_pa": 0.2304
+        "singles": 0.1613,
+        "doubles": 0.0309,
+        "triples": 0.0126,
+        "home_runs": 0.0569,
+        "bb_hbp": 0.1118,
+        "r_per_pa": 0.3615,
+        "rbi_per_pa": 0.2297
       },
       "pa": 4.0,
       "tier": "low"
@@ -1121,6 +1121,82 @@
       "tier": "low"
     },
     {
+      "player_id": 672640,
+      "name": "Otto Lopez",
+      "position": "SS",
+      "team_id": 146,
+      "team_abbr": "MIA",
+      "opp_abbr": "TEX",
+      "opp_team_id": 140,
+      "opp_pitcher": {
+        "id": 594798,
+        "fullName": "Jacob deGrom"
+      },
+      "park": {
+        "id": 4169,
+        "name": "LoanDepot Park",
+        "runs": 95,
+        "hr": 91,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.88,
+      "mean_efp": 6.43,
+      "stats_games": 7,
+      "efp": 9.71,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.31,
+        "doubles": 1.12,
+        "triples": 0.17,
+        "home_runs": 1.18,
+        "bb_hbp": 0.51,
+        "r": 2.96,
+        "rbi": 1.48,
+        "sb": 1.35
+      },
+      "multipliers": {
+        "park_hr": 0.91,
+        "park_runs": 0.95,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.939,
+        "pitcher_hr": 1.141,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.168,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.03,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1793,
+        "doubles": 0.0522,
+        "triples": 0.0049,
+        "home_runs": 0.0275,
+        "bb_hbp": 0.0595,
+        "r_per_pa": 0.3441,
+        "rbi_per_pa": 0.172
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 547180,
       "name": "Bryce Harper",
       "position": "1B",
@@ -1334,82 +1410,6 @@
         "rbi_per_pa": 0.1744
       },
       "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 672640,
-      "name": "Otto Lopez",
-      "position": "SS",
-      "team_id": 146,
-      "team_abbr": "MIA",
-      "opp_abbr": "TEX",
-      "opp_team_id": 140,
-      "opp_pitcher": {
-        "id": 594798,
-        "fullName": "Jacob deGrom"
-      },
-      "park": {
-        "id": 4169,
-        "name": "LoanDepot Park",
-        "runs": 95,
-        "hr": 91,
-        "label": "Pitcher Friendly"
-      },
-      "weather": {
-        "condition": "Roof Closed",
-        "temp": "72",
-        "wind": "0 mph, None"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 5.88,
-      "mean_efp": 6.43,
-      "stats_games": 7,
-      "efp": 9.31,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.33,
-        "doubles": 1.13,
-        "triples": 0.17,
-        "home_runs": 0.84,
-        "bb_hbp": 0.52,
-        "r": 2.92,
-        "rbi": 1.37,
-        "sb": 1.35
-      },
-      "multipliers": {
-        "park_hr": 0.91,
-        "park_runs": 0.95,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.939,
-        "pitcher_hr": 1.141,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.168,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.03,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1805,
-        "doubles": 0.0526,
-        "triples": 0.0049,
-        "home_runs": 0.0195,
-        "bb_hbp": 0.0602,
-        "r_per_pa": 0.3395,
-        "rbi_per_pa": 0.1593
-      },
-      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -2065,6 +2065,82 @@
       "tier": "low"
     },
     {
+      "player_id": 669065,
+      "name": "Kyle Stowers",
+      "position": "LF",
+      "team_id": 146,
+      "team_abbr": "MIA",
+      "opp_abbr": "TEX",
+      "opp_team_id": 140,
+      "opp_pitcher": {
+        "id": 594798,
+        "fullName": "Jacob deGrom"
+      },
+      "park": {
+        "id": 4169,
+        "name": "LoanDepot Park",
+        "runs": 95,
+        "hr": 91,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.15,
+      "mean_efp": 6.89,
+      "stats_games": 0,
+      "efp": 8.97,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.14,
+        "doubles": 1.17,
+        "triples": 0.28,
+        "home_runs": 2.33,
+        "bb_hbp": 0.79,
+        "r": 2.91,
+        "rbi": 1.55,
+        "sb": 0.07
+      },
+      "multipliers": {
+        "park_hr": 0.91,
+        "park_runs": 0.95,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.939,
+        "pitcher_hr": 1.141,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.168,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.119,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.0883,
+        "doubles": 0.0542,
+        "triples": 0.0081,
+        "home_runs": 0.0543,
+        "bb_hbp": 0.0915,
+        "r_per_pa": 0.3387,
+        "rbi_per_pa": 0.1804
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 694203,
       "name": "Denzer Guzman",
       "position": "3B",
@@ -2139,84 +2215,8 @@
       },
       "pa": 4.3,
       "tier": "low"
-    },
-    {
-      "player_id": 575929,
-      "name": "Willson Contreras",
-      "position": "1B",
-      "team_id": 111,
-      "team_abbr": "BOS",
-      "opp_abbr": "COL",
-      "opp_team_id": 115,
-      "opp_pitcher": {
-        "id": 607536,
-        "fullName": "Kyle Freeland"
-      },
-      "park": {
-        "id": 19,
-        "name": "Coors Field",
-        "runs": 116,
-        "hr": 118,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "83",
-        "wind": "7 mph, R To L"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 6.38,
-      "mean_efp": 5.25,
-      "stats_games": 8,
-      "efp": 8.88,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.18,
-        "doubles": 0.99,
-        "triples": 0.27,
-        "home_runs": 2.43,
-        "bb_hbp": 0.82,
-        "r": 2.18,
-        "rbi": 1.22,
-        "sb": 0.04
-      },
-      "multipliers": {
-        "park_hr": 1.18,
-        "park_runs": 1.16,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.17,
-        "pitcher_hr": 1.174,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.046,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 0.895,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.182,
-        "doubles": 0.0495,
-        "triples": 0.0084,
-        "home_runs": 0.0608,
-        "bb_hbp": 0.1028,
-        "r_per_pa": 0.2727,
-        "rbi_per_pa": 0.1525
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-06-24T18:21:04.878398+00:00"
+  "generated_at": "2026-06-24T18:28:56.549314+00:00"
 }
