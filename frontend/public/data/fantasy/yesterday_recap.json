@@ -1,6 +1,6 @@
 {
-  "recap_date": "2026-06-08",
-  "generated_at": "2026-06-09T11:22:34.352173+00:00",
+  "recap_date": "2026-06-25",
+  "generated_at": "2026-06-26T10:55:56.366358+00:00",
   "totals": {
     "high_conf": {
       "n": 0,
@@ -8,131 +8,107 @@
       "hit_rate": null
     },
     "med_conf": {
-      "n": 2,
+      "n": 4,
       "wins": 2,
-      "hit_rate": 1.0
+      "hit_rate": 0.5
     },
     "low_conf": {
-      "n": 5,
-      "wins": 2,
-      "hit_rate": 0.4
+      "n": 1,
+      "wins": 1,
+      "hit_rate": 1.0
     },
     "fade": {
-      "n": 30,
-      "wins": 18,
-      "hit_rate": 0.6
+      "n": 1,
+      "wins": 0,
+      "hit_rate": 0.0
     },
     "overall": {
-      "n": 37,
-      "wins": 22,
-      "hit_rate": 0.595
+      "n": 6,
+      "wins": 3,
+      "hit_rate": 0.5
     }
   },
   "top_hit": {
-    "name": "Jung Hoo Lee",
-    "team": "SF",
-    "opp": "WSH",
-    "projected": 8.47,
-    "line": 6.0,
-    "actual": 16.0,
-    "edge_z": 0.453,
+    "name": "Wyatt Langford",
+    "team": "TEX",
+    "opp": "TOR",
+    "projected": 9.5,
+    "line": 5.5,
+    "actual": 18.0,
+    "edge_z": 0.742,
     "tier": "MED",
     "won": true,
     "grade": "over"
   },
   "biggest_miss": {
-    "name": "Colton Cowser",
-    "team": "BAL",
+    "name": "Jake Mangum",
+    "team": "PIT",
     "opp": "SEA",
-    "projected": 7.95,
-    "line": 7.5,
+    "projected": 7.88,
+    "line": 5.5,
     "actual": 0.0,
-    "edge_z": 0.146,
-    "tier": "LOW",
+    "edge_z": 0.382,
+    "tier": "MED",
     "won": false,
     "grade": "under"
   },
   "sample_picks": [
     {
-      "name": "Jung Hoo Lee",
-      "team": "SF",
-      "opp": "WSH",
-      "projected": 8.47,
-      "line": 6.0,
-      "actual": 16.0,
-      "edge_z": 0.453,
-      "tier": "MED",
-      "won": true,
-      "grade": "over"
-    },
-    {
-      "name": "Christian Yelich",
-      "team": "MIL",
-      "opp": "ATH",
-      "projected": 8.48,
-      "line": 6.5,
-      "actual": 15.0,
-      "edge_z": 0.302,
-      "tier": "MED",
-      "won": true,
-      "grade": "over"
-    },
-    {
-      "name": "Curtis Mead",
-      "team": "WSH",
-      "opp": "SF",
-      "projected": 7.04,
+      "name": "Wyatt Langford",
+      "team": "TEX",
+      "opp": "TOR",
+      "projected": 9.5,
       "line": 5.5,
-      "actual": 2.0,
-      "edge_z": 0.198,
-      "tier": "LOW",
+      "actual": 18.0,
+      "edge_z": 0.742,
+      "tier": "MED",
+      "won": true,
+      "grade": "over"
+    },
+    {
+      "name": "Jac Caglianone",
+      "team": "KC",
+      "opp": "TB",
+      "projected": 8.96,
+      "line": 5.0,
+      "actual": 0.0,
+      "edge_z": 0.742,
+      "tier": "MED",
       "won": false,
       "grade": "under"
     },
     {
-      "name": "Colton Cowser",
-      "team": "BAL",
+      "name": "Jung Hoo Lee",
+      "team": "SF",
+      "opp": "ATH",
+      "projected": 8.59,
+      "line": 5.0,
+      "actual": 16.0,
+      "edge_z": 0.659,
+      "tier": "MED",
+      "won": true,
+      "grade": "over"
+    },
+    {
+      "name": "Jake Mangum",
+      "team": "PIT",
       "opp": "SEA",
-      "projected": 7.95,
-      "line": 7.5,
+      "projected": 7.88,
+      "line": 5.5,
       "actual": 0.0,
-      "edge_z": 0.146,
-      "tier": "LOW",
+      "edge_z": 0.382,
+      "tier": "MED",
       "won": false,
       "grade": "under"
     },
     {
       "name": "J.T. Realmuto",
       "team": "PHI",
-      "opp": "TOR",
-      "projected": 6.38,
-      "line": 5.5,
-      "actual": 5.0,
-      "edge_z": 0.138,
-      "tier": "LOW",
-      "won": false,
-      "grade": "under"
-    },
-    {
-      "name": "Blaze Alexander",
-      "team": "BAL",
-      "opp": "SEA",
-      "projected": 8.07,
-      "line": 7.5,
-      "actual": 12.0,
-      "edge_z": 0.104,
-      "tier": "LOW",
-      "won": true,
-      "grade": "over"
-    },
-    {
-      "name": "Ryan McMahon",
-      "team": "NYY",
-      "opp": "CLE",
-      "projected": 6.57,
-      "line": 6.5,
-      "actual": 14.0,
-      "edge_z": 0.018,
+      "opp": "WSH",
+      "projected": 6.52,
+      "line": 5.0,
+      "actual": 9.0,
+      "edge_z": 0.239,
       "tier": "LOW",
       "won": true,
       "grade": "over"
