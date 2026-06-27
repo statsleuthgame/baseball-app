@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 380,
+  "projection_count": 369,
   "projections": [
     {
       "player_id": 677951,
@@ -373,78 +373,6 @@
       "tier": "low"
     },
     {
-      "player_id": 681987,
-      "name": "Nate Eaton",
-      "position": "OF",
-      "team_id": 111,
-      "team_abbr": "BOS",
-      "opp_abbr": "NYY",
-      "opp_team_id": 147,
-      "opp_pitcher": {
-        "id": 543037,
-        "fullName": "Gerrit Cole"
-      },
-      "park": {
-        "id": 3,
-        "name": "Fenway Park",
-        "runs": 108,
-        "hr": 99,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.18,
-      "mean_efp": 6.88,
-      "stats_games": 0,
-      "efp": 9.43,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.46,
-        "doubles": 1.28,
-        "triples": 0.09,
-        "home_runs": 1.94,
-        "bb_hbp": 0.84,
-        "r": 2.54,
-        "rbi": 1.31,
-        "sb": 1.29
-      },
-      "multipliers": {
-        "park_hr": 0.99,
-        "park_runs": 1.08,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.976,
-        "pitcher_hr": 1.087,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.189,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.122,
-        "doubles": 0.0642,
-        "triples": 0.003,
-        "home_runs": 0.0484,
-        "bb_hbp": 0.1056,
-        "r_per_pa": 0.3172,
-        "rbi_per_pa": 0.1639
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 668952,
       "name": "Ryan Kreidler",
       "position": "CF",
@@ -661,6 +589,82 @@
       "tier": "low"
     },
     {
+      "player_id": 677800,
+      "name": "Wilyer Abreu",
+      "position": "RF",
+      "team_id": 111,
+      "team_abbr": "BOS",
+      "opp_abbr": "NYY",
+      "opp_team_id": 147,
+      "opp_pitcher": {
+        "id": 543037,
+        "fullName": "Gerrit Cole"
+      },
+      "park": {
+        "id": 3,
+        "name": "Fenway Park",
+        "runs": 108,
+        "hr": 99,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "76",
+        "wind": "6 mph, In From RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.96,
+      "mean_efp": 5.56,
+      "stats_games": 9,
+      "efp": 9.28,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.81,
+        "doubles": 0.87,
+        "triples": 0.62,
+        "home_runs": 1.67,
+        "bb_hbp": 0.68,
+        "r": 3.02,
+        "rbi": 1.48,
+        "sb": 0.45
+      },
+      "multipliers": {
+        "park_hr": 0.99,
+        "park_runs": 1.08,
+        "weather_hr": 0.82,
+        "pitcher_hits": 0.976,
+        "pitcher_hr": 1.087,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.189,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1403,
+        "doubles": 0.0404,
+        "triples": 0.018,
+        "home_runs": 0.0389,
+        "bb_hbp": 0.0786,
+        "r_per_pa": 0.3516,
+        "rbi_per_pa": 0.1721
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 691406,
       "name": "Junior Caminero",
       "position": "3B",
@@ -730,6 +734,82 @@
         "rbi_per_pa": 0.2099
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 805808,
+      "name": "Kevin McGonigle",
+      "position": "SS",
+      "team_id": 116,
+      "team_abbr": "DET",
+      "opp_abbr": "HOU",
+      "opp_team_id": 117,
+      "opp_pitcher": {
+        "id": 678906,
+        "fullName": "Kai-Wei Teng"
+      },
+      "park": {
+        "id": 2394,
+        "name": "Comerica Park",
+        "runs": 97,
+        "hr": 93,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "69",
+        "wind": "9 mph, In From LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 3.29,
+      "mean_efp": 8.88,
+      "stats_games": 8,
+      "efp": 9.22,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.92,
+        "doubles": 1.04,
+        "triples": 0.22,
+        "home_runs": 0.67,
+        "bb_hbp": 1.55,
+        "r": 2.91,
+        "rbi": 1.27,
+        "sb": 0.94
+      },
+      "multipliers": {
+        "park_hr": 0.93,
+        "park_runs": 0.97,
+        "weather_hr": 0.95,
+        "pitcher_hits": 0.933,
+        "pitcher_hr": 1.067,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.959,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.996,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.149,
+        "doubles": 0.0482,
+        "triples": 0.0063,
+        "home_runs": 0.0156,
+        "bb_hbp": 0.1798,
+        "r_per_pa": 0.3388,
+        "rbi_per_pa": 0.1481
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1090,6 +1170,82 @@
         "rbi_per_pa": 0.1317
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 678882,
+      "name": "Ceddanne Rafaela",
+      "position": "CF",
+      "team_id": 111,
+      "team_abbr": "BOS",
+      "opp_abbr": "NYY",
+      "opp_team_id": 147,
+      "opp_pitcher": {
+        "id": 543037,
+        "fullName": "Gerrit Cole"
+      },
+      "park": {
+        "id": 3,
+        "name": "Fenway Park",
+        "runs": 108,
+        "hr": 99,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "76",
+        "wind": "6 mph, In From RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.95,
+      "mean_efp": 5.75,
+      "stats_games": 8,
+      "efp": 9.01,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.15,
+        "doubles": 1.27,
+        "triples": 0.37,
+        "home_runs": 1.11,
+        "bb_hbp": 0.45,
+        "r": 2.6,
+        "rbi": 1.29,
+        "sb": 1.05
+      },
+      "multipliers": {
+        "park_hr": 0.99,
+        "park_runs": 1.08,
+        "weather_hr": 0.95,
+        "pitcher_hits": 0.976,
+        "pitcher_hr": 1.087,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.189,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.078,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.167,
+        "doubles": 0.0589,
+        "triples": 0.0108,
+        "home_runs": 0.0259,
+        "bb_hbp": 0.052,
+        "r_per_pa": 0.3025,
+        "rbi_per_pa": 0.1494
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -2027,152 +2183,8 @@
       },
       "pa": 4.0,
       "tier": "low"
-    },
-    {
-      "player_id": 677800,
-      "name": "Wilyer Abreu",
-      "position": "RF",
-      "team_id": 111,
-      "team_abbr": "BOS",
-      "opp_abbr": "NYY",
-      "opp_team_id": 147,
-      "opp_pitcher": {
-        "id": 543037,
-        "fullName": "Gerrit Cole"
-      },
-      "park": {
-        "id": 3,
-        "name": "Fenway Park",
-        "runs": 108,
-        "hr": 99,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 5.96,
-      "mean_efp": 5.56,
-      "stats_games": 9,
-      "efp": 8.64,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.68,
-        "doubles": 0.81,
-        "triples": 0.58,
-        "home_runs": 1.9,
-        "bb_hbp": 0.63,
-        "r": 2.45,
-        "rbi": 1.38,
-        "sb": 0.45
-      },
-      "multipliers": {
-        "park_hr": 0.99,
-        "park_runs": 1.08,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.976,
-        "pitcher_hr": 1.087,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.189,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1403,
-        "doubles": 0.0404,
-        "triples": 0.018,
-        "home_runs": 0.0474,
-        "bb_hbp": 0.0786,
-        "r_per_pa": 0.3058,
-        "rbi_per_pa": 0.1721
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 641343,
-      "name": "Jake Bauers",
-      "position": "1B",
-      "team_id": 158,
-      "team_abbr": "MIL",
-      "opp_abbr": "CHC",
-      "opp_team_id": 112,
-      "opp_pitcher": {
-        "id": 656849,
-        "fullName": "David Peterson"
-      },
-      "park": {
-        "id": 32,
-        "name": "American Family Field",
-        "runs": 103,
-        "hr": 108,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 9.48,
-      "mean_efp": 9.83,
-      "stats_games": 6,
-      "efp": 8.64,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.82,
-        "doubles": 0.82,
-        "triples": 0.42,
-        "home_runs": 1.32,
-        "bb_hbp": 1.2,
-        "r": 2.69,
-        "rbi": 1.38,
-        "sb": 0.23
-      },
-      "multipliers": {
-        "park_hr": 1.08,
-        "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.092,
-        "pitcher_hr": 0.859,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.88,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.035,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1514,
-        "doubles": 0.0409,
-        "triples": 0.013,
-        "home_runs": 0.0329,
-        "bb_hbp": 0.15,
-        "r_per_pa": 0.3358,
-        "rbi_per_pa": 0.1725
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-06-27T12:20:02.211321+00:00"
+  "generated_at": "2026-06-27T14:22:46.767085+00:00"
 }
