@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 369,
+  "projection_count": 366,
   "projections": [
     {
       "player_id": 677951,
@@ -882,6 +882,82 @@
         "rbi_per_pa": 0.1549
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 502671,
+      "name": "Paul Goldschmidt",
+      "position": "1B",
+      "team_id": 147,
+      "team_abbr": "NYY",
+      "opp_abbr": "BOS",
+      "opp_team_id": 111,
+      "opp_pitcher": {
+        "id": 687562,
+        "fullName": "Jake Bennett"
+      },
+      "park": {
+        "id": 3,
+        "name": "Fenway Park",
+        "runs": 108,
+        "hr": 99,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "76",
+        "wind": "6 mph, In From RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.18,
+      "mean_efp": 6.88,
+      "stats_games": 0,
+      "efp": 9.2,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.3,
+        "doubles": 1.1,
+        "triples": 0.19,
+        "home_runs": 1.6,
+        "bb_hbp": 0.59,
+        "r": 3.0,
+        "rbi": 1.65,
+        "sb": 0.06
+      },
+      "multipliers": {
+        "park_hr": 0.99,
+        "park_runs": 1.08,
+        "weather_hr": 0.95,
+        "pitcher_hits": 1.037,
+        "pitcher_hr": 0.675,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.871,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1786,
+        "doubles": 0.0513,
+        "triples": 0.0055,
+        "home_runs": 0.0373,
+        "bb_hbp": 0.0683,
+        "r_per_pa": 0.3491,
+        "rbi_per_pa": 0.1923
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -2111,80 +2187,8 @@
       },
       "pa": 4.0,
       "tier": "low"
-    },
-    {
-      "player_id": 671277,
-      "name": "Luis Garc\u00eda Jr.",
-      "position": "1B",
-      "team_id": 120,
-      "team_abbr": "WSH",
-      "opp_abbr": "BAL",
-      "opp_team_id": 110,
-      "opp_pitcher": {
-        "id": 687064,
-        "fullName": "Brandon Young"
-      },
-      "park": {
-        "id": 2,
-        "name": "Camden Yards",
-        "runs": 103,
-        "hr": 108,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 9.01,
-      "mean_efp": 7.0,
-      "stats_games": 8,
-      "efp": 8.66,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.5,
-        "doubles": 0.79,
-        "triples": 0.26,
-        "home_runs": 2.7,
-        "bb_hbp": 0.6,
-        "r": 2.3,
-        "rbi": 1.63,
-        "sb": 0.11
-      },
-      "multipliers": {
-        "park_hr": 1.08,
-        "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.965,
-        "pitcher_hr": 0.892,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.01,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.021,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1253,
-        "doubles": 0.0393,
-        "triples": 0.0081,
-        "home_runs": 0.0675,
-        "bb_hbp": 0.0746,
-        "r_per_pa": 0.288,
-        "rbi_per_pa": 0.2039
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-06-27T14:22:46.767085+00:00"
+  "generated_at": "2026-06-27T16:04:25.030295+00:00"
 }
