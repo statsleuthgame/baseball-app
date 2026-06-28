@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 380,
+  "projection_count": 373,
   "projections": [
     {
       "player_id": 694671,
@@ -373,78 +373,6 @@
       "tier": "low"
     },
     {
-      "player_id": 670541,
-      "name": "Yordan Alvarez",
-      "position": "DH",
-      "team_id": 117,
-      "team_abbr": "HOU",
-      "opp_abbr": "DET",
-      "opp_team_id": 116,
-      "opp_pitcher": {
-        "id": 656427,
-        "fullName": "Jack Flaherty"
-      },
-      "park": {
-        "id": 2394,
-        "name": "Comerica Park",
-        "runs": 97,
-        "hr": 93,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.94,
-      "mean_efp": 11.0,
-      "stats_games": 9,
-      "efp": 9.53,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.56,
-        "doubles": 0.87,
-        "triples": 0.02,
-        "home_runs": 2.35,
-        "bb_hbp": 1.67,
-        "r": 2.86,
-        "rbi": 1.5,
-        "sb": 0.05
-      },
-      "multipliers": {
-        "park_hr": 0.93,
-        "park_runs": 0.97,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.009,
-        "pitcher_hr": 0.964,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.168,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.187,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1298,
-        "doubles": 0.0437,
-        "triples": 0.0007,
-        "home_runs": 0.0586,
-        "bb_hbp": 0.209,
-        "r_per_pa": 0.3581,
-        "rbi_per_pa": 0.1871
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 650490,
       "name": "Yandy D\u00edaz",
       "position": "DH",
@@ -512,6 +440,82 @@
         "bb_hbp": 0.1326,
         "r_per_pa": 0.3829,
         "rbi_per_pa": 0.185
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 670541,
+      "name": "Yordan Alvarez",
+      "position": "DH",
+      "team_id": 117,
+      "team_abbr": "HOU",
+      "opp_abbr": "DET",
+      "opp_team_id": 116,
+      "opp_pitcher": {
+        "id": 656427,
+        "fullName": "Jack Flaherty"
+      },
+      "park": {
+        "id": 2394,
+        "name": "Comerica Park",
+        "runs": 97,
+        "hr": 93,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "74",
+        "wind": "9 mph, In From LF"
+      },
+      "pa_source": "default",
+      "stdev_efp": 7.94,
+      "mean_efp": 11.0,
+      "stats_games": 9,
+      "efp": 9.43,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.56,
+        "doubles": 0.87,
+        "triples": 0.02,
+        "home_runs": 2.23,
+        "bb_hbp": 1.67,
+        "r": 2.86,
+        "rbi": 1.5,
+        "sb": 0.05
+      },
+      "multipliers": {
+        "park_hr": 0.93,
+        "park_runs": 0.97,
+        "weather_hr": 0.95,
+        "pitcher_hits": 1.009,
+        "pitcher_hr": 0.964,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.168,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.187,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1298,
+        "doubles": 0.0437,
+        "triples": 0.0007,
+        "home_runs": 0.0557,
+        "bb_hbp": 0.209,
+        "r_per_pa": 0.3581,
+        "rbi_per_pa": 0.1871
       },
       "pa": 4.0,
       "tier": "low"
@@ -1021,78 +1025,6 @@
       "tier": "low"
     },
     {
-      "player_id": 804606,
-      "name": "Konnor Griffin",
-      "position": "SS",
-      "team_id": 134,
-      "team_abbr": "PIT",
-      "opp_abbr": "CIN",
-      "opp_team_id": 113,
-      "opp_pitcher": {
-        "id": 663903,
-        "fullName": "Brady Singer"
-      },
-      "park": {
-        "id": 31,
-        "name": "PNC Park",
-        "runs": 96,
-        "hr": 92,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 10.45,
-      "mean_efp": 6.5,
-      "stats_games": 6,
-      "efp": 9.23,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.07,
-        "doubles": 0.85,
-        "triples": 0.2,
-        "home_runs": 1.48,
-        "bb_hbp": 0.73,
-        "r": 2.43,
-        "rbi": 1.27,
-        "sb": 1.51
-      },
-      "multipliers": {
-        "park_hr": 0.92,
-        "park_runs": 0.96,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.095,
-        "pitcher_hr": 1.224,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.004,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.963,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1723,
-        "doubles": 0.0425,
-        "triples": 0.0061,
-        "home_runs": 0.0371,
-        "bb_hbp": 0.0917,
-        "r_per_pa": 0.3038,
-        "rbi_per_pa": 0.1585
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 803011,
       "name": "Sam Antonacci",
       "position": "LF",
@@ -1304,6 +1236,82 @@
         "bb_hbp": 0.1398,
         "r_per_pa": 0.3607,
         "rbi_per_pa": 0.1781
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 804606,
+      "name": "Konnor Griffin",
+      "position": "SS",
+      "team_id": 134,
+      "team_abbr": "PIT",
+      "opp_abbr": "CIN",
+      "opp_team_id": 113,
+      "opp_pitcher": {
+        "id": 663903,
+        "fullName": "Brady Singer"
+      },
+      "park": {
+        "id": 31,
+        "name": "PNC Park",
+        "runs": 96,
+        "hr": 92,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "81",
+        "wind": "2 mph, In From CF"
+      },
+      "pa_source": "default",
+      "stdev_efp": 10.45,
+      "mean_efp": 6.5,
+      "stats_games": 6,
+      "efp": 9.1,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.07,
+        "doubles": 0.85,
+        "triples": 0.2,
+        "home_runs": 1.34,
+        "bb_hbp": 0.73,
+        "r": 2.43,
+        "rbi": 1.27,
+        "sb": 1.51
+      },
+      "multipliers": {
+        "park_hr": 0.92,
+        "park_runs": 0.96,
+        "weather_hr": 0.9,
+        "pitcher_hits": 1.095,
+        "pitcher_hr": 1.224,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.004,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.963,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1723,
+        "doubles": 0.0425,
+        "triples": 0.0061,
+        "home_runs": 0.0334,
+        "bb_hbp": 0.0917,
+        "r_per_pa": 0.3038,
+        "rbi_per_pa": 0.1585
       },
       "pa": 4.0,
       "tier": "low"
@@ -1664,78 +1672,6 @@
         "bb_hbp": 0.1177,
         "r_per_pa": 0.3326,
         "rbi_per_pa": 0.1366
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 665161,
-      "name": "Jeremy Pe\u00f1a",
-      "position": "SS",
-      "team_id": 117,
-      "team_abbr": "HOU",
-      "opp_abbr": "DET",
-      "opp_team_id": 116,
-      "opp_pitcher": {
-        "id": 656427,
-        "fullName": "Jack Flaherty"
-      },
-      "park": {
-        "id": 2394,
-        "name": "Comerica Park",
-        "runs": 97,
-        "hr": 93,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 4.06,
-      "mean_efp": 6.29,
-      "stats_games": 7,
-      "efp": 8.93,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.32,
-        "doubles": 0.84,
-        "triples": 0.03,
-        "home_runs": 1.11,
-        "bb_hbp": 0.92,
-        "r": 2.62,
-        "rbi": 1.24,
-        "sb": 1.11
-      },
-      "multipliers": {
-        "park_hr": 0.93,
-        "park_runs": 0.97,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.009,
-        "pitcher_hr": 0.964,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.168,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.187,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.193,
-        "doubles": 0.0419,
-        "triples": 0.0011,
-        "home_runs": 0.0278,
-        "bb_hbp": 0.1153,
-        "r_per_pa": 0.328,
-        "rbi_per_pa": 0.1544
       },
       "pa": 4.0,
       "tier": "low"
@@ -2171,8 +2107,80 @@
       },
       "pa": 4.0,
       "tier": "low"
+    },
+    {
+      "player_id": 668952,
+      "name": "Ryan Kreidler",
+      "position": "CF",
+      "team_id": 142,
+      "team_abbr": "MIN",
+      "opp_abbr": "COL",
+      "opp_team_id": 115,
+      "opp_pitcher": {
+        "id": 663372,
+        "fullName": "Ryan Feltner"
+      },
+      "park": {
+        "id": 3312,
+        "name": "Target Field",
+        "runs": 100,
+        "hr": 101,
+        "label": "Neutral"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 7.18,
+      "mean_efp": 6.88,
+      "stats_games": 0,
+      "efp": 8.79,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.3,
+        "doubles": 0.55,
+        "triples": 0.65,
+        "home_runs": 1.76,
+        "bb_hbp": 0.74,
+        "r": 2.62,
+        "rbi": 1.41,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 1.01,
+        "park_runs": 1.0,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.959,
+        "pitcher_hr": 1.072,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.986,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.217,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.192,
+        "doubles": 0.0275,
+        "triples": 0.0204,
+        "home_runs": 0.0441,
+        "bb_hbp": 0.092,
+        "r_per_pa": 0.3272,
+        "rbi_per_pa": 0.1757
+      },
+      "pa": 4.0,
+      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-06-28T12:34:32.856945+00:00"
+  "generated_at": "2026-06-28T14:32:19.874132+00:00"
 }
