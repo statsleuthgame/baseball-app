@@ -229,6 +229,78 @@
       "tier": "low"
     },
     {
+      "player_id": 691718,
+      "name": "Pete Crow-Armstrong",
+      "position": "CF",
+      "team_id": 112,
+      "team_abbr": "CHC",
+      "opp_abbr": "SD",
+      "opp_team_id": 135,
+      "opp_pitcher": {
+        "id": 656288,
+        "fullName": "Griffin Canning"
+      },
+      "park": {
+        "id": 17,
+        "name": "Wrigley Field",
+        "runs": 104,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 9.7,
+      "mean_efp": 11.11,
+      "stats_games": 9,
+      "efp": 9.77,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.73,
+        "doubles": 0.82,
+        "triples": 0.28,
+        "home_runs": 1.93,
+        "bb_hbp": 1.32,
+        "r": 2.55,
+        "rbi": 1.28,
+        "sb": 1.24
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.036,
+        "pitcher_hr": 1.137,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.931,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1443,
+        "doubles": 0.0411,
+        "triples": 0.0088,
+        "home_runs": 0.0481,
+        "bb_hbp": 0.1651,
+        "r_per_pa": 0.3184,
+        "rbi_per_pa": 0.1605
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
       "player_id": 672640,
       "name": "Otto Lopez",
       "position": "SS",
@@ -719,75 +791,6 @@
         "bb_hbp": 0.0822,
         "r_per_pa": 0.3419,
         "rbi_per_pa": 0.1794
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 691718,
-      "name": "Pete Crow-Armstrong",
-      "position": "CF",
-      "team_id": 112,
-      "team_abbr": "CHC",
-      "opp_abbr": "SD",
-      "opp_team_id": 135,
-      "opp_pitcher": null,
-      "park": {
-        "id": 17,
-        "name": "Wrigley Field",
-        "runs": 104,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 9.7,
-      "mean_efp": 11.11,
-      "stats_games": 9,
-      "efp": 9.24,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.68,
-        "doubles": 0.76,
-        "triples": 0.24,
-        "home_runs": 1.71,
-        "bb_hbp": 1.09,
-        "r": 2.55,
-        "rbi": 1.28,
-        "sb": 1.24
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 1.0,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.0,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1402,
-        "doubles": 0.0379,
-        "triples": 0.0074,
-        "home_runs": 0.0427,
-        "bb_hbp": 0.1366,
-        "r_per_pa": 0.3184,
-        "rbi_per_pa": 0.1605
       },
       "pa": 4.0,
       "tier": "low"
@@ -2162,5 +2165,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-06-29T16:32:53.201053+00:00"
+  "generated_at": "2026-06-29T17:35:00.279825+00:00"
 }
