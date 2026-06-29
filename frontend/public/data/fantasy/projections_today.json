@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 13,
-  "projection_count": 289,
+  "projection_count": 269,
   "projections": [
     {
       "player_id": 665923,
@@ -393,6 +393,158 @@
       "tier": "low"
     },
     {
+      "player_id": 691718,
+      "name": "Pete Crow-Armstrong",
+      "position": "CF",
+      "team_id": 112,
+      "team_abbr": "CHC",
+      "opp_abbr": "SD",
+      "opp_team_id": 135,
+      "opp_pitcher": {
+        "id": 656288,
+        "fullName": "Griffin Canning"
+      },
+      "park": {
+        "id": 17,
+        "name": "Wrigley Field",
+        "runs": 104,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "87",
+        "wind": "15 mph, Out To LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 9.7,
+      "mean_efp": 11.11,
+      "stats_games": 9,
+      "efp": 10.66,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.86,
+        "doubles": 0.88,
+        "triples": 0.3,
+        "home_runs": 2.24,
+        "bb_hbp": 1.42,
+        "r": 2.69,
+        "rbi": 1.38,
+        "sb": 1.39
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.04,
+        "weather_hr": 1.082,
+        "pitcher_hits": 1.036,
+        "pitcher_hr": 1.137,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.931,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.984,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1443,
+        "doubles": 0.0411,
+        "triples": 0.0088,
+        "home_runs": 0.0521,
+        "bb_hbp": 0.1651,
+        "r_per_pa": 0.3132,
+        "rbi_per_pa": 0.1605
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 670541,
+      "name": "Yordan Alvarez",
+      "position": "DH",
+      "team_id": 117,
+      "team_abbr": "HOU",
+      "opp_abbr": "MIN",
+      "opp_team_id": 142,
+      "opp_pitcher": {
+        "id": 805673,
+        "fullName": "Zebby Matthews"
+      },
+      "park": {
+        "id": 2392,
+        "name": "Minute Maid Park",
+        "runs": 103,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.94,
+      "mean_efp": 11.0,
+      "stats_games": 9,
+      "efp": 10.62,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.8,
+        "doubles": 1.0,
+        "triples": 0.03,
+        "home_runs": 3.3,
+        "bb_hbp": 1.2,
+        "r": 3.15,
+        "rbi": 1.6,
+        "sb": 0.05
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.03,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.036,
+        "pitcher_hr": 1.202,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.084,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.003,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1391,
+        "doubles": 0.0467,
+        "triples": 0.0008,
+        "home_runs": 0.0766,
+        "bb_hbp": 0.1394,
+        "r_per_pa": 0.3658,
+        "rbi_per_pa": 0.1861
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 678246,
       "name": "Miguel Vargas",
       "position": "3B",
@@ -545,78 +697,6 @@
       "tier": "low"
     },
     {
-      "player_id": 670541,
-      "name": "Yordan Alvarez",
-      "position": "DH",
-      "team_id": 117,
-      "team_abbr": "HOU",
-      "opp_abbr": "MIN",
-      "opp_team_id": 142,
-      "opp_pitcher": {
-        "id": 805673,
-        "fullName": "Zebby Matthews"
-      },
-      "park": {
-        "id": 2392,
-        "name": "Minute Maid Park",
-        "runs": 103,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.94,
-      "mean_efp": 11.0,
-      "stats_games": 9,
-      "efp": 9.87,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.67,
-        "doubles": 0.93,
-        "triples": 0.03,
-        "home_runs": 3.07,
-        "bb_hbp": 1.12,
-        "r": 2.92,
-        "rbi": 1.49,
-        "sb": 0.05
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.036,
-        "pitcher_hr": 1.202,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.084,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1391,
-        "doubles": 0.0467,
-        "triples": 0.0008,
-        "home_runs": 0.0766,
-        "bb_hbp": 0.1394,
-        "r_per_pa": 0.3646,
-        "rbi_per_pa": 0.1861
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 696100,
       "name": "Hunter Goodman",
       "position": "C",
@@ -690,78 +770,6 @@
         "rbi_per_pa": 0.1916
       },
       "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 691718,
-      "name": "Pete Crow-Armstrong",
-      "position": "CF",
-      "team_id": 112,
-      "team_abbr": "CHC",
-      "opp_abbr": "SD",
-      "opp_team_id": 135,
-      "opp_pitcher": {
-        "id": 656288,
-        "fullName": "Griffin Canning"
-      },
-      "park": {
-        "id": 17,
-        "name": "Wrigley Field",
-        "runs": 104,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 9.7,
-      "mean_efp": 11.11,
-      "stats_games": 9,
-      "efp": 9.77,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.73,
-        "doubles": 0.82,
-        "triples": 0.28,
-        "home_runs": 1.93,
-        "bb_hbp": 1.32,
-        "r": 2.55,
-        "rbi": 1.28,
-        "sb": 1.24
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.036,
-        "pitcher_hr": 1.137,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.931,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1443,
-        "doubles": 0.0411,
-        "triples": 0.0088,
-        "home_runs": 0.0481,
-        "bb_hbp": 0.1651,
-        "r_per_pa": 0.3184,
-        "rbi_per_pa": 0.1605
-      },
-      "pa": 4.0,
       "tier": "low"
     },
     {
@@ -914,6 +922,82 @@
         "rbi_per_pa": 0.1572
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 665742,
+      "name": "Juan Soto",
+      "position": "LF",
+      "team_id": 121,
+      "team_abbr": "NYM",
+      "opp_abbr": "TOR",
+      "opp_team_id": 141,
+      "opp_pitcher": {
+        "id": 702056,
+        "fullName": "Trey Yesavage"
+      },
+      "park": {
+        "id": 14,
+        "name": "Rogers Centre",
+        "runs": 104,
+        "hr": 109,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "70",
+        "wind": "8 mph, In From RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 2.64,
+      "mean_efp": 4.2,
+      "stats_games": 5,
+      "efp": 9.72,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.77,
+        "doubles": 0.49,
+        "triples": 0.29,
+        "home_runs": 1.71,
+        "bb_hbp": 1.72,
+        "r": 3.2,
+        "rbi": 1.51,
+        "sb": 0.41
+      },
+      "multipliers": {
+        "park_hr": 1.09,
+        "park_runs": 1.04,
+        "weather_hr": 0.82,
+        "pitcher_hits": 0.836,
+        "pitcher_hr": 0.879,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.071,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.045,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1372,
+        "doubles": 0.0227,
+        "triples": 0.0085,
+        "home_runs": 0.0398,
+        "bb_hbp": 0.2003,
+        "r_per_pa": 0.3717,
+        "rbi_per_pa": 0.1751
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1753,6 +1837,82 @@
       "tier": "low"
     },
     {
+      "player_id": 664034,
+      "name": "Ty France",
+      "position": "1B",
+      "team_id": 135,
+      "team_abbr": "SD",
+      "opp_abbr": "CHC",
+      "opp_team_id": 112,
+      "opp_pitcher": {
+        "id": 684007,
+        "fullName": "Shota Imanaga"
+      },
+      "park": {
+        "id": 17,
+        "name": "Wrigley Field",
+        "runs": 104,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "87",
+        "wind": "15 mph, Out To LF"
+      },
+      "pa_source": "default",
+      "stdev_efp": 10.22,
+      "mean_efp": 7.8,
+      "stats_games": 5,
+      "efp": 9.19,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.47,
+        "doubles": 0.87,
+        "triples": 0.27,
+        "home_runs": 3.52,
+        "bb_hbp": 0.6,
+        "r": 2.3,
+        "rbi": 1.4,
+        "sb": 0.05
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.04,
+        "weather_hr": 1.208,
+        "pitcher_hits": 0.941,
+        "pitcher_hr": 1.245,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.095,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1226,
+        "doubles": 0.0433,
+        "triples": 0.0084,
+        "home_runs": 0.088,
+        "bb_hbp": 0.0754,
+        "r_per_pa": 0.2875,
+        "rbi_per_pa": 0.1753
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
       "player_id": 624413,
       "name": "Pete Alonso",
       "position": "1B",
@@ -2123,156 +2283,8 @@
       },
       "pa": 4.0,
       "tier": "low"
-    },
-    {
-      "player_id": 678882,
-      "name": "Ceddanne Rafaela",
-      "position": "CF",
-      "team_id": 111,
-      "team_abbr": "BOS",
-      "opp_abbr": "WSH",
-      "opp_team_id": 120,
-      "opp_pitcher": {
-        "id": 571945,
-        "fullName": "Miles Mikolas"
-      },
-      "park": {
-        "id": 3,
-        "name": "Fenway Park",
-        "runs": 108,
-        "hr": 99,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Clear",
-        "temp": "75",
-        "wind": "5 mph, In From RF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 5.95,
-      "mean_efp": 5.75,
-      "stats_games": 8,
-      "efp": 9.01,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.5,
-        "doubles": 1.25,
-        "triples": 0.41,
-        "home_runs": 0.97,
-        "bb_hbp": 0.44,
-        "r": 2.57,
-        "rbi": 1.26,
-        "sb": 0.88
-      },
-      "multipliers": {
-        "park_hr": 0.99,
-        "park_runs": 1.08,
-        "weather_hr": 0.95,
-        "pitcher_hits": 1.084,
-        "pitcher_hr": 1.201,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.959,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.068,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1938,
-        "doubles": 0.0584,
-        "triples": 0.0119,
-        "home_runs": 0.0226,
-        "bb_hbp": 0.0511,
-        "r_per_pa": 0.2988,
-        "rbi_per_pa": 0.1461
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 665161,
-      "name": "Jeremy Pe\u00f1a",
-      "position": "SS",
-      "team_id": 117,
-      "team_abbr": "HOU",
-      "opp_abbr": "MIN",
-      "opp_team_id": 142,
-      "opp_pitcher": {
-        "id": 805673,
-        "fullName": "Zebby Matthews"
-      },
-      "park": {
-        "id": 2392,
-        "name": "Minute Maid Park",
-        "runs": 103,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 4.06,
-      "mean_efp": 6.29,
-      "stats_games": 7,
-      "efp": 9.01,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.58,
-        "doubles": 0.77,
-        "triples": 0.04,
-        "home_runs": 1.45,
-        "bb_hbp": 0.57,
-        "r": 2.59,
-        "rbi": 1.19,
-        "sb": 1.1
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.036,
-        "pitcher_hr": 1.202,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.084,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.215,
-        "doubles": 0.0384,
-        "triples": 0.0012,
-        "home_runs": 0.0363,
-        "bb_hbp": 0.0713,
-        "r_per_pa": 0.3234,
-        "rbi_per_pa": 0.1492
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-06-29T20:23:12.340905+00:00"
+  "generated_at": "2026-06-29T20:47:31.849889+00:00"
 }
