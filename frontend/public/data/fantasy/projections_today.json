@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 314,
+  "projection_count": 302,
   "projections": [
     {
       "player_id": 678246,
@@ -84,6 +84,82 @@
         "bb_hbp": 0.1778,
         "r_per_pa": 0.3523,
         "rbi_per_pa": 0.1967
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 691406,
+      "name": "Junior Caminero",
+      "position": "3B",
+      "team_id": 139,
+      "team_abbr": "TB",
+      "opp_abbr": "KC",
+      "opp_team_id": 118,
+      "opp_pitcher": {
+        "id": 702070,
+        "fullName": "Noah Cameron"
+      },
+      "park": {
+        "id": 7,
+        "name": "Kauffman Stadium",
+        "runs": 101,
+        "hr": 99,
+        "label": "Neutral"
+      },
+      "weather": {
+        "condition": "Clear",
+        "temp": "91",
+        "wind": "15 mph, Out To LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 14.96,
+      "mean_efp": 14.22,
+      "stats_games": 9,
+      "efp": 11.09,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.04,
+        "doubles": 0.77,
+        "triples": 0.03,
+        "home_runs": 3.97,
+        "bb_hbp": 0.89,
+        "r": 2.95,
+        "rbi": 2.01,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 0.99,
+        "park_runs": 1.01,
+        "weather_hr": 1.208,
+        "pitcher_hits": 1.05,
+        "pitcher_hr": 0.921,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.082,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.977,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1579,
+        "doubles": 0.036,
+        "triples": 0.0008,
+        "home_runs": 0.0924,
+        "bb_hbp": 0.1033,
+        "r_per_pa": 0.3434,
+        "rbi_per_pa": 0.2337
       },
       "pa": 4.3,
       "tier": "low"
@@ -541,82 +617,6 @@
       "tier": "low"
     },
     {
-      "player_id": 691406,
-      "name": "Junior Caminero",
-      "position": "3B",
-      "team_id": 139,
-      "team_abbr": "TB",
-      "opp_abbr": "KC",
-      "opp_team_id": 118,
-      "opp_pitcher": {
-        "id": 702070,
-        "fullName": "Noah Cameron"
-      },
-      "park": {
-        "id": 7,
-        "name": "Kauffman Stadium",
-        "runs": 101,
-        "hr": 99,
-        "label": "Neutral"
-      },
-      "weather": {
-        "condition": "Clear",
-        "temp": "91",
-        "wind": "15 mph, Out To LF"
-      },
-      "pa_source": "default",
-      "stdev_efp": 14.96,
-      "mean_efp": 14.22,
-      "stats_games": 9,
-      "efp": 10.38,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.89,
-        "doubles": 0.72,
-        "triples": 0.03,
-        "home_runs": 3.7,
-        "bb_hbp": 0.83,
-        "r": 2.81,
-        "rbi": 1.87,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 0.99,
-        "park_runs": 1.01,
-        "weather_hr": 1.208,
-        "pitcher_hits": 1.05,
-        "pitcher_hr": 0.921,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.082,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1579,
-        "doubles": 0.036,
-        "triples": 0.0008,
-        "home_runs": 0.0924,
-        "bb_hbp": 0.1033,
-        "r_per_pa": 0.3515,
-        "rbi_per_pa": 0.2337
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 621566,
       "name": "Matt Olson",
       "position": "1B",
@@ -762,6 +762,158 @@
         "rbi_per_pa": 0.2017
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 650490,
+      "name": "Yandy D\u00edaz",
+      "position": "DH",
+      "team_id": 139,
+      "team_abbr": "TB",
+      "opp_abbr": "KC",
+      "opp_team_id": 118,
+      "opp_pitcher": {
+        "id": 702070,
+        "fullName": "Noah Cameron"
+      },
+      "park": {
+        "id": 7,
+        "name": "Kauffman Stadium",
+        "runs": 101,
+        "hr": 99,
+        "label": "Neutral"
+      },
+      "weather": {
+        "condition": "Clear",
+        "temp": "91",
+        "wind": "15 mph, Out To LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 6.63,
+      "mean_efp": 9.0,
+      "stats_games": 9,
+      "efp": 10.21,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.72,
+        "doubles": 1.22,
+        "triples": 0.08,
+        "home_runs": 1.54,
+        "bb_hbp": 0.81,
+        "r": 3.69,
+        "rbi": 1.55,
+        "sb": 0.05
+      },
+      "multipliers": {
+        "park_hr": 0.99,
+        "park_runs": 1.01,
+        "weather_hr": 1.208,
+        "pitcher_hits": 1.05,
+        "pitcher_hr": 0.921,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.082,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.2107,
+        "doubles": 0.0567,
+        "triples": 0.0022,
+        "home_runs": 0.0358,
+        "bb_hbp": 0.094,
+        "r_per_pa": 0.4296,
+        "rbi_per_pa": 0.1807
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 686797,
+      "name": "Brooks Lee",
+      "position": "SS",
+      "team_id": 142,
+      "team_abbr": "MIN",
+      "opp_abbr": "HOU",
+      "opp_team_id": 117,
+      "opp_pitcher": {
+        "id": 681347,
+        "fullName": "Mike Burrows"
+      },
+      "park": {
+        "id": 2392,
+        "name": "Minute Maid Park",
+        "runs": 103,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 8.95,
+      "mean_efp": 8.86,
+      "stats_games": 7,
+      "efp": 10.11,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 2.29,
+        "doubles": 0.97,
+        "triples": 0.21,
+        "home_runs": 2.72,
+        "bb_hbp": 0.63,
+        "r": 2.69,
+        "rbi": 1.45,
+        "sb": 0.58
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.03,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.096,
+        "pitcher_hr": 1.216,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.039,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.964,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.069,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1773,
+        "doubles": 0.0451,
+        "triples": 0.006,
+        "home_runs": 0.0632,
+        "bb_hbp": 0.0738,
+        "r_per_pa": 0.3131,
+        "rbi_per_pa": 0.1683
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1809,78 +1961,6 @@
       "tier": "low"
     },
     {
-      "player_id": 621439,
-      "name": "Byron Buxton",
-      "position": "CF",
-      "team_id": 142,
-      "team_abbr": "MIN",
-      "opp_abbr": "HOU",
-      "opp_team_id": 117,
-      "opp_pitcher": {
-        "id": 681347,
-        "fullName": "Mike Burrows"
-      },
-      "park": {
-        "id": 2392,
-        "name": "Minute Maid Park",
-        "runs": 103,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 5.64,
-      "mean_efp": 9.2,
-      "stats_games": 5,
-      "efp": 9.5,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.68,
-        "doubles": 1.09,
-        "triples": 0.11,
-        "home_runs": 3.38,
-        "bb_hbp": 0.58,
-        "r": 2.21,
-        "rbi": 1.42,
-        "sb": 0.38
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.096,
-        "pitcher_hr": 1.216,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.039,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.964,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1399,
-        "doubles": 0.0544,
-        "triples": 0.0034,
-        "home_runs": 0.0844,
-        "bb_hbp": 0.0729,
-        "r_per_pa": 0.2765,
-        "rbi_per_pa": 0.1772
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 694192,
       "name": "Jackson Chourio",
       "position": "LF",
@@ -2029,6 +2109,82 @@
       "tier": "low"
     },
     {
+      "player_id": 666018,
+      "name": "Jonathan Aranda",
+      "position": "1B",
+      "team_id": 139,
+      "team_abbr": "TB",
+      "opp_abbr": "KC",
+      "opp_team_id": 118,
+      "opp_pitcher": {
+        "id": 702070,
+        "fullName": "Noah Cameron"
+      },
+      "park": {
+        "id": 7,
+        "name": "Kauffman Stadium",
+        "runs": 101,
+        "hr": 99,
+        "label": "Neutral"
+      },
+      "weather": {
+        "condition": "Clear",
+        "temp": "91",
+        "wind": "15 mph, Out To LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 9.43,
+      "mean_efp": 10.67,
+      "stats_games": 9,
+      "efp": 9.38,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.33,
+        "doubles": 1.03,
+        "triples": 0.03,
+        "home_runs": 1.39,
+        "bb_hbp": 0.92,
+        "r": 3.5,
+        "rbi": 1.5,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 0.99,
+        "park_runs": 1.01,
+        "weather_hr": 1.082,
+        "pitcher_hits": 1.05,
+        "pitcher_hr": 0.921,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.082,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1808,
+        "doubles": 0.0478,
+        "triples": 0.0008,
+        "home_runs": 0.0323,
+        "bb_hbp": 0.1075,
+        "r_per_pa": 0.4075,
+        "rbi_per_pa": 0.1745
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 681198,
       "name": "TJ Rumfield",
       "position": "1B",
@@ -2099,156 +2255,8 @@
       },
       "pa": 4.0,
       "tier": "low"
-    },
-    {
-      "player_id": 695506,
-      "name": "Jac Caglianone",
-      "position": "RF",
-      "team_id": 118,
-      "team_abbr": "KC",
-      "opp_abbr": "TB",
-      "opp_team_id": 139,
-      "opp_pitcher": {
-        "id": 643377,
-        "fullName": "Griffin Jax"
-      },
-      "park": {
-        "id": 7,
-        "name": "Kauffman Stadium",
-        "runs": 101,
-        "hr": 99,
-        "label": "Neutral"
-      },
-      "weather": {
-        "condition": "Clear",
-        "temp": "91",
-        "wind": "15 mph, Out To LF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 6.21,
-      "mean_efp": 3.8,
-      "stats_games": 5,
-      "efp": 9.34,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.65,
-        "doubles": 0.77,
-        "triples": 0.38,
-        "home_runs": 2.78,
-        "bb_hbp": 0.86,
-        "r": 2.48,
-        "rbi": 1.58,
-        "sb": 0.15
-      },
-      "multipliers": {
-        "park_hr": 0.99,
-        "park_runs": 1.01,
-        "weather_hr": 1.082,
-        "pitcher_hits": 1.01,
-        "pitcher_hr": 1.117,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.949,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.98,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 0.99,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1277,
-        "doubles": 0.036,
-        "triples": 0.0112,
-        "home_runs": 0.0647,
-        "bb_hbp": 0.0997,
-        "r_per_pa": 0.2882,
-        "rbi_per_pa": 0.184
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 691718,
-      "name": "Pete Crow-Armstrong",
-      "position": "CF",
-      "team_id": 112,
-      "team_abbr": "CHC",
-      "opp_abbr": "SD",
-      "opp_team_id": 135,
-      "opp_pitcher": {
-        "id": 676664,
-        "fullName": "JP Sears"
-      },
-      "park": {
-        "id": 17,
-        "name": "Wrigley Field",
-        "runs": 104,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 9.7,
-      "mean_efp": 11.11,
-      "stats_games": 9,
-      "efp": 9.29,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.98,
-        "doubles": 0.65,
-        "triples": 0.24,
-        "home_runs": 1.68,
-        "bb_hbp": 1.13,
-        "r": 2.66,
-        "rbi": 1.27,
-        "sb": 0.98
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.975,
-        "pitcher_hr": 1.05,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.11,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.01,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1652,
-        "doubles": 0.0327,
-        "triples": 0.0075,
-        "home_runs": 0.0421,
-        "bb_hbp": 0.1411,
-        "r_per_pa": 0.333,
-        "rbi_per_pa": 0.1587
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-06-30T20:28:49.861069+00:00"
+  "generated_at": "2026-06-30T20:51:57.435748+00:00"
 }
