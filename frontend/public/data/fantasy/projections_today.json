@@ -192,16 +192,16 @@
       "stdev_efp": 8.21,
       "mean_efp": 8.0,
       "stats_games": 10,
-      "efp": 10.87,
+      "efp": 10.81,
       "bat_side": "L",
       "per_event": {
-        "singles": 1.59,
+        "singles": 1.58,
         "doubles": 0.52,
         "triples": 0.07,
-        "home_runs": 4.17,
-        "bb_hbp": 1.2,
-        "r": 3.1,
-        "rbi": 1.5,
+        "home_runs": 4.15,
+        "bb_hbp": 1.19,
+        "r": 3.08,
+        "rbi": 1.49,
         "sb": 0.26
       },
       "multipliers": {
@@ -229,13 +229,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.123,
+        "singles": 0.1221,
         "doubles": 0.0244,
         "triples": 0.0021,
-        "home_runs": 0.0969,
-        "bb_hbp": 0.139,
-        "r_per_pa": 0.3602,
-        "rbi_per_pa": 0.1746
+        "home_runs": 0.0965,
+        "bb_hbp": 0.138,
+        "r_per_pa": 0.3576,
+        "rbi_per_pa": 0.1733
       },
       "pa": 4.3,
       "tier": "low"
@@ -693,82 +693,6 @@
       "tier": "low"
     },
     {
-      "player_id": 694192,
-      "name": "Jackson Chourio",
-      "position": "LF",
-      "team_id": 158,
-      "team_abbr": "MIL",
-      "opp_abbr": "CIN",
-      "opp_team_id": 113,
-      "opp_pitcher": {
-        "id": 695505,
-        "fullName": "Chase Burns"
-      },
-      "park": {
-        "id": 32,
-        "name": "American Family Field",
-        "runs": 103,
-        "hr": 108,
-        "label": "Slight Hitter"
-      },
-      "weather": {
-        "condition": "Sunny",
-        "temp": "88",
-        "wind": "9 mph, In From RF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 7.18,
-      "mean_efp": 6.88,
-      "stats_games": 0,
-      "efp": 9.95,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.81,
-        "doubles": 1.18,
-        "triples": 0.03,
-        "home_runs": 2.38,
-        "bb_hbp": 0.72,
-        "r": 3.0,
-        "rbi": 1.55,
-        "sb": 0.69
-      },
-      "multipliers": {
-        "park_hr": 1.08,
-        "park_runs": 1.03,
-        "weather_hr": 0.997,
-        "pitcher_hits": 0.913,
-        "pitcher_hr": 1.012,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.079,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.87,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.096,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1407,
-        "doubles": 0.0547,
-        "triples": 0.0009,
-        "home_runs": 0.0554,
-        "bb_hbp": 0.0838,
-        "r_per_pa": 0.3489,
-        "rbi_per_pa": 0.1803
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
       "player_id": 691594,
       "name": "Javier Sanoja",
       "position": "3B",
@@ -842,6 +766,82 @@
         "rbi_per_pa": 0.1864
       },
       "pa": 3.7,
+      "tier": "low"
+    },
+    {
+      "player_id": 694192,
+      "name": "Jackson Chourio",
+      "position": "LF",
+      "team_id": 158,
+      "team_abbr": "MIL",
+      "opp_abbr": "CIN",
+      "opp_team_id": 113,
+      "opp_pitcher": {
+        "id": 695505,
+        "fullName": "Chase Burns"
+      },
+      "park": {
+        "id": 32,
+        "name": "American Family Field",
+        "runs": 103,
+        "hr": 108,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "88",
+        "wind": "9 mph, In From RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.18,
+      "mean_efp": 6.88,
+      "stats_games": 0,
+      "efp": 9.9,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.79,
+        "doubles": 1.09,
+        "triples": 0.03,
+        "home_runs": 2.44,
+        "bb_hbp": 0.74,
+        "r": 2.98,
+        "rbi": 1.53,
+        "sb": 0.69
+      },
+      "multipliers": {
+        "park_hr": 1.08,
+        "park_runs": 1.03,
+        "weather_hr": 0.997,
+        "pitcher_hits": 0.911,
+        "pitcher_hr": 1.011,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.079,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.87,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.096,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1384,
+        "doubles": 0.0508,
+        "triples": 0.0009,
+        "home_runs": 0.0568,
+        "bb_hbp": 0.0865,
+        "r_per_pa": 0.3466,
+        "rbi_per_pa": 0.1784
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -948,15 +948,15 @@
       "stdev_efp": 5.0,
       "mean_efp": 6.6,
       "stats_games": 10,
-      "efp": 9.76,
+      "efp": 9.78,
       "bat_side": "R",
       "per_event": {
-        "singles": 2.19,
+        "singles": 2.2,
         "doubles": 1.03,
         "triples": 0.03,
-        "home_runs": 2.33,
+        "home_runs": 2.32,
         "bb_hbp": 0.49,
-        "r": 2.73,
+        "r": 2.74,
         "rbi": 1.36,
         "sb": 0.99
       },
@@ -985,13 +985,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1694,
+        "singles": 0.1705,
         "doubles": 0.0479,
         "triples": 0.0008,
-        "home_runs": 0.0541,
-        "bb_hbp": 0.057,
-        "r_per_pa": 0.3169,
-        "rbi_per_pa": 0.1583
+        "home_runs": 0.054,
+        "bb_hbp": 0.0569,
+        "r_per_pa": 0.3181,
+        "rbi_per_pa": 0.1587
       },
       "pa": 4.3,
       "tier": "low"
@@ -1840,7 +1840,7 @@
       "stdev_efp": 5.88,
       "mean_efp": 5.33,
       "stats_games": 6,
-      "efp": 8.85,
+      "efp": 8.84,
       "bat_side": "L",
       "per_event": {
         "singles": 1.7,
@@ -1856,8 +1856,8 @@
         "park_hr": 1.08,
         "park_runs": 1.03,
         "weather_hr": 0.861,
-        "pitcher_hits": 0.913,
-        "pitcher_hr": 1.012,
+        "pitcher_hits": 0.911,
+        "pitcher_hr": 1.011,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -1877,10 +1877,10 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1417,
-        "doubles": 0.0642,
-        "triples": 0.0151,
-        "home_runs": 0.033,
+        "singles": 0.1415,
+        "doubles": 0.0641,
+        "triples": 0.015,
+        "home_runs": 0.0329,
         "bb_hbp": 0.1038,
         "r_per_pa": 0.3275,
         "rbi_per_pa": 0.1946
@@ -1961,6 +1961,82 @@
       "tier": "low"
     },
     {
+      "player_id": 701398,
+      "name": "Sal Stewart",
+      "position": "1B",
+      "team_id": 113,
+      "team_abbr": "CIN",
+      "opp_abbr": "MIL",
+      "opp_team_id": 158,
+      "opp_pitcher": {
+        "id": 694819,
+        "fullName": "Jacob Misiorowski"
+      },
+      "park": {
+        "id": 32,
+        "name": "American Family Field",
+        "runs": 103,
+        "hr": 108,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "88",
+        "wind": "9 mph, In From RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 9.43,
+      "mean_efp": 8.25,
+      "stats_games": 8,
+      "efp": 8.83,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.36,
+        "doubles": 0.88,
+        "triples": 0.02,
+        "home_runs": 1.91,
+        "bb_hbp": 0.7,
+        "r": 3.04,
+        "rbi": 1.6,
+        "sb": 0.56
+      },
+      "multipliers": {
+        "park_hr": 1.08,
+        "park_runs": 1.03,
+        "weather_hr": 0.997,
+        "pitcher_hits": 0.731,
+        "pitcher_hr": 0.808,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.969,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.884,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1058,
+        "doubles": 0.0409,
+        "triples": 0.0006,
+        "home_runs": 0.0445,
+        "bb_hbp": 0.0809,
+        "r_per_pa": 0.3537,
+        "rbi_per_pa": 0.1865
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 668930,
       "name": "Brice Turang",
       "position": "2B",
@@ -1988,7 +2064,7 @@
       "stdev_efp": 9.83,
       "mean_efp": 10.25,
       "stats_games": 8,
-      "efp": 8.77,
+      "efp": 8.76,
       "bat_side": "L",
       "per_event": {
         "singles": 1.63,
@@ -2004,8 +2080,8 @@
         "park_hr": 1.08,
         "park_runs": 1.03,
         "weather_hr": 0.861,
-        "pitcher_hits": 0.913,
-        "pitcher_hr": 1.012,
+        "pitcher_hits": 0.911,
+        "pitcher_hr": 1.011,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -2025,8 +2101,8 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1265,
-        "doubles": 0.0418,
+        "singles": 0.1263,
+        "doubles": 0.0417,
         "triples": 0.0102,
         "home_runs": 0.0349,
         "bb_hbp": 0.1001,
@@ -2183,80 +2259,8 @@
       },
       "pa": 4.3,
       "tier": "low"
-    },
-    {
-      "player_id": 678246,
-      "name": "Miguel Vargas",
-      "position": "3B",
-      "team_id": 145,
-      "team_abbr": "CWS",
-      "opp_abbr": "CLE",
-      "opp_team_id": 114,
-      "opp_pitcher": {
-        "id": 677944,
-        "fullName": "Slade Cecconi"
-      },
-      "park": {
-        "id": 5,
-        "name": "Progressive Field",
-        "runs": 97,
-        "hr": 95,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 8.99,
-      "mean_efp": 14.29,
-      "stats_games": 7,
-      "efp": 8.71,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.41,
-        "doubles": 1.04,
-        "triples": 0.07,
-        "home_runs": 1.76,
-        "bb_hbp": 0.97,
-        "r": 2.59,
-        "rbi": 1.43,
-        "sb": 0.67
-      },
-      "multipliers": {
-        "park_hr": 0.95,
-        "park_runs": 0.97,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.055,
-        "pitcher_hr": 1.024,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.947,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.872,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1179,
-        "doubles": 0.052,
-        "triples": 0.002,
-        "home_runs": 0.0441,
-        "bb_hbp": 0.1212,
-        "r_per_pa": 0.3243,
-        "rbi_per_pa": 0.1788
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-07-02T18:17:25.521700+00:00"
+  "generated_at": "2026-07-02T18:23:25.218811+00:00"
 }
