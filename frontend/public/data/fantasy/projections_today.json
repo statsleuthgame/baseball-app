@@ -116,24 +116,24 @@
       "stdev_efp": 8.29,
       "mean_efp": 7.8,
       "stats_games": 10,
-      "efp": 11.3,
+      "efp": 11.16,
       "bat_side": "L",
       "per_event": {
-        "singles": 1.97,
-        "doubles": 1.04,
-        "triples": 0.16,
-        "home_runs": 3.85,
-        "bb_hbp": 1.08,
-        "r": 2.95,
-        "rbi": 1.63,
+        "singles": 1.88,
+        "doubles": 1.15,
+        "triples": 0.15,
+        "home_runs": 3.64,
+        "bb_hbp": 1.07,
+        "r": 2.97,
+        "rbi": 1.65,
         "sb": 0.23
       },
       "multipliers": {
         "park_hr": 1.12,
         "park_runs": 1.05,
         "weather_hr": 1.208,
-        "pitcher_hits": 1.051,
-        "pitcher_hr": 1.163,
+        "pitcher_hits": 1.022,
+        "pitcher_hr": 1.116,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -153,13 +153,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1525,
-        "doubles": 0.0482,
-        "triples": 0.0046,
-        "home_runs": 0.0896,
-        "bb_hbp": 0.1259,
-        "r_per_pa": 0.3435,
-        "rbi_per_pa": 0.1892
+        "singles": 0.1457,
+        "doubles": 0.0536,
+        "triples": 0.0044,
+        "home_runs": 0.0846,
+        "bb_hbp": 0.1245,
+        "r_per_pa": 0.3454,
+        "rbi_per_pa": 0.1919
       },
       "pa": 4.3,
       "tier": "low"
@@ -192,15 +192,15 @@
       "stdev_efp": 8.21,
       "mean_efp": 8.0,
       "stats_games": 10,
-      "efp": 11.04,
+      "efp": 10.87,
       "bat_side": "L",
       "per_event": {
-        "singles": 1.65,
-        "doubles": 0.54,
+        "singles": 1.59,
+        "doubles": 0.52,
         "triples": 0.07,
-        "home_runs": 4.37,
-        "bb_hbp": 1.15,
-        "r": 3.06,
+        "home_runs": 4.17,
+        "bb_hbp": 1.2,
+        "r": 3.1,
         "rbi": 1.5,
         "sb": 0.26
       },
@@ -208,8 +208,8 @@
         "park_hr": 1.12,
         "park_runs": 1.05,
         "weather_hr": 1.208,
-        "pitcher_hits": 1.051,
-        "pitcher_hr": 1.163,
+        "pitcher_hits": 1.022,
+        "pitcher_hr": 1.116,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -229,13 +229,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1276,
-        "doubles": 0.0252,
-        "triples": 0.0022,
-        "home_runs": 0.1015,
-        "bb_hbp": 0.1337,
-        "r_per_pa": 0.3554,
-        "rbi_per_pa": 0.175
+        "singles": 0.123,
+        "doubles": 0.0244,
+        "triples": 0.0021,
+        "home_runs": 0.0969,
+        "bb_hbp": 0.139,
+        "r_per_pa": 0.3602,
+        "rbi_per_pa": 0.1746
       },
       "pa": 4.3,
       "tier": "low"
@@ -541,82 +541,6 @@
       "tier": "low"
     },
     {
-      "player_id": 699013,
-      "name": "Esmerlyn Valdez",
-      "position": "RF",
-      "team_id": 134,
-      "team_abbr": "PIT",
-      "opp_abbr": "PHI",
-      "opp_team_id": 143,
-      "opp_pitcher": {
-        "id": 660604,
-        "fullName": "Alan Rangel"
-      },
-      "park": {
-        "id": 2681,
-        "name": "Citizens Bank Park",
-        "runs": 105,
-        "hr": 112,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "98",
-        "wind": "8 mph, Out To RF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 7.18,
-      "mean_efp": 6.88,
-      "stats_games": 0,
-      "efp": 10.17,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.81,
-        "doubles": 1.19,
-        "triples": 0.06,
-        "home_runs": 3.17,
-        "bb_hbp": 0.66,
-        "r": 2.88,
-        "rbi": 1.85,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 1.12,
-        "park_runs": 1.05,
-        "weather_hr": 1.082,
-        "pitcher_hits": 1.001,
-        "pitcher_hr": 0.869,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.996,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.026,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1507,
-        "doubles": 0.0594,
-        "triples": 0.0019,
-        "home_runs": 0.0792,
-        "bb_hbp": 0.0822,
-        "r_per_pa": 0.3596,
-        "rbi_per_pa": 0.2308
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 665052,
       "name": "Griffin Conine",
       "position": "LF",
@@ -769,158 +693,6 @@
       "tier": "low"
     },
     {
-      "player_id": 669016,
-      "name": "Brandon Marsh",
-      "position": "LF",
-      "team_id": 143,
-      "team_abbr": "PHI",
-      "opp_abbr": "PIT",
-      "opp_team_id": 134,
-      "opp_pitcher": {
-        "id": 683003,
-        "fullName": "Jared Jones"
-      },
-      "park": {
-        "id": 2681,
-        "name": "Citizens Bank Park",
-        "runs": 105,
-        "hr": 112,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "98",
-        "wind": "8 mph, Out To RF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 12.78,
-      "mean_efp": 12.5,
-      "stats_games": 8,
-      "efp": 9.99,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.35,
-        "doubles": 1.02,
-        "triples": 0.12,
-        "home_runs": 3.39,
-        "bb_hbp": 0.45,
-        "r": 2.2,
-        "rbi": 1.5,
-        "sb": 0.37
-      },
-      "multipliers": {
-        "park_hr": 1.12,
-        "park_runs": 1.05,
-        "weather_hr": 1.208,
-        "pitcher_hits": 1.051,
-        "pitcher_hr": 1.163,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.98,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.954,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 0.922,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1956,
-        "doubles": 0.0511,
-        "triples": 0.0039,
-        "home_runs": 0.0847,
-        "bb_hbp": 0.0566,
-        "r_per_pa": 0.2749,
-        "rbi_per_pa": 0.1878
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 607208,
-      "name": "Trea Turner",
-      "position": "SS",
-      "team_id": 143,
-      "team_abbr": "PHI",
-      "opp_abbr": "PIT",
-      "opp_team_id": 134,
-      "opp_pitcher": {
-        "id": 683003,
-        "fullName": "Jared Jones"
-      },
-      "park": {
-        "id": 2681,
-        "name": "Citizens Bank Park",
-        "runs": 105,
-        "hr": 112,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "98",
-        "wind": "8 mph, Out To RF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 5.0,
-      "mean_efp": 6.6,
-      "stats_games": 10,
-      "efp": 9.97,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.2,
-        "doubles": 1.08,
-        "triples": 0.03,
-        "home_runs": 2.49,
-        "bb_hbp": 0.49,
-        "r": 2.71,
-        "rbi": 1.38,
-        "sb": 1.0
-      },
-      "multipliers": {
-        "park_hr": 1.12,
-        "park_runs": 1.05,
-        "weather_hr": 1.082,
-        "pitcher_hits": 1.051,
-        "pitcher_hr": 1.163,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.98,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.954,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.15,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1705,
-        "doubles": 0.0502,
-        "triples": 0.0008,
-        "home_runs": 0.0579,
-        "bb_hbp": 0.0575,
-        "r_per_pa": 0.3154,
-        "rbi_per_pa": 0.1599
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
       "player_id": 694192,
       "name": "Jackson Chourio",
       "position": "LF",
@@ -940,21 +712,21 @@
         "label": "Slight Hitter"
       },
       "weather": {
-        "condition": "Roof Closed",
-        "temp": "72",
-        "wind": "0 mph, None"
+        "condition": "Sunny",
+        "temp": "88",
+        "wind": "9 mph, In From RF"
       },
       "pa_source": "lineup",
       "stdev_efp": 7.18,
       "mean_efp": 6.88,
       "stats_games": 0,
-      "efp": 9.96,
+      "efp": 9.95,
       "bat_side": "R",
       "per_event": {
         "singles": 1.81,
         "doubles": 1.18,
         "triples": 0.03,
-        "home_runs": 2.39,
+        "home_runs": 2.38,
         "bb_hbp": 0.72,
         "r": 3.0,
         "rbi": 1.55,
@@ -963,7 +735,7 @@
       "multipliers": {
         "park_hr": 1.08,
         "park_runs": 1.03,
-        "weather_hr": 1.0,
+        "weather_hr": 0.997,
         "pitcher_hits": 0.913,
         "pitcher_hr": 1.012,
         "slot_r": 1.0,
@@ -988,7 +760,7 @@
         "singles": 0.1407,
         "doubles": 0.0547,
         "triples": 0.0009,
-        "home_runs": 0.0556,
+        "home_runs": 0.0554,
         "bb_hbp": 0.0838,
         "r_per_pa": 0.3489,
         "rbi_per_pa": 0.1803
@@ -1149,6 +921,82 @@
       "tier": "low"
     },
     {
+      "player_id": 607208,
+      "name": "Trea Turner",
+      "position": "SS",
+      "team_id": 143,
+      "team_abbr": "PHI",
+      "opp_abbr": "PIT",
+      "opp_team_id": 134,
+      "opp_pitcher": {
+        "id": 683003,
+        "fullName": "Jared Jones"
+      },
+      "park": {
+        "id": 2681,
+        "name": "Citizens Bank Park",
+        "runs": 105,
+        "hr": 112,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "98",
+        "wind": "8 mph, Out To RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.0,
+      "mean_efp": 6.6,
+      "stats_games": 10,
+      "efp": 9.76,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.19,
+        "doubles": 1.03,
+        "triples": 0.03,
+        "home_runs": 2.33,
+        "bb_hbp": 0.49,
+        "r": 2.73,
+        "rbi": 1.36,
+        "sb": 0.99
+      },
+      "multipliers": {
+        "park_hr": 1.12,
+        "park_runs": 1.05,
+        "weather_hr": 1.082,
+        "pitcher_hits": 1.022,
+        "pitcher_hr": 1.116,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.98,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.954,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1694,
+        "doubles": 0.0479,
+        "triples": 0.0008,
+        "home_runs": 0.0541,
+        "bb_hbp": 0.057,
+        "r_per_pa": 0.3169,
+        "rbi_per_pa": 0.1583
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 669065,
       "name": "Kyle Stowers",
       "position": "LF",
@@ -1222,6 +1070,158 @@
         "rbi_per_pa": 0.1561
       },
       "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 699013,
+      "name": "Esmerlyn Valdez",
+      "position": "RF",
+      "team_id": 134,
+      "team_abbr": "PIT",
+      "opp_abbr": "PHI",
+      "opp_team_id": 143,
+      "opp_pitcher": {
+        "id": 660604,
+        "fullName": "Alan Rangel"
+      },
+      "park": {
+        "id": 2681,
+        "name": "Citizens Bank Park",
+        "runs": 105,
+        "hr": 112,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "98",
+        "wind": "8 mph, Out To RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.18,
+      "mean_efp": 6.88,
+      "stats_games": 0,
+      "efp": 9.63,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.84,
+        "doubles": 1.13,
+        "triples": 0.06,
+        "home_runs": 2.73,
+        "bb_hbp": 0.63,
+        "r": 2.83,
+        "rbi": 1.77,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 1.12,
+        "park_runs": 1.05,
+        "weather_hr": 1.082,
+        "pitcher_hits": 0.987,
+        "pitcher_hr": 0.784,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.996,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.026,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.153,
+        "doubles": 0.0566,
+        "triples": 0.0019,
+        "home_runs": 0.0683,
+        "bb_hbp": 0.0794,
+        "r_per_pa": 0.3537,
+        "rbi_per_pa": 0.2213
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 669016,
+      "name": "Brandon Marsh",
+      "position": "LF",
+      "team_id": 143,
+      "team_abbr": "PHI",
+      "opp_abbr": "PIT",
+      "opp_team_id": 134,
+      "opp_pitcher": {
+        "id": 683003,
+        "fullName": "Jared Jones"
+      },
+      "park": {
+        "id": 2681,
+        "name": "Citizens Bank Park",
+        "runs": 105,
+        "hr": 112,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "98",
+        "wind": "8 mph, Out To RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 12.78,
+      "mean_efp": 12.5,
+      "stats_games": 8,
+      "efp": 9.62,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.26,
+        "doubles": 0.98,
+        "triples": 0.12,
+        "home_runs": 3.17,
+        "bb_hbp": 0.45,
+        "r": 2.17,
+        "rbi": 1.47,
+        "sb": 0.37
+      },
+      "multipliers": {
+        "park_hr": 1.12,
+        "park_runs": 1.05,
+        "weather_hr": 1.208,
+        "pitcher_hits": 1.022,
+        "pitcher_hr": 1.116,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.98,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.954,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.922,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1884,
+        "doubles": 0.0492,
+        "triples": 0.0038,
+        "home_runs": 0.0793,
+        "bb_hbp": 0.0561,
+        "r_per_pa": 0.2707,
+        "rbi_per_pa": 0.1837
+      },
+      "pa": 4.0,
       "tier": "low"
     },
     {
@@ -1665,82 +1665,6 @@
       "tier": "low"
     },
     {
-      "player_id": 669003,
-      "name": "Garrett Mitchell",
-      "position": "CF",
-      "team_id": 158,
-      "team_abbr": "MIL",
-      "opp_abbr": "CIN",
-      "opp_team_id": 113,
-      "opp_pitcher": {
-        "id": 695505,
-        "fullName": "Chase Burns"
-      },
-      "park": {
-        "id": 32,
-        "name": "American Family Field",
-        "runs": 103,
-        "hr": 108,
-        "label": "Slight Hitter"
-      },
-      "weather": {
-        "condition": "Roof Closed",
-        "temp": "72",
-        "wind": "0 mph, None"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 5.88,
-      "mean_efp": 5.33,
-      "stats_games": 6,
-      "efp": 9.03,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.7,
-        "doubles": 1.28,
-        "triples": 0.48,
-        "home_runs": 1.53,
-        "bb_hbp": 0.83,
-        "r": 2.62,
-        "rbi": 1.56,
-        "sb": 0.31
-      },
-      "multipliers": {
-        "park_hr": 1.08,
-        "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.913,
-        "pitcher_hr": 1.012,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.079,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.87,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 0.929,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1417,
-        "doubles": 0.0642,
-        "triples": 0.0151,
-        "home_runs": 0.0383,
-        "bb_hbp": 0.1038,
-        "r_per_pa": 0.3275,
-        "rbi_per_pa": 0.1946
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 687859,
       "name": "Troy Johnston",
       "position": "RF",
@@ -1889,9 +1813,9 @@
       "tier": "low"
     },
     {
-      "player_id": 668930,
-      "name": "Brice Turang",
-      "position": "2B",
+      "player_id": 669003,
+      "name": "Garrett Mitchell",
+      "position": "CF",
       "team_id": 158,
       "team_abbr": "MIL",
       "opp_abbr": "CIN",
@@ -1908,30 +1832,30 @@
         "label": "Slight Hitter"
       },
       "weather": {
-        "condition": "Roof Closed",
-        "temp": "72",
-        "wind": "0 mph, None"
+        "condition": "Sunny",
+        "temp": "88",
+        "wind": "9 mph, In From RF"
       },
       "pa_source": "lineup",
-      "stdev_efp": 9.83,
-      "mean_efp": 10.25,
-      "stats_games": 8,
-      "efp": 8.98,
+      "stdev_efp": 5.88,
+      "mean_efp": 5.33,
+      "stats_games": 6,
+      "efp": 8.85,
       "bat_side": "L",
       "per_event": {
-        "singles": 1.63,
-        "doubles": 0.9,
-        "triples": 0.35,
-        "home_runs": 1.74,
-        "bb_hbp": 0.86,
-        "r": 2.78,
-        "rbi": 1.34,
-        "sb": 0.65
+        "singles": 1.7,
+        "doubles": 1.28,
+        "triples": 0.48,
+        "home_runs": 1.32,
+        "bb_hbp": 0.83,
+        "r": 2.62,
+        "rbi": 1.56,
+        "sb": 0.31
       },
       "multipliers": {
         "park_hr": 1.08,
         "park_runs": 1.03,
-        "weather_hr": 1.0,
+        "weather_hr": 0.861,
         "pitcher_hits": 0.913,
         "pitcher_hr": 1.012,
         "slot_r": 1.0,
@@ -1949,19 +1873,19 @@
         "speed_singles": 1.0,
         "speed_r": 1.0,
         "bvpt": 1.0,
-        "ondeck_r": 1.096,
+        "ondeck_r": 0.929,
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1265,
-        "doubles": 0.0418,
-        "triples": 0.0102,
-        "home_runs": 0.0406,
-        "bb_hbp": 0.1001,
-        "r_per_pa": 0.3228,
-        "rbi_per_pa": 0.1555
+        "singles": 0.1417,
+        "doubles": 0.0642,
+        "triples": 0.0151,
+        "home_runs": 0.033,
+        "bb_hbp": 0.1038,
+        "r_per_pa": 0.3275,
+        "rbi_per_pa": 0.1946
       },
-      "pa": 4.3,
+      "pa": 4.0,
       "tier": "low"
     },
     {
@@ -2037,9 +1961,9 @@
       "tier": "low"
     },
     {
-      "player_id": 641343,
-      "name": "Jake Bauers",
-      "position": "1B",
+      "player_id": 668930,
+      "name": "Brice Turang",
+      "position": "2B",
       "team_id": 158,
       "team_abbr": "MIL",
       "opp_abbr": "CIN",
@@ -2056,30 +1980,30 @@
         "label": "Slight Hitter"
       },
       "weather": {
-        "condition": "Roof Closed",
-        "temp": "72",
-        "wind": "0 mph, None"
+        "condition": "Sunny",
+        "temp": "88",
+        "wind": "9 mph, In From RF"
       },
       "pa_source": "lineup",
-      "stdev_efp": 9.48,
-      "mean_efp": 9.83,
-      "stats_games": 6,
-      "efp": 8.81,
+      "stdev_efp": 9.83,
+      "mean_efp": 10.25,
+      "stats_games": 8,
+      "efp": 8.77,
       "bat_side": "L",
       "per_event": {
-        "singles": 1.58,
-        "doubles": 0.66,
-        "triples": 0.07,
-        "home_runs": 2.49,
-        "bb_hbp": 0.91,
-        "r": 2.71,
-        "rbi": 1.39,
-        "sb": 0.25
+        "singles": 1.63,
+        "doubles": 0.9,
+        "triples": 0.35,
+        "home_runs": 1.5,
+        "bb_hbp": 0.86,
+        "r": 2.78,
+        "rbi": 1.34,
+        "sb": 0.65
       },
       "multipliers": {
         "park_hr": 1.08,
         "park_runs": 1.03,
-        "weather_hr": 1.0,
+        "weather_hr": 0.861,
         "pitcher_hits": 0.913,
         "pitcher_hr": 1.012,
         "slot_r": 1.0,
@@ -2097,19 +2021,19 @@
         "speed_singles": 1.0,
         "speed_r": 1.0,
         "bvpt": 1.0,
-        "ondeck_r": 1.073,
+        "ondeck_r": 1.096,
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1318,
-        "doubles": 0.033,
-        "triples": 0.0022,
-        "home_runs": 0.0622,
-        "bb_hbp": 0.1134,
-        "r_per_pa": 0.3382,
-        "rbi_per_pa": 0.1735
+        "singles": 0.1265,
+        "doubles": 0.0418,
+        "triples": 0.0102,
+        "home_runs": 0.0349,
+        "bb_hbp": 0.1001,
+        "r_per_pa": 0.3228,
+        "rbi_per_pa": 0.1555
       },
-      "pa": 4.0,
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -2182,6 +2106,82 @@
         "rbi_per_pa": 0.1694
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 663968,
+      "name": "Jake Mangum",
+      "position": "LF",
+      "team_id": 134,
+      "team_abbr": "PIT",
+      "opp_abbr": "PHI",
+      "opp_team_id": 143,
+      "opp_pitcher": {
+        "id": 660604,
+        "fullName": "Alan Rangel"
+      },
+      "park": {
+        "id": 2681,
+        "name": "Citizens Bank Park",
+        "runs": 105,
+        "hr": 112,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "98",
+        "wind": "8 mph, Out To RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.54,
+      "mean_efp": 4.4,
+      "stats_games": 5,
+      "efp": 8.74,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 2.81,
+        "doubles": 1.05,
+        "triples": 0.04,
+        "home_runs": 0.5,
+        "bb_hbp": 0.53,
+        "r": 2.91,
+        "rbi": 1.2,
+        "sb": 0.94
+      },
+      "multipliers": {
+        "park_hr": 1.12,
+        "park_runs": 1.05,
+        "weather_hr": 1.145,
+        "pitcher_hits": 0.987,
+        "pitcher_hr": 0.784,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.996,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.073,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.2179,
+        "doubles": 0.0487,
+        "triples": 0.0011,
+        "home_runs": 0.0117,
+        "bb_hbp": 0.0619,
+        "r_per_pa": 0.3386,
+        "rbi_per_pa": 0.1391
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -2258,5 +2258,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-07-02T16:48:47.846473+00:00"
+  "generated_at": "2026-07-02T18:17:25.521700+00:00"
 }
