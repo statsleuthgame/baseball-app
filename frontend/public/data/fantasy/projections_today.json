@@ -108,9 +108,9 @@
         "label": "Slight Hitter"
       },
       "weather": {
-        "condition": "Overcast",
-        "temp": "84",
-        "wind": "13 mph, Out To CF"
+        "condition": "Cloudy",
+        "temp": "77",
+        "wind": "7 mph, Out To CF"
       },
       "pa_source": "lineup",
       "stdev_efp": 9.7,
@@ -1159,9 +1159,9 @@
         "label": "Slight Hitter"
       },
       "weather": {
-        "condition": "Overcast",
-        "temp": "84",
-        "wind": "13 mph, Out To CF"
+        "condition": "Cloudy",
+        "temp": "77",
+        "wind": "7 mph, Out To CF"
       },
       "pa_source": "lineup",
       "stdev_efp": 7.43,
@@ -2262,5 +2262,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-07-03T19:58:13.322819+00:00"
+  "generated_at": "2026-07-03T20:11:25.325394+00:00"
 }
