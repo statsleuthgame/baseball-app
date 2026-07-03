@@ -10,8 +10,84 @@
     "n": 1721
   },
   "game_count": 13,
-  "projection_count": 332,
+  "projection_count": 329,
   "projections": [
+    {
+      "player_id": 691718,
+      "name": "Pete Crow-Armstrong",
+      "position": "CF",
+      "team_id": 112,
+      "team_abbr": "CHC",
+      "opp_abbr": "STL",
+      "opp_team_id": 138,
+      "opp_pitcher": {
+        "id": 669467,
+        "fullName": "Andre Pallante"
+      },
+      "park": {
+        "id": 17,
+        "name": "Wrigley Field",
+        "runs": 104,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Overcast",
+        "temp": "88",
+        "wind": "10 mph, Out To CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 9.7,
+      "mean_efp": 11.11,
+      "stats_games": 9,
+      "efp": 10.64,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.94,
+        "doubles": 0.84,
+        "triples": 0.29,
+        "home_runs": 2.16,
+        "bb_hbp": 0.95,
+        "r": 2.86,
+        "rbi": 1.54,
+        "sb": 1.56
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.04,
+        "weather_hr": 1.134,
+        "pitcher_hits": 1.007,
+        "pitcher_hr": 0.937,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.889,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.838,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.999,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1502,
+        "doubles": 0.0392,
+        "triples": 0.0083,
+        "home_runs": 0.0503,
+        "bb_hbp": 0.11,
+        "r_per_pa": 0.333,
+        "rbi_per_pa": 0.1794
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
     {
       "player_id": 691406,
       "name": "Junior Caminero",
@@ -575,78 +651,6 @@
         "bb_hbp": 0.0567,
         "r_per_pa": 0.2765,
         "rbi_per_pa": 0.1772
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 691718,
-      "name": "Pete Crow-Armstrong",
-      "position": "CF",
-      "team_id": 112,
-      "team_abbr": "CHC",
-      "opp_abbr": "STL",
-      "opp_team_id": 138,
-      "opp_pitcher": {
-        "id": 669467,
-        "fullName": "Andre Pallante"
-      },
-      "park": {
-        "id": 17,
-        "name": "Wrigley Field",
-        "runs": 104,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 9.7,
-      "mean_efp": 11.11,
-      "stats_games": 9,
-      "efp": 9.64,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.8,
-        "doubles": 0.78,
-        "triples": 0.27,
-        "home_runs": 1.77,
-        "bb_hbp": 0.88,
-        "r": 2.67,
-        "rbi": 1.44,
-        "sb": 1.39
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.007,
-        "pitcher_hr": 0.937,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.889,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.838,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1502,
-        "doubles": 0.0392,
-        "triples": 0.0083,
-        "home_runs": 0.0443,
-        "bb_hbp": 0.11,
-        "r_per_pa": 0.3333,
-        "rbi_per_pa": 0.1794
       },
       "pa": 4.0,
       "tier": "low"
@@ -1582,6 +1586,82 @@
       "tier": "low"
     },
     {
+      "player_id": 691023,
+      "name": "Jordan Walker",
+      "position": "RF",
+      "team_id": 138,
+      "team_abbr": "STL",
+      "opp_abbr": "CHC",
+      "opp_team_id": 112,
+      "opp_pitcher": {
+        "id": 656849,
+        "fullName": "David Peterson"
+      },
+      "park": {
+        "id": 17,
+        "name": "Wrigley Field",
+        "runs": 104,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Overcast",
+        "temp": "88",
+        "wind": "10 mph, Out To CF"
+      },
+      "pa_source": "default",
+      "stdev_efp": 7.43,
+      "mean_efp": 8.67,
+      "stats_games": 6,
+      "efp": 9.09,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.43,
+        "doubles": 0.82,
+        "triples": 0.03,
+        "home_runs": 1.94,
+        "bb_hbp": 0.71,
+        "r": 2.52,
+        "rbi": 1.38,
+        "sb": 0.54
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.04,
+        "weather_hr": 1.134,
+        "pitcher_hits": 1.091,
+        "pitcher_hr": 0.888,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.892,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.983,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.2022,
+        "doubles": 0.041,
+        "triples": 0.0009,
+        "home_runs": 0.0486,
+        "bb_hbp": 0.0891,
+        "r_per_pa": 0.3155,
+        "rbi_per_pa": 0.1721
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
       "player_id": 694212,
       "name": "Samuel Basallo",
       "position": "C",
@@ -1942,78 +2022,6 @@
       "tier": "low"
     },
     {
-      "player_id": 691023,
-      "name": "Jordan Walker",
-      "position": "RF",
-      "team_id": 138,
-      "team_abbr": "STL",
-      "opp_abbr": "CHC",
-      "opp_team_id": 112,
-      "opp_pitcher": {
-        "id": 656849,
-        "fullName": "David Peterson"
-      },
-      "park": {
-        "id": 17,
-        "name": "Wrigley Field",
-        "runs": 104,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.43,
-      "mean_efp": 8.67,
-      "stats_games": 6,
-      "efp": 8.89,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.43,
-        "doubles": 0.82,
-        "triples": 0.03,
-        "home_runs": 1.71,
-        "bb_hbp": 0.71,
-        "r": 2.52,
-        "rbi": 1.38,
-        "sb": 0.54
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.091,
-        "pitcher_hr": 0.888,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.892,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.983,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.2022,
-        "doubles": 0.041,
-        "triples": 0.0009,
-        "home_runs": 0.0428,
-        "bb_hbp": 0.0891,
-        "r_per_pa": 0.3155,
-        "rbi_per_pa": 0.1721
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 665052,
       "name": "Griffin Conine",
       "position": "LF",
@@ -2159,5 +2167,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-07-03T16:24:33.226668+00:00"
+  "generated_at": "2026-07-03T17:59:54.111698+00:00"
 }
