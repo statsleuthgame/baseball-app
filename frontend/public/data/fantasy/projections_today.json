@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 356,
+  "projection_count": 353,
   "projections": [
     {
       "player_id": 700250,
@@ -89,16 +89,16 @@
       "tier": "low"
     },
     {
-      "player_id": 663757,
-      "name": "Trent Grisham",
-      "position": "CF",
-      "team_id": 147,
-      "team_abbr": "NYY",
-      "opp_abbr": "MIN",
-      "opp_team_id": 142,
+      "player_id": 665019,
+      "name": "Kody Clemens",
+      "position": "1B",
+      "team_id": 142,
+      "team_abbr": "MIN",
+      "opp_abbr": "NYY",
+      "opp_team_id": 147,
       "opp_pitcher": {
-        "id": 805673,
-        "fullName": "Zebby Matthews"
+        "id": 694341,
+        "fullName": "Brendan Beck"
       },
       "park": {
         "id": 3313,
@@ -113,27 +113,27 @@
         "wind": "10 mph, Out To RF"
       },
       "pa_source": "lineup",
-      "stdev_efp": 7.94,
-      "mean_efp": 8.0,
-      "stats_games": 6,
-      "efp": 10.85,
+      "stdev_efp": 1.6,
+      "mean_efp": 4.0,
+      "stats_games": 7,
+      "efp": 11.15,
       "bat_side": "L",
       "per_event": {
-        "singles": 2.02,
-        "doubles": 0.94,
-        "triples": 0.37,
-        "home_runs": 2.93,
-        "bb_hbp": 0.78,
-        "r": 3.15,
-        "rbi": 1.47,
-        "sb": 0.72
+        "singles": 1.6,
+        "doubles": 1.22,
+        "triples": 0.2,
+        "home_runs": 4.63,
+        "bb_hbp": 0.62,
+        "r": 2.49,
+        "rbi": 1.66,
+        "sb": 0.32
       },
       "multipliers": {
         "park_hr": 1.15,
         "park_runs": 1.07,
         "weather_hr": 1.208,
-        "pitcher_hits": 1.014,
-        "pitcher_hr": 1.193,
+        "pitcher_hits": 1.0,
+        "pitcher_hr": 1.18,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -141,25 +141,25 @@
         "stx_xwoba": 1.0,
         "stx_barrel": 1.0,
         "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.071,
+        "pitcher_gb_hr": 1.0,
         "k_damper": 1.0,
-        "pitcher_bb": 0.75,
+        "pitcher_bb": 1.0,
         "park_hand_hr": 1.0,
         "sb_speed": 1.0,
         "speed_singles": 1.0,
         "speed_r": 1.0,
         "bvpt": 1.0,
-        "ondeck_r": 1.15,
+        "ondeck_r": 1.04,
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1566,
-        "doubles": 0.0437,
-        "triples": 0.0108,
-        "home_runs": 0.0682,
-        "bb_hbp": 0.0905,
-        "r_per_pa": 0.3661,
-        "rbi_per_pa": 0.1715
+        "singles": 0.1238,
+        "doubles": 0.0567,
+        "triples": 0.0058,
+        "home_runs": 0.1077,
+        "bb_hbp": 0.0721,
+        "r_per_pa": 0.2897,
+        "rbi_per_pa": 0.1928
       },
       "pa": 4.3,
       "tier": "low"
@@ -234,6 +234,158 @@
         "rbi_per_pa": 0.1815
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 663757,
+      "name": "Trent Grisham",
+      "position": "CF",
+      "team_id": 147,
+      "team_abbr": "NYY",
+      "opp_abbr": "MIN",
+      "opp_team_id": 142,
+      "opp_pitcher": {
+        "id": 805673,
+        "fullName": "Zebby Matthews"
+      },
+      "park": {
+        "id": 3313,
+        "name": "Yankee Stadium",
+        "runs": 107,
+        "hr": 115,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "95",
+        "wind": "10 mph, Out To RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.94,
+      "mean_efp": 8.0,
+      "stats_games": 6,
+      "efp": 10.7,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.1,
+        "doubles": 0.96,
+        "triples": 0.4,
+        "home_runs": 2.61,
+        "bb_hbp": 0.79,
+        "r": 3.19,
+        "rbi": 1.45,
+        "sb": 0.72
+      },
+      "multipliers": {
+        "park_hr": 1.15,
+        "park_runs": 1.07,
+        "weather_hr": 1.208,
+        "pitcher_hits": 1.014,
+        "pitcher_hr": 1.193,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.071,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1628,
+        "doubles": 0.0445,
+        "triples": 0.0116,
+        "home_runs": 0.0606,
+        "bb_hbp": 0.0916,
+        "r_per_pa": 0.3714,
+        "rbi_per_pa": 0.1683
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 621439,
+      "name": "Byron Buxton",
+      "position": "CF",
+      "team_id": 142,
+      "team_abbr": "MIN",
+      "opp_abbr": "NYY",
+      "opp_team_id": 147,
+      "opp_pitcher": {
+        "id": 694341,
+        "fullName": "Brendan Beck"
+      },
+      "park": {
+        "id": 3313,
+        "name": "Yankee Stadium",
+        "runs": 107,
+        "hr": 115,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "95",
+        "wind": "10 mph, Out To RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.64,
+      "mean_efp": 9.2,
+      "stats_games": 5,
+      "efp": 10.68,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.59,
+        "doubles": 1.3,
+        "triples": 0.11,
+        "home_runs": 3.98,
+        "bb_hbp": 0.66,
+        "r": 2.57,
+        "rbi": 1.57,
+        "sb": 0.42
+      },
+      "multipliers": {
+        "park_hr": 1.15,
+        "park_runs": 1.07,
+        "weather_hr": 1.082,
+        "pitcher_hits": 1.0,
+        "pitcher_hr": 1.18,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.0,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.0,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.075,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1232,
+        "doubles": 0.0606,
+        "triples": 0.0032,
+        "home_runs": 0.0926,
+        "bb_hbp": 0.0762,
+        "r_per_pa": 0.2984,
+        "rbi_per_pa": 0.1823
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -677,82 +829,6 @@
       "tier": "low"
     },
     {
-      "player_id": 665019,
-      "name": "Kody Clemens",
-      "position": "1B",
-      "team_id": 142,
-      "team_abbr": "MIN",
-      "opp_abbr": "NYY",
-      "opp_team_id": 147,
-      "opp_pitcher": {
-        "id": 694341,
-        "fullName": "Brendan Beck"
-      },
-      "park": {
-        "id": 3313,
-        "name": "Yankee Stadium",
-        "runs": 107,
-        "hr": 115,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Sunny",
-        "temp": "95",
-        "wind": "10 mph, Out To RF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 1.6,
-      "mean_efp": 4.0,
-      "stats_games": 7,
-      "efp": 10.38,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.5,
-        "doubles": 1.15,
-        "triples": 0.19,
-        "home_runs": 3.97,
-        "bb_hbp": 0.67,
-        "r": 2.47,
-        "rbi": 1.58,
-        "sb": 0.32
-      },
-      "multipliers": {
-        "park_hr": 1.15,
-        "park_runs": 1.07,
-        "weather_hr": 1.208,
-        "pitcher_hits": 0.957,
-        "pitcher_hr": 1.088,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.0,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.04,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1162,
-        "doubles": 0.0535,
-        "triples": 0.0056,
-        "home_runs": 0.0923,
-        "bb_hbp": 0.0775,
-        "r_per_pa": 0.2872,
-        "rbi_per_pa": 0.1842
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
       "player_id": 671277,
       "name": "Luis Garc\u00eda Jr.",
       "position": "1B",
@@ -824,82 +900,6 @@
         "bb_hbp": 0.0453,
         "r_per_pa": 0.351,
         "rbi_per_pa": 0.2241
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 621439,
-      "name": "Byron Buxton",
-      "position": "CF",
-      "team_id": 142,
-      "team_abbr": "MIN",
-      "opp_abbr": "NYY",
-      "opp_team_id": 147,
-      "opp_pitcher": {
-        "id": 694341,
-        "fullName": "Brendan Beck"
-      },
-      "park": {
-        "id": 3313,
-        "name": "Yankee Stadium",
-        "runs": 107,
-        "hr": 115,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Sunny",
-        "temp": "95",
-        "wind": "10 mph, Out To RF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 5.64,
-      "mean_efp": 9.2,
-      "stats_games": 5,
-      "efp": 10.15,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.64,
-        "doubles": 1.06,
-        "triples": 0.1,
-        "home_runs": 3.63,
-        "bb_hbp": 0.65,
-        "r": 2.56,
-        "rbi": 1.52,
-        "sb": 0.42
-      },
-      "multipliers": {
-        "park_hr": 1.15,
-        "park_runs": 1.07,
-        "weather_hr": 1.082,
-        "pitcher_hits": 0.957,
-        "pitcher_hr": 1.088,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.0,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.075,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1269,
-        "doubles": 0.0494,
-        "triples": 0.003,
-        "home_runs": 0.0845,
-        "bb_hbp": 0.0756,
-        "r_per_pa": 0.2973,
-        "rbi_per_pa": 0.1772
       },
       "pa": 4.3,
       "tier": "low"
@@ -1412,6 +1412,82 @@
         "bb_hbp": 0.1371,
         "r_per_pa": 0.2729,
         "rbi_per_pa": 0.1897
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 663616,
+      "name": "Trevor Larnach",
+      "position": "LF",
+      "team_id": 142,
+      "team_abbr": "MIN",
+      "opp_abbr": "NYY",
+      "opp_team_id": 147,
+      "opp_pitcher": {
+        "id": 694341,
+        "fullName": "Brendan Beck"
+      },
+      "park": {
+        "id": 3313,
+        "name": "Yankee Stadium",
+        "runs": 107,
+        "hr": 115,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "95",
+        "wind": "10 mph, Out To RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 3.74,
+      "mean_efp": 5.0,
+      "stats_games": 7,
+      "efp": 9.59,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.3,
+        "doubles": 1.54,
+        "triples": 0.12,
+        "home_runs": 1.32,
+        "bb_hbp": 1.04,
+        "r": 3.16,
+        "rbi": 1.33,
+        "sb": 0.12
+      },
+      "multipliers": {
+        "park_hr": 1.15,
+        "park_runs": 1.07,
+        "weather_hr": 1.208,
+        "pitcher_hits": 1.0,
+        "pitcher_hr": 1.18,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.0,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.0,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.104,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1784,
+        "doubles": 0.0718,
+        "triples": 0.0035,
+        "home_runs": 0.0307,
+        "bb_hbp": 0.121,
+        "r_per_pa": 0.3675,
+        "rbi_per_pa": 0.155
       },
       "pa": 4.3,
       "tier": "low"
@@ -1933,158 +2009,6 @@
       "tier": "low"
     },
     {
-      "player_id": 804606,
-      "name": "Konnor Griffin",
-      "position": "SS",
-      "team_id": 134,
-      "team_abbr": "PIT",
-      "opp_abbr": "WSH",
-      "opp_team_id": 120,
-      "opp_pitcher": {
-        "id": 687223,
-        "fullName": "Carson Palmquist"
-      },
-      "park": {
-        "id": 3309,
-        "name": "Nationals Park",
-        "runs": 100,
-        "hr": 101,
-        "label": "Neutral"
-      },
-      "weather": {
-        "condition": "Sunny",
-        "temp": "93",
-        "wind": "5 mph, In From LF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 10.45,
-      "mean_efp": 6.5,
-      "stats_games": 6,
-      "efp": 9.4,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.27,
-        "doubles": 0.91,
-        "triples": 0.26,
-        "home_runs": 0.88,
-        "bb_hbp": 0.62,
-        "r": 2.73,
-        "rbi": 1.26,
-        "sb": 1.81
-      },
-      "multipliers": {
-        "park_hr": 1.01,
-        "park_runs": 1.0,
-        "weather_hr": 0.861,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 1.0,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.966,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.932,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.085,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1757,
-        "doubles": 0.0421,
-        "triples": 0.0075,
-        "home_runs": 0.0205,
-        "bb_hbp": 0.0722,
-        "r_per_pa": 0.3171,
-        "rbi_per_pa": 0.1461
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 663616,
-      "name": "Trevor Larnach",
-      "position": "LF",
-      "team_id": 142,
-      "team_abbr": "MIN",
-      "opp_abbr": "NYY",
-      "opp_team_id": 147,
-      "opp_pitcher": {
-        "id": 694341,
-        "fullName": "Brendan Beck"
-      },
-      "park": {
-        "id": 3313,
-        "name": "Yankee Stadium",
-        "runs": 107,
-        "hr": 115,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Sunny",
-        "temp": "95",
-        "wind": "10 mph, Out To RF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 3.74,
-      "mean_efp": 5.0,
-      "stats_games": 7,
-      "efp": 9.39,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.24,
-        "doubles": 1.56,
-        "triples": 0.12,
-        "home_runs": 1.22,
-        "bb_hbp": 0.96,
-        "r": 3.14,
-        "rbi": 1.36,
-        "sb": 0.12
-      },
-      "multipliers": {
-        "park_hr": 1.15,
-        "park_runs": 1.07,
-        "weather_hr": 1.208,
-        "pitcher_hits": 0.957,
-        "pitcher_hr": 1.088,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.0,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.104,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1734,
-        "doubles": 0.0725,
-        "triples": 0.0034,
-        "home_runs": 0.0284,
-        "bb_hbp": 0.1122,
-        "r_per_pa": 0.3647,
-        "rbi_per_pa": 0.158
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
       "player_id": 691023,
       "name": "Jordan Walker",
       "position": "RF",
@@ -2154,6 +2078,82 @@
         "rbi_per_pa": 0.1722
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 804606,
+      "name": "Konnor Griffin",
+      "position": "SS",
+      "team_id": 134,
+      "team_abbr": "PIT",
+      "opp_abbr": "WSH",
+      "opp_team_id": 120,
+      "opp_pitcher": {
+        "id": 687223,
+        "fullName": "Carson Palmquist"
+      },
+      "park": {
+        "id": 3309,
+        "name": "Nationals Park",
+        "runs": 100,
+        "hr": 101,
+        "label": "Neutral"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "93",
+        "wind": "5 mph, In From LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 10.45,
+      "mean_efp": 6.5,
+      "stats_games": 6,
+      "efp": 9.34,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.25,
+        "doubles": 0.9,
+        "triples": 0.26,
+        "home_runs": 0.88,
+        "bb_hbp": 0.62,
+        "r": 2.7,
+        "rbi": 1.25,
+        "sb": 1.81
+      },
+      "multipliers": {
+        "park_hr": 1.01,
+        "park_runs": 1.0,
+        "weather_hr": 0.861,
+        "pitcher_hits": 1.0,
+        "pitcher_hr": 1.0,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.966,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.932,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.085,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1745,
+        "doubles": 0.0419,
+        "triples": 0.0075,
+        "home_runs": 0.0204,
+        "bb_hbp": 0.0718,
+        "r_per_pa": 0.3144,
+        "rbi_per_pa": 0.1449
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -2230,5 +2230,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-07-04T17:37:31.333761+00:00"
+  "generated_at": "2026-07-04T17:57:00.807928+00:00"
 }
