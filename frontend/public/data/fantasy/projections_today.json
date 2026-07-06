@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 8,
-  "projection_count": 197,
+  "projection_count": 193,
   "projections": [
     {
       "player_id": 695578,
@@ -478,7 +478,7 @@
         "singles": 1.79,
         "doubles": 0.61,
         "triples": 0.12,
-        "home_runs": 2.62,
+        "home_runs": 2.61,
         "bb_hbp": 0.96,
         "r": 3.13,
         "rbi": 1.42,
@@ -488,8 +488,8 @@
         "park_hr": 0.99,
         "park_runs": 1.01,
         "weather_hr": 1.05,
-        "pitcher_hits": 1.081,
-        "pitcher_hr": 0.97,
+        "pitcher_hits": 1.082,
+        "pitcher_hr": 0.967,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -509,10 +509,10 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1389,
-        "doubles": 0.0281,
+        "singles": 0.1391,
+        "doubles": 0.0282,
         "triples": 0.0036,
-        "home_runs": 0.0609,
+        "home_runs": 0.0607,
         "bb_hbp": 0.112,
         "r_per_pa": 0.3642,
         "rbi_per_pa": 0.1649
@@ -620,24 +620,24 @@
       "stdev_efp": 5.37,
       "mean_efp": 11.57,
       "stats_games": 7,
-      "efp": 9.12,
+      "efp": 9.13,
       "bat_side": "R",
       "per_event": {
-        "singles": 2.04,
-        "doubles": 1.2,
-        "triples": 0.14,
-        "home_runs": 1.15,
-        "bb_hbp": 0.62,
+        "singles": 2.1,
+        "doubles": 1.1,
+        "triples": 0.15,
+        "home_runs": 1.23,
+        "bb_hbp": 0.63,
         "r": 2.3,
-        "rbi": 1.44,
-        "sb": 1.51
+        "rbi": 1.43,
+        "sb": 1.49
       },
       "multipliers": {
         "park_hr": 0.99,
         "park_runs": 1.01,
         "weather_hr": 1.05,
-        "pitcher_hits": 0.992,
-        "pitcher_hr": 0.827,
+        "pitcher_hits": 1.009,
+        "pitcher_hr": 0.856,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -657,13 +657,89 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1578,
-        "doubles": 0.0559,
-        "triples": 0.0041,
-        "home_runs": 0.0268,
-        "bb_hbp": 0.0722,
-        "r_per_pa": 0.268,
-        "rbi_per_pa": 0.1674
+        "singles": 0.1629,
+        "doubles": 0.0512,
+        "triples": 0.0042,
+        "home_runs": 0.0286,
+        "bb_hbp": 0.0731,
+        "r_per_pa": 0.2672,
+        "rbi_per_pa": 0.166
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 691406,
+      "name": "Junior Caminero",
+      "position": "3B",
+      "team_id": 139,
+      "team_abbr": "TB",
+      "opp_abbr": "NYY",
+      "opp_team_id": 147,
+      "opp_pitcher": {
+        "id": 693645,
+        "fullName": "Cam Schlittler"
+      },
+      "park": {
+        "id": 12,
+        "name": "Tropicana Field",
+        "runs": 96,
+        "hr": 98,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Dome",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 14.96,
+      "mean_efp": 14.22,
+      "stats_games": 9,
+      "efp": 9.05,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.63,
+        "doubles": 0.52,
+        "triples": 0.02,
+        "home_runs": 3.03,
+        "bb_hbp": 0.73,
+        "r": 2.4,
+        "rbi": 1.81,
+        "sb": 0.19
+      },
+      "multipliers": {
+        "park_hr": 0.98,
+        "park_runs": 0.96,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.913,
+        "pitcher_hr": 0.938,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.979,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.85,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1266,
+        "doubles": 0.0243,
+        "triples": 0.0006,
+        "home_runs": 0.0705,
+        "bb_hbp": 0.0847,
+        "r_per_pa": 0.2795,
+        "rbi_per_pa": 0.2101
       },
       "pa": 4.3,
       "tier": "low"
@@ -1173,78 +1249,6 @@
       "tier": "low"
     },
     {
-      "player_id": 691406,
-      "name": "Junior Caminero",
-      "position": "3B",
-      "team_id": 139,
-      "team_abbr": "TB",
-      "opp_abbr": "NYY",
-      "opp_team_id": 147,
-      "opp_pitcher": {
-        "id": 693645,
-        "fullName": "Cam Schlittler"
-      },
-      "park": {
-        "id": 12,
-        "name": "Tropicana Field",
-        "runs": 96,
-        "hr": 98,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 14.96,
-      "mean_efp": 14.22,
-      "stats_games": 9,
-      "efp": 8.78,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.52,
-        "doubles": 0.49,
-        "triples": 0.02,
-        "home_runs": 2.82,
-        "bb_hbp": 0.68,
-        "r": 2.63,
-        "rbi": 1.68,
-        "sb": 0.19
-      },
-      "multipliers": {
-        "park_hr": 0.98,
-        "park_runs": 0.96,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.913,
-        "pitcher_hr": 0.938,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.979,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1266,
-        "doubles": 0.0243,
-        "triples": 0.0006,
-        "home_runs": 0.0705,
-        "bb_hbp": 0.0847,
-        "r_per_pa": 0.3288,
-        "rbi_per_pa": 0.2101
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 669003,
       "name": "Garrett Mitchell",
       "position": "CF",
@@ -1314,6 +1318,82 @@
         "rbi_per_pa": 0.1919
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 607208,
+      "name": "Trea Turner",
+      "position": "SS",
+      "team_id": 143,
+      "team_abbr": "PHI",
+      "opp_abbr": "KC",
+      "opp_team_id": 118,
+      "opp_pitcher": {
+        "id": 702070,
+        "fullName": "Noah Cameron"
+      },
+      "park": {
+        "id": 7,
+        "name": "Kauffman Stadium",
+        "runs": 101,
+        "hr": 99,
+        "label": "Neutral"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "85",
+        "wind": "4 mph, L To R"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.0,
+      "mean_efp": 6.6,
+      "stats_games": 10,
+      "efp": 8.76,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.12,
+        "doubles": 1.07,
+        "triples": 0.03,
+        "home_runs": 1.65,
+        "bb_hbp": 0.44,
+        "r": 2.68,
+        "rbi": 1.36,
+        "sb": 0.64
+      },
+      "multipliers": {
+        "park_hr": 0.99,
+        "park_runs": 1.01,
+        "weather_hr": 1.05,
+        "pitcher_hits": 1.082,
+        "pitcher_hr": 0.967,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.084,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.754,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1646,
+        "doubles": 0.0496,
+        "triples": 0.0008,
+        "home_runs": 0.0384,
+        "bb_hbp": 0.0507,
+        "r_per_pa": 0.3122,
+        "rbi_per_pa": 0.1584
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1432,8 +1512,8 @@
         "park_hr": 0.99,
         "park_runs": 1.01,
         "weather_hr": 1.05,
-        "pitcher_hits": 1.081,
-        "pitcher_hr": 0.97,
+        "pitcher_hits": 1.082,
+        "pitcher_hr": 0.967,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -1453,10 +1533,10 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1356,
-        "doubles": 0.0466,
+        "singles": 0.1358,
+        "doubles": 0.0467,
         "triples": 0.0049,
-        "home_runs": 0.0436,
+        "home_runs": 0.0435,
         "bb_hbp": 0.1038,
         "r_per_pa": 0.3019,
         "rbi_per_pa": 0.1703
@@ -1534,82 +1614,6 @@
         "rbi_per_pa": 0.1563
       },
       "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 607208,
-      "name": "Trea Turner",
-      "position": "SS",
-      "team_id": 143,
-      "team_abbr": "PHI",
-      "opp_abbr": "KC",
-      "opp_team_id": 118,
-      "opp_pitcher": {
-        "id": 702070,
-        "fullName": "Noah Cameron"
-      },
-      "park": {
-        "id": 7,
-        "name": "Kauffman Stadium",
-        "runs": 101,
-        "hr": 99,
-        "label": "Neutral"
-      },
-      "weather": {
-        "condition": "Sunny",
-        "temp": "85",
-        "wind": "4 mph, L To R"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 5.0,
-      "mean_efp": 6.6,
-      "stats_games": 10,
-      "efp": 8.67,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.04,
-        "doubles": 1.08,
-        "triples": 0.03,
-        "home_runs": 1.69,
-        "bb_hbp": 0.44,
-        "r": 2.64,
-        "rbi": 1.35,
-        "sb": 0.64
-      },
-      "multipliers": {
-        "park_hr": 0.99,
-        "park_runs": 1.01,
-        "weather_hr": 1.05,
-        "pitcher_hits": 1.081,
-        "pitcher_hr": 0.97,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.084,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.754,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.15,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1582,
-        "doubles": 0.05,
-        "triples": 0.0008,
-        "home_runs": 0.0392,
-        "bb_hbp": 0.0508,
-        "r_per_pa": 0.3068,
-        "rbi_per_pa": 0.1573
-      },
-      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1919,7 +1923,11 @@
         "hr": 98,
         "label": "Pitcher Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Dome",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
       "pa_source": "default",
       "stdev_efp": 9.19,
       "mean_efp": 8.5,
@@ -2190,5 +2198,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-07-06T18:28:44.622292+00:00"
+  "generated_at": "2026-07-06T18:50:44.658259+00:00"
 }
