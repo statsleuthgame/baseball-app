@@ -1,170 +1,170 @@
 {
-  "game_date": "2026-06-25",
-  "generated_at": "2026-06-25T19:02:07.506764+00:00",
+  "game_date": "2026-07-07",
+  "generated_at": "2026-07-07T15:40:13.663675+00:00",
   "weights_version": "2026-04-18",
-  "source_pick_count": 6,
+  "source_pick_count": 10,
   "parlays": [
     {
       "size": 2,
       "payout": 3.0,
-      "combined_prob": 0.5944,
-      "ev_pct": 78.3,
+      "combined_prob": 0.5004,
+      "ev_pct": 50.1,
       "legs": [
         {
-          "player_id": 694671,
-          "name": "Wyatt Langford",
-          "team_abbr": "TEX",
-          "opp_abbr": "TOR",
-          "opp_pitcher": "Kevin Gausman",
+          "player_id": 672695,
+          "name": "Geraldo Perdomo",
+          "team_abbr": "AZ",
+          "opp_abbr": "SD",
+          "opp_pitcher": "Germ\u00e1n M\u00e1rquez",
           "line": 5.5,
           "side": "over",
-          "efp": 9.5,
-          "edge_z": 0.742,
-          "hit_prob": 0.771
+          "efp": 8.6,
+          "edge_z": 0.563,
+          "hit_prob": 0.713
         },
         {
-          "player_id": 695506,
-          "name": "Jac Caglianone",
-          "team_abbr": "KC",
-          "opp_abbr": "TB",
-          "opp_pitcher": "Casey Legumina",
-          "line": 5.0,
+          "player_id": 664761,
+          "name": "Alec Bohm",
+          "team_abbr": "PHI",
+          "opp_abbr": "CIN",
+          "opp_pitcher": "Andrew Abbott",
+          "line": 5.5,
           "side": "over",
-          "efp": 8.96,
-          "edge_z": 0.742,
-          "hit_prob": 0.771
+          "efp": 7.63,
+          "edge_z": 0.529,
+          "hit_prob": 0.702
         }
       ]
     },
     {
       "size": 2,
       "payout": 3.0,
-      "combined_prob": 0.3909,
-      "ev_pct": 17.3,
+      "combined_prob": 0.4827,
+      "ev_pct": 44.8,
       "legs": [
         {
-          "player_id": 663968,
-          "name": "Jake Mangum",
-          "team_abbr": "PIT",
-          "opp_abbr": "SEA",
-          "opp_pitcher": "Bryce Miller",
-          "line": 5.5,
-          "side": "over",
-          "efp": 7.88,
-          "edge_z": 0.382,
-          "hit_prob": 0.649
-        },
-        {
-          "player_id": 596019,
-          "name": "Francisco Lindor",
-          "team_abbr": "NYM",
-          "opp_abbr": "CHC",
-          "opp_pitcher": "Matthew Boyd",
+          "player_id": 656941,
+          "name": "Kyle Schwarber",
+          "team_abbr": "PHI",
+          "opp_abbr": "CIN",
+          "opp_pitcher": "Andrew Abbott",
           "line": 5.0,
           "side": "over",
-          "efp": 6.65,
-          "edge_z": 0.26,
-          "hit_prob": 0.603
+          "efp": 9.21,
+          "edge_z": 0.513,
+          "hit_prob": 0.696
+        },
+        {
+          "player_id": 695578,
+          "name": "James Wood",
+          "team_abbr": "WSH",
+          "opp_abbr": "HOU",
+          "opp_pitcher": "Tatsuya Imai",
+          "line": 6.5,
+          "side": "over",
+          "efp": 10.82,
+          "edge_z": 0.506,
+          "hit_prob": 0.694
         }
       ]
     },
     {
       "size": 3,
       "payout": 5.0,
-      "combined_prob": 0.3856,
-      "ev_pct": 92.8,
+      "combined_prob": 0.3471,
+      "ev_pct": 73.5,
       "legs": [
         {
-          "player_id": 694671,
-          "name": "Wyatt Langford",
-          "team_abbr": "TEX",
-          "opp_abbr": "TOR",
-          "opp_pitcher": "Kevin Gausman",
+          "player_id": 672695,
+          "name": "Geraldo Perdomo",
+          "team_abbr": "AZ",
+          "opp_abbr": "SD",
+          "opp_pitcher": "Germ\u00e1n M\u00e1rquez",
           "line": 5.5,
           "side": "over",
-          "efp": 9.5,
-          "edge_z": 0.742,
-          "hit_prob": 0.771
+          "efp": 8.6,
+          "edge_z": 0.563,
+          "hit_prob": 0.713
         },
         {
-          "player_id": 695506,
-          "name": "Jac Caglianone",
-          "team_abbr": "KC",
-          "opp_abbr": "TB",
-          "opp_pitcher": "Casey Legumina",
-          "line": 5.0,
-          "side": "over",
-          "efp": 8.96,
-          "edge_z": 0.742,
-          "hit_prob": 0.771
-        },
-        {
-          "player_id": 663968,
-          "name": "Jake Mangum",
-          "team_abbr": "PIT",
-          "opp_abbr": "SEA",
-          "opp_pitcher": "Bryce Miller",
+          "player_id": 664761,
+          "name": "Alec Bohm",
+          "team_abbr": "PHI",
+          "opp_abbr": "CIN",
+          "opp_pitcher": "Andrew Abbott",
           "line": 5.5,
           "side": "over",
-          "efp": 7.88,
-          "edge_z": 0.382,
-          "hit_prob": 0.649
+          "efp": 7.63,
+          "edge_z": 0.529,
+          "hit_prob": 0.702
+        },
+        {
+          "player_id": 695578,
+          "name": "James Wood",
+          "team_abbr": "WSH",
+          "opp_abbr": "HOU",
+          "opp_pitcher": "Tatsuya Imai",
+          "line": 6.5,
+          "side": "over",
+          "efp": 10.82,
+          "edge_z": 0.506,
+          "hit_prob": 0.694
         }
       ]
     },
     {
       "size": 4,
       "payout": 10.0,
-      "combined_prob": 0.2324,
-      "ev_pct": 132.4,
+      "combined_prob": 0.2344,
+      "ev_pct": 134.4,
       "legs": [
         {
-          "player_id": 694671,
-          "name": "Wyatt Langford",
-          "team_abbr": "TEX",
-          "opp_abbr": "TOR",
-          "opp_pitcher": "Kevin Gausman",
+          "player_id": 672695,
+          "name": "Geraldo Perdomo",
+          "team_abbr": "AZ",
+          "opp_abbr": "SD",
+          "opp_pitcher": "Germ\u00e1n M\u00e1rquez",
           "line": 5.5,
           "side": "over",
-          "efp": 9.5,
-          "edge_z": 0.742,
-          "hit_prob": 0.771
+          "efp": 8.6,
+          "edge_z": 0.563,
+          "hit_prob": 0.713
         },
         {
-          "player_id": 695506,
-          "name": "Jac Caglianone",
-          "team_abbr": "KC",
-          "opp_abbr": "TB",
-          "opp_pitcher": "Casey Legumina",
-          "line": 5.0,
-          "side": "over",
-          "efp": 8.96,
-          "edge_z": 0.742,
-          "hit_prob": 0.771
-        },
-        {
-          "player_id": 663968,
-          "name": "Jake Mangum",
-          "team_abbr": "PIT",
-          "opp_abbr": "SEA",
-          "opp_pitcher": "Bryce Miller",
+          "player_id": 664761,
+          "name": "Alec Bohm",
+          "team_abbr": "PHI",
+          "opp_abbr": "CIN",
+          "opp_pitcher": "Andrew Abbott",
           "line": 5.5,
           "side": "over",
-          "efp": 7.88,
-          "edge_z": 0.382,
-          "hit_prob": 0.649
+          "efp": 7.63,
+          "edge_z": 0.529,
+          "hit_prob": 0.702
         },
         {
-          "player_id": 596019,
-          "name": "Francisco Lindor",
-          "team_abbr": "NYM",
-          "opp_abbr": "CHC",
-          "opp_pitcher": "Matthew Boyd",
-          "line": 5.0,
+          "player_id": 695578,
+          "name": "James Wood",
+          "team_abbr": "WSH",
+          "opp_abbr": "HOU",
+          "opp_pitcher": "Tatsuya Imai",
+          "line": 6.5,
           "side": "over",
-          "efp": 6.65,
-          "edge_z": 0.26,
-          "hit_prob": 0.603
+          "efp": 10.82,
+          "edge_z": 0.506,
+          "hit_prob": 0.694
+        },
+        {
+          "player_id": 668885,
+          "name": "Austin Martin",
+          "team_abbr": "MIN",
+          "opp_abbr": "CLE",
+          "opp_pitcher": "Joey Cantillo",
+          "line": 5.5,
+          "side": "over",
+          "efp": 7.99,
+          "edge_z": 0.455,
+          "hit_prob": 0.675
         }
       ]
     }
