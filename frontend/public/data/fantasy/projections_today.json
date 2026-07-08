@@ -10,8 +10,84 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 309,
+  "projection_count": 305,
   "projections": [
+    {
+      "player_id": 695578,
+      "name": "James Wood",
+      "position": "RF",
+      "team_id": 120,
+      "team_abbr": "WSH",
+      "opp_abbr": "HOU",
+      "opp_team_id": 117,
+      "opp_pitcher": {
+        "id": 681293,
+        "fullName": "Spencer Arrighetti"
+      },
+      "park": {
+        "id": 3309,
+        "name": "Nationals Park",
+        "runs": 100,
+        "hr": 101,
+        "label": "Neutral"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "81",
+        "wind": "5 mph, Out To LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 8.76,
+      "mean_efp": 10.82,
+      "stats_games": 11,
+      "efp": 12.18,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.3,
+        "doubles": 0.92,
+        "triples": 0.21,
+        "home_runs": 3.03,
+        "bb_hbp": 2.02,
+        "r": 3.65,
+        "rbi": 1.93,
+        "sb": 0.83
+      },
+      "multipliers": {
+        "park_hr": 1.01,
+        "park_runs": 1.0,
+        "weather_hr": 1.03,
+        "pitcher_hits": 0.868,
+        "pitcher_hr": 1.014,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.053,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.117,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1005,
+        "doubles": 0.043,
+        "triples": 0.0061,
+        "home_runs": 0.0705,
+        "bb_hbp": 0.2352,
+        "r_per_pa": 0.4245,
+        "rbi_per_pa": 0.2248
+      },
+      "pa": 4.3,
+      "tier": "medium"
+    },
     {
       "player_id": 691718,
       "name": "Pete Crow-Armstrong",
@@ -162,82 +238,6 @@
         "rbi_per_pa": 0.1953
       },
       "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 695578,
-      "name": "James Wood",
-      "position": "RF",
-      "team_id": 120,
-      "team_abbr": "WSH",
-      "opp_abbr": "HOU",
-      "opp_team_id": 117,
-      "opp_pitcher": {
-        "id": 681293,
-        "fullName": "Spencer Arrighetti"
-      },
-      "park": {
-        "id": 3309,
-        "name": "Nationals Park",
-        "runs": 100,
-        "hr": 101,
-        "label": "Neutral"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "81",
-        "wind": "5 mph, Out To LF"
-      },
-      "pa_source": "default",
-      "stdev_efp": 8.76,
-      "mean_efp": 10.82,
-      "stats_games": 11,
-      "efp": 10.99,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.21,
-        "doubles": 0.86,
-        "triples": 0.19,
-        "home_runs": 2.82,
-        "bb_hbp": 1.88,
-        "r": 3.04,
-        "rbi": 1.8,
-        "sb": 0.75
-      },
-      "multipliers": {
-        "park_hr": 1.01,
-        "park_runs": 1.0,
-        "weather_hr": 1.03,
-        "pitcher_hits": 0.868,
-        "pitcher_hr": 1.014,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.053,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1005,
-        "doubles": 0.043,
-        "triples": 0.0061,
-        "home_runs": 0.0705,
-        "bb_hbp": 0.2352,
-        "r_per_pa": 0.3801,
-        "rbi_per_pa": 0.2248
-      },
-      "pa": 4.0,
       "tier": "low"
     },
     {
@@ -769,48 +769,51 @@
       "tier": "low"
     },
     {
-      "player_id": 682829,
-      "name": "Elly De La Cruz",
-      "position": "SS",
-      "team_id": 113,
-      "team_abbr": "CIN",
-      "opp_abbr": "PHI",
-      "opp_team_id": 143,
-      "opp_pitcher": null,
+      "player_id": 671277,
+      "name": "Luis Garc\u00eda Jr.",
+      "position": "1B",
+      "team_id": 120,
+      "team_abbr": "WSH",
+      "opp_abbr": "HOU",
+      "opp_team_id": 117,
+      "opp_pitcher": {
+        "id": 681293,
+        "fullName": "Spencer Arrighetti"
+      },
       "park": {
-        "id": 2602,
-        "name": "Great American Ball Park",
-        "runs": 109,
-        "hr": 116,
-        "label": "Hitter Friendly"
+        "id": 3309,
+        "name": "Nationals Park",
+        "runs": 100,
+        "hr": 101,
+        "label": "Neutral"
       },
       "weather": {
         "condition": "Partly Cloudy",
-        "temp": "87",
-        "wind": "2 mph, In From RF"
+        "temp": "81",
+        "wind": "5 mph, Out To LF"
       },
       "pa_source": "lineup",
-      "stdev_efp": 7.28,
-      "mean_efp": 11.06,
-      "stats_games": 16,
-      "efp": 9.94,
-      "bat_side": "S",
+      "stdev_efp": 8.5,
+      "mean_efp": 6.89,
+      "stats_games": 9,
+      "efp": 9.95,
+      "bat_side": "L",
       "per_event": {
-        "singles": 2.29,
-        "doubles": 0.99,
-        "triples": 0.17,
-        "home_runs": 1.42,
-        "bb_hbp": 0.91,
-        "r": 2.96,
-        "rbi": 1.32,
-        "sb": 1.3
+        "singles": 1.62,
+        "doubles": 1.04,
+        "triples": 0.22,
+        "home_runs": 3.05,
+        "bb_hbp": 0.58,
+        "r": 2.84,
+        "rbi": 1.71,
+        "sb": 0.31
       },
       "multipliers": {
-        "park_hr": 1.16,
-        "park_runs": 1.09,
-        "weather_hr": 0.924,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 1.0,
+        "park_hr": 1.01,
+        "park_runs": 1.0,
+        "weather_hr": 1.03,
+        "pitcher_hits": 0.868,
+        "pitcher_hr": 1.014,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -818,25 +821,25 @@
         "stx_xwoba": 1.0,
         "stx_barrel": 1.0,
         "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
+        "pitcher_gb_hr": 1.053,
         "k_damper": 1.0,
-        "pitcher_bb": 1.0,
+        "pitcher_bb": 1.25,
         "park_hand_hr": 1.0,
         "sb_speed": 1.0,
         "speed_singles": 1.0,
         "speed_r": 1.0,
         "bvpt": 1.0,
-        "ondeck_r": 1.111,
+        "ondeck_r": 1.135,
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1776,
-        "doubles": 0.0459,
-        "triples": 0.0049,
-        "home_runs": 0.033,
-        "bb_hbp": 0.1055,
-        "r_per_pa": 0.3436,
-        "rbi_per_pa": 0.1531
+        "singles": 0.1252,
+        "doubles": 0.0483,
+        "triples": 0.0064,
+        "home_runs": 0.0709,
+        "bb_hbp": 0.0669,
+        "r_per_pa": 0.3302,
+        "rbi_per_pa": 0.1991
       },
       "pa": 4.3,
       "tier": "low"
@@ -911,6 +914,82 @@
         "rbi_per_pa": 0.2067
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 678554,
+      "name": "Curtis Mead",
+      "position": "3B",
+      "team_id": 120,
+      "team_abbr": "WSH",
+      "opp_abbr": "HOU",
+      "opp_team_id": 117,
+      "opp_pitcher": {
+        "id": 681293,
+        "fullName": "Spencer Arrighetti"
+      },
+      "park": {
+        "id": 3309,
+        "name": "Nationals Park",
+        "runs": 100,
+        "hr": 101,
+        "label": "Neutral"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "81",
+        "wind": "5 mph, Out To LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.21,
+      "mean_efp": 8.29,
+      "stats_games": 7,
+      "efp": 9.82,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.53,
+        "doubles": 0.88,
+        "triples": 0.21,
+        "home_runs": 2.42,
+        "bb_hbp": 1.21,
+        "r": 2.89,
+        "rbi": 1.51,
+        "sb": 0.55
+      },
+      "multipliers": {
+        "park_hr": 1.01,
+        "park_runs": 1.0,
+        "weather_hr": 1.15,
+        "pitcher_hits": 0.868,
+        "pitcher_hr": 1.014,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.053,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.067,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1185,
+        "doubles": 0.0411,
+        "triples": 0.0061,
+        "home_runs": 0.0563,
+        "bb_hbp": 0.1412,
+        "r_per_pa": 0.3365,
+        "rbi_per_pa": 0.1754
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1137,79 +1216,6 @@
         "bb_hbp": 0.1294,
         "r_per_pa": 0.3502,
         "rbi_per_pa": 0.1576
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 701398,
-      "name": "Sal Stewart",
-      "position": "1B",
-      "team_id": 113,
-      "team_abbr": "CIN",
-      "opp_abbr": "PHI",
-      "opp_team_id": 143,
-      "opp_pitcher": null,
-      "park": {
-        "id": 2602,
-        "name": "Great American Ball Park",
-        "runs": 109,
-        "hr": 116,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "87",
-        "wind": "2 mph, In From RF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 9.04,
-      "mean_efp": 7.67,
-      "stats_games": 9,
-      "efp": 9.77,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.66,
-        "doubles": 1.43,
-        "triples": 0.03,
-        "home_runs": 2.28,
-        "bb_hbp": 0.87,
-        "r": 2.89,
-        "rbi": 1.46,
-        "sb": 0.54
-      },
-      "multipliers": {
-        "park_hr": 1.16,
-        "park_runs": 1.09,
-        "weather_hr": 0.997,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 1.0,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.0,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.147,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1283,
-        "doubles": 0.0665,
-        "triples": 0.001,
-        "home_runs": 0.053,
-        "bb_hbp": 0.1012,
-        "r_per_pa": 0.3356,
-        "rbi_per_pa": 0.1696
       },
       "pa": 4.3,
       "tier": "low"
@@ -1586,6 +1592,82 @@
         "bb_hbp": 0.1268,
         "r_per_pa": 0.3346,
         "rbi_per_pa": 0.166
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 682829,
+      "name": "Elly De La Cruz",
+      "position": "SS",
+      "team_id": 113,
+      "team_abbr": "CIN",
+      "opp_abbr": "PHI",
+      "opp_team_id": 143,
+      "opp_pitcher": {
+        "id": 660604,
+        "fullName": "Alan Rangel"
+      },
+      "park": {
+        "id": 2602,
+        "name": "Great American Ball Park",
+        "runs": 109,
+        "hr": 116,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "87",
+        "wind": "2 mph, In From RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.28,
+      "mean_efp": 11.06,
+      "stats_games": 16,
+      "efp": 9.36,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 2.2,
+        "doubles": 0.98,
+        "triples": 0.13,
+        "home_runs": 1.11,
+        "bb_hbp": 0.68,
+        "r": 2.96,
+        "rbi": 1.32,
+        "sb": 1.3
+      },
+      "multipliers": {
+        "park_hr": 1.16,
+        "park_runs": 1.09,
+        "weather_hr": 0.924,
+        "pitcher_hits": 0.987,
+        "pitcher_hr": 0.784,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.996,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.111,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1709,
+        "doubles": 0.0458,
+        "triples": 0.0038,
+        "home_runs": 0.0258,
+        "bb_hbp": 0.0786,
+        "r_per_pa": 0.3436,
+        "rbi_per_pa": 0.1531
       },
       "pa": 4.3,
       "tier": "low"
@@ -2189,84 +2271,8 @@
       },
       "pa": 4.0,
       "tier": "low"
-    },
-    {
-      "player_id": 682928,
-      "name": "CJ Abrams",
-      "position": "SS",
-      "team_id": 120,
-      "team_abbr": "WSH",
-      "opp_abbr": "HOU",
-      "opp_team_id": 117,
-      "opp_pitcher": {
-        "id": 681293,
-        "fullName": "Spencer Arrighetti"
-      },
-      "park": {
-        "id": 3309,
-        "name": "Nationals Park",
-        "runs": 100,
-        "hr": 101,
-        "label": "Neutral"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "81",
-        "wind": "5 mph, Out To LF"
-      },
-      "pa_source": "default",
-      "stdev_efp": 6.49,
-      "mean_efp": 5.64,
-      "stats_games": 11,
-      "efp": 9.12,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.51,
-        "doubles": 0.69,
-        "triples": 0.11,
-        "home_runs": 2.26,
-        "bb_hbp": 1.05,
-        "r": 2.42,
-        "rbi": 1.41,
-        "sb": 0.96
-      },
-      "multipliers": {
-        "park_hr": 1.01,
-        "park_runs": 1.0,
-        "weather_hr": 1.03,
-        "pitcher_hits": 0.868,
-        "pitcher_hr": 1.014,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.053,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1256,
-        "doubles": 0.0347,
-        "triples": 0.0034,
-        "home_runs": 0.0565,
-        "bb_hbp": 0.131,
-        "r_per_pa": 0.303,
-        "rbi_per_pa": 0.1762
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-07-08T20:03:09.635465+00:00"
+  "generated_at": "2026-07-08T20:18:07.663518+00:00"
 }
