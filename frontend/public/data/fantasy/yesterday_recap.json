@@ -1,6 +1,6 @@
 {
-  "recap_date": "2026-06-25",
-  "generated_at": "2026-06-26T10:55:56.366358+00:00",
+  "recap_date": "2026-07-07",
+  "generated_at": "2026-07-08T10:24:13.620660+00:00",
   "totals": {
     "high_conf": {
       "n": 0,
@@ -8,14 +8,14 @@
       "hit_rate": null
     },
     "med_conf": {
-      "n": 4,
-      "wins": 2,
-      "hit_rate": 0.5
+      "n": 11,
+      "wins": 4,
+      "hit_rate": 0.364
     },
     "low_conf": {
-      "n": 1,
-      "wins": 1,
-      "hit_rate": 1.0
+      "n": 2,
+      "wins": 0,
+      "hit_rate": 0.0
     },
     "fade": {
       "n": 1,
@@ -23,95 +23,155 @@
       "hit_rate": 0.0
     },
     "overall": {
-      "n": 6,
-      "wins": 3,
-      "hit_rate": 0.5
+      "n": 14,
+      "wins": 4,
+      "hit_rate": 0.286
     }
   },
   "top_hit": {
-    "name": "Wyatt Langford",
-    "team": "TEX",
-    "opp": "TOR",
-    "projected": 9.5,
-    "line": 5.5,
-    "actual": 18.0,
-    "edge_z": 0.742,
+    "name": "James Wood",
+    "team": "WSH",
+    "opp": "HOU",
+    "projected": 11.98,
+    "line": 7.0,
+    "actual": 21.0,
+    "edge_z": 0.583,
     "tier": "MED",
     "won": true,
     "grade": "over"
   },
   "biggest_miss": {
-    "name": "Jake Mangum",
-    "team": "PIT",
-    "opp": "SEA",
-    "projected": 7.88,
-    "line": 5.5,
+    "name": "Bryce Harper",
+    "team": "PHI",
+    "opp": "CIN",
+    "projected": 9.9,
+    "line": 6.0,
     "actual": 0.0,
-    "edge_z": 0.382,
+    "edge_z": 0.47,
     "tier": "MED",
     "won": false,
     "grade": "under"
   },
   "sample_picks": [
     {
-      "name": "Wyatt Langford",
-      "team": "TEX",
-      "opp": "TOR",
-      "projected": 9.5,
+      "name": "Elly De La Cruz",
+      "team": "CIN",
+      "opp": "PHI",
+      "projected": 9.87,
       "line": 5.5,
-      "actual": 18.0,
-      "edge_z": 0.742,
-      "tier": "MED",
-      "won": true,
-      "grade": "over"
-    },
-    {
-      "name": "Jac Caglianone",
-      "team": "KC",
-      "opp": "TB",
-      "projected": 8.96,
-      "line": 5.0,
-      "actual": 0.0,
-      "edge_z": 0.742,
+      "actual": 2.0,
+      "edge_z": 0.6,
       "tier": "MED",
       "won": false,
       "grade": "under"
     },
     {
-      "name": "Jung Hoo Lee",
-      "team": "SF",
-      "opp": "ATH",
-      "projected": 8.59,
-      "line": 5.0,
-      "actual": 16.0,
-      "edge_z": 0.659,
-      "tier": "MED",
-      "won": true,
-      "grade": "over"
-    },
-    {
-      "name": "Jake Mangum",
-      "team": "PIT",
-      "opp": "SEA",
-      "projected": 7.88,
-      "line": 5.5,
-      "actual": 0.0,
-      "edge_z": 0.382,
-      "tier": "MED",
-      "won": false,
-      "grade": "under"
-    },
-    {
-      "name": "J.T. Realmuto",
+      "name": "Kyle Schwarber",
       "team": "PHI",
-      "opp": "WSH",
-      "projected": 6.52,
-      "line": 5.0,
-      "actual": 9.0,
-      "edge_z": 0.239,
-      "tier": "LOW",
+      "opp": "CIN",
+      "projected": 10.81,
+      "line": 6.0,
+      "actual": 19.0,
+      "edge_z": 0.586,
+      "tier": "MED",
       "won": true,
       "grade": "over"
+    },
+    {
+      "name": "James Wood",
+      "team": "WSH",
+      "opp": "HOU",
+      "projected": 11.98,
+      "line": 7.0,
+      "actual": 21.0,
+      "edge_z": 0.583,
+      "tier": "MED",
+      "won": true,
+      "grade": "over"
+    },
+    {
+      "name": "Geraldo Perdomo",
+      "team": "AZ",
+      "opp": "SD",
+      "projected": 8.6,
+      "line": 5.5,
+      "actual": 2.0,
+      "edge_z": 0.563,
+      "tier": "MED",
+      "won": false,
+      "grade": "under"
+    },
+    {
+      "name": "Alec Bohm",
+      "team": "PHI",
+      "opp": "CIN",
+      "projected": 7.91,
+      "line": 6.0,
+      "actual": 2.0,
+      "edge_z": 0.474,
+      "tier": "MED",
+      "won": false,
+      "grade": "under"
+    },
+    {
+      "name": "Bryce Harper",
+      "team": "PHI",
+      "opp": "CIN",
+      "projected": 9.9,
+      "line": 6.0,
+      "actual": 0.0,
+      "edge_z": 0.47,
+      "tier": "MED",
+      "won": false,
+      "grade": "under"
+    },
+    {
+      "name": "Austin Martin",
+      "team": "MIN",
+      "opp": "CLE",
+      "projected": 8.01,
+      "line": 5.5,
+      "actual": 7.0,
+      "edge_z": 0.459,
+      "tier": "MED",
+      "won": true,
+      "grade": "over"
+    },
+    {
+      "name": "Christian Yelich",
+      "team": "MIL",
+      "opp": "STL",
+      "projected": 8.4,
+      "line": 5.5,
+      "actual": 2.0,
+      "edge_z": 0.442,
+      "tier": "MED",
+      "won": false,
+      "grade": "under"
+    },
+    {
+      "name": "CJ Abrams",
+      "team": "WSH",
+      "opp": "HOU",
+      "projected": 8.61,
+      "line": 6.0,
+      "actual": 9.0,
+      "edge_z": 0.389,
+      "tier": "MED",
+      "won": true,
+      "grade": "over"
+    },
+    {
+      "name": "Trea Turner",
+      "team": "PHI",
+      "opp": "CIN",
+      "projected": 9.4,
+      "line": 7.5,
+      "actual": 7.0,
+      "edge_z": 0.38,
+      "tier": "MED",
+      "won": false,
+      "grade": "under"
     }
   ]
 }
