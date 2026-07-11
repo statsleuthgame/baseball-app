@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 16,
-  "projection_count": 403,
+  "projection_count": 397,
   "projections": [
     {
       "player_id": 691718,
@@ -80,78 +80,6 @@
         "bb_hbp": 0.1471,
         "r_per_pa": 0.3524,
         "rbi_per_pa": 0.1949
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 700250,
-      "name": "Ben Rice",
-      "position": "1B",
-      "team_id": 147,
-      "team_abbr": "NYY",
-      "opp_abbr": "WSH",
-      "opp_team_id": 120,
-      "opp_pitcher": {
-        "id": 571945,
-        "fullName": "Miles Mikolas"
-      },
-      "park": {
-        "id": 3309,
-        "name": "Nationals Park",
-        "runs": 100,
-        "hr": 101,
-        "label": "Neutral"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 9.94,
-      "mean_efp": 10.22,
-      "stats_games": 9,
-      "efp": 10.34,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.61,
-        "doubles": 0.81,
-        "triples": 0.14,
-        "home_runs": 4.01,
-        "bb_hbp": 0.76,
-        "r": 2.63,
-        "rbi": 1.76,
-        "sb": 0.09
-      },
-      "multipliers": {
-        "park_hr": 1.01,
-        "park_runs": 1.0,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.107,
-        "pitcher_hr": 1.227,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.971,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1345,
-        "doubles": 0.0404,
-        "triples": 0.0043,
-        "home_runs": 0.1004,
-        "bb_hbp": 0.0948,
-        "r_per_pa": 0.3284,
-        "rbi_per_pa": 0.2195
       },
       "pa": 4.0,
       "tier": "low"
@@ -229,6 +157,82 @@
       "tier": "low"
     },
     {
+      "player_id": 668804,
+      "name": "Bryan Reynolds",
+      "position": "LF",
+      "team_id": 134,
+      "team_abbr": "PIT",
+      "opp_abbr": "MIL",
+      "opp_team_id": 158,
+      "opp_pitcher": {
+        "id": 687075,
+        "fullName": "Brandon Sproat"
+      },
+      "park": {
+        "id": 31,
+        "name": "PNC Park",
+        "runs": 96,
+        "hr": 92,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "81",
+        "wind": "2 mph, Out To CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 4.06,
+      "mean_efp": 6.44,
+      "stats_games": 9,
+      "efp": 10.27,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 1.68,
+        "doubles": 0.92,
+        "triples": 0.14,
+        "home_runs": 2.0,
+        "bb_hbp": 1.6,
+        "r": 3.29,
+        "rbi": 1.53,
+        "sb": 0.58
+      },
+      "multipliers": {
+        "park_hr": 0.92,
+        "park_runs": 0.96,
+        "weather_hr": 1.08,
+        "pitcher_hits": 0.971,
+        "pitcher_hr": 1.135,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.985,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.229,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.125,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1301,
+        "doubles": 0.0426,
+        "triples": 0.0041,
+        "home_runs": 0.0464,
+        "bb_hbp": 0.1858,
+        "r_per_pa": 0.3823,
+        "rbi_per_pa": 0.1777
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 695578,
       "name": "James Wood",
       "position": "RF",
@@ -298,6 +302,82 @@
         "rbi_per_pa": 0.2274
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 663968,
+      "name": "Jake Mangum",
+      "position": "CF",
+      "team_id": 134,
+      "team_abbr": "PIT",
+      "opp_abbr": "MIL",
+      "opp_team_id": 158,
+      "opp_pitcher": {
+        "id": 687075,
+        "fullName": "Brandon Sproat"
+      },
+      "park": {
+        "id": 31,
+        "name": "PNC Park",
+        "runs": 96,
+        "hr": 92,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "81",
+        "wind": "2 mph, Out To CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.34,
+      "mean_efp": 5.17,
+      "stats_games": 6,
+      "efp": 9.87,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 2.56,
+        "doubles": 0.91,
+        "triples": 0.03,
+        "home_runs": 0.87,
+        "bb_hbp": 0.87,
+        "r": 2.99,
+        "rbi": 1.29,
+        "sb": 1.74
+      },
+      "multipliers": {
+        "park_hr": 0.92,
+        "park_runs": 0.96,
+        "weather_hr": 1.08,
+        "pitcher_hits": 0.971,
+        "pitcher_hr": 1.135,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.985,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.229,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.073,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1988,
+        "doubles": 0.0423,
+        "triples": 0.0009,
+        "home_runs": 0.0203,
+        "bb_hbp": 0.1008,
+        "r_per_pa": 0.3471,
+        "rbi_per_pa": 0.1504
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -658,6 +738,82 @@
       "tier": "low"
     },
     {
+      "player_id": 668930,
+      "name": "Brice Turang",
+      "position": "2B",
+      "team_id": 158,
+      "team_abbr": "MIL",
+      "opp_abbr": "PIT",
+      "opp_team_id": 134,
+      "opp_pitcher": {
+        "id": 677952,
+        "fullName": "Braxton Ashcraft"
+      },
+      "park": {
+        "id": 31,
+        "name": "PNC Park",
+        "runs": 96,
+        "hr": 92,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "81",
+        "wind": "2 mph, Out To CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 9.35,
+      "mean_efp": 10.67,
+      "stats_games": 9,
+      "efp": 9.35,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.84,
+        "doubles": 1.29,
+        "triples": 0.18,
+        "home_runs": 1.36,
+        "bb_hbp": 0.69,
+        "r": 2.89,
+        "rbi": 1.46,
+        "sb": 0.97
+      },
+      "multipliers": {
+        "park_hr": 0.92,
+        "park_runs": 0.96,
+        "weather_hr": 1.08,
+        "pitcher_hits": 0.979,
+        "pitcher_hr": 0.98,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.961,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.051,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1423,
+        "doubles": 0.06,
+        "triples": 0.0052,
+        "home_runs": 0.0316,
+        "bb_hbp": 0.0806,
+        "r_per_pa": 0.3357,
+        "rbi_per_pa": 0.1696
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 672640,
       "name": "Otto Lopez",
       "position": "SS",
@@ -725,6 +881,78 @@
         "bb_hbp": 0.0529,
         "r_per_pa": 0.3369,
         "rbi_per_pa": 0.1947
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 700250,
+      "name": "Ben Rice",
+      "position": "1B",
+      "team_id": 147,
+      "team_abbr": "NYY",
+      "opp_abbr": "WSH",
+      "opp_team_id": 120,
+      "opp_pitcher": {
+        "id": 676571,
+        "fullName": "PJ Poulin"
+      },
+      "park": {
+        "id": 3309,
+        "name": "Nationals Park",
+        "runs": 100,
+        "hr": 101,
+        "label": "Neutral"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 9.94,
+      "mean_efp": 10.22,
+      "stats_games": 9,
+      "efp": 9.32,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.36,
+        "doubles": 0.51,
+        "triples": 0.13,
+        "home_runs": 3.02,
+        "bb_hbp": 1.15,
+        "r": 2.63,
+        "rbi": 1.76,
+        "sb": 0.07
+      },
+      "multipliers": {
+        "park_hr": 1.01,
+        "park_runs": 1.0,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.876,
+        "pitcher_hr": 0.98,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.968,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1137,
+        "doubles": 0.0256,
+        "triples": 0.0041,
+        "home_runs": 0.0756,
+        "bb_hbp": 0.144,
+        "r_per_pa": 0.3284,
+        "rbi_per_pa": 0.2195
       },
       "pa": 4.0,
       "tier": "low"
@@ -1090,6 +1318,82 @@
       "tier": "low"
     },
     {
+      "player_id": 664040,
+      "name": "Brandon Lowe",
+      "position": "2B",
+      "team_id": 134,
+      "team_abbr": "PIT",
+      "opp_abbr": "MIL",
+      "opp_team_id": 158,
+      "opp_pitcher": {
+        "id": 687075,
+        "fullName": "Brandon Sproat"
+      },
+      "park": {
+        "id": 31,
+        "name": "PNC Park",
+        "runs": 96,
+        "hr": 92,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "81",
+        "wind": "2 mph, Out To CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 6.72,
+      "mean_efp": 8.33,
+      "stats_games": 6,
+      "efp": 9.03,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.53,
+        "doubles": 0.99,
+        "triples": 0.08,
+        "home_runs": 2.27,
+        "bb_hbp": 1.01,
+        "r": 2.82,
+        "rbi": 1.4,
+        "sb": 0.21
+      },
+      "multipliers": {
+        "park_hr": 0.92,
+        "park_runs": 0.96,
+        "weather_hr": 1.08,
+        "pitcher_hits": 0.971,
+        "pitcher_hr": 1.135,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.985,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.229,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1188,
+        "doubles": 0.0458,
+        "triples": 0.0024,
+        "home_runs": 0.0528,
+        "bb_hbp": 0.1172,
+        "r_per_pa": 0.3277,
+        "rbi_per_pa": 0.1631
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 678246,
       "name": "Miguel Vargas",
       "position": "3B",
@@ -1378,78 +1682,6 @@
       "tier": "low"
     },
     {
-      "player_id": 676609,
-      "name": "Jos\u00e9 Caballero",
-      "position": "SS",
-      "team_id": 147,
-      "team_abbr": "NYY",
-      "opp_abbr": "WSH",
-      "opp_team_id": 120,
-      "opp_pitcher": {
-        "id": 571945,
-        "fullName": "Miles Mikolas"
-      },
-      "park": {
-        "id": 3309,
-        "name": "Nationals Park",
-        "runs": 100,
-        "hr": 101,
-        "label": "Neutral"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.42,
-      "mean_efp": 7.67,
-      "stats_games": 9,
-      "efp": 8.93,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.19,
-        "doubles": 0.69,
-        "triples": 0.03,
-        "home_runs": 1.95,
-        "bb_hbp": 0.39,
-        "r": 2.18,
-        "rbi": 1.23,
-        "sb": 1.51
-      },
-      "multipliers": {
-        "park_hr": 1.01,
-        "park_runs": 1.0,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.107,
-        "pitcher_hr": 1.227,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.971,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1826,
-        "doubles": 0.0347,
-        "triples": 0.001,
-        "home_runs": 0.0488,
-        "bb_hbp": 0.0491,
-        "r_per_pa": 0.2729,
-        "rbi_per_pa": 0.1539
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 668227,
       "name": "Randy Arozarena",
       "position": "LF",
@@ -1586,75 +1818,6 @@
         "bb_hbp": 0.0955,
         "r_per_pa": 0.3226,
         "rbi_per_pa": 0.177
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 668804,
-      "name": "Bryan Reynolds",
-      "position": "LF",
-      "team_id": 134,
-      "team_abbr": "PIT",
-      "opp_abbr": "MIL",
-      "opp_team_id": 158,
-      "opp_pitcher": null,
-      "park": {
-        "id": 31,
-        "name": "PNC Park",
-        "runs": 96,
-        "hr": 92,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 4.06,
-      "mean_efp": 6.44,
-      "stats_games": 9,
-      "efp": 8.89,
-      "bat_side": "S",
-      "per_event": {
-        "singles": 1.61,
-        "doubles": 0.88,
-        "triples": 0.11,
-        "home_runs": 1.67,
-        "bb_hbp": 1.16,
-        "r": 2.72,
-        "rbi": 1.42,
-        "sb": 0.58
-      },
-      "multipliers": {
-        "park_hr": 0.92,
-        "park_runs": 0.96,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 1.0,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.0,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1338,
-        "doubles": 0.0439,
-        "triples": 0.0036,
-        "home_runs": 0.0416,
-        "bb_hbp": 0.1452,
-        "r_per_pa": 0.3397,
-        "rbi_per_pa": 0.1777
       },
       "pa": 4.0,
       "tier": "low"
@@ -1804,75 +1967,6 @@
       "tier": "low"
     },
     {
-      "player_id": 663968,
-      "name": "Jake Mangum",
-      "position": "CF",
-      "team_id": 134,
-      "team_abbr": "PIT",
-      "opp_abbr": "MIL",
-      "opp_team_id": 158,
-      "opp_pitcher": null,
-      "park": {
-        "id": 31,
-        "name": "PNC Park",
-        "runs": 96,
-        "hr": 92,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 5.34,
-      "mean_efp": 5.17,
-      "stats_games": 6,
-      "efp": 8.83,
-      "bat_side": "S",
-      "per_event": {
-        "singles": 2.4,
-        "doubles": 0.89,
-        "triples": 0.04,
-        "home_runs": 0.74,
-        "bb_hbp": 0.67,
-        "r": 2.59,
-        "rbi": 1.2,
-        "sb": 1.56
-      },
-      "multipliers": {
-        "park_hr": 0.92,
-        "park_runs": 0.96,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 1.0,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.0,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1998,
-        "doubles": 0.0443,
-        "triples": 0.0012,
-        "home_runs": 0.0186,
-        "bb_hbp": 0.084,
-        "r_per_pa": 0.3234,
-        "rbi_per_pa": 0.1504
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 671976,
       "name": "Tristan Peters",
       "position": "CF",
@@ -2017,75 +2111,6 @@
       "tier": "low"
     },
     {
-      "player_id": 668930,
-      "name": "Brice Turang",
-      "position": "2B",
-      "team_id": 158,
-      "team_abbr": "MIL",
-      "opp_abbr": "PIT",
-      "opp_team_id": 134,
-      "opp_pitcher": null,
-      "park": {
-        "id": 31,
-        "name": "PNC Park",
-        "runs": 96,
-        "hr": 92,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 9.35,
-      "mean_efp": 10.67,
-      "stats_games": 9,
-      "efp": 8.78,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.75,
-        "doubles": 1.25,
-        "triples": 0.16,
-        "home_runs": 1.17,
-        "bb_hbp": 0.81,
-        "r": 2.56,
-        "rbi": 1.36,
-        "sb": 0.97
-      },
-      "multipliers": {
-        "park_hr": 0.92,
-        "park_runs": 0.96,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 1.0,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.0,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1461,
-        "doubles": 0.0626,
-        "triples": 0.005,
-        "home_runs": 0.0293,
-        "bb_hbp": 0.1007,
-        "r_per_pa": 0.3195,
-        "rbi_per_pa": 0.1696
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 701398,
       "name": "Sal Stewart",
       "position": "1B",
@@ -2159,5 +2184,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-07-11T11:44:57.638168+00:00"
+  "generated_at": "2026-07-11T14:17:56.231783+00:00"
 }
