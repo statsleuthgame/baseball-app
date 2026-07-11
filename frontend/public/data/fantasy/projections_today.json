@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 16,
-  "projection_count": 352,
+  "projection_count": 349,
   "projections": [
     {
       "player_id": 700250,
@@ -237,82 +237,6 @@
       "tier": "low"
     },
     {
-      "player_id": 668804,
-      "name": "Bryan Reynolds",
-      "position": "LF",
-      "team_id": 134,
-      "team_abbr": "PIT",
-      "opp_abbr": "MIL",
-      "opp_team_id": 158,
-      "opp_pitcher": {
-        "id": 687075,
-        "fullName": "Brandon Sproat"
-      },
-      "park": {
-        "id": 31,
-        "name": "PNC Park",
-        "runs": 96,
-        "hr": 92,
-        "label": "Pitcher Friendly"
-      },
-      "weather": {
-        "condition": "Overcast",
-        "temp": "73",
-        "wind": "1 mph, Out To CF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 4.06,
-      "mean_efp": 6.44,
-      "stats_games": 9,
-      "efp": 10.34,
-      "bat_side": "S",
-      "per_event": {
-        "singles": 1.62,
-        "doubles": 0.91,
-        "triples": 0.14,
-        "home_runs": 2.08,
-        "bb_hbp": 1.63,
-        "r": 3.3,
-        "rbi": 1.55,
-        "sb": 0.58
-      },
-      "multipliers": {
-        "park_hr": 0.92,
-        "park_runs": 0.96,
-        "weather_hr": 1.08,
-        "pitcher_hits": 0.96,
-        "pitcher_hr": 1.144,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.985,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.229,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.125,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1252,
-        "doubles": 0.0424,
-        "triples": 0.004,
-        "home_runs": 0.0484,
-        "bb_hbp": 0.1898,
-        "r_per_pa": 0.3841,
-        "rbi_per_pa": 0.1799
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
       "player_id": 686475,
       "name": "Tyler Tolbert",
       "position": "2B",
@@ -382,6 +306,82 @@
         "rbi_per_pa": 0.1808
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 668804,
+      "name": "Bryan Reynolds",
+      "position": "LF",
+      "team_id": 134,
+      "team_abbr": "PIT",
+      "opp_abbr": "MIL",
+      "opp_team_id": 158,
+      "opp_pitcher": {
+        "id": 687075,
+        "fullName": "Brandon Sproat"
+      },
+      "park": {
+        "id": 31,
+        "name": "PNC Park",
+        "runs": 96,
+        "hr": 92,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Overcast",
+        "temp": "73",
+        "wind": "1 mph, Out To CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 4.06,
+      "mean_efp": 6.44,
+      "stats_games": 9,
+      "efp": 10.26,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 1.61,
+        "doubles": 0.91,
+        "triples": 0.14,
+        "home_runs": 2.05,
+        "bb_hbp": 1.62,
+        "r": 3.28,
+        "rbi": 1.53,
+        "sb": 0.58
+      },
+      "multipliers": {
+        "park_hr": 0.92,
+        "park_runs": 0.96,
+        "weather_hr": 1.08,
+        "pitcher_hits": 0.96,
+        "pitcher_hr": 1.144,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.985,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.229,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.125,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1246,
+        "doubles": 0.0422,
+        "triples": 0.004,
+        "home_runs": 0.0477,
+        "bb_hbp": 0.1885,
+        "r_per_pa": 0.3809,
+        "rbi_per_pa": 0.1778
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1513,6 +1513,82 @@
       "tier": "low"
     },
     {
+      "player_id": 668930,
+      "name": "Brice Turang",
+      "position": "2B",
+      "team_id": 158,
+      "team_abbr": "MIL",
+      "opp_abbr": "PIT",
+      "opp_team_id": 134,
+      "opp_pitcher": {
+        "id": 677952,
+        "fullName": "Braxton Ashcraft"
+      },
+      "park": {
+        "id": 31,
+        "name": "PNC Park",
+        "runs": 96,
+        "hr": 92,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Overcast",
+        "temp": "73",
+        "wind": "1 mph, Out To CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 9.35,
+      "mean_efp": 10.67,
+      "stats_games": 9,
+      "efp": 9.28,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.68,
+        "doubles": 1.33,
+        "triples": 0.18,
+        "home_runs": 1.43,
+        "bb_hbp": 0.73,
+        "r": 2.84,
+        "rbi": 1.44,
+        "sb": 0.96
+      },
+      "multipliers": {
+        "park_hr": 0.92,
+        "park_runs": 0.96,
+        "weather_hr": 1.08,
+        "pitcher_hits": 0.98,
+        "pitcher_hr": 1.016,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.961,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.051,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1306,
+        "doubles": 0.0617,
+        "triples": 0.0052,
+        "home_runs": 0.0331,
+        "bb_hbp": 0.0854,
+        "r_per_pa": 0.3306,
+        "rbi_per_pa": 0.1675
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 687263,
       "name": "Zach Neto",
       "position": "SS",
@@ -1584,82 +1660,6 @@
         "bb_hbp": 0.0842,
         "r_per_pa": 0.3558,
         "rbi_per_pa": 0.1687
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 668930,
-      "name": "Brice Turang",
-      "position": "2B",
-      "team_id": 158,
-      "team_abbr": "MIL",
-      "opp_abbr": "PIT",
-      "opp_team_id": 134,
-      "opp_pitcher": {
-        "id": 677952,
-        "fullName": "Braxton Ashcraft"
-      },
-      "park": {
-        "id": 31,
-        "name": "PNC Park",
-        "runs": 96,
-        "hr": 92,
-        "label": "Pitcher Friendly"
-      },
-      "weather": {
-        "condition": "Overcast",
-        "temp": "73",
-        "wind": "1 mph, Out To CF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 9.35,
-      "mean_efp": 10.67,
-      "stats_games": 9,
-      "efp": 9.21,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.7,
-        "doubles": 1.34,
-        "triples": 0.18,
-        "home_runs": 1.4,
-        "bb_hbp": 0.7,
-        "r": 2.8,
-        "rbi": 1.44,
-        "sb": 0.96
-      },
-      "multipliers": {
-        "park_hr": 0.92,
-        "park_runs": 0.96,
-        "weather_hr": 1.08,
-        "pitcher_hits": 0.982,
-        "pitcher_hr": 0.995,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.961,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.051,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1316,
-        "doubles": 0.0625,
-        "triples": 0.0052,
-        "home_runs": 0.0326,
-        "bb_hbp": 0.0809,
-        "r_per_pa": 0.3253,
-        "rbi_per_pa": 0.1675
       },
       "pa": 4.3,
       "tier": "low"
@@ -2254,5 +2254,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-07-11T17:33:38.734619+00:00"
+  "generated_at": "2026-07-11T17:47:20.789447+00:00"
 }
