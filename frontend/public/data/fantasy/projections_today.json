@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 374,
+  "projection_count": 370,
   "projections": [
     {
       "player_id": 700250,
@@ -1453,6 +1453,82 @@
       "tier": "low"
     },
     {
+      "player_id": 666018,
+      "name": "Jonathan Aranda",
+      "position": "1B",
+      "team_id": 139,
+      "team_abbr": "TB",
+      "opp_abbr": "BOS",
+      "opp_team_id": 111,
+      "opp_pitcher": {
+        "id": 687562,
+        "fullName": "Jake Bennett"
+      },
+      "park": {
+        "id": 3,
+        "name": "Fenway Park",
+        "runs": 108,
+        "hr": 99,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "81",
+        "wind": "11 mph, Varies"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 9.31,
+      "mean_efp": 9.8,
+      "stats_games": 10,
+      "efp": 9.01,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.33,
+        "doubles": 1.15,
+        "triples": 0.02,
+        "home_runs": 0.91,
+        "bb_hbp": 0.84,
+        "r": 3.48,
+        "rbi": 1.55,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 0.99,
+        "park_runs": 1.08,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.949,
+        "pitcher_hr": 0.821,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.905,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1807,
+        "doubles": 0.0533,
+        "triples": 0.0007,
+        "home_runs": 0.0212,
+        "bb_hbp": 0.0982,
+        "r_per_pa": 0.405,
+        "rbi_per_pa": 0.1799
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 681715,
       "name": "Heriberto Hern\u00e1ndez",
       "position": "LF",
@@ -1954,6 +2030,82 @@
       "tier": "low"
     },
     {
+      "player_id": 650490,
+      "name": "Yandy D\u00edaz",
+      "position": "DH",
+      "team_id": 139,
+      "team_abbr": "TB",
+      "opp_abbr": "BOS",
+      "opp_team_id": 111,
+      "opp_pitcher": {
+        "id": 687562,
+        "fullName": "Jake Bennett"
+      },
+      "park": {
+        "id": 3,
+        "name": "Fenway Park",
+        "runs": 108,
+        "hr": 99,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "81",
+        "wind": "11 mph, Varies"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 6.97,
+      "mean_efp": 10.0,
+      "stats_games": 10,
+      "efp": 8.86,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.59,
+        "doubles": 1.02,
+        "triples": 0.07,
+        "home_runs": 1.07,
+        "bb_hbp": 0.6,
+        "r": 3.26,
+        "rbi": 1.46,
+        "sb": 0.04
+      },
+      "multipliers": {
+        "park_hr": 0.99,
+        "park_runs": 1.08,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.949,
+        "pitcher_hr": 0.821,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.905,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.2009,
+        "doubles": 0.0472,
+        "triples": 0.0019,
+        "home_runs": 0.025,
+        "bb_hbp": 0.0701,
+        "r_per_pa": 0.3793,
+        "rbi_per_pa": 0.1699
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 624424,
       "name": "Michael Conforto",
       "position": "DH",
@@ -2024,152 +2176,8 @@
       },
       "pa": 4.0,
       "tier": "low"
-    },
-    {
-      "player_id": 681624,
-      "name": "Andy Pages",
-      "position": "CF",
-      "team_id": 119,
-      "team_abbr": "LAD",
-      "opp_abbr": "NYY",
-      "opp_team_id": 147,
-      "opp_pitcher": {
-        "id": 543037,
-        "fullName": "Gerrit Cole"
-      },
-      "park": {
-        "id": 3313,
-        "name": "Yankee Stadium",
-        "runs": 107,
-        "hr": 115,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 4.89,
-      "mean_efp": 6.22,
-      "stats_games": 9,
-      "efp": 8.8,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.05,
-        "doubles": 0.89,
-        "triples": 0.09,
-        "home_runs": 2.24,
-        "bb_hbp": 0.65,
-        "r": 2.51,
-        "rbi": 1.29,
-        "sb": 0.33
-      },
-      "multipliers": {
-        "park_hr": 1.15,
-        "park_runs": 1.07,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.026,
-        "pitcher_hr": 1.106,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.125,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1706,
-        "doubles": 0.0443,
-        "triples": 0.0027,
-        "home_runs": 0.0561,
-        "bb_hbp": 0.0808,
-        "r_per_pa": 0.3138,
-        "rbi_per_pa": 0.161
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 665862,
-      "name": "Jazz Chisholm Jr.",
-      "position": "2B",
-      "team_id": 147,
-      "team_abbr": "NYY",
-      "opp_abbr": "LAD",
-      "opp_team_id": 119,
-      "opp_pitcher": {
-        "id": 808963,
-        "fullName": "Roki Sasaki"
-      },
-      "park": {
-        "id": 3313,
-        "name": "Yankee Stadium",
-        "runs": 107,
-        "hr": 115,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 9.83,
-      "mean_efp": 11.12,
-      "stats_games": 8,
-      "efp": 8.79,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.59,
-        "doubles": 0.79,
-        "triples": 0.11,
-        "home_runs": 2.07,
-        "bb_hbp": 1.04,
-        "r": 2.15,
-        "rbi": 1.14,
-        "sb": 1.14
-      },
-      "multipliers": {
-        "park_hr": 1.15,
-        "park_runs": 1.07,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.991,
-        "pitcher_hr": 1.243,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.004,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1324,
-        "doubles": 0.0394,
-        "triples": 0.0035,
-        "home_runs": 0.0519,
-        "bb_hbp": 0.1297,
-        "r_per_pa": 0.2689,
-        "rbi_per_pa": 0.1423
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-07-17T14:24:33.741953+00:00"
+  "generated_at": "2026-07-17T16:14:19.915633+00:00"
 }
