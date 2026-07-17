@@ -373,6 +373,78 @@
       "tier": "low"
     },
     {
+      "player_id": 691023,
+      "name": "Jordan Walker",
+      "position": "RF",
+      "team_id": 138,
+      "team_abbr": "STL",
+      "opp_abbr": "AZ",
+      "opp_team_id": 109,
+      "opp_pitcher": {
+        "id": 518876,
+        "fullName": "Merrill Kelly"
+      },
+      "park": {
+        "id": 15,
+        "name": "Chase Field",
+        "runs": 106,
+        "hr": 110,
+        "label": "Hitter Friendly"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 6.88,
+      "mean_efp": 8.57,
+      "stats_games": 7,
+      "efp": 10.38,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.3,
+        "doubles": 1.04,
+        "triples": 0.03,
+        "home_runs": 2.99,
+        "bb_hbp": 0.63,
+        "r": 2.51,
+        "rbi": 1.5,
+        "sb": 0.84
+      },
+      "multipliers": {
+        "park_hr": 1.1,
+        "park_runs": 1.06,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.075,
+        "pitcher_hr": 1.199,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.041,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.996,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1919,
+        "doubles": 0.0522,
+        "triples": 0.0008,
+        "home_runs": 0.0748,
+        "bb_hbp": 0.0787,
+        "r_per_pa": 0.3136,
+        "rbi_per_pa": 0.187
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
       "player_id": 664983,
       "name": "Jake McCarthy",
       "position": "CF",
@@ -512,75 +584,6 @@
         "bb_hbp": 0.0793,
         "r_per_pa": 0.3388,
         "rbi_per_pa": 0.1808
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 691023,
-      "name": "Jordan Walker",
-      "position": "RF",
-      "team_id": 138,
-      "team_abbr": "STL",
-      "opp_abbr": "AZ",
-      "opp_team_id": 109,
-      "opp_pitcher": null,
-      "park": {
-        "id": 15,
-        "name": "Chase Field",
-        "runs": 106,
-        "hr": 110,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 6.88,
-      "mean_efp": 8.57,
-      "stats_games": 7,
-      "efp": 9.66,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.16,
-        "doubles": 0.96,
-        "triples": 0.03,
-        "home_runs": 2.39,
-        "bb_hbp": 0.64,
-        "r": 2.51,
-        "rbi": 1.5,
-        "sb": 0.84
-      },
-      "multipliers": {
-        "park_hr": 1.1,
-        "park_runs": 1.06,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 1.0,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.0,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1803,
-        "doubles": 0.0479,
-        "triples": 0.0009,
-        "home_runs": 0.0598,
-        "bb_hbp": 0.0799,
-        "r_per_pa": 0.3136,
-        "rbi_per_pa": 0.187
       },
       "pa": 4.0,
       "tier": "low"
@@ -2168,5 +2171,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-07-17T01:06:26.183522+00:00"
+  "generated_at": "2026-07-17T12:14:58.880022+00:00"
 }
