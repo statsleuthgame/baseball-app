@@ -33,7 +33,7 @@
       },
       "weather": {
         "condition": "Roof Closed",
-        "temp": "72",
+        "temp": "68",
         "wind": "0 mph, None"
       },
       "pa_source": "lineup",
@@ -257,7 +257,7 @@
       },
       "weather": {
         "condition": "Roof Closed",
-        "temp": "72",
+        "temp": "68",
         "wind": "0 mph, None"
       },
       "pa_source": "lineup",
@@ -709,7 +709,7 @@
       },
       "weather": {
         "condition": "Roof Closed",
-        "temp": "72",
+        "temp": "68",
         "wind": "0 mph, None"
       },
       "pa_source": "lineup",
@@ -783,7 +783,11 @@
         "hr": 107,
         "label": "Slight Hitter"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
       "pa_source": "lineup",
       "stdev_efp": 8.23,
       "mean_efp": 9.9,
@@ -1437,82 +1441,6 @@
       "tier": "low"
     },
     {
-      "player_id": 668804,
-      "name": "Bryan Reynolds",
-      "position": "LF",
-      "team_id": 134,
-      "team_abbr": "PIT",
-      "opp_abbr": "CLE",
-      "opp_team_id": 114,
-      "opp_pitcher": {
-        "id": 668909,
-        "fullName": "Gavin Williams"
-      },
-      "park": {
-        "id": 5,
-        "name": "Progressive Field",
-        "runs": 97,
-        "hr": 95,
-        "label": "Pitcher Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "89",
-        "wind": "14 mph, Out To RF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 4.06,
-      "mean_efp": 6.44,
-      "stats_games": 9,
-      "efp": 9.69,
-      "bat_side": "S",
-      "per_event": {
-        "singles": 1.64,
-        "doubles": 0.93,
-        "triples": 0.14,
-        "home_runs": 1.6,
-        "bb_hbp": 1.31,
-        "r": 3.58,
-        "rbi": 1.44,
-        "sb": 0.43
-      },
-      "multipliers": {
-        "park_hr": 0.95,
-        "park_runs": 0.97,
-        "weather_hr": 1.145,
-        "pitcher_hits": 0.949,
-        "pitcher_hr": 1.083,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.96,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.845,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.15,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1273,
-        "doubles": 0.0435,
-        "triples": 0.0039,
-        "home_runs": 0.0371,
-        "bb_hbp": 0.1522,
-        "r_per_pa": 0.4161,
-        "rbi_per_pa": 0.1673
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
       "player_id": 673548,
       "name": "Seiya Suzuki",
       "position": "RF",
@@ -1662,6 +1590,82 @@
         "rbi_per_pa": 0.1985
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 668804,
+      "name": "Bryan Reynolds",
+      "position": "LF",
+      "team_id": 134,
+      "team_abbr": "PIT",
+      "opp_abbr": "CLE",
+      "opp_team_id": 114,
+      "opp_pitcher": {
+        "id": 668909,
+        "fullName": "Gavin Williams"
+      },
+      "park": {
+        "id": 5,
+        "name": "Progressive Field",
+        "runs": 97,
+        "hr": 95,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "89",
+        "wind": "14 mph, Out To RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 4.06,
+      "mean_efp": 6.44,
+      "stats_games": 9,
+      "efp": 9.63,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 1.63,
+        "doubles": 0.93,
+        "triples": 0.14,
+        "home_runs": 1.61,
+        "bb_hbp": 1.29,
+        "r": 3.54,
+        "rbi": 1.42,
+        "sb": 0.43
+      },
+      "multipliers": {
+        "park_hr": 0.95,
+        "park_runs": 0.97,
+        "weather_hr": 1.145,
+        "pitcher_hits": 0.95,
+        "pitcher_hr": 1.101,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.96,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.845,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1267,
+        "doubles": 0.0433,
+        "triples": 0.0039,
+        "home_runs": 0.0374,
+        "bb_hbp": 0.1505,
+        "r_per_pa": 0.4115,
+        "rbi_per_pa": 0.165
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -2193,9 +2197,9 @@
       "tier": "low"
     },
     {
-      "player_id": 663968,
-      "name": "Jake Mangum",
-      "position": "CF",
+      "player_id": 699013,
+      "name": "Esmerlyn Valdez",
+      "position": "RF",
       "team_id": 134,
       "team_abbr": "PIT",
       "opp_abbr": "CLE",
@@ -2217,27 +2221,27 @@
         "wind": "14 mph, Out To RF"
       },
       "pa_source": "lineup",
-      "stdev_efp": 5.34,
-      "mean_efp": 5.17,
-      "stats_games": 6,
-      "efp": 9.32,
-      "bat_side": "S",
+      "stdev_efp": 7.21,
+      "mean_efp": 6.87,
+      "stats_games": 0,
+      "efp": 9.29,
+      "bat_side": "R",
       "per_event": {
-        "singles": 2.36,
-        "doubles": 0.82,
-        "triples": 0.32,
-        "home_runs": 0.96,
-        "bb_hbp": 0.65,
-        "r": 2.96,
-        "rbi": 1.35,
-        "sb": 1.21
+        "singles": 1.37,
+        "doubles": 0.85,
+        "triples": 0.12,
+        "home_runs": 3.23,
+        "bb_hbp": 0.7,
+        "r": 2.65,
+        "rbi": 1.69,
+        "sb": 0.0
       },
       "multipliers": {
         "park_hr": 0.95,
         "park_runs": 0.97,
-        "weather_hr": 1.145,
-        "pitcher_hits": 0.949,
-        "pitcher_hr": 1.083,
+        "weather_hr": 1.082,
+        "pitcher_hits": 0.95,
+        "pitcher_hr": 1.101,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -2253,22 +2257,22 @@
         "speed_singles": 1.0,
         "speed_r": 1.0,
         "bvpt": 1.0,
-        "ondeck_r": 1.065,
+        "ondeck_r": 1.058,
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1826,
-        "doubles": 0.0382,
-        "triples": 0.0094,
-        "home_runs": 0.0223,
-        "bb_hbp": 0.0761,
-        "r_per_pa": 0.3444,
-        "rbi_per_pa": 0.1573
+        "singles": 0.1139,
+        "doubles": 0.0424,
+        "triples": 0.0037,
+        "home_runs": 0.0807,
+        "bb_hbp": 0.0875,
+        "r_per_pa": 0.331,
+        "rbi_per_pa": 0.2114
       },
-      "pa": 4.3,
+      "pa": 4.0,
       "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-07-18T17:34:23.872913+00:00"
+  "generated_at": "2026-07-18T17:47:51.169880+00:00"
 }
