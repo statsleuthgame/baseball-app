@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 16,
-  "projection_count": 406,
+  "projection_count": 402,
   "projections": [
     {
       "player_id": 700250,
@@ -1885,6 +1885,82 @@
       "tier": "low"
     },
     {
+      "player_id": 800050,
+      "name": "Chase DeLauter",
+      "position": "RF",
+      "team_id": 114,
+      "team_abbr": "CLE",
+      "opp_abbr": "PIT",
+      "opp_team_id": 134,
+      "opp_pitcher": {
+        "id": 683003,
+        "fullName": "Jared Jones"
+      },
+      "park": {
+        "id": 5,
+        "name": "Progressive Field",
+        "runs": 97,
+        "hr": 95,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "89",
+        "wind": "14 mph, Out To RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.18,
+      "mean_efp": 7.57,
+      "stats_games": 7,
+      "efp": 9.13,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.8,
+        "doubles": 0.85,
+        "triples": 0.07,
+        "home_runs": 2.5,
+        "bb_hbp": 0.79,
+        "r": 2.68,
+        "rbi": 1.58,
+        "sb": 0.15
+      },
+      "multipliers": {
+        "park_hr": 0.95,
+        "park_runs": 0.97,
+        "weather_hr": 1.208,
+        "pitcher_hits": 0.943,
+        "pitcher_hr": 1.065,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.97,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.892,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.973,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1399,
+        "doubles": 0.0394,
+        "triples": 0.0019,
+        "home_runs": 0.0581,
+        "bb_hbp": 0.0916,
+        "r_per_pa": 0.3118,
+        "rbi_per_pa": 0.1838
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 665052,
       "name": "Griffin Conine",
       "position": "LF",
@@ -2099,80 +2175,8 @@
       },
       "pa": 4.0,
       "tier": "low"
-    },
-    {
-      "player_id": 553993,
-      "name": "Eugenio Su\u00e1rez",
-      "position": "DH",
-      "team_id": 113,
-      "team_abbr": "CIN",
-      "opp_abbr": "COL",
-      "opp_team_id": 115,
-      "opp_pitcher": {
-        "id": 608372,
-        "fullName": "Tomoyuki Sugano"
-      },
-      "park": {
-        "id": 19,
-        "name": "Coors Field",
-        "runs": 116,
-        "hr": 118,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 4.8,
-      "mean_efp": 3.29,
-      "stats_games": 7,
-      "efp": 8.92,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.65,
-        "doubles": 0.99,
-        "triples": 0.04,
-        "home_runs": 3.32,
-        "bb_hbp": 0.6,
-        "r": 2.21,
-        "rbi": 1.37,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 1.18,
-        "park_runs": 1.16,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.063,
-        "pitcher_hr": 1.163,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.086,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.782,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1375,
-        "doubles": 0.0497,
-        "triples": 0.0011,
-        "home_runs": 0.083,
-        "bb_hbp": 0.0748,
-        "r_per_pa": 0.2761,
-        "rbi_per_pa": 0.1716
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-07-18T11:59:30.150869+00:00"
+  "generated_at": "2026-07-18T14:14:59.517513+00:00"
 }
