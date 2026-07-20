@@ -445,78 +445,6 @@
       "tier": "low"
     },
     {
-      "player_id": 700250,
-      "name": "Ben Rice",
-      "position": "1B",
-      "team_id": 147,
-      "team_abbr": "NYY",
-      "opp_abbr": "PIT",
-      "opp_team_id": 134,
-      "opp_pitcher": {
-        "id": 677952,
-        "fullName": "Braxton Ashcraft"
-      },
-      "park": {
-        "id": 3313,
-        "name": "Yankee Stadium",
-        "runs": 107,
-        "hr": 115,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 9.94,
-      "mean_efp": 10.22,
-      "stats_games": 9,
-      "efp": 10.19,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.58,
-        "doubles": 1.03,
-        "triples": 0.35,
-        "home_runs": 3.29,
-        "bb_hbp": 0.77,
-        "r": 2.75,
-        "rbi": 1.78,
-        "sb": 0.09
-      },
-      "multipliers": {
-        "park_hr": 1.15,
-        "park_runs": 1.07,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.98,
-        "pitcher_hr": 1.016,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.979,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1314,
-        "doubles": 0.0516,
-        "triples": 0.011,
-        "home_runs": 0.0823,
-        "bb_hbp": 0.0957,
-        "r_per_pa": 0.3434,
-        "rbi_per_pa": 0.2229
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 682928,
       "name": "CJ Abrams",
       "position": "SS",
@@ -584,6 +512,78 @@
         "bb_hbp": 0.0701,
         "r_per_pa": 0.3042,
         "rbi_per_pa": 0.1835
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 700250,
+      "name": "Ben Rice",
+      "position": "1B",
+      "team_id": 147,
+      "team_abbr": "NYY",
+      "opp_abbr": "PIT",
+      "opp_team_id": 134,
+      "opp_pitcher": {
+        "id": 677952,
+        "fullName": "Braxton Ashcraft"
+      },
+      "park": {
+        "id": 3313,
+        "name": "Yankee Stadium",
+        "runs": 107,
+        "hr": 115,
+        "label": "Hitter Friendly"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 9.94,
+      "mean_efp": 10.22,
+      "stats_games": 9,
+      "efp": 10.08,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.56,
+        "doubles": 1.02,
+        "triples": 0.34,
+        "home_runs": 3.26,
+        "bb_hbp": 0.76,
+        "r": 2.72,
+        "rbi": 1.76,
+        "sb": 0.09
+      },
+      "multipliers": {
+        "park_hr": 1.15,
+        "park_runs": 1.07,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.98,
+        "pitcher_hr": 1.016,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.979,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1303,
+        "doubles": 0.0511,
+        "triples": 0.0108,
+        "home_runs": 0.0814,
+        "bb_hbp": 0.0949,
+        "r_per_pa": 0.34,
+        "rbi_per_pa": 0.22
       },
       "pa": 4.0,
       "tier": "low"
@@ -2174,5 +2174,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-07-20T01:09:04.934812+00:00"
+  "generated_at": "2026-07-20T12:48:52.311826+00:00"
 }
