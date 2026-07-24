@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 305,
+  "projection_count": 297,
   "projections": [
     {
       "player_id": 678554,
@@ -317,6 +317,82 @@
       "tier": "low"
     },
     {
+      "player_id": 669242,
+      "name": "Tommy Edman",
+      "position": "LF",
+      "team_id": 119,
+      "team_abbr": "LAD",
+      "opp_abbr": "NYM",
+      "opp_team_id": 121,
+      "opp_pitcher": {
+        "id": 640455,
+        "fullName": "Sean Manaea"
+      },
+      "park": {
+        "id": 3289,
+        "name": "Citi Field",
+        "runs": 96,
+        "hr": 93,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "77",
+        "wind": "9 mph, Out To LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.21,
+      "mean_efp": 6.87,
+      "stats_games": 0,
+      "efp": 9.85,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 2.36,
+        "doubles": 0.96,
+        "triples": 0.54,
+        "home_runs": 1.43,
+        "bb_hbp": 0.78,
+        "r": 3.41,
+        "rbi": 1.53,
+        "sb": 0.23
+      },
+      "multipliers": {
+        "park_hr": 0.93,
+        "park_runs": 0.96,
+        "weather_hr": 1.09,
+        "pitcher_hits": 1.028,
+        "pitcher_hr": 1.057,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.036,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.842,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1832,
+        "doubles": 0.0447,
+        "triples": 0.0158,
+        "home_runs": 0.0332,
+        "bb_hbp": 0.0906,
+        "r_per_pa": 0.397,
+        "rbi_per_pa": 0.1775
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 575929,
       "name": "Willson Contreras",
       "position": "1B",
@@ -464,6 +540,82 @@
         "bb_hbp": 0.2137,
         "r_per_pa": 0.3396,
         "rbi_per_pa": 0.1523
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 592626,
+      "name": "Joc Pederson",
+      "position": "DH",
+      "team_id": 140,
+      "team_abbr": "TEX",
+      "opp_abbr": "SEA",
+      "opp_team_id": 136,
+      "opp_pitcher": {
+        "id": 682243,
+        "fullName": "Bryce Miller"
+      },
+      "park": {
+        "id": 5325,
+        "name": "Globe Life Field",
+        "runs": 104,
+        "hr": 108,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 6.68,
+      "mean_efp": 5.56,
+      "stats_games": 9,
+      "efp": 9.71,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.49,
+        "doubles": 0.87,
+        "triples": 0.12,
+        "home_runs": 3.4,
+        "bb_hbp": 0.75,
+        "r": 2.72,
+        "rbi": 1.69,
+        "sb": 0.05
+      },
+      "multipliers": {
+        "park_hr": 1.08,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.913,
+        "pitcher_hr": 1.093,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.042,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.015,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1155,
+        "doubles": 0.0403,
+        "triples": 0.0035,
+        "home_runs": 0.079,
+        "bb_hbp": 0.0867,
+        "r_per_pa": 0.3164,
+        "rbi_per_pa": 0.1971
       },
       "pa": 4.3,
       "tier": "low"
@@ -1457,6 +1609,82 @@
       "tier": "low"
     },
     {
+      "player_id": 694671,
+      "name": "Wyatt Langford",
+      "position": "LF",
+      "team_id": 140,
+      "team_abbr": "TEX",
+      "opp_abbr": "SEA",
+      "opp_team_id": 136,
+      "opp_pitcher": {
+        "id": 682243,
+        "fullName": "Bryce Miller"
+      },
+      "park": {
+        "id": 5325,
+        "name": "Globe Life Field",
+        "runs": 104,
+        "hr": 108,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.39,
+      "mean_efp": 7.23,
+      "stats_games": 13,
+      "efp": 9.38,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.03,
+        "doubles": 0.86,
+        "triples": 0.19,
+        "home_runs": 2.53,
+        "bb_hbp": 0.44,
+        "r": 2.39,
+        "rbi": 1.49,
+        "sb": 0.77
+      },
+      "multipliers": {
+        "park_hr": 1.08,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.913,
+        "pitcher_hr": 1.093,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.042,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.951,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1571,
+        "doubles": 0.04,
+        "triples": 0.0056,
+        "home_runs": 0.0588,
+        "bb_hbp": 0.0512,
+        "r_per_pa": 0.278,
+        "rbi_per_pa": 0.1735
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 691406,
       "name": "Junior Caminero",
       "position": "3B",
@@ -2055,232 +2283,8 @@
       },
       "pa": 4.3,
       "tier": "low"
-    },
-    {
-      "player_id": 672640,
-      "name": "Otto Lopez",
-      "position": "SS",
-      "team_id": 146,
-      "team_abbr": "MIA",
-      "opp_abbr": "SD",
-      "opp_team_id": 135,
-      "opp_pitcher": {
-        "id": 608566,
-        "fullName": "Germ\u00e1n M\u00e1rquez"
-      },
-      "park": {
-        "id": 4169,
-        "name": "LoanDepot Park",
-        "runs": 95,
-        "hr": 91,
-        "label": "Pitcher Friendly"
-      },
-      "weather": {
-        "condition": "Roof Closed",
-        "temp": "72",
-        "wind": "0 mph, None"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 5.61,
-      "mean_efp": 6.0,
-      "stats_games": 8,
-      "efp": 9.09,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.24,
-        "doubles": 1.15,
-        "triples": 0.33,
-        "home_runs": 1.05,
-        "bb_hbp": 0.79,
-        "r": 2.55,
-        "rbi": 1.29,
-        "sb": 0.97
-      },
-      "multipliers": {
-        "park_hr": 0.91,
-        "park_runs": 0.95,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.038,
-        "pitcher_hr": 1.253,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.082,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.245,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.006,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1738,
-        "doubles": 0.0533,
-        "triples": 0.0096,
-        "home_runs": 0.0243,
-        "bb_hbp": 0.0924,
-        "r_per_pa": 0.2968,
-        "rbi_per_pa": 0.1496
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 663616,
-      "name": "Trevor Larnach",
-      "position": "LF",
-      "team_id": 142,
-      "team_abbr": "MIN",
-      "opp_abbr": "ATH",
-      "opp_team_id": 133,
-      "opp_pitcher": {
-        "id": 682052,
-        "fullName": "Jacob Lopez"
-      },
-      "park": {
-        "id": 3312,
-        "name": "Target Field",
-        "runs": 100,
-        "hr": 101,
-        "label": "Neutral"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 3.87,
-      "mean_efp": 4.38,
-      "stats_games": 8,
-      "efp": 9.08,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.01,
-        "doubles": 0.88,
-        "triples": 0.07,
-        "home_runs": 2.08,
-        "bb_hbp": 1.12,
-        "r": 2.71,
-        "rbi": 1.42,
-        "sb": 0.07
-      },
-      "multipliers": {
-        "park_hr": 1.01,
-        "park_runs": 1.0,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.044,
-        "pitcher_hr": 1.111,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.138,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1674,
-        "doubles": 0.0439,
-        "triples": 0.0023,
-        "home_runs": 0.052,
-        "bb_hbp": 0.1397,
-        "r_per_pa": 0.3388,
-        "rbi_per_pa": 0.1769
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 677800,
-      "name": "Wilyer Abreu",
-      "position": "RF",
-      "team_id": 111,
-      "team_abbr": "BOS",
-      "opp_abbr": "TOR",
-      "opp_team_id": 141,
-      "opp_pitcher": {
-        "id": 702056,
-        "fullName": "Trey Yesavage"
-      },
-      "park": {
-        "id": 3,
-        "name": "Fenway Park",
-        "runs": 108,
-        "hr": 99,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "76",
-        "wind": "8 mph, Out To LF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 5.66,
-      "mean_efp": 5.6,
-      "stats_games": 10,
-      "efp": 9.06,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.34,
-        "doubles": 0.84,
-        "triples": 0.16,
-        "home_runs": 2.31,
-        "bb_hbp": 1.05,
-        "r": 2.87,
-        "rbi": 1.53,
-        "sb": 0.24
-      },
-      "multipliers": {
-        "park_hr": 0.99,
-        "park_runs": 1.08,
-        "weather_hr": 1.03,
-        "pitcher_hits": 0.816,
-        "pitcher_hr": 0.934,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.108,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.15,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1036,
-        "doubles": 0.039,
-        "triples": 0.0047,
-        "home_runs": 0.0537,
-        "bb_hbp": 0.122,
-        "r_per_pa": 0.334,
-        "rbi_per_pa": 0.1782
-      },
-      "pa": 4.3,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-07-24T19:55:45.690865+00:00"
+  "generated_at": "2026-07-24T20:11:51.481741+00:00"
 }
