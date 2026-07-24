@@ -655,6 +655,78 @@
       "tier": "low"
     },
     {
+      "player_id": 693307,
+      "name": "Dillon Dingler",
+      "position": "C",
+      "team_id": 116,
+      "team_abbr": "DET",
+      "opp_abbr": "KC",
+      "opp_team_id": 118,
+      "opp_pitcher": {
+        "id": 694360,
+        "fullName": "Beck Way"
+      },
+      "park": {
+        "id": 2394,
+        "name": "Comerica Park",
+        "runs": 97,
+        "hr": 93,
+        "label": "Pitcher Friendly"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 10.1,
+      "mean_efp": 7.5,
+      "stats_games": 8,
+      "efp": 9.27,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.7,
+        "doubles": 1.24,
+        "triples": 0.15,
+        "home_runs": 2.23,
+        "bb_hbp": 0.9,
+        "r": 2.68,
+        "rbi": 1.68,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 0.93,
+        "park_runs": 0.97,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.061,
+        "pitcher_hr": 1.127,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.872,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.079,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1417,
+        "doubles": 0.062,
+        "triples": 0.0047,
+        "home_runs": 0.0558,
+        "bb_hbp": 0.1129,
+        "r_per_pa": 0.335,
+        "rbi_per_pa": 0.2099
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
       "player_id": 680777,
       "name": "Ryan Jeffers",
       "position": "C",
@@ -1226,75 +1298,6 @@
         "bb_hbp": 0.0867,
         "r_per_pa": 0.3118,
         "rbi_per_pa": 0.1971
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 693307,
-      "name": "Dillon Dingler",
-      "position": "C",
-      "team_id": 116,
-      "team_abbr": "DET",
-      "opp_abbr": "KC",
-      "opp_team_id": 118,
-      "opp_pitcher": null,
-      "park": {
-        "id": 2394,
-        "name": "Comerica Park",
-        "runs": 97,
-        "hr": 93,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 10.1,
-      "mean_efp": 7.5,
-      "stats_games": 8,
-      "efp": 8.98,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.64,
-        "doubles": 1.07,
-        "triples": 0.12,
-        "home_runs": 2.25,
-        "bb_hbp": 0.87,
-        "r": 2.65,
-        "rbi": 1.65,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 0.93,
-        "park_runs": 0.97,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 1.0,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.0,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1363,
-        "doubles": 0.0533,
-        "triples": 0.0037,
-        "home_runs": 0.0564,
-        "bb_hbp": 0.1091,
-        "r_per_pa": 0.3316,
-        "rbi_per_pa": 0.2058
       },
       "pa": 4.0,
       "tier": "low"
@@ -2159,5 +2162,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-07-24T00:59:55.938499+00:00"
+  "generated_at": "2026-07-24T12:27:24.596501+00:00"
 }
