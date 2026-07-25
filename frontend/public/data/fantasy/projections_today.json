@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 383,
+  "projection_count": 375,
   "projections": [
     {
       "player_id": 670541,
@@ -807,7 +807,7 @@
     {
       "player_id": 687952,
       "name": "Christian Encarnacion-Strand",
-      "position": "1B",
+      "position": "3B",
       "team_id": 110,
       "team_abbr": "BAL",
       "opp_abbr": "ATL",
@@ -1522,78 +1522,6 @@
       "tier": "low"
     },
     {
-      "player_id": 693307,
-      "name": "Dillon Dingler",
-      "position": "C",
-      "team_id": 116,
-      "team_abbr": "DET",
-      "opp_abbr": "KC",
-      "opp_team_id": 118,
-      "opp_pitcher": {
-        "id": 608379,
-        "fullName": "Michael Wacha"
-      },
-      "park": {
-        "id": 2394,
-        "name": "Comerica Park",
-        "runs": 97,
-        "hr": 93,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 10.1,
-      "mean_efp": 7.5,
-      "stats_games": 8,
-      "efp": 8.94,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.51,
-        "doubles": 1.15,
-        "triples": 0.14,
-        "home_runs": 2.39,
-        "bb_hbp": 0.73,
-        "r": 2.63,
-        "rbi": 1.65,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 0.93,
-        "park_runs": 0.97,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.988,
-        "pitcher_hr": 1.005,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.05,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.864,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1262,
-        "doubles": 0.0575,
-        "triples": 0.0043,
-        "home_runs": 0.0596,
-        "bb_hbp": 0.0916,
-        "r_per_pa": 0.3286,
-        "rbi_per_pa": 0.2062
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 691718,
       "name": "Pete Crow-Armstrong",
       "position": "CF",
@@ -1954,6 +1882,82 @@
       "tier": "low"
     },
     {
+      "player_id": 805808,
+      "name": "Kevin McGonigle",
+      "position": "SS",
+      "team_id": 116,
+      "team_abbr": "DET",
+      "opp_abbr": "KC",
+      "opp_team_id": 118,
+      "opp_pitcher": {
+        "id": 608379,
+        "fullName": "Michael Wacha"
+      },
+      "park": {
+        "id": 2394,
+        "name": "Comerica Park",
+        "runs": 97,
+        "hr": 93,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "75",
+        "wind": "5 mph, R To L"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 3.26,
+      "mean_efp": 9.22,
+      "stats_games": 9,
+      "efp": 8.75,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.93,
+        "doubles": 1.02,
+        "triples": 0.19,
+        "home_runs": 1.05,
+        "bb_hbp": 1.01,
+        "r": 3.0,
+        "rbi": 1.31,
+        "sb": 0.48
+      },
+      "multipliers": {
+        "park_hr": 0.93,
+        "park_runs": 0.97,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.988,
+        "pitcher_hr": 1.005,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.05,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.864,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.069,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1495,
+        "doubles": 0.0475,
+        "triples": 0.0055,
+        "home_runs": 0.0243,
+        "bb_hbp": 0.1176,
+        "r_per_pa": 0.3484,
+        "rbi_per_pa": 0.1518
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 681198,
       "name": "TJ Rumfield",
       "position": "1B",
@@ -2171,5 +2175,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-07-25T11:54:40.961989+00:00"
+  "generated_at": "2026-07-25T14:26:42.408579+00:00"
 }
