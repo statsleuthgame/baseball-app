@@ -417,10 +417,10 @@
       "stdev_efp": 6.68,
       "mean_efp": 5.56,
       "stats_games": 9,
-      "efp": 10.42,
+      "efp": 10.41,
       "bat_side": "L",
       "per_event": {
-        "singles": 2.07,
+        "singles": 2.06,
         "doubles": 1.21,
         "triples": 0.14,
         "home_runs": 3.0,
@@ -454,13 +454,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1602,
-        "doubles": 0.0563,
+        "singles": 0.16,
+        "doubles": 0.0562,
         "triples": 0.0041,
         "home_runs": 0.0698,
-        "bb_hbp": 0.0731,
-        "r_per_pa": 0.3248,
-        "rbi_per_pa": 0.2095
+        "bb_hbp": 0.073,
+        "r_per_pa": 0.3244,
+        "rbi_per_pa": 0.2093
       },
       "pa": 4.3,
       "tier": "low"
@@ -1370,82 +1370,6 @@
       "tier": "low"
     },
     {
-      "player_id": 668227,
-      "name": "Randy Arozarena",
-      "position": "LF",
-      "team_id": 136,
-      "team_abbr": "SEA",
-      "opp_abbr": "TEX",
-      "opp_team_id": 140,
-      "opp_pitcher": {
-        "id": 677958,
-        "fullName": "Kumar Rocker"
-      },
-      "park": {
-        "id": 5325,
-        "name": "Globe Life Field",
-        "runs": 104,
-        "hr": 108,
-        "label": "Slight Hitter"
-      },
-      "weather": {
-        "condition": "Roof Closed",
-        "temp": "74",
-        "wind": "0 mph, None"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 6.78,
-      "mean_efp": 9.0,
-      "stats_games": 10,
-      "efp": 9.18,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.09,
-        "doubles": 0.83,
-        "triples": 0.08,
-        "home_runs": 1.58,
-        "bb_hbp": 1.06,
-        "r": 2.75,
-        "rbi": 1.35,
-        "sb": 0.73
-      },
-      "multipliers": {
-        "park_hr": 1.08,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.983,
-        "pitcher_hr": 1.014,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.977,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.011,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.015,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1741,
-        "doubles": 0.0414,
-        "triples": 0.0025,
-        "home_runs": 0.0396,
-        "bb_hbp": 0.1329,
-        "r_per_pa": 0.344,
-        "rbi_per_pa": 0.1688
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 700250,
       "name": "Ben Rice",
       "position": "1B",
@@ -1670,6 +1594,82 @@
       "tier": "low"
     },
     {
+      "player_id": 668227,
+      "name": "Randy Arozarena",
+      "position": "LF",
+      "team_id": 136,
+      "team_abbr": "SEA",
+      "opp_abbr": "TEX",
+      "opp_team_id": 140,
+      "opp_pitcher": {
+        "id": 677958,
+        "fullName": "Kumar Rocker"
+      },
+      "park": {
+        "id": 5325,
+        "name": "Globe Life Field",
+        "runs": 104,
+        "hr": 108,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "74",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 6.78,
+      "mean_efp": 9.0,
+      "stats_games": 10,
+      "efp": 9.11,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.08,
+        "doubles": 0.83,
+        "triples": 0.08,
+        "home_runs": 1.57,
+        "bb_hbp": 1.06,
+        "r": 2.73,
+        "rbi": 1.34,
+        "sb": 0.73
+      },
+      "multipliers": {
+        "park_hr": 1.08,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.987,
+        "pitcher_hr": 1.012,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.977,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.011,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.015,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1733,
+        "doubles": 0.0415,
+        "triples": 0.0025,
+        "home_runs": 0.0391,
+        "bb_hbp": 0.132,
+        "r_per_pa": 0.3409,
+        "rbi_per_pa": 0.1671
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
       "player_id": 678554,
       "name": "Curtis Mead",
       "position": "3B",
@@ -1845,11 +1845,11 @@
       "stdev_efp": 8.75,
       "mean_efp": 9.29,
       "stats_games": 7,
-      "efp": 9.0,
+      "efp": 9.01,
       "bat_side": "L",
       "per_event": {
-        "singles": 1.7,
-        "doubles": 1.17,
+        "singles": 1.71,
+        "doubles": 1.18,
         "triples": 0.11,
         "home_runs": 2.16,
         "bb_hbp": 0.82,
@@ -1861,8 +1861,8 @@
         "park_hr": 1.08,
         "park_runs": 1.04,
         "weather_hr": 1.0,
-        "pitcher_hits": 0.983,
-        "pitcher_hr": 1.014,
+        "pitcher_hits": 0.987,
+        "pitcher_hr": 1.012,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -1882,10 +1882,10 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1318,
-        "doubles": 0.0546,
+        "singles": 0.1323,
+        "doubles": 0.0548,
         "triples": 0.0032,
-        "home_runs": 0.0502,
+        "home_runs": 0.0501,
         "bb_hbp": 0.0952,
         "r_per_pa": 0.3281,
         "rbi_per_pa": 0.168
@@ -2275,5 +2275,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-07-27T20:04:25.158311+00:00"
+  "generated_at": "2026-07-27T20:14:41.340773+00:00"
 }
