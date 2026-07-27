@@ -246,7 +246,7 @@
       },
       "weather": {
         "condition": "Roof Closed",
-        "temp": "71",
+        "temp": "74",
         "wind": "0 mph, None"
       },
       "pa_source": "lineup",
@@ -682,7 +682,7 @@
       },
       "weather": {
         "condition": "Roof Closed",
-        "temp": "71",
+        "temp": "74",
         "wind": "0 mph, None"
       },
       "pa_source": "lineup",
@@ -1262,7 +1262,7 @@
       },
       "weather": {
         "condition": "Roof Closed",
-        "temp": "71",
+        "temp": "74",
         "wind": "0 mph, None"
       },
       "pa_source": "lineup",
@@ -1410,7 +1410,7 @@
       },
       "weather": {
         "condition": "Roof Closed",
-        "temp": "71",
+        "temp": "74",
         "wind": "0 mph, None"
       },
       "pa_source": "lineup",
@@ -1630,7 +1630,7 @@
       },
       "weather": {
         "condition": "Roof Closed",
-        "temp": "71",
+        "temp": "74",
         "wind": "0 mph, None"
       },
       "pa_source": "lineup",
@@ -2191,5 +2191,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-07-27T16:57:07.103838+00:00"
+  "generated_at": "2026-07-27T18:09:08.690564+00:00"
 }
