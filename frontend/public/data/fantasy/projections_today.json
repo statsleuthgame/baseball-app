@@ -112,24 +112,24 @@
       "stdev_efp": 7.28,
       "mean_efp": 11.06,
       "stats_games": 16,
-      "efp": 11.02,
+      "efp": 10.93,
       "bat_side": "S",
       "per_event": {
-        "singles": 2.18,
+        "singles": 2.16,
         "doubles": 0.87,
-        "triples": 0.29,
-        "home_runs": 2.37,
-        "bb_hbp": 0.88,
-        "r": 2.93,
-        "rbi": 1.49,
+        "triples": 0.28,
+        "home_runs": 2.34,
+        "bb_hbp": 0.87,
+        "r": 2.9,
+        "rbi": 1.47,
         "sb": 1.58
       },
       "multipliers": {
         "park_hr": 1.16,
         "park_runs": 1.09,
         "weather_hr": 1.0,
-        "pitcher_hits": 1.087,
-        "pitcher_hr": 1.046,
+        "pitcher_hits": 1.084,
+        "pitcher_hr": 1.044,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -149,13 +149,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1687,
-        "doubles": 0.0406,
+        "singles": 0.1673,
+        "doubles": 0.0404,
         "triples": 0.0083,
-        "home_runs": 0.0551,
-        "bb_hbp": 0.1025,
-        "r_per_pa": 0.3402,
-        "rbi_per_pa": 0.173
+        "home_runs": 0.0544,
+        "bb_hbp": 0.1014,
+        "r_per_pa": 0.3371,
+        "rbi_per_pa": 0.171
       },
       "pa": 4.3,
       "tier": "low"
@@ -541,16 +541,16 @@
       "stdev_efp": 7.28,
       "mean_efp": 11.06,
       "stats_games": 16,
-      "efp": 9.7,
+      "efp": 9.63,
       "bat_side": "S",
       "per_event": {
-        "singles": 1.75,
+        "singles": 1.74,
         "doubles": 0.7,
         "triples": 0.23,
-        "home_runs": 2.36,
-        "bb_hbp": 0.73,
-        "r": 2.51,
-        "rbi": 1.38,
+        "home_runs": 2.33,
+        "bb_hbp": 0.72,
+        "r": 2.48,
+        "rbi": 1.37,
         "sb": 1.41
       },
       "multipliers": {
@@ -578,13 +578,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1462,
+        "singles": 0.1453,
         "doubles": 0.0351,
         "triples": 0.0072,
-        "home_runs": 0.0589,
-        "bb_hbp": 0.0911,
-        "r_per_pa": 0.3133,
-        "rbi_per_pa": 0.173
+        "home_runs": 0.0583,
+        "bb_hbp": 0.0902,
+        "r_per_pa": 0.3105,
+        "rbi_per_pa": 0.171
       },
       "pa": 4.0,
       "tier": "low"
@@ -659,6 +659,82 @@
         "rbi_per_pa": 0.1598
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 701398,
+      "name": "Sal Stewart",
+      "position": "1B",
+      "team_id": 113,
+      "team_abbr": "CIN",
+      "opp_abbr": "CLE",
+      "opp_team_id": 114,
+      "opp_pitcher": {
+        "id": 677944,
+        "fullName": "Slade Cecconi"
+      },
+      "park": {
+        "id": 2602,
+        "name": "Great American Ball Park",
+        "runs": 109,
+        "hr": 116,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "84",
+        "wind": "10 mph, Varies"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 9.04,
+      "mean_efp": 7.67,
+      "stats_games": 9,
+      "efp": 9.29,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.05,
+        "doubles": 1.07,
+        "triples": 0.03,
+        "home_runs": 2.2,
+        "bb_hbp": 0.69,
+        "r": 2.74,
+        "rbi": 1.36,
+        "sb": 0.46
+      },
+      "multipliers": {
+        "park_hr": 1.16,
+        "park_runs": 1.09,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.084,
+        "pitcher_hr": 1.044,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.97,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.871,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.134,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1591,
+        "doubles": 0.05,
+        "triples": 0.0008,
+        "home_runs": 0.0511,
+        "bb_hbp": 0.0805,
+        "r_per_pa": 0.3187,
+        "rbi_per_pa": 0.1577
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -803,82 +879,6 @@
         "rbi_per_pa": 0.2067
       },
       "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 701398,
-      "name": "Sal Stewart",
-      "position": "1B",
-      "team_id": 113,
-      "team_abbr": "CIN",
-      "opp_abbr": "CLE",
-      "opp_team_id": 114,
-      "opp_pitcher": {
-        "id": 677944,
-        "fullName": "Slade Cecconi"
-      },
-      "park": {
-        "id": 2602,
-        "name": "Great American Ball Park",
-        "runs": 109,
-        "hr": 116,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "84",
-        "wind": "10 mph, Varies"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 9.04,
-      "mean_efp": 7.67,
-      "stats_games": 9,
-      "efp": 9.23,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.08,
-        "doubles": 1.08,
-        "triples": 0.03,
-        "home_runs": 2.22,
-        "bb_hbp": 0.64,
-        "r": 2.68,
-        "rbi": 1.36,
-        "sb": 0.46
-      },
-      "multipliers": {
-        "park_hr": 1.16,
-        "park_runs": 1.09,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.087,
-        "pitcher_hr": 1.046,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.97,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.871,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.134,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1611,
-        "doubles": 0.0501,
-        "triples": 0.0008,
-        "home_runs": 0.0515,
-        "bb_hbp": 0.0744,
-        "r_per_pa": 0.3118,
-        "rbi_per_pa": 0.1577
-      },
-      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1242,6 +1242,82 @@
       "tier": "low"
     },
     {
+      "player_id": 608070,
+      "name": "Jos\u00e9 Ram\u00edrez",
+      "position": "3B",
+      "team_id": 114,
+      "team_abbr": "CLE",
+      "opp_abbr": "CIN",
+      "opp_team_id": 113,
+      "opp_pitcher": {
+        "id": 695505,
+        "fullName": "Chase Burns"
+      },
+      "park": {
+        "id": 2602,
+        "name": "Great American Ball Park",
+        "runs": 109,
+        "hr": 116,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "84",
+        "wind": "10 mph, Varies"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 9.33,
+      "mean_efp": 12.12,
+      "stats_games": 8,
+      "efp": 8.92,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 1.6,
+        "doubles": 1.04,
+        "triples": 0.03,
+        "home_runs": 1.31,
+        "bb_hbp": 1.0,
+        "r": 2.68,
+        "rbi": 1.16,
+        "sb": 1.37
+      },
+      "multipliers": {
+        "park_hr": 1.16,
+        "park_runs": 1.09,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.9,
+        "pitcher_hr": 1.007,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.085,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.995,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.09,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1242,
+        "doubles": 0.0482,
+        "triples": 0.0008,
+        "home_runs": 0.0305,
+        "bb_hbp": 0.1162,
+        "r_per_pa": 0.3116,
+        "rbi_per_pa": 0.1345
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 700250,
       "name": "Ben Rice",
       "position": "1B",
@@ -1311,82 +1387,6 @@
         "rbi_per_pa": 0.187
       },
       "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 608070,
-      "name": "Jos\u00e9 Ram\u00edrez",
-      "position": "3B",
-      "team_id": 114,
-      "team_abbr": "CLE",
-      "opp_abbr": "CIN",
-      "opp_team_id": 113,
-      "opp_pitcher": {
-        "id": 695505,
-        "fullName": "Chase Burns"
-      },
-      "park": {
-        "id": 2602,
-        "name": "Great American Ball Park",
-        "runs": 109,
-        "hr": 116,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "84",
-        "wind": "10 mph, Varies"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 9.33,
-      "mean_efp": 12.12,
-      "stats_games": 8,
-      "efp": 8.88,
-      "bat_side": "S",
-      "per_event": {
-        "singles": 1.6,
-        "doubles": 1.03,
-        "triples": 0.03,
-        "home_runs": 1.28,
-        "bb_hbp": 1.0,
-        "r": 2.68,
-        "rbi": 1.16,
-        "sb": 1.37
-      },
-      "multipliers": {
-        "park_hr": 1.16,
-        "park_runs": 1.09,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.896,
-        "pitcher_hr": 0.98,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.085,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.995,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.09,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1236,
-        "doubles": 0.048,
-        "triples": 0.0008,
-        "home_runs": 0.0297,
-        "bb_hbp": 0.1162,
-        "r_per_pa": 0.3116,
-        "rbi_per_pa": 0.1345
-      },
-      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1633,13 +1633,13 @@
       "stdev_efp": 4.15,
       "mean_efp": 4.5,
       "stats_games": 6,
-      "efp": 8.8,
+      "efp": 8.79,
       "bat_side": "L",
       "per_event": {
-        "singles": 2.14,
+        "singles": 2.13,
         "doubles": 1.02,
         "triples": 0.04,
-        "home_runs": 2.38,
+        "home_runs": 2.37,
         "bb_hbp": 0.6,
         "r": 2.52,
         "rbi": 1.35,
@@ -1649,8 +1649,8 @@
         "park_hr": 1.16,
         "park_runs": 1.09,
         "weather_hr": 1.0,
-        "pitcher_hits": 1.087,
-        "pitcher_hr": 1.046,
+        "pitcher_hits": 1.084,
+        "pitcher_hr": 1.044,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -1670,10 +1670,10 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1783,
-        "doubles": 0.051,
+        "singles": 0.1779,
+        "doubles": 0.0508,
         "triples": 0.0011,
-        "home_runs": 0.0594,
+        "home_runs": 0.0593,
         "bb_hbp": 0.0755,
         "r_per_pa": 0.3151,
         "rbi_per_pa": 0.1689
@@ -1754,6 +1754,82 @@
       "tier": "low"
     },
     {
+      "player_id": 800050,
+      "name": "Chase DeLauter",
+      "position": "RF",
+      "team_id": 114,
+      "team_abbr": "CLE",
+      "opp_abbr": "CIN",
+      "opp_team_id": 113,
+      "opp_pitcher": {
+        "id": 695505,
+        "fullName": "Chase Burns"
+      },
+      "park": {
+        "id": 2602,
+        "name": "Great American Ball Park",
+        "runs": 109,
+        "hr": 116,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "84",
+        "wind": "10 mph, Varies"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.18,
+      "mean_efp": 7.57,
+      "stats_games": 7,
+      "efp": 8.78,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.0,
+        "doubles": 1.25,
+        "triples": 0.07,
+        "home_runs": 1.44,
+        "bb_hbp": 0.92,
+        "r": 2.63,
+        "rbi": 1.35,
+        "sb": 0.37
+      },
+      "multipliers": {
+        "park_hr": 1.16,
+        "park_runs": 1.09,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.9,
+        "pitcher_hr": 1.007,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.085,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.995,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.95,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.155,
+        "doubles": 0.058,
+        "triples": 0.0019,
+        "home_runs": 0.0335,
+        "bb_hbp": 0.1068,
+        "r_per_pa": 0.3061,
+        "rbi_per_pa": 0.1575
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 806198,
       "name": "Cooper Pratt",
       "position": "SS",
@@ -1823,82 +1899,6 @@
         "rbi_per_pa": 0.1729
       },
       "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 800050,
-      "name": "Chase DeLauter",
-      "position": "RF",
-      "team_id": 114,
-      "team_abbr": "CLE",
-      "opp_abbr": "CIN",
-      "opp_team_id": 113,
-      "opp_pitcher": {
-        "id": 695505,
-        "fullName": "Chase Burns"
-      },
-      "park": {
-        "id": 2602,
-        "name": "Great American Ball Park",
-        "runs": 109,
-        "hr": 116,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "84",
-        "wind": "10 mph, Varies"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 5.18,
-      "mean_efp": 7.57,
-      "stats_games": 7,
-      "efp": 8.74,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.99,
-        "doubles": 1.24,
-        "triples": 0.07,
-        "home_runs": 1.4,
-        "bb_hbp": 0.92,
-        "r": 2.63,
-        "rbi": 1.35,
-        "sb": 0.37
-      },
-      "multipliers": {
-        "park_hr": 1.16,
-        "park_runs": 1.09,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.896,
-        "pitcher_hr": 0.98,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.085,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.995,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 0.95,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1542,
-        "doubles": 0.0578,
-        "triples": 0.0019,
-        "home_runs": 0.0327,
-        "bb_hbp": 0.1068,
-        "r_per_pa": 0.3061,
-        "rbi_per_pa": 0.1575
-      },
-      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -2188,5 +2188,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-07-28T17:59:28.377174+00:00"
+  "generated_at": "2026-07-28T18:08:10.654126+00:00"
 }
