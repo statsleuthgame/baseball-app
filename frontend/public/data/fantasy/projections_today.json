@@ -1400,15 +1400,15 @@
       "stdev_efp": 9.33,
       "mean_efp": 12.12,
       "stats_games": 8,
-      "efp": 9.32,
+      "efp": 9.31,
       "bat_side": "S",
       "per_event": {
         "singles": 1.65,
         "doubles": 1.02,
         "triples": 0.03,
         "home_runs": 1.29,
-        "bb_hbp": 0.99,
-        "r": 2.7,
+        "bb_hbp": 0.98,
+        "r": 2.69,
         "rbi": 1.16,
         "sb": 1.8
       },
@@ -1437,13 +1437,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1283,
-        "doubles": 0.0475,
+        "singles": 0.1281,
+        "doubles": 0.0474,
         "triples": 0.0008,
         "home_runs": 0.03,
-        "bb_hbp": 0.1146,
-        "r_per_pa": 0.3135,
-        "rbi_per_pa": 0.1354
+        "bb_hbp": 0.1144,
+        "r_per_pa": 0.313,
+        "rbi_per_pa": 0.135
       },
       "pa": 4.3,
       "tier": "low"
@@ -2274,5 +2274,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-07-28T20:01:24.659106+00:00"
+  "generated_at": "2026-07-28T20:12:20.002897+00:00"
 }
