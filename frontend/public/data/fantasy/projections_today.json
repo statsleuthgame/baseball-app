@@ -408,13 +408,13 @@
       "stdev_efp": 9.13,
       "mean_efp": 10.17,
       "stats_games": 12,
-      "efp": 9.2,
+      "efp": 9.18,
       "bat_side": "R",
       "per_event": {
-        "singles": 2.23,
+        "singles": 2.21,
         "doubles": 0.86,
         "triples": 0.21,
-        "home_runs": 2.05,
+        "home_runs": 2.04,
         "bb_hbp": 0.96,
         "r": 2.69,
         "rbi": 1.43,
@@ -424,8 +424,8 @@
         "park_hr": 1.01,
         "park_runs": 1.0,
         "weather_hr": 1.15,
-        "pitcher_hits": 1.055,
-        "pitcher_hr": 1.006,
+        "pitcher_hits": 1.048,
+        "pitcher_hr": 1.003,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -445,10 +445,10 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1728,
-        "doubles": 0.0401,
+        "singles": 0.1717,
+        "doubles": 0.0398,
         "triples": 0.0061,
-        "home_runs": 0.0477,
+        "home_runs": 0.0475,
         "bb_hbp": 0.112,
         "r_per_pa": 0.313,
         "rbi_per_pa": 0.1657
@@ -529,158 +529,6 @@
       "tier": "low"
     },
     {
-      "player_id": 686475,
-      "name": "Tyler Tolbert",
-      "position": "SS",
-      "team_id": 118,
-      "team_abbr": "KC",
-      "opp_abbr": "MIN",
-      "opp_team_id": 142,
-      "opp_pitcher": {
-        "id": 641927,
-        "fullName": "Bailey Ober"
-      },
-      "park": {
-        "id": 3312,
-        "name": "Target Field",
-        "runs": 100,
-        "hr": 101,
-        "label": "Neutral"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "84",
-        "wind": "10 mph, Out To LF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 7.21,
-      "mean_efp": 6.87,
-      "stats_games": 0,
-      "efp": 9.09,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.72,
-        "doubles": 0.76,
-        "triples": 0.05,
-        "home_runs": 2.56,
-        "bb_hbp": 0.61,
-        "r": 2.11,
-        "rbi": 1.37,
-        "sb": 1.2
-      },
-      "multipliers": {
-        "park_hr": 1.01,
-        "park_runs": 1.0,
-        "weather_hr": 1.15,
-        "pitcher_hits": 1.017,
-        "pitcher_hr": 1.095,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.103,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.819,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 0.888,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1549,
-        "doubles": 0.0411,
-        "triples": 0.0017,
-        "home_runs": 0.0692,
-        "bb_hbp": 0.082,
-        "r_per_pa": 0.2847,
-        "rbi_per_pa": 0.1852
-      },
-      "pa": 3.7,
-      "tier": "low"
-    },
-    {
-      "player_id": 668885,
-      "name": "Austin Martin",
-      "position": "RF",
-      "team_id": 142,
-      "team_abbr": "MIN",
-      "opp_abbr": "KC",
-      "opp_team_id": 118,
-      "opp_pitcher": {
-        "id": 702070,
-        "fullName": "Noah Cameron"
-      },
-      "park": {
-        "id": 3312,
-        "name": "Target Field",
-        "runs": 100,
-        "hr": 101,
-        "label": "Neutral"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "84",
-        "wind": "10 mph, Out To LF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 5.47,
-      "mean_efp": 7.08,
-      "stats_games": 13,
-      "efp": 9.09,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.81,
-        "doubles": 1.54,
-        "triples": 0.03,
-        "home_runs": 0.62,
-        "bb_hbp": 1.34,
-        "r": 3.42,
-        "rbi": 1.25,
-        "sb": 0.37
-      },
-      "multipliers": {
-        "park_hr": 1.01,
-        "park_runs": 1.0,
-        "weather_hr": 1.15,
-        "pitcher_hits": 1.055,
-        "pitcher_hr": 1.006,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.074,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.871,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.15,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1403,
-        "doubles": 0.0715,
-        "triples": 0.0009,
-        "home_runs": 0.0143,
-        "bb_hbp": 0.1561,
-        "r_per_pa": 0.3973,
-        "rbi_per_pa": 0.1457
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
       "player_id": 663330,
       "name": "Jahmai Jones",
       "position": "DH",
@@ -750,6 +598,158 @@
         "rbi_per_pa": 0.1821
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 686475,
+      "name": "Tyler Tolbert",
+      "position": "SS",
+      "team_id": 118,
+      "team_abbr": "KC",
+      "opp_abbr": "MIN",
+      "opp_team_id": 142,
+      "opp_pitcher": {
+        "id": 641927,
+        "fullName": "Bailey Ober"
+      },
+      "park": {
+        "id": 3312,
+        "name": "Target Field",
+        "runs": 100,
+        "hr": 101,
+        "label": "Neutral"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "84",
+        "wind": "10 mph, Out To LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.21,
+      "mean_efp": 6.87,
+      "stats_games": 0,
+      "efp": 9.07,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.71,
+        "doubles": 0.76,
+        "triples": 0.05,
+        "home_runs": 2.55,
+        "bb_hbp": 0.61,
+        "r": 2.11,
+        "rbi": 1.37,
+        "sb": 1.2
+      },
+      "multipliers": {
+        "park_hr": 1.01,
+        "park_runs": 1.0,
+        "weather_hr": 1.15,
+        "pitcher_hits": 1.01,
+        "pitcher_hr": 1.09,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.103,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.819,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.888,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1538,
+        "doubles": 0.0409,
+        "triples": 0.0017,
+        "home_runs": 0.0689,
+        "bb_hbp": 0.082,
+        "r_per_pa": 0.2847,
+        "rbi_per_pa": 0.1852
+      },
+      "pa": 3.7,
+      "tier": "low"
+    },
+    {
+      "player_id": 668885,
+      "name": "Austin Martin",
+      "position": "RF",
+      "team_id": 142,
+      "team_abbr": "MIN",
+      "opp_abbr": "KC",
+      "opp_team_id": 118,
+      "opp_pitcher": {
+        "id": 702070,
+        "fullName": "Noah Cameron"
+      },
+      "park": {
+        "id": 3312,
+        "name": "Target Field",
+        "runs": 100,
+        "hr": 101,
+        "label": "Neutral"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "84",
+        "wind": "10 mph, Out To LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.47,
+      "mean_efp": 7.08,
+      "stats_games": 13,
+      "efp": 9.07,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.8,
+        "doubles": 1.53,
+        "triples": 0.03,
+        "home_runs": 0.61,
+        "bb_hbp": 1.34,
+        "r": 3.42,
+        "rbi": 1.25,
+        "sb": 0.37
+      },
+      "multipliers": {
+        "park_hr": 1.01,
+        "park_runs": 1.0,
+        "weather_hr": 1.15,
+        "pitcher_hits": 1.048,
+        "pitcher_hr": 1.003,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.074,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.871,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1394,
+        "doubles": 0.0711,
+        "triples": 0.0009,
+        "home_runs": 0.0143,
+        "bb_hbp": 0.1561,
+        "r_per_pa": 0.3973,
+        "rbi_per_pa": 0.1457
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1861,82 +1861,6 @@
       "tier": "low"
     },
     {
-      "player_id": 668904,
-      "name": "Royce Lewis",
-      "position": "3B",
-      "team_id": 142,
-      "team_abbr": "MIN",
-      "opp_abbr": "KC",
-      "opp_team_id": 118,
-      "opp_pitcher": {
-        "id": 702070,
-        "fullName": "Noah Cameron"
-      },
-      "park": {
-        "id": 3312,
-        "name": "Target Field",
-        "runs": 100,
-        "hr": 101,
-        "label": "Neutral"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "84",
-        "wind": "10 mph, Out To LF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 4.82,
-      "mean_efp": 3.5,
-      "stats_games": 6,
-      "efp": 8.54,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.48,
-        "doubles": 1.08,
-        "triples": 0.31,
-        "home_runs": 1.43,
-        "bb_hbp": 0.94,
-        "r": 2.46,
-        "rbi": 1.18,
-        "sb": 0.88
-      },
-      "multipliers": {
-        "park_hr": 1.01,
-        "park_runs": 1.0,
-        "weather_hr": 1.15,
-        "pitcher_hits": 1.055,
-        "pitcher_hr": 1.006,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.074,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.871,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.008,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1144,
-        "doubles": 0.05,
-        "triples": 0.0091,
-        "home_runs": 0.0331,
-        "bb_hbp": 0.1091,
-        "r_per_pa": 0.286,
-        "rbi_per_pa": 0.1374
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
       "player_id": 682829,
       "name": "Elly De La Cruz",
       "position": "SS",
@@ -2157,6 +2081,82 @@
       "tier": "low"
     },
     {
+      "player_id": 668904,
+      "name": "Royce Lewis",
+      "position": "3B",
+      "team_id": 142,
+      "team_abbr": "MIN",
+      "opp_abbr": "KC",
+      "opp_team_id": 118,
+      "opp_pitcher": {
+        "id": 702070,
+        "fullName": "Noah Cameron"
+      },
+      "park": {
+        "id": 3312,
+        "name": "Target Field",
+        "runs": 100,
+        "hr": 101,
+        "label": "Neutral"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "84",
+        "wind": "10 mph, Out To LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 4.82,
+      "mean_efp": 3.5,
+      "stats_games": 6,
+      "efp": 8.51,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.46,
+        "doubles": 1.07,
+        "triples": 0.31,
+        "home_runs": 1.42,
+        "bb_hbp": 0.94,
+        "r": 2.46,
+        "rbi": 1.18,
+        "sb": 0.88
+      },
+      "multipliers": {
+        "park_hr": 1.01,
+        "park_runs": 1.0,
+        "weather_hr": 1.15,
+        "pitcher_hits": 1.048,
+        "pitcher_hr": 1.003,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.074,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.871,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.008,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1135,
+        "doubles": 0.0496,
+        "triples": 0.0091,
+        "home_runs": 0.033,
+        "bb_hbp": 0.109,
+        "r_per_pa": 0.2855,
+        "rbi_per_pa": 0.137
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 686611,
       "name": "Dylan Crews",
       "position": "RF",
@@ -2230,5 +2230,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-07-30T17:59:28.117276+00:00"
+  "generated_at": "2026-07-30T18:10:38.210818+00:00"
 }
