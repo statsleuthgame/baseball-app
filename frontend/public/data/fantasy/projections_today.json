@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 379,
+  "projection_count": 375,
   "projections": [
     {
       "player_id": 691718,
@@ -33,20 +33,20 @@
       },
       "weather": {
         "condition": "Cloudy",
-        "temp": "79",
-        "wind": "12 mph, L To R"
+        "temp": "77",
+        "wind": "11 mph, Out To CF"
       },
       "pa_source": "lineup",
       "stdev_efp": 9.25,
       "mean_efp": 10.8,
       "stats_games": 10,
-      "efp": 11.14,
+      "efp": 11.32,
       "bat_side": "L",
       "per_event": {
         "singles": 1.66,
         "doubles": 1.47,
         "triples": 0.51,
-        "home_runs": 2.59,
+        "home_runs": 2.8,
         "bb_hbp": 0.87,
         "r": 2.61,
         "rbi": 1.78,
@@ -55,7 +55,7 @@
       "multipliers": {
         "park_hr": 1.07,
         "park_runs": 1.04,
-        "weather_hr": 1.0,
+        "weather_hr": 1.08,
         "pitcher_hits": 1.048,
         "pitcher_hr": 1.05,
         "slot_r": 1.0,
@@ -80,7 +80,7 @@
         "singles": 0.1286,
         "doubles": 0.0683,
         "triples": 0.015,
-        "home_runs": 0.0602,
+        "home_runs": 0.0651,
         "bb_hbp": 0.1006,
         "r_per_pa": 0.3036,
         "rbi_per_pa": 0.2065
@@ -158,6 +158,82 @@
         "rbi_per_pa": 0.1762
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 682829,
+      "name": "Elly De La Cruz",
+      "position": "SS",
+      "team_id": 113,
+      "team_abbr": "CIN",
+      "opp_abbr": "PIT",
+      "opp_team_id": 134,
+      "opp_pitcher": {
+        "id": 694973,
+        "fullName": "Paul Skenes"
+      },
+      "park": {
+        "id": 2602,
+        "name": "Great American Ball Park",
+        "runs": 109,
+        "hr": 116,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Clear",
+        "temp": "80",
+        "wind": "1 mph, Calm"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.28,
+      "mean_efp": 11.06,
+      "stats_games": 16,
+      "efp": 10.45,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 1.97,
+        "doubles": 1.14,
+        "triples": 0.24,
+        "home_runs": 1.78,
+        "bb_hbp": 0.7,
+        "r": 2.96,
+        "rbi": 1.5,
+        "sb": 1.65
+      },
+      "multipliers": {
+        "park_hr": 1.16,
+        "park_runs": 1.09,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.951,
+        "pitcher_hr": 0.914,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.016,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.08,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1527,
+        "doubles": 0.0529,
+        "triples": 0.007,
+        "home_runs": 0.0415,
+        "bb_hbp": 0.0808,
+        "r_per_pa": 0.344,
+        "rbi_per_pa": 0.1741
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -469,20 +545,20 @@
       },
       "weather": {
         "condition": "Cloudy",
-        "temp": "79",
-        "wind": "12 mph, L To R"
+        "temp": "77",
+        "wind": "11 mph, Out To CF"
       },
       "pa_source": "lineup",
       "stdev_efp": 7.21,
       "mean_efp": 6.87,
       "stats_games": 0,
-      "efp": 9.7,
+      "efp": 9.75,
       "bat_side": "S",
       "per_event": {
         "singles": 2.51,
         "doubles": 1.68,
         "triples": 0.24,
-        "home_runs": 0.72,
+        "home_runs": 0.78,
         "bb_hbp": 0.7,
         "r": 3.02,
         "rbi": 1.4,
@@ -491,7 +567,7 @@
       "multipliers": {
         "park_hr": 1.07,
         "park_runs": 1.04,
-        "weather_hr": 1.0,
+        "weather_hr": 1.08,
         "pitcher_hits": 1.048,
         "pitcher_hr": 1.05,
         "slot_r": 1.0,
@@ -516,7 +592,7 @@
         "singles": 0.1946,
         "doubles": 0.0782,
         "triples": 0.007,
-        "home_runs": 0.0168,
+        "home_runs": 0.0181,
         "bb_hbp": 0.0809,
         "r_per_pa": 0.3511,
         "rbi_per_pa": 0.1626
@@ -543,7 +619,11 @@
         "hr": 116,
         "label": "Hitter Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Clear",
+        "temp": "80",
+        "wind": "1 mph, Calm"
+      },
       "pa_source": "default",
       "stdev_efp": 7.21,
       "mean_efp": 6.87,
@@ -615,7 +695,11 @@
         "hr": 116,
         "label": "Hitter Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Clear",
+        "temp": "80",
+        "wind": "1 mph, Calm"
+      },
       "pa_source": "default",
       "stdev_efp": 6.72,
       "mean_efp": 8.33,
@@ -741,9 +825,85 @@
       "tier": "low"
     },
     {
-      "player_id": 682829,
-      "name": "Elly De La Cruz",
-      "position": "SS",
+      "player_id": 700250,
+      "name": "Ben Rice",
+      "position": "1B",
+      "team_id": 147,
+      "team_abbr": "NYY",
+      "opp_abbr": "CHC",
+      "opp_team_id": 112,
+      "opp_pitcher": {
+        "id": 684007,
+        "fullName": "Shota Imanaga"
+      },
+      "park": {
+        "id": 17,
+        "name": "Wrigley Field",
+        "runs": 104,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Cloudy",
+        "temp": "77",
+        "wind": "11 mph, Out To CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 9.94,
+      "mean_efp": 10.22,
+      "stats_games": 9,
+      "efp": 9.5,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.53,
+        "doubles": 0.9,
+        "triples": 0.22,
+        "home_runs": 3.39,
+        "bb_hbp": 0.73,
+        "r": 2.48,
+        "rbi": 1.52,
+        "sb": 0.07
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.04,
+        "weather_hr": 1.08,
+        "pitcher_hits": 0.977,
+        "pitcher_hr": 1.168,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.065,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.964,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1185,
+        "doubles": 0.0418,
+        "triples": 0.0065,
+        "home_runs": 0.0789,
+        "bb_hbp": 0.0845,
+        "r_per_pa": 0.2888,
+        "rbi_per_pa": 0.1771
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 701398,
+      "name": "Sal Stewart",
+      "position": "1B",
       "team_id": 113,
       "team_abbr": "CIN",
       "opp_abbr": "PIT",
@@ -759,22 +919,26 @@
         "hr": 116,
         "label": "Hitter Friendly"
       },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.28,
-      "mean_efp": 11.06,
-      "stats_games": 16,
-      "efp": 9.49,
-      "bat_side": "S",
+      "weather": {
+        "condition": "Clear",
+        "temp": "80",
+        "wind": "1 mph, Calm"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 9.04,
+      "mean_efp": 7.67,
+      "stats_games": 9,
+      "efp": 9.39,
+      "bat_side": "R",
       "per_event": {
-        "singles": 1.83,
-        "doubles": 1.06,
-        "triples": 0.22,
-        "home_runs": 1.66,
-        "bb_hbp": 0.65,
-        "r": 2.55,
-        "rbi": 1.39,
-        "sb": 1.47
+        "singles": 1.96,
+        "doubles": 0.91,
+        "triples": 0.02,
+        "home_runs": 1.98,
+        "bb_hbp": 0.72,
+        "r": 3.07,
+        "rbi": 1.41,
+        "sb": 0.65
       },
       "multipliers": {
         "park_hr": 1.16,
@@ -797,19 +961,19 @@
         "speed_singles": 1.0,
         "speed_r": 1.0,
         "bvpt": 1.0,
-        "ondeck_r": 1.0,
+        "ondeck_r": 1.138,
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1527,
-        "doubles": 0.0529,
-        "triples": 0.007,
-        "home_runs": 0.0415,
-        "bb_hbp": 0.0808,
-        "r_per_pa": 0.3185,
-        "rbi_per_pa": 0.1741
+        "singles": 0.1521,
+        "doubles": 0.0425,
+        "triples": 0.0006,
+        "home_runs": 0.046,
+        "bb_hbp": 0.0836,
+        "r_per_pa": 0.3569,
+        "rbi_per_pa": 0.1636
       },
-      "pa": 4.0,
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1119,7 +1283,11 @@
         "hr": 116,
         "label": "Hitter Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Clear",
+        "temp": "80",
+        "wind": "1 mph, Calm"
+      },
       "pa_source": "default",
       "stdev_efp": 7.21,
       "mean_efp": 6.87,
@@ -1173,8 +1341,8 @@
       "tier": "low"
     },
     {
-      "player_id": 700250,
-      "name": "Ben Rice",
+      "player_id": 502671,
+      "name": "Paul Goldschmidt",
       "position": "1B",
       "team_id": 147,
       "team_abbr": "NYY",
@@ -1193,29 +1361,29 @@
       },
       "weather": {
         "condition": "Cloudy",
-        "temp": "79",
-        "wind": "12 mph, L To R"
+        "temp": "77",
+        "wind": "11 mph, Out To CF"
       },
       "pa_source": "lineup",
-      "stdev_efp": 9.94,
-      "mean_efp": 10.22,
-      "stats_games": 9,
-      "efp": 9.28,
-      "bat_side": "L",
+      "stdev_efp": 6.81,
+      "mean_efp": 10.0,
+      "stats_games": 5,
+      "efp": 9.3,
+      "bat_side": "R",
       "per_event": {
-        "singles": 1.53,
-        "doubles": 0.9,
-        "triples": 0.22,
-        "home_runs": 3.14,
-        "bb_hbp": 0.73,
-        "r": 2.48,
-        "rbi": 1.52,
-        "sb": 0.07
+        "singles": 2.02,
+        "doubles": 0.7,
+        "triples": 0.13,
+        "home_runs": 2.92,
+        "bb_hbp": 0.67,
+        "r": 2.83,
+        "rbi": 1.31,
+        "sb": 0.04
       },
       "multipliers": {
         "park_hr": 1.07,
         "park_runs": 1.04,
-        "weather_hr": 1.0,
+        "weather_hr": 1.08,
         "pitcher_hits": 0.977,
         "pitcher_hr": 1.168,
         "slot_r": 1.0,
@@ -1233,17 +1401,17 @@
         "speed_singles": 1.0,
         "speed_r": 1.0,
         "bvpt": 1.0,
-        "ondeck_r": 0.964,
+        "ondeck_r": 1.15,
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1185,
-        "doubles": 0.0418,
-        "triples": 0.0065,
-        "home_runs": 0.073,
-        "bb_hbp": 0.0845,
-        "r_per_pa": 0.2888,
-        "rbi_per_pa": 0.1771
+        "singles": 0.1564,
+        "doubles": 0.0326,
+        "triples": 0.0038,
+        "home_runs": 0.0678,
+        "bb_hbp": 0.0776,
+        "r_per_pa": 0.3295,
+        "rbi_per_pa": 0.1526
       },
       "pa": 4.3,
       "tier": "low"
@@ -1462,82 +1630,6 @@
         "rbi_per_pa": 0.1518
       },
       "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 502671,
-      "name": "Paul Goldschmidt",
-      "position": "1B",
-      "team_id": 147,
-      "team_abbr": "NYY",
-      "opp_abbr": "CHC",
-      "opp_team_id": 112,
-      "opp_pitcher": {
-        "id": 684007,
-        "fullName": "Shota Imanaga"
-      },
-      "park": {
-        "id": 17,
-        "name": "Wrigley Field",
-        "runs": 104,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": {
-        "condition": "Cloudy",
-        "temp": "79",
-        "wind": "12 mph, L To R"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 6.81,
-      "mean_efp": 10.0,
-      "stats_games": 5,
-      "efp": 9.11,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.02,
-        "doubles": 0.7,
-        "triples": 0.13,
-        "home_runs": 2.7,
-        "bb_hbp": 0.67,
-        "r": 2.83,
-        "rbi": 1.31,
-        "sb": 0.04
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.977,
-        "pitcher_hr": 1.168,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.065,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.15,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1564,
-        "doubles": 0.0326,
-        "triples": 0.0038,
-        "home_runs": 0.0628,
-        "bb_hbp": 0.0776,
-        "r_per_pa": 0.3295,
-        "rbi_per_pa": 0.1526
-      },
-      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -2115,80 +2207,8 @@
       },
       "pa": 4.0,
       "tier": "low"
-    },
-    {
-      "player_id": 672640,
-      "name": "Otto Lopez",
-      "position": "SS",
-      "team_id": 146,
-      "team_abbr": "MIA",
-      "opp_abbr": "NYM",
-      "opp_team_id": 121,
-      "opp_pitcher": {
-        "id": 642547,
-        "fullName": "Freddy Peralta"
-      },
-      "park": {
-        "id": 3289,
-        "name": "Citi Field",
-        "runs": 96,
-        "hr": 93,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 5.61,
-      "mean_efp": 6.0,
-      "stats_games": 8,
-      "efp": 8.78,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.28,
-        "doubles": 0.92,
-        "triples": 0.51,
-        "home_runs": 0.74,
-        "bb_hbp": 0.55,
-        "r": 2.38,
-        "rbi": 1.25,
-        "sb": 1.4
-      },
-      "multipliers": {
-        "park_hr": 0.93,
-        "park_runs": 0.96,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.033,
-        "pitcher_hr": 1.049,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.021,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.093,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1903,
-        "doubles": 0.046,
-        "triples": 0.0159,
-        "home_runs": 0.0186,
-        "bb_hbp": 0.0683,
-        "r_per_pa": 0.2969,
-        "rbi_per_pa": 0.1561
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-07-31T16:44:27.838756+00:00"
+  "generated_at": "2026-07-31T18:07:24.594998+00:00"
 }
