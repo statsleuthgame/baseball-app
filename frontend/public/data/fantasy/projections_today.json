@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 331,
+  "projection_count": 327,
   "projections": [
     {
       "player_id": 695578,
@@ -161,6 +161,158 @@
       "tier": "low"
     },
     {
+      "player_id": 665161,
+      "name": "Jeremy Pe\u00f1a",
+      "position": "SS",
+      "team_id": 117,
+      "team_abbr": "HOU",
+      "opp_abbr": "TEX",
+      "opp_team_id": 140,
+      "opp_pitcher": {
+        "id": 543135,
+        "fullName": "Nathan Eovaldi"
+      },
+      "park": {
+        "id": 2392,
+        "name": "Minute Maid Park",
+        "runs": 103,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 4.06,
+      "mean_efp": 6.29,
+      "stats_games": 7,
+      "efp": 10.67,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.68,
+        "doubles": 0.84,
+        "triples": 0.03,
+        "home_runs": 2.72,
+        "bb_hbp": 0.46,
+        "r": 3.22,
+        "rbi": 1.66,
+        "sb": 0.58
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.03,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.008,
+        "pitcher_hr": 1.151,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.915,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.2079,
+        "doubles": 0.0389,
+        "triples": 0.001,
+        "home_runs": 0.0633,
+        "bb_hbp": 0.0533,
+        "r_per_pa": 0.3742,
+        "rbi_per_pa": 0.1927
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 670541,
+      "name": "Yordan Alvarez",
+      "position": "DH",
+      "team_id": 117,
+      "team_abbr": "HOU",
+      "opp_abbr": "TEX",
+      "opp_team_id": 140,
+      "opp_pitcher": {
+        "id": 543135,
+        "fullName": "Nathan Eovaldi"
+      },
+      "park": {
+        "id": 2392,
+        "name": "Minute Maid Park",
+        "runs": 103,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 8.23,
+      "mean_efp": 9.9,
+      "stats_games": 10,
+      "efp": 10.61,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.94,
+        "doubles": 0.84,
+        "triples": 0.02,
+        "home_runs": 3.19,
+        "bb_hbp": 1.11,
+        "r": 3.22,
+        "rbi": 1.75,
+        "sb": 0.04
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.03,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.008,
+        "pitcher_hr": 1.151,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.915,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.013,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1501,
+        "doubles": 0.0391,
+        "triples": 0.0006,
+        "home_runs": 0.0741,
+        "bb_hbp": 0.1296,
+        "r_per_pa": 0.3743,
+        "rbi_per_pa": 0.2036
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 691718,
       "name": "Pete Crow-Armstrong",
       "position": "CF",
@@ -188,13 +340,13 @@
       "stdev_efp": 9.25,
       "mean_efp": 10.8,
       "stats_games": 10,
-      "efp": 10.59,
+      "efp": 10.6,
       "bat_side": "L",
       "per_event": {
-        "singles": 1.63,
-        "doubles": 1.36,
+        "singles": 1.64,
+        "doubles": 1.37,
         "triples": 0.52,
-        "home_runs": 2.36,
+        "home_runs": 2.35,
         "bb_hbp": 0.83,
         "r": 2.51,
         "rbi": 1.66,
@@ -204,8 +356,8 @@
         "park_hr": 1.07,
         "park_runs": 1.04,
         "weather_hr": 1.0,
-        "pitcher_hits": 1.034,
-        "pitcher_hr": 1.035,
+        "pitcher_hits": 1.039,
+        "pitcher_hr": 1.032,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -225,10 +377,10 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1265,
-        "doubles": 0.0634,
-        "triples": 0.015,
-        "home_runs": 0.0548,
+        "singles": 0.1273,
+        "doubles": 0.0638,
+        "triples": 0.0151,
+        "home_runs": 0.0546,
         "bb_hbp": 0.0967,
         "r_per_pa": 0.2914,
         "rbi_per_pa": 0.1935
@@ -765,78 +917,6 @@
       "tier": "low"
     },
     {
-      "player_id": 670541,
-      "name": "Yordan Alvarez",
-      "position": "DH",
-      "team_id": 117,
-      "team_abbr": "HOU",
-      "opp_abbr": "TEX",
-      "opp_team_id": 140,
-      "opp_pitcher": {
-        "id": 543135,
-        "fullName": "Nathan Eovaldi"
-      },
-      "park": {
-        "id": 2392,
-        "name": "Minute Maid Park",
-        "runs": 103,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 8.23,
-      "mean_efp": 9.9,
-      "stats_games": 10,
-      "efp": 9.84,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.8,
-        "doubles": 0.78,
-        "triples": 0.02,
-        "home_runs": 2.97,
-        "bb_hbp": 1.04,
-        "r": 2.96,
-        "rbi": 1.63,
-        "sb": 0.04
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.008,
-        "pitcher_hr": 1.151,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.915,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1501,
-        "doubles": 0.0391,
-        "triples": 0.0006,
-        "home_runs": 0.0741,
-        "bb_hbp": 0.1296,
-        "r_per_pa": 0.3695,
-        "rbi_per_pa": 0.2036
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 665052,
       "name": "Griffin Conine",
       "position": "RF",
@@ -1141,78 +1221,6 @@
       "tier": "low"
     },
     {
-      "player_id": 665161,
-      "name": "Jeremy Pe\u00f1a",
-      "position": "SS",
-      "team_id": 117,
-      "team_abbr": "HOU",
-      "opp_abbr": "TEX",
-      "opp_team_id": 140,
-      "opp_pitcher": {
-        "id": 543135,
-        "fullName": "Nathan Eovaldi"
-      },
-      "park": {
-        "id": 2392,
-        "name": "Minute Maid Park",
-        "runs": 103,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 4.06,
-      "mean_efp": 6.29,
-      "stats_games": 7,
-      "efp": 9.57,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.49,
-        "doubles": 0.78,
-        "triples": 0.03,
-        "home_runs": 2.53,
-        "bb_hbp": 0.43,
-        "r": 2.6,
-        "rbi": 1.54,
-        "sb": 0.52
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.008,
-        "pitcher_hr": 1.151,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.915,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.2079,
-        "doubles": 0.0389,
-        "triples": 0.001,
-        "home_runs": 0.0633,
-        "bb_hbp": 0.0533,
-        "r_per_pa": 0.3254,
-        "rbi_per_pa": 0.1927
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 668804,
       "name": "Bryan Reynolds",
       "position": "LF",
@@ -1392,12 +1400,12 @@
       "stdev_efp": 7.21,
       "mean_efp": 6.87,
       "stats_games": 0,
-      "efp": 9.39,
+      "efp": 9.41,
       "bat_side": "S",
       "per_event": {
-        "singles": 2.56,
-        "doubles": 1.46,
-        "triples": 0.23,
+        "singles": 2.57,
+        "doubles": 1.47,
+        "triples": 0.24,
         "home_runs": 0.7,
         "bb_hbp": 0.68,
         "r": 2.96,
@@ -1408,8 +1416,8 @@
         "park_hr": 1.07,
         "park_runs": 1.04,
         "weather_hr": 1.0,
-        "pitcher_hits": 1.034,
-        "pitcher_hr": 1.035,
+        "pitcher_hits": 1.039,
+        "pitcher_hr": 1.032,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -1429,8 +1437,8 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1982,
-        "doubles": 0.068,
+        "singles": 0.1994,
+        "doubles": 0.0684,
         "triples": 0.0068,
         "home_runs": 0.0163,
         "bb_hbp": 0.0787,
@@ -2258,5 +2266,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-07-31T20:02:17.185609+00:00"
+  "generated_at": "2026-07-31T20:16:24.771289+00:00"
 }
