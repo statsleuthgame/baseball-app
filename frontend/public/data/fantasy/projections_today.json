@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 359,
+  "projection_count": 347,
   "projections": [
     {
       "player_id": 682928,
@@ -1105,6 +1105,82 @@
       "tier": "low"
     },
     {
+      "player_id": 680777,
+      "name": "Ryan Jeffers",
+      "position": "C",
+      "team_id": 142,
+      "team_abbr": "MIN",
+      "opp_abbr": "SEA",
+      "opp_team_id": 136,
+      "opp_pitcher": {
+        "id": 669302,
+        "fullName": "Logan Gilbert"
+      },
+      "park": {
+        "id": 680,
+        "name": "T-Mobile Park",
+        "runs": 95,
+        "hr": 96,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "70",
+        "wind": "14 mph, Out To CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 9.13,
+      "mean_efp": 10.17,
+      "stats_games": 12,
+      "efp": 9.06,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.78,
+        "doubles": 0.74,
+        "triples": 0.09,
+        "home_runs": 2.45,
+        "bb_hbp": 0.75,
+        "r": 2.92,
+        "rbi": 1.52,
+        "sb": 0.09
+      },
+      "multipliers": {
+        "park_hr": 0.96,
+        "park_runs": 0.95,
+        "weather_hr": 1.08,
+        "pitcher_hits": 0.932,
+        "pitcher_hr": 1.015,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.062,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.043,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1384,
+        "doubles": 0.0342,
+        "triples": 0.0026,
+        "home_runs": 0.057,
+        "bb_hbp": 0.0872,
+        "r_per_pa": 0.3399,
+        "rbi_per_pa": 0.1764
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 665953,
       "name": "Andr\u00e9s Chaparro",
       "position": "1B",
@@ -1833,6 +1909,82 @@
       "tier": "low"
     },
     {
+      "player_id": 805999,
+      "name": "A.J. Ewing",
+      "position": "CF",
+      "team_id": 121,
+      "team_abbr": "NYM",
+      "opp_abbr": "MIA",
+      "opp_team_id": 146,
+      "opp_pitcher": {
+        "id": 663969,
+        "fullName": "Tyler Phillips"
+      },
+      "park": {
+        "id": 3289,
+        "name": "Citi Field",
+        "runs": 96,
+        "hr": 93,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "82",
+        "wind": "13 mph, Out To LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.21,
+      "mean_efp": 6.87,
+      "stats_games": 0,
+      "efp": 8.84,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.94,
+        "doubles": 0.83,
+        "triples": 0.08,
+        "home_runs": 0.88,
+        "bb_hbp": 1.04,
+        "r": 2.79,
+        "rbi": 1.16,
+        "sb": 1.38
+      },
+      "multipliers": {
+        "park_hr": 0.93,
+        "park_runs": 0.96,
+        "weather_hr": 1.03,
+        "pitcher_hits": 0.975,
+        "pitcher_hr": 0.983,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.967,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.126,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1505,
+        "doubles": 0.0387,
+        "triples": 0.0022,
+        "home_runs": 0.0204,
+        "bb_hbp": 0.121,
+        "r_per_pa": 0.3242,
+        "rbi_per_pa": 0.1353
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 660271,
       "name": "Shohei Ohtani",
       "position": "TWP",
@@ -2047,156 +2199,8 @@
       },
       "pa": 4.0,
       "tier": "low"
-    },
-    {
-      "player_id": 803011,
-      "name": "Sam Antonacci",
-      "position": "LF",
-      "team_id": 145,
-      "team_abbr": "CWS",
-      "opp_abbr": "TB",
-      "opp_team_id": 139,
-      "opp_pitcher": {
-        "id": 656876,
-        "fullName": "Drew Rasmussen"
-      },
-      "park": {
-        "id": 12,
-        "name": "Tropicana Field",
-        "runs": 96,
-        "hr": 98,
-        "label": "Pitcher Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "84",
-        "wind": "14 mph, Out To RF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 8.62,
-      "mean_efp": 10.33,
-      "stats_games": 6,
-      "efp": 8.79,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.97,
-        "doubles": 0.8,
-        "triples": 0.14,
-        "home_runs": 1.34,
-        "bb_hbp": 0.69,
-        "r": 3.08,
-        "rbi": 1.31,
-        "sb": 0.7
-      },
-      "multipliers": {
-        "park_hr": 0.98,
-        "park_runs": 0.96,
-        "weather_hr": 1.15,
-        "pitcher_hits": 0.921,
-        "pitcher_hr": 0.98,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.963,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.15,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1527,
-        "doubles": 0.0371,
-        "triples": 0.0042,
-        "home_runs": 0.0311,
-        "bb_hbp": 0.0798,
-        "r_per_pa": 0.3585,
-        "rbi_per_pa": 0.1528
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 691720,
-      "name": "Kyle Karros",
-      "position": "3B",
-      "team_id": 115,
-      "team_abbr": "COL",
-      "opp_abbr": "KC",
-      "opp_team_id": 118,
-      "opp_pitcher": {
-        "id": 679883,
-        "fullName": "Luinder Avila"
-      },
-      "park": {
-        "id": 19,
-        "name": "Coors Field",
-        "runs": 116,
-        "hr": 118,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 6.38,
-      "mean_efp": 7.56,
-      "stats_games": 9,
-      "efp": 8.74,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.25,
-        "doubles": 1.08,
-        "triples": 0.19,
-        "home_runs": 0.97,
-        "bb_hbp": 1.42,
-        "r": 2.74,
-        "rbi": 1.21,
-        "sb": 0.12
-      },
-      "multipliers": {
-        "park_hr": 1.18,
-        "park_runs": 1.16,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.016,
-        "pitcher_hr": 0.884,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.946,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1877,
-        "doubles": 0.0541,
-        "triples": 0.0059,
-        "home_runs": 0.0241,
-        "bb_hbp": 0.178,
-        "r_per_pa": 0.342,
-        "rbi_per_pa": 0.1513
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-08-01T17:34:43.816607+00:00"
+  "generated_at": "2026-08-01T17:53:49.421605+00:00"
 }
