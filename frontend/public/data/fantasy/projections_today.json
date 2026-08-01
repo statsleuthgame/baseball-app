@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 383,
+  "projection_count": 379,
   "projections": [
     {
       "player_id": 682928,
@@ -1813,6 +1813,82 @@
       "tier": "low"
     },
     {
+      "player_id": 672960,
+      "name": "Kazuma Okamoto",
+      "position": "3B",
+      "team_id": 141,
+      "team_abbr": "TOR",
+      "opp_abbr": "STL",
+      "opp_team_id": 138,
+      "opp_pitcher": {
+        "id": 687273,
+        "fullName": "Quinn Mathews"
+      },
+      "park": {
+        "id": 14,
+        "name": "Rogers Centre",
+        "runs": 104,
+        "hr": 109,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 9.62,
+      "mean_efp": 9.1,
+      "stats_games": 10,
+      "efp": 8.73,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.72,
+        "doubles": 1.03,
+        "triples": 0.02,
+        "home_runs": 2.45,
+        "bb_hbp": 0.73,
+        "r": 2.36,
+        "rbi": 1.47,
+        "sb": 0.18
+      },
+      "multipliers": {
+        "park_hr": 1.09,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.0,
+        "pitcher_hr": 1.0,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.0,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.0,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.988,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1331,
+        "doubles": 0.0479,
+        "triples": 0.0007,
+        "home_runs": 0.0569,
+        "bb_hbp": 0.0847,
+        "r_per_pa": 0.2749,
+        "rbi_per_pa": 0.1714
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 668804,
       "name": "Bryan Reynolds",
       "position": "LF",
@@ -2099,80 +2175,8 @@
       },
       "pa": 4.0,
       "tier": "low"
-    },
-    {
-      "player_id": 608070,
-      "name": "Jos\u00e9 Ram\u00edrez",
-      "position": "3B",
-      "team_id": 114,
-      "team_abbr": "CLE",
-      "opp_abbr": "AZ",
-      "opp_team_id": 109,
-      "opp_pitcher": {
-        "id": 684442,
-        "fullName": "Kohl Drake"
-      },
-      "park": {
-        "id": 5,
-        "name": "Progressive Field",
-        "runs": 97,
-        "hr": 95,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 9.33,
-      "mean_efp": 12.12,
-      "stats_games": 8,
-      "efp": 8.58,
-      "bat_side": "S",
-      "per_event": {
-        "singles": 1.61,
-        "doubles": 0.85,
-        "triples": 0.02,
-        "home_runs": 1.47,
-        "bb_hbp": 1.12,
-        "r": 2.29,
-        "rbi": 1.02,
-        "sb": 1.42
-      },
-      "multipliers": {
-        "park_hr": 0.95,
-        "park_runs": 0.97,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.005,
-        "pitcher_hr": 1.14,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.168,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.12,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1338,
-        "doubles": 0.0424,
-        "triples": 0.0007,
-        "home_runs": 0.0367,
-        "bb_hbp": 0.1398,
-        "r_per_pa": 0.2867,
-        "rbi_per_pa": 0.127
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-08-01T14:21:29.691756+00:00"
+  "generated_at": "2026-08-01T16:00:11.654933+00:00"
 }
