@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 384,
+  "projection_count": 383,
   "projections": [
     {
       "player_id": 682928,
@@ -2174,5 +2174,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-08-01T12:14:29.990779+00:00"
+  "generated_at": "2026-08-01T14:21:29.691756+00:00"
 }
