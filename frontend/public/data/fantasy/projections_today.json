@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 379,
+  "projection_count": 359,
   "projections": [
     {
       "player_id": 682928,
@@ -298,6 +298,82 @@
         "rbi_per_pa": 0.1852
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 808959,
+      "name": "Munetaka Murakami",
+      "position": "1B",
+      "team_id": 145,
+      "team_abbr": "CWS",
+      "opp_abbr": "TB",
+      "opp_team_id": 139,
+      "opp_pitcher": {
+        "id": 656876,
+        "fullName": "Drew Rasmussen"
+      },
+      "park": {
+        "id": 12,
+        "name": "Tropicana Field",
+        "runs": 96,
+        "hr": 98,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "84",
+        "wind": "14 mph, Out To RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 9.01,
+      "mean_efp": 13.5,
+      "stats_games": 6,
+      "efp": 10.21,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.32,
+        "doubles": 0.6,
+        "triples": 0.02,
+        "home_runs": 3.53,
+        "bb_hbp": 1.01,
+        "r": 3.35,
+        "rbi": 1.76,
+        "sb": 0.06
+      },
+      "multipliers": {
+        "park_hr": 0.98,
+        "park_runs": 0.96,
+        "weather_hr": 1.15,
+        "pitcher_hits": 0.921,
+        "pitcher_hr": 0.98,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.963,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1026,
+        "doubles": 0.0281,
+        "triples": 0.0007,
+        "home_runs": 0.0821,
+        "bb_hbp": 0.1179,
+        "r_per_pa": 0.3891,
+        "rbi_per_pa": 0.2043
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -661,6 +737,82 @@
       "tier": "low"
     },
     {
+      "player_id": 686527,
+      "name": "Dominic Canzone",
+      "position": "DH",
+      "team_id": 136,
+      "team_abbr": "SEA",
+      "opp_abbr": "MIN",
+      "opp_team_id": 142,
+      "opp_pitcher": {
+        "id": 687570,
+        "fullName": "Connor Prielipp"
+      },
+      "park": {
+        "id": 680,
+        "name": "T-Mobile Park",
+        "runs": 95,
+        "hr": 96,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "70",
+        "wind": "14 mph, Out To CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 8.75,
+      "mean_efp": 9.29,
+      "stats_games": 7,
+      "efp": 9.58,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.35,
+        "doubles": 1.07,
+        "triples": 0.07,
+        "home_runs": 2.79,
+        "bb_hbp": 1.12,
+        "r": 2.84,
+        "rbi": 1.66,
+        "sb": 0.03
+      },
+      "multipliers": {
+        "park_hr": 0.96,
+        "park_runs": 0.95,
+        "weather_hr": 1.08,
+        "pitcher_hits": 0.989,
+        "pitcher_hr": 0.958,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.01,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.028,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.092,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1049,
+        "doubles": 0.05,
+        "triples": 0.0021,
+        "home_runs": 0.0648,
+        "bb_hbp": 0.1299,
+        "r_per_pa": 0.3301,
+        "rbi_per_pa": 0.1927
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 671277,
       "name": "Luis Garc\u00eda Jr.",
       "position": "1B",
@@ -730,6 +882,82 @@
         "rbi_per_pa": 0.2021
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 668227,
+      "name": "Randy Arozarena",
+      "position": "LF",
+      "team_id": 136,
+      "team_abbr": "SEA",
+      "opp_abbr": "MIN",
+      "opp_team_id": 142,
+      "opp_pitcher": {
+        "id": 687570,
+        "fullName": "Connor Prielipp"
+      },
+      "park": {
+        "id": 680,
+        "name": "T-Mobile Park",
+        "runs": 95,
+        "hr": 96,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "70",
+        "wind": "14 mph, Out To CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 6.78,
+      "mean_efp": 9.0,
+      "stats_games": 10,
+      "efp": 9.37,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.89,
+        "doubles": 0.97,
+        "triples": 0.06,
+        "home_runs": 1.46,
+        "bb_hbp": 0.95,
+        "r": 3.15,
+        "rbi": 1.41,
+        "sb": 0.81
+      },
+      "multipliers": {
+        "park_hr": 0.96,
+        "park_runs": 0.95,
+        "weather_hr": 1.08,
+        "pitcher_hits": 0.989,
+        "pitcher_hr": 0.958,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.01,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.028,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1468,
+        "doubles": 0.0449,
+        "triples": 0.0016,
+        "home_runs": 0.034,
+        "bb_hbp": 0.1102,
+        "r_per_pa": 0.3666,
+        "rbi_per_pa": 0.1638
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1165,6 +1393,82 @@
       "tier": "low"
     },
     {
+      "player_id": 691023,
+      "name": "Jordan Walker",
+      "position": "RF",
+      "team_id": 138,
+      "team_abbr": "STL",
+      "opp_abbr": "TOR",
+      "opp_team_id": 141,
+      "opp_pitcher": {
+        "id": 592332,
+        "fullName": "Kevin Gausman"
+      },
+      "park": {
+        "id": 14,
+        "name": "Rogers Centre",
+        "runs": 104,
+        "hr": 109,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "78",
+        "wind": "6 mph, R To L"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 6.88,
+      "mean_efp": 8.57,
+      "stats_games": 7,
+      "efp": 8.96,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.07,
+        "doubles": 1.07,
+        "triples": 0.02,
+        "home_runs": 1.85,
+        "bb_hbp": 0.55,
+        "r": 2.8,
+        "rbi": 1.3,
+        "sb": 0.57
+      },
+      "multipliers": {
+        "park_hr": 1.09,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.024,
+        "pitcher_hr": 1.002,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.044,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.786,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1607,
+        "doubles": 0.0496,
+        "triples": 0.0007,
+        "home_runs": 0.043,
+        "bb_hbp": 0.0644,
+        "r_per_pa": 0.3251,
+        "rbi_per_pa": 0.151
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 670231,
       "name": "John Rave",
       "position": "RF",
@@ -1378,6 +1682,82 @@
         "rbi_per_pa": 0.1459
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 676475,
+      "name": "Alec Burleson",
+      "position": "1B",
+      "team_id": 138,
+      "team_abbr": "STL",
+      "opp_abbr": "TOR",
+      "opp_team_id": 141,
+      "opp_pitcher": {
+        "id": 592332,
+        "fullName": "Kevin Gausman"
+      },
+      "park": {
+        "id": 14,
+        "name": "Rogers Centre",
+        "runs": 104,
+        "hr": 109,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "78",
+        "wind": "6 mph, R To L"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 4.98,
+      "mean_efp": 3.29,
+      "stats_games": 7,
+      "efp": 8.87,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.32,
+        "doubles": 1.37,
+        "triples": 0.08,
+        "home_runs": 1.42,
+        "bb_hbp": 0.65,
+        "r": 2.82,
+        "rbi": 1.34,
+        "sb": 0.11
+      },
+      "multipliers": {
+        "park_hr": 1.09,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.024,
+        "pitcher_hr": 1.002,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.044,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.786,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.057,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1799,
+        "doubles": 0.0639,
+        "triples": 0.0024,
+        "home_runs": 0.033,
+        "bb_hbp": 0.0761,
+        "r_per_pa": 0.3283,
+        "rbi_per_pa": 0.1557
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1669,9 +2049,9 @@
       "tier": "low"
     },
     {
-      "player_id": 808959,
-      "name": "Munetaka Murakami",
-      "position": "1B",
+      "player_id": 803011,
+      "name": "Sam Antonacci",
+      "position": "LF",
       "team_id": 145,
       "team_abbr": "CWS",
       "opp_abbr": "TB",
@@ -1687,27 +2067,31 @@
         "hr": 98,
         "label": "Pitcher Friendly"
       },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 9.01,
-      "mean_efp": 13.5,
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "84",
+        "wind": "14 mph, Out To RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 8.62,
+      "mean_efp": 10.33,
       "stats_games": 6,
-      "efp": 8.77,
+      "efp": 8.79,
       "bat_side": "L",
       "per_event": {
-        "singles": 1.23,
-        "doubles": 0.56,
-        "triples": 0.02,
-        "home_runs": 2.85,
-        "bb_hbp": 0.94,
-        "r": 2.71,
-        "rbi": 1.63,
-        "sb": 0.05
+        "singles": 1.97,
+        "doubles": 0.8,
+        "triples": 0.14,
+        "home_runs": 1.34,
+        "bb_hbp": 0.69,
+        "r": 3.08,
+        "rbi": 1.31,
+        "sb": 0.7
       },
       "multipliers": {
         "park_hr": 0.98,
         "park_runs": 0.96,
-        "weather_hr": 1.0,
+        "weather_hr": 1.15,
         "pitcher_hits": 0.921,
         "pitcher_hr": 0.98,
         "slot_r": 1.0,
@@ -1725,19 +2109,19 @@
         "speed_singles": 1.0,
         "speed_r": 1.0,
         "bvpt": 1.0,
-        "ondeck_r": 1.0,
+        "ondeck_r": 1.15,
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1026,
-        "doubles": 0.0281,
-        "triples": 0.0007,
-        "home_runs": 0.0713,
-        "bb_hbp": 0.1179,
-        "r_per_pa": 0.3383,
-        "rbi_per_pa": 0.2043
+        "singles": 0.1527,
+        "doubles": 0.0371,
+        "triples": 0.0042,
+        "home_runs": 0.0311,
+        "bb_hbp": 0.0798,
+        "r_per_pa": 0.3585,
+        "rbi_per_pa": 0.1528
       },
-      "pa": 4.0,
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1811,372 +2195,8 @@
       },
       "pa": 4.0,
       "tier": "low"
-    },
-    {
-      "player_id": 672960,
-      "name": "Kazuma Okamoto",
-      "position": "3B",
-      "team_id": 141,
-      "team_abbr": "TOR",
-      "opp_abbr": "STL",
-      "opp_team_id": 138,
-      "opp_pitcher": {
-        "id": 687273,
-        "fullName": "Quinn Mathews"
-      },
-      "park": {
-        "id": 14,
-        "name": "Rogers Centre",
-        "runs": 104,
-        "hr": 109,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Roof Closed",
-        "temp": "72",
-        "wind": "0 mph, None"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 9.62,
-      "mean_efp": 9.1,
-      "stats_games": 10,
-      "efp": 8.73,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.72,
-        "doubles": 1.03,
-        "triples": 0.02,
-        "home_runs": 2.45,
-        "bb_hbp": 0.73,
-        "r": 2.36,
-        "rbi": 1.47,
-        "sb": 0.18
-      },
-      "multipliers": {
-        "park_hr": 1.09,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 1.0,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.0,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 0.988,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1331,
-        "doubles": 0.0479,
-        "triples": 0.0007,
-        "home_runs": 0.0569,
-        "bb_hbp": 0.0847,
-        "r_per_pa": 0.2749,
-        "rbi_per_pa": 0.1714
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 668804,
-      "name": "Bryan Reynolds",
-      "position": "LF",
-      "team_id": 134,
-      "team_abbr": "PIT",
-      "opp_abbr": "CIN",
-      "opp_team_id": 113,
-      "opp_pitcher": {
-        "id": 671096,
-        "fullName": "Andrew Abbott"
-      },
-      "park": {
-        "id": 2602,
-        "name": "Great American Ball Park",
-        "runs": 109,
-        "hr": 116,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 4.06,
-      "mean_efp": 6.44,
-      "stats_games": 9,
-      "efp": 8.71,
-      "bat_side": "S",
-      "per_event": {
-        "singles": 1.71,
-        "doubles": 1.21,
-        "triples": 0.09,
-        "home_runs": 1.64,
-        "bb_hbp": 1.3,
-        "r": 2.54,
-        "rbi": 1.25,
-        "sb": 0.2
-      },
-      "multipliers": {
-        "park_hr": 1.16,
-        "park_runs": 1.09,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.978,
-        "pitcher_hr": 1.054,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.012,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.245,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1429,
-        "doubles": 0.0603,
-        "triples": 0.0028,
-        "home_runs": 0.041,
-        "bb_hbp": 0.1627,
-        "r_per_pa": 0.3169,
-        "rbi_per_pa": 0.1561
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 677649,
-      "name": "Ezequiel Duran",
-      "position": "SS",
-      "team_id": 140,
-      "team_abbr": "TEX",
-      "opp_abbr": "HOU",
-      "opp_team_id": 117,
-      "opp_pitcher": {
-        "id": 669854,
-        "fullName": "Ronel Blanco"
-      },
-      "park": {
-        "id": 2392,
-        "name": "Minute Maid Park",
-        "runs": 103,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 6.54,
-      "mean_efp": 6.64,
-      "stats_games": 11,
-      "efp": 8.71,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.57,
-        "doubles": 0.72,
-        "triples": 0.33,
-        "home_runs": 2.34,
-        "bb_hbp": 0.82,
-        "r": 2.34,
-        "rbi": 1.36,
-        "sb": 0.46
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.849,
-        "pitcher_hr": 1.35,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.057,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1305,
-        "doubles": 0.0361,
-        "triples": 0.0104,
-        "home_runs": 0.0585,
-        "bb_hbp": 0.1029,
-        "r_per_pa": 0.2928,
-        "rbi_per_pa": 0.1694
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 650559,
-      "name": "Bryan De La Cruz",
-      "position": "OF",
-      "team_id": 143,
-      "team_abbr": "PHI",
-      "opp_abbr": "BAL",
-      "opp_team_id": 110,
-      "opp_pitcher": {
-        "id": 669358,
-        "fullName": "Shane Baz"
-      },
-      "park": {
-        "id": 2,
-        "name": "Camden Yards",
-        "runs": 103,
-        "hr": 108,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.21,
-      "mean_efp": 6.87,
-      "stats_games": 0,
-      "efp": 8.68,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.46,
-        "doubles": 1.07,
-        "triples": 0.1,
-        "home_runs": 1.54,
-        "bb_hbp": 0.66,
-        "r": 2.63,
-        "rbi": 1.46,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 1.08,
-        "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.042,
-        "pitcher_hr": 0.831,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.039,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.949,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.2046,
-        "doubles": 0.0535,
-        "triples": 0.0031,
-        "home_runs": 0.0384,
-        "bb_hbp": 0.0823,
-        "r_per_pa": 0.329,
-        "rbi_per_pa": 0.1822
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 682848,
-      "name": "Endy Rodr\u00edguez",
-      "position": "C",
-      "team_id": 134,
-      "team_abbr": "PIT",
-      "opp_abbr": "CIN",
-      "opp_team_id": 113,
-      "opp_pitcher": {
-        "id": 671096,
-        "fullName": "Andrew Abbott"
-      },
-      "park": {
-        "id": 2602,
-        "name": "Great American Ball Park",
-        "runs": 109,
-        "hr": 116,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.21,
-      "mean_efp": 6.87,
-      "stats_games": 0,
-      "efp": 8.67,
-      "bat_side": "S",
-      "per_event": {
-        "singles": 1.86,
-        "doubles": 0.75,
-        "triples": 0.06,
-        "home_runs": 1.69,
-        "bb_hbp": 1.2,
-        "r": 2.42,
-        "rbi": 1.16,
-        "sb": 0.75
-      },
-      "multipliers": {
-        "park_hr": 1.16,
-        "park_runs": 1.09,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.978,
-        "pitcher_hr": 1.054,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.012,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.245,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1553,
-        "doubles": 0.0376,
-        "triples": 0.0018,
-        "home_runs": 0.0423,
-        "bb_hbp": 0.1503,
-        "r_per_pa": 0.3019,
-        "rbi_per_pa": 0.1446
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-08-01T16:00:11.654933+00:00"
+  "generated_at": "2026-08-01T17:34:43.816607+00:00"
 }
