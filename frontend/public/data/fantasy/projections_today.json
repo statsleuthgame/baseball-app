@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 8,
-  "projection_count": 187,
+  "projection_count": 183,
   "projections": [
     {
       "player_id": 670541,
@@ -154,6 +154,82 @@
         "rbi_per_pa": 0.2026
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 671277,
+      "name": "Luis Garc\u00eda Jr.",
+      "position": "1B",
+      "team_id": 147,
+      "team_abbr": "NYY",
+      "opp_abbr": "STL",
+      "opp_team_id": 138,
+      "opp_pitcher": {
+        "id": 700241,
+        "fullName": "Michael McGreevy"
+      },
+      "park": {
+        "id": 3313,
+        "name": "Yankee Stadium",
+        "runs": 107,
+        "hr": 115,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Cloudy",
+        "temp": "81",
+        "wind": "8 mph, Out To CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 8.5,
+      "mean_efp": 6.89,
+      "stats_games": 9,
+      "efp": 10.33,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.0,
+        "doubles": 1.58,
+        "triples": 0.58,
+        "home_runs": 3.08,
+        "bb_hbp": 0.3,
+        "r": 2.35,
+        "rbi": 1.75,
+        "sb": 0.15
+      },
+      "multipliers": {
+        "park_hr": 1.15,
+        "park_runs": 1.07,
+        "weather_hr": 1.08,
+        "pitcher_hits": 1.034,
+        "pitcher_hr": 1.035,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.969,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.938,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1551,
+        "doubles": 0.0737,
+        "triples": 0.017,
+        "home_runs": 0.0715,
+        "bb_hbp": 0.0345,
+        "r_per_pa": 0.2735,
+        "rbi_per_pa": 0.2032
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -529,82 +605,6 @@
       "tier": "low"
     },
     {
-      "player_id": 671277,
-      "name": "Luis Garc\u00eda Jr.",
-      "position": "1B",
-      "team_id": 147,
-      "team_abbr": "NYY",
-      "opp_abbr": "STL",
-      "opp_team_id": 138,
-      "opp_pitcher": {
-        "id": 700241,
-        "fullName": "Michael McGreevy"
-      },
-      "park": {
-        "id": 3313,
-        "name": "Yankee Stadium",
-        "runs": 107,
-        "hr": 115,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Cloudy",
-        "temp": "81",
-        "wind": "8 mph, Out To CF"
-      },
-      "pa_source": "default",
-      "stdev_efp": 8.5,
-      "mean_efp": 6.89,
-      "stats_games": 9,
-      "efp": 9.75,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.86,
-        "doubles": 1.47,
-        "triples": 0.54,
-        "home_runs": 2.86,
-        "bb_hbp": 0.28,
-        "r": 2.33,
-        "rbi": 1.63,
-        "sb": 0.15
-      },
-      "multipliers": {
-        "park_hr": 1.15,
-        "park_runs": 1.07,
-        "weather_hr": 1.08,
-        "pitcher_hits": 1.034,
-        "pitcher_hr": 1.035,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.969,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1551,
-        "doubles": 0.0737,
-        "triples": 0.017,
-        "home_runs": 0.0715,
-        "bb_hbp": 0.0345,
-        "r_per_pa": 0.2916,
-        "rbi_per_pa": 0.2032
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 665953,
       "name": "Andr\u00e9s Chaparro",
       "position": "1B",
@@ -901,48 +901,51 @@
       "tier": "low"
     },
     {
-      "player_id": 691718,
-      "name": "Pete Crow-Armstrong",
-      "position": "CF",
-      "team_id": 112,
-      "team_abbr": "CHC",
-      "opp_abbr": "LAD",
-      "opp_team_id": 119,
-      "opp_pitcher": null,
+      "player_id": 700250,
+      "name": "Ben Rice",
+      "position": "1B",
+      "team_id": 147,
+      "team_abbr": "NYY",
+      "opp_abbr": "STL",
+      "opp_team_id": 138,
+      "opp_pitcher": {
+        "id": 700241,
+        "fullName": "Michael McGreevy"
+      },
       "park": {
-        "id": 17,
-        "name": "Wrigley Field",
-        "runs": 104,
-        "hr": 107,
-        "label": "Slight Hitter"
+        "id": 3313,
+        "name": "Yankee Stadium",
+        "runs": 107,
+        "hr": 115,
+        "label": "Hitter Friendly"
       },
       "weather": {
-        "condition": "Clear",
-        "temp": "73",
-        "wind": "8 mph, R To L"
+        "condition": "Cloudy",
+        "temp": "81",
+        "wind": "8 mph, Out To CF"
       },
-      "pa_source": "default",
-      "stdev_efp": 9.25,
-      "mean_efp": 10.8,
-      "stats_games": 10,
-      "efp": 9.4,
+      "pa_source": "lineup",
+      "stdev_efp": 9.94,
+      "mean_efp": 10.22,
+      "stats_games": 9,
+      "efp": 9.49,
       "bat_side": "L",
       "per_event": {
-        "singles": 1.36,
-        "doubles": 0.98,
-        "triples": 0.52,
-        "home_runs": 1.81,
-        "bb_hbp": 1.14,
-        "r": 2.56,
-        "rbi": 1.42,
-        "sb": 0.93
+        "singles": 1.65,
+        "doubles": 1.03,
+        "triples": 0.17,
+        "home_runs": 2.83,
+        "bb_hbp": 0.8,
+        "r": 2.86,
+        "rbi": 1.41,
+        "sb": 0.08
       },
       "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 1.0,
+        "park_hr": 1.15,
+        "park_runs": 1.07,
+        "weather_hr": 1.08,
+        "pitcher_hits": 1.034,
+        "pitcher_hr": 1.035,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -950,27 +953,27 @@
         "stx_xwoba": 1.0,
         "stx_barrel": 1.0,
         "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
+        "pitcher_gb_hr": 0.969,
         "k_damper": 1.0,
-        "pitcher_bb": 1.0,
+        "pitcher_bb": 0.75,
         "park_hand_hr": 1.0,
         "sb_speed": 1.0,
         "speed_singles": 1.0,
         "speed_r": 1.0,
         "bvpt": 1.0,
-        "ondeck_r": 1.0,
+        "ondeck_r": 1.118,
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1135,
-        "doubles": 0.049,
-        "triples": 0.0163,
-        "home_runs": 0.0453,
-        "bb_hbp": 0.1427,
-        "r_per_pa": 0.3205,
-        "rbi_per_pa": 0.1773
+        "singles": 0.1277,
+        "doubles": 0.0481,
+        "triples": 0.0049,
+        "home_runs": 0.0657,
+        "bb_hbp": 0.0935,
+        "r_per_pa": 0.3325,
+        "rbi_per_pa": 0.1644
       },
-      "pa": 4.0,
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1638,82 +1641,6 @@
       "tier": "low"
     },
     {
-      "player_id": 676609,
-      "name": "Jos\u00e9 Caballero",
-      "position": "SS",
-      "team_id": 147,
-      "team_abbr": "NYY",
-      "opp_abbr": "STL",
-      "opp_team_id": 138,
-      "opp_pitcher": {
-        "id": 700241,
-        "fullName": "Michael McGreevy"
-      },
-      "park": {
-        "id": 3313,
-        "name": "Yankee Stadium",
-        "runs": 107,
-        "hr": 115,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Cloudy",
-        "temp": "81",
-        "wind": "8 mph, Out To CF"
-      },
-      "pa_source": "default",
-      "stdev_efp": 7.42,
-      "mean_efp": 7.67,
-      "stats_games": 9,
-      "efp": 8.96,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.09,
-        "doubles": 0.85,
-        "triples": 0.03,
-        "home_runs": 1.69,
-        "bb_hbp": 0.47,
-        "r": 2.23,
-        "rbi": 1.17,
-        "sb": 1.7
-      },
-      "multipliers": {
-        "park_hr": 1.15,
-        "park_runs": 1.07,
-        "weather_hr": 1.08,
-        "pitcher_hits": 1.034,
-        "pitcher_hr": 1.035,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.969,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1745,
-        "doubles": 0.0424,
-        "triples": 0.0009,
-        "home_runs": 0.0422,
-        "bb_hbp": 0.0584,
-        "r_per_pa": 0.2792,
-        "rbi_per_pa": 0.1468
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 650489,
       "name": "Willi Castro",
       "position": "2B",
@@ -1934,6 +1861,82 @@
       "tier": "low"
     },
     {
+      "player_id": 691718,
+      "name": "Pete Crow-Armstrong",
+      "position": "CF",
+      "team_id": 112,
+      "team_abbr": "CHC",
+      "opp_abbr": "LAD",
+      "opp_team_id": 119,
+      "opp_pitcher": {
+        "id": 680736,
+        "fullName": "Justin Wrobleski"
+      },
+      "park": {
+        "id": 17,
+        "name": "Wrigley Field",
+        "runs": 104,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Clear",
+        "temp": "73",
+        "wind": "8 mph, R To L"
+      },
+      "pa_source": "default",
+      "stdev_efp": 9.25,
+      "mean_efp": 10.8,
+      "stats_games": 10,
+      "efp": 8.89,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.45,
+        "doubles": 0.81,
+        "triples": 0.53,
+        "home_runs": 1.73,
+        "bb_hbp": 0.9,
+        "r": 2.56,
+        "rbi": 1.42,
+        "sb": 0.74
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.965,
+        "pitcher_hr": 0.972,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.037,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1209,
+        "doubles": 0.0404,
+        "triples": 0.0165,
+        "home_runs": 0.0434,
+        "bb_hbp": 0.1124,
+        "r_per_pa": 0.3205,
+        "rbi_per_pa": 0.1773
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
       "player_id": 663743,
       "name": "Nick Fortes",
       "position": "C",
@@ -2078,82 +2081,6 @@
       "tier": "low"
     },
     {
-      "player_id": 682987,
-      "name": "Spencer Jones",
-      "position": "CF",
-      "team_id": 147,
-      "team_abbr": "NYY",
-      "opp_abbr": "STL",
-      "opp_team_id": 138,
-      "opp_pitcher": {
-        "id": 700241,
-        "fullName": "Michael McGreevy"
-      },
-      "park": {
-        "id": 3313,
-        "name": "Yankee Stadium",
-        "runs": 107,
-        "hr": 115,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Cloudy",
-        "temp": "81",
-        "wind": "8 mph, Out To CF"
-      },
-      "pa_source": "default",
-      "stdev_efp": 7.21,
-      "mean_efp": 6.87,
-      "stats_games": 0,
-      "efp": 8.8,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.83,
-        "doubles": 0.69,
-        "triples": 0.05,
-        "home_runs": 2.66,
-        "bb_hbp": 0.57,
-        "r": 2.28,
-        "rbi": 1.36,
-        "sb": 0.59
-      },
-      "multipliers": {
-        "park_hr": 1.15,
-        "park_runs": 1.07,
-        "weather_hr": 1.08,
-        "pitcher_hits": 1.034,
-        "pitcher_hr": 1.035,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.969,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1523,
-        "doubles": 0.0345,
-        "triples": 0.0016,
-        "home_runs": 0.0665,
-        "bb_hbp": 0.0718,
-        "r_per_pa": 0.2854,
-        "rbi_per_pa": 0.1704
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 607208,
       "name": "Trea Turner",
       "position": "SS",
@@ -2228,8 +2155,80 @@
       },
       "pa": 4.3,
       "tier": "low"
+    },
+    {
+      "player_id": 666211,
+      "name": "Taylor Trammell",
+      "position": "CF",
+      "team_id": 117,
+      "team_abbr": "HOU",
+      "opp_abbr": "TOR",
+      "opp_team_id": 141,
+      "opp_pitcher": {
+        "id": 669456,
+        "fullName": "Shane Bieber"
+      },
+      "park": {
+        "id": 2392,
+        "name": "Minute Maid Park",
+        "runs": 103,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 7.21,
+      "mean_efp": 6.87,
+      "stats_games": 0,
+      "efp": 8.77,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.81,
+        "doubles": 0.85,
+        "triples": 0.11,
+        "home_runs": 1.88,
+        "bb_hbp": 1.33,
+        "r": 2.55,
+        "rbi": 1.27,
+        "sb": 0.21
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.03,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.032,
+        "pitcher_hr": 1.207,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.961,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1511,
+        "doubles": 0.0424,
+        "triples": 0.0035,
+        "home_runs": 0.047,
+        "bb_hbp": 0.1659,
+        "r_per_pa": 0.3189,
+        "rbi_per_pa": 0.1589
+      },
+      "pa": 4.0,
+      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-08-03T20:10:18.557886+00:00"
+  "generated_at": "2026-08-03T20:21:33.082495+00:00"
 }
