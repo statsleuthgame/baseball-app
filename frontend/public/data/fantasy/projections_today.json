@@ -799,78 +799,6 @@
       "tier": "low"
     },
     {
-      "player_id": 660271,
-      "name": "Shohei Ohtani",
-      "position": "TWP",
-      "team_id": 119,
-      "team_abbr": "LAD",
-      "opp_abbr": "CHC",
-      "opp_team_id": 112,
-      "opp_pitcher": {
-        "id": 571510,
-        "fullName": "Matthew Boyd"
-      },
-      "park": {
-        "id": 17,
-        "name": "Wrigley Field",
-        "runs": 104,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 10.47,
-      "mean_efp": 11.67,
-      "stats_games": 9,
-      "efp": 9.36,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.73,
-        "doubles": 1.25,
-        "triples": 0.09,
-        "home_runs": 2.13,
-        "bb_hbp": 0.85,
-        "r": 2.84,
-        "rbi": 1.62,
-        "sb": 0.18
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.992,
-        "pitcher_hr": 0.906,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.008,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.826,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1438,
-        "doubles": 0.0626,
-        "triples": 0.0028,
-        "home_runs": 0.0531,
-        "bb_hbp": 0.1066,
-        "r_per_pa": 0.3554,
-        "rbi_per_pa": 0.2019
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 547180,
       "name": "Bryce Harper",
       "position": "1B",
@@ -935,6 +863,78 @@
         "bb_hbp": 0.1395,
         "r_per_pa": 0.3266,
         "rbi_per_pa": 0.1862
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 660271,
+      "name": "Shohei Ohtani",
+      "position": "TWP",
+      "team_id": 119,
+      "team_abbr": "LAD",
+      "opp_abbr": "CHC",
+      "opp_team_id": 112,
+      "opp_pitcher": {
+        "id": 571510,
+        "fullName": "Matthew Boyd"
+      },
+      "park": {
+        "id": 17,
+        "name": "Wrigley Field",
+        "runs": 104,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 10.47,
+      "mean_efp": 11.67,
+      "stats_games": 9,
+      "efp": 9.3,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.72,
+        "doubles": 1.22,
+        "triples": 0.09,
+        "home_runs": 2.08,
+        "bb_hbp": 0.89,
+        "r": 2.85,
+        "rbi": 1.6,
+        "sb": 0.18
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.992,
+        "pitcher_hr": 0.906,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.008,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.826,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.143,
+        "doubles": 0.0609,
+        "triples": 0.0028,
+        "home_runs": 0.0521,
+        "bb_hbp": 0.111,
+        "r_per_pa": 0.3558,
+        "rbi_per_pa": 0.1995
       },
       "pa": 4.0,
       "tier": "low"
@@ -2159,5 +2159,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-08-03T01:09:29.310166+00:00"
+  "generated_at": "2026-08-03T13:31:17.875142+00:00"
 }
