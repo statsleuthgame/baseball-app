@@ -1527,7 +1527,7 @@
     {
       "player_id": 656537,
       "name": "Derek Hill",
-      "position": "RF",
+      "position": "CF",
       "team_id": 143,
       "team_abbr": "PHI",
       "opp_abbr": "WSH",
@@ -2174,5 +2174,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-08-04T12:54:37.917291+00:00"
+  "generated_at": "2026-08-04T15:15:18.792214+00:00"
 }
