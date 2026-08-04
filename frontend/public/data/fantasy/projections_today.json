@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 317,
+  "projection_count": 314,
   "projections": [
     {
       "player_id": 694249,
@@ -1217,6 +1217,82 @@
       "tier": "low"
     },
     {
+      "player_id": 678545,
+      "name": "Osleivis Basabe",
+      "position": "SS",
+      "team_id": 137,
+      "team_abbr": "SF",
+      "opp_abbr": "TEX",
+      "opp_team_id": 140,
+      "opp_pitcher": {
+        "id": 669022,
+        "fullName": "MacKenzie Gore"
+      },
+      "park": {
+        "id": 5325,
+        "name": "Globe Life Field",
+        "runs": 104,
+        "hr": 108,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.21,
+      "mean_efp": 6.87,
+      "stats_games": 0,
+      "efp": 9.54,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.62,
+        "doubles": 1.13,
+        "triples": 0.1,
+        "home_runs": 3.08,
+        "bb_hbp": 0.79,
+        "r": 2.5,
+        "rbi": 1.67,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 1.08,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.968,
+        "pitcher_hr": 1.019,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.043,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.034,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.991,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1254,
+        "doubles": 0.0524,
+        "triples": 0.0029,
+        "home_runs": 0.0717,
+        "bb_hbp": 0.0924,
+        "r_per_pa": 0.2903,
+        "rbi_per_pa": 0.1937
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 665052,
       "name": "Griffin Conine",
       "position": "RF",
@@ -1821,6 +1897,82 @@
       "tier": "low"
     },
     {
+      "player_id": 808982,
+      "name": "Jung Hoo Lee",
+      "position": "RF",
+      "team_id": 137,
+      "team_abbr": "SF",
+      "opp_abbr": "TEX",
+      "opp_team_id": 140,
+      "opp_pitcher": {
+        "id": 669022,
+        "fullName": "MacKenzie Gore"
+      },
+      "park": {
+        "id": 5325,
+        "name": "Globe Life Field",
+        "runs": 104,
+        "hr": 108,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.45,
+      "mean_efp": 5.62,
+      "stats_games": 16,
+      "efp": 9.12,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.36,
+        "doubles": 1.3,
+        "triples": 0.24,
+        "home_runs": 1.39,
+        "bb_hbp": 0.62,
+        "r": 2.47,
+        "rbi": 1.51,
+        "sb": 0.52
+      },
+      "multipliers": {
+        "park_hr": 1.08,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.968,
+        "pitcher_hr": 1.019,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.043,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.034,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.918,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1827,
+        "doubles": 0.0602,
+        "triples": 0.007,
+        "home_runs": 0.0324,
+        "bb_hbp": 0.0721,
+        "r_per_pa": 0.2877,
+        "rbi_per_pa": 0.175
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 805367,
       "name": "Chase Meidroth",
       "position": "2B",
@@ -2119,160 +2271,8 @@
       },
       "pa": 4.3,
       "tier": "low"
-    },
-    {
-      "player_id": 694671,
-      "name": "Wyatt Langford",
-      "position": "LF",
-      "team_id": 140,
-      "team_abbr": "TEX",
-      "opp_abbr": "SF",
-      "opp_team_id": 137,
-      "opp_pitcher": {
-        "id": 694918,
-        "fullName": "Blade Tidwell"
-      },
-      "park": {
-        "id": 5325,
-        "name": "Globe Life Field",
-        "runs": 104,
-        "hr": 108,
-        "label": "Slight Hitter"
-      },
-      "weather": {
-        "condition": "Roof Closed",
-        "temp": "72",
-        "wind": "0 mph, None"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 5.39,
-      "mean_efp": 7.23,
-      "stats_games": 13,
-      "efp": 9.05,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.69,
-        "doubles": 1.15,
-        "triples": 0.18,
-        "home_runs": 2.05,
-        "bb_hbp": 0.78,
-        "r": 2.4,
-        "rbi": 1.34,
-        "sb": 0.73
-      },
-      "multipliers": {
-        "park_hr": 1.08,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.98,
-        "pitcher_hr": 0.92,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.129,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.167,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.044,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1309,
-        "doubles": 0.0537,
-        "triples": 0.0052,
-        "home_runs": 0.0477,
-        "bb_hbp": 0.091,
-        "r_per_pa": 0.2796,
-        "rbi_per_pa": 0.1558
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 700250,
-      "name": "Ben Rice",
-      "position": "1B",
-      "team_id": 147,
-      "team_abbr": "NYY",
-      "opp_abbr": "STL",
-      "opp_team_id": 138,
-      "opp_pitcher": {
-        "id": 690928,
-        "fullName": "Hunter Dobbins"
-      },
-      "park": {
-        "id": 3313,
-        "name": "Yankee Stadium",
-        "runs": 107,
-        "hr": 115,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "80",
-        "wind": "6 mph, R To L"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 9.94,
-      "mean_efp": 10.22,
-      "stats_games": 9,
-      "efp": 8.98,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.49,
-        "doubles": 1.04,
-        "triples": 0.17,
-        "home_runs": 2.49,
-        "bb_hbp": 0.93,
-        "r": 2.69,
-        "rbi": 1.36,
-        "sb": 0.08
-      },
-      "multipliers": {
-        "park_hr": 1.15,
-        "park_runs": 1.07,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.042,
-        "pitcher_hr": 0.987,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.973,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.905,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.124,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1159,
-        "doubles": 0.0484,
-        "triples": 0.005,
-        "home_runs": 0.0578,
-        "bb_hbp": 0.1077,
-        "r_per_pa": 0.3129,
-        "rbi_per_pa": 0.1577
-      },
-      "pa": 4.3,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-08-04T20:10:06.809874+00:00"
+  "generated_at": "2026-08-04T20:19:10.302908+00:00"
 }
