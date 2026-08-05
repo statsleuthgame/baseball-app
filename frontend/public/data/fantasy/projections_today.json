@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 379,
+  "projection_count": 376,
   "projections": [
     {
       "player_id": 670541,
@@ -83,6 +83,82 @@
       },
       "pa": 4.0,
       "tier": "medium"
+    },
+    {
+      "player_id": 660271,
+      "name": "Shohei Ohtani",
+      "position": "TWP",
+      "team_id": 119,
+      "team_abbr": "LAD",
+      "opp_abbr": "CHC",
+      "opp_team_id": 112,
+      "opp_pitcher": {
+        "id": 684007,
+        "fullName": "Shota Imanaga"
+      },
+      "park": {
+        "id": 17,
+        "name": "Wrigley Field",
+        "runs": 104,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Overcast",
+        "temp": "78",
+        "wind": "9 mph, Varies"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 10.47,
+      "mean_efp": 11.67,
+      "stats_games": 9,
+      "efp": 11.05,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.07,
+        "doubles": 1.17,
+        "triples": 0.09,
+        "home_runs": 3.1,
+        "bb_hbp": 0.86,
+        "r": 3.38,
+        "rbi": 1.75,
+        "sb": 0.2
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.972,
+        "pitcher_hr": 1.185,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.074,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.061,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1603,
+        "doubles": 0.0545,
+        "triples": 0.0027,
+        "home_runs": 0.072,
+        "bb_hbp": 0.1001,
+        "r_per_pa": 0.3926,
+        "rbi_per_pa": 0.2038
+      },
+      "pa": 4.3,
+      "tier": "low"
     },
     {
       "player_id": 686475,
@@ -391,7 +467,11 @@
         "hr": 107,
         "label": "Slight Hitter"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Overcast",
+        "temp": "78",
+        "wind": "9 mph, Varies"
+      },
       "pa_source": "default",
       "stdev_efp": 9.25,
       "mean_efp": 10.8,
@@ -440,78 +520,6 @@
         "bb_hbp": 0.1335,
         "r_per_pa": 0.3345,
         "rbi_per_pa": 0.1838
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 660271,
-      "name": "Shohei Ohtani",
-      "position": "TWP",
-      "team_id": 119,
-      "team_abbr": "LAD",
-      "opp_abbr": "CHC",
-      "opp_team_id": 112,
-      "opp_pitcher": {
-        "id": 684007,
-        "fullName": "Shota Imanaga"
-      },
-      "park": {
-        "id": 17,
-        "name": "Wrigley Field",
-        "runs": 104,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 10.47,
-      "mean_efp": 11.67,
-      "stats_games": 9,
-      "efp": 10.12,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.92,
-        "doubles": 1.09,
-        "triples": 0.09,
-        "home_runs": 2.88,
-        "bb_hbp": 0.8,
-        "r": 2.96,
-        "rbi": 1.63,
-        "sb": 0.18
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.972,
-        "pitcher_hr": 1.185,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.074,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1603,
-        "doubles": 0.0545,
-        "triples": 0.0027,
-        "home_runs": 0.072,
-        "bb_hbp": 0.1001,
-        "r_per_pa": 0.3702,
-        "rbi_per_pa": 0.2038
       },
       "pa": 4.0,
       "tier": "low"
@@ -1021,6 +1029,82 @@
       "tier": "low"
     },
     {
+      "player_id": 518692,
+      "name": "Freddie Freeman",
+      "position": "1B",
+      "team_id": 119,
+      "team_abbr": "LAD",
+      "opp_abbr": "CHC",
+      "opp_team_id": 112,
+      "opp_pitcher": {
+        "id": 684007,
+        "fullName": "Shota Imanaga"
+      },
+      "park": {
+        "id": 17,
+        "name": "Wrigley Field",
+        "runs": 104,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Overcast",
+        "temp": "78",
+        "wind": "9 mph, Varies"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 2.56,
+      "mean_efp": 3.33,
+      "stats_games": 6,
+      "efp": 9.49,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.81,
+        "doubles": 0.92,
+        "triples": 0.06,
+        "home_runs": 1.5,
+        "bb_hbp": 0.62,
+        "r": 3.34,
+        "rbi": 1.44,
+        "sb": 0.14
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.972,
+        "pitcher_hr": 1.185,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.074,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.104,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.2181,
+        "doubles": 0.0427,
+        "triples": 0.0016,
+        "home_runs": 0.0348,
+        "bb_hbp": 0.0724,
+        "r_per_pa": 0.3882,
+        "rbi_per_pa": 0.1672
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 673548,
       "name": "Seiya Suzuki",
       "position": "RF",
@@ -1039,7 +1123,11 @@
         "hr": 107,
         "label": "Slight Hitter"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Overcast",
+        "temp": "78",
+        "wind": "9 mph, Varies"
+      },
       "pa_source": "default",
       "stdev_efp": 10.17,
       "mean_efp": 7.89,
@@ -1306,6 +1394,82 @@
         "rbi_per_pa": 0.1897
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 681624,
+      "name": "Andy Pages",
+      "position": "CF",
+      "team_id": 119,
+      "team_abbr": "LAD",
+      "opp_abbr": "CHC",
+      "opp_team_id": 112,
+      "opp_pitcher": {
+        "id": 684007,
+        "fullName": "Shota Imanaga"
+      },
+      "park": {
+        "id": 17,
+        "name": "Wrigley Field",
+        "runs": 104,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Overcast",
+        "temp": "78",
+        "wind": "9 mph, Varies"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 4.89,
+      "mean_efp": 6.22,
+      "stats_games": 9,
+      "efp": 9.38,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.17,
+        "doubles": 1.02,
+        "triples": 0.14,
+        "home_runs": 2.09,
+        "bb_hbp": 0.59,
+        "r": 2.99,
+        "rbi": 1.39,
+        "sb": 0.31
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.972,
+        "pitcher_hr": 1.185,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.074,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1683,
+        "doubles": 0.0474,
+        "triples": 0.0041,
+        "home_runs": 0.0486,
+        "bb_hbp": 0.0685,
+        "r_per_pa": 0.348,
+        "rbi_per_pa": 0.1616
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -2027,152 +2191,8 @@
       },
       "pa": 4.0,
       "tier": "low"
-    },
-    {
-      "player_id": 650490,
-      "name": "Yandy D\u00edaz",
-      "position": "DH",
-      "team_id": 139,
-      "team_abbr": "TB",
-      "opp_abbr": "COL",
-      "opp_team_id": 115,
-      "opp_pitcher": {
-        "id": 608372,
-        "fullName": "Tomoyuki Sugano"
-      },
-      "park": {
-        "id": 19,
-        "name": "Coors Field",
-        "runs": 116,
-        "hr": 118,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 6.97,
-      "mean_efp": 10.0,
-      "stats_games": 10,
-      "efp": 9.12,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.64,
-        "doubles": 1.14,
-        "triples": 0.09,
-        "home_runs": 1.87,
-        "bb_hbp": 0.6,
-        "r": 2.53,
-        "rbi": 1.29,
-        "sb": 0.25
-      },
-      "multipliers": {
-        "park_hr": 1.18,
-        "park_runs": 1.16,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.06,
-        "pitcher_hr": 1.201,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.074,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.2203,
-        "doubles": 0.057,
-        "triples": 0.0027,
-        "home_runs": 0.0468,
-        "bb_hbp": 0.0747,
-        "r_per_pa": 0.3166,
-        "rbi_per_pa": 0.1613
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 695734,
-      "name": "Daylen Lile",
-      "position": "LF",
-      "team_id": 120,
-      "team_abbr": "WSH",
-      "opp_abbr": "PHI",
-      "opp_team_id": 143,
-      "opp_pitcher": {
-        "id": 691725,
-        "fullName": "Andrew Painter"
-      },
-      "park": {
-        "id": 2681,
-        "name": "Citizens Bank Park",
-        "runs": 105,
-        "hr": 112,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 6.45,
-      "mean_efp": 8.6,
-      "stats_games": 10,
-      "efp": 9.05,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.92,
-        "doubles": 0.96,
-        "triples": 0.31,
-        "home_runs": 2.61,
-        "bb_hbp": 0.52,
-        "r": 2.15,
-        "rbi": 1.33,
-        "sb": 0.53
-      },
-      "multipliers": {
-        "park_hr": 1.12,
-        "park_runs": 1.05,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.125,
-        "pitcher_hr": 1.18,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.044,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.935,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1603,
-        "doubles": 0.0478,
-        "triples": 0.0096,
-        "home_runs": 0.0653,
-        "bb_hbp": 0.0648,
-        "r_per_pa": 0.2694,
-        "rbi_per_pa": 0.166
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-08-05T12:57:17.817286+00:00"
+  "generated_at": "2026-08-05T15:06:56.084330+00:00"
 }
