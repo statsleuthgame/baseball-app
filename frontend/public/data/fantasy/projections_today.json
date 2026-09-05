@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 392,
+  "projection_count": 387,
   "projections": [
     {
       "player_id": 691718,
@@ -232,6 +232,82 @@
         "bb_hbp": 0.0881,
         "r_per_pa": 0.3189,
         "rbi_per_pa": 0.1734
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 660670,
+      "name": "Ronald Acu\u00f1a Jr.",
+      "position": "RF",
+      "team_id": 144,
+      "team_abbr": "ATL",
+      "opp_abbr": "PHI",
+      "opp_team_id": 143,
+      "opp_pitcher": {
+        "id": 554430,
+        "fullName": "Zack Wheeler"
+      },
+      "park": {
+        "id": 2681,
+        "name": "Citizens Bank Park",
+        "runs": 105,
+        "hr": 112,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "79",
+        "wind": "7 mph, In From LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 6.24,
+      "mean_efp": 9.62,
+      "stats_games": 8,
+      "efp": 9.94,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.14,
+        "doubles": 0.87,
+        "triples": 0.06,
+        "home_runs": 1.51,
+        "bb_hbp": 1.07,
+        "r": 2.94,
+        "rbi": 1.44,
+        "sb": 1.31
+      },
+      "multipliers": {
+        "park_hr": 1.12,
+        "park_runs": 1.05,
+        "weather_hr": 0.82,
+        "pitcher_hits": 0.919,
+        "pitcher_hr": 1.081,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.0,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.0,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1659,
+        "doubles": 0.0404,
+        "triples": 0.0018,
+        "home_runs": 0.0351,
+        "bb_hbp": 0.1247,
+        "r_per_pa": 0.3424,
+        "rbi_per_pa": 0.1677
       },
       "pa": 4.3,
       "tier": "low"
@@ -745,78 +821,6 @@
       "tier": "low"
     },
     {
-      "player_id": 660670,
-      "name": "Ronald Acu\u00f1a Jr.",
-      "position": "RF",
-      "team_id": 144,
-      "team_abbr": "ATL",
-      "opp_abbr": "PHI",
-      "opp_team_id": 143,
-      "opp_pitcher": {
-        "id": 554430,
-        "fullName": "Zack Wheeler"
-      },
-      "park": {
-        "id": 2681,
-        "name": "Citizens Bank Park",
-        "runs": 105,
-        "hr": 112,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 6.24,
-      "mean_efp": 9.62,
-      "stats_games": 8,
-      "efp": 9.5,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.99,
-        "doubles": 0.81,
-        "triples": 0.06,
-        "home_runs": 1.71,
-        "bb_hbp": 1.0,
-        "r": 2.74,
-        "rbi": 1.34,
-        "sb": 1.19
-      },
-      "multipliers": {
-        "park_hr": 1.12,
-        "park_runs": 1.05,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.919,
-        "pitcher_hr": 1.081,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.0,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1659,
-        "doubles": 0.0404,
-        "triples": 0.0018,
-        "home_runs": 0.0428,
-        "bb_hbp": 0.1247,
-        "r_per_pa": 0.3424,
-        "rbi_per_pa": 0.1677
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 682829,
       "name": "Elly De La Cruz",
       "position": "SS",
@@ -1181,78 +1185,6 @@
       "tier": "low"
     },
     {
-      "player_id": 671739,
-      "name": "Michael Harris II",
-      "position": "CF",
-      "team_id": 144,
-      "team_abbr": "ATL",
-      "opp_abbr": "PHI",
-      "opp_team_id": 143,
-      "opp_pitcher": {
-        "id": 554430,
-        "fullName": "Zack Wheeler"
-      },
-      "park": {
-        "id": 2681,
-        "name": "Citizens Bank Park",
-        "runs": 105,
-        "hr": 112,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 9.08,
-      "mean_efp": 12.75,
-      "stats_games": 8,
-      "efp": 9.19,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.87,
-        "doubles": 1.17,
-        "triples": 0.06,
-        "home_runs": 2.65,
-        "bb_hbp": 0.38,
-        "r": 2.36,
-        "rbi": 1.56,
-        "sb": 0.44
-      },
-      "multipliers": {
-        "park_hr": 1.12,
-        "park_runs": 1.05,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.919,
-        "pitcher_hr": 1.081,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.0,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1561,
-        "doubles": 0.0585,
-        "triples": 0.002,
-        "home_runs": 0.0663,
-        "bb_hbp": 0.047,
-        "r_per_pa": 0.2948,
-        "rbi_per_pa": 0.1949
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 695491,
       "name": "Joshua B\u00e1ez",
       "position": "LF",
@@ -1392,6 +1324,82 @@
         "bb_hbp": 0.0749,
         "r_per_pa": 0.2877,
         "rbi_per_pa": 0.1648
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 671739,
+      "name": "Michael Harris II",
+      "position": "CF",
+      "team_id": 144,
+      "team_abbr": "ATL",
+      "opp_abbr": "PHI",
+      "opp_team_id": 143,
+      "opp_pitcher": {
+        "id": 554430,
+        "fullName": "Zack Wheeler"
+      },
+      "park": {
+        "id": 2681,
+        "name": "Citizens Bank Park",
+        "runs": 105,
+        "hr": 112,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "79",
+        "wind": "7 mph, In From LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 9.08,
+      "mean_efp": 12.75,
+      "stats_games": 8,
+      "efp": 9.05,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.87,
+        "doubles": 1.17,
+        "triples": 0.06,
+        "home_runs": 2.52,
+        "bb_hbp": 0.38,
+        "r": 2.36,
+        "rbi": 1.56,
+        "sb": 0.42
+      },
+      "multipliers": {
+        "park_hr": 1.12,
+        "park_runs": 1.05,
+        "weather_hr": 0.95,
+        "pitcher_hits": 0.919,
+        "pitcher_hr": 1.081,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.0,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.0,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1561,
+        "doubles": 0.0585,
+        "triples": 0.002,
+        "home_runs": 0.063,
+        "bb_hbp": 0.047,
+        "r_per_pa": 0.2948,
+        "rbi_per_pa": 0.1949
       },
       "pa": 4.0,
       "tier": "low"
@@ -2198,5 +2206,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-09-05T18:30:28.654330+00:00"
+  "generated_at": "2026-09-05T18:32:39.860924+00:00"
 }
