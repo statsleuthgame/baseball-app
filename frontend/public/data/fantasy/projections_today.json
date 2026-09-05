@@ -116,13 +116,13 @@
       "stdev_efp": 9.25,
       "mean_efp": 10.8,
       "stats_games": 10,
-      "efp": 10.49,
+      "efp": 10.59,
       "bat_side": "L",
       "per_event": {
         "singles": 1.47,
-        "doubles": 0.94,
+        "doubles": 0.95,
         "triples": 0.28,
-        "home_runs": 2.47,
+        "home_runs": 2.57,
         "bb_hbp": 1.12,
         "r": 2.79,
         "rbi": 1.73,
@@ -132,8 +132,8 @@
         "park_hr": 0.91,
         "park_runs": 0.95,
         "weather_hr": 1.0,
-        "pitcher_hits": 1.048,
-        "pitcher_hr": 0.967,
+        "pitcher_hits": 1.053,
+        "pitcher_hr": 1.005,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -153,10 +153,10 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1137,
-        "doubles": 0.0438,
+        "singles": 0.1142,
+        "doubles": 0.044,
         "triples": 0.008,
-        "home_runs": 0.0574,
+        "home_runs": 0.0597,
         "bb_hbp": 0.1297,
         "r_per_pa": 0.3243,
         "rbi_per_pa": 0.2009
@@ -724,11 +724,11 @@
       "stdev_efp": 7.21,
       "mean_efp": 6.87,
       "stats_games": 0,
-      "efp": 9.75,
+      "efp": 9.72,
       "bat_side": "R",
       "per_event": {
-        "singles": 2.13,
-        "doubles": 0.76,
+        "singles": 2.12,
+        "doubles": 0.75,
         "triples": 0.51,
         "home_runs": 1.49,
         "bb_hbp": 0.76,
@@ -740,8 +740,8 @@
         "park_hr": 0.93,
         "park_runs": 0.96,
         "weather_hr": 0.82,
-        "pitcher_hits": 1.029,
-        "pitcher_hr": 1.037,
+        "pitcher_hits": 1.022,
+        "pitcher_hr": 1.032,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -761,10 +761,10 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1653,
-        "doubles": 0.0352,
-        "triples": 0.0148,
-        "home_runs": 0.0348,
+        "singles": 0.1641,
+        "doubles": 0.0349,
+        "triples": 0.0147,
+        "home_runs": 0.0346,
         "bb_hbp": 0.0879,
         "r_per_pa": 0.3179,
         "rbi_per_pa": 0.1727
@@ -1077,16 +1077,16 @@
       "tier": "low"
     },
     {
-      "player_id": 646240,
-      "name": "Rafael Devers",
-      "position": "1B",
-      "team_id": 137,
-      "team_abbr": "SF",
-      "opp_abbr": "NYM",
-      "opp_team_id": 121,
+      "player_id": 665742,
+      "name": "Juan Soto",
+      "position": "LF",
+      "team_id": 121,
+      "team_abbr": "NYM",
+      "opp_abbr": "SF",
+      "opp_team_id": 137,
       "opp_pitcher": {
-        "id": 804267,
-        "fullName": "Zac Thornton"
+        "id": 683627,
+        "fullName": "Anthony Molina"
       },
       "park": {
         "id": 3289,
@@ -1101,27 +1101,27 @@
         "wind": "7 mph, In From LF"
       },
       "pa_source": "lineup",
-      "stdev_efp": 5.0,
-      "mean_efp": 5.3,
-      "stats_games": 10,
+      "stdev_efp": 5.68,
+      "mean_efp": 6.5,
+      "stats_games": 6,
       "efp": 9.6,
       "bat_side": "L",
       "per_event": {
-        "singles": 1.43,
-        "doubles": 1.09,
-        "triples": 0.05,
-        "home_runs": 2.5,
-        "bb_hbp": 1.05,
-        "r": 2.92,
-        "rbi": 1.92,
-        "sb": 0.0
+        "singles": 1.59,
+        "doubles": 0.46,
+        "triples": 0.1,
+        "home_runs": 2.77,
+        "bb_hbp": 1.28,
+        "r": 2.71,
+        "rbi": 1.51,
+        "sb": 0.54
       },
       "multipliers": {
         "park_hr": 0.93,
         "park_runs": 0.96,
         "weather_hr": 0.95,
-        "pitcher_hits": 1.029,
-        "pitcher_hr": 1.037,
+        "pitcher_hits": 0.991,
+        "pitcher_hr": 1.183,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -1141,13 +1141,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.111,
-        "doubles": 0.0509,
-        "triples": 0.0013,
-        "home_runs": 0.0582,
-        "bb_hbp": 0.1222,
-        "r_per_pa": 0.3392,
-        "rbi_per_pa": 0.2227
+        "singles": 0.1236,
+        "doubles": 0.0213,
+        "triples": 0.003,
+        "home_runs": 0.0645,
+        "bb_hbp": 0.1485,
+        "r_per_pa": 0.3145,
+        "rbi_per_pa": 0.1754
       },
       "pa": 4.3,
       "tier": "low"
@@ -1224,6 +1224,82 @@
         "bb_hbp": 0.0979,
         "r_per_pa": 0.2799,
         "rbi_per_pa": 0.1659
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 646240,
+      "name": "Rafael Devers",
+      "position": "1B",
+      "team_id": 137,
+      "team_abbr": "SF",
+      "opp_abbr": "NYM",
+      "opp_team_id": 121,
+      "opp_pitcher": {
+        "id": 804267,
+        "fullName": "Zac Thornton"
+      },
+      "park": {
+        "id": 3289,
+        "name": "Citi Field",
+        "runs": 96,
+        "hr": 93,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "79",
+        "wind": "7 mph, In From LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.0,
+      "mean_efp": 5.3,
+      "stats_games": 10,
+      "efp": 9.57,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.42,
+        "doubles": 1.09,
+        "triples": 0.05,
+        "home_runs": 2.49,
+        "bb_hbp": 1.05,
+        "r": 2.92,
+        "rbi": 1.92,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 0.93,
+        "park_runs": 0.96,
+        "weather_hr": 0.95,
+        "pitcher_hits": 1.022,
+        "pitcher_hr": 1.032,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.0,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.0,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1102,
+        "doubles": 0.0505,
+        "triples": 0.0013,
+        "home_runs": 0.058,
+        "bb_hbp": 0.1222,
+        "r_per_pa": 0.3392,
+        "rbi_per_pa": 0.2227
       },
       "pa": 4.3,
       "tier": "low"
@@ -1604,82 +1680,6 @@
         "bb_hbp": 0.0779,
         "r_per_pa": 0.2887,
         "rbi_per_pa": 0.1365
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 665742,
-      "name": "Juan Soto",
-      "position": "LF",
-      "team_id": 121,
-      "team_abbr": "NYM",
-      "opp_abbr": "SF",
-      "opp_team_id": 137,
-      "opp_pitcher": {
-        "id": 683627,
-        "fullName": "Anthony Molina"
-      },
-      "park": {
-        "id": 3289,
-        "name": "Citi Field",
-        "runs": 96,
-        "hr": 93,
-        "label": "Pitcher Friendly"
-      },
-      "weather": {
-        "condition": "Sunny",
-        "temp": "79",
-        "wind": "7 mph, In From LF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 5.68,
-      "mean_efp": 6.5,
-      "stats_games": 6,
-      "efp": 9.35,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.6,
-        "doubles": 0.46,
-        "triples": 0.1,
-        "home_runs": 2.47,
-        "bb_hbp": 1.28,
-        "r": 2.71,
-        "rbi": 1.51,
-        "sb": 0.54
-      },
-      "multipliers": {
-        "park_hr": 0.93,
-        "park_runs": 0.96,
-        "weather_hr": 0.95,
-        "pitcher_hits": 0.996,
-        "pitcher_hr": 1.055,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.0,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1241,
-        "doubles": 0.0214,
-        "triples": 0.003,
-        "home_runs": 0.0576,
-        "bb_hbp": 0.1485,
-        "r_per_pa": 0.3145,
-        "rbi_per_pa": 0.1754
       },
       "pa": 4.3,
       "tier": "low"
@@ -2294,5 +2294,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-09-05T20:33:37.326725+00:00"
+  "generated_at": "2026-09-05T20:49:37.003218+00:00"
 }
