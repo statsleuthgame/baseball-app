@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 387,
+  "projection_count": 382,
   "projections": [
     {
       "player_id": 691718,
@@ -89,9 +89,9 @@
       "tier": "low"
     },
     {
-      "player_id": 691182,
-      "name": "Adael Amador",
-      "position": "2B",
+      "player_id": 664983,
+      "name": "Jake McCarthy",
+      "position": "LF",
       "team_id": 115,
       "team_abbr": "COL",
       "opp_abbr": "STL",
@@ -107,27 +107,31 @@
         "hr": 118,
         "label": "Hitter Friendly"
       },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.21,
-      "mean_efp": 6.87,
-      "stats_games": 0,
-      "efp": 10.02,
-      "bat_side": "S",
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "90",
+        "wind": "8 mph, In From CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 1.96,
+      "mean_efp": 6.86,
+      "stats_games": 7,
+      "efp": 10.64,
+      "bat_side": "L",
       "per_event": {
-        "singles": 2.25,
-        "doubles": 1.41,
-        "triples": 0.11,
-        "home_runs": 2.57,
-        "bb_hbp": 0.93,
-        "r": 2.67,
-        "rbi": 1.5,
-        "sb": 0.0
+        "singles": 2.58,
+        "doubles": 1.44,
+        "triples": 0.82,
+        "home_runs": 1.58,
+        "bb_hbp": 0.67,
+        "r": 2.58,
+        "rbi": 1.46,
+        "sb": 1.02
       },
       "multipliers": {
         "park_hr": 1.18,
         "park_runs": 1.16,
-        "weather_hr": 1.0,
+        "weather_hr": 0.945,
         "pitcher_hits": 1.09,
         "pitcher_hr": 1.143,
         "slot_r": 1.0,
@@ -149,15 +153,15 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1876,
-        "doubles": 0.0705,
-        "triples": 0.0034,
-        "home_runs": 0.0642,
-        "bb_hbp": 0.1156,
-        "r_per_pa": 0.3337,
-        "rbi_per_pa": 0.188
+        "singles": 0.1997,
+        "doubles": 0.0668,
+        "triples": 0.0238,
+        "home_runs": 0.0368,
+        "bb_hbp": 0.0783,
+        "r_per_pa": 0.2996,
+        "rbi_per_pa": 0.1695
       },
-      "pa": 4.0,
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -313,78 +317,6 @@
       "tier": "low"
     },
     {
-      "player_id": 664983,
-      "name": "Jake McCarthy",
-      "position": "LF",
-      "team_id": 115,
-      "team_abbr": "COL",
-      "opp_abbr": "STL",
-      "opp_team_id": 138,
-      "opp_pitcher": {
-        "id": 669461,
-        "fullName": "Matthew Liberatore"
-      },
-      "park": {
-        "id": 19,
-        "name": "Coors Field",
-        "runs": 116,
-        "hr": 118,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 1.96,
-      "mean_efp": 6.86,
-      "stats_games": 7,
-      "efp": 9.94,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.4,
-        "doubles": 1.34,
-        "triples": 0.76,
-        "home_runs": 1.56,
-        "bb_hbp": 0.63,
-        "r": 2.4,
-        "rbi": 1.36,
-        "sb": 0.91
-      },
-      "multipliers": {
-        "park_hr": 1.18,
-        "park_runs": 1.16,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.09,
-        "pitcher_hr": 1.143,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.0,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1997,
-        "doubles": 0.0668,
-        "triples": 0.0238,
-        "home_runs": 0.039,
-        "bb_hbp": 0.0783,
-        "r_per_pa": 0.2996,
-        "rbi_per_pa": 0.1695
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 681198,
       "name": "TJ Rumfield",
       "position": "1B",
@@ -403,18 +335,22 @@
         "hr": 118,
         "label": "Hitter Friendly"
       },
-      "weather": null,
-      "pa_source": "default",
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "90",
+        "wind": "8 mph, In From CF"
+      },
+      "pa_source": "lineup",
       "stdev_efp": 5.91,
       "mean_efp": 7.67,
       "stats_games": 9,
-      "efp": 9.87,
+      "efp": 9.79,
       "bat_side": "L",
       "per_event": {
         "singles": 2.72,
         "doubles": 0.96,
         "triples": 0.39,
-        "home_runs": 1.78,
+        "home_runs": 1.68,
         "bb_hbp": 1.1,
         "r": 2.89,
         "rbi": 1.44,
@@ -423,7 +359,7 @@
       "multipliers": {
         "park_hr": 1.18,
         "park_runs": 1.16,
-        "weather_hr": 1.0,
+        "weather_hr": 0.945,
         "pitcher_hits": 1.09,
         "pitcher_hr": 1.143,
         "slot_r": 1.0,
@@ -448,82 +384,10 @@
         "singles": 0.2267,
         "doubles": 0.0478,
         "triples": 0.0121,
-        "home_runs": 0.0445,
+        "home_runs": 0.0421,
         "bb_hbp": 0.1377,
         "r_per_pa": 0.3609,
         "rbi_per_pa": 0.1795
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 695336,
-      "name": "Thomas Saggese",
-      "position": "LF",
-      "team_id": 138,
-      "team_abbr": "STL",
-      "opp_abbr": "COL",
-      "opp_team_id": 115,
-      "opp_pitcher": {
-        "id": 690279,
-        "fullName": "Mason Adams"
-      },
-      "park": {
-        "id": 19,
-        "name": "Coors Field",
-        "runs": 116,
-        "hr": 118,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 4.32,
-      "mean_efp": 4.56,
-      "stats_games": 9,
-      "efp": 9.79,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.22,
-        "doubles": 0.91,
-        "triples": 0.37,
-        "home_runs": 2.38,
-        "bb_hbp": 0.69,
-        "r": 2.57,
-        "rbi": 1.55,
-        "sb": 0.5
-      },
-      "multipliers": {
-        "park_hr": 1.18,
-        "park_runs": 1.16,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.98,
-        "pitcher_hr": 1.147,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.0,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1847,
-        "doubles": 0.0453,
-        "triples": 0.0116,
-        "home_runs": 0.0596,
-        "bb_hbp": 0.0865,
-        "r_per_pa": 0.3212,
-        "rbi_per_pa": 0.1933
       },
       "pa": 4.0,
       "tier": "low"
@@ -605,6 +469,82 @@
       "tier": "low"
     },
     {
+      "player_id": 695336,
+      "name": "Thomas Saggese",
+      "position": "LF",
+      "team_id": 138,
+      "team_abbr": "STL",
+      "opp_abbr": "COL",
+      "opp_team_id": 115,
+      "opp_pitcher": {
+        "id": 690279,
+        "fullName": "Mason Adams"
+      },
+      "park": {
+        "id": 19,
+        "name": "Coors Field",
+        "runs": 116,
+        "hr": 118,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "90",
+        "wind": "8 mph, In From CF"
+      },
+      "pa_source": "default",
+      "stdev_efp": 4.32,
+      "mean_efp": 4.56,
+      "stats_games": 9,
+      "efp": 9.68,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.22,
+        "doubles": 0.91,
+        "triples": 0.37,
+        "home_runs": 2.25,
+        "bb_hbp": 0.69,
+        "r": 2.57,
+        "rbi": 1.55,
+        "sb": 0.5
+      },
+      "multipliers": {
+        "park_hr": 1.18,
+        "park_runs": 1.16,
+        "weather_hr": 0.945,
+        "pitcher_hits": 0.98,
+        "pitcher_hr": 1.147,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.0,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.0,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1847,
+        "doubles": 0.0453,
+        "triples": 0.0116,
+        "home_runs": 0.0563,
+        "bb_hbp": 0.0865,
+        "r_per_pa": 0.3212,
+        "rbi_per_pa": 0.1933
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
       "player_id": 670541,
       "name": "Yordan Alvarez",
       "position": "DH",
@@ -677,16 +617,16 @@
       "tier": "low"
     },
     {
-      "player_id": 691023,
-      "name": "Jordan Walker",
-      "position": "RF",
-      "team_id": 138,
-      "team_abbr": "STL",
-      "opp_abbr": "COL",
-      "opp_team_id": 115,
+      "player_id": 696100,
+      "name": "Hunter Goodman",
+      "position": "C",
+      "team_id": 115,
+      "team_abbr": "COL",
+      "opp_abbr": "STL",
+      "opp_team_id": 138,
       "opp_pitcher": {
-        "id": 690279,
-        "fullName": "Mason Adams"
+        "id": 669461,
+        "fullName": "Matthew Liberatore"
       },
       "park": {
         "id": 19,
@@ -695,29 +635,33 @@
         "hr": 118,
         "label": "Hitter Friendly"
       },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 6.88,
-      "mean_efp": 8.57,
-      "stats_games": 7,
-      "efp": 9.63,
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "90",
+        "wind": "8 mph, In From CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 9.37,
+      "mean_efp": 8.17,
+      "stats_games": 6,
+      "efp": 9.58,
       "bat_side": "R",
       "per_event": {
-        "singles": 2.26,
-        "doubles": 1.37,
-        "triples": 0.02,
-        "home_runs": 2.3,
-        "bb_hbp": 0.53,
+        "singles": 2.05,
+        "doubles": 1.21,
+        "triples": 0.07,
+        "home_runs": 2.8,
+        "bb_hbp": 0.84,
         "r": 2.41,
-        "rbi": 1.42,
-        "sb": 0.69
+        "rbi": 1.43,
+        "sb": 0.13
       },
       "multipliers": {
         "park_hr": 1.18,
         "park_runs": 1.16,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.98,
-        "pitcher_hr": 1.147,
+        "weather_hr": 0.945,
+        "pitcher_hits": 1.09,
+        "pitcher_hr": 1.143,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -737,15 +681,15 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1883,
-        "doubles": 0.0684,
-        "triples": 0.0006,
-        "home_runs": 0.0575,
-        "bb_hbp": 0.0661,
-        "r_per_pa": 0.3009,
-        "rbi_per_pa": 0.1774
+        "singles": 0.1588,
+        "doubles": 0.0561,
+        "triples": 0.002,
+        "home_runs": 0.0652,
+        "bb_hbp": 0.0979,
+        "r_per_pa": 0.2799,
+        "rbi_per_pa": 0.1659
       },
-      "pa": 4.0,
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -816,6 +760,82 @@
         "bb_hbp": 0.1192,
         "r_per_pa": 0.3365,
         "rbi_per_pa": 0.1603
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 691023,
+      "name": "Jordan Walker",
+      "position": "RF",
+      "team_id": 138,
+      "team_abbr": "STL",
+      "opp_abbr": "COL",
+      "opp_team_id": 115,
+      "opp_pitcher": {
+        "id": 690279,
+        "fullName": "Mason Adams"
+      },
+      "park": {
+        "id": 19,
+        "name": "Coors Field",
+        "runs": 116,
+        "hr": 118,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "90",
+        "wind": "8 mph, In From CF"
+      },
+      "pa_source": "default",
+      "stdev_efp": 6.88,
+      "mean_efp": 8.57,
+      "stats_games": 7,
+      "efp": 9.52,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.26,
+        "doubles": 1.37,
+        "triples": 0.02,
+        "home_runs": 2.17,
+        "bb_hbp": 0.53,
+        "r": 2.41,
+        "rbi": 1.42,
+        "sb": 0.69
+      },
+      "multipliers": {
+        "park_hr": 1.18,
+        "park_runs": 1.16,
+        "weather_hr": 0.945,
+        "pitcher_hits": 0.98,
+        "pitcher_hr": 1.147,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.0,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.0,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1883,
+        "doubles": 0.0684,
+        "triples": 0.0006,
+        "home_runs": 0.0543,
+        "bb_hbp": 0.0661,
+        "r_per_pa": 0.3009,
+        "rbi_per_pa": 0.1774
       },
       "pa": 4.0,
       "tier": "low"
@@ -960,78 +980,6 @@
         "bb_hbp": 0.1352,
         "r_per_pa": 0.3346,
         "rbi_per_pa": 0.191
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 691728,
-      "name": "Zac Veen",
-      "position": "LF",
-      "team_id": 115,
-      "team_abbr": "COL",
-      "opp_abbr": "STL",
-      "opp_team_id": 138,
-      "opp_pitcher": {
-        "id": 669461,
-        "fullName": "Matthew Liberatore"
-      },
-      "park": {
-        "id": 19,
-        "name": "Coors Field",
-        "runs": 116,
-        "hr": 118,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.21,
-      "mean_efp": 6.87,
-      "stats_games": 0,
-      "efp": 9.33,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.05,
-        "doubles": 1.28,
-        "triples": 0.85,
-        "home_runs": 1.56,
-        "bb_hbp": 0.88,
-        "r": 2.51,
-        "rbi": 1.35,
-        "sb": 0.17
-      },
-      "multipliers": {
-        "park_hr": 1.18,
-        "park_runs": 1.16,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.09,
-        "pitcher_hr": 1.143,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.0,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.171,
-        "doubles": 0.0642,
-        "triples": 0.0265,
-        "home_runs": 0.039,
-        "bb_hbp": 0.1094,
-        "r_per_pa": 0.3135,
-        "rbi_per_pa": 0.1688
       },
       "pa": 4.0,
       "tier": "low"
@@ -1185,81 +1133,9 @@
       "tier": "low"
     },
     {
-      "player_id": 695491,
-      "name": "Joshua B\u00e1ez",
-      "position": "LF",
-      "team_id": 138,
-      "team_abbr": "STL",
-      "opp_abbr": "COL",
-      "opp_team_id": 115,
-      "opp_pitcher": {
-        "id": 690279,
-        "fullName": "Mason Adams"
-      },
-      "park": {
-        "id": 19,
-        "name": "Coors Field",
-        "runs": 116,
-        "hr": 118,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.21,
-      "mean_efp": 6.87,
-      "stats_games": 0,
-      "efp": 9.13,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.34,
-        "doubles": 1.42,
-        "triples": 0.06,
-        "home_runs": 2.74,
-        "bb_hbp": 0.71,
-        "r": 2.3,
-        "rbi": 1.47,
-        "sb": 0.4
-      },
-      "multipliers": {
-        "park_hr": 1.18,
-        "park_runs": 1.16,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.98,
-        "pitcher_hr": 1.147,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.0,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1113,
-        "doubles": 0.0708,
-        "triples": 0.002,
-        "home_runs": 0.0685,
-        "bb_hbp": 0.0882,
-        "r_per_pa": 0.287,
-        "rbi_per_pa": 0.1835
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 694249,
-      "name": "Cole Carrigg",
-      "position": "CF",
+      "player_id": 691182,
+      "name": "Adael Amador",
+      "position": "2B",
       "team_id": 115,
       "team_abbr": "COL",
       "opp_abbr": "STL",
@@ -1275,27 +1151,31 @@
         "hr": 118,
         "label": "Hitter Friendly"
       },
-      "weather": null,
-      "pa_source": "default",
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "90",
+        "wind": "8 mph, In From CF"
+      },
+      "pa_source": "lineup",
       "stdev_efp": 7.21,
       "mean_efp": 6.87,
       "stats_games": 0,
-      "efp": 9.13,
+      "efp": 9.15,
       "bat_side": "S",
       "per_event": {
-        "singles": 1.98,
-        "doubles": 1.8,
-        "triples": 0.52,
-        "home_runs": 1.54,
-        "bb_hbp": 0.6,
-        "r": 2.3,
-        "rbi": 1.32,
-        "sb": 0.36
+        "singles": 2.08,
+        "doubles": 1.3,
+        "triples": 0.1,
+        "home_runs": 2.24,
+        "bb_hbp": 0.86,
+        "r": 2.47,
+        "rbi": 1.39,
+        "sb": 0.0
       },
       "multipliers": {
         "park_hr": 1.18,
         "park_runs": 1.16,
-        "weather_hr": 1.0,
+        "weather_hr": 0.945,
         "pitcher_hits": 1.09,
         "pitcher_hr": 1.143,
         "slot_r": 1.0,
@@ -1317,15 +1197,15 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1652,
-        "doubles": 0.09,
-        "triples": 0.0163,
-        "home_runs": 0.0385,
-        "bb_hbp": 0.0749,
-        "r_per_pa": 0.2877,
-        "rbi_per_pa": 0.1648
+        "singles": 0.1876,
+        "doubles": 0.0705,
+        "triples": 0.0034,
+        "home_runs": 0.0606,
+        "bb_hbp": 0.1156,
+        "r_per_pa": 0.3337,
+        "rbi_per_pa": 0.188
       },
-      "pa": 4.0,
+      "pa": 3.7,
       "tier": "low"
     },
     {
@@ -1405,78 +1285,6 @@
       "tier": "low"
     },
     {
-      "player_id": 696100,
-      "name": "Hunter Goodman",
-      "position": "C",
-      "team_id": 115,
-      "team_abbr": "COL",
-      "opp_abbr": "STL",
-      "opp_team_id": 138,
-      "opp_pitcher": {
-        "id": 669461,
-        "fullName": "Matthew Liberatore"
-      },
-      "park": {
-        "id": 19,
-        "name": "Coors Field",
-        "runs": 116,
-        "hr": 118,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 9.37,
-      "mean_efp": 8.17,
-      "stats_games": 6,
-      "efp": 9.05,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.91,
-        "doubles": 1.12,
-        "triples": 0.06,
-        "home_runs": 2.76,
-        "bb_hbp": 0.78,
-        "r": 2.24,
-        "rbi": 1.33,
-        "sb": 0.13
-      },
-      "multipliers": {
-        "park_hr": 1.18,
-        "park_runs": 1.16,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.09,
-        "pitcher_hr": 1.143,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.0,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1588,
-        "doubles": 0.0561,
-        "triples": 0.002,
-        "home_runs": 0.069,
-        "bb_hbp": 0.0979,
-        "r_per_pa": 0.2799,
-        "rbi_per_pa": 0.1659
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 683734,
       "name": "Andrew Vaughn",
       "position": "1B",
@@ -1544,6 +1352,82 @@
         "bb_hbp": 0.1102,
         "r_per_pa": 0.3418,
         "rbi_per_pa": 0.171
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 694249,
+      "name": "Cole Carrigg",
+      "position": "CF",
+      "team_id": 115,
+      "team_abbr": "COL",
+      "opp_abbr": "STL",
+      "opp_team_id": 138,
+      "opp_pitcher": {
+        "id": 669461,
+        "fullName": "Matthew Liberatore"
+      },
+      "park": {
+        "id": 19,
+        "name": "Coors Field",
+        "runs": 116,
+        "hr": 118,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "90",
+        "wind": "8 mph, In From CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.21,
+      "mean_efp": 6.87,
+      "stats_games": 0,
+      "efp": 9.04,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 1.98,
+        "doubles": 1.8,
+        "triples": 0.52,
+        "home_runs": 1.46,
+        "bb_hbp": 0.6,
+        "r": 2.3,
+        "rbi": 1.32,
+        "sb": 0.34
+      },
+      "multipliers": {
+        "park_hr": 1.18,
+        "park_runs": 1.16,
+        "weather_hr": 0.945,
+        "pitcher_hits": 1.09,
+        "pitcher_hr": 1.143,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.0,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.0,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1652,
+        "doubles": 0.09,
+        "triples": 0.0163,
+        "home_runs": 0.0364,
+        "bb_hbp": 0.0749,
+        "r_per_pa": 0.2877,
+        "rbi_per_pa": 0.1648
       },
       "pa": 4.0,
       "tier": "low"
@@ -1688,6 +1572,82 @@
         "bb_hbp": 0.0881,
         "r_per_pa": 0.3083,
         "rbi_per_pa": 0.1489
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 695491,
+      "name": "Joshua B\u00e1ez",
+      "position": "LF",
+      "team_id": 138,
+      "team_abbr": "STL",
+      "opp_abbr": "COL",
+      "opp_team_id": 115,
+      "opp_pitcher": {
+        "id": 690279,
+        "fullName": "Mason Adams"
+      },
+      "park": {
+        "id": 19,
+        "name": "Coors Field",
+        "runs": 116,
+        "hr": 118,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "90",
+        "wind": "8 mph, In From CF"
+      },
+      "pa_source": "default",
+      "stdev_efp": 7.21,
+      "mean_efp": 6.87,
+      "stats_games": 0,
+      "efp": 9.0,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.34,
+        "doubles": 1.42,
+        "triples": 0.06,
+        "home_runs": 2.59,
+        "bb_hbp": 0.71,
+        "r": 2.3,
+        "rbi": 1.47,
+        "sb": 0.4
+      },
+      "multipliers": {
+        "park_hr": 1.18,
+        "park_runs": 1.16,
+        "weather_hr": 0.945,
+        "pitcher_hits": 0.98,
+        "pitcher_hr": 1.147,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.0,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.0,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1113,
+        "doubles": 0.0708,
+        "triples": 0.002,
+        "home_runs": 0.0647,
+        "bb_hbp": 0.0882,
+        "r_per_pa": 0.287,
+        "rbi_per_pa": 0.1835
       },
       "pa": 4.0,
       "tier": "low"
@@ -2203,8 +2163,80 @@
       },
       "pa": 4.0,
       "tier": "low"
+    },
+    {
+      "player_id": 695600,
+      "name": "Carter Jensen",
+      "position": "C",
+      "team_id": 118,
+      "team_abbr": "KC",
+      "opp_abbr": "TOR",
+      "opp_team_id": 141,
+      "opp_pitcher": {
+        "id": 453286,
+        "fullName": "Max Scherzer"
+      },
+      "park": {
+        "id": 7,
+        "name": "Kauffman Stadium",
+        "runs": 101,
+        "hr": 99,
+        "label": "Neutral"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 6.02,
+      "mean_efp": 11.62,
+      "stats_games": 8,
+      "efp": 8.85,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.19,
+        "doubles": 1.15,
+        "triples": 0.27,
+        "home_runs": 2.63,
+        "bb_hbp": 0.87,
+        "r": 2.4,
+        "rbi": 1.53,
+        "sb": 0.06
+      },
+      "multipliers": {
+        "park_hr": 0.99,
+        "park_runs": 1.01,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.977,
+        "pitcher_hr": 1.196,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.0,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.0,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.099,
+        "doubles": 0.0576,
+        "triples": 0.0084,
+        "home_runs": 0.0657,
+        "bb_hbp": 0.109,
+        "r_per_pa": 0.3003,
+        "rbi_per_pa": 0.1918
+      },
+      "pa": 4.0,
+      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-09-05T18:32:39.860924+00:00"
+  "generated_at": "2026-09-05T18:40:50.204593+00:00"
 }
