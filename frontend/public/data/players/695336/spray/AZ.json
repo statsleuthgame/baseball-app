@@ -1,1 +1,1 @@
-{"hits":[{"x":-95.2,"y":96.9,"result":"double","event":"double","date":"2025-07-19","exitVelo":97.7,"launchAngle":20.0,"pitchType":"CH","hitDistance":275.0,"pitcher":663765,"pitcherName":"","opponent":"AZ"}],"summary":{"single":0,"double":1,"triple":0,"home_run":0,"out":0,"total":1}}
+{"hits":[{"x":-95.2,"y":96.9,"result":"double","event":"double","date":"2025-07-19","exitVelo":97.7,"launchAngle":20.0,"pitchType":"FS","hitDistance":275.0,"pitcher":663765,"pitcherName":"","opponent":"AZ"}],"summary":{"single":0,"double":1,"triple":0,"home_run":0,"out":0,"total":1}}
