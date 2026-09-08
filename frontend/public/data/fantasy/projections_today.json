@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 308,
+  "projection_count": 300,
   "projections": [
     {
       "player_id": 670541,
@@ -33,8 +33,8 @@
       },
       "weather": {
         "condition": "Partly Cloudy",
-        "temp": "81",
-        "wind": "5 mph, Out To RF"
+        "temp": "84",
+        "wind": "6 mph, Out To RF"
       },
       "pa_source": "lineup",
       "stdev_efp": 8.23,
@@ -773,6 +773,82 @@
       "tier": "low"
     },
     {
+      "player_id": 646240,
+      "name": "Rafael Devers",
+      "position": "1B",
+      "team_id": 137,
+      "team_abbr": "SF",
+      "opp_abbr": "STL",
+      "opp_team_id": 138,
+      "opp_pitcher": {
+        "id": 687273,
+        "fullName": "Quinn Mathews"
+      },
+      "park": {
+        "id": 2395,
+        "name": "Oracle Park",
+        "runs": 93,
+        "hr": 88,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "69",
+        "wind": "12 mph, Out To CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.0,
+      "mean_efp": 5.3,
+      "stats_games": 10,
+      "efp": 9.6,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.33,
+        "doubles": 1.29,
+        "triples": 0.04,
+        "home_runs": 1.76,
+        "bb_hbp": 1.29,
+        "r": 3.28,
+        "rbi": 1.95,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 0.88,
+        "park_runs": 0.93,
+        "weather_hr": 1.08,
+        "pitcher_hits": 1.051,
+        "pitcher_hr": 0.662,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.017,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.121,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1032,
+        "doubles": 0.0601,
+        "triples": 0.0013,
+        "home_runs": 0.041,
+        "bb_hbp": 0.1502,
+        "r_per_pa": 0.3816,
+        "rbi_per_pa": 0.2265
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 681198,
       "name": "TJ Rumfield",
       "position": "1B",
@@ -1148,6 +1224,82 @@
         "bb_hbp": 0.1291,
         "r_per_pa": 0.3379,
         "rbi_per_pa": 0.1583
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 668227,
+      "name": "Randy Arozarena",
+      "position": "LF",
+      "team_id": 136,
+      "team_abbr": "SEA",
+      "opp_abbr": "TEX",
+      "opp_team_id": 140,
+      "opp_pitcher": {
+        "id": 615698,
+        "fullName": "Cal Quantrill"
+      },
+      "park": {
+        "id": 680,
+        "name": "T-Mobile Park",
+        "runs": 95,
+        "hr": 96,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Clear",
+        "temp": "69",
+        "wind": "9 mph, In From LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 6.78,
+      "mean_efp": 9.0,
+      "stats_games": 10,
+      "efp": 9.33,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.76,
+        "doubles": 0.95,
+        "triples": 0.06,
+        "home_runs": 1.38,
+        "bb_hbp": 0.88,
+        "r": 3.27,
+        "rbi": 1.51,
+        "sb": 0.85
+      },
+      "multipliers": {
+        "park_hr": 0.96,
+        "park_runs": 0.95,
+        "weather_hr": 0.82,
+        "pitcher_hits": 0.942,
+        "pitcher_hr": 0.988,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.027,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.116,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1362,
+        "doubles": 0.044,
+        "triples": 0.0017,
+        "home_runs": 0.032,
+        "bb_hbp": 0.1019,
+        "r_per_pa": 0.3808,
+        "rbi_per_pa": 0.1759
       },
       "pa": 4.3,
       "tier": "low"
@@ -1769,8 +1921,8 @@
       },
       "weather": {
         "condition": "Partly Cloudy",
-        "temp": "81",
-        "wind": "5 mph, Out To RF"
+        "temp": "84",
+        "wind": "6 mph, Out To RF"
       },
       "pa_source": "lineup",
       "stdev_efp": 8.22,
@@ -2127,160 +2279,8 @@
       },
       "pa": 4.3,
       "tier": "low"
-    },
-    {
-      "player_id": 641355,
-      "name": "Cody Bellinger",
-      "position": "LF",
-      "team_id": 147,
-      "team_abbr": "NYY",
-      "opp_abbr": "COL",
-      "opp_team_id": 115,
-      "opp_pitcher": {
-        "id": 687312,
-        "fullName": "Gabriel Hughes"
-      },
-      "park": {
-        "id": 3313,
-        "name": "Yankee Stadium",
-        "runs": 107,
-        "hr": 115,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "78",
-        "wind": "3 mph, Out To RF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 4.42,
-      "mean_efp": 5.0,
-      "stats_games": 9,
-      "efp": 9.08,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.65,
-        "doubles": 0.87,
-        "triples": 0.18,
-        "home_runs": 1.15,
-        "bb_hbp": 0.84,
-        "r": 3.05,
-        "rbi": 1.24,
-        "sb": 0.38
-      },
-      "multipliers": {
-        "park_hr": 1.15,
-        "park_runs": 1.07,
-        "weather_hr": 1.15,
-        "pitcher_hits": 1.031,
-        "pitcher_hr": 0.903,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.025,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.019,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.15,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.2054,
-        "doubles": 0.0407,
-        "triples": 0.0054,
-        "home_runs": 0.0268,
-        "bb_hbp": 0.0972,
-        "r_per_pa": 0.3544,
-        "rbi_per_pa": 0.144
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 624413,
-      "name": "Pete Alonso",
-      "position": "1B",
-      "team_id": 110,
-      "team_abbr": "BAL",
-      "opp_abbr": "CLE",
-      "opp_team_id": 114,
-      "opp_pitcher": {
-        "id": 676440,
-        "fullName": "Tanner Bibee"
-      },
-      "park": {
-        "id": 2,
-        "name": "Camden Yards",
-        "runs": 103,
-        "hr": 108,
-        "label": "Slight Hitter"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "82",
-        "wind": "8 mph, R To L"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 6.53,
-      "mean_efp": 6.56,
-      "stats_games": 9,
-      "efp": 9.05,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.78,
-        "doubles": 0.72,
-        "triples": 0.02,
-        "home_runs": 2.61,
-        "bb_hbp": 0.94,
-        "r": 2.71,
-        "rbi": 1.39,
-        "sb": 0.15
-      },
-      "multipliers": {
-        "park_hr": 1.08,
-        "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.977,
-        "pitcher_hr": 1.099,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.072,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.782,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 0.989,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1383,
-        "doubles": 0.0334,
-        "triples": 0.0005,
-        "home_runs": 0.0607,
-        "bb_hbp": 0.1095,
-        "r_per_pa": 0.3155,
-        "rbi_per_pa": 0.1621
-      },
-      "pa": 4.3,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-09-08T21:20:10.207930+00:00"
+  "generated_at": "2026-09-08T21:32:36.556728+00:00"
 }
