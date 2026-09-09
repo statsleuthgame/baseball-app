@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 401,
+  "projection_count": 377,
   "projections": [
     {
       "player_id": 691718,
@@ -82,6 +82,82 @@
         "rbi_per_pa": 0.2039
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 703607,
+      "name": "Henry Bolte",
+      "position": "CF",
+      "team_id": 133,
+      "team_abbr": "ATH",
+      "opp_abbr": "TOR",
+      "opp_team_id": 141,
+      "opp_pitcher": {
+        "id": 680755,
+        "fullName": "Braydon Fisher"
+      },
+      "park": {
+        "id": 2529,
+        "name": "Unknown",
+        "runs": 100,
+        "hr": 100,
+        "label": "Neutral"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "92",
+        "wind": "8 mph, L To R"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.21,
+      "mean_efp": 6.87,
+      "stats_games": 0,
+      "efp": 10.11,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.98,
+        "doubles": 0.64,
+        "triples": 0.08,
+        "home_runs": 1.33,
+        "bb_hbp": 1.42,
+        "r": 2.99,
+        "rbi": 1.48,
+        "sb": 1.63
+      },
+      "multipliers": {
+        "park_hr": 1.0,
+        "park_runs": 1.0,
+        "weather_hr": 1.05,
+        "pitcher_hits": 0.856,
+        "pitcher_hr": 0.942,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.97,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.999,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1538,
+        "doubles": 0.0296,
+        "triples": 0.0022,
+        "home_runs": 0.0309,
+        "bb_hbp": 0.1653,
+        "r_per_pa": 0.3474,
+        "rbi_per_pa": 0.1721
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -661,78 +737,6 @@
       "tier": "low"
     },
     {
-      "player_id": 703607,
-      "name": "Henry Bolte",
-      "position": "CF",
-      "team_id": 133,
-      "team_abbr": "ATH",
-      "opp_abbr": "TOR",
-      "opp_team_id": 141,
-      "opp_pitcher": {
-        "id": 680755,
-        "fullName": "Braydon Fisher"
-      },
-      "park": {
-        "id": 2529,
-        "name": "Unknown",
-        "runs": 100,
-        "hr": 100,
-        "label": "Neutral"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.21,
-      "mean_efp": 6.87,
-      "stats_games": 0,
-      "efp": 9.3,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.85,
-        "doubles": 0.59,
-        "triples": 0.07,
-        "home_runs": 1.18,
-        "bb_hbp": 1.32,
-        "r": 2.78,
-        "rbi": 1.38,
-        "sb": 1.45
-      },
-      "multipliers": {
-        "park_hr": 1.0,
-        "park_runs": 1.0,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.856,
-        "pitcher_hr": 0.942,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.97,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1538,
-        "doubles": 0.0296,
-        "triples": 0.0022,
-        "home_runs": 0.0294,
-        "bb_hbp": 0.1653,
-        "r_per_pa": 0.3478,
-        "rbi_per_pa": 0.1721
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 686475,
       "name": "Tyler Tolbert",
       "position": "SS",
@@ -872,6 +876,158 @@
         "bb_hbp": 0.0805,
         "r_per_pa": 0.352,
         "rbi_per_pa": 0.2113
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 680869,
+      "name": "Zack Gelof",
+      "position": "3B",
+      "team_id": 133,
+      "team_abbr": "ATH",
+      "opp_abbr": "TOR",
+      "opp_team_id": 141,
+      "opp_pitcher": {
+        "id": 680755,
+        "fullName": "Braydon Fisher"
+      },
+      "park": {
+        "id": 2529,
+        "name": "Unknown",
+        "runs": 100,
+        "hr": 100,
+        "label": "Neutral"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "92",
+        "wind": "8 mph, L To R"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.21,
+      "mean_efp": 6.87,
+      "stats_games": 0,
+      "efp": 9.23,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.38,
+        "doubles": 0.85,
+        "triples": 0.27,
+        "home_runs": 2.12,
+        "bb_hbp": 0.88,
+        "r": 2.33,
+        "rbi": 1.54,
+        "sb": 1.16
+      },
+      "multipliers": {
+        "park_hr": 1.0,
+        "park_runs": 1.0,
+        "weather_hr": 1.05,
+        "pitcher_hits": 0.856,
+        "pitcher_hr": 0.942,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.97,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.965,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1071,
+        "doubles": 0.0394,
+        "triples": 0.0078,
+        "home_runs": 0.0494,
+        "bb_hbp": 0.1021,
+        "r_per_pa": 0.2715,
+        "rbi_per_pa": 0.1786
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 695578,
+      "name": "James Wood",
+      "position": "RF",
+      "team_id": 120,
+      "team_abbr": "WSH",
+      "opp_abbr": "SD",
+      "opp_team_id": 135,
+      "opp_pitcher": {
+        "id": 621111,
+        "fullName": "Walker Buehler"
+      },
+      "park": {
+        "id": 2680,
+        "name": "Petco Park",
+        "runs": 95,
+        "hr": 93,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "86",
+        "wind": "10 mph, Out To RF"
+      },
+      "pa_source": "default",
+      "stdev_efp": 8.76,
+      "mean_efp": 10.82,
+      "stats_games": 11,
+      "efp": 9.17,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.36,
+        "doubles": 1.1,
+        "triples": 0.06,
+        "home_runs": 1.89,
+        "bb_hbp": 1.28,
+        "r": 2.67,
+        "rbi": 1.37,
+        "sb": 0.74
+      },
+      "multipliers": {
+        "park_hr": 0.93,
+        "park_runs": 0.95,
+        "weather_hr": 1.208,
+        "pitcher_hits": 1.019,
+        "pitcher_hr": 1.026,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.961,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.98,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1131,
+        "doubles": 0.055,
+        "triples": 0.0019,
+        "home_runs": 0.0473,
+        "bb_hbp": 0.16,
+        "r_per_pa": 0.3337,
+        "rbi_per_pa": 0.1709
       },
       "pa": 4.0,
       "tier": "low"
@@ -1738,16 +1894,16 @@
       "tier": "low"
     },
     {
-      "player_id": 695578,
-      "name": "James Wood",
+      "player_id": 665487,
+      "name": "Fernando Tatis Jr.",
       "position": "RF",
-      "team_id": 120,
-      "team_abbr": "WSH",
-      "opp_abbr": "SD",
-      "opp_team_id": 135,
+      "team_id": 135,
+      "team_abbr": "SD",
+      "opp_abbr": "WSH",
+      "opp_team_id": 120,
       "opp_pitcher": {
-        "id": 621111,
-        "fullName": "Walker Buehler"
+        "id": 800600,
+        "fullName": "Jackson Kent"
       },
       "park": {
         "id": 2680,
@@ -1756,29 +1912,33 @@
         "hr": 93,
         "label": "Pitcher Friendly"
       },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 8.76,
-      "mean_efp": 10.82,
-      "stats_games": 11,
-      "efp": 8.89,
-      "bat_side": "L",
+      "weather": {
+        "condition": "Sunny",
+        "temp": "86",
+        "wind": "10 mph, Out To RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 3.35,
+      "mean_efp": 5.62,
+      "stats_games": 8,
+      "efp": 8.84,
+      "bat_side": "R",
       "per_event": {
-        "singles": 1.36,
-        "doubles": 1.1,
-        "triples": 0.06,
-        "home_runs": 1.57,
-        "bb_hbp": 1.28,
-        "r": 2.67,
-        "rbi": 1.37,
-        "sb": 0.74
+        "singles": 1.82,
+        "doubles": 0.79,
+        "triples": 0.11,
+        "home_runs": 1.24,
+        "bb_hbp": 1.06,
+        "r": 2.68,
+        "rbi": 1.47,
+        "sb": 0.93
       },
       "multipliers": {
         "park_hr": 0.93,
         "park_runs": 0.95,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.019,
-        "pitcher_hr": 1.026,
+        "weather_hr": 1.082,
+        "pitcher_hits": 0.929,
+        "pitcher_hr": 0.662,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -1786,27 +1946,27 @@
         "stx_xwoba": 1.0,
         "stx_barrel": 1.0,
         "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.961,
+        "pitcher_gb_hr": 0.903,
         "k_damper": 1.0,
-        "pitcher_bb": 0.98,
+        "pitcher_bb": 1.25,
         "park_hand_hr": 1.0,
         "sb_speed": 1.0,
         "speed_singles": 1.0,
         "speed_r": 1.0,
         "bvpt": 1.0,
-        "ondeck_r": 1.0,
+        "ondeck_r": 1.01,
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1131,
-        "doubles": 0.055,
-        "triples": 0.0019,
-        "home_runs": 0.0392,
-        "bb_hbp": 0.16,
-        "r_per_pa": 0.3337,
-        "rbi_per_pa": 0.1709
+        "singles": 0.1413,
+        "doubles": 0.0366,
+        "triples": 0.0031,
+        "home_runs": 0.0287,
+        "bb_hbp": 0.1231,
+        "r_per_pa": 0.3117,
+        "rbi_per_pa": 0.1714
       },
-      "pa": 4.0,
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -2021,156 +2181,8 @@
       },
       "pa": 4.0,
       "tier": "low"
-    },
-    {
-      "player_id": 677649,
-      "name": "Ezequiel Duran",
-      "position": "SS",
-      "team_id": 140,
-      "team_abbr": "TEX",
-      "opp_abbr": "SEA",
-      "opp_team_id": 136,
-      "opp_pitcher": {
-        "id": 807739,
-        "fullName": "Kade Anderson"
-      },
-      "park": {
-        "id": 680,
-        "name": "T-Mobile Park",
-        "runs": 95,
-        "hr": 96,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 6.54,
-      "mean_efp": 6.64,
-      "stats_games": 11,
-      "efp": 8.78,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.99,
-        "doubles": 0.78,
-        "triples": 0.18,
-        "home_runs": 1.82,
-        "bb_hbp": 1.07,
-        "r": 2.48,
-        "rbi": 1.33,
-        "sb": 0.37
-      },
-      "multipliers": {
-        "park_hr": 0.96,
-        "park_runs": 0.95,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.043,
-        "pitcher_hr": 1.19,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.083,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.231,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1658,
-        "doubles": 0.0388,
-        "triples": 0.0057,
-        "home_runs": 0.0456,
-        "bb_hbp": 0.1337,
-        "r_per_pa": 0.3099,
-        "rbi_per_pa": 0.1658
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 682985,
-      "name": "Riley Greene",
-      "position": "LF",
-      "team_id": 116,
-      "team_abbr": "DET",
-      "opp_abbr": "MIN",
-      "opp_team_id": 142,
-      "opp_pitcher": {
-        "id": 805673,
-        "fullName": "Zebby Matthews"
-      },
-      "park": {
-        "id": 2394,
-        "name": "Comerica Park",
-        "runs": 97,
-        "hr": 93,
-        "label": "Pitcher Friendly"
-      },
-      "weather": {
-        "condition": "Cloudy",
-        "temp": "80",
-        "wind": "13 mph, R To L"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 7.18,
-      "mean_efp": 8.7,
-      "stats_games": 10,
-      "efp": 8.76,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.66,
-        "doubles": 1.32,
-        "triples": 0.05,
-        "home_runs": 2.0,
-        "bb_hbp": 0.66,
-        "r": 2.73,
-        "rbi": 1.49,
-        "sb": 0.09
-      },
-      "multipliers": {
-        "park_hr": 0.93,
-        "park_runs": 0.97,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.027,
-        "pitcher_hr": 1.168,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.781,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.073,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1379,
-        "doubles": 0.0661,
-        "triples": 0.0015,
-        "home_runs": 0.0501,
-        "bb_hbp": 0.0821,
-        "r_per_pa": 0.3417,
-        "rbi_per_pa": 0.1863
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-09-09T14:53:20.222550+00:00"
+  "generated_at": "2026-09-09T16:57:33.431042+00:00"
 }
