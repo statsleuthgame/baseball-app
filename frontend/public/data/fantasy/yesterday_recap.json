@@ -1,6 +1,6 @@
 {
-  "recap_date": "2026-07-07",
-  "generated_at": "2026-07-08T10:24:13.620660+00:00",
+  "recap_date": "2026-09-10",
+  "generated_at": "2026-09-11T12:43:22.422466+00:00",
   "totals": {
     "high_conf": {
       "n": 0,
@@ -8,167 +8,71 @@
       "hit_rate": null
     },
     "med_conf": {
-      "n": 11,
-      "wins": 4,
-      "hit_rate": 0.364
+      "n": 2,
+      "wins": 1,
+      "hit_rate": 0.5
     },
     "low_conf": {
-      "n": 2,
+      "n": 0,
       "wins": 0,
-      "hit_rate": 0.0
+      "hit_rate": null
     },
     "fade": {
-      "n": 1,
+      "n": 0,
       "wins": 0,
-      "hit_rate": 0.0
+      "hit_rate": null
     },
     "overall": {
-      "n": 14,
-      "wins": 4,
-      "hit_rate": 0.286
+      "n": 2,
+      "wins": 1,
+      "hit_rate": 0.5
     }
   },
   "top_hit": {
-    "name": "James Wood",
-    "team": "WSH",
-    "opp": "HOU",
-    "projected": 11.98,
-    "line": 7.0,
-    "actual": 21.0,
-    "edge_z": 0.583,
+    "name": "Randy Arozarena",
+    "team": "SEA",
+    "opp": "TEX",
+    "projected": 8.91,
+    "line": 5.5,
+    "actual": 6.0,
+    "edge_z": 0.503,
     "tier": "MED",
     "won": true,
     "grade": "over"
   },
   "biggest_miss": {
-    "name": "Bryce Harper",
-    "team": "PHI",
-    "opp": "CIN",
-    "projected": 9.9,
-    "line": 6.0,
+    "name": "Ezequiel Duran",
+    "team": "TEX",
+    "opp": "SEA",
+    "projected": 8.36,
+    "line": 5.5,
     "actual": 0.0,
-    "edge_z": 0.47,
+    "edge_z": 0.437,
     "tier": "MED",
     "won": false,
     "grade": "under"
   },
   "sample_picks": [
     {
-      "name": "Elly De La Cruz",
-      "team": "CIN",
-      "opp": "PHI",
-      "projected": 9.87,
+      "name": "Randy Arozarena",
+      "team": "SEA",
+      "opp": "TEX",
+      "projected": 8.91,
       "line": 5.5,
-      "actual": 2.0,
-      "edge_z": 0.6,
-      "tier": "MED",
-      "won": false,
-      "grade": "under"
-    },
-    {
-      "name": "Kyle Schwarber",
-      "team": "PHI",
-      "opp": "CIN",
-      "projected": 10.81,
-      "line": 6.0,
-      "actual": 19.0,
-      "edge_z": 0.586,
+      "actual": 6.0,
+      "edge_z": 0.503,
       "tier": "MED",
       "won": true,
       "grade": "over"
     },
     {
-      "name": "James Wood",
-      "team": "WSH",
-      "opp": "HOU",
-      "projected": 11.98,
-      "line": 7.0,
-      "actual": 21.0,
-      "edge_z": 0.583,
-      "tier": "MED",
-      "won": true,
-      "grade": "over"
-    },
-    {
-      "name": "Geraldo Perdomo",
-      "team": "AZ",
-      "opp": "SD",
-      "projected": 8.6,
+      "name": "Ezequiel Duran",
+      "team": "TEX",
+      "opp": "SEA",
+      "projected": 8.36,
       "line": 5.5,
-      "actual": 2.0,
-      "edge_z": 0.563,
-      "tier": "MED",
-      "won": false,
-      "grade": "under"
-    },
-    {
-      "name": "Alec Bohm",
-      "team": "PHI",
-      "opp": "CIN",
-      "projected": 7.91,
-      "line": 6.0,
-      "actual": 2.0,
-      "edge_z": 0.474,
-      "tier": "MED",
-      "won": false,
-      "grade": "under"
-    },
-    {
-      "name": "Bryce Harper",
-      "team": "PHI",
-      "opp": "CIN",
-      "projected": 9.9,
-      "line": 6.0,
       "actual": 0.0,
-      "edge_z": 0.47,
-      "tier": "MED",
-      "won": false,
-      "grade": "under"
-    },
-    {
-      "name": "Austin Martin",
-      "team": "MIN",
-      "opp": "CLE",
-      "projected": 8.01,
-      "line": 5.5,
-      "actual": 7.0,
-      "edge_z": 0.459,
-      "tier": "MED",
-      "won": true,
-      "grade": "over"
-    },
-    {
-      "name": "Christian Yelich",
-      "team": "MIL",
-      "opp": "STL",
-      "projected": 8.4,
-      "line": 5.5,
-      "actual": 2.0,
-      "edge_z": 0.442,
-      "tier": "MED",
-      "won": false,
-      "grade": "under"
-    },
-    {
-      "name": "CJ Abrams",
-      "team": "WSH",
-      "opp": "HOU",
-      "projected": 8.61,
-      "line": 6.0,
-      "actual": 9.0,
-      "edge_z": 0.389,
-      "tier": "MED",
-      "won": true,
-      "grade": "over"
-    },
-    {
-      "name": "Trea Turner",
-      "team": "PHI",
-      "opp": "CIN",
-      "projected": 9.4,
-      "line": 7.5,
-      "actual": 7.0,
-      "edge_z": 0.38,
+      "edge_z": 0.437,
       "tier": "MED",
       "won": false,
       "grade": "under"
