@@ -10,8 +10,84 @@
     "n": 1721
   },
   "game_count": 10,
-  "projection_count": 232,
+  "projection_count": 213,
   "projections": [
+    {
+      "player_id": 691718,
+      "name": "Pete Crow-Armstrong",
+      "position": "CF",
+      "team_id": 112,
+      "team_abbr": "CHC",
+      "opp_abbr": "ATL",
+      "opp_team_id": 144,
+      "opp_pitcher": {
+        "id": 625643,
+        "fullName": "Reynaldo L\u00f3pez"
+      },
+      "park": {
+        "id": 17,
+        "name": "Wrigley Field",
+        "runs": 104,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "71",
+        "wind": "14 mph, R To L"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 9.25,
+      "mean_efp": 10.8,
+      "stats_games": 10,
+      "efp": 11.49,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.69,
+        "doubles": 0.83,
+        "triples": 0.28,
+        "home_runs": 3.09,
+        "bb_hbp": 1.22,
+        "r": 2.88,
+        "rbi": 1.59,
+        "sb": 1.56
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.008,
+        "pitcher_hr": 1.051,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.077,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.162,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.072,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1308,
+        "doubles": 0.0385,
+        "triples": 0.008,
+        "home_runs": 0.0718,
+        "bb_hbp": 0.1415,
+        "r_per_pa": 0.3344,
+        "rbi_per_pa": 0.1853
+      },
+      "pa": 4.3,
+      "tier": "medium"
+    },
     {
       "player_id": 665487,
       "name": "Fernando Tatis Jr.",
@@ -236,78 +312,6 @@
         "bb_hbp": 0.0517,
         "r_per_pa": 0.2948,
         "rbi_per_pa": 0.1911
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 691718,
-      "name": "Pete Crow-Armstrong",
-      "position": "CF",
-      "team_id": 112,
-      "team_abbr": "CHC",
-      "opp_abbr": "ATL",
-      "opp_team_id": 144,
-      "opp_pitcher": {
-        "id": 625643,
-        "fullName": "Reynaldo L\u00f3pez"
-      },
-      "park": {
-        "id": 17,
-        "name": "Wrigley Field",
-        "runs": 104,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 9.25,
-      "mean_efp": 10.8,
-      "stats_games": 10,
-      "efp": 10.48,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.57,
-        "doubles": 0.77,
-        "triples": 0.26,
-        "home_runs": 2.87,
-        "bb_hbp": 1.13,
-        "r": 2.49,
-        "rbi": 1.48,
-        "sb": 1.39
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.008,
-        "pitcher_hr": 1.051,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.077,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.162,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1308,
-        "doubles": 0.0385,
-        "triples": 0.008,
-        "home_runs": 0.0718,
-        "bb_hbp": 0.1415,
-        "r_per_pa": 0.3118,
-        "rbi_per_pa": 0.1853
       },
       "pa": 4.0,
       "tier": "low"
@@ -761,6 +765,82 @@
       "tier": "low"
     },
     {
+      "player_id": 660670,
+      "name": "Ronald Acu\u00f1a Jr.",
+      "position": "RF",
+      "team_id": 144,
+      "team_abbr": "ATL",
+      "opp_abbr": "CHC",
+      "opp_team_id": 112,
+      "opp_pitcher": {
+        "id": 656849,
+        "fullName": "David Peterson"
+      },
+      "park": {
+        "id": 17,
+        "name": "Wrigley Field",
+        "runs": 104,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "71",
+        "wind": "14 mph, R To L"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 6.06,
+      "mean_efp": 9.11,
+      "stats_games": 9,
+      "efp": 9.49,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.02,
+        "doubles": 1.06,
+        "triples": 0.12,
+        "home_runs": 1.43,
+        "bb_hbp": 1.11,
+        "r": 2.99,
+        "rbi": 1.36,
+        "sb": 0.74
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.066,
+        "pitcher_hr": 0.927,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.907,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.114,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.139,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1562,
+        "doubles": 0.0492,
+        "triples": 0.0036,
+        "home_runs": 0.0334,
+        "bb_hbp": 0.1293,
+        "r_per_pa": 0.3476,
+        "rbi_per_pa": 0.1585
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 672640,
       "name": "Otto Lopez",
       "position": "SS",
@@ -828,6 +908,234 @@
         "bb_hbp": 0.0984,
         "r_per_pa": 0.3516,
         "rbi_per_pa": 0.1672
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 805808,
+      "name": "Kevin McGonigle",
+      "position": "SS",
+      "team_id": 116,
+      "team_abbr": "DET",
+      "opp_abbr": "TOR",
+      "opp_team_id": 141,
+      "opp_pitcher": {
+        "id": 667755,
+        "fullName": "Jos\u00e9 Soriano"
+      },
+      "park": {
+        "id": 14,
+        "name": "Rogers Centre",
+        "runs": 104,
+        "hr": 109,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 3.26,
+      "mean_efp": 9.22,
+      "stats_games": 9,
+      "efp": 9.45,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.82,
+        "doubles": 0.84,
+        "triples": 0.36,
+        "home_runs": 1.53,
+        "bb_hbp": 1.47,
+        "r": 2.9,
+        "rbi": 1.49,
+        "sb": 0.37
+      },
+      "multipliers": {
+        "park_hr": 1.09,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.947,
+        "pitcher_hr": 0.929,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.895,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.211,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.022,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1415,
+        "doubles": 0.0391,
+        "triples": 0.0104,
+        "home_runs": 0.0355,
+        "bb_hbp": 0.1706,
+        "r_per_pa": 0.3374,
+        "rbi_per_pa": 0.1736
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 673548,
+      "name": "Seiya Suzuki",
+      "position": "RF",
+      "team_id": 112,
+      "team_abbr": "CHC",
+      "opp_abbr": "ATL",
+      "opp_team_id": 144,
+      "opp_pitcher": {
+        "id": 625643,
+        "fullName": "Reynaldo L\u00f3pez"
+      },
+      "park": {
+        "id": 17,
+        "name": "Wrigley Field",
+        "runs": 104,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "71",
+        "wind": "14 mph, R To L"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 10.17,
+      "mean_efp": 7.89,
+      "stats_games": 9,
+      "efp": 9.41,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.7,
+        "doubles": 1.22,
+        "triples": 0.27,
+        "home_runs": 1.71,
+        "bb_hbp": 1.42,
+        "r": 2.93,
+        "rbi": 1.4,
+        "sb": 0.1
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.008,
+        "pitcher_hr": 1.051,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.077,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.162,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.036,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1315,
+        "doubles": 0.0569,
+        "triples": 0.0079,
+        "home_runs": 0.0397,
+        "bb_hbp": 0.1653,
+        "r_per_pa": 0.3403,
+        "rbi_per_pa": 0.1622
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 682985,
+      "name": "Riley Greene",
+      "position": "LF",
+      "team_id": 116,
+      "team_abbr": "DET",
+      "opp_abbr": "TOR",
+      "opp_team_id": 141,
+      "opp_pitcher": {
+        "id": 667755,
+        "fullName": "Jos\u00e9 Soriano"
+      },
+      "park": {
+        "id": 14,
+        "name": "Rogers Centre",
+        "runs": 104,
+        "hr": 109,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.18,
+      "mean_efp": 8.7,
+      "stats_games": 10,
+      "efp": 9.24,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.87,
+        "doubles": 1.23,
+        "triples": 0.25,
+        "home_runs": 1.53,
+        "bb_hbp": 1.07,
+        "r": 2.94,
+        "rbi": 1.56,
+        "sb": 0.09
+      },
+      "multipliers": {
+        "park_hr": 1.09,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.947,
+        "pitcher_hr": 0.929,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.895,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.211,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.067,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1561,
+        "doubles": 0.0615,
+        "triples": 0.0078,
+        "home_runs": 0.0383,
+        "bb_hbp": 0.1339,
+        "r_per_pa": 0.3678,
+        "rbi_per_pa": 0.1954
       },
       "pa": 4.0,
       "tier": "low"
@@ -1057,82 +1365,6 @@
       "tier": "low"
     },
     {
-      "player_id": 682985,
-      "name": "Riley Greene",
-      "position": "LF",
-      "team_id": 116,
-      "team_abbr": "DET",
-      "opp_abbr": "TOR",
-      "opp_team_id": 141,
-      "opp_pitcher": {
-        "id": 667755,
-        "fullName": "Jos\u00e9 Soriano"
-      },
-      "park": {
-        "id": 14,
-        "name": "Rogers Centre",
-        "runs": 104,
-        "hr": 109,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Roof Closed",
-        "temp": "72",
-        "wind": "0 mph, None"
-      },
-      "pa_source": "default",
-      "stdev_efp": 7.18,
-      "mean_efp": 8.7,
-      "stats_games": 10,
-      "efp": 9.08,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.87,
-        "doubles": 1.23,
-        "triples": 0.25,
-        "home_runs": 1.53,
-        "bb_hbp": 1.07,
-        "r": 2.76,
-        "rbi": 1.56,
-        "sb": 0.09
-      },
-      "multipliers": {
-        "park_hr": 1.09,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.947,
-        "pitcher_hr": 0.929,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.895,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.211,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1561,
-        "doubles": 0.0615,
-        "triples": 0.0078,
-        "home_runs": 0.0383,
-        "bb_hbp": 0.1339,
-        "r_per_pa": 0.3446,
-        "rbi_per_pa": 0.1954
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 687263,
       "name": "Zach Neto",
       "position": "SS",
@@ -1200,78 +1432,6 @@
         "bb_hbp": 0.1141,
         "r_per_pa": 0.2971,
         "rbi_per_pa": 0.1708
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 608324,
-      "name": "Alex Bregman",
-      "position": "3B",
-      "team_id": 112,
-      "team_abbr": "CHC",
-      "opp_abbr": "ATL",
-      "opp_team_id": 144,
-      "opp_pitcher": {
-        "id": 625643,
-        "fullName": "Reynaldo L\u00f3pez"
-      },
-      "park": {
-        "id": 17,
-        "name": "Wrigley Field",
-        "runs": 104,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 4.78,
-      "mean_efp": 8.9,
-      "stats_games": 10,
-      "efp": 8.95,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.79,
-        "doubles": 1.19,
-        "triples": 0.06,
-        "home_runs": 1.76,
-        "bb_hbp": 1.24,
-        "r": 2.72,
-        "rbi": 1.38,
-        "sb": 0.08
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.008,
-        "pitcher_hr": 1.051,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.077,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.162,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1494,
-        "doubles": 0.0593,
-        "triples": 0.0017,
-        "home_runs": 0.0439,
-        "bb_hbp": 0.155,
-        "r_per_pa": 0.3396,
-        "rbi_per_pa": 0.1729
       },
       "pa": 4.0,
       "tier": "low"
@@ -1426,6 +1586,82 @@
         "rbi_per_pa": 0.1725
       },
       "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 608324,
+      "name": "Alex Bregman",
+      "position": "3B",
+      "team_id": 112,
+      "team_abbr": "CHC",
+      "opp_abbr": "ATL",
+      "opp_team_id": 144,
+      "opp_pitcher": {
+        "id": 625643,
+        "fullName": "Reynaldo L\u00f3pez"
+      },
+      "park": {
+        "id": 17,
+        "name": "Wrigley Field",
+        "runs": 104,
+        "hr": 107,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "71",
+        "wind": "14 mph, R To L"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 4.78,
+      "mean_efp": 8.9,
+      "stats_games": 10,
+      "efp": 8.92,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.79,
+        "doubles": 1.19,
+        "triples": 0.06,
+        "home_runs": 1.76,
+        "bb_hbp": 1.24,
+        "r": 2.7,
+        "rbi": 1.38,
+        "sb": 0.08
+      },
+      "multipliers": {
+        "park_hr": 1.07,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.008,
+        "pitcher_hr": 1.051,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.077,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.162,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.992,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1494,
+        "doubles": 0.0593,
+        "triples": 0.0017,
+        "home_runs": 0.0439,
+        "bb_hbp": 0.155,
+        "r_per_pa": 0.3369,
+        "rbi_per_pa": 0.1729
+      },
+      "pa": 4.0,
       "tier": "low"
     },
     {
@@ -1869,82 +2105,6 @@
       "tier": "low"
     },
     {
-      "player_id": 545341,
-      "name": "Randal Grichuk",
-      "position": "DH",
-      "team_id": 145,
-      "team_abbr": "CWS",
-      "opp_abbr": "CLE",
-      "opp_team_id": 114,
-      "opp_pitcher": {
-        "id": 668909,
-        "fullName": "Gavin Williams"
-      },
-      "park": {
-        "id": 5,
-        "name": "Progressive Field",
-        "runs": 97,
-        "hr": 95,
-        "label": "Pitcher Friendly"
-      },
-      "weather": {
-        "condition": "Clear",
-        "temp": "66",
-        "wind": "6 mph, In From RF"
-      },
-      "pa_source": "default",
-      "stdev_efp": 4.12,
-      "mean_efp": 4.2,
-      "stats_games": 5,
-      "efp": 8.79,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.57,
-        "doubles": 1.36,
-        "triples": 0.15,
-        "home_runs": 2.27,
-        "bb_hbp": 0.38,
-        "r": 2.6,
-        "rbi": 1.7,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 0.95,
-        "park_runs": 0.97,
-        "weather_hr": 0.95,
-        "pitcher_hits": 0.922,
-        "pitcher_hr": 1.116,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.995,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.847,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.131,
-        "doubles": 0.068,
-        "triples": 0.0048,
-        "home_runs": 0.0566,
-        "bb_hbp": 0.0476,
-        "r_per_pa": 0.3255,
-        "rbi_per_pa": 0.2127
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 606192,
       "name": "Teoscar Hern\u00e1ndez",
       "position": "LF",
@@ -2095,160 +2255,8 @@
       },
       "pa": 4.0,
       "tier": "low"
-    },
-    {
-      "player_id": 807726,
-      "name": "John Peck",
-      "position": "SS",
-      "team_id": 116,
-      "team_abbr": "DET",
-      "opp_abbr": "TOR",
-      "opp_team_id": 141,
-      "opp_pitcher": {
-        "id": 667755,
-        "fullName": "Jos\u00e9 Soriano"
-      },
-      "park": {
-        "id": 14,
-        "name": "Rogers Centre",
-        "runs": 104,
-        "hr": 109,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Roof Closed",
-        "temp": "72",
-        "wind": "0 mph, None"
-      },
-      "pa_source": "default",
-      "stdev_efp": 7.22,
-      "mean_efp": 6.9,
-      "stats_games": 0,
-      "efp": 8.76,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.9,
-        "doubles": 0.64,
-        "triples": 0.08,
-        "home_runs": 0.75,
-        "bb_hbp": 1.27,
-        "r": 2.46,
-        "rbi": 1.01,
-        "sb": 1.9
-      },
-      "multipliers": {
-        "park_hr": 1.09,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.947,
-        "pitcher_hr": 0.929,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.895,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.211,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1581,
-        "doubles": 0.0318,
-        "triples": 0.0025,
-        "home_runs": 0.0187,
-        "bb_hbp": 0.1581,
-        "r_per_pa": 0.3074,
-        "rbi_per_pa": 0.1261
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 800543,
-      "name": "Josue De Paula",
-      "position": "RF",
-      "team_id": 119,
-      "team_abbr": "LAD",
-      "opp_abbr": "CIN",
-      "opp_team_id": 113,
-      "opp_pitcher": {
-        "id": 666157,
-        "fullName": "Nick Lodolo"
-      },
-      "park": {
-        "id": 2602,
-        "name": "Great American Ball Park",
-        "runs": 109,
-        "hr": 116,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Clear",
-        "temp": "75",
-        "wind": "6 mph, In From LF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 7.22,
-      "mean_efp": 6.9,
-      "stats_games": 0,
-      "efp": 8.75,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.37,
-        "doubles": 1.21,
-        "triples": 0.1,
-        "home_runs": 2.21,
-        "bb_hbp": 1.29,
-        "r": 2.42,
-        "rbi": 1.37,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 1.16,
-        "park_runs": 1.09,
-        "weather_hr": 0.95,
-        "pitcher_hits": 1.058,
-        "pitcher_hr": 1.137,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.065,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 0.977,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1238,
-        "doubles": 0.0654,
-        "triples": 0.0034,
-        "home_runs": 0.0598,
-        "bb_hbp": 0.1748,
-        "r_per_pa": 0.3277,
-        "rbi_per_pa": 0.1856
-      },
-      "pa": 3.7,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-09-14T19:44:28.745087+00:00"
+  "generated_at": "2026-09-14T20:27:43.003579+00:00"
 }
