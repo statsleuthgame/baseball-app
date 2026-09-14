@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 10,
-  "projection_count": 193,
+  "projection_count": 188,
   "projections": [
     {
       "player_id": 665487,
@@ -692,6 +692,82 @@
         "bb_hbp": 0.1339,
         "r_per_pa": 0.3678,
         "rbi_per_pa": 0.1954
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 668227,
+      "name": "Randy Arozarena",
+      "position": "LF",
+      "team_id": 136,
+      "team_abbr": "SEA",
+      "opp_abbr": "LAA",
+      "opp_team_id": 108,
+      "opp_pitcher": {
+        "id": 672282,
+        "fullName": "Reid Detmers"
+      },
+      "park": {
+        "id": 1,
+        "name": "Angel Stadium",
+        "runs": 97,
+        "hr": 96,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Clear",
+        "temp": "76",
+        "wind": "9 mph, Out To CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 6.31,
+      "mean_efp": 9.0,
+      "stats_games": 12,
+      "efp": 9.89,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.78,
+        "doubles": 0.86,
+        "triples": 0.04,
+        "home_runs": 2.3,
+        "bb_hbp": 0.88,
+        "r": 3.17,
+        "rbi": 1.58,
+        "sb": 0.67
+      },
+      "multipliers": {
+        "park_hr": 0.96,
+        "park_runs": 0.97,
+        "weather_hr": 1.08,
+        "pitcher_hits": 0.916,
+        "pitcher_hr": 0.953,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.052,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.853,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.107,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1376,
+        "doubles": 0.0401,
+        "triples": 0.0012,
+        "home_runs": 0.0535,
+        "bb_hbp": 0.1024,
+        "r_per_pa": 0.369,
+        "rbi_per_pa": 0.1842
       },
       "pa": 4.3,
       "tier": "low"
@@ -1533,6 +1609,82 @@
       "tier": "low"
     },
     {
+      "player_id": 687263,
+      "name": "Zach Neto",
+      "position": "SS",
+      "team_id": 108,
+      "team_abbr": "LAA",
+      "opp_abbr": "SEA",
+      "opp_team_id": 136,
+      "opp_pitcher": {
+        "id": 807739,
+        "fullName": "Kade Anderson"
+      },
+      "park": {
+        "id": 1,
+        "name": "Angel Stadium",
+        "runs": 97,
+        "hr": 96,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Clear",
+        "temp": "76",
+        "wind": "9 mph, Out To CF"
+      },
+      "pa_source": "default",
+      "stdev_efp": 7.2,
+      "mean_efp": 10.56,
+      "stats_games": 9,
+      "efp": 9.2,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.61,
+        "doubles": 0.87,
+        "triples": 0.19,
+        "home_runs": 2.61,
+        "bb_hbp": 0.91,
+        "r": 2.38,
+        "rbi": 1.37,
+        "sb": 0.56
+      },
+      "multipliers": {
+        "park_hr": 0.96,
+        "park_runs": 0.97,
+        "weather_hr": 1.08,
+        "pitcher_hits": 1.051,
+        "pitcher_hr": 1.175,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.094,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.07,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.134,
+        "doubles": 0.0437,
+        "triples": 0.0061,
+        "home_runs": 0.0652,
+        "bb_hbp": 0.1141,
+        "r_per_pa": 0.2971,
+        "rbi_per_pa": 0.1708
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
       "player_id": 592450,
       "name": "Aaron Judge",
       "position": "RF",
@@ -1761,9 +1913,9 @@
       "tier": "low"
     },
     {
-      "player_id": 687263,
-      "name": "Zach Neto",
-      "position": "SS",
+      "player_id": 545361,
+      "name": "Mike Trout",
+      "position": "CF",
       "team_id": 108,
       "team_abbr": "LAA",
       "opp_abbr": "SEA",
@@ -1779,27 +1931,31 @@
         "hr": 96,
         "label": "Pitcher Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Clear",
+        "temp": "76",
+        "wind": "9 mph, Out To CF"
+      },
       "pa_source": "default",
-      "stdev_efp": 7.2,
-      "mean_efp": 10.56,
-      "stats_games": 9,
-      "efp": 9.03,
+      "stdev_efp": 7.86,
+      "mean_efp": 9.0,
+      "stats_games": 8,
+      "efp": 8.97,
       "bat_side": "R",
       "per_event": {
-        "singles": 1.61,
-        "doubles": 0.87,
-        "triples": 0.19,
-        "home_runs": 2.42,
-        "bb_hbp": 0.91,
-        "r": 2.38,
-        "rbi": 1.37,
-        "sb": 0.56
+        "singles": 1.45,
+        "doubles": 1.18,
+        "triples": 0.02,
+        "home_runs": 1.82,
+        "bb_hbp": 1.47,
+        "r": 2.73,
+        "rbi": 1.31,
+        "sb": 0.27
       },
       "multipliers": {
         "park_hr": 0.96,
         "park_runs": 0.97,
-        "weather_hr": 1.0,
+        "weather_hr": 1.08,
         "pitcher_hits": 1.051,
         "pitcher_hr": 1.175,
         "slot_r": 1.0,
@@ -1821,13 +1977,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.134,
-        "doubles": 0.0437,
-        "triples": 0.0061,
-        "home_runs": 0.0604,
-        "bb_hbp": 0.1141,
-        "r_per_pa": 0.2971,
-        "rbi_per_pa": 0.1708
+        "singles": 0.1206,
+        "doubles": 0.0589,
+        "triples": 0.0005,
+        "home_runs": 0.0456,
+        "bb_hbp": 0.1832,
+        "r_per_pa": 0.3412,
+        "rbi_per_pa": 0.164
       },
       "pa": 4.0,
       "tier": "low"
@@ -2061,78 +2217,6 @@
       "tier": "low"
     },
     {
-      "player_id": 545361,
-      "name": "Mike Trout",
-      "position": "CF",
-      "team_id": 108,
-      "team_abbr": "LAA",
-      "opp_abbr": "SEA",
-      "opp_team_id": 136,
-      "opp_pitcher": {
-        "id": 807739,
-        "fullName": "Kade Anderson"
-      },
-      "park": {
-        "id": 1,
-        "name": "Angel Stadium",
-        "runs": 97,
-        "hr": 96,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.86,
-      "mean_efp": 9.0,
-      "stats_games": 8,
-      "efp": 8.86,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.45,
-        "doubles": 1.18,
-        "triples": 0.02,
-        "home_runs": 1.69,
-        "bb_hbp": 1.47,
-        "r": 2.73,
-        "rbi": 1.31,
-        "sb": 0.27
-      },
-      "multipliers": {
-        "park_hr": 0.96,
-        "park_runs": 0.97,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.051,
-        "pitcher_hr": 1.175,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.094,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.07,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1206,
-        "doubles": 0.0589,
-        "triples": 0.0005,
-        "home_runs": 0.0422,
-        "bb_hbp": 0.1832,
-        "r_per_pa": 0.3412,
-        "rbi_per_pa": 0.164
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 624413,
       "name": "Pete Alonso",
       "position": "1B",
@@ -2207,84 +2291,8 @@
       },
       "pa": 4.3,
       "tier": "low"
-    },
-    {
-      "player_id": 571448,
-      "name": "Nolan Arenado",
-      "position": "3B",
-      "team_id": 109,
-      "team_abbr": "AZ",
-      "opp_abbr": "MIA",
-      "opp_team_id": 146,
-      "opp_pitcher": {
-        "id": 645261,
-        "fullName": "Sandy Alcantara"
-      },
-      "park": {
-        "id": 15,
-        "name": "Chase Field",
-        "runs": 106,
-        "hr": 110,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Roof Closed",
-        "temp": "73",
-        "wind": "0 mph, None"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 11.16,
-      "mean_efp": 8.57,
-      "stats_games": 7,
-      "efp": 8.82,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.59,
-        "doubles": 0.97,
-        "triples": 0.07,
-        "home_runs": 2.43,
-        "bb_hbp": 0.75,
-        "r": 2.57,
-        "rbi": 1.58,
-        "sb": 0.11
-      },
-      "multipliers": {
-        "park_hr": 1.1,
-        "park_runs": 1.06,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.01,
-        "pitcher_hr": 0.968,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.004,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 0.989,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1323,
-        "doubles": 0.0486,
-        "triples": 0.0021,
-        "home_runs": 0.0607,
-        "bb_hbp": 0.0938,
-        "r_per_pa": 0.3212,
-        "rbi_per_pa": 0.1975
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-09-14T21:57:51.295075+00:00"
+  "generated_at": "2026-09-14T22:12:59.785922+00:00"
 }
