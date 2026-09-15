@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 416,
+  "projection_count": 406,
   "projections": [
     {
       "player_id": 665487,
@@ -229,16 +229,92 @@
       "tier": "low"
     },
     {
-      "player_id": 800543,
-      "name": "Josue De Paula",
-      "position": "RF",
-      "team_id": 119,
-      "team_abbr": "LAD",
-      "opp_abbr": "CIN",
-      "opp_team_id": 113,
+      "player_id": 545341,
+      "name": "Randal Grichuk",
+      "position": "DH",
+      "team_id": 145,
+      "team_abbr": "CWS",
+      "opp_abbr": "CLE",
+      "opp_team_id": 114,
       "opp_pitcher": {
-        "id": 695076,
-        "fullName": "Rhett Lowder"
+        "id": 656492,
+        "fullName": "Foster Griffin"
+      },
+      "park": {
+        "id": 5,
+        "name": "Progressive Field",
+        "runs": 97,
+        "hr": 95,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "81",
+        "wind": "14 mph, Out To CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 4.12,
+      "mean_efp": 4.2,
+      "stats_games": 5,
+      "efp": 10.53,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.97,
+        "doubles": 1.82,
+        "triples": 0.09,
+        "home_runs": 2.68,
+        "bb_hbp": 0.4,
+        "r": 3.23,
+        "rbi": 1.83,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 0.95,
+        "park_runs": 0.97,
+        "weather_hr": 1.08,
+        "pitcher_hits": 0.997,
+        "pitcher_hr": 1.059,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.973,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.153,
+        "doubles": 0.0845,
+        "triples": 0.0025,
+        "home_runs": 0.0624,
+        "bb_hbp": 0.0462,
+        "r_per_pa": 0.3754,
+        "rbi_per_pa": 0.213
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 682829,
+      "name": "Elly De La Cruz",
+      "position": "SS",
+      "team_id": 113,
+      "team_abbr": "CIN",
+      "opp_abbr": "LAD",
+      "opp_team_id": 119,
+      "opp_pitcher": {
+        "id": 808967,
+        "fullName": "Yoshinobu Yamamoto"
       },
       "park": {
         "id": 2602,
@@ -247,29 +323,33 @@
         "hr": 116,
         "label": "Hitter Friendly"
       },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.22,
-      "mean_efp": 6.9,
-      "stats_games": 0,
-      "efp": 10.03,
-      "bat_side": "L",
+      "weather": {
+        "condition": "Clear",
+        "temp": "91",
+        "wind": "6 mph, In From RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.28,
+      "mean_efp": 11.06,
+      "stats_games": 16,
+      "efp": 10.44,
+      "bat_side": "S",
       "per_event": {
-        "singles": 1.47,
-        "doubles": 1.21,
-        "triples": 0.11,
-        "home_runs": 2.07,
-        "bb_hbp": 1.37,
-        "r": 2.62,
-        "rbi": 1.36,
-        "sb": 1.25
+        "singles": 1.68,
+        "doubles": 1.11,
+        "triples": 0.2,
+        "home_runs": 2.51,
+        "bb_hbp": 0.62,
+        "r": 3.04,
+        "rbi": 1.77,
+        "sb": 1.0
       },
       "multipliers": {
         "park_hr": 1.16,
         "park_runs": 1.09,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.063,
-        "pitcher_hr": 1.028,
+        "weather_hr": 0.924,
+        "pitcher_hits": 0.857,
+        "pitcher_hr": 0.998,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -277,27 +357,27 @@
         "stx_xwoba": 1.0,
         "stx_barrel": 1.0,
         "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
+        "pitcher_gb_hr": 0.939,
         "k_damper": 1.0,
-        "pitcher_bb": 1.033,
+        "pitcher_bb": 0.75,
         "park_hand_hr": 1.0,
         "sb_speed": 1.0,
         "speed_singles": 1.0,
         "speed_r": 1.0,
         "bvpt": 1.0,
-        "ondeck_r": 1.0,
+        "ondeck_r": 1.1,
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1221,
-        "doubles": 0.0604,
-        "triples": 0.0034,
-        "home_runs": 0.0517,
-        "bb_hbp": 0.1716,
-        "r_per_pa": 0.3275,
-        "rbi_per_pa": 0.1695
+        "singles": 0.1301,
+        "doubles": 0.0514,
+        "triples": 0.0059,
+        "home_runs": 0.0584,
+        "bb_hbp": 0.072,
+        "r_per_pa": 0.3534,
+        "rbi_per_pa": 0.2056
       },
-      "pa": 4.0,
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -517,16 +597,16 @@
       "tier": "low"
     },
     {
-      "player_id": 682829,
-      "name": "Elly De La Cruz",
-      "position": "SS",
-      "team_id": 113,
-      "team_abbr": "CIN",
-      "opp_abbr": "LAD",
-      "opp_team_id": 119,
+      "player_id": 800543,
+      "name": "Josue De Paula",
+      "position": "RF",
+      "team_id": 119,
+      "team_abbr": "LAD",
+      "opp_abbr": "CIN",
+      "opp_team_id": 113,
       "opp_pitcher": {
-        "id": 808967,
-        "fullName": "Yoshinobu Yamamoto"
+        "id": 695076,
+        "fullName": "Rhett Lowder"
       },
       "park": {
         "id": 2602,
@@ -535,29 +615,33 @@
         "hr": 116,
         "label": "Hitter Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Clear",
+        "temp": "91",
+        "wind": "6 mph, In From RF"
+      },
       "pa_source": "default",
-      "stdev_efp": 7.28,
-      "mean_efp": 11.06,
-      "stats_games": 16,
-      "efp": 9.64,
-      "bat_side": "S",
+      "stdev_efp": 7.22,
+      "mean_efp": 6.9,
+      "stats_games": 0,
+      "efp": 9.78,
+      "bat_side": "L",
       "per_event": {
-        "singles": 1.56,
-        "doubles": 1.03,
-        "triples": 0.19,
-        "home_runs": 2.53,
-        "bb_hbp": 0.58,
-        "r": 2.57,
-        "rbi": 1.64,
-        "sb": 0.91
+        "singles": 1.47,
+        "doubles": 1.21,
+        "triples": 0.11,
+        "home_runs": 1.78,
+        "bb_hbp": 1.37,
+        "r": 2.62,
+        "rbi": 1.36,
+        "sb": 1.25
       },
       "multipliers": {
         "park_hr": 1.16,
         "park_runs": 1.09,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.857,
-        "pitcher_hr": 0.998,
+        "weather_hr": 0.861,
+        "pitcher_hits": 1.063,
+        "pitcher_hr": 1.028,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -565,9 +649,9 @@
         "stx_xwoba": 1.0,
         "stx_barrel": 1.0,
         "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.939,
+        "pitcher_gb_hr": 1.0,
         "k_damper": 1.0,
-        "pitcher_bb": 0.75,
+        "pitcher_bb": 1.033,
         "park_hand_hr": 1.0,
         "sb_speed": 1.0,
         "speed_singles": 1.0,
@@ -577,13 +661,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1301,
-        "doubles": 0.0514,
-        "triples": 0.0059,
-        "home_runs": 0.0632,
-        "bb_hbp": 0.072,
-        "r_per_pa": 0.3212,
-        "rbi_per_pa": 0.2056
+        "singles": 0.1221,
+        "doubles": 0.0604,
+        "triples": 0.0034,
+        "home_runs": 0.0445,
+        "bb_hbp": 0.1716,
+        "r_per_pa": 0.3275,
+        "rbi_per_pa": 0.1695
       },
       "pa": 4.0,
       "tier": "low"
@@ -895,7 +979,11 @@
         "hr": 116,
         "label": "Hitter Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Clear",
+        "temp": "91",
+        "wind": "6 mph, In From RF"
+      },
       "pa_source": "default",
       "stdev_efp": 3.14,
       "mean_efp": 2.86,
@@ -915,7 +1003,7 @@
       "multipliers": {
         "park_hr": 1.16,
         "park_runs": 1.09,
-        "weather_hr": 1.0,
+        "weather_hr": 0.997,
         "pitcher_hits": 1.063,
         "pitcher_hr": 1.028,
         "slot_r": 1.0,
@@ -940,7 +1028,7 @@
         "singles": 0.1965,
         "doubles": 0.0389,
         "triples": 0.0109,
-        "home_runs": 0.0441,
+        "home_runs": 0.044,
         "bb_hbp": 0.1093,
         "r_per_pa": 0.3297,
         "rbi_per_pa": 0.1759
@@ -1021,78 +1109,6 @@
       "tier": "low"
     },
     {
-      "player_id": 545341,
-      "name": "Randal Grichuk",
-      "position": "DH",
-      "team_id": 145,
-      "team_abbr": "CWS",
-      "opp_abbr": "CLE",
-      "opp_team_id": 114,
-      "opp_pitcher": {
-        "id": 656492,
-        "fullName": "Foster Griffin"
-      },
-      "park": {
-        "id": 5,
-        "name": "Progressive Field",
-        "runs": 97,
-        "hr": 95,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 4.12,
-      "mean_efp": 4.2,
-      "stats_games": 5,
-      "efp": 9.29,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.84,
-        "doubles": 1.69,
-        "triples": 0.08,
-        "home_runs": 2.31,
-        "bb_hbp": 0.37,
-        "r": 2.61,
-        "rbi": 1.7,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 0.95,
-        "park_runs": 0.97,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.997,
-        "pitcher_hr": 1.059,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.973,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.153,
-        "doubles": 0.0845,
-        "triples": 0.0025,
-        "home_runs": 0.0577,
-        "bb_hbp": 0.0462,
-        "r_per_pa": 0.3264,
-        "rbi_per_pa": 0.213
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 691406,
       "name": "Junior Caminero",
       "position": "3B",
@@ -1160,78 +1176,6 @@
         "bb_hbp": 0.1378,
         "r_per_pa": 0.3192,
         "rbi_per_pa": 0.1835
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 571970,
-      "name": "Max Muncy",
-      "position": "3B",
-      "team_id": 119,
-      "team_abbr": "LAD",
-      "opp_abbr": "CIN",
-      "opp_team_id": 113,
-      "opp_pitcher": {
-        "id": 695076,
-        "fullName": "Rhett Lowder"
-      },
-      "park": {
-        "id": 2602,
-        "name": "Great American Ball Park",
-        "runs": 109,
-        "hr": 116,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 11.74,
-      "mean_efp": 10.25,
-      "stats_games": 8,
-      "efp": 9.16,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.72,
-        "doubles": 1.11,
-        "triples": 0.06,
-        "home_runs": 2.52,
-        "bb_hbp": 1.04,
-        "r": 2.52,
-        "rbi": 1.43,
-        "sb": 0.06
-      },
-      "multipliers": {
-        "park_hr": 1.16,
-        "park_runs": 1.09,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.063,
-        "pitcher_hr": 1.028,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.033,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1432,
-        "doubles": 0.0554,
-        "triples": 0.0018,
-        "home_runs": 0.063,
-        "bb_hbp": 0.1301,
-        "r_per_pa": 0.3153,
-        "rbi_per_pa": 0.1786
       },
       "pa": 4.0,
       "tier": "low"
@@ -2101,6 +2045,82 @@
       "tier": "low"
     },
     {
+      "player_id": 678246,
+      "name": "Miguel Vargas",
+      "position": "3B",
+      "team_id": 145,
+      "team_abbr": "CWS",
+      "opp_abbr": "CLE",
+      "opp_team_id": 114,
+      "opp_pitcher": {
+        "id": 656492,
+        "fullName": "Foster Griffin"
+      },
+      "park": {
+        "id": 5,
+        "name": "Progressive Field",
+        "runs": 97,
+        "hr": 95,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "81",
+        "wind": "14 mph, Out To CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 8.62,
+      "mean_efp": 11.7,
+      "stats_games": 10,
+      "efp": 8.88,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.53,
+        "doubles": 0.76,
+        "triples": 0.08,
+        "home_runs": 2.13,
+        "bb_hbp": 0.85,
+        "r": 2.71,
+        "rbi": 1.32,
+        "sb": 0.75
+      },
+      "multipliers": {
+        "park_hr": 0.95,
+        "park_runs": 0.97,
+        "weather_hr": 1.08,
+        "pitcher_hits": 0.997,
+        "pitcher_hr": 1.059,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.973,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.076,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1188,
+        "doubles": 0.0355,
+        "triples": 0.0023,
+        "home_runs": 0.0494,
+        "bb_hbp": 0.0987,
+        "r_per_pa": 0.3155,
+        "rbi_per_pa": 0.1533
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 694671,
       "name": "Wyatt Langford",
       "position": "LF",
@@ -2174,5 +2194,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-09-15T17:23:39.107682+00:00"
+  "generated_at": "2026-09-15T18:42:58.868416+00:00"
 }
