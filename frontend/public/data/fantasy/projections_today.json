@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 303,
+  "projection_count": 294,
   "projections": [
     {
       "player_id": 665487,
@@ -31,7 +31,11 @@
         "hr": 118,
         "label": "Hitter Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "74",
+        "wind": "10 mph, R To L"
+      },
       "pa_source": "default",
       "stdev_efp": 3.45,
       "mean_efp": 6.11,
@@ -179,7 +183,11 @@
         "hr": 118,
         "label": "Hitter Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "74",
+        "wind": "10 mph, R To L"
+      },
       "pa_source": "default",
       "stdev_efp": 6.65,
       "mean_efp": 6.44,
@@ -537,6 +545,82 @@
       "tier": "low"
     },
     {
+      "player_id": 668227,
+      "name": "Randy Arozarena",
+      "position": "LF",
+      "team_id": 136,
+      "team_abbr": "SEA",
+      "opp_abbr": "LAA",
+      "opp_team_id": 108,
+      "opp_pitcher": {
+        "id": 696270,
+        "fullName": "Ryan Johnson"
+      },
+      "park": {
+        "id": 1,
+        "name": "Angel Stadium",
+        "runs": 97,
+        "hr": 96,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Clear",
+        "temp": "74",
+        "wind": "9 mph, Out To LF"
+      },
+      "pa_source": "default",
+      "stdev_efp": 6.31,
+      "mean_efp": 9.0,
+      "stats_games": 12,
+      "efp": 10.09,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.67,
+        "doubles": 0.93,
+        "triples": 0.05,
+        "home_runs": 2.63,
+        "bb_hbp": 1.14,
+        "r": 2.67,
+        "rbi": 1.5,
+        "sb": 0.93
+      },
+      "multipliers": {
+        "park_hr": 0.96,
+        "park_runs": 0.97,
+        "weather_hr": 1.15,
+        "pitcher_hits": 0.965,
+        "pitcher_hr": 1.207,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.06,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.139,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1388,
+        "doubles": 0.0464,
+        "triples": 0.0017,
+        "home_runs": 0.0658,
+        "bb_hbp": 0.1431,
+        "r_per_pa": 0.334,
+        "rbi_per_pa": 0.1872
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
       "player_id": 677951,
       "name": "Bobby Witt Jr.",
       "position": "SS",
@@ -608,6 +692,82 @@
         "bb_hbp": 0.1511,
         "r_per_pa": 0.3552,
         "rbi_per_pa": 0.1528
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 664983,
+      "name": "Jake McCarthy",
+      "position": "LF",
+      "team_id": 115,
+      "team_abbr": "COL",
+      "opp_abbr": "SD",
+      "opp_team_id": 135,
+      "opp_pitcher": {
+        "id": 621111,
+        "fullName": "Walker Buehler"
+      },
+      "park": {
+        "id": 19,
+        "name": "Coors Field",
+        "runs": 116,
+        "hr": 118,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "74",
+        "wind": "10 mph, R To L"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 2.74,
+      "mean_efp": 7.62,
+      "stats_games": 8,
+      "efp": 10.05,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.65,
+        "doubles": 1.31,
+        "triples": 0.9,
+        "home_runs": 1.22,
+        "bb_hbp": 0.59,
+        "r": 2.36,
+        "rbi": 1.48,
+        "sb": 0.96
+      },
+      "multipliers": {
+        "park_hr": 1.18,
+        "park_runs": 1.16,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.02,
+        "pitcher_hr": 1.039,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.965,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.998,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.885,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.2055,
+        "doubles": 0.0608,
+        "triples": 0.0262,
+        "home_runs": 0.0284,
+        "bb_hbp": 0.069,
+        "r_per_pa": 0.2746,
+        "rbi_per_pa": 0.1718
       },
       "pa": 4.3,
       "tier": "low"
@@ -855,7 +1015,11 @@
         "hr": 118,
         "label": "Hitter Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "74",
+        "wind": "10 mph, R To L"
+      },
       "pa_source": "default",
       "stdev_efp": 10.22,
       "mean_efp": 7.8,
@@ -1061,78 +1225,6 @@
       "tier": "low"
     },
     {
-      "player_id": 668227,
-      "name": "Randy Arozarena",
-      "position": "LF",
-      "team_id": 136,
-      "team_abbr": "SEA",
-      "opp_abbr": "LAA",
-      "opp_team_id": 108,
-      "opp_pitcher": {
-        "id": 696270,
-        "fullName": "Ryan Johnson"
-      },
-      "park": {
-        "id": 1,
-        "name": "Angel Stadium",
-        "runs": 97,
-        "hr": 96,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 6.31,
-      "mean_efp": 9.0,
-      "stats_games": 12,
-      "efp": 9.79,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.67,
-        "doubles": 0.93,
-        "triples": 0.05,
-        "home_runs": 2.29,
-        "bb_hbp": 1.14,
-        "r": 2.67,
-        "rbi": 1.5,
-        "sb": 0.93
-      },
-      "multipliers": {
-        "park_hr": 0.96,
-        "park_runs": 0.97,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.965,
-        "pitcher_hr": 1.207,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.06,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.139,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1388,
-        "doubles": 0.0464,
-        "triples": 0.0017,
-        "home_runs": 0.0573,
-        "bb_hbp": 0.1431,
-        "r_per_pa": 0.334,
-        "rbi_per_pa": 0.1872
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 641355,
       "name": "Cody Bellinger",
       "position": "LF",
@@ -1209,9 +1301,9 @@
       "tier": "low"
     },
     {
-      "player_id": 664983,
-      "name": "Jake McCarthy",
-      "position": "LF",
+      "player_id": 691182,
+      "name": "Adael Amador",
+      "position": "2B",
       "team_id": 115,
       "team_abbr": "COL",
       "opp_abbr": "SD",
@@ -1227,22 +1319,26 @@
         "hr": 118,
         "label": "Hitter Friendly"
       },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 2.74,
-      "mean_efp": 7.62,
-      "stats_games": 8,
-      "efp": 9.57,
-      "bat_side": "L",
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "74",
+        "wind": "10 mph, R To L"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.22,
+      "mean_efp": 6.9,
+      "stats_games": 0,
+      "efp": 9.77,
+      "bat_side": "S",
       "per_event": {
-        "singles": 2.47,
-        "doubles": 1.22,
-        "triples": 0.84,
-        "home_runs": 1.14,
-        "bb_hbp": 0.55,
-        "r": 2.48,
-        "rbi": 1.37,
-        "sb": 0.86
+        "singles": 1.97,
+        "doubles": 1.06,
+        "triples": 0.08,
+        "home_runs": 3.18,
+        "bb_hbp": 0.86,
+        "r": 2.54,
+        "rbi": 1.46,
+        "sb": 0.0
       },
       "multipliers": {
         "park_hr": 1.18,
@@ -1265,17 +1361,169 @@
         "speed_singles": 1.0,
         "speed_r": 1.0,
         "bvpt": 1.0,
+        "ondeck_r": 0.979,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1526,
+        "doubles": 0.0492,
+        "triples": 0.0022,
+        "home_runs": 0.0739,
+        "bb_hbp": 0.1005,
+        "r_per_pa": 0.2956,
+        "rbi_per_pa": 0.1701
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 687263,
+      "name": "Zach Neto",
+      "position": "SS",
+      "team_id": 108,
+      "team_abbr": "LAA",
+      "opp_abbr": "SEA",
+      "opp_team_id": 136,
+      "opp_pitcher": {
+        "id": 669302,
+        "fullName": "Logan Gilbert"
+      },
+      "park": {
+        "id": 1,
+        "name": "Angel Stadium",
+        "runs": 97,
+        "hr": 96,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Clear",
+        "temp": "74",
+        "wind": "9 mph, Out To LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.2,
+      "mean_efp": 10.56,
+      "stats_games": 9,
+      "efp": 9.77,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.45,
+        "doubles": 0.84,
+        "triples": 0.32,
+        "home_runs": 2.63,
+        "bb_hbp": 0.66,
+        "r": 2.94,
+        "rbi": 1.53,
+        "sb": 0.78
+      },
+      "multipliers": {
+        "park_hr": 0.96,
+        "park_runs": 0.97,
+        "weather_hr": 1.15,
+        "pitcher_hits": 0.938,
+        "pitcher_hr": 1.113,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.047,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.753,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1127,
+        "doubles": 0.0388,
+        "triples": 0.0094,
+        "home_runs": 0.0612,
+        "bb_hbp": 0.0772,
+        "r_per_pa": 0.3423,
+        "rbi_per_pa": 0.1776
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 703197,
+      "name": "Michael Arroyo",
+      "position": "SS",
+      "team_id": 136,
+      "team_abbr": "SEA",
+      "opp_abbr": "LAA",
+      "opp_team_id": 108,
+      "opp_pitcher": {
+        "id": 696270,
+        "fullName": "Ryan Johnson"
+      },
+      "park": {
+        "id": 1,
+        "name": "Angel Stadium",
+        "runs": 97,
+        "hr": 96,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Clear",
+        "temp": "74",
+        "wind": "9 mph, Out To LF"
+      },
+      "pa_source": "default",
+      "stdev_efp": 7.22,
+      "mean_efp": 6.9,
+      "stats_games": 0,
+      "efp": 9.63,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.53,
+        "doubles": 0.92,
+        "triples": 0.09,
+        "home_runs": 2.27,
+        "bb_hbp": 1.23,
+        "r": 2.58,
+        "rbi": 1.37,
+        "sb": 1.0
+      },
+      "multipliers": {
+        "park_hr": 0.96,
+        "park_runs": 0.97,
+        "weather_hr": 1.15,
+        "pitcher_hits": 0.965,
+        "pitcher_hr": 1.207,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.06,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.139,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
         "ondeck_r": 1.0,
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.2055,
-        "doubles": 0.0608,
-        "triples": 0.0262,
-        "home_runs": 0.0284,
-        "bb_hbp": 0.069,
-        "r_per_pa": 0.3104,
-        "rbi_per_pa": 0.1718
+        "singles": 0.1279,
+        "doubles": 0.0458,
+        "triples": 0.0027,
+        "home_runs": 0.0569,
+        "bb_hbp": 0.154,
+        "r_per_pa": 0.3224,
+        "rbi_per_pa": 0.1708
       },
       "pa": 4.0,
       "tier": "low"
@@ -2035,232 +2283,8 @@
       },
       "pa": 4.0,
       "tier": "low"
-    },
-    {
-      "player_id": 605141,
-      "name": "Mookie Betts",
-      "position": "SS",
-      "team_id": 119,
-      "team_abbr": "LAD",
-      "opp_abbr": "CIN",
-      "opp_team_id": 113,
-      "opp_pitcher": {
-        "id": 695076,
-        "fullName": "Rhett Lowder"
-      },
-      "park": {
-        "id": 2602,
-        "name": "Great American Ball Park",
-        "runs": 109,
-        "hr": 116,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Clear",
-        "temp": "91",
-        "wind": "6 mph, In From RF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 7.22,
-      "mean_efp": 6.9,
-      "stats_games": 0,
-      "efp": 9.4,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.02,
-        "doubles": 1.02,
-        "triples": 0.02,
-        "home_runs": 2.54,
-        "bb_hbp": 0.89,
-        "r": 2.59,
-        "rbi": 1.44,
-        "sb": 0.21
-      },
-      "multipliers": {
-        "park_hr": 1.16,
-        "park_runs": 1.09,
-        "weather_hr": 0.997,
-        "pitcher_hits": 1.063,
-        "pitcher_hr": 1.028,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.033,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.028,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1565,
-        "doubles": 0.0473,
-        "triples": 0.0007,
-        "home_runs": 0.0591,
-        "bb_hbp": 0.1029,
-        "r_per_pa": 0.3013,
-        "rbi_per_pa": 0.1673
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 669003,
-      "name": "Garrett Mitchell",
-      "position": "CF",
-      "team_id": 158,
-      "team_abbr": "MIL",
-      "opp_abbr": "PIT",
-      "opp_team_id": 134,
-      "opp_pitcher": {
-        "id": 669199,
-        "fullName": "Lake Bachar"
-      },
-      "park": {
-        "id": 31,
-        "name": "PNC Park",
-        "runs": 96,
-        "hr": 92,
-        "label": "Pitcher Friendly"
-      },
-      "weather": {
-        "condition": "Clear",
-        "temp": "82",
-        "wind": "7 mph, In From RF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 9.81,
-      "mean_efp": 8.0,
-      "stats_games": 8,
-      "efp": 9.4,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.64,
-        "doubles": 0.95,
-        "triples": 0.33,
-        "home_runs": 1.27,
-        "bb_hbp": 1.12,
-        "r": 3.08,
-        "rbi": 1.54,
-        "sb": 0.79
-      },
-      "multipliers": {
-        "park_hr": 0.92,
-        "park_runs": 0.96,
-        "weather_hr": 0.82,
-        "pitcher_hits": 0.84,
-        "pitcher_hr": 1.119,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.042,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.18,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.075,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1274,
-        "doubles": 0.044,
-        "triples": 0.0096,
-        "home_runs": 0.0296,
-        "bb_hbp": 0.1306,
-        "r_per_pa": 0.3585,
-        "rbi_per_pa": 0.179
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 703197,
-      "name": "Michael Arroyo",
-      "position": "SS",
-      "team_id": 136,
-      "team_abbr": "SEA",
-      "opp_abbr": "LAA",
-      "opp_team_id": 108,
-      "opp_pitcher": {
-        "id": 696270,
-        "fullName": "Ryan Johnson"
-      },
-      "park": {
-        "id": 1,
-        "name": "Angel Stadium",
-        "runs": 97,
-        "hr": 96,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.22,
-      "mean_efp": 6.9,
-      "stats_games": 0,
-      "efp": 9.37,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.53,
-        "doubles": 0.92,
-        "triples": 0.09,
-        "home_runs": 1.98,
-        "bb_hbp": 1.23,
-        "r": 2.58,
-        "rbi": 1.37,
-        "sb": 1.0
-      },
-      "multipliers": {
-        "park_hr": 0.96,
-        "park_runs": 0.97,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.965,
-        "pitcher_hr": 1.207,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.06,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.139,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1279,
-        "doubles": 0.0458,
-        "triples": 0.0027,
-        "home_runs": 0.0494,
-        "bb_hbp": 0.154,
-        "r_per_pa": 0.3224,
-        "rbi_per_pa": 0.1708
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-09-15T21:36:28.336893+00:00"
+  "generated_at": "2026-09-15T21:51:02.388210+00:00"
 }
