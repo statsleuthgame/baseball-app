@@ -229,6 +229,82 @@
       "tier": "low"
     },
     {
+      "player_id": 641355,
+      "name": "Cody Bellinger",
+      "position": "LF",
+      "team_id": 147,
+      "team_abbr": "NYY",
+      "opp_abbr": "MIN",
+      "opp_team_id": 142,
+      "opp_pitcher": {
+        "id": 805673,
+        "fullName": "Zebby Matthews"
+      },
+      "park": {
+        "id": 3312,
+        "name": "Target Field",
+        "runs": 100,
+        "hr": 101,
+        "label": "Neutral"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "71",
+        "wind": "10 mph, In From RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.05,
+      "mean_efp": 7.73,
+      "stats_games": 11,
+      "efp": 10.06,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.15,
+        "doubles": 1.11,
+        "triples": 0.16,
+        "home_runs": 1.83,
+        "bb_hbp": 0.76,
+        "r": 3.29,
+        "rbi": 1.64,
+        "sb": 0.54
+      },
+      "multipliers": {
+        "park_hr": 1.01,
+        "park_runs": 1.0,
+        "weather_hr": 0.82,
+        "pitcher_hits": 1.018,
+        "pitcher_hr": 1.166,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.0,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.85,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1665,
+        "doubles": 0.0515,
+        "triples": 0.0047,
+        "home_runs": 0.0425,
+        "bb_hbp": 0.0881,
+        "r_per_pa": 0.3828,
+        "rbi_per_pa": 0.191
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 805808,
       "name": "Kevin McGonigle",
       "position": "SS",
@@ -374,82 +450,6 @@
         "rbi_per_pa": 0.1873
       },
       "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 641355,
-      "name": "Cody Bellinger",
-      "position": "LF",
-      "team_id": 147,
-      "team_abbr": "NYY",
-      "opp_abbr": "MIN",
-      "opp_team_id": 142,
-      "opp_pitcher": {
-        "id": 805673,
-        "fullName": "Zebby Matthews"
-      },
-      "park": {
-        "id": 3312,
-        "name": "Target Field",
-        "runs": 100,
-        "hr": 101,
-        "label": "Neutral"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "68",
-        "wind": "7 mph, In From RF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 7.05,
-      "mean_efp": 7.73,
-      "stats_games": 11,
-      "efp": 9.97,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.04,
-        "doubles": 1.1,
-        "triples": 0.16,
-        "home_runs": 2.02,
-        "bb_hbp": 0.71,
-        "r": 3.16,
-        "rbi": 1.65,
-        "sb": 0.55
-      },
-      "multipliers": {
-        "park_hr": 1.01,
-        "park_runs": 1.0,
-        "weather_hr": 0.82,
-        "pitcher_hits": 1.021,
-        "pitcher_hr": 1.175,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.85,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.15,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1584,
-        "doubles": 0.051,
-        "triples": 0.0047,
-        "home_runs": 0.0471,
-        "bb_hbp": 0.0821,
-        "r_per_pa": 0.367,
-        "rbi_per_pa": 0.1914
-      },
-      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -817,6 +817,82 @@
       "tier": "low"
     },
     {
+      "player_id": 813841,
+      "name": "Jonah Cox",
+      "position": "CF",
+      "team_id": 137,
+      "team_abbr": "SF",
+      "opp_abbr": "STL",
+      "opp_team_id": 138,
+      "opp_pitcher": {
+        "id": 669461,
+        "fullName": "Matthew Liberatore"
+      },
+      "park": {
+        "id": 2889,
+        "name": "Busch Stadium",
+        "runs": 98,
+        "hr": 97,
+        "label": "Slight Pitcher"
+      },
+      "weather": {
+        "condition": "Cloudy",
+        "temp": "91",
+        "wind": "4 mph, In From RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.22,
+      "mean_efp": 6.9,
+      "stats_games": 0,
+      "efp": 9.54,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.48,
+        "doubles": 0.52,
+        "triples": 0.43,
+        "home_runs": 1.46,
+        "bb_hbp": 0.57,
+        "r": 2.83,
+        "rbi": 1.21,
+        "sb": 1.39
+      },
+      "multipliers": {
+        "park_hr": 0.97,
+        "park_runs": 0.98,
+        "weather_hr": 0.997,
+        "pitcher_hits": 1.086,
+        "pitcher_hr": 1.135,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.065,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.935,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.13,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1922,
+        "doubles": 0.0243,
+        "triples": 0.0124,
+        "home_runs": 0.0339,
+        "bb_hbp": 0.0664,
+        "r_per_pa": 0.329,
+        "rbi_per_pa": 0.1412
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 664034,
       "name": "Ty France",
       "position": "1B",
@@ -981,31 +1057,31 @@
       },
       "weather": {
         "condition": "Partly Cloudy",
-        "temp": "68",
-        "wind": "7 mph, In From RF"
+        "temp": "71",
+        "wind": "10 mph, In From RF"
       },
       "pa_source": "lineup",
       "stdev_efp": 10.0,
       "mean_efp": 11.0,
       "stats_games": 11,
-      "efp": 9.43,
+      "efp": 9.48,
       "bat_side": "L",
       "per_event": {
-        "singles": 1.79,
+        "singles": 1.89,
         "doubles": 0.71,
         "triples": 0.12,
-        "home_runs": 2.49,
-        "bb_hbp": 0.98,
-        "r": 3.01,
-        "rbi": 1.57,
+        "home_runs": 2.5,
+        "bb_hbp": 0.91,
+        "r": 3.0,
+        "rbi": 1.6,
         "sb": 0.09
       },
       "multipliers": {
         "park_hr": 1.01,
         "park_runs": 1.0,
         "weather_hr": 0.82,
-        "pitcher_hits": 1.021,
-        "pitcher_hr": 1.175,
+        "pitcher_hits": 1.018,
+        "pitcher_hr": 1.166,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -1025,13 +1101,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1387,
-        "doubles": 0.0332,
+        "singles": 0.1466,
+        "doubles": 0.0331,
         "triples": 0.0035,
-        "home_runs": 0.0579,
-        "bb_hbp": 0.1138,
-        "r_per_pa": 0.3497,
-        "rbi_per_pa": 0.1829
+        "home_runs": 0.058,
+        "bb_hbp": 0.1058,
+        "r_per_pa": 0.3488,
+        "rbi_per_pa": 0.1857
       },
       "pa": 4.3,
       "tier": "low"
@@ -1981,82 +2057,6 @@
       "tier": "low"
     },
     {
-      "player_id": 813841,
-      "name": "Jonah Cox",
-      "position": "CF",
-      "team_id": 137,
-      "team_abbr": "SF",
-      "opp_abbr": "STL",
-      "opp_team_id": 138,
-      "opp_pitcher": {
-        "id": 669461,
-        "fullName": "Matthew Liberatore"
-      },
-      "park": {
-        "id": 2889,
-        "name": "Busch Stadium",
-        "runs": 98,
-        "hr": 97,
-        "label": "Slight Pitcher"
-      },
-      "weather": {
-        "condition": "Cloudy",
-        "temp": "91",
-        "wind": "4 mph, In From RF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 7.22,
-      "mean_efp": 6.9,
-      "stats_games": 0,
-      "efp": 9.15,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.43,
-        "doubles": 0.53,
-        "triples": 0.43,
-        "home_runs": 1.48,
-        "bb_hbp": 0.58,
-        "r": 2.8,
-        "rbi": 1.2,
-        "sb": 1.0
-      },
-      "multipliers": {
-        "park_hr": 0.97,
-        "park_runs": 0.98,
-        "weather_hr": 0.997,
-        "pitcher_hits": 1.089,
-        "pitcher_hr": 1.147,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.065,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.935,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.13,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1883,
-        "doubles": 0.0246,
-        "triples": 0.0125,
-        "home_runs": 0.0345,
-        "bb_hbp": 0.0674,
-        "r_per_pa": 0.3254,
-        "rbi_per_pa": 0.1398
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
       "player_id": 669720,
       "name": "Austin Hays",
       "position": "DH",
@@ -2202,5 +2202,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-09-16T17:22:22.454258+00:00"
+  "generated_at": "2026-09-16T18:39:42.840832+00:00"
 }
