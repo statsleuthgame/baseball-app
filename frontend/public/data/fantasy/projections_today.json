@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 348,
+  "projection_count": 342,
   "projections": [
     {
       "player_id": 665487,
@@ -233,6 +233,82 @@
       "tier": "low"
     },
     {
+      "player_id": 695578,
+      "name": "James Wood",
+      "position": "RF",
+      "team_id": 120,
+      "team_abbr": "WSH",
+      "opp_abbr": "PHI",
+      "opp_team_id": 143,
+      "opp_pitcher": {
+        "id": 554430,
+        "fullName": "Zack Wheeler"
+      },
+      "park": {
+        "id": 3309,
+        "name": "Nationals Park",
+        "runs": 100,
+        "hr": 101,
+        "label": "Neutral"
+      },
+      "weather": {
+        "condition": "Clear",
+        "temp": "83",
+        "wind": "7 mph, Out To CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 8.76,
+      "mean_efp": 10.82,
+      "stats_games": 11,
+      "efp": 10.1,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.52,
+        "doubles": 0.9,
+        "triples": 0.06,
+        "home_runs": 2.08,
+        "bb_hbp": 1.33,
+        "r": 3.0,
+        "rbi": 1.42,
+        "sb": 1.23
+      },
+      "multipliers": {
+        "park_hr": 1.01,
+        "park_runs": 1.0,
+        "weather_hr": 1.08,
+        "pitcher_hits": 0.911,
+        "pitcher_hr": 1.066,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.999,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.922,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.03,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1176,
+        "doubles": 0.042,
+        "triples": 0.0018,
+        "home_runs": 0.0483,
+        "bb_hbp": 0.1544,
+        "r_per_pa": 0.3485,
+        "rbi_per_pa": 0.165
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 682985,
       "name": "Riley Greene",
       "position": "LF",
@@ -306,6 +382,82 @@
         "rbi_per_pa": 0.1849
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 813841,
+      "name": "Jonah Cox",
+      "position": "CF",
+      "team_id": 137,
+      "team_abbr": "SF",
+      "opp_abbr": "STL",
+      "opp_team_id": 138,
+      "opp_pitcher": {
+        "id": 669461,
+        "fullName": "Matthew Liberatore"
+      },
+      "park": {
+        "id": 2889,
+        "name": "Busch Stadium",
+        "runs": 98,
+        "hr": 97,
+        "label": "Slight Pitcher"
+      },
+      "weather": {
+        "condition": "Cloudy",
+        "temp": "91",
+        "wind": "4 mph, In From RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.22,
+      "mean_efp": 6.9,
+      "stats_games": 0,
+      "efp": 9.91,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.64,
+        "doubles": 0.52,
+        "triples": 0.43,
+        "home_runs": 1.45,
+        "bb_hbp": 0.56,
+        "r": 2.94,
+        "rbi": 1.26,
+        "sb": 1.52
+      },
+      "multipliers": {
+        "park_hr": 0.97,
+        "park_runs": 0.98,
+        "weather_hr": 0.997,
+        "pitcher_hits": 1.09,
+        "pitcher_hr": 1.133,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.065,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.935,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.13,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.2047,
+        "doubles": 0.0243,
+        "triples": 0.0124,
+        "home_runs": 0.0337,
+        "bb_hbp": 0.0654,
+        "r_per_pa": 0.3414,
+        "rbi_per_pa": 0.146
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -526,82 +678,6 @@
         "rbi_per_pa": 0.1472
       },
       "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 813841,
-      "name": "Jonah Cox",
-      "position": "CF",
-      "team_id": 137,
-      "team_abbr": "SF",
-      "opp_abbr": "STL",
-      "opp_team_id": 138,
-      "opp_pitcher": {
-        "id": 669461,
-        "fullName": "Matthew Liberatore"
-      },
-      "park": {
-        "id": 2889,
-        "name": "Busch Stadium",
-        "runs": 98,
-        "hr": 97,
-        "label": "Slight Pitcher"
-      },
-      "weather": {
-        "condition": "Cloudy",
-        "temp": "91",
-        "wind": "4 mph, In From RF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 7.22,
-      "mean_efp": 6.9,
-      "stats_games": 0,
-      "efp": 9.68,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.57,
-        "doubles": 0.52,
-        "triples": 0.43,
-        "home_runs": 1.45,
-        "bb_hbp": 0.57,
-        "r": 2.88,
-        "rbi": 1.24,
-        "sb": 1.39
-      },
-      "multipliers": {
-        "park_hr": 0.97,
-        "park_runs": 0.98,
-        "weather_hr": 0.997,
-        "pitcher_hits": 1.09,
-        "pitcher_hr": 1.133,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.065,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.935,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.13,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1989,
-        "doubles": 0.0243,
-        "triples": 0.0124,
-        "home_runs": 0.0338,
-        "bb_hbp": 0.0659,
-        "r_per_pa": 0.3354,
-        "rbi_per_pa": 0.1437
-      },
-      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1421,82 +1497,6 @@
       "tier": "low"
     },
     {
-      "player_id": 695578,
-      "name": "James Wood",
-      "position": "RF",
-      "team_id": 120,
-      "team_abbr": "WSH",
-      "opp_abbr": "PHI",
-      "opp_team_id": 143,
-      "opp_pitcher": {
-        "id": 554430,
-        "fullName": "Zack Wheeler"
-      },
-      "park": {
-        "id": 3309,
-        "name": "Nationals Park",
-        "runs": 100,
-        "hr": 101,
-        "label": "Neutral"
-      },
-      "weather": {
-        "condition": "Clear",
-        "temp": "83",
-        "wind": "7 mph, Out To CF"
-      },
-      "pa_source": "default",
-      "stdev_efp": 8.76,
-      "mean_efp": 10.82,
-      "stats_games": 11,
-      "efp": 9.29,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.41,
-        "doubles": 0.84,
-        "triples": 0.06,
-        "home_runs": 1.93,
-        "bb_hbp": 1.24,
-        "r": 2.71,
-        "rbi": 1.32,
-        "sb": 1.1
-      },
-      "multipliers": {
-        "park_hr": 1.01,
-        "park_runs": 1.0,
-        "weather_hr": 1.08,
-        "pitcher_hits": 0.911,
-        "pitcher_hr": 1.066,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.999,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.922,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1176,
-        "doubles": 0.042,
-        "triples": 0.0018,
-        "home_runs": 0.0483,
-        "bb_hbp": 0.1544,
-        "r_per_pa": 0.3385,
-        "rbi_per_pa": 0.165
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 665052,
       "name": "Griffin Conine",
       "position": "RF",
@@ -2234,5 +2234,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-09-16T19:41:19.153045+00:00"
+  "generated_at": "2026-09-16T19:49:26.269251+00:00"
 }
