@@ -116,16 +116,16 @@
       "stdev_efp": 7.22,
       "mean_efp": 6.9,
       "stats_games": 0,
-      "efp": 11.42,
+      "efp": 11.4,
       "bat_side": "L",
       "per_event": {
-        "singles": 3.6,
-        "doubles": 1.13,
+        "singles": 3.59,
+        "doubles": 1.12,
         "triples": 1.33,
-        "home_runs": 0.75,
+        "home_runs": 0.74,
         "bb_hbp": 0.58,
-        "r": 2.98,
-        "rbi": 1.38,
+        "r": 2.97,
+        "rbi": 1.37,
         "sb": 1.29
       },
       "multipliers": {
@@ -153,16 +153,16 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.2791,
-        "doubles": 0.0524,
+        "singles": 0.2785,
+        "doubles": 0.0522,
         "triples": 0.0387,
         "home_runs": 0.0173,
-        "bb_hbp": 0.0679,
-        "r_per_pa": 0.3468,
-        "rbi_per_pa": 0.16
+        "bb_hbp": 0.0677,
+        "r_per_pa": 0.3459,
+        "rbi_per_pa": 0.1596
       },
       "pa": 4.3,
-      "tier": "medium"
+      "tier": "low"
     },
     {
       "player_id": 677951,
@@ -393,6 +393,82 @@
       "tier": "low"
     },
     {
+      "player_id": 664034,
+      "name": "Ty France",
+      "position": "1B",
+      "team_id": 135,
+      "team_abbr": "SD",
+      "opp_abbr": "COL",
+      "opp_team_id": 115,
+      "opp_pitcher": {
+        "id": 685299,
+        "fullName": "Tanner Gordon"
+      },
+      "park": {
+        "id": 19,
+        "name": "Coors Field",
+        "runs": 116,
+        "hr": 118,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Cloudy",
+        "temp": "74",
+        "wind": "2 mph, In From LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 10.22,
+      "mean_efp": 7.8,
+      "stats_games": 5,
+      "efp": 10.07,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.93,
+        "doubles": 1.71,
+        "triples": 0.15,
+        "home_runs": 1.75,
+        "bb_hbp": 0.56,
+        "r": 2.92,
+        "rbi": 1.44,
+        "sb": 0.03
+      },
+      "multipliers": {
+        "park_hr": 1.18,
+        "park_runs": 1.16,
+        "weather_hr": 0.82,
+        "pitcher_hits": 1.207,
+        "pitcher_hr": 1.142,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.115,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.096,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.2444,
+        "doubles": 0.0856,
+        "triples": 0.0047,
+        "home_runs": 0.0437,
+        "bb_hbp": 0.0702,
+        "r_per_pa": 0.3647,
+        "rbi_per_pa": 0.1796
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
       "player_id": 665161,
       "name": "Jeremy Pe\u00f1a",
       "position": "SS",
@@ -466,82 +542,6 @@
         "rbi_per_pa": 0.18
       },
       "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 664034,
-      "name": "Ty France",
-      "position": "1B",
-      "team_id": 135,
-      "team_abbr": "SD",
-      "opp_abbr": "COL",
-      "opp_team_id": 115,
-      "opp_pitcher": {
-        "id": 685299,
-        "fullName": "Tanner Gordon"
-      },
-      "park": {
-        "id": 19,
-        "name": "Coors Field",
-        "runs": 116,
-        "hr": 118,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Cloudy",
-        "temp": "74",
-        "wind": "2 mph, In From LF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 10.22,
-      "mean_efp": 7.8,
-      "stats_games": 5,
-      "efp": 10.05,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.96,
-        "doubles": 1.73,
-        "triples": 0.15,
-        "home_runs": 1.75,
-        "bb_hbp": 0.53,
-        "r": 2.88,
-        "rbi": 1.44,
-        "sb": 0.03
-      },
-      "multipliers": {
-        "park_hr": 1.18,
-        "park_runs": 1.16,
-        "weather_hr": 0.82,
-        "pitcher_hits": 1.207,
-        "pitcher_hr": 1.142,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.115,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.096,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.2465,
-        "doubles": 0.0865,
-        "triples": 0.0047,
-        "home_runs": 0.0438,
-        "bb_hbp": 0.0659,
-        "r_per_pa": 0.3603,
-        "rbi_per_pa": 0.1796
-      },
-      "pa": 4.0,
       "tier": "low"
     },
     {
@@ -952,16 +952,16 @@
       "stdev_efp": 7.22,
       "mean_efp": 6.9,
       "stats_games": 0,
-      "efp": 9.35,
+      "efp": 9.28,
       "bat_side": "S",
       "per_event": {
-        "singles": 1.89,
+        "singles": 1.88,
         "doubles": 1.13,
         "triples": 0.38,
-        "home_runs": 1.84,
+        "home_runs": 1.82,
         "bb_hbp": 0.84,
-        "r": 2.65,
-        "rbi": 1.51,
+        "r": 2.63,
+        "rbi": 1.49,
         "sb": 0.43
       },
       "multipliers": {
@@ -989,89 +989,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1467,
-        "doubles": 0.0527,
+        "singles": 0.1456,
+        "doubles": 0.0524,
         "triples": 0.011,
-        "home_runs": 0.0429,
-        "bb_hbp": 0.0978,
-        "r_per_pa": 0.3084,
-        "rbi_per_pa": 0.1754
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 681393,
-      "name": "Connor Norby",
-      "position": "2B",
-      "team_id": 115,
-      "team_abbr": "COL",
-      "opp_abbr": "SD",
-      "opp_team_id": 135,
-      "opp_pitcher": {
-        "id": 650633,
-        "fullName": "Michael King"
-      },
-      "park": {
-        "id": 19,
-        "name": "Coors Field",
-        "runs": 116,
-        "hr": 118,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Cloudy",
-        "temp": "74",
-        "wind": "2 mph, In From LF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 6.0,
-      "mean_efp": 3.57,
-      "stats_games": 7,
-      "efp": 9.2,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.77,
-        "doubles": 1.82,
-        "triples": 0.03,
-        "home_runs": 1.19,
-        "bb_hbp": 1.06,
-        "r": 2.7,
-        "rbi": 1.38,
-        "sb": 0.57
-      },
-      "multipliers": {
-        "park_hr": 1.18,
-        "park_runs": 1.16,
-        "weather_hr": 0.82,
-        "pitcher_hits": 0.919,
-        "pitcher_hr": 0.977,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.979,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.09,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 0.987,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.137,
-        "doubles": 0.0846,
-        "triples": 0.0008,
-        "home_runs": 0.0276,
-        "bb_hbp": 0.123,
-        "r_per_pa": 0.3142,
-        "rbi_per_pa": 0.1603
+        "home_runs": 0.0423,
+        "bb_hbp": 0.0977,
+        "r_per_pa": 0.306,
+        "rbi_per_pa": 0.1736
       },
       "pa": 4.3,
       "tier": "low"
@@ -1148,6 +1072,82 @@
         "bb_hbp": 0.0998,
         "r_per_pa": 0.325,
         "rbi_per_pa": 0.1624
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 681393,
+      "name": "Connor Norby",
+      "position": "2B",
+      "team_id": 115,
+      "team_abbr": "COL",
+      "opp_abbr": "SD",
+      "opp_team_id": 135,
+      "opp_pitcher": {
+        "id": 650633,
+        "fullName": "Michael King"
+      },
+      "park": {
+        "id": 19,
+        "name": "Coors Field",
+        "runs": 116,
+        "hr": 118,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Cloudy",
+        "temp": "74",
+        "wind": "2 mph, In From LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 6.0,
+      "mean_efp": 3.57,
+      "stats_games": 7,
+      "efp": 9.12,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.76,
+        "doubles": 1.8,
+        "triples": 0.03,
+        "home_runs": 1.18,
+        "bb_hbp": 1.05,
+        "r": 2.67,
+        "rbi": 1.36,
+        "sb": 0.57
+      },
+      "multipliers": {
+        "park_hr": 1.18,
+        "park_runs": 1.16,
+        "weather_hr": 0.82,
+        "pitcher_hits": 0.919,
+        "pitcher_hr": 0.977,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.979,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.09,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.987,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1361,
+        "doubles": 0.0835,
+        "triples": 0.0008,
+        "home_runs": 0.0274,
+        "bb_hbp": 0.1222,
+        "r_per_pa": 0.311,
+        "rbi_per_pa": 0.1583
       },
       "pa": 4.3,
       "tier": "low"
@@ -2294,5 +2294,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-09-17T21:35:36.910164+00:00"
+  "generated_at": "2026-09-17T21:51:14.926787+00:00"
 }
