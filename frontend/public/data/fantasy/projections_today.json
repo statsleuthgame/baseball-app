@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 310,
+  "projection_count": 300,
   "projections": [
     {
       "player_id": 691718,
@@ -165,6 +165,82 @@
       "tier": "low"
     },
     {
+      "player_id": 672515,
+      "name": "Gabriel Moreno",
+      "position": "C",
+      "team_id": 109,
+      "team_abbr": "AZ",
+      "opp_abbr": "NYY",
+      "opp_team_id": 147,
+      "opp_pitcher": {
+        "id": 543037,
+        "fullName": "Gerrit Cole"
+      },
+      "park": {
+        "id": 15,
+        "name": "Chase Field",
+        "runs": 106,
+        "hr": 110,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.97,
+      "mean_efp": 4.89,
+      "stats_games": 9,
+      "efp": 10.72,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.48,
+        "doubles": 1.29,
+        "triples": 0.08,
+        "home_runs": 2.48,
+        "bb_hbp": 0.78,
+        "r": 3.14,
+        "rbi": 1.65,
+        "sb": 0.34
+      },
+      "multipliers": {
+        "park_hr": 1.1,
+        "park_runs": 1.06,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.014,
+        "pitcher_hr": 1.139,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.116,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.028,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1921,
+        "doubles": 0.0598,
+        "triples": 0.0022,
+        "home_runs": 0.0576,
+        "bb_hbp": 0.0911,
+        "r_per_pa": 0.3655,
+        "rbi_per_pa": 0.1923
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 670541,
       "name": "Yordan Alvarez",
       "position": "DH",
@@ -312,6 +388,82 @@
         "bb_hbp": 0.1572,
         "r_per_pa": 0.3838,
         "rbi_per_pa": 0.1806
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 665487,
+      "name": "Fernando Tatis Jr.",
+      "position": "RF",
+      "team_id": 135,
+      "team_abbr": "SD",
+      "opp_abbr": "MIA",
+      "opp_team_id": 146,
+      "opp_pitcher": {
+        "id": 663969,
+        "fullName": "Tyler Phillips"
+      },
+      "park": {
+        "id": 2680,
+        "name": "Petco Park",
+        "runs": 95,
+        "hr": 93,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Clear",
+        "temp": "71",
+        "wind": "11 mph, In From LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 3.45,
+      "mean_efp": 6.11,
+      "stats_games": 9,
+      "efp": 10.12,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.9,
+        "doubles": 0.82,
+        "triples": 0.26,
+        "home_runs": 1.37,
+        "bb_hbp": 1.15,
+        "r": 2.97,
+        "rbi": 1.56,
+        "sb": 1.52
+      },
+      "multipliers": {
+        "park_hr": 0.93,
+        "park_runs": 0.95,
+        "weather_hr": 0.82,
+        "pitcher_hits": 0.97,
+        "pitcher_hr": 1.052,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.966,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.222,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.056,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1473,
+        "doubles": 0.0383,
+        "triples": 0.0075,
+        "home_runs": 0.0318,
+        "bb_hbp": 0.1333,
+        "r_per_pa": 0.3457,
+        "rbi_per_pa": 0.1819
       },
       "pa": 4.3,
       "tier": "low"
@@ -621,78 +773,6 @@
       "tier": "low"
     },
     {
-      "player_id": 672515,
-      "name": "Gabriel Moreno",
-      "position": "C",
-      "team_id": 109,
-      "team_abbr": "AZ",
-      "opp_abbr": "NYY",
-      "opp_team_id": 147,
-      "opp_pitcher": {
-        "id": 543037,
-        "fullName": "Gerrit Cole"
-      },
-      "park": {
-        "id": 15,
-        "name": "Chase Field",
-        "runs": 106,
-        "hr": 110,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 5.97,
-      "mean_efp": 4.89,
-      "stats_games": 9,
-      "efp": 9.92,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.31,
-        "doubles": 1.2,
-        "triples": 0.07,
-        "home_runs": 2.3,
-        "bb_hbp": 0.73,
-        "r": 2.85,
-        "rbi": 1.54,
-        "sb": 0.34
-      },
-      "multipliers": {
-        "park_hr": 1.1,
-        "park_runs": 1.06,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.014,
-        "pitcher_hr": 1.139,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.116,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1921,
-        "doubles": 0.0598,
-        "triples": 0.0022,
-        "home_runs": 0.0576,
-        "bb_hbp": 0.0911,
-        "r_per_pa": 0.3557,
-        "rbi_per_pa": 0.1923
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 571448,
       "name": "Nolan Arenado",
       "position": "3B",
@@ -711,12 +791,16 @@
         "hr": 110,
         "label": "Hitter Friendly"
       },
-      "weather": null,
-      "pa_source": "default",
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
       "stdev_efp": 11.16,
       "mean_efp": 8.57,
       "stats_games": 7,
-      "efp": 9.72,
+      "efp": 9.88,
       "bat_side": "R",
       "per_event": {
         "singles": 1.72,
@@ -724,7 +808,7 @@
         "triples": 0.07,
         "home_runs": 3.35,
         "bb_hbp": 0.66,
-        "r": 2.58,
+        "r": 2.77,
         "rbi": 1.61,
         "sb": 0.11
       },
@@ -749,7 +833,7 @@
         "speed_singles": 1.0,
         "speed_r": 1.0,
         "bvpt": 1.0,
-        "ondeck_r": 1.0,
+        "ondeck_r": 1.074,
         "preceding_rbi": 1.0
       },
       "rates": {
@@ -758,10 +842,86 @@
         "triples": 0.0021,
         "home_runs": 0.0838,
         "bb_hbp": 0.0825,
-        "r_per_pa": 0.3229,
+        "r_per_pa": 0.3467,
         "rbi_per_pa": 0.2016
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 687957,
+      "name": "Dustin Harris",
+      "position": "LF",
+      "team_id": 135,
+      "team_abbr": "SD",
+      "opp_abbr": "MIA",
+      "opp_team_id": 146,
+      "opp_pitcher": {
+        "id": 663969,
+        "fullName": "Tyler Phillips"
+      },
+      "park": {
+        "id": 2680,
+        "name": "Petco Park",
+        "runs": 95,
+        "hr": 93,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Clear",
+        "temp": "71",
+        "wind": "11 mph, In From LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.22,
+      "mean_efp": 6.9,
+      "stats_games": 0,
+      "efp": 9.7,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.46,
+        "doubles": 0.73,
+        "triples": 0.86,
+        "home_runs": 0.47,
+        "bb_hbp": 0.94,
+        "r": 2.96,
+        "rbi": 1.37,
+        "sb": 1.29
+      },
+      "multipliers": {
+        "park_hr": 0.93,
+        "park_runs": 0.95,
+        "weather_hr": 0.95,
+        "pitcher_hits": 0.97,
+        "pitcher_hr": 1.052,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.966,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.222,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.047,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1907,
+        "doubles": 0.0338,
+        "triples": 0.0249,
+        "home_runs": 0.0109,
+        "bb_hbp": 0.1092,
+        "r_per_pa": 0.3436,
+        "rbi_per_pa": 0.1596
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -990,78 +1150,6 @@
         "rbi_per_pa": 0.1578
       },
       "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 665487,
-      "name": "Fernando Tatis Jr.",
-      "position": "RF",
-      "team_id": 135,
-      "team_abbr": "SD",
-      "opp_abbr": "MIA",
-      "opp_team_id": 146,
-      "opp_pitcher": {
-        "id": 663969,
-        "fullName": "Tyler Phillips"
-      },
-      "park": {
-        "id": 2680,
-        "name": "Petco Park",
-        "runs": 95,
-        "hr": 93,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 3.45,
-      "mean_efp": 6.11,
-      "stats_games": 9,
-      "efp": 9.48,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.77,
-        "doubles": 0.77,
-        "triples": 0.24,
-        "home_runs": 1.55,
-        "bb_hbp": 1.07,
-        "r": 2.62,
-        "rbi": 1.45,
-        "sb": 1.36
-      },
-      "multipliers": {
-        "park_hr": 0.93,
-        "park_runs": 0.95,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.97,
-        "pitcher_hr": 1.052,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.966,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.222,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1473,
-        "doubles": 0.0383,
-        "triples": 0.0075,
-        "home_runs": 0.0388,
-        "bb_hbp": 0.1333,
-        "r_per_pa": 0.3274,
-        "rbi_per_pa": 0.1819
-      },
-      "pa": 4.0,
       "tier": "low"
     },
     {
@@ -1615,7 +1703,11 @@
         "hr": 110,
         "label": "Hitter Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
       "pa_source": "default",
       "stdev_efp": 7.05,
       "mean_efp": 7.73,
@@ -2199,80 +2291,8 @@
       },
       "pa": 4.3,
       "tier": "low"
-    },
-    {
-      "player_id": 687957,
-      "name": "Dustin Harris",
-      "position": "LF",
-      "team_id": 135,
-      "team_abbr": "SD",
-      "opp_abbr": "MIA",
-      "opp_team_id": 146,
-      "opp_pitcher": {
-        "id": 663969,
-        "fullName": "Tyler Phillips"
-      },
-      "park": {
-        "id": 2680,
-        "name": "Petco Park",
-        "runs": 95,
-        "hr": 93,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.22,
-      "mean_efp": 6.9,
-      "stats_games": 0,
-      "efp": 8.91,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.29,
-        "doubles": 0.68,
-        "triples": 0.8,
-        "home_runs": 0.46,
-        "bb_hbp": 0.87,
-        "r": 2.63,
-        "rbi": 1.28,
-        "sb": 1.17
-      },
-      "multipliers": {
-        "park_hr": 0.93,
-        "park_runs": 0.95,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.97,
-        "pitcher_hr": 1.052,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.966,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.222,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1907,
-        "doubles": 0.0338,
-        "triples": 0.0249,
-        "home_runs": 0.0114,
-        "bb_hbp": 0.1092,
-        "r_per_pa": 0.3283,
-        "rbi_per_pa": 0.1596
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-09-18T21:06:43.017487+00:00"
+  "generated_at": "2026-09-18T21:23:05.990897+00:00"
 }
