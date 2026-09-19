@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 15,
-  "projection_count": 374,
+  "projection_count": 359,
   "projections": [
     {
       "player_id": 682829,
@@ -309,82 +309,6 @@
       "tier": "low"
     },
     {
-      "player_id": 678246,
-      "name": "Miguel Vargas",
-      "position": "3B",
-      "team_id": 145,
-      "team_abbr": "CWS",
-      "opp_abbr": "DET",
-      "opp_team_id": 116,
-      "opp_pitcher": {
-        "id": 695549,
-        "fullName": "Jackson Jobe"
-      },
-      "park": {
-        "id": 4,
-        "name": "Guaranteed Rate Field",
-        "runs": 104,
-        "hr": 110,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Overcast",
-        "temp": "69",
-        "wind": "5 mph, Varies"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 8.62,
-      "mean_efp": 11.7,
-      "stats_games": 10,
-      "efp": 10.06,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.56,
-        "doubles": 0.96,
-        "triples": 0.04,
-        "home_runs": 2.39,
-        "bb_hbp": 1.22,
-        "r": 2.97,
-        "rbi": 1.52,
-        "sb": 0.81
-      },
-      "multipliers": {
-        "park_hr": 1.1,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.95,
-        "pitcher_hr": 1.101,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.942,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.026,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.072,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1206,
-        "doubles": 0.0447,
-        "triples": 0.0012,
-        "home_runs": 0.0556,
-        "bb_hbp": 0.1424,
-        "r_per_pa": 0.3459,
-        "rbi_per_pa": 0.1771
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
       "player_id": 664983,
       "name": "Jake McCarthy",
       "position": "LF",
@@ -454,6 +378,82 @@
         "rbi_per_pa": 0.1783
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 678246,
+      "name": "Miguel Vargas",
+      "position": "3B",
+      "team_id": 145,
+      "team_abbr": "CWS",
+      "opp_abbr": "DET",
+      "opp_team_id": 116,
+      "opp_pitcher": {
+        "id": 695549,
+        "fullName": "Jackson Jobe"
+      },
+      "park": {
+        "id": 4,
+        "name": "Guaranteed Rate Field",
+        "runs": 104,
+        "hr": 110,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Overcast",
+        "temp": "69",
+        "wind": "5 mph, Varies"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 8.62,
+      "mean_efp": 11.7,
+      "stats_games": 10,
+      "efp": 9.94,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.53,
+        "doubles": 0.95,
+        "triples": 0.04,
+        "home_runs": 2.35,
+        "bb_hbp": 1.22,
+        "r": 2.95,
+        "rbi": 1.51,
+        "sb": 0.81
+      },
+      "multipliers": {
+        "park_hr": 1.1,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.939,
+        "pitcher_hr": 1.094,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.942,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.026,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.072,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1184,
+        "doubles": 0.044,
+        "triples": 0.0012,
+        "home_runs": 0.0547,
+        "bb_hbp": 0.1414,
+        "r_per_pa": 0.3426,
+        "rbi_per_pa": 0.175
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1425,82 +1425,6 @@
       "tier": "low"
     },
     {
-      "player_id": 805808,
-      "name": "Kevin McGonigle",
-      "position": "SS",
-      "team_id": 116,
-      "team_abbr": "DET",
-      "opp_abbr": "CWS",
-      "opp_team_id": 145,
-      "opp_pitcher": {
-        "id": 680732,
-        "fullName": "Sean Burke"
-      },
-      "park": {
-        "id": 4,
-        "name": "Guaranteed Rate Field",
-        "runs": 104,
-        "hr": 110,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Overcast",
-        "temp": "69",
-        "wind": "5 mph, Varies"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 3.26,
-      "mean_efp": 9.22,
-      "stats_games": 9,
-      "efp": 9.25,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.2,
-        "doubles": 0.7,
-        "triples": 0.58,
-        "home_runs": 1.16,
-        "bb_hbp": 1.28,
-        "r": 2.9,
-        "rbi": 1.38,
-        "sb": 0.36
-      },
-      "multipliers": {
-        "park_hr": 1.1,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.941,
-        "pitcher_hr": 0.97,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.108,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.001,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 0.954,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1703,
-        "doubles": 0.0326,
-        "triples": 0.0167,
-        "home_runs": 0.027,
-        "bb_hbp": 0.1486,
-        "r_per_pa": 0.3376,
-        "rbi_per_pa": 0.1605
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
       "player_id": 686527,
       "name": "Dominic Canzone",
       "position": "DH",
@@ -1573,47 +1497,51 @@
       "tier": "low"
     },
     {
-      "player_id": 683953,
-      "name": "Travis Bazzana",
-      "position": "2B",
-      "team_id": 114,
-      "team_abbr": "CLE",
-      "opp_abbr": "ATH",
-      "opp_team_id": 133,
+      "player_id": 665833,
+      "name": "Oneil Cruz",
+      "position": "CF",
+      "team_id": 134,
+      "team_abbr": "PIT",
+      "opp_abbr": "KC",
+      "opp_team_id": 118,
       "opp_pitcher": {
-        "id": 682052,
-        "fullName": "Jacob Lopez"
+        "id": 702070,
+        "fullName": "Noah Cameron"
       },
       "park": {
-        "id": 5,
-        "name": "Progressive Field",
-        "runs": 97,
-        "hr": 95,
+        "id": 31,
+        "name": "PNC Park",
+        "runs": 96,
+        "hr": 92,
         "label": "Pitcher Friendly"
       },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.22,
-      "mean_efp": 6.9,
-      "stats_games": 0,
-      "efp": 9.19,
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "76",
+        "wind": "4 mph, In From RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 6.98,
+      "mean_efp": 11.29,
+      "stats_games": 7,
+      "efp": 9.2,
       "bat_side": "L",
       "per_event": {
-        "singles": 1.64,
-        "doubles": 0.68,
-        "triples": 0.08,
-        "home_runs": 2.17,
-        "bb_hbp": 1.25,
-        "r": 2.58,
-        "rbi": 1.45,
-        "sb": 0.64
+        "singles": 2.09,
+        "doubles": 0.72,
+        "triples": 0.11,
+        "home_runs": 1.25,
+        "bb_hbp": 0.8,
+        "r": 3.08,
+        "rbi": 1.41,
+        "sb": 1.04
       },
       "multipliers": {
-        "park_hr": 0.95,
-        "park_runs": 0.97,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.003,
-        "pitcher_hr": 1.111,
+        "park_hr": 0.92,
+        "park_runs": 0.96,
+        "weather_hr": 0.82,
+        "pitcher_hits": 0.97,
+        "pitcher_hr": 0.944,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
         "team_env_r": 1.0,
@@ -1621,27 +1549,27 @@
         "stx_xwoba": 1.0,
         "stx_barrel": 1.0,
         "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.147,
+        "pitcher_gb_hr": 1.037,
         "k_damper": 1.0,
-        "pitcher_bb": 1.25,
+        "pitcher_bb": 0.853,
         "park_hand_hr": 1.0,
         "sb_speed": 1.0,
         "speed_singles": 1.0,
         "speed_r": 1.0,
         "bvpt": 1.0,
-        "ondeck_r": 1.0,
+        "ondeck_r": 1.113,
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1368,
-        "doubles": 0.0342,
-        "triples": 0.0025,
-        "home_runs": 0.0543,
-        "bb_hbp": 0.1558,
-        "r_per_pa": 0.3227,
-        "rbi_per_pa": 0.1816
+        "singles": 0.162,
+        "doubles": 0.0334,
+        "triples": 0.0032,
+        "home_runs": 0.029,
+        "bb_hbp": 0.0928,
+        "r_per_pa": 0.3584,
+        "rbi_per_pa": 0.1645
       },
-      "pa": 4.0,
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1717,6 +1645,82 @@
       "tier": "low"
     },
     {
+      "player_id": 805808,
+      "name": "Kevin McGonigle",
+      "position": "SS",
+      "team_id": 116,
+      "team_abbr": "DET",
+      "opp_abbr": "CWS",
+      "opp_team_id": 145,
+      "opp_pitcher": {
+        "id": 680732,
+        "fullName": "Sean Burke"
+      },
+      "park": {
+        "id": 4,
+        "name": "Guaranteed Rate Field",
+        "runs": 104,
+        "hr": 110,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Overcast",
+        "temp": "69",
+        "wind": "5 mph, Varies"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 3.26,
+      "mean_efp": 9.22,
+      "stats_games": 9,
+      "efp": 9.18,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.19,
+        "doubles": 0.7,
+        "triples": 0.57,
+        "home_runs": 1.16,
+        "bb_hbp": 1.27,
+        "r": 2.88,
+        "rbi": 1.36,
+        "sb": 0.36
+      },
+      "multipliers": {
+        "park_hr": 1.1,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.945,
+        "pitcher_hr": 0.967,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.108,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.001,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.954,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1697,
+        "doubles": 0.0327,
+        "triples": 0.0165,
+        "home_runs": 0.0269,
+        "bb_hbp": 0.1475,
+        "r_per_pa": 0.3343,
+        "rbi_per_pa": 0.1587
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 695578,
       "name": "James Wood",
       "position": "RF",
@@ -1786,6 +1790,82 @@
         "rbi_per_pa": 0.1654
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 608070,
+      "name": "Jos\u00e9 Ram\u00edrez",
+      "position": "3B",
+      "team_id": 114,
+      "team_abbr": "CLE",
+      "opp_abbr": "ATH",
+      "opp_team_id": 133,
+      "opp_pitcher": {
+        "id": 682052,
+        "fullName": "Jacob Lopez"
+      },
+      "park": {
+        "id": 5,
+        "name": "Progressive Field",
+        "runs": 97,
+        "hr": 95,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "71",
+        "wind": "11 mph, R To L"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 9.59,
+      "mean_efp": 10.78,
+      "stats_games": 9,
+      "efp": 9.04,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 1.52,
+        "doubles": 1.19,
+        "triples": 0.02,
+        "home_runs": 1.48,
+        "bb_hbp": 1.11,
+        "r": 2.46,
+        "rbi": 1.14,
+        "sb": 1.39
+      },
+      "multipliers": {
+        "park_hr": 0.95,
+        "park_runs": 0.97,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.003,
+        "pitcher_hr": 1.111,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.147,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.083,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1181,
+        "doubles": 0.0555,
+        "triples": 0.0006,
+        "home_runs": 0.0343,
+        "bb_hbp": 0.1288,
+        "r_per_pa": 0.2864,
+        "rbi_per_pa": 0.1329
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1937,6 +2017,82 @@
       "tier": "low"
     },
     {
+      "player_id": 701678,
+      "name": "Hao-Yu Lee",
+      "position": "2B",
+      "team_id": 116,
+      "team_abbr": "DET",
+      "opp_abbr": "CWS",
+      "opp_team_id": 145,
+      "opp_pitcher": {
+        "id": 680732,
+        "fullName": "Sean Burke"
+      },
+      "park": {
+        "id": 4,
+        "name": "Guaranteed Rate Field",
+        "runs": 104,
+        "hr": 110,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Overcast",
+        "temp": "69",
+        "wind": "5 mph, Varies"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.22,
+      "mean_efp": 6.9,
+      "stats_games": 0,
+      "efp": 9.0,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.89,
+        "doubles": 1.17,
+        "triples": 0.33,
+        "home_runs": 1.85,
+        "bb_hbp": 0.72,
+        "r": 2.71,
+        "rbi": 1.51,
+        "sb": 0.08
+      },
+      "multipliers": {
+        "park_hr": 1.1,
+        "park_runs": 1.04,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.945,
+        "pitcher_hr": 0.967,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.108,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.001,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.055,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1465,
+        "doubles": 0.0544,
+        "triples": 0.0095,
+        "home_runs": 0.0431,
+        "bb_hbp": 0.0843,
+        "r_per_pa": 0.3156,
+        "rbi_per_pa": 0.1756
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 687952,
       "name": "Christian Encarnacion-Strand",
       "position": "3B",
@@ -2083,160 +2239,8 @@
       },
       "pa": 4.0,
       "tier": "low"
-    },
-    {
-      "player_id": 690993,
-      "name": "Colt Keith",
-      "position": "3B",
-      "team_id": 116,
-      "team_abbr": "DET",
-      "opp_abbr": "CWS",
-      "opp_team_id": 145,
-      "opp_pitcher": {
-        "id": 680732,
-        "fullName": "Sean Burke"
-      },
-      "park": {
-        "id": 4,
-        "name": "Guaranteed Rate Field",
-        "runs": 104,
-        "hr": 110,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Overcast",
-        "temp": "69",
-        "wind": "5 mph, Varies"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 5.72,
-      "mean_efp": 5.38,
-      "stats_games": 8,
-      "efp": 8.92,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.77,
-        "doubles": 1.44,
-        "triples": 0.24,
-        "home_runs": 1.11,
-        "bb_hbp": 0.91,
-        "r": 3.06,
-        "rbi": 1.34,
-        "sb": 0.31
-      },
-      "multipliers": {
-        "park_hr": 1.1,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.941,
-        "pitcher_hr": 0.97,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.108,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.001,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.15,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1371,
-        "doubles": 0.067,
-        "triples": 0.007,
-        "home_runs": 0.0258,
-        "bb_hbp": 0.1059,
-        "r_per_pa": 0.3562,
-        "rbi_per_pa": 0.1556
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 701678,
-      "name": "Hao-Yu Lee",
-      "position": "2B",
-      "team_id": 116,
-      "team_abbr": "DET",
-      "opp_abbr": "CWS",
-      "opp_team_id": 145,
-      "opp_pitcher": {
-        "id": 680732,
-        "fullName": "Sean Burke"
-      },
-      "park": {
-        "id": 4,
-        "name": "Guaranteed Rate Field",
-        "runs": 104,
-        "hr": 110,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Overcast",
-        "temp": "69",
-        "wind": "5 mph, Varies"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 7.22,
-      "mean_efp": 6.9,
-      "stats_games": 0,
-      "efp": 8.92,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.81,
-        "doubles": 1.18,
-        "triples": 0.33,
-        "home_runs": 1.88,
-        "bb_hbp": 0.73,
-        "r": 2.67,
-        "rbi": 1.5,
-        "sb": 0.08
-      },
-      "multipliers": {
-        "park_hr": 1.1,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.941,
-        "pitcher_hr": 0.97,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.108,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.001,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.055,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1403,
-        "doubles": 0.0547,
-        "triples": 0.0097,
-        "home_runs": 0.0437,
-        "bb_hbp": 0.0847,
-        "r_per_pa": 0.3107,
-        "rbi_per_pa": 0.1746
-      },
-      "pa": 4.3,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-09-19T18:48:22.059162+00:00"
+  "generated_at": "2026-09-19T19:05:50.263869+00:00"
 }
