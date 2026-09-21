@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 3,
-  "projection_count": 62,
+  "projection_count": 57,
   "projections": [
     {
       "player_id": 695578,
@@ -336,9 +336,9 @@
         "label": "Slight Hitter"
       },
       "weather": {
-        "condition": "Partly Cloudy",
+        "condition": "Rain",
         "temp": "69",
-        "wind": "9 mph, In From CF"
+        "wind": "3 mph, In From CF"
       },
       "pa_source": "lineup",
       "stdev_efp": 6.5,
@@ -388,6 +388,82 @@
         "bb_hbp": 0.1236,
         "r_per_pa": 0.3054,
         "rbi_per_pa": 0.1773
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 807712,
+      "name": "Luke Keaschall",
+      "position": "2B",
+      "team_id": 142,
+      "team_abbr": "MIN",
+      "opp_abbr": "SF",
+      "opp_team_id": 137,
+      "opp_pitcher": {
+        "id": 694918,
+        "fullName": "Blade Tidwell"
+      },
+      "park": {
+        "id": 2395,
+        "name": "Oracle Park",
+        "runs": 93,
+        "hr": 88,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "60",
+        "wind": "15 mph, Out To CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 5.18,
+      "mean_efp": 3.43,
+      "stats_games": 7,
+      "efp": 8.47,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.12,
+        "doubles": 0.76,
+        "triples": 0.06,
+        "home_runs": 0.73,
+        "bb_hbp": 1.32,
+        "r": 2.57,
+        "rbi": 1.23,
+        "sb": 0.89
+      },
+      "multipliers": {
+        "park_hr": 0.88,
+        "park_runs": 0.93,
+        "weather_hr": 1.08,
+        "pitcher_hits": 0.921,
+        "pitcher_hr": 1.03,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.081,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.205,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.873,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.164,
+        "doubles": 0.0352,
+        "triples": 0.0016,
+        "home_runs": 0.0169,
+        "bb_hbp": 0.1535,
+        "r_per_pa": 0.2991,
+        "rbi_per_pa": 0.143
       },
       "pa": 4.3,
       "tier": "low"
@@ -469,6 +545,82 @@
       "tier": "low"
     },
     {
+      "player_id": 805805,
+      "name": "Walker Jenkins",
+      "position": "CF",
+      "team_id": 142,
+      "team_abbr": "MIN",
+      "opp_abbr": "SF",
+      "opp_team_id": 137,
+      "opp_pitcher": {
+        "id": 694918,
+        "fullName": "Blade Tidwell"
+      },
+      "park": {
+        "id": 2395,
+        "name": "Oracle Park",
+        "runs": 93,
+        "hr": 88,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "60",
+        "wind": "15 mph, Out To CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.22,
+      "mean_efp": 6.9,
+      "stats_games": 0,
+      "efp": 8.38,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.72,
+        "doubles": 0.61,
+        "triples": 0.05,
+        "home_runs": 2.13,
+        "bb_hbp": 0.98,
+        "r": 2.51,
+        "rbi": 1.35,
+        "sb": 0.22
+      },
+      "multipliers": {
+        "park_hr": 0.88,
+        "park_runs": 0.93,
+        "weather_hr": 1.08,
+        "pitcher_hits": 0.921,
+        "pitcher_hr": 1.03,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.081,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.205,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 0.997,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1334,
+        "doubles": 0.0283,
+        "triples": 0.0015,
+        "home_runs": 0.0496,
+        "bb_hbp": 0.1134,
+        "r_per_pa": 0.2913,
+        "rbi_per_pa": 0.157
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 703520,
       "name": "Brett Bateman",
       "position": "CF",
@@ -488,9 +640,9 @@
         "label": "Slight Hitter"
       },
       "weather": {
-        "condition": "Partly Cloudy",
+        "condition": "Rain",
         "temp": "69",
-        "wind": "9 mph, In From CF"
+        "wind": "3 mph, In From CF"
       },
       "pa_source": "lineup",
       "stdev_efp": 7.22,
@@ -564,9 +716,9 @@
         "label": "Slight Hitter"
       },
       "weather": {
-        "condition": "Partly Cloudy",
+        "condition": "Rain",
         "temp": "69",
-        "wind": "9 mph, In From CF"
+        "wind": "3 mph, In From CF"
       },
       "pa_source": "lineup",
       "stdev_efp": 7.22,
@@ -621,9 +773,9 @@
       "tier": "low"
     },
     {
-      "player_id": 807712,
-      "name": "Luke Keaschall",
-      "position": "2B",
+      "player_id": 686797,
+      "name": "Brooks Lee",
+      "position": "3B",
       "team_id": 142,
       "team_abbr": "MIN",
       "opp_abbr": "SF",
@@ -639,27 +791,31 @@
         "hr": 88,
         "label": "Pitcher Friendly"
       },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 5.18,
-      "mean_efp": 3.43,
-      "stats_games": 7,
-      "efp": 8.12,
-      "bat_side": "R",
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "60",
+        "wind": "15 mph, Out To CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 8.41,
+      "mean_efp": 7.44,
+      "stats_games": 9,
+      "efp": 8.08,
+      "bat_side": "S",
       "per_event": {
         "singles": 1.97,
-        "doubles": 0.7,
-        "triples": 0.05,
-        "home_runs": 0.63,
-        "bb_hbp": 1.23,
-        "r": 2.74,
-        "rbi": 1.14,
-        "sb": 0.81
+        "doubles": 0.72,
+        "triples": 0.13,
+        "home_runs": 1.52,
+        "bb_hbp": 0.72,
+        "r": 2.64,
+        "rbi": 1.31,
+        "sb": 0.21
       },
       "multipliers": {
         "park_hr": 0.88,
         "park_runs": 0.93,
-        "weather_hr": 1.0,
+        "weather_hr": 1.08,
         "pitcher_hits": 0.921,
         "pitcher_hr": 1.03,
         "slot_r": 1.0,
@@ -677,19 +833,19 @@
         "speed_singles": 1.0,
         "speed_r": 1.0,
         "bvpt": 1.0,
-        "ondeck_r": 1.0,
+        "ondeck_r": 1.048,
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.164,
-        "doubles": 0.0352,
-        "triples": 0.0016,
-        "home_runs": 0.0157,
-        "bb_hbp": 0.1535,
-        "r_per_pa": 0.3427,
-        "rbi_per_pa": 0.143
+        "singles": 0.1524,
+        "doubles": 0.0334,
+        "triples": 0.0039,
+        "home_runs": 0.0354,
+        "bb_hbp": 0.0837,
+        "r_per_pa": 0.3072,
+        "rbi_per_pa": 0.1525
       },
-      "pa": 4.0,
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -787,18 +943,22 @@
         "hr": 88,
         "label": "Pitcher Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "60",
+        "wind": "15 mph, Out To CF"
+      },
       "pa_source": "default",
       "stdev_efp": 7.22,
       "mean_efp": 6.9,
       "stats_games": 0,
-      "efp": 7.96,
+      "efp": 8.02,
       "bat_side": "R",
       "per_event": {
         "singles": 2.16,
         "doubles": 0.41,
         "triples": 0.17,
-        "home_runs": 0.92,
+        "home_runs": 0.99,
         "bb_hbp": 0.45,
         "r": 2.3,
         "rbi": 1.1,
@@ -807,7 +967,7 @@
       "multipliers": {
         "park_hr": 0.88,
         "park_runs": 0.93,
-        "weather_hr": 1.0,
+        "weather_hr": 1.08,
         "pitcher_hits": 1.006,
         "pitcher_hr": 1.158,
         "slot_r": 1.0,
@@ -832,7 +992,7 @@
         "singles": 0.1801,
         "doubles": 0.0207,
         "triples": 0.0053,
-        "home_runs": 0.023,
+        "home_runs": 0.0249,
         "bb_hbp": 0.0559,
         "r_per_pa": 0.2874,
         "rbi_per_pa": 0.1375
@@ -859,18 +1019,22 @@
         "hr": 88,
         "label": "Pitcher Friendly"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "60",
+        "wind": "15 mph, Out To CF"
+      },
       "pa_source": "default",
       "stdev_efp": 3.83,
       "mean_efp": 6.4,
       "stats_games": 5,
-      "efp": 7.83,
+      "efp": 7.93,
       "bat_side": "L",
       "per_event": {
         "singles": 1.67,
         "doubles": 0.97,
         "triples": 0.02,
-        "home_runs": 1.46,
+        "home_runs": 1.58,
         "bb_hbp": 0.87,
         "r": 2.61,
         "rbi": 1.31,
@@ -879,7 +1043,7 @@
       "multipliers": {
         "park_hr": 0.88,
         "park_runs": 0.93,
-        "weather_hr": 1.0,
+        "weather_hr": 1.08,
         "pitcher_hits": 1.006,
         "pitcher_hr": 1.158,
         "slot_r": 1.0,
@@ -904,82 +1068,10 @@
         "singles": 0.1389,
         "doubles": 0.0483,
         "triples": 0.0006,
-        "home_runs": 0.0365,
+        "home_runs": 0.0394,
         "bb_hbp": 0.1082,
         "r_per_pa": 0.3261,
         "rbi_per_pa": 0.1643
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 805805,
-      "name": "Walker Jenkins",
-      "position": "CF",
-      "team_id": 142,
-      "team_abbr": "MIN",
-      "opp_abbr": "SF",
-      "opp_team_id": 137,
-      "opp_pitcher": {
-        "id": 694918,
-        "fullName": "Blade Tidwell"
-      },
-      "park": {
-        "id": 2395,
-        "name": "Oracle Park",
-        "runs": 93,
-        "hr": 88,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.22,
-      "mean_efp": 6.9,
-      "stats_games": 0,
-      "efp": 7.67,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.6,
-        "doubles": 0.57,
-        "triples": 0.05,
-        "home_runs": 1.84,
-        "bb_hbp": 0.91,
-        "r": 2.34,
-        "rbi": 1.26,
-        "sb": 0.2
-      },
-      "multipliers": {
-        "park_hr": 0.88,
-        "park_runs": 0.93,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.921,
-        "pitcher_hr": 1.03,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.081,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.205,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1334,
-        "doubles": 0.0283,
-        "triples": 0.0015,
-        "home_runs": 0.0459,
-        "bb_hbp": 0.1134,
-        "r_per_pa": 0.2921,
-        "rbi_per_pa": 0.157
       },
       "pa": 4.0,
       "tier": "low"
@@ -1004,9 +1096,9 @@
         "label": "Slight Hitter"
       },
       "weather": {
-        "condition": "Partly Cloudy",
+        "condition": "Rain",
         "temp": "69",
-        "wind": "9 mph, In From CF"
+        "wind": "3 mph, In From CF"
       },
       "pa_source": "lineup",
       "stdev_efp": 7.24,
@@ -1080,9 +1172,9 @@
         "label": "Slight Hitter"
       },
       "weather": {
-        "condition": "Partly Cloudy",
+        "condition": "Rain",
         "temp": "69",
-        "wind": "9 mph, In From CF"
+        "wind": "3 mph, In From CF"
       },
       "pa_source": "lineup",
       "stdev_efp": 7.22,
@@ -1156,9 +1248,9 @@
         "label": "Slight Hitter"
       },
       "weather": {
-        "condition": "Partly Cloudy",
+        "condition": "Rain",
         "temp": "69",
-        "wind": "9 mph, In From CF"
+        "wind": "3 mph, In From CF"
       },
       "pa_source": "lineup",
       "stdev_efp": 7.08,
@@ -1232,9 +1324,9 @@
         "label": "Slight Hitter"
       },
       "weather": {
-        "condition": "Partly Cloudy",
+        "condition": "Rain",
         "temp": "69",
-        "wind": "9 mph, In From CF"
+        "wind": "3 mph, In From CF"
       },
       "pa_source": "lineup",
       "stdev_efp": 5.43,
@@ -1308,9 +1400,9 @@
         "label": "Slight Hitter"
       },
       "weather": {
-        "condition": "Partly Cloudy",
+        "condition": "Rain",
         "temp": "69",
-        "wind": "9 mph, In From CF"
+        "wind": "3 mph, In From CF"
       },
       "pa_source": "lineup",
       "stdev_efp": 7.22,
@@ -1383,18 +1475,22 @@
         "hr": 88,
         "label": "Pitcher Friendly"
       },
-      "weather": null,
-      "pa_source": "default",
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "60",
+        "wind": "15 mph, Out To CF"
+      },
+      "pa_source": "lineup",
       "stdev_efp": 7.22,
       "mean_efp": 6.9,
       "stats_games": 0,
-      "efp": 7.37,
+      "efp": 7.43,
       "bat_side": "L",
       "per_event": {
         "singles": 1.67,
         "doubles": 1.01,
         "triples": 0.04,
-        "home_runs": 0.87,
+        "home_runs": 0.94,
         "bb_hbp": 0.99,
         "r": 2.55,
         "rbi": 1.28,
@@ -1403,7 +1499,7 @@
       "multipliers": {
         "park_hr": 0.88,
         "park_runs": 0.93,
-        "weather_hr": 1.0,
+        "weather_hr": 1.08,
         "pitcher_hits": 0.921,
         "pitcher_hr": 1.03,
         "slot_r": 1.0,
@@ -1428,82 +1524,10 @@
         "singles": 0.1389,
         "doubles": 0.0505,
         "triples": 0.0014,
-        "home_runs": 0.0217,
+        "home_runs": 0.0235,
         "bb_hbp": 0.1233,
         "r_per_pa": 0.3183,
         "rbi_per_pa": 0.1605
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 686797,
-      "name": "Brooks Lee",
-      "position": "3B",
-      "team_id": 142,
-      "team_abbr": "MIN",
-      "opp_abbr": "SF",
-      "opp_team_id": 137,
-      "opp_pitcher": {
-        "id": 694918,
-        "fullName": "Blade Tidwell"
-      },
-      "park": {
-        "id": 2395,
-        "name": "Oracle Park",
-        "runs": 93,
-        "hr": 88,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 8.41,
-      "mean_efp": 7.44,
-      "stats_games": 9,
-      "efp": 7.34,
-      "bat_side": "S",
-      "per_event": {
-        "singles": 1.83,
-        "doubles": 0.67,
-        "triples": 0.12,
-        "home_runs": 1.31,
-        "bb_hbp": 0.67,
-        "r": 2.34,
-        "rbi": 1.22,
-        "sb": 0.21
-      },
-      "multipliers": {
-        "park_hr": 0.88,
-        "park_runs": 0.93,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.921,
-        "pitcher_hr": 1.03,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.081,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.205,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1524,
-        "doubles": 0.0334,
-        "triples": 0.0039,
-        "home_runs": 0.0328,
-        "bb_hbp": 0.0837,
-        "r_per_pa": 0.2931,
-        "rbi_per_pa": 0.1525
       },
       "pa": 4.0,
       "tier": "low"
@@ -1580,6 +1604,234 @@
         "bb_hbp": 0.1269,
         "r_per_pa": 0.3162,
         "rbi_per_pa": 0.135
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 665019,
+      "name": "Kody Clemens",
+      "position": "2B",
+      "team_id": 142,
+      "team_abbr": "MIN",
+      "opp_abbr": "SF",
+      "opp_team_id": 137,
+      "opp_pitcher": {
+        "id": 694918,
+        "fullName": "Blade Tidwell"
+      },
+      "park": {
+        "id": 2395,
+        "name": "Oracle Park",
+        "runs": 93,
+        "hr": 88,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "60",
+        "wind": "15 mph, Out To CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 3.8,
+      "mean_efp": 5.67,
+      "stats_games": 9,
+      "efp": 7.3,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.16,
+        "doubles": 0.6,
+        "triples": 0.4,
+        "home_runs": 1.62,
+        "bb_hbp": 0.81,
+        "r": 2.21,
+        "rbi": 1.15,
+        "sb": 0.38
+      },
+      "multipliers": {
+        "park_hr": 0.88,
+        "park_runs": 0.93,
+        "weather_hr": 1.08,
+        "pitcher_hits": 0.921,
+        "pitcher_hr": 1.03,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.081,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.205,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.096,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.0963,
+        "doubles": 0.0302,
+        "triples": 0.0126,
+        "home_runs": 0.0404,
+        "bb_hbp": 0.1007,
+        "r_per_pa": 0.2763,
+        "rbi_per_pa": 0.1442
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 687551,
+      "name": "Drew Gilbert",
+      "position": "CF",
+      "team_id": 137,
+      "team_abbr": "SF",
+      "opp_abbr": "MIN",
+      "opp_team_id": 142,
+      "opp_pitcher": {
+        "id": 805673,
+        "fullName": "Zebby Matthews"
+      },
+      "park": {
+        "id": 2395,
+        "name": "Oracle Park",
+        "runs": 93,
+        "hr": 88,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "60",
+        "wind": "15 mph, Out To CF"
+      },
+      "pa_source": "default",
+      "stdev_efp": 3.31,
+      "mean_efp": 2.89,
+      "stats_games": 9,
+      "efp": 7.29,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.27,
+        "doubles": 0.63,
+        "triples": 0.18,
+        "home_runs": 1.57,
+        "bb_hbp": 0.99,
+        "r": 2.36,
+        "rbi": 1.12,
+        "sb": 0.21
+      },
+      "multipliers": {
+        "park_hr": 0.88,
+        "park_runs": 0.93,
+        "weather_hr": 1.08,
+        "pitcher_hits": 1.006,
+        "pitcher_hr": 1.158,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.004,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.858,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1057,
+        "doubles": 0.0313,
+        "triples": 0.0058,
+        "home_runs": 0.0392,
+        "bb_hbp": 0.1236,
+        "r_per_pa": 0.295,
+        "rbi_per_pa": 0.1404
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 808982,
+      "name": "Jung Hoo Lee",
+      "position": "RF",
+      "team_id": 137,
+      "team_abbr": "SF",
+      "opp_abbr": "MIN",
+      "opp_team_id": 142,
+      "opp_pitcher": {
+        "id": 805673,
+        "fullName": "Zebby Matthews"
+      },
+      "park": {
+        "id": 2395,
+        "name": "Oracle Park",
+        "runs": 93,
+        "hr": 88,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "60",
+        "wind": "15 mph, Out To CF"
+      },
+      "pa_source": "default",
+      "stdev_efp": 5.45,
+      "mean_efp": 5.62,
+      "stats_games": 16,
+      "efp": 7.27,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.84,
+        "doubles": 1.05,
+        "triples": 0.17,
+        "home_runs": 1.01,
+        "bb_hbp": 0.48,
+        "r": 2.25,
+        "rbi": 1.17,
+        "sb": 0.34
+      },
+      "multipliers": {
+        "park_hr": 0.88,
+        "park_runs": 0.93,
+        "weather_hr": 1.08,
+        "pitcher_hits": 1.006,
+        "pitcher_hr": 1.158,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.004,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.858,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1537,
+        "doubles": 0.0524,
+        "triples": 0.0052,
+        "home_runs": 0.0252,
+        "bb_hbp": 0.0598,
+        "r_per_pa": 0.281,
+        "rbi_per_pa": 0.1465
       },
       "pa": 4.0,
       "tier": "low"
@@ -1680,9 +1932,9 @@
         "label": "Slight Hitter"
       },
       "weather": {
-        "condition": "Partly Cloudy",
+        "condition": "Rain",
         "temp": "69",
-        "wind": "9 mph, In From CF"
+        "wind": "3 mph, In From CF"
       },
       "pa_source": "lineup",
       "stdev_efp": 3.16,
@@ -1756,9 +2008,9 @@
         "label": "Slight Hitter"
       },
       "weather": {
-        "condition": "Partly Cloudy",
+        "condition": "Rain",
         "temp": "69",
-        "wind": "9 mph, In From CF"
+        "wind": "3 mph, In From CF"
       },
       "pa_source": "lineup",
       "stdev_efp": 9.6,
@@ -1808,6 +2060,158 @@
         "bb_hbp": 0.0915,
         "r_per_pa": 0.246,
         "rbi_per_pa": 0.1621
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 668800,
+      "name": "Andrew Knizner",
+      "position": "C",
+      "team_id": 137,
+      "team_abbr": "SF",
+      "opp_abbr": "MIN",
+      "opp_team_id": 142,
+      "opp_pitcher": {
+        "id": 805673,
+        "fullName": "Zebby Matthews"
+      },
+      "park": {
+        "id": 2395,
+        "name": "Oracle Park",
+        "runs": 93,
+        "hr": 88,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "60",
+        "wind": "15 mph, Out To CF"
+      },
+      "pa_source": "default",
+      "stdev_efp": 7.22,
+      "mean_efp": 6.9,
+      "stats_games": 0,
+      "efp": 7.22,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.71,
+        "doubles": 0.83,
+        "triples": 0.07,
+        "home_runs": 1.51,
+        "bb_hbp": 0.63,
+        "r": 2.31,
+        "rbi": 1.19,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 0.88,
+        "park_runs": 0.93,
+        "weather_hr": 1.08,
+        "pitcher_hits": 1.006,
+        "pitcher_hr": 1.158,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.004,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.858,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1423,
+        "doubles": 0.0416,
+        "triples": 0.0021,
+        "home_runs": 0.0378,
+        "bb_hbp": 0.0792,
+        "r_per_pa": 0.2886,
+        "rbi_per_pa": 0.1487
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 682674,
+      "name": "Victor Bericoto",
+      "position": "LF",
+      "team_id": 137,
+      "team_abbr": "SF",
+      "opp_abbr": "MIN",
+      "opp_team_id": 142,
+      "opp_pitcher": {
+        "id": 805673,
+        "fullName": "Zebby Matthews"
+      },
+      "park": {
+        "id": 2395,
+        "name": "Oracle Park",
+        "runs": 93,
+        "hr": 88,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "60",
+        "wind": "15 mph, Out To CF"
+      },
+      "pa_source": "default",
+      "stdev_efp": 7.22,
+      "mean_efp": 6.9,
+      "stats_games": 0,
+      "efp": 7.22,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.57,
+        "doubles": 0.68,
+        "triples": 0.05,
+        "home_runs": 2.14,
+        "bb_hbp": 0.38,
+        "r": 2.08,
+        "rbi": 1.22,
+        "sb": 0.11
+      },
+      "multipliers": {
+        "park_hr": 0.88,
+        "park_runs": 0.93,
+        "weather_hr": 1.08,
+        "pitcher_hits": 1.006,
+        "pitcher_hr": 1.158,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.004,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.858,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1312,
+        "doubles": 0.0339,
+        "triples": 0.0015,
+        "home_runs": 0.0535,
+        "bb_hbp": 0.0478,
+        "r_per_pa": 0.2604,
+        "rbi_per_pa": 0.153
       },
       "pa": 4.0,
       "tier": "low"
@@ -1887,368 +2291,8 @@
       },
       "pa": 3.7,
       "tier": "low"
-    },
-    {
-      "player_id": 808982,
-      "name": "Jung Hoo Lee",
-      "position": "RF",
-      "team_id": 137,
-      "team_abbr": "SF",
-      "opp_abbr": "MIN",
-      "opp_team_id": 142,
-      "opp_pitcher": {
-        "id": 805673,
-        "fullName": "Zebby Matthews"
-      },
-      "park": {
-        "id": 2395,
-        "name": "Oracle Park",
-        "runs": 93,
-        "hr": 88,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 5.45,
-      "mean_efp": 5.62,
-      "stats_games": 16,
-      "efp": 7.21,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.84,
-        "doubles": 1.05,
-        "triples": 0.17,
-        "home_runs": 0.93,
-        "bb_hbp": 0.48,
-        "r": 2.25,
-        "rbi": 1.17,
-        "sb": 0.34
-      },
-      "multipliers": {
-        "park_hr": 0.88,
-        "park_runs": 0.93,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.006,
-        "pitcher_hr": 1.158,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.004,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.858,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1537,
-        "doubles": 0.0524,
-        "triples": 0.0052,
-        "home_runs": 0.0233,
-        "bb_hbp": 0.0598,
-        "r_per_pa": 0.281,
-        "rbi_per_pa": 0.1465
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 687551,
-      "name": "Drew Gilbert",
-      "position": "CF",
-      "team_id": 137,
-      "team_abbr": "SF",
-      "opp_abbr": "MIN",
-      "opp_team_id": 142,
-      "opp_pitcher": {
-        "id": 805673,
-        "fullName": "Zebby Matthews"
-      },
-      "park": {
-        "id": 2395,
-        "name": "Oracle Park",
-        "runs": 93,
-        "hr": 88,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 3.31,
-      "mean_efp": 2.89,
-      "stats_games": 9,
-      "efp": 7.19,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.27,
-        "doubles": 0.63,
-        "triples": 0.18,
-        "home_runs": 1.45,
-        "bb_hbp": 0.99,
-        "r": 2.36,
-        "rbi": 1.12,
-        "sb": 0.21
-      },
-      "multipliers": {
-        "park_hr": 0.88,
-        "park_runs": 0.93,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.006,
-        "pitcher_hr": 1.158,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.004,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.858,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1057,
-        "doubles": 0.0313,
-        "triples": 0.0058,
-        "home_runs": 0.0363,
-        "bb_hbp": 0.1236,
-        "r_per_pa": 0.295,
-        "rbi_per_pa": 0.1404
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 605137,
-      "name": "Josh Bell",
-      "position": "DH",
-      "team_id": 142,
-      "team_abbr": "MIN",
-      "opp_abbr": "SF",
-      "opp_team_id": 137,
-      "opp_pitcher": {
-        "id": 694918,
-        "fullName": "Blade Tidwell"
-      },
-      "park": {
-        "id": 2395,
-        "name": "Oracle Park",
-        "runs": 93,
-        "hr": 88,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 3.59,
-      "mean_efp": 3.88,
-      "stats_games": 8,
-      "efp": 7.14,
-      "bat_side": "S",
-      "per_event": {
-        "singles": 1.76,
-        "doubles": 0.65,
-        "triples": 0.05,
-        "home_runs": 1.29,
-        "bb_hbp": 0.79,
-        "r": 2.35,
-        "rbi": 1.21,
-        "sb": 0.05
-      },
-      "multipliers": {
-        "park_hr": 0.88,
-        "park_runs": 0.93,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.921,
-        "pitcher_hr": 1.03,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.081,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.205,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1468,
-        "doubles": 0.0326,
-        "triples": 0.0016,
-        "home_runs": 0.0323,
-        "bb_hbp": 0.0982,
-        "r_per_pa": 0.2934,
-        "rbi_per_pa": 0.1512
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 668800,
-      "name": "Andrew Knizner",
-      "position": "C",
-      "team_id": 137,
-      "team_abbr": "SF",
-      "opp_abbr": "MIN",
-      "opp_team_id": 142,
-      "opp_pitcher": {
-        "id": 805673,
-        "fullName": "Zebby Matthews"
-      },
-      "park": {
-        "id": 2395,
-        "name": "Oracle Park",
-        "runs": 93,
-        "hr": 88,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.22,
-      "mean_efp": 6.9,
-      "stats_games": 0,
-      "efp": 7.13,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.71,
-        "doubles": 0.83,
-        "triples": 0.07,
-        "home_runs": 1.4,
-        "bb_hbp": 0.63,
-        "r": 2.31,
-        "rbi": 1.19,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 0.88,
-        "park_runs": 0.93,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.006,
-        "pitcher_hr": 1.158,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.004,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.858,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1423,
-        "doubles": 0.0416,
-        "triples": 0.0021,
-        "home_runs": 0.035,
-        "bb_hbp": 0.0792,
-        "r_per_pa": 0.2886,
-        "rbi_per_pa": 0.1487
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 668952,
-      "name": "Ryan Kreidler",
-      "position": "SS",
-      "team_id": 142,
-      "team_abbr": "MIN",
-      "opp_abbr": "SF",
-      "opp_team_id": 137,
-      "opp_pitcher": {
-        "id": 694918,
-        "fullName": "Blade Tidwell"
-      },
-      "park": {
-        "id": 2395,
-        "name": "Oracle Park",
-        "runs": 93,
-        "hr": 88,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.22,
-      "mean_efp": 6.9,
-      "stats_games": 0,
-      "efp": 7.12,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.23,
-        "doubles": 0.52,
-        "triples": 0.27,
-        "home_runs": 1.67,
-        "bb_hbp": 0.89,
-        "r": 2.16,
-        "rbi": 1.22,
-        "sb": 0.16
-      },
-      "multipliers": {
-        "park_hr": 0.88,
-        "park_runs": 0.93,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.921,
-        "pitcher_hr": 1.03,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.081,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.205,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1029,
-        "doubles": 0.026,
-        "triples": 0.0084,
-        "home_runs": 0.0418,
-        "bb_hbp": 0.1111,
-        "r_per_pa": 0.2698,
-        "rbi_per_pa": 0.1529
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-09-21T20:42:21.757371+00:00"
+  "generated_at": "2026-09-21T22:06:27.742589+00:00"
 }
