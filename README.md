@@ -1,127 +1,111 @@
-# Baseball App ⚾
+# Baseball App
 
-A mobile-first MLB stats and live-game platform: real-time game tracking, a 3D
-ball-flight visualization engine, player and matchup analytics, and a
-projection "edge" model — built on a multi-source data pipeline that stitches
-together the live MLB Stats API, Statcast, and FanGraphs.
+A mobile-first MLB dashboard that brings team context, live game data, player analytics, and experimental fantasy projections into one interface. The project combines a React frontend, a Python/FastAPI backend, scheduled data pipelines, and a 3D ball-flight viewer.
 
-**Live demo:** https://statsleuthgame.github.io/baseball-app/ · **API:** FastAPI service on Render
+**[Open the demo](https://statsleuthgame.github.io/baseball-app/)** · **[Model evaluation and limitations](docs/MODEL_EVALUATION.md)**
 
-<!-- Add a screenshot or GIF of the live game view / 3D ball flight here — it's the single highest-impact thing you can add. -->
+![Seattle Mariners dashboard with the next matchup, upcoming games, and division standings](docs/images/team-dashboard.png)
 
----
+*Public demo captured September 22, 2026. Data and schedules change over time.*
 
-## Highlights
+## Try it
 
-- **Live game tracking** — pitch-by-pitch strike zone, box score, win probability, and base/out state, polled from the MLB Stats API every 5 seconds.
-- **3D ball-flight engine** — a custom React Three Fiber scene renders batted balls with drag-calibrated trajectory physics, animated runners and fielders, throw-to-base sequences, and cinematic camera rigs — tuned to stay smooth on phones.
-- **Multi-source data pipeline** — live data from the MLB Stats API, pre-generated Statcast features from Baseball Savant, and scraped FanGraphs projections, unified behind one API with a static-first, live-fallback fetch strategy.
-- **Analytics** — spray charts, strike-zone / missed-call (umpire) analysis, leaderboards, standings, and player profiles.
-- **Projection edge model** — compares FanGraphs/Statcast-derived projections against posted prop lines to surface positive-expected-value plays (research and modeling exercise; see the disclaimer below).
-- **Automated data refresh** — scheduled GitHub Actions regenerate projections, fantasy weights, and resolve prop-line history, committing fresh data back to the repo for the next deploy.
+Choose a team, open its dashboard, then explore **Matchup**, **Scores**, **Schedule**, or **Roster**. The dashboard combines the next game, recent player form, transactions, and standings. Live game views depend on the MLB schedule and upstream data availability.
+
+## What the project demonstrates
+
+- **Data integration:** MLB Stats API, Statcast features, and FanGraphs projections feed a shared application experience.
+- **Interactive visualization:** strike-zone and spray-chart views, plus a React Three Fiber ball-flight scene with trajectory calculations, fielders, runners, and camera controls.
+- **Delivery automation:** GitHub Actions publish the frontend and refresh committed data snapshots on a schedule.
+- **Experimental modeling:** a configurable fantasy-point projection function, unit tests, and a historical backtesting/calibration workflow. Predictive performance remains subject to the evaluation qualifications below.
+
+## Engineering decisions
+
+| Constraint | Implementation | Tradeoff |
+| --- | --- | --- |
+| Many views need data before a backend request completes | Pre-generated JSON for supported views, with direct MLB API calls and fallback paths in [the API client](frontend/src/api/client.js) | Snapshots can be stale; data availability and freshness differ by view. |
+| Live games change more often than rosters and standings | View-specific TanStack Query refresh intervals | Polling trades request volume for freshness; this is not a streaming feed. |
+| Projection logic needs to be inspectable | [The fantasy model](backend/app/services/fantasy.py) separates projection math from slate orchestration and exposes configurable weights | A transparent formula still needs independent predictive validation. |
+| An odds-provider key must stay out of the frontend bundle | Optional [Cloudflare Worker](cloudflare/odds-proxy) | Requires a separately configured service; the core team dashboard can run without it. |
 
 ## Architecture
 
-```
-┌──────────────────────────────┐        ┌───────────────────────────────┐
-│  Frontend (React 19 + Vite)  │        │   Backend (FastAPI, Python)   │
-│  GitHub Pages                 │        │   Render (Docker)             │
-│                               │  HTTP  │                               │
-│  • React Router 7 (Hash)      │◀──────▶│  routers/  team, player,      │
-│  • TanStack Query (polling)   │        │            matchup, umpire,   │
-│  • React Three Fiber / three  │        │            fantasy, spraychart│
-│  • D3 (charts) + custom SVG   │        │  services/ mlb_api, statcast, │
-└───────────────┬───────────────┘        │            fangraphs, edge…   │
-                │                         └───────────────┬───────────────┘
-                │ live odds                               │
-        ┌───────▼────────┐              ┌─────────────────▼─────────────────┐
-        │ Cloudflare      │              │  Data sources                     │
-        │ Worker          │              │  • MLB Stats API (live)           │
-        │ (odds proxy —   │              │  • Baseball Savant / Statcast     │
-        │  hides API key) │              │  • FanGraphs (scraped projections)│
-        └─────────────────┘              └───────────────────────────────────┘
-                         ▲
-          Scheduled GitHub Actions regenerate & commit
-          projections / fantasy weights / prop-line logs
+```mermaid
+flowchart LR
+    Sources[MLB Stats API / Statcast / FanGraphs] --> Jobs[Scheduled Python jobs]
+    Jobs --> JSON[Committed JSON snapshots]
+    JSON --> UI[React frontend on GitHub Pages]
+    MLB[MLB Stats API] --> UI
+    API[FastAPI backend] --> UI
+    Sources --> API
+    Odds[Odds provider] --> Proxy[Optional Cloudflare Worker]
+    Proxy --> UI
 ```
 
-The frontend tries pre-generated static JSON first and falls back to the live
-MLB API, so common views are instant and resilient while live data stays
-fresh. Live game state uses short React Query intervals (5s); less time-
-sensitive data (rosters, standings) uses longer ones.
+**Frontend:** React 19, Vite, React Router, TanStack Query, Three.js / React Three Fiber, D3.
+**Backend and data:** Python, FastAPI, httpx, pybaseball, pandas, Pydantic.
+**Delivery:** GitHub Pages, GitHub Actions, Render configuration, optional Cloudflare Worker.
 
-## Tech stack
+The public repository includes the app and its fantasy model. A separate, optional Edge integration reads externally generated picks; it is not required for the team dashboard and its model implementation is not included here.
 
-| Layer | Tech |
-|---|---|
-| Frontend | React 19, Vite, React Router 7, TanStack React Query, Axios |
-| 3D / viz | React Three Fiber, drei, postprocessing, Three.js, D3 (scale/shape/array) |
-| Backend | FastAPI, Uvicorn, httpx, pybaseball, BeautifulSoup, Pydantic v2 |
-| Data | MLB Stats API, Baseball Savant (Statcast), FanGraphs |
-| Infra | GitHub Pages (frontend), Render / Docker (API), Cloudflare Workers (odds proxy), GitHub Actions (scheduled data refresh) |
+## Model evaluation
 
-## Project structure
+The fantasy model estimates hitter fantasy points using historical event rates, recent form, and contextual adjustments. It is a statistical projection system, not an LLM feature.
 
-```
-frontend/
-  src/
-    api/client.js          # All API calls (static + live), 60+ functions
-    components/
-      ballflight3d/         # 3D ball-flight engine (physics, camera, fielders, runners)
-      team/                 # Live game, scoreboard, dashboard
-      matchup/ player/ spraychart/ strikezone/
-    context/                # Global team selection
-    data/                   # Static team/park/stadium geometry
-backend/
-  app/
-    routers/                # HTTP endpoints (team, player, matchup, umpire, fantasy…)
-    services/               # Data providers (mlb_api, statcast, fangraphs, edge_model_picks…)
-    models/                 # Pydantic response models
-  Dockerfile · render.yaml
-cloudflare/odds-proxy/      # Cloudflare Worker proxying The Odds API
-.github/workflows/          # Deploy + scheduled data refresh
-docs/                       # Accessibility audit, prop-edge research notes
-```
+The current backtest conditions on **actual plate appearances**, and its fitter divides CSV rows into an 80/20 split without enforcing a date boundary. Stored calibration metrics therefore should not be presented as verified pregame accuracy or evidence of profitable recommendations.
 
-## Running locally
+The [evaluation notes](docs/MODEL_EVALUATION.md) explain the existing evidence, reproducibility gaps, and the requirements for an independent chronological evaluation. UI labels such as “edge” represent model estimates, not proven positive expected value.
 
-**Backend** (FastAPI, Python 3.11+):
+## Run locally
 
-```bash
-python3 -m venv .venv && source .venv/bin/activate
-pip install -r backend/requirements.txt
-uvicorn app.main:app --reload --app-dir backend --port 10000
-```
+Use Node **22.12+** or a compatible newer LTS for the Vite 8 frontend, and Python **3.11+** for the backend. Commands below run from the repository root unless noted.
 
-**Frontend** (Node 20+):
+### Frontend
 
 ```bash
 cd frontend
-npm install
-npm run dev        # http://localhost:5173
+npm ci
+npm run dev
 ```
 
-The Vite dev server proxies `/api` requests to the local backend on port
-10000 (see `frontend/vite.config.js`), so run the backend alongside it for
-full functionality. Live MLB Stats API calls go directly from the browser.
+Open `http://localhost:5173/baseball-app/`. Many views use committed JSON or the public MLB API. Backend-powered routes require the API below.
 
-### Optional: live odds proxy
+### Backend (separate terminal)
 
-The "Refresh Odds" feature reads from a Cloudflare Worker that proxies
-[The Odds API](https://the-odds-api.com/) so the API key never reaches the
-browser. See [`cloudflare/odds-proxy`](cloudflare/odds-proxy). Set
-`VITE_ODDS_PROXY_URL` at build time to enable it; without it, the app simply
-hides the odds UI.
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r backend/requirements.txt
+python -m uvicorn app.main:app --reload --app-dir backend --port 10000
+```
 
-## Deployment
+The Vite dev server proxies `/api` to port 10000. Optional live odds require `VITE_ODDS_PROXY_URL` at frontend build time and a configured Worker; keep the provider secret on the Worker.
 
-- **Frontend** → GitHub Pages via `.github/workflows/deploy-frontend.yml` on every push to `main`.
-- **Backend** → Render, built from `backend/Dockerfile` (`backend/render.yaml`).
-- **Data** → `refresh-data.yml`, `refresh-fantasy.yml`, and `resolve-pp-lines.yml` regenerate data on a schedule and commit it back; the next deploy picks it up.
+### Checks
 
-## Notes & disclaimer
+```bash
+# From the repository root, with the Python environment active
+python -m pip install pytest
+PYTHONPATH=backend python -m pytest backend/tests/test_fantasy.py -q
 
-This is a personal project and is not affiliated with or endorsed by MLB,
-FanGraphs, or any data provider. All data is used for personal, educational,
-and analytical purposes. The projection "edge" feature is a modeling and
-research exercise — nothing here is betting advice.
+# Frontend compilation
+cd frontend
+npm run build
+```
+
+**Verification snapshot, September 22, 2026:** 66 model tests passed and 3 were skipped under the checked-in configuration. Unit tests check implementation behavior; they do not establish predictive accuracy. See [model evaluation](docs/MODEL_EVALUATION.md) before running calibration, which can overwrite the model's weight file.
+
+## Source map
+
+- [`frontend/src/api/client.js`](frontend/src/api/client.js) — static and live data access.
+- [`frontend/src/components/ballflight3d/`](frontend/src/components/ballflight3d/) — visualization engine.
+- [`backend/app/services/fantasy.py`](backend/app/services/fantasy.py) — projection math and slate orchestration.
+- [`scripts/backtest_fantasy.py`](scripts/backtest_fantasy.py) — historical dataset generation and calibration.
+- [`.github/workflows/`](.github/workflows/) — deployment and data-refresh jobs.
+- [`docs/ACCESSIBILITY_AUDIT.md`](docs/ACCESSIBILITY_AUDIT.md) — existing accessibility review.
+
+## Project context
+
+A personal project by Cody Ostler, developed with AI coding assistance.
+
+Not affiliated with MLB or the data providers. Projection features are educational modeling experiments, not betting advice.
