@@ -10,7 +10,7 @@
     "n": 1721
   },
   "game_count": 16,
-  "projection_count": 442,
+  "projection_count": 432,
   "projections": [
     {
       "player_id": 691718,
@@ -82,6 +82,82 @@
         "rbi_per_pa": 0.2141
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 700250,
+      "name": "Ben Rice",
+      "position": "DH",
+      "team_id": 147,
+      "team_abbr": "NYY",
+      "opp_abbr": "TB",
+      "opp_team_id": 139,
+      "opp_pitcher": {
+        "id": 607259,
+        "fullName": "Nick Martinez"
+      },
+      "park": {
+        "id": 3313,
+        "name": "Yankee Stadium",
+        "runs": 107,
+        "hr": 115,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "63",
+        "wind": "12 mph, In From LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 10.0,
+      "mean_efp": 11.0,
+      "stats_games": 11,
+      "efp": 10.32,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.75,
+        "doubles": 0.75,
+        "triples": 0.36,
+        "home_runs": 3.06,
+        "bb_hbp": 1.01,
+        "r": 3.11,
+        "rbi": 1.65,
+        "sb": 0.09
+      },
+      "multipliers": {
+        "park_hr": 1.15,
+        "park_runs": 1.07,
+        "weather_hr": 0.95,
+        "pitcher_hits": 1.03,
+        "pitcher_hr": 1.021,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.092,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.064,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1354,
+        "doubles": 0.0349,
+        "triples": 0.0105,
+        "home_runs": 0.0712,
+        "bb_hbp": 0.1171,
+        "r_per_pa": 0.3619,
+        "rbi_per_pa": 0.192
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -301,6 +377,78 @@
       "tier": "low"
     },
     {
+      "player_id": 624413,
+      "name": "Pete Alonso",
+      "position": "1B",
+      "team_id": 110,
+      "team_abbr": "BAL",
+      "opp_abbr": "TOR",
+      "opp_team_id": 141,
+      "opp_pitcher": {
+        "id": 453286,
+        "fullName": "Max Scherzer"
+      },
+      "park": {
+        "id": 2,
+        "name": "Camden Yards",
+        "runs": 103,
+        "hr": 108,
+        "label": "Slight Hitter"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 6.5,
+      "mean_efp": 5.9,
+      "stats_games": 10,
+      "efp": 10.09,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.38,
+        "doubles": 0.63,
+        "triples": 0.01,
+        "home_runs": 4.25,
+        "bb_hbp": 1.15,
+        "r": 2.41,
+        "rbi": 1.56,
+        "sb": 0.13
+      },
+      "multipliers": {
+        "park_hr": 1.08,
+        "park_runs": 1.03,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.983,
+        "pitcher_hr": 1.161,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.14,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.164,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1151,
+        "doubles": 0.0313,
+        "triples": 0.0005,
+        "home_runs": 0.1063,
+        "bb_hbp": 0.1437,
+        "r_per_pa": 0.3007,
+        "rbi_per_pa": 0.1945
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
       "player_id": 571448,
       "name": "Nolan Arenado",
       "position": "3B",
@@ -368,78 +516,6 @@
         "bb_hbp": 0.0629,
         "r_per_pa": 0.3039,
         "rbi_per_pa": 0.1837
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 624413,
-      "name": "Pete Alonso",
-      "position": "1B",
-      "team_id": 110,
-      "team_abbr": "BAL",
-      "opp_abbr": "TOR",
-      "opp_team_id": 141,
-      "opp_pitcher": {
-        "id": 453286,
-        "fullName": "Max Scherzer"
-      },
-      "park": {
-        "id": 2,
-        "name": "Camden Yards",
-        "runs": 103,
-        "hr": 108,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 6.5,
-      "mean_efp": 5.9,
-      "stats_games": 10,
-      "efp": 10.05,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.38,
-        "doubles": 0.63,
-        "triples": 0.01,
-        "home_runs": 4.21,
-        "bb_hbp": 1.15,
-        "r": 2.41,
-        "rbi": 1.56,
-        "sb": 0.13
-      },
-      "multipliers": {
-        "park_hr": 1.08,
-        "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.983,
-        "pitcher_hr": 1.161,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.14,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.164,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1153,
-        "doubles": 0.0313,
-        "triples": 0.0005,
-        "home_runs": 0.1052,
-        "bb_hbp": 0.1439,
-        "r_per_pa": 0.3007,
-        "rbi_per_pa": 0.1945
       },
       "pa": 4.0,
       "tier": "low"
@@ -797,78 +873,6 @@
         "bb_hbp": 0.1079,
         "r_per_pa": 0.365,
         "rbi_per_pa": 0.1766
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 700250,
-      "name": "Ben Rice",
-      "position": "DH",
-      "team_id": 147,
-      "team_abbr": "NYY",
-      "opp_abbr": "TB",
-      "opp_team_id": 139,
-      "opp_pitcher": {
-        "id": 607259,
-        "fullName": "Nick Martinez"
-      },
-      "park": {
-        "id": 3313,
-        "name": "Yankee Stadium",
-        "runs": 107,
-        "hr": 115,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 10.0,
-      "mean_efp": 11.0,
-      "stats_games": 11,
-      "efp": 9.58,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.62,
-        "doubles": 0.7,
-        "triples": 0.34,
-        "home_runs": 3.0,
-        "bb_hbp": 0.94,
-        "r": 2.72,
-        "rbi": 1.54,
-        "sb": 0.08
-      },
-      "multipliers": {
-        "park_hr": 1.15,
-        "park_runs": 1.07,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.03,
-        "pitcher_hr": 1.021,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.092,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1354,
-        "doubles": 0.0349,
-        "triples": 0.0105,
-        "home_runs": 0.0749,
-        "bb_hbp": 0.1171,
-        "r_per_pa": 0.3402,
-        "rbi_per_pa": 0.192
       },
       "pa": 4.0,
       "tier": "low"
@@ -1306,75 +1310,6 @@
       "tier": "low"
     },
     {
-      "player_id": 805300,
-      "name": "Jakob Marsee",
-      "position": "CF",
-      "team_id": 146,
-      "team_abbr": "MIA",
-      "opp_abbr": "CHC",
-      "opp_team_id": 112,
-      "opp_pitcher": null,
-      "park": {
-        "id": 17,
-        "name": "Wrigley Field",
-        "runs": 104,
-        "hr": 107,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 6.99,
-      "mean_efp": 9.43,
-      "stats_games": 7,
-      "efp": 9.04,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.86,
-        "doubles": 0.72,
-        "triples": 0.46,
-        "home_runs": 1.32,
-        "bb_hbp": 1.18,
-        "r": 2.71,
-        "rbi": 1.3,
-        "sb": 0.76
-      },
-      "multipliers": {
-        "park_hr": 1.07,
-        "park_runs": 1.04,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.0,
-        "pitcher_hr": 1.0,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.0,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1551,
-        "doubles": 0.0359,
-        "triples": 0.0145,
-        "home_runs": 0.033,
-        "bb_hbp": 0.1474,
-        "r_per_pa": 0.3393,
-        "rbi_per_pa": 0.1627
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 621566,
       "name": "Matt Olson",
       "position": "1B",
@@ -1519,6 +1454,82 @@
       "tier": "low"
     },
     {
+      "player_id": 666018,
+      "name": "Jonathan Aranda",
+      "position": "1B",
+      "team_id": 139,
+      "team_abbr": "TB",
+      "opp_abbr": "NYY",
+      "opp_team_id": 147,
+      "opp_pitcher": {
+        "id": 607074,
+        "fullName": "Carlos Rod\u00f3n"
+      },
+      "park": {
+        "id": 3313,
+        "name": "Yankee Stadium",
+        "runs": 107,
+        "hr": 115,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "63",
+        "wind": "12 mph, In From LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 8.99,
+      "mean_efp": 9.36,
+      "stats_games": 11,
+      "efp": 8.94,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.62,
+        "doubles": 0.89,
+        "triples": 0.01,
+        "home_runs": 1.87,
+        "bb_hbp": 1.19,
+        "r": 3.11,
+        "rbi": 1.51,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 1.15,
+        "park_runs": 1.07,
+        "weather_hr": 0.95,
+        "pitcher_hits": 0.798,
+        "pitcher_hr": 0.911,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.078,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.141,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1259,
+        "doubles": 0.0413,
+        "triples": 0.0004,
+        "home_runs": 0.0434,
+        "bb_hbp": 0.1386,
+        "r_per_pa": 0.3616,
+        "rbi_per_pa": 0.1759
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 665487,
       "name": "Fernando Tatis Jr.",
       "position": "RF",
@@ -1657,6 +1668,82 @@
         "rbi_per_pa": 0.1981
       },
       "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 641355,
+      "name": "Cody Bellinger",
+      "position": "LF",
+      "team_id": 147,
+      "team_abbr": "NYY",
+      "opp_abbr": "TB",
+      "opp_team_id": 139,
+      "opp_pitcher": {
+        "id": 607259,
+        "fullName": "Nick Martinez"
+      },
+      "park": {
+        "id": 3313,
+        "name": "Yankee Stadium",
+        "runs": 107,
+        "hr": 115,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "63",
+        "wind": "12 mph, In From LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.05,
+      "mean_efp": 7.73,
+      "stats_games": 11,
+      "efp": 8.9,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 2.33,
+        "doubles": 0.89,
+        "triples": 0.17,
+        "home_runs": 1.6,
+        "bb_hbp": 0.64,
+        "r": 2.66,
+        "rbi": 1.29,
+        "sb": 0.57
+      },
+      "multipliers": {
+        "park_hr": 1.15,
+        "park_runs": 1.07,
+        "weather_hr": 0.95,
+        "pitcher_hits": 1.03,
+        "pitcher_hr": 1.021,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.092,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.034,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1809,
+        "doubles": 0.0416,
+        "triples": 0.0049,
+        "home_runs": 0.0372,
+        "bb_hbp": 0.075,
+        "r_per_pa": 0.3097,
+        "rbi_per_pa": 0.1495
+      },
+      "pa": 4.3,
       "tier": "low"
     },
     {
@@ -1804,6 +1891,82 @@
       "tier": "low"
     },
     {
+      "player_id": 691406,
+      "name": "Junior Caminero",
+      "position": "3B",
+      "team_id": 139,
+      "team_abbr": "TB",
+      "opp_abbr": "NYY",
+      "opp_team_id": 147,
+      "opp_pitcher": {
+        "id": 607074,
+        "fullName": "Carlos Rod\u00f3n"
+      },
+      "park": {
+        "id": 3313,
+        "name": "Yankee Stadium",
+        "runs": 107,
+        "hr": 115,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "63",
+        "wind": "12 mph, In From LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 14.16,
+      "mean_efp": 13.09,
+      "stats_games": 11,
+      "efp": 8.88,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.47,
+        "doubles": 0.87,
+        "triples": 0.04,
+        "home_runs": 1.97,
+        "bb_hbp": 1.46,
+        "r": 2.72,
+        "rbi": 1.54,
+        "sb": 0.06
+      },
+      "multipliers": {
+        "park_hr": 1.15,
+        "park_runs": 1.07,
+        "weather_hr": 0.82,
+        "pitcher_hits": 0.798,
+        "pitcher_hr": 0.911,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.078,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.005,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.114,
+        "doubles": 0.0404,
+        "triples": 0.0011,
+        "home_runs": 0.0459,
+        "bb_hbp": 0.1699,
+        "r_per_pa": 0.3166,
+        "rbi_per_pa": 0.1788
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 672695,
       "name": "Geraldo Perdomo",
       "position": "SS",
@@ -1902,11 +2065,11 @@
       "efp": 8.81,
       "bat_side": "R",
       "per_event": {
-        "singles": 1.55,
-        "doubles": 1.37,
+        "singles": 1.56,
+        "doubles": 1.36,
         "triples": 0.04,
-        "home_runs": 2.55,
-        "bb_hbp": 0.71,
+        "home_runs": 2.54,
+        "bb_hbp": 0.7,
         "r": 2.33,
         "rbi": 1.45,
         "sb": 0.07
@@ -1936,11 +2099,11 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1292,
-        "doubles": 0.0685,
+        "singles": 0.1302,
+        "doubles": 0.0681,
         "triples": 0.0011,
-        "home_runs": 0.0637,
-        "bb_hbp": 0.0883,
+        "home_runs": 0.0635,
+        "bb_hbp": 0.088,
         "r_per_pa": 0.2908,
         "rbi_per_pa": 0.1812
       },
@@ -2018,152 +2181,8 @@
       },
       "pa": 4.0,
       "tier": "low"
-    },
-    {
-      "player_id": 700250,
-      "name": "Ben Rice",
-      "position": "DH",
-      "team_id": 147,
-      "team_abbr": "NYY",
-      "opp_abbr": "TB",
-      "opp_team_id": 139,
-      "opp_pitcher": {
-        "id": 656876,
-        "fullName": "Drew Rasmussen"
-      },
-      "park": {
-        "id": 3313,
-        "name": "Yankee Stadium",
-        "runs": 107,
-        "hr": 115,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 10.0,
-      "mean_efp": 11.0,
-      "stats_games": 11,
-      "efp": 8.77,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.45,
-        "doubles": 0.62,
-        "triples": 0.3,
-        "home_runs": 2.37,
-        "bb_hbp": 0.94,
-        "r": 2.72,
-        "rbi": 1.54,
-        "sb": 0.08
-      },
-      "multipliers": {
-        "park_hr": 1.15,
-        "park_runs": 1.07,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.917,
-        "pitcher_hr": 0.904,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.975,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1206,
-        "doubles": 0.0311,
-        "triples": 0.0093,
-        "home_runs": 0.0592,
-        "bb_hbp": 0.1171,
-        "r_per_pa": 0.3402,
-        "rbi_per_pa": 0.192
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 806198,
-      "name": "Cooper Pratt",
-      "position": "SS",
-      "team_id": 158,
-      "team_abbr": "MIL",
-      "opp_abbr": "PHI",
-      "opp_team_id": 143,
-      "opp_pitcher": {
-        "id": 554430,
-        "fullName": "Zack Wheeler"
-      },
-      "park": {
-        "id": 2681,
-        "name": "Citizens Bank Park",
-        "runs": 105,
-        "hr": 112,
-        "label": "Hitter Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.22,
-      "mean_efp": 6.9,
-      "stats_games": 0,
-      "efp": 8.75,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 2.44,
-        "doubles": 0.64,
-        "triples": 0.16,
-        "home_runs": 0.7,
-        "bb_hbp": 0.71,
-        "r": 2.63,
-        "rbi": 1.15,
-        "sb": 1.56
-      },
-      "multipliers": {
-        "park_hr": 1.12,
-        "park_runs": 1.05,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.907,
-        "pitcher_hr": 1.051,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.991,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.903,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.2037,
-        "doubles": 0.0319,
-        "triples": 0.005,
-        "home_runs": 0.0174,
-        "bb_hbp": 0.0891,
-        "r_per_pa": 0.3287,
-        "rbi_per_pa": 0.1443
-      },
-      "pa": 4.0,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-09-22T01:48:08.918800+00:00"
+  "generated_at": "2026-09-22T14:59:11.216500+00:00"
 }
