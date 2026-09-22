@@ -396,16 +396,16 @@
       "stdev_efp": 6.5,
       "mean_efp": 5.9,
       "stats_games": 10,
-      "efp": 9.84,
+      "efp": 10.05,
       "bat_side": "R",
       "per_event": {
-        "singles": 1.39,
+        "singles": 1.38,
         "doubles": 0.63,
-        "triples": 0.02,
-        "home_runs": 4.0,
-        "bb_hbp": 1.17,
-        "r": 2.39,
-        "rbi": 1.51,
+        "triples": 0.01,
+        "home_runs": 4.21,
+        "bb_hbp": 1.15,
+        "r": 2.41,
+        "rbi": 1.56,
         "sb": 0.13
       },
       "multipliers": {
@@ -433,13 +433,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1156,
-        "doubles": 0.0314,
+        "singles": 0.1153,
+        "doubles": 0.0313,
         "triples": 0.0005,
-        "home_runs": 0.1001,
-        "bb_hbp": 0.1463,
-        "r_per_pa": 0.2992,
-        "rbi_per_pa": 0.1882
+        "home_runs": 0.1052,
+        "bb_hbp": 0.1439,
+        "r_per_pa": 0.3007,
+        "rbi_per_pa": 0.1945
       },
       "pa": 4.0,
       "tier": "low"
@@ -1185,7 +1185,7 @@
       "stdev_efp": 6.49,
       "mean_efp": 5.64,
       "stats_games": 11,
-      "efp": 9.07,
+      "efp": 9.06,
       "bat_side": "L",
       "per_event": {
         "singles": 1.42,
@@ -1222,11 +1222,11 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1187,
+        "singles": 0.1185,
         "doubles": 0.0502,
         "triples": 0.0036,
         "home_runs": 0.0411,
-        "bb_hbp": 0.1149,
+        "bb_hbp": 0.1147,
         "r_per_pa": 0.2858,
         "rbi_per_pa": 0.1681
       },
@@ -1588,6 +1588,78 @@
       "tier": "low"
     },
     {
+      "player_id": 680664,
+      "name": "Eduardo Valencia",
+      "position": "DH",
+      "team_id": 116,
+      "team_abbr": "DET",
+      "opp_abbr": "WSH",
+      "opp_team_id": 120,
+      "opp_pitcher": {
+        "id": 800600,
+        "fullName": "Jackson Kent"
+      },
+      "park": {
+        "id": 2394,
+        "name": "Comerica Park",
+        "runs": 97,
+        "hr": 93,
+        "label": "Pitcher Friendly"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 7.22,
+      "mean_efp": 6.9,
+      "stats_games": 0,
+      "efp": 8.91,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.0,
+        "doubles": 1.94,
+        "triples": 0.04,
+        "home_runs": 1.1,
+        "bb_hbp": 0.67,
+        "r": 2.83,
+        "rbi": 1.58,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 0.93,
+        "park_runs": 0.97,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.009,
+        "pitcher_hr": 0.76,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.932,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1669,
+        "doubles": 0.0969,
+        "triples": 0.0014,
+        "home_runs": 0.0275,
+        "bb_hbp": 0.084,
+        "r_per_pa": 0.3542,
+        "rbi_per_pa": 0.1981
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
       "player_id": 656976,
       "name": "Pavin Smith",
       "position": "1B",
@@ -1732,150 +1804,6 @@
       "tier": "low"
     },
     {
-      "player_id": 680664,
-      "name": "Eduardo Valencia",
-      "position": "DH",
-      "team_id": 116,
-      "team_abbr": "DET",
-      "opp_abbr": "WSH",
-      "opp_team_id": 120,
-      "opp_pitcher": {
-        "id": 800600,
-        "fullName": "Jackson Kent"
-      },
-      "park": {
-        "id": 2394,
-        "name": "Comerica Park",
-        "runs": 97,
-        "hr": 93,
-        "label": "Pitcher Friendly"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.22,
-      "mean_efp": 6.9,
-      "stats_games": 0,
-      "efp": 8.84,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.97,
-        "doubles": 1.88,
-        "triples": 0.04,
-        "home_runs": 1.12,
-        "bb_hbp": 0.67,
-        "r": 2.83,
-        "rbi": 1.58,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 0.93,
-        "park_runs": 0.97,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.009,
-        "pitcher_hr": 0.76,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 0.932,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1638,
-        "doubles": 0.0939,
-        "triples": 0.0014,
-        "home_runs": 0.0279,
-        "bb_hbp": 0.0842,
-        "r_per_pa": 0.3542,
-        "rbi_per_pa": 0.1981
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 687952,
-      "name": "Christian Encarnacion-Strand",
-      "position": "3B",
-      "team_id": 110,
-      "team_abbr": "BAL",
-      "opp_abbr": "TOR",
-      "opp_team_id": 141,
-      "opp_pitcher": {
-        "id": 453286,
-        "fullName": "Max Scherzer"
-      },
-      "park": {
-        "id": 2,
-        "name": "Camden Yards",
-        "runs": 103,
-        "hr": 108,
-        "label": "Slight Hitter"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 7.22,
-      "mean_efp": 6.9,
-      "stats_games": 0,
-      "efp": 8.83,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.47,
-        "doubles": 1.41,
-        "triples": 0.04,
-        "home_runs": 2.62,
-        "bb_hbp": 0.72,
-        "r": 2.3,
-        "rbi": 1.46,
-        "sb": 0.07
-      },
-      "multipliers": {
-        "park_hr": 1.08,
-        "park_runs": 1.03,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.983,
-        "pitcher_hr": 1.161,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.14,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.164,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1222,
-        "doubles": 0.0703,
-        "triples": 0.0011,
-        "home_runs": 0.0654,
-        "bb_hbp": 0.0899,
-        "r_per_pa": 0.2877,
-        "rbi_per_pa": 0.1824
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 672695,
       "name": "Geraldo Perdomo",
       "position": "SS",
@@ -1943,6 +1871,78 @@
         "bb_hbp": 0.1048,
         "r_per_pa": 0.3478,
         "rbi_per_pa": 0.1434
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 687952,
+      "name": "Christian Encarnacion-Strand",
+      "position": "3B",
+      "team_id": 110,
+      "team_abbr": "BAL",
+      "opp_abbr": "TOR",
+      "opp_team_id": 141,
+      "opp_pitcher": {
+        "id": 453286,
+        "fullName": "Max Scherzer"
+      },
+      "park": {
+        "id": 2,
+        "name": "Camden Yards",
+        "runs": 103,
+        "hr": 108,
+        "label": "Slight Hitter"
+      },
+      "weather": null,
+      "pa_source": "default",
+      "stdev_efp": 7.22,
+      "mean_efp": 6.9,
+      "stats_games": 0,
+      "efp": 8.81,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.55,
+        "doubles": 1.37,
+        "triples": 0.04,
+        "home_runs": 2.55,
+        "bb_hbp": 0.71,
+        "r": 2.33,
+        "rbi": 1.45,
+        "sb": 0.07
+      },
+      "multipliers": {
+        "park_hr": 1.08,
+        "park_runs": 1.03,
+        "weather_hr": 1.0,
+        "pitcher_hits": 0.983,
+        "pitcher_hr": 1.161,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.14,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.164,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1292,
+        "doubles": 0.0685,
+        "triples": 0.0011,
+        "home_runs": 0.0637,
+        "bb_hbp": 0.0883,
+        "r_per_pa": 0.2908,
+        "rbi_per_pa": 0.1812
       },
       "pa": 4.0,
       "tier": "low"
@@ -2165,5 +2165,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-09-22T00:28:59.536396+00:00"
+  "generated_at": "2026-09-22T01:48:08.918800+00:00"
 }
