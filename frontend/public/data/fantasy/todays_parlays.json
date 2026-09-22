@@ -1,7 +1,172 @@
 {
-  "game_date": "2026-09-10",
-  "generated_at": "2026-09-10T19:13:41.925042+00:00",
+  "game_date": "2026-09-22",
+  "generated_at": "2026-09-22T19:51:45.179818+00:00",
   "weights_version": "2026-04-18",
-  "source_pick_count": 2,
-  "parlays": []
+  "source_pick_count": 10,
+  "parlays": [
+    {
+      "size": 2,
+      "payout": 3.0,
+      "combined_prob": 0.5823,
+      "ev_pct": 74.7,
+      "legs": [
+        {
+          "player_id": 668227,
+          "name": "Randy Arozarena",
+          "team_abbr": "SEA",
+          "opp_abbr": "HOU",
+          "opp_pitcher": "Cristian Javier",
+          "line": 5.5,
+          "side": "over",
+          "efp": 10.26,
+          "edge_z": 0.754,
+          "hit_prob": 0.775
+        },
+        {
+          "player_id": 621566,
+          "name": "Matt Olson",
+          "team_abbr": "ATL",
+          "opp_abbr": "CIN",
+          "opp_pitcher": "Brandon Williamson",
+          "line": 5.5,
+          "side": "over",
+          "efp": 9.8,
+          "edge_z": 0.68,
+          "hit_prob": 0.752
+        }
+      ]
+    },
+    {
+      "size": 2,
+      "payout": 3.0,
+      "combined_prob": 0.5532,
+      "ev_pct": 66.0,
+      "legs": [
+        {
+          "player_id": 607208,
+          "name": "Trea Turner",
+          "team_abbr": "PHI",
+          "opp_abbr": "MIL",
+          "opp_pitcher": "Dustin May",
+          "line": 5.5,
+          "side": "over",
+          "efp": 8.73,
+          "edge_z": 0.657,
+          "hit_prob": 0.744
+        },
+        {
+          "player_id": 607043,
+          "name": "Brandon Nimmo",
+          "team_abbr": "TEX",
+          "opp_abbr": "NYM",
+          "opp_pitcher": "Sean Manaea",
+          "line": 5.0,
+          "side": "over",
+          "efp": 7.6,
+          "edge_z": 0.653,
+          "hit_prob": 0.743
+        }
+      ]
+    },
+    {
+      "size": 3,
+      "payout": 5.0,
+      "combined_prob": 0.4335,
+      "ev_pct": 116.7,
+      "legs": [
+        {
+          "player_id": 668227,
+          "name": "Randy Arozarena",
+          "team_abbr": "SEA",
+          "opp_abbr": "HOU",
+          "opp_pitcher": "Cristian Javier",
+          "line": 5.5,
+          "side": "over",
+          "efp": 10.26,
+          "edge_z": 0.754,
+          "hit_prob": 0.775
+        },
+        {
+          "player_id": 621566,
+          "name": "Matt Olson",
+          "team_abbr": "ATL",
+          "opp_abbr": "CIN",
+          "opp_pitcher": "Brandon Williamson",
+          "line": 5.5,
+          "side": "over",
+          "efp": 9.8,
+          "edge_z": 0.68,
+          "hit_prob": 0.752
+        },
+        {
+          "player_id": 607208,
+          "name": "Trea Turner",
+          "team_abbr": "PHI",
+          "opp_abbr": "MIL",
+          "opp_pitcher": "Dustin May",
+          "line": 5.5,
+          "side": "over",
+          "efp": 8.73,
+          "edge_z": 0.657,
+          "hit_prob": 0.744
+        }
+      ]
+    },
+    {
+      "size": 4,
+      "payout": 10.0,
+      "combined_prob": 0.3221,
+      "ev_pct": 222.1,
+      "legs": [
+        {
+          "player_id": 668227,
+          "name": "Randy Arozarena",
+          "team_abbr": "SEA",
+          "opp_abbr": "HOU",
+          "opp_pitcher": "Cristian Javier",
+          "line": 5.5,
+          "side": "over",
+          "efp": 10.26,
+          "edge_z": 0.754,
+          "hit_prob": 0.775
+        },
+        {
+          "player_id": 621566,
+          "name": "Matt Olson",
+          "team_abbr": "ATL",
+          "opp_abbr": "CIN",
+          "opp_pitcher": "Brandon Williamson",
+          "line": 5.5,
+          "side": "over",
+          "efp": 9.8,
+          "edge_z": 0.68,
+          "hit_prob": 0.752
+        },
+        {
+          "player_id": 607208,
+          "name": "Trea Turner",
+          "team_abbr": "PHI",
+          "opp_abbr": "MIL",
+          "opp_pitcher": "Dustin May",
+          "line": 5.5,
+          "side": "over",
+          "efp": 8.73,
+          "edge_z": 0.657,
+          "hit_prob": 0.744
+        },
+        {
+          "player_id": 607043,
+          "name": "Brandon Nimmo",
+          "team_abbr": "TEX",
+          "opp_abbr": "NYM",
+          "opp_pitcher": "Sean Manaea",
+          "line": 5.0,
+          "side": "over",
+          "efp": 7.6,
+          "edge_z": 0.653,
+          "hit_prob": 0.743
+        }
+      ]
+    }
+  ]
 }

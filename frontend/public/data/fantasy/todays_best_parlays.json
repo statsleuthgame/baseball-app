@@ -1,10 +1,329 @@
 {
-  "game_date": "2026-09-10",
-  "generated_at": "2026-09-10T19:13:41.925042+00:00",
+  "game_date": "2026-09-22",
+  "generated_at": "2026-09-22T19:51:45.179818+00:00",
   "weights_version": "2026-04-18",
   "leg_counts": {
-    "fantasy_edge": 2,
+    "fantasy_edge": 10,
     "model": 0
   },
-  "parlays": []
+  "parlays": [
+    {
+      "size": 2,
+      "payout": 3.0,
+      "combined_prob": 0.5823,
+      "ev_pct": 74.7,
+      "legs": [
+        {
+          "player_id": 668227,
+          "name": "Randy Arozarena",
+          "team_abbr": "SEA",
+          "opp_abbr": "HOU",
+          "opp_pitcher": "Cristian Javier",
+          "market": "fantasy_score",
+          "line": 5.5,
+          "side": "over",
+          "hit_prob": 0.775,
+          "source": "fantasy_edge",
+          "efp": 10.26,
+          "edge_z": 0.754,
+          "bat_side": "R"
+        },
+        {
+          "player_id": 621566,
+          "name": "Matt Olson",
+          "team_abbr": "ATL",
+          "opp_abbr": "CIN",
+          "opp_pitcher": "Brandon Williamson",
+          "market": "fantasy_score",
+          "line": 5.5,
+          "side": "over",
+          "hit_prob": 0.752,
+          "source": "fantasy_edge",
+          "efp": 9.8,
+          "edge_z": 0.68,
+          "bat_side": "L"
+        }
+      ]
+    },
+    {
+      "size": 2,
+      "payout": 3.0,
+      "combined_prob": 0.5532,
+      "ev_pct": 66.0,
+      "legs": [
+        {
+          "player_id": 607208,
+          "name": "Trea Turner",
+          "team_abbr": "PHI",
+          "opp_abbr": "MIL",
+          "opp_pitcher": "Dustin May",
+          "market": "fantasy_score",
+          "line": 5.5,
+          "side": "over",
+          "hit_prob": 0.744,
+          "source": "fantasy_edge",
+          "efp": 8.73,
+          "edge_z": 0.657,
+          "bat_side": "R"
+        },
+        {
+          "player_id": 607043,
+          "name": "Brandon Nimmo",
+          "team_abbr": "TEX",
+          "opp_abbr": "NYM",
+          "opp_pitcher": "Sean Manaea",
+          "market": "fantasy_score",
+          "line": 5.0,
+          "side": "over",
+          "hit_prob": 0.743,
+          "source": "fantasy_edge",
+          "efp": 7.6,
+          "edge_z": 0.653,
+          "bat_side": "L"
+        }
+      ]
+    },
+    {
+      "size": 3,
+      "payout": 5.0,
+      "combined_prob": 0.4335,
+      "ev_pct": 116.7,
+      "legs": [
+        {
+          "player_id": 668227,
+          "name": "Randy Arozarena",
+          "team_abbr": "SEA",
+          "opp_abbr": "HOU",
+          "opp_pitcher": "Cristian Javier",
+          "market": "fantasy_score",
+          "line": 5.5,
+          "side": "over",
+          "hit_prob": 0.775,
+          "source": "fantasy_edge",
+          "efp": 10.26,
+          "edge_z": 0.754,
+          "bat_side": "R"
+        },
+        {
+          "player_id": 621566,
+          "name": "Matt Olson",
+          "team_abbr": "ATL",
+          "opp_abbr": "CIN",
+          "opp_pitcher": "Brandon Williamson",
+          "market": "fantasy_score",
+          "line": 5.5,
+          "side": "over",
+          "hit_prob": 0.752,
+          "source": "fantasy_edge",
+          "efp": 9.8,
+          "edge_z": 0.68,
+          "bat_side": "L"
+        },
+        {
+          "player_id": 607208,
+          "name": "Trea Turner",
+          "team_abbr": "PHI",
+          "opp_abbr": "MIL",
+          "opp_pitcher": "Dustin May",
+          "market": "fantasy_score",
+          "line": 5.5,
+          "side": "over",
+          "hit_prob": 0.744,
+          "source": "fantasy_edge",
+          "efp": 8.73,
+          "edge_z": 0.657,
+          "bat_side": "R"
+        }
+      ]
+    },
+    {
+      "size": 3,
+      "payout": 5.0,
+      "combined_prob": 0.3973,
+      "ev_pct": 98.7,
+      "legs": [
+        {
+          "player_id": 607043,
+          "name": "Brandon Nimmo",
+          "team_abbr": "TEX",
+          "opp_abbr": "NYM",
+          "opp_pitcher": "Sean Manaea",
+          "market": "fantasy_score",
+          "line": 5.0,
+          "side": "over",
+          "hit_prob": 0.743,
+          "source": "fantasy_edge",
+          "efp": 7.6,
+          "edge_z": 0.653,
+          "bat_side": "L"
+        },
+        {
+          "player_id": 664761,
+          "name": "Alec Bohm",
+          "team_abbr": "PHI",
+          "opp_abbr": "MIL",
+          "opp_pitcher": "Dustin May",
+          "market": "fantasy_score",
+          "line": 5.0,
+          "side": "over",
+          "hit_prob": 0.735,
+          "source": "fantasy_edge",
+          "efp": 7.44,
+          "edge_z": 0.629,
+          "bat_side": "R"
+        },
+        {
+          "player_id": 682829,
+          "name": "Elly De La Cruz",
+          "team_abbr": "CIN",
+          "opp_abbr": "ATL",
+          "opp_pitcher": "JR Ritchie",
+          "market": "fantasy_score",
+          "line": 7.0,
+          "side": "over",
+          "hit_prob": 0.727,
+          "source": "fantasy_edge",
+          "efp": 11.4,
+          "edge_z": 0.604,
+          "bat_side": "S"
+        }
+      ]
+    },
+    {
+      "size": 4,
+      "payout": 10.0,
+      "combined_prob": 0.3221,
+      "ev_pct": 222.1,
+      "legs": [
+        {
+          "player_id": 668227,
+          "name": "Randy Arozarena",
+          "team_abbr": "SEA",
+          "opp_abbr": "HOU",
+          "opp_pitcher": "Cristian Javier",
+          "market": "fantasy_score",
+          "line": 5.5,
+          "side": "over",
+          "hit_prob": 0.775,
+          "source": "fantasy_edge",
+          "efp": 10.26,
+          "edge_z": 0.754,
+          "bat_side": "R"
+        },
+        {
+          "player_id": 621566,
+          "name": "Matt Olson",
+          "team_abbr": "ATL",
+          "opp_abbr": "CIN",
+          "opp_pitcher": "Brandon Williamson",
+          "market": "fantasy_score",
+          "line": 5.5,
+          "side": "over",
+          "hit_prob": 0.752,
+          "source": "fantasy_edge",
+          "efp": 9.8,
+          "edge_z": 0.68,
+          "bat_side": "L"
+        },
+        {
+          "player_id": 607208,
+          "name": "Trea Turner",
+          "team_abbr": "PHI",
+          "opp_abbr": "MIL",
+          "opp_pitcher": "Dustin May",
+          "market": "fantasy_score",
+          "line": 5.5,
+          "side": "over",
+          "hit_prob": 0.744,
+          "source": "fantasy_edge",
+          "efp": 8.73,
+          "edge_z": 0.657,
+          "bat_side": "R"
+        },
+        {
+          "player_id": 607043,
+          "name": "Brandon Nimmo",
+          "team_abbr": "TEX",
+          "opp_abbr": "NYM",
+          "opp_pitcher": "Sean Manaea",
+          "market": "fantasy_score",
+          "line": 5.0,
+          "side": "over",
+          "hit_prob": 0.743,
+          "source": "fantasy_edge",
+          "efp": 7.6,
+          "edge_z": 0.653,
+          "bat_side": "L"
+        }
+      ]
+    },
+    {
+      "size": 4,
+      "payout": 10.0,
+      "combined_prob": 0.279,
+      "ev_pct": 179.0,
+      "legs": [
+        {
+          "player_id": 664761,
+          "name": "Alec Bohm",
+          "team_abbr": "PHI",
+          "opp_abbr": "MIL",
+          "opp_pitcher": "Dustin May",
+          "market": "fantasy_score",
+          "line": 5.0,
+          "side": "over",
+          "hit_prob": 0.735,
+          "source": "fantasy_edge",
+          "efp": 7.44,
+          "edge_z": 0.629,
+          "bat_side": "R"
+        },
+        {
+          "player_id": 682829,
+          "name": "Elly De La Cruz",
+          "team_abbr": "CIN",
+          "opp_abbr": "ATL",
+          "opp_pitcher": "JR Ritchie",
+          "market": "fantasy_score",
+          "line": 7.0,
+          "side": "over",
+          "hit_prob": 0.727,
+          "source": "fantasy_edge",
+          "efp": 11.4,
+          "edge_z": 0.604,
+          "bat_side": "S"
+        },
+        {
+          "player_id": 802415,
+          "name": "Chandler Simpson",
+          "team_abbr": "TB",
+          "opp_abbr": "NYY",
+          "opp_pitcher": "Max Fried",
+          "market": "fantasy_score",
+          "line": 5.5,
+          "side": "over",
+          "hit_prob": 0.724,
+          "source": "fantasy_edge",
+          "efp": 8.16,
+          "edge_z": 0.596,
+          "bat_side": "L"
+        },
+        {
+          "player_id": 681715,
+          "name": "Heriberto Hern\u00e1ndez",
+          "team_abbr": "MIA",
+          "opp_abbr": "CHC",
+          "opp_pitcher": "Shota Imanaga",
+          "market": "fantasy_score",
+          "line": 5.5,
+          "side": "over",
+          "hit_prob": 0.72,
+          "source": "fantasy_edge",
+          "efp": 8.32,
+          "edge_z": 0.584,
+          "bat_side": "R"
+        }
+      ]
+    }
+  ]
 }
