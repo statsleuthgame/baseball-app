@@ -1,6 +1,6 @@
 {
-  "recap_date": "2026-09-11",
-  "generated_at": "2026-09-12T12:03:41.433959+00:00",
+  "recap_date": "2026-09-22",
+  "generated_at": "2026-09-23T13:30:21.082654+00:00",
   "totals": {
     "high_conf": {
       "n": 0,
@@ -8,27 +8,170 @@
       "hit_rate": null
     },
     "med_conf": {
-      "n": 0,
-      "wins": 0,
-      "hit_rate": null
+      "n": 29,
+      "wins": 12,
+      "hit_rate": 0.414
     },
     "low_conf": {
-      "n": 0,
-      "wins": 0,
-      "hit_rate": null
+      "n": 11,
+      "wins": 3,
+      "hit_rate": 0.273
     },
     "fade": {
-      "n": 0,
+      "n": 1,
       "wins": 0,
-      "hit_rate": null
+      "hit_rate": 0.0
     },
     "overall": {
-      "n": 0,
-      "wins": 0,
-      "hit_rate": null
+      "n": 41,
+      "wins": 15,
+      "hit_rate": 0.366
     }
   },
-  "top_hit": null,
-  "biggest_miss": null,
-  "sample_picks": []
+  "top_hit": {
+    "name": "Chase Meidroth",
+    "team": "CWS",
+    "opp": "KC",
+    "projected": 7.28,
+    "line": 5.5,
+    "actual": 32.0,
+    "edge_z": 0.219,
+    "tier": "LOW",
+    "won": true,
+    "grade": "over"
+  },
+  "biggest_miss": {
+    "name": "Daylen Lile",
+    "team": "WSH",
+    "opp": "DET",
+    "projected": 8.42,
+    "line": 7.0,
+    "actual": 0.0,
+    "edge_z": 0.22,
+    "tier": "LOW",
+    "won": false,
+    "grade": "under"
+  },
+  "sample_picks": [
+    {
+      "name": "Randy Arozarena",
+      "team": "SEA",
+      "opp": "HOU",
+      "projected": 10.26,
+      "line": 5.5,
+      "actual": 11.0,
+      "edge_z": 0.754,
+      "tier": "MED",
+      "won": true,
+      "grade": "over"
+    },
+    {
+      "name": "Matt Olson",
+      "team": "ATL",
+      "opp": "CIN",
+      "projected": 9.8,
+      "line": 5.5,
+      "actual": 3.0,
+      "edge_z": 0.68,
+      "tier": "MED",
+      "won": false,
+      "grade": "under"
+    },
+    {
+      "name": "Trea Turner",
+      "team": "PHI",
+      "opp": "MIL",
+      "projected": 8.73,
+      "line": 5.5,
+      "actual": 5.0,
+      "edge_z": 0.657,
+      "tier": "MED",
+      "won": false,
+      "grade": "under"
+    },
+    {
+      "name": "Brandon Nimmo",
+      "team": "TEX",
+      "opp": "NYM",
+      "projected": 7.6,
+      "line": 5.0,
+      "actual": 8.0,
+      "edge_z": 0.653,
+      "tier": "MED",
+      "won": true,
+      "grade": "over"
+    },
+    {
+      "name": "Alec Bohm",
+      "team": "PHI",
+      "opp": "MIL",
+      "projected": 7.44,
+      "line": 5.0,
+      "actual": 12.0,
+      "edge_z": 0.629,
+      "tier": "MED",
+      "won": true,
+      "grade": "over"
+    },
+    {
+      "name": "Elly De La Cruz",
+      "team": "CIN",
+      "opp": "ATL",
+      "projected": 11.4,
+      "line": 7.0,
+      "actual": 28.0,
+      "edge_z": 0.604,
+      "tier": "MED",
+      "won": true,
+      "grade": "over"
+    },
+    {
+      "name": "Chandler Simpson",
+      "team": "TB",
+      "opp": "NYY",
+      "projected": 8.16,
+      "line": 5.5,
+      "actual": 5.0,
+      "edge_z": 0.596,
+      "tier": "MED",
+      "won": false,
+      "grade": "under"
+    },
+    {
+      "name": "Heriberto Hern\u00e1ndez",
+      "team": "MIA",
+      "opp": "CHC",
+      "projected": 8.32,
+      "line": 5.5,
+      "actual": 7.0,
+      "edge_z": 0.584,
+      "tier": "MED",
+      "won": true,
+      "grade": "over"
+    },
+    {
+      "name": "Julio Rodr\u00edguez",
+      "team": "SEA",
+      "opp": "HOU",
+      "projected": 8.13,
+      "line": 5.5,
+      "actual": 6.0,
+      "edge_z": 0.567,
+      "tier": "MED",
+      "won": true,
+      "grade": "over"
+    },
+    {
+      "name": "Jake Burger",
+      "team": "TEX",
+      "opp": "NYM",
+      "projected": 7.94,
+      "line": 5.0,
+      "actual": 0.0,
+      "edge_z": 0.526,
+      "tier": "MED",
+      "won": false,
+      "grade": "under"
+    }
+  ]
 }
