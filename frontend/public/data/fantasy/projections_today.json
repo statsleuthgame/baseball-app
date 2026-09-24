@@ -10,8 +10,84 @@
     "n": 1721
   },
   "game_count": 8,
-  "projection_count": 169,
+  "projection_count": 164,
   "projections": [
+    {
+      "player_id": 670541,
+      "name": "Yordan Alvarez",
+      "position": "DH",
+      "team_id": 117,
+      "team_abbr": "HOU",
+      "opp_abbr": "ATH",
+      "opp_team_id": 133,
+      "opp_pitcher": {
+        "id": 686930,
+        "fullName": "Mason Barnett"
+      },
+      "park": {
+        "id": 2529,
+        "name": "Unknown",
+        "runs": 100,
+        "hr": 100,
+        "label": "Neutral"
+      },
+      "weather": {
+        "condition": "Cloudy",
+        "temp": "92",
+        "wind": "6 mph, Out To RF"
+      },
+      "pa_source": "default",
+      "stdev_efp": 8.7,
+      "mean_efp": 11.09,
+      "stats_games": 11,
+      "efp": 11.93,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.94,
+        "doubles": 1.23,
+        "triples": 0.04,
+        "home_runs": 3.92,
+        "bb_hbp": 1.64,
+        "r": 3.08,
+        "rbi": 1.75,
+        "sb": 0.03
+      },
+      "multipliers": {
+        "park_hr": 1.0,
+        "park_runs": 1.0,
+        "weather_hr": 1.208,
+        "pitcher_hits": 1.045,
+        "pitcher_hr": 1.279,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.076,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1615,
+        "doubles": 0.0613,
+        "triples": 0.0013,
+        "home_runs": 0.0979,
+        "bb_hbp": 0.205,
+        "r_per_pa": 0.3856,
+        "rbi_per_pa": 0.2183
+      },
+      "pa": 4.0,
+      "tier": "medium"
+    },
     {
       "player_id": 672515,
       "name": "Gabriel Moreno",
@@ -87,78 +163,6 @@
       },
       "pa": 4.3,
       "tier": "medium"
-    },
-    {
-      "player_id": 670541,
-      "name": "Yordan Alvarez",
-      "position": "DH",
-      "team_id": 117,
-      "team_abbr": "HOU",
-      "opp_abbr": "ATH",
-      "opp_team_id": 133,
-      "opp_pitcher": {
-        "id": 686930,
-        "fullName": "Mason Barnett"
-      },
-      "park": {
-        "id": 2529,
-        "name": "Unknown",
-        "runs": 100,
-        "hr": 100,
-        "label": "Neutral"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 8.7,
-      "mean_efp": 11.09,
-      "stats_games": 11,
-      "efp": 11.34,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.94,
-        "doubles": 1.23,
-        "triples": 0.04,
-        "home_runs": 3.24,
-        "bb_hbp": 1.64,
-        "r": 3.08,
-        "rbi": 1.75,
-        "sb": 0.03
-      },
-      "multipliers": {
-        "park_hr": 1.0,
-        "park_runs": 1.0,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.045,
-        "pitcher_hr": 1.279,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.076,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1615,
-        "doubles": 0.0613,
-        "triples": 0.0013,
-        "home_runs": 0.0811,
-        "bb_hbp": 0.205,
-        "r_per_pa": 0.3856,
-        "rbi_per_pa": 0.2183
-      },
-      "pa": 4.0,
-      "tier": "low"
     },
     {
       "player_id": 571448,
@@ -921,6 +925,82 @@
       "tier": "low"
     },
     {
+      "player_id": 665161,
+      "name": "Jeremy Pe\u00f1a",
+      "position": "SS",
+      "team_id": 117,
+      "team_abbr": "HOU",
+      "opp_abbr": "ATH",
+      "opp_team_id": 133,
+      "opp_pitcher": {
+        "id": 686930,
+        "fullName": "Mason Barnett"
+      },
+      "park": {
+        "id": 2529,
+        "name": "Unknown",
+        "runs": 100,
+        "hr": 100,
+        "label": "Neutral"
+      },
+      "weather": {
+        "condition": "Cloudy",
+        "temp": "92",
+        "wind": "6 mph, Out To RF"
+      },
+      "pa_source": "default",
+      "stdev_efp": 4.53,
+      "mean_efp": 11.8,
+      "stats_games": 5,
+      "efp": 9.48,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.06,
+        "doubles": 0.85,
+        "triples": 0.33,
+        "home_runs": 2.51,
+        "bb_hbp": 0.7,
+        "r": 2.34,
+        "rbi": 1.35,
+        "sb": 0.69
+      },
+      "multipliers": {
+        "park_hr": 1.0,
+        "park_runs": 1.0,
+        "weather_hr": 1.082,
+        "pitcher_hits": 1.045,
+        "pitcher_hr": 1.279,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.076,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.0,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1714,
+        "doubles": 0.0426,
+        "triples": 0.0102,
+        "home_runs": 0.0628,
+        "bb_hbp": 0.0871,
+        "r_per_pa": 0.292,
+        "rbi_per_pa": 0.1689
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
       "player_id": 672695,
       "name": "Geraldo Perdomo",
       "position": "SS",
@@ -997,9 +1077,9 @@
       "tier": "low"
     },
     {
-      "player_id": 665161,
-      "name": "Jeremy Pe\u00f1a",
-      "position": "SS",
+      "player_id": 673237,
+      "name": "Yainer Diaz",
+      "position": "C",
       "team_id": 117,
       "team_abbr": "HOU",
       "opp_abbr": "ATH",
@@ -1015,27 +1095,31 @@
         "hr": 100,
         "label": "Neutral"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Cloudy",
+        "temp": "92",
+        "wind": "6 mph, Out To RF"
+      },
       "pa_source": "default",
-      "stdev_efp": 4.53,
-      "mean_efp": 11.8,
+      "stdev_efp": 5.23,
+      "mean_efp": 8.8,
       "stats_games": 5,
-      "efp": 9.32,
+      "efp": 9.37,
       "bat_side": "R",
       "per_event": {
-        "singles": 2.06,
-        "doubles": 0.85,
-        "triples": 0.33,
-        "home_runs": 2.32,
-        "bb_hbp": 0.7,
-        "r": 2.34,
-        "rbi": 1.35,
-        "sb": 0.69
+        "singles": 2.21,
+        "doubles": 0.82,
+        "triples": 0.29,
+        "home_runs": 3.09,
+        "bb_hbp": 0.46,
+        "r": 2.33,
+        "rbi": 1.49,
+        "sb": 0.0
       },
       "multipliers": {
         "park_hr": 1.0,
         "park_runs": 1.0,
-        "weather_hr": 1.0,
+        "weather_hr": 1.082,
         "pitcher_hits": 1.045,
         "pitcher_hr": 1.279,
         "slot_r": 1.0,
@@ -1057,13 +1141,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1714,
-        "doubles": 0.0426,
-        "triples": 0.0102,
-        "home_runs": 0.058,
-        "bb_hbp": 0.0871,
-        "r_per_pa": 0.292,
-        "rbi_per_pa": 0.1689
+        "singles": 0.1841,
+        "doubles": 0.041,
+        "triples": 0.0092,
+        "home_runs": 0.0773,
+        "bb_hbp": 0.0577,
+        "r_per_pa": 0.2917,
+        "rbi_per_pa": 0.1858
       },
       "pa": 4.0,
       "tier": "low"
@@ -1221,9 +1305,85 @@
       "tier": "low"
     },
     {
-      "player_id": 673237,
-      "name": "Yainer Diaz",
-      "position": "C",
+      "player_id": 703607,
+      "name": "Henry Bolte",
+      "position": "CF",
+      "team_id": 133,
+      "team_abbr": "ATH",
+      "opp_abbr": "HOU",
+      "opp_team_id": 117,
+      "opp_pitcher": {
+        "id": 663567,
+        "fullName": "Peter Lambert"
+      },
+      "park": {
+        "id": 2529,
+        "name": "Unknown",
+        "runs": 100,
+        "hr": 100,
+        "label": "Neutral"
+      },
+      "weather": {
+        "condition": "Cloudy",
+        "temp": "92",
+        "wind": "6 mph, Out To RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 4.57,
+      "mean_efp": 9.5,
+      "stats_games": 6,
+      "efp": 9.24,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 2.11,
+        "doubles": 0.94,
+        "triples": 0.08,
+        "home_runs": 1.14,
+        "bb_hbp": 1.05,
+        "r": 2.9,
+        "rbi": 1.35,
+        "sb": 0.98
+      },
+      "multipliers": {
+        "park_hr": 1.0,
+        "park_runs": 1.0,
+        "weather_hr": 1.082,
+        "pitcher_hits": 0.938,
+        "pitcher_hr": 0.928,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.075,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.048,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.031,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1639,
+        "doubles": 0.0438,
+        "triples": 0.0022,
+        "home_runs": 0.0266,
+        "bb_hbp": 0.1221,
+        "r_per_pa": 0.3375,
+        "rbi_per_pa": 0.1567
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 670623,
+      "name": "Isaac Paredes",
+      "position": "3B",
       "team_id": 117,
       "team_abbr": "HOU",
       "opp_abbr": "ATH",
@@ -1239,27 +1399,31 @@
         "hr": 100,
         "label": "Neutral"
       },
-      "weather": null,
+      "weather": {
+        "condition": "Cloudy",
+        "temp": "92",
+        "wind": "6 mph, Out To RF"
+      },
       "pa_source": "default",
-      "stdev_efp": 5.23,
-      "mean_efp": 8.8,
-      "stats_games": 5,
-      "efp": 9.17,
+      "stdev_efp": 9.39,
+      "mean_efp": 10.42,
+      "stats_games": 12,
+      "efp": 9.15,
       "bat_side": "R",
       "per_event": {
-        "singles": 2.21,
-        "doubles": 0.82,
-        "triples": 0.29,
-        "home_runs": 2.86,
-        "bb_hbp": 0.46,
-        "r": 2.33,
-        "rbi": 1.49,
+        "singles": 1.84,
+        "doubles": 0.84,
+        "triples": 0.04,
+        "home_runs": 2.44,
+        "bb_hbp": 1.32,
+        "r": 2.59,
+        "rbi": 1.36,
         "sb": 0.0
       },
       "multipliers": {
         "park_hr": 1.0,
         "park_runs": 1.0,
-        "weather_hr": 1.0,
+        "weather_hr": 1.082,
         "pitcher_hits": 1.045,
         "pitcher_hr": 1.279,
         "slot_r": 1.0,
@@ -1281,13 +1445,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1841,
-        "doubles": 0.041,
-        "triples": 0.0092,
-        "home_runs": 0.0714,
-        "bb_hbp": 0.0577,
-        "r_per_pa": 0.2917,
-        "rbi_per_pa": 0.1858
+        "singles": 0.1536,
+        "doubles": 0.0418,
+        "triples": 0.0014,
+        "home_runs": 0.0611,
+        "bb_hbp": 0.1652,
+        "r_per_pa": 0.3243,
+        "rbi_per_pa": 0.1697
       },
       "pa": 4.0,
       "tier": "low"
@@ -1385,8 +1549,8 @@
       },
       "weather": {
         "condition": "Partly Cloudy",
-        "temp": "59",
-        "wind": "13 mph, In From CF"
+        "temp": "60",
+        "wind": "8 mph, In From CF"
       },
       "pa_source": "lineup",
       "stdev_efp": 9.39,
@@ -1517,78 +1681,6 @@
       "tier": "low"
     },
     {
-      "player_id": 670623,
-      "name": "Isaac Paredes",
-      "position": "3B",
-      "team_id": 117,
-      "team_abbr": "HOU",
-      "opp_abbr": "ATH",
-      "opp_team_id": 133,
-      "opp_pitcher": {
-        "id": 686930,
-        "fullName": "Mason Barnett"
-      },
-      "park": {
-        "id": 2529,
-        "name": "Unknown",
-        "runs": 100,
-        "hr": 100,
-        "label": "Neutral"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 9.39,
-      "mean_efp": 10.42,
-      "stats_games": 12,
-      "efp": 8.99,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.84,
-        "doubles": 0.84,
-        "triples": 0.04,
-        "home_runs": 2.26,
-        "bb_hbp": 1.32,
-        "r": 2.59,
-        "rbi": 1.36,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 1.0,
-        "park_runs": 1.0,
-        "weather_hr": 1.0,
-        "pitcher_hits": 1.045,
-        "pitcher_hr": 1.279,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.076,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1536,
-        "doubles": 0.0418,
-        "triples": 0.0014,
-        "home_runs": 0.0565,
-        "bb_hbp": 0.1652,
-        "r_per_pa": 0.3243,
-        "rbi_per_pa": 0.1697
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
       "player_id": 681393,
       "name": "Connor Norby",
       "position": "2B",
@@ -1660,6 +1752,82 @@
         "bb_hbp": 0.1159,
         "r_per_pa": 0.3136,
         "rbi_per_pa": 0.1405
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 671732,
+      "name": "Lawrence Butler",
+      "position": "RF",
+      "team_id": 133,
+      "team_abbr": "ATH",
+      "opp_abbr": "HOU",
+      "opp_team_id": 117,
+      "opp_pitcher": {
+        "id": 663567,
+        "fullName": "Peter Lambert"
+      },
+      "park": {
+        "id": 2529,
+        "name": "Unknown",
+        "runs": 100,
+        "hr": 100,
+        "label": "Neutral"
+      },
+      "weather": {
+        "condition": "Cloudy",
+        "temp": "92",
+        "wind": "6 mph, Out To RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 9.52,
+      "mean_efp": 8.7,
+      "stats_games": 10,
+      "efp": 8.89,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.74,
+        "doubles": 0.75,
+        "triples": 0.25,
+        "home_runs": 1.71,
+        "bb_hbp": 1.06,
+        "r": 3.0,
+        "rbi": 1.34,
+        "sb": 0.29
+      },
+      "multipliers": {
+        "park_hr": 1.0,
+        "park_runs": 1.0,
+        "weather_hr": 1.208,
+        "pitcher_hits": 0.938,
+        "pitcher_hr": 0.928,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.075,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.048,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.126,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1349,
+        "doubles": 0.035,
+        "triples": 0.0072,
+        "home_runs": 0.0397,
+        "bb_hbp": 0.1235,
+        "r_per_pa": 0.3493,
+        "rbi_per_pa": 0.1556
       },
       "pa": 4.3,
       "tier": "low"
@@ -1768,16 +1936,16 @@
       "stdev_efp": 7.21,
       "mean_efp": 6.86,
       "stats_games": 0,
-      "efp": 8.75,
+      "efp": 8.81,
       "bat_side": "S",
       "per_event": {
         "singles": 2.37,
         "doubles": 1.25,
         "triples": 0.21,
-        "home_runs": 1.14,
+        "home_runs": 1.19,
         "bb_hbp": 0.55,
-        "r": 2.59,
-        "rbi": 1.28,
+        "r": 2.6,
+        "rbi": 1.3,
         "sb": 0.59
       },
       "multipliers": {
@@ -1805,13 +1973,89 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1975,
-        "doubles": 0.0626,
+        "singles": 0.1973,
+        "doubles": 0.0625,
         "triples": 0.0067,
-        "home_runs": 0.0285,
-        "bb_hbp": 0.069,
-        "r_per_pa": 0.3241,
-        "rbi_per_pa": 0.1599
+        "home_runs": 0.0297,
+        "bb_hbp": 0.0689,
+        "r_per_pa": 0.3252,
+        "rbi_per_pa": 0.1621
+      },
+      "pa": 4.0,
+      "tier": "low"
+    },
+    {
+      "player_id": 680869,
+      "name": "Zack Gelof",
+      "position": "3B",
+      "team_id": 133,
+      "team_abbr": "ATH",
+      "opp_abbr": "HOU",
+      "opp_team_id": 117,
+      "opp_pitcher": {
+        "id": 663567,
+        "fullName": "Peter Lambert"
+      },
+      "park": {
+        "id": 2529,
+        "name": "Unknown",
+        "runs": 100,
+        "hr": 100,
+        "label": "Neutral"
+      },
+      "weather": {
+        "condition": "Cloudy",
+        "temp": "92",
+        "wind": "6 mph, Out To RF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 8.28,
+      "mean_efp": 12.5,
+      "stats_games": 6,
+      "efp": 8.81,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.68,
+        "doubles": 0.73,
+        "triples": 0.11,
+        "home_runs": 2.07,
+        "bb_hbp": 0.77,
+        "r": 2.48,
+        "rbi": 1.38,
+        "sb": 0.84
+      },
+      "multipliers": {
+        "park_hr": 1.0,
+        "park_runs": 1.0,
+        "weather_hr": 1.082,
+        "pitcher_hits": 0.938,
+        "pitcher_hr": 0.928,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.075,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.048,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.026,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1403,
+        "doubles": 0.0364,
+        "triples": 0.0034,
+        "home_runs": 0.0517,
+        "bb_hbp": 0.0966,
+        "r_per_pa": 0.3103,
+        "rbi_per_pa": 0.172
       },
       "pa": 4.0,
       "tier": "low"
@@ -1913,8 +2157,8 @@
       },
       "weather": {
         "condition": "Partly Cloudy",
-        "temp": "59",
-        "wind": "13 mph, In From CF"
+        "temp": "60",
+        "wind": "8 mph, In From CF"
       },
       "pa_source": "lineup",
       "stdev_efp": 5.14,
@@ -2043,232 +2287,8 @@
       },
       "pa": 4.3,
       "tier": "low"
-    },
-    {
-      "player_id": 680869,
-      "name": "Zack Gelof",
-      "position": "3B",
-      "team_id": 133,
-      "team_abbr": "ATH",
-      "opp_abbr": "HOU",
-      "opp_team_id": 117,
-      "opp_pitcher": {
-        "id": 663567,
-        "fullName": "Peter Lambert"
-      },
-      "park": {
-        "id": 2529,
-        "name": "Unknown",
-        "runs": 100,
-        "hr": 100,
-        "label": "Neutral"
-      },
-      "weather": null,
-      "pa_source": "default",
-      "stdev_efp": 8.28,
-      "mean_efp": 12.5,
-      "stats_games": 6,
-      "efp": 8.66,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.68,
-        "doubles": 0.73,
-        "triples": 0.11,
-        "home_runs": 1.91,
-        "bb_hbp": 0.77,
-        "r": 2.42,
-        "rbi": 1.38,
-        "sb": 0.88
-      },
-      "multipliers": {
-        "park_hr": 1.0,
-        "park_runs": 1.0,
-        "weather_hr": 1.0,
-        "pitcher_hits": 0.938,
-        "pitcher_hr": 0.928,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.075,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.048,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.0,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1403,
-        "doubles": 0.0364,
-        "triples": 0.0034,
-        "home_runs": 0.0478,
-        "bb_hbp": 0.0966,
-        "r_per_pa": 0.3023,
-        "rbi_per_pa": 0.172
-      },
-      "pa": 4.0,
-      "tier": "low"
-    },
-    {
-      "player_id": 682998,
-      "name": "Corbin Carroll",
-      "position": "RF",
-      "team_id": 109,
-      "team_abbr": "AZ",
-      "opp_abbr": "COL",
-      "opp_team_id": 115,
-      "opp_pitcher": {
-        "id": 685299,
-        "fullName": "Tanner Gordon"
-      },
-      "park": {
-        "id": 19,
-        "name": "Coors Field",
-        "runs": 116,
-        "hr": 118,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Cloudy",
-        "temp": "70",
-        "wind": "8 mph, In From RF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 9.88,
-      "mean_efp": 6.75,
-      "stats_games": 8,
-      "efp": 8.62,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.52,
-        "doubles": 1.35,
-        "triples": 1.02,
-        "home_runs": 1.59,
-        "bb_hbp": 0.65,
-        "r": 1.95,
-        "rbi": 1.27,
-        "sb": 0.51
-      },
-      "multipliers": {
-        "park_hr": 1.18,
-        "park_runs": 1.16,
-        "weather_hr": 0.82,
-        "pitcher_hits": 1.229,
-        "pitcher_hr": 1.161,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.121,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 0.896,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1369,
-        "doubles": 0.0728,
-        "triples": 0.0344,
-        "home_runs": 0.0431,
-        "bb_hbp": 0.0873,
-        "r_per_pa": 0.2634,
-        "rbi_per_pa": 0.1711
-      },
-      "pa": 3.7,
-      "tier": "low"
-    },
-    {
-      "player_id": 669003,
-      "name": "Garrett Mitchell",
-      "position": "CF",
-      "team_id": 158,
-      "team_abbr": "MIL",
-      "opp_abbr": "PHI",
-      "opp_team_id": 143,
-      "opp_pitcher": {
-        "id": 691725,
-        "fullName": "Andrew Painter"
-      },
-      "park": {
-        "id": 2681,
-        "name": "Citizens Bank Park",
-        "runs": 105,
-        "hr": 112,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Partly Cloudy",
-        "temp": "64",
-        "wind": "11 mph, In From RF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 9.3,
-      "mean_efp": 7.67,
-      "stats_games": 9,
-      "efp": 8.62,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.85,
-        "doubles": 1.44,
-        "triples": 0.21,
-        "home_runs": 0.91,
-        "bb_hbp": 0.99,
-        "r": 2.81,
-        "rbi": 1.19,
-        "sb": 0.44
-      },
-      "multipliers": {
-        "park_hr": 1.12,
-        "park_runs": 1.05,
-        "weather_hr": 0.82,
-        "pitcher_hits": 1.049,
-        "pitcher_hr": 1.117,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.003,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.946,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.082,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1435,
-        "doubles": 0.0669,
-        "triples": 0.006,
-        "home_runs": 0.0211,
-        "bb_hbp": 0.1154,
-        "r_per_pa": 0.327,
-        "rbi_per_pa": 0.1388
-      },
-      "pa": 4.3,
-      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-09-24T21:40:03.701269+00:00"
+  "generated_at": "2026-09-24T21:54:06.779048+00:00"
 }
