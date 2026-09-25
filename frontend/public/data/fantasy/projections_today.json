@@ -264,10 +264,10 @@
       "stdev_efp": 6.5,
       "mean_efp": 5.9,
       "stats_games": 10,
-      "efp": 10.54,
+      "efp": 10.52,
       "bat_side": "R",
       "per_event": {
-        "singles": 1.51,
+        "singles": 1.5,
         "doubles": 0.68,
         "triples": 0.02,
         "home_runs": 4.16,
@@ -280,7 +280,7 @@
         "park_hr": 1.15,
         "park_runs": 1.07,
         "weather_hr": 0.82,
-        "pitcher_hits": 0.975,
+        "pitcher_hits": 0.965,
         "pitcher_hr": 1.35,
         "slot_r": 1.0,
         "slot_rbi": 1.0,
@@ -301,8 +301,8 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1173,
-        "doubles": 0.0318,
+        "singles": 0.1161,
+        "doubles": 0.0315,
         "triples": 0.0005,
         "home_runs": 0.0967,
         "bb_hbp": 0.1303,
@@ -1643,82 +1643,6 @@
       "tier": "low"
     },
     {
-      "player_id": 683002,
-      "name": "Gunnar Henderson",
-      "position": "SS",
-      "team_id": 110,
-      "team_abbr": "BAL",
-      "opp_abbr": "NYY",
-      "opp_team_id": 147,
-      "opp_pitcher": {
-        "id": 694341,
-        "fullName": "Brendan Beck"
-      },
-      "park": {
-        "id": 3313,
-        "name": "Yankee Stadium",
-        "runs": 107,
-        "hr": 115,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Cloudy",
-        "temp": "69",
-        "wind": "17 mph, In From LF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 7.24,
-      "mean_efp": 8.7,
-      "stats_games": 10,
-      "efp": 9.03,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 1.69,
-        "doubles": 0.86,
-        "triples": 0.41,
-        "home_runs": 2.18,
-        "bb_hbp": 0.95,
-        "r": 2.63,
-        "rbi": 1.32,
-        "sb": 0.25
-      },
-      "multipliers": {
-        "park_hr": 1.15,
-        "park_runs": 1.07,
-        "weather_hr": 0.95,
-        "pitcher_hits": 0.975,
-        "pitcher_hr": 1.35,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.0,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.0,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.062,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1311,
-        "doubles": 0.0401,
-        "triples": 0.012,
-        "home_runs": 0.0507,
-        "bb_hbp": 0.1107,
-        "r_per_pa": 0.3059,
-        "rbi_per_pa": 0.1538
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
       "player_id": 665742,
       "name": "Juan Soto",
       "position": "LF",
@@ -1866,6 +1790,82 @@
         "bb_hbp": 0.0875,
         "r_per_pa": 0.326,
         "rbi_per_pa": 0.1379
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 683002,
+      "name": "Gunnar Henderson",
+      "position": "SS",
+      "team_id": 110,
+      "team_abbr": "BAL",
+      "opp_abbr": "NYY",
+      "opp_team_id": 147,
+      "opp_pitcher": {
+        "id": 694341,
+        "fullName": "Brendan Beck"
+      },
+      "park": {
+        "id": 3313,
+        "name": "Yankee Stadium",
+        "runs": 107,
+        "hr": 115,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Cloudy",
+        "temp": "69",
+        "wind": "17 mph, In From LF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.24,
+      "mean_efp": 8.7,
+      "stats_games": 10,
+      "efp": 9.0,
+      "bat_side": "L",
+      "per_event": {
+        "singles": 1.67,
+        "doubles": 0.85,
+        "triples": 0.41,
+        "home_runs": 2.18,
+        "bb_hbp": 0.95,
+        "r": 2.63,
+        "rbi": 1.32,
+        "sb": 0.25
+      },
+      "multipliers": {
+        "park_hr": 1.15,
+        "park_runs": 1.07,
+        "weather_hr": 0.95,
+        "pitcher_hits": 0.965,
+        "pitcher_hr": 1.35,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.0,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.0,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.062,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1297,
+        "doubles": 0.0396,
+        "triples": 0.0119,
+        "home_runs": 0.0507,
+        "bb_hbp": 0.1107,
+        "r_per_pa": 0.3059,
+        "rbi_per_pa": 0.1538
       },
       "pa": 4.3,
       "tier": "low"
@@ -2248,5 +2248,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-09-25T20:07:45.154373+00:00"
+  "generated_at": "2026-09-25T20:12:13.121589+00:00"
 }
