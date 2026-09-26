@@ -9,8 +9,8 @@
     "spearman": 0.3559,
     "n": 1721
   },
-  "game_count": 11,
-  "projection_count": 218,
+  "game_count": 10,
+  "projection_count": 200,
   "projections": [
     {
       "player_id": 678246,
@@ -84,82 +84,6 @@
         "bb_hbp": 0.1878,
         "r_per_pa": 0.3437,
         "rbi_per_pa": 0.1764
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 682829,
-      "name": "Elly De La Cruz",
-      "position": "SS",
-      "team_id": 113,
-      "team_abbr": "CIN",
-      "opp_abbr": "TOR",
-      "opp_team_id": 141,
-      "opp_pitcher": {
-        "id": 702056,
-        "fullName": "Trey Yesavage"
-      },
-      "park": {
-        "id": 14,
-        "name": "Rogers Centre",
-        "runs": 104,
-        "hr": 109,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Sunny",
-        "temp": "71",
-        "wind": "5 mph, Out To CF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 7.28,
-      "mean_efp": 11.06,
-      "stats_games": 16,
-      "efp": 10.94,
-      "bat_side": "S",
-      "per_event": {
-        "singles": 1.44,
-        "doubles": 0.81,
-        "triples": 0.17,
-        "home_runs": 2.74,
-        "bb_hbp": 1.38,
-        "r": 3.01,
-        "rbi": 1.54,
-        "sb": 1.4
-      },
-      "multipliers": {
-        "park_hr": 1.09,
-        "park_runs": 1.04,
-        "weather_hr": 1.08,
-        "pitcher_hits": 0.82,
-        "pitcher_hr": 1.011,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.107,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.084,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.112,
-        "doubles": 0.0375,
-        "triples": 0.0051,
-        "home_runs": 0.0637,
-        "bb_hbp": 0.1604,
-        "r_per_pa": 0.3495,
-        "rbi_per_pa": 0.1786
       },
       "pa": 4.3,
       "tier": "low"
@@ -1093,16 +1017,16 @@
       "stdev_efp": 10.47,
       "mean_efp": 11.67,
       "stats_games": 9,
-      "efp": 9.27,
+      "efp": 9.37,
       "bat_side": "L",
       "per_event": {
-        "singles": 1.45,
+        "singles": 1.51,
         "doubles": 0.8,
         "triples": 0.12,
         "home_runs": 2.37,
-        "bb_hbp": 0.9,
-        "r": 3.19,
-        "rbi": 1.35,
+        "bb_hbp": 0.89,
+        "r": 3.23,
+        "rbi": 1.37,
         "sb": 0.41
       },
       "multipliers": {
@@ -1130,13 +1054,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1126,
-        "doubles": 0.0374,
+        "singles": 0.1173,
+        "doubles": 0.0372,
         "triples": 0.0034,
         "home_runs": 0.0551,
-        "bb_hbp": 0.1049,
-        "r_per_pa": 0.3708,
-        "rbi_per_pa": 0.1567
+        "bb_hbp": 0.1041,
+        "r_per_pa": 0.3761,
+        "rbi_per_pa": 0.159
       },
       "pa": 4.3,
       "tier": "low"
@@ -1365,82 +1289,6 @@
         "bb_hbp": 0.0797,
         "r_per_pa": 0.3381,
         "rbi_per_pa": 0.1759
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 669257,
-      "name": "Will Smith",
-      "position": "C",
-      "team_id": 119,
-      "team_abbr": "LAD",
-      "opp_abbr": "SF",
-      "opp_team_id": 137,
-      "opp_pitcher": {
-        "id": 683363,
-        "fullName": "Matt Wilkinson"
-      },
-      "park": {
-        "id": 2395,
-        "name": "Oracle Park",
-        "runs": 93,
-        "hr": 88,
-        "label": "Pitcher Friendly"
-      },
-      "weather": {
-        "condition": "Sunny",
-        "temp": "63",
-        "wind": "7 mph, Out To CF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 6.99,
-      "mean_efp": 6.83,
-      "stats_games": 6,
-      "efp": 9.2,
-      "bat_side": "R",
-      "per_event": {
-        "singles": 1.81,
-        "doubles": 0.49,
-        "triples": 0.03,
-        "home_runs": 2.63,
-        "bb_hbp": 0.89,
-        "r": 3.08,
-        "rbi": 1.57,
-        "sb": 0.0
-      },
-      "multipliers": {
-        "park_hr": 0.88,
-        "park_runs": 0.93,
-        "weather_hr": 1.08,
-        "pitcher_hits": 0.939,
-        "pitcher_hr": 1.17,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.2,
-        "k_damper": 1.0,
-        "pitcher_bb": 0.75,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.047,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.1405,
-        "doubles": 0.0228,
-        "triples": 0.0008,
-        "home_runs": 0.0612,
-        "bb_hbp": 0.104,
-        "r_per_pa": 0.3584,
-        "rbi_per_pa": 0.1823
       },
       "pa": 4.3,
       "tier": "low"
@@ -1902,6 +1750,82 @@
       "tier": "low"
     },
     {
+      "player_id": 669257,
+      "name": "Will Smith",
+      "position": "C",
+      "team_id": 119,
+      "team_abbr": "LAD",
+      "opp_abbr": "SF",
+      "opp_team_id": 137,
+      "opp_pitcher": {
+        "id": 683363,
+        "fullName": "Matt Wilkinson"
+      },
+      "park": {
+        "id": 2395,
+        "name": "Oracle Park",
+        "runs": 93,
+        "hr": 88,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "63",
+        "wind": "7 mph, Out To CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 6.99,
+      "mean_efp": 6.83,
+      "stats_games": 6,
+      "efp": 9.09,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.79,
+        "doubles": 0.49,
+        "triples": 0.03,
+        "home_runs": 2.59,
+        "bb_hbp": 0.89,
+        "r": 3.05,
+        "rbi": 1.54,
+        "sb": 0.0
+      },
+      "multipliers": {
+        "park_hr": 0.88,
+        "park_runs": 0.93,
+        "weather_hr": 1.08,
+        "pitcher_hits": 0.939,
+        "pitcher_hr": 1.17,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.2,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.75,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.047,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1389,
+        "doubles": 0.0228,
+        "triples": 0.0008,
+        "home_runs": 0.0602,
+        "bb_hbp": 0.1031,
+        "r_per_pa": 0.3544,
+        "rbi_per_pa": 0.1794
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 672640,
       "name": "Otto Lopez",
       "position": "SS",
@@ -1973,82 +1897,6 @@
         "bb_hbp": 0.0702,
         "r_per_pa": 0.3405,
         "rbi_per_pa": 0.15
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 703520,
-      "name": "Brett Bateman",
-      "position": "CF",
-      "team_id": 141,
-      "team_abbr": "TOR",
-      "opp_abbr": "CIN",
-      "opp_team_id": 113,
-      "opp_pitcher": {
-        "id": 695076,
-        "fullName": "Rhett Lowder"
-      },
-      "park": {
-        "id": 14,
-        "name": "Rogers Centre",
-        "runs": 104,
-        "hr": 109,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Sunny",
-        "temp": "71",
-        "wind": "5 mph, Out To CF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 7.21,
-      "mean_efp": 6.86,
-      "stats_games": 0,
-      "efp": 8.98,
-      "bat_side": "L",
-      "per_event": {
-        "singles": 2.77,
-        "doubles": 1.12,
-        "triples": 0.12,
-        "home_runs": 0.88,
-        "bb_hbp": 1.1,
-        "r": 2.65,
-        "rbi": 1.27,
-        "sb": 0.34
-      },
-      "multipliers": {
-        "park_hr": 1.09,
-        "park_runs": 1.04,
-        "weather_hr": 1.08,
-        "pitcher_hits": 1.058,
-        "pitcher_hr": 1.01,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.003,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.061,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 0.92,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.215,
-        "doubles": 0.0521,
-        "triples": 0.0034,
-        "home_runs": 0.0205,
-        "bb_hbp": 0.1282,
-        "r_per_pa": 0.308,
-        "rbi_per_pa": 0.1473
       },
       "pa": 4.3,
       "tier": "low"
@@ -2276,8 +2124,160 @@
       },
       "pa": 4.3,
       "tier": "low"
+    },
+    {
+      "player_id": 671056,
+      "name": "Iv\u00e1n Herrera",
+      "position": "DH",
+      "team_id": 138,
+      "team_abbr": "STL",
+      "opp_abbr": "MIL",
+      "opp_team_id": 158,
+      "opp_pitcher": {
+        "id": 669160,
+        "fullName": "Dustin May"
+      },
+      "park": {
+        "id": 32,
+        "name": "American Family Field",
+        "runs": 103,
+        "hr": 108,
+        "label": "Slight Hitter"
+      },
+      "weather": {
+        "condition": "Roof Closed",
+        "temp": "72",
+        "wind": "0 mph, None"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 3.58,
+      "mean_efp": 5.3,
+      "stats_games": 10,
+      "efp": 8.85,
+      "bat_side": "R",
+      "per_event": {
+        "singles": 1.88,
+        "doubles": 0.84,
+        "triples": 0.06,
+        "home_runs": 1.57,
+        "bb_hbp": 1.07,
+        "r": 3.11,
+        "rbi": 1.36,
+        "sb": 0.22
+      },
+      "multipliers": {
+        "park_hr": 1.08,
+        "park_runs": 1.03,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.018,
+        "pitcher_hr": 0.899,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.982,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.951,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.15,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1456,
+        "doubles": 0.0391,
+        "triples": 0.0017,
+        "home_runs": 0.0364,
+        "bb_hbp": 0.1243,
+        "r_per_pa": 0.3615,
+        "rbi_per_pa": 0.1581
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
+      "player_id": 672695,
+      "name": "Geraldo Perdomo",
+      "position": "SS",
+      "team_id": 109,
+      "team_abbr": "AZ",
+      "opp_abbr": "SD",
+      "opp_team_id": 135,
+      "opp_pitcher": {
+        "id": 621111,
+        "fullName": "Walker Buehler"
+      },
+      "park": {
+        "id": 2680,
+        "name": "Petco Park",
+        "runs": 95,
+        "hr": 93,
+        "label": "Pitcher Friendly"
+      },
+      "weather": {
+        "condition": "Partly Cloudy",
+        "temp": "79",
+        "wind": "9 mph, L To R"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 9.29,
+      "mean_efp": 10.33,
+      "stats_games": 6,
+      "efp": 8.83,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 2.06,
+        "doubles": 0.61,
+        "triples": 0.79,
+        "home_runs": 0.54,
+        "bb_hbp": 1.09,
+        "r": 3.05,
+        "rbi": 1.29,
+        "sb": 0.65
+      },
+      "multipliers": {
+        "park_hr": 0.93,
+        "park_runs": 0.95,
+        "weather_hr": 1.0,
+        "pitcher_hits": 1.019,
+        "pitcher_hr": 1.048,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 0.962,
+        "k_damper": 1.0,
+        "pitcher_bb": 0.983,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.077,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1718,
+        "doubles": 0.0304,
+        "triples": 0.0246,
+        "home_runs": 0.0134,
+        "bb_hbp": 0.1363,
+        "r_per_pa": 0.3814,
+        "rbi_per_pa": 0.1616
+      },
+      "pa": 4.0,
+      "tier": "low"
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-09-26T21:23:19.339853+00:00"
+  "generated_at": "2026-09-26T21:43:45.227299+00:00"
 }
