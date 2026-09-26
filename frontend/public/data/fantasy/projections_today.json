@@ -89,6 +89,82 @@
       "tier": "low"
     },
     {
+      "player_id": 682829,
+      "name": "Elly De La Cruz",
+      "position": "SS",
+      "team_id": 113,
+      "team_abbr": "CIN",
+      "opp_abbr": "TOR",
+      "opp_team_id": 141,
+      "opp_pitcher": {
+        "id": 702056,
+        "fullName": "Trey Yesavage"
+      },
+      "park": {
+        "id": 14,
+        "name": "Rogers Centre",
+        "runs": 104,
+        "hr": 109,
+        "label": "Hitter Friendly"
+      },
+      "weather": {
+        "condition": "Sunny",
+        "temp": "71",
+        "wind": "5 mph, Out To CF"
+      },
+      "pa_source": "lineup",
+      "stdev_efp": 7.28,
+      "mean_efp": 11.06,
+      "stats_games": 16,
+      "efp": 11.04,
+      "bat_side": "S",
+      "per_event": {
+        "singles": 1.46,
+        "doubles": 0.82,
+        "triples": 0.17,
+        "home_runs": 2.82,
+        "bb_hbp": 1.35,
+        "r": 3.01,
+        "rbi": 1.57,
+        "sb": 1.4
+      },
+      "multipliers": {
+        "park_hr": 1.09,
+        "park_runs": 1.04,
+        "weather_hr": 1.08,
+        "pitcher_hits": 0.816,
+        "pitcher_hr": 1.014,
+        "slot_r": 1.0,
+        "slot_rbi": 1.0,
+        "team_env_r": 1.0,
+        "team_env_rbi": 1.0,
+        "stx_xwoba": 1.0,
+        "stx_barrel": 1.0,
+        "stx_hardhit": 1.0,
+        "pitcher_gb_hr": 1.107,
+        "k_damper": 1.0,
+        "pitcher_bb": 1.25,
+        "park_hand_hr": 1.0,
+        "sb_speed": 1.0,
+        "speed_singles": 1.0,
+        "speed_r": 1.0,
+        "bvpt": 1.0,
+        "ondeck_r": 1.084,
+        "preceding_rbi": 1.0
+      },
+      "rates": {
+        "singles": 0.1129,
+        "doubles": 0.038,
+        "triples": 0.0051,
+        "home_runs": 0.0656,
+        "bb_hbp": 0.157,
+        "r_per_pa": 0.3501,
+        "rbi_per_pa": 0.1823
+      },
+      "pa": 4.3,
+      "tier": "low"
+    },
+    {
       "player_id": 678246,
       "name": "Miguel Vargas",
       "position": "3B",
@@ -236,82 +312,6 @@
         "bb_hbp": 0.0984,
         "r_per_pa": 0.3319,
         "rbi_per_pa": 0.1815
-      },
-      "pa": 4.3,
-      "tier": "low"
-    },
-    {
-      "player_id": 682829,
-      "name": "Elly De La Cruz",
-      "position": "SS",
-      "team_id": 113,
-      "team_abbr": "CIN",
-      "opp_abbr": "TOR",
-      "opp_team_id": 141,
-      "opp_pitcher": {
-        "id": 702056,
-        "fullName": "Trey Yesavage"
-      },
-      "park": {
-        "id": 14,
-        "name": "Rogers Centre",
-        "runs": 104,
-        "hr": 109,
-        "label": "Hitter Friendly"
-      },
-      "weather": {
-        "condition": "Sunny",
-        "temp": "71",
-        "wind": "5 mph, Out To CF"
-      },
-      "pa_source": "lineup",
-      "stdev_efp": 7.28,
-      "mean_efp": 11.06,
-      "stats_games": 16,
-      "efp": 10.95,
-      "bat_side": "S",
-      "per_event": {
-        "singles": 1.44,
-        "doubles": 0.81,
-        "triples": 0.17,
-        "home_runs": 2.74,
-        "bb_hbp": 1.35,
-        "r": 3.01,
-        "rbi": 1.57,
-        "sb": 1.4
-      },
-      "multipliers": {
-        "park_hr": 1.09,
-        "park_runs": 1.04,
-        "weather_hr": 1.08,
-        "pitcher_hits": 0.81,
-        "pitcher_hr": 0.984,
-        "slot_r": 1.0,
-        "slot_rbi": 1.0,
-        "team_env_r": 1.0,
-        "team_env_rbi": 1.0,
-        "stx_xwoba": 1.0,
-        "stx_barrel": 1.0,
-        "stx_hardhit": 1.0,
-        "pitcher_gb_hr": 1.107,
-        "k_damper": 1.0,
-        "pitcher_bb": 1.25,
-        "park_hand_hr": 1.0,
-        "sb_speed": 1.0,
-        "speed_singles": 1.0,
-        "speed_r": 1.0,
-        "bvpt": 1.0,
-        "ondeck_r": 1.084,
-        "preceding_rbi": 1.0
-      },
-      "rates": {
-        "singles": 0.112,
-        "doubles": 0.0377,
-        "triples": 0.005,
-        "home_runs": 0.0637,
-        "bb_hbp": 0.157,
-        "r_per_pa": 0.3501,
-        "rbi_per_pa": 0.1823
       },
       "pa": 4.3,
       "tier": "low"
@@ -857,14 +857,14 @@
       "stdev_efp": 5.09,
       "mean_efp": 6.25,
       "stats_games": 8,
-      "efp": 9.53,
+      "efp": 9.54,
       "bat_side": "L",
       "per_event": {
-        "singles": 2.07,
+        "singles": 2.08,
         "doubles": 0.42,
         "triples": 0.17,
-        "home_runs": 2.03,
-        "bb_hbp": 1.25,
+        "home_runs": 2.02,
+        "bb_hbp": 1.26,
         "r": 3.16,
         "rbi": 1.49,
         "sb": 0.29
@@ -894,11 +894,11 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1602,
+        "singles": 0.161,
         "doubles": 0.0196,
         "triples": 0.0049,
-        "home_runs": 0.0471,
-        "bb_hbp": 0.1454,
+        "home_runs": 0.047,
+        "bb_hbp": 0.1464,
         "r_per_pa": 0.3675,
         "rbi_per_pa": 0.1738
       },
@@ -1993,7 +1993,7 @@
       "stdev_efp": 9.16,
       "mean_efp": 7.67,
       "stats_games": 12,
-      "efp": 8.91,
+      "efp": 8.9,
       "bat_side": "L",
       "per_event": {
         "singles": 1.29,
@@ -2002,7 +2002,7 @@
         "home_runs": 1.75,
         "bb_hbp": 1.05,
         "r": 2.48,
-        "rbi": 1.43,
+        "rbi": 1.42,
         "sb": 1.4
       },
       "multipliers": {
@@ -2030,13 +2030,13 @@
         "preceding_rbi": 1.0
       },
       "rates": {
-        "singles": 0.1079,
-        "doubles": 0.033,
+        "singles": 0.1076,
+        "doubles": 0.0329,
         "triples": 0.0033,
-        "home_runs": 0.0439,
-        "bb_hbp": 0.1318,
+        "home_runs": 0.0438,
+        "bb_hbp": 0.1314,
         "r_per_pa": 0.3095,
-        "rbi_per_pa": 0.1782
+        "rbi_per_pa": 0.1779
       },
       "pa": 4.0,
       "tier": "low"
@@ -2271,5 +2271,5 @@
     }
   ],
   "best_bets": [],
-  "generated_at": "2026-09-26T19:20:34.565216+00:00"
+  "generated_at": "2026-09-26T19:31:34.280429+00:00"
 }
